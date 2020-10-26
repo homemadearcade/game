@@ -542,6 +542,7 @@ class Hero{
       velocityDecayXExtra: hero.velocityDecayXExtra,
       velocityDecayYExtra: hero.velocityDecayYExtra,
       floatJumpTimeout: hero.floatJumpTimeout,
+      gravityVelocityY: hero.gravityVelocityY,
 
       pathId: hero.pathId,
       pathfindingLimitId: hero.pathfindingLimitId,
@@ -669,6 +670,7 @@ class Hero{
       navigationTargetId: hero.navigationTargetId,
 
       flags: hero.flags,
+      tags: hero.tags,
       heroMenu: hero.heroMenu,
       objectMenu: hero.objectMenu,
       worldMenu: hero.worldMenu,
@@ -732,9 +734,9 @@ class Hero{
 
   removeHero(hero) {
     OBJECTS.forAllSubObjects(hero.subObjects, (subObject) => {
-      subObject.mod().removed = true
+      subObject.removed = true
     })
-    GAME.heros[hero.id].mod().removed = true
+    GAME.heros[hero.id].removed = true
   }
 
   onDeleteHero(heroId) {
@@ -743,6 +745,7 @@ class Hero{
     HERO.deleteHero(hero)
     window.local.emit('onDeletedHero', hero)
     delete GAME.heros[heroId]
+    GAME.heroList = GAME.heroList.filter(({id}) => id !== heroId)
   }
 
   onDeleteQuest(heroId, questId) {

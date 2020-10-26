@@ -45,7 +45,15 @@ class ConstructEditor {
     this.painting = false
     this.erasing = false
     this.selectedColor = null
-    this.mapVisible = true
+    this.mapVisible = {
+      all: true,
+      drawing: true,
+      objects: true,
+      background: true,
+      foreground: true,
+      structure: true,
+      hero: true
+    }
   }
 
   cancel() {
@@ -64,6 +72,10 @@ class ConstructEditor {
     this.ref.close()
     this.nodesHistory = []
     this.initState()
+
+    // if(object.tags.background) {
+    //   PIXIMAP.app.view.style.zIndex = null
+    // }
   }
 
 
@@ -72,7 +84,7 @@ class ConstructEditor {
     constructParts.forEach((part) => {
       part.id = window.uniqueID()
       if(part.color == GAME.world.defaultObjectColor || part.color == window.defaultObjectColor) {
-        delete part.color
+        part.color = null
       }
     })
     const { x, y, width, height } = this.getBoundingBox(constructParts)
@@ -154,6 +166,10 @@ class ConstructEditor {
     this.nodesHistory = []
 
     window.local.emit('onConstructEditorStart', object)
+
+    // if(object.tags.background) {
+    //   PIXIMAP.app.view.style.zIndex = '1'
+    // }
   }
 
   handleMouseUp() {
@@ -205,6 +221,10 @@ class ConstructEditor {
           node.data.defaultSprite = this.selectedTextureId
         }
       })
+      this.ref.closeColorPicker()
+    } else if(tool === 'fill-empty') {
+      this.nodesHistory.unshift(_.cloneDeep(this.grid.nodes))
+      this.bucketFill(true)
       this.ref.closeColorPicker()
     }
 
@@ -320,7 +340,7 @@ class ConstructEditor {
 
     this.grid.forEachNode((node) => {
       if(node.data.filled) {
-        if(node.data.defaultSprite) {
+        if(node.data.defaultSprite || CONSTRUCTEDITOR.tags.seperateParts) {
           rectangles.push({ x: node.x, y: node.y, width: this.grid.nodeSize, height: this.grid.nodeSize, color: node.data.color, defaultSprite: node.data.defaultSprite })
           this.unfillNode(node.gridX, node.gridY)
           return
@@ -340,7 +360,7 @@ class ConstructEditor {
 
     rectangles.forEach((rect1) => {
       rectangles.forEach((rect2) => {
-        if(!rect1.claimed && !rect2.claimed && rect1.x === rect2.x && rect1.width === rect2.width && !rect1.defaultSprite && !rect2.defaultSprite) {
+        if(!rect1.claimed && !rect2.claimed && rect1.x === rect2.x && rect1.width === rect2.width && !rect1.defaultSprite && !rect2.defaultSprite && !CONSTRUCTEDITOR.tags.seperateParts) {
           if(rect1.y + rect1.height === rect2.y && rect1.color === rect2.color) {
             let higherRect = rect1
             let lowerRect = rect2
@@ -375,7 +395,7 @@ class ConstructEditor {
     }
   }
 
-  bucketFill() {
+  bucketFill(empty) {
     const { selectedColor, grid, selectedTextureId } = this
     const { gridX, gridY } = grid.getGridXYfromXY(this.mousePos.x, this.mousePos.y, { closest: false })
 
@@ -390,7 +410,11 @@ class ConstructEditor {
     const findAndFillSimilarNeighbors = (node) => {
       const neighbors = grid.findNeighborNodes(node.gridX, node.gridY)
       nodesSeen[node.id] = true
-      this.fillNode(node.gridX, node.gridY, selectedColor, selectedTextureId)
+      if(empty) {
+        this.unfillNode(node.gridX, node.gridY)
+      } else {
+        this.fillNode(node.gridX, node.gridY, selectedColor, selectedTextureId)
+      }
       neighbors.forEach((neighbor) => {
         if(nodesSeen[neighbor.id]) {
           return
@@ -460,27 +484,32 @@ class ConstructEditor {
     camera.set(cameraController)
   }
 
-  toggleMapVisibility() {
-    this.mapVisible = !this.mapVisible
+  toggleMapVisibility(type) {
+    this.mapVisible[type] = !this.mapVisible[type]
+    PIXIMAP.resetConstructParts()
   }
 
   onRender = () => {
     const {ctx, canvas, camera, grid, nodeHighlighted, tags, open, tool, selectedColor } = CONSTRUCTEDITOR
     if(!open) return
 
-    if(!this.mapVisible) {
+    if(!this.mapVisible.all) {
       ctx.fillStyle = GAME.world.backgroundColor || 'black'
       ctx.fillRect(0, 0, canvas.width, canvas.height)
     }
 
     drawTools.drawGrid(ctx, {...grid, color: 'white'}, camera)
 
+    if(!this.mapVisible.drawing) return
+
     grid.forEachNode((node) => {
-      if(node.data.defaultSprite) {
-        drawTools.drawSprite(ctx, camera, node.data.defaultSprite, {x: node.x, y: node.y, height: node.height, width: node.width, color: node.data.color, tags })
-        // drawTools.drawObject(ctx, {x: node.x, y: node.y, height: node.height, width: node.width, color: node.data.color, tags }, camera)
-      } else if(node.data.filled) {
-        drawTools.drawObject(ctx, {x: node.x, y: node.y, height: node.height, width: node.width, color: node.data.color, tags }, camera)
+      if(node.data.filled) {
+        if(node.data.defaultSprite && node.data.defaultSprite !== 'solidcolorsprite') {
+          drawTools.drawSprite(ctx, camera, node.data.defaultSprite, {x: node.x, y: node.y, height: node.height, width: node.width, color: node.data.color, tags })
+          // drawTools.drawObject(ctx, {x: node.x, y: node.y, height: node.height, width: node.width, color: node.data.color, tags }, camera)
+        } else {
+          drawTools.drawObject(ctx, {x: node.x, y: node.y, height: node.height, width: node.width, color: node.data.color, tags }, camera)
+        }
       }
     })
 

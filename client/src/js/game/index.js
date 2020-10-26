@@ -39,6 +39,7 @@ class Game{
       tags: {},
       images: {},
       tags: {},
+      creator: {}
     }
   }
 
@@ -260,6 +261,7 @@ class Game{
     if(game.library) GAME.library = game.library
     else GAME.library = {}
     if(!GAME.library.branches) GAME.library.branches = {}
+    if(!GAME.library.creator) GAME.library.creator = {}
 
     if(GAME.library.tags) {
       tags.addGameTags(GAME.library.tags)
@@ -377,9 +379,11 @@ class Game{
 
   removeListeners() {
     GAME.gameState.sequenceQueue.forEach((sequence) => {
-      sequence.eventListeners.forEach((remove) => {
-        if(remove) remove()
-      })
+      if(sequence.eventListeners) {
+        sequence.eventListeners.forEach((remove) => {
+          if(remove) remove()
+        })
+      }
     })
     GAME.gameState.activeModList.forEach((mod) => {
       if(mod.removeEventListener) mod.removeEventListener()
@@ -545,9 +549,9 @@ class Game{
     if(!effectedIds) {
       effects.processEffect(effect)
     } else {
-      const effector = GAME.getObjectOrHeroById(effectorId)
+      const effector = OBJECTS.getObjectOrHeroById(effectorId)
       effectedIds.forEach((id) => {
-        effects.processEffect(effect, GAME.getObjectOrHeroById(id), effector)
+        effects.processEffect(effect, OBJECTS.getObjectOrHeroById(id), effector)
       })
     }
   }
@@ -623,6 +627,11 @@ class Game{
           })
         }
       })
+
+      if(!PAGE.role.isAdmin && EDITOR.preferences.zoomMultiplier) {
+        window.local.emit('onZoomChange')
+      }
+
       GAME.gameState.paused = false
       GAME.gameState.started = true
       window.local.emit('onGameStarted')
@@ -703,7 +712,7 @@ class Game{
     const branch = _.cloneDeep(GAME.library.branches[id])
     const addedObjects = branch.addedObjects.map((addedObj) => {
       addedObj.id = 'branchadded-'+window.uniqueID()
-      addedObj.mod().removed = true
+      addedObj.removed = true
       return addedObj
     })
     window.socket.emit('addObjects', addedObjects)
@@ -729,7 +738,7 @@ class Game{
     })
   }
 
-  cleanForSave(game, options = { keepState: false, removeFalseTags: true }) {
+  cleanForSave(game, options = { keepState: false, removeFalseTags: false }) {
     let gameCopy = JSON.parse(JSON.stringify({
       //.filter((object) => !object.spawned)
       id: game.id,

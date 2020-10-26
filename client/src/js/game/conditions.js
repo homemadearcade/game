@@ -237,7 +237,7 @@ function testMatchJSONCondition(JSON, testObject, options) {
 
 function testIsWithinObject(object, testObject, options) {
   if(options.testModdedVersion) testObject = testObject.mod()
-  return collisions.checkObject(object, testObject, options)
+  return collisions.checkObject(object, testObject)
 }
 
 function testHasCompletedQuest(questName, testObject, options) {
@@ -338,7 +338,6 @@ function checkIdOrTagMatch(id, tag, object) {
     return true
   }
 }
-
 
 export {
   testEventMatch,

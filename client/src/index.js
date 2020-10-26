@@ -6,6 +6,58 @@
 
 TODO
 
+LEVEL 1 POWERS
+Get guns working
+- GUN PARAMETERS
+various guns
+  - SPREAD GUN
+  - GRAPLING HOOK
+  - BOOMERANG
+  - ARROW SHOOTER
+  - SNIPER
+  - BIG GUN, SMALL GUN
+  - MAGIC
+  SHOTGUN
+Sword - pickaxe? ax? Are these the same thing?
+Sword options..
+  time quota - Time it takes for one 'hit'
+
+bullets that ping around!
+---> Rotational velocity bullets
+
+Other weapons?
+- BOMB DROPPER
+
+JUMPING POWERS
+ Wall jump
+ DASH
+ , teleport dash
+
+REVEAL things power
+
+SUCK THINGS IN AND ADD TO INVENTORY?
+
+GUNS THAT CREATE THINGs....
+
+Gun from the swapper
+
+
+Bouncing ball action - mario
+
+Maybe dual stick shooter potential?
+
+-----
+
+Non scroller object ( sun )
+Parallax scroller ( 0-10 )
+
+Change on collide to on touch start for certain tags
+Try loading game on non host
+Change ask current game
+Low bandwidth mode
+Color icon in creator menu
+Toggle between drawing types?
+
 SIMPLE SEQUENCE ( Opening Sequence )
 PUZZLE INTERFACES
 -----
@@ -47,11 +99,6 @@ actually build in this whole equipping system
 // drop last object when full ( boolean )
 // prevent add when full ( boolean )
 
-EQUIPMENT UPGRADE
-Get guns working
-various guns
-Sword?
-Other weapons
 
 ANIMATION UPGRADE
 Random Particle Designer
@@ -76,11 +123,12 @@ Win/Lose States that can connect to the meta of the engine ( picking new game or
 
 COMBAT UPGRADE
 Main questions for this upgrade is
-  -- How to detect the destroyer! Thats key... how does _destroyedBy work -- by weapon, by bullet, by player?
+  -- How to detect the destroyer! Thats key... how does _destroyedById work -- by weapon, by bullet, by player?
   -- How much damage does it do?
   -- Start with just rock paper scissors??
   -- how to handle animations?
-  -- The key is also making sure this system works without TRIGGERS
+  -- The key to CONVENIENCE is also making sure this system works without TRIGGERS
+  -- allow a system for pattern recognition ( with patterns, timing )
 
 HP, DEFENSE, ATTACK, ETC, hittable, LIVES, respawn options,
 VICTIMS, ENEMIES, NEUTRAL,
@@ -123,7 +171,7 @@ LEVELS ( sub worlds )
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
 
-VISIBLE TO
+VISIBLE TO - tag
 STORY - Fade in/out to game
 
 --
@@ -569,8 +617,31 @@ import './js/libraries/objectLibrary.js'
 import './js/libraries/heroLibrary.js'
 import './js/libraries/spriteSheetLibrary.js'
 
+
+// Broadcast that you're opening a page.
+let otherPageOpen = false
+localStorage.openpages = Date.now();
+var onLocalStorageEvent = function(e){
+  if(e.key == "openpages"){
+      // Listen if anybody else is opening the same page!
+    localStorage.page_available = Date.now();
+  }
+  if(e.key == "page_available"){
+    otherPageOpen = true
+  }
+};
+window.addEventListener('storage', onLocalStorageEvent, false);
+
+setTimeout(() => {
+  if(otherPageOpen) {
+    alert("Another tab has Homemade Arcade open");
+  } else {
+    PAGE.load()
+  }
+}, 100)
+
+
 // if(document.hasFocus()) {
-  PAGE.load()
 // } else {
 //   window.onfocus = PAGE.load
 // }
