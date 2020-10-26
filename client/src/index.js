@@ -41,19 +41,19 @@ GUNS THAT CREATE THINGs....
 
 Gun from the swapper
 
-
 Bouncing ball action - mario
 
 Maybe dual stick shooter potential?
 
 -----
 
+experience password for ha-live. Use month+day - 100
+
 Non scroller object ( sun )
 Parallax scroller ( 0-10 )
 
 Change on collide to on touch start for certain tags
-Try loading game on non host
-Change ask current game
+Try uploading game JSON on non host
 Low bandwidth mode
 Color icon in creator menu
 Toggle between drawing types?

@@ -1,5 +1,6 @@
 import gridUtil from '../utils/grid'
 import Swal from 'sweetalert2/src/sweetalert2.js';
+import axios from 'axios';
 
 class Editor {
   constructor() {
@@ -45,25 +46,40 @@ class Editor {
   }
 
   async loadGame() {
-    const { value: loadGameId } = await Swal.fire({
+    const response  = await axios.get(window.HAGameServerUrl + '/gamesmetadata')
+    const gamesMetadata = response.data.games
+    let loadGameId
+    const { value: gamesMetadataIndex } = await Swal.fire({
       title: 'Load Game',
-      text: "Enter id of game to load",
-      input: 'text',
+      text: "Select id of game",
+      input: 'select',
       inputAttributes: {
         autocapitalize: 'off'
       },
-      showClass: {
-        popup: 'animated fadeInDown faster'
-      },
-      hideClass: {
-        popup: 'animated fadeOutUp faster'
-      },
+      inputOptions: gamesMetadata.map(({id}) => id),
       showCancelButton: true,
       confirmButtonText: 'Load Game',
     })
-    if(loadGameId) {
+    if(gamesMetadataIndex) {
+      loadGameId = gamesMetadata[gamesMetadataIndex].id
       choseGameCallback(loadGameId)
     }
+    // const { value: loadGameId } = await Swal.fire({
+    //   title: 'Load Game',
+    //   text: "Enter id of game to load",
+    //   input: 'text',
+    //   inputAttributes: {
+    //     autocapitalize: 'off'
+    //   },
+    //   showClass: {
+    //     popup: 'animated fadeInDown faster'
+    //   },
+    //   hideClass: {
+    //     popup: 'animated fadeOutUp faster'
+    //   },
+    //   showCancelButton: true,
+    //   confirmButtonText: 'Load Game',
+    // })
   }
 
   async newGame() {

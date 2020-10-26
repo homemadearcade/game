@@ -171,23 +171,29 @@ class Page{
     }
 
     const heroOptions = Object.keys(window.heroLibrary)
-    if(localStorage.getItem('hero')) heroOptions.unshift('resume')
+    const hasSavedHero = localStorage.getItem('hero')
+    if(hasSavedHero) heroOptions.unshift('resume')
 
-    const { value: heroLibraryNameIndex } = await Swal.fire({
-      title: 'Select your hero',
-      showClass: {
-        popup: 'animated fadeInDown faster'
-      },
-      hideClass: {
-        popup: 'animated fadeOutUp faster'
-      },
-      input: 'select',
-      inputOptions: heroOptions,
-      allowOutsideClick: false,
-    })
+    let heroSummonType = 'singlePlayer'
+    if(PAGE.getParameterByName('heroSummonType')) {
+      if(hasSavedHero) heroSummonType = 'resume'
+      else heroSummonType = PAGE.getParameterByName('heroSummonType')
+    } else {
+      const { value: heroLibraryNameIndex } = await Swal.fire({
+        title: 'Select your hero',
+        showClass: {
+          popup: 'animated fadeInDown faster'
+        },
+        hideClass: {
+          popup: 'animated fadeOutUp faster'
+        },
+        input: 'select',
+        inputOptions: heroOptions,
+        allowOutsideClick: false,
+      })
 
-    const heroSummonType = heroOptions[heroLibraryNameIndex]
-
+      heroSummonType = heroOptions[heroLibraryNameIndex]
+    }
     if(document.hasFocus()) {
       PAGE.playerIdentified(heroSummonType)
     } else {
@@ -310,26 +316,33 @@ class Page{
           const response  = await axios.get(window.HAGameServerUrl + '/gamesmetadata')
           const gamesMetadata = response.data.games
 
-          const { value: gamesMetadataIndex } = await Swal.fire({
-            title: 'Load Game',
-            text: "Select id of game",
-            input: 'select',
-            inputAttributes: {
-              autocapitalize: 'off'
-            },
-            inputOptions: gamesMetadata.map(({id}) => id),
-            showCancelButton: true,
-            confirmButtonText: 'Load Game',
-            cancelButtonText: 'New Game',
-          })
-          if(gamesMetadataIndex) {
-            const id = gamesMetadata[gamesMetadataIndex].id
+          let gameId
+          if(PAGE.getParameterByName('gameId')) {
+            gameId = PAGE.getParameterByName('gameId')
+          } else {
+            const { value: gamesMetadataIndex } = await Swal.fire({
+              title: 'Load Game',
+              text: "Select id of game",
+              input: 'select',
+              inputAttributes: {
+                autocapitalize: 'off'
+              },
+              inputOptions: gamesMetadata.map(({id}) => id),
+              showCancelButton: true,
+              confirmButtonText: 'Load Game',
+              cancelButtonText: 'New Game',
+            })
+            if(gamesMetadataIndex) {
+              gameId = gamesMetadata[gamesMetadataIndex].id
+            }
+          }
+
+          if(gameId) {
             window.socket.on('onLoadGame', (game) => {
               cb(game)
             })
-            window.socket.emit('setAndLoadCurrentGame', id)
+            window.socket.emit('setAndLoadCurrentGame', gameId)
           } else {
-
             const { value: newGameId } = await Swal.fire({
               title: 'Create Game',
               text: "Enter id you want for new game",

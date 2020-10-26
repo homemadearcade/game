@@ -5,7 +5,7 @@
     width: 40px;
     height: 40px;
   }
-  
+
   display: flex;
   flex-wrap: wrap;
   background: #0f0f0f;
@@ -52,6 +52,10 @@
 
       &--sprite-selector{
         text-align: center;
+      }
+
+      .fa {
+        margin-top: 5px;
       }
     }
 

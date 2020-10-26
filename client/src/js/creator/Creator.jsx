@@ -15,7 +15,7 @@ export default class Creator extends React.Component {
       columnsOpen: {},
       creatorObjectsToggled: {},
       isColorPickerOpen: false,
-      colorSelected: EDITOR.preferences.creatorColorSelected || '#ffeb3b',
+      colorSelected: EDITOR.preferences.creatorColorSelected || window.defaultObjectColor,
     }
 
     this.setCreatorObjects = (creatorObjects = window.defaultCreatorObjects) => {
@@ -327,6 +327,8 @@ export default class Creator extends React.Component {
   _renderSelectSprite() {
     const { textureIdSelected } = this.props
 
+    if(!PIXIMAP.assetsLoaded) return
+    
     return <div className="Creator__category-container">
       <div className="Creator__category Creator__category-top Creator__category-top--sprite-selector" onClick={() => {
         BELOWMANAGER.open({ selectedManager: 'MediaManager', objectSelected: 'creator', selectedMenu: 'SpriteSelector'})
@@ -341,7 +343,7 @@ export default class Creator extends React.Component {
     const { isColorPickerOpen, colorSelected } = this.state
 
     return <div className="Creator__category-container">
-      {!isColorPickerOpen && <div className="Creator__category Creator__category-top" style={{backgroundColor: colorSelected}} onClick={this._openColorPicker}></div>}
+      {!isColorPickerOpen && <div className="Creator__category Creator__category-top" style={{backgroundColor: colorSelected}} onClick={this._openColorPicker}><i className="fa fas fa-palette"></i></div>}
       {isColorPickerOpen && <div className="Creator__category Creator__category-top" style={{backgroundColor: colorSelected}} onClick={this._closeColorPicker}><i className="fa fas fa-chevron-down"></i></div>}
       {this._renderColorPicker()}
     </div>
