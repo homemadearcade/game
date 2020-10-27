@@ -474,6 +474,20 @@ class Editor {
   }
 
   setGridTo(propName) {
+    if(propName === 'addTop') {
+      GAME.grid.height += 16
+      GAME.grid.startY -= (GAME.grid.nodeSize * 16)
+    }
+    if(propName === 'addBottom') {
+      GAME.grid.height += 16
+    }
+    if(propName === 'addLeft') {
+      GAME.grid.width+= 32
+      GAME.grid.startX-= (GAME.grid.nodeSize * 32)
+    }
+    if(propName === 'addRight') {
+      GAME.grid.width+= 32
+    }
     if(propName === 'larger') {
       GAME.grid.width+=4
       GAME.grid.startX-=GAME.grid.nodeSize * 2

@@ -28,12 +28,7 @@ bullets that ping around!
 Other weapons?
 - BOMB DROPPER
 
-JUMPING POWERS
- Wall jump
- DASH
- , teleport dash
-
-REVEAL things power
+Shrink ray, grow ray
 
 SUCK THINGS IN AND ADD TO INVENTORY?
 
@@ -44,6 +39,24 @@ Gun from the swapper
 Bouncing ball action - mario
 
 Maybe dual stick shooter potential?
+
+MODS
+
+Fly power
+
+Metal mario! How did I not think of this. Sink and don't drown
+
+Vanish cap ( lets you walk through walls )
+
+Change speed and game feel to something else ( racoon type thing )
+
+JUMPING POWERS
+ Wall jump
+ DASH
+ , teleport dash
+
+Shrink power
+REVEAL things power
 
 -----
 

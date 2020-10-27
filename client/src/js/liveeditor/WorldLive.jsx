@@ -121,6 +121,26 @@ export default class WorldLive extends React.Component {
             <DatButton label="Make Larger" onClick={() => {
                 EDITOR.setGridTo('larger')
               }}></DatButton>
+            <DatButton label="Add Section to Top" onClick={() => {
+                EDITOR.setGridTo('addTop')
+              }}></DatButton>
+            <DatButton label="Add Section to Bottom" onClick={() => {
+                EDITOR.setGridTo('addBottom')
+              }}></DatButton>
+            <DatButton label="Add Section to Right" onClick={() => {
+                EDITOR.setGridTo('addRight')
+              }}></DatButton>
+            <DatButton label="Add Section to Left" onClick={() => {
+                EDITOR.setGridTo('addLeft')
+              }}></DatButton>
+            <DatButton label="Set boundaries/camera to grid" onClick={() => {
+              EDITOR.setCameraLockTo('grid')
+              EDITOR.setGameBoundaryTo('grid')
+            }}></DatButton>
+            <DatButton label="Set boundaries/camera to grid -1" onClick={() => {
+              EDITOR.setCameraLockTo('gridMinusOne')
+              EDITOR.setGameBoundaryTo('gridMinusOne')
+            }}></DatButton>
           </DatFolder>
         </DatGui>
       </div>
