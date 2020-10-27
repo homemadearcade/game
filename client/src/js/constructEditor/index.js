@@ -143,7 +143,7 @@ class ConstructEditor {
     this._mouseDownListener = (e) => {
       if(!window.isClickingMap(e.target.className)) return
       if(e.which === 1) {
-        if(!this.paused) this.handleMouseDown(event)
+        if(!this.paused && this.open) this.handleMouseDown(event)
       }
     }
     document.body.addEventListener("mousedown", this._mouseDownListener)
@@ -155,7 +155,7 @@ class ConstructEditor {
     document.body.addEventListener("mousemove", this._mouseMoveListener)
 
     this._mouseUpListener = (e) => {
-      if(!this.paused) this.handleMouseUp(event)
+      if(!this.paused && this.open) this.handleMouseUp(event)
     }
     document.body.addEventListener("mouseup", this._mouseUpListener)
 

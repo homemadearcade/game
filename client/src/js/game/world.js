@@ -9,7 +9,7 @@ function setDefault() {
     proceduralBoundaries: null,
     worldSpawnPointX: null,
     worldSpawnPointY: null,
-    defaultObjectColor: window.defaultObjectColor,
+    defaultObjectColor: '#525252',
     tags: {
       hasGameLog: false,
       allowHeroChat: false,

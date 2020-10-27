@@ -15,7 +15,7 @@ export default class Creator extends React.Component {
       columnsOpen: {},
       creatorObjectsToggled: {},
       isColorPickerOpen: false,
-      colorSelected: EDITOR.preferences.creatorColorSelected || window.defaultObjectColor,
+      colorSelected: EDITOR.preferences.creatorColorSelected,
     }
 
     this.setCreatorObjects = (creatorObjects = window.defaultCreatorObjects) => {
@@ -57,7 +57,8 @@ export default class Creator extends React.Component {
 
       const isObstacle = MAPEDITOR.objectHighlighted.id && MAPEDITOR.objectHighlighted.tags.obstacle
       if(!isObstacle && creatorObjectSelected.JSON) {
-        const { height, width, tags, color } = creatorObjectSelected.JSON
+        if(MAPEDITOR.objectHighlighted.id) MAPEDITOR.objectHighlighted = {}
+        const { height, width, tags, color, defaultSprite } = creatorObjectSelected.JSON
         if(width) MAPEDITOR.objectHighlighted.width = width
         else MAPEDITOR.objectHighlighted.width = GAME.grid.nodeSize
         if(height) MAPEDITOR.objectHighlighted.height = height
@@ -68,6 +69,7 @@ export default class Creator extends React.Component {
         MAPEDITOR.objectHighlighted.y = y
         if(colorSelected && colorSelected !== GAME.world.defaultObjectColor) MAPEDITOR.objectHighlighted.color = colorSelected
         if(textureIdSelected) MAPEDITOR.objectHighlighted.defaultSprite = textureIdSelected
+        else MAPEDITOR.objectHighlighted.defaultSprite = defaultSprite
         MAPEDITOR.objectHighlighted.CREATOR = true
       }
     }
@@ -79,8 +81,13 @@ export default class Creator extends React.Component {
       const { textureIdSelected } = this.props
 
       let newObject
-      // this confuses me, idk
-      if((!MAPEDITOR.objectHighlighted.id || (MAPEDITOR.objectHighlighted.tags && !MAPEDITOR.objectHighlighted.tags.obstacle) || MAPEDITOR.objectHighlighted.CREATOR) && creatorObjectSelected.JSON) {
+      // maybe use isObstacle instead since thats what is used for mouse move
+      // const isObstacle = MAPEDITOR.objectHighlighted.id && MAPEDITOR.objectHighlighted.tags.obstacle
+
+      //if((!MAPEDITOR.objectHighlighted.id || (MAPEDITOR.objectHighlighted.tags && !MAPEDITOR.objectHighlighted.tags.obstacle) || MAPEDITOR.objectHighlighted.CREATOR) && creatorObjectSelected.JSON) {
+
+      const isObstacle = MAPEDITOR.objectHighlighted.id && MAPEDITOR.objectHighlighted.tags.obstacle
+      if(!isObstacle && creatorObjectSelected.JSON) {
         newObject = _.cloneDeep(creatorObjectSelected.JSON)
 
         newObject.x = MAPEDITOR.objectHighlighted.x
@@ -295,10 +302,11 @@ export default class Creator extends React.Component {
   _renderColorPicker() {
     const { colorSelected, isColorPickerOpen } = this.state
 
+
     if(!isColorPickerOpen) return null
 
     return <div className="Creator__color-picker"><SketchPicker
-        color={colorSelected}
+        color={colorSelected || GAME.world.defaultObjectColor || window.defaultObjectColor }
         onChange={(color) => {
           this.setState({
             colorSelected: color.hex
@@ -314,7 +322,7 @@ export default class Creator extends React.Component {
       />
     <br/>
     <SwatchesPicker
-      color={colorSelected}
+      color={colorSelected || GAME.world.defaultObjectColor || window.defaultObjectColor}
       onChangeComplete={ (color) => {
         this.setState({
           colorSelected: color.hex
@@ -328,13 +336,30 @@ export default class Creator extends React.Component {
     const { textureIdSelected } = this.props
 
     if(!PIXIMAP.assetsLoaded) return
-    
+
     return <div className="Creator__category-container">
-      <div className="Creator__category Creator__category-top Creator__category-top--sprite-selector" onClick={() => {
-        BELOWMANAGER.open({ selectedManager: 'MediaManager', objectSelected: 'creator', selectedMenu: 'SpriteSelector'})
-      }}>
-        {textureIdSelected ? <div className="Creator__sprite-container"><PixiMapSprite width="40" height="40" textureId={textureIdSelected}></PixiMapSprite></div>
-      : <i className="fa fas fa-image"></i>}
+      <div
+        className="Creator__category"
+        onMouseEnter={() => {
+            this.setState({selectSpriteOpen: true})
+          }}
+          onMouseLeave={() => {
+            this.setState({selectSpriteOpen: false})
+          }}
+        >
+        <div
+          className="Creator__category-top Creator__category-top--sprite-selector"
+          onClick={() => {
+          BELOWMANAGER.open({ selectedManager: 'MediaManager', objectSelected: 'creator', selectedMenu: 'SpriteSelector'})
+        }}>
+          {textureIdSelected ? <div className="Creator__sprite-container"><PixiMapSprite width="40" height="40" textureId={textureIdSelected}></PixiMapSprite></div>
+        : <i className="fa fas fa-image"></i>}
+        </div>
+        {this.state.selectSpriteOpen && this.props.textureIdSelected && <div className={classnames("Creator__category-item")} onClick={() => {
+            window.local.emit('onSelectTextureId', null, 'creator')
+          }}>
+          <i className="fa fas fa-times"/>
+        </div>}
       </div>
     </div>
   }
@@ -343,9 +368,25 @@ export default class Creator extends React.Component {
     const { isColorPickerOpen, colorSelected } = this.state
 
     return <div className="Creator__category-container">
-      {!isColorPickerOpen && <div className="Creator__category Creator__category-top" style={{backgroundColor: colorSelected}} onClick={this._openColorPicker}><i className="fa fas fa-palette"></i></div>}
-      {isColorPickerOpen && <div className="Creator__category Creator__category-top" style={{backgroundColor: colorSelected}} onClick={this._closeColorPicker}><i className="fa fas fa-chevron-down"></i></div>}
-      {this._renderColorPicker()}
+      <div
+        className="Creator__category"
+        onMouseEnter={() => {
+            this.setState({selectColorOpen: true})
+          }}
+          onMouseLeave={() => {
+            this.setState({selectColorOpen: false})
+          }}
+        >
+        {!isColorPickerOpen && <div className="Creator__category-top" style={{backgroundColor: colorSelected || GAME.world.defaultObjectColor || window.defaultObjectColor }} onClick={this._openColorPicker}><i className="fa fas fa-palette"></i></div>}
+        {isColorPickerOpen && <div className="Creator__category-top" style={{backgroundColor: colorSelected || GAME.world.defaultObjectColor || window.defaultObjectColor }} onClick={this._closeColorPicker}><i className="fa fas fa-chevron-down"></i></div>}
+        {this._renderColorPicker()}
+        {!isColorPickerOpen && this.state.selectColorOpen && colorSelected && <div className={classnames("Creator__category-item")} onClick={() => {
+            this.setState({colorSelected: null})
+            EDITOR.preferences.creatorColorSelected = null
+          }}>
+          <i className="fa fas fa-times"/>
+        </div>}
+      </div>
     </div>
   }
 
