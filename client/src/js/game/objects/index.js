@@ -175,7 +175,7 @@ class Objects{
     let properties = {
       id: object.id,
       objectType: object.objectType,
-      
+
       velocityMax: object.velocityMax,
       gravityVelocityY: object.gravityVelocityY,
 
@@ -436,14 +436,36 @@ class Objects{
         width: GAME.grid.nodeSize,
         height: GAME.grid.nodeSize,
       }
-      if(object.failCount > 20) {
+      if(object.failCount > 80) {
+        if(Math.random() > .5) {
+          newObject.y = target.y - (1 * GAME.grid.nodeSize)
+        } else {
+          newObject.y = target.y + (1 * GAME.grid.nodeSize)
+        }
+        console.log('failed so badly')
+      } else if(object.failCount > 60) {
+        if(Math.random() > .5) {
+          newObject.y -= (GAME.grid.nodeSize * 4)
+        } else {
+          newObject.y += (GAME.grid.nodeSize * 4)
+        }
+      } else if(object.failCount > 40) {
+        if(Math.random() > .5) {
+          newObject.y -= (GAME.grid.nodeSize * 2)
+        } else {
+          newObject.y += (GAME.grid.nodeSize * 2)
+        }
+      } else if(object.failCount > 20) {
         if(Math.random() > .5) {
           newObject.y -= GAME.grid.nodeSize
         } else {
           newObject.y += GAME.grid.nodeSize
         }
-        object.failCount = 0
       }
+
+
+
+
 
       addAnticipatedObject(newObject)
       return
@@ -488,10 +510,11 @@ class Objects{
       } else if(isPlatform) {
         newObject = {
           x: hero.x - (GAME.grid.nodeSize * 4),
-          y: gridUtil.getRandomGridWithinXY(maxY - 3, maxY),
-          width: GAME.grid.nodeSize * 9,
+          y: gridUtil.getRandomGridWithinXY(hero.y + (GAME.grid.nodeSize * 8), hero.y + (GAME.grid.nodeSize * 2)),
+          width: GAME.grid.nodeSize * 8,
           height: GAME.grid.nodeSize,
         }
+        console.log(newObject.y)
       } else {
         newObject = {
           x: gridUtil.getRandomGridWithinXY(minX, maxX),
@@ -506,39 +529,39 @@ class Objects{
         let newObject = {
           x: hero.x - (GAME.grid.nodeSize * 4),
           // honestly this + is just so we dont add a platform where nothing can be added above it
-          y: maxY + (GAME.grid.nodeSize * 6),
+          y: maxY + (GAME.grid.nodeSize * 4),
           width: GAME.grid.nodeSize * 9,
           height: GAME.grid.nodeSize,
         }
         addAnticipatedObject(newObject)
-      } else if (leftDiff < 10 && hero.directions.left) {
+      } else if (leftDiff < 5 && hero.directions.left) {
         let newObject = {
-          x: minX - GAME.grid.nodeSize,
+          x: minX + (GAME.grid.nodeSize * 3),
           y: isWall ? minY + ( GAME.grid.nodeSize * 2) : gridUtil.getRandomGridWithinXY(minY, maxY),
           width: GAME.grid.nodeSize,
           height: isWall ? (HERO.cameraHeight * 2) - (GAME.grid.nodeSize * 6) : GAME.grid.nodeSize,
         }
         addAnticipatedObject(newObject)
-      } else if (topDiff < 10 && hero.directions.up) {
+      } else if (topDiff < 5 && hero.directions.up) {
         let newObject = {
           x: isWall ? minX + ( GAME.grid.nodeSize * 2) : gridUtil.getRandomGridWithinXY(minX, maxX),
-          y: minY - GAME.grid.nodeSize,
+          y: minY + (GAME.grid.nodeSize * 3),
           width: isWall ? (HERO.cameraWidth * 2) - (GAME.grid.nodeSize * 12) : GAME.grid.nodeSize,
           height: GAME.grid.nodeSize,
         }
         addAnticipatedObject(newObject)
-      } else if (rightDiff > GAME.grid.nodeSize - 10 && hero.directions.right) {
+      } else if (rightDiff > GAME.grid.nodeSize - 5 && hero.directions.right) {
         let newObject = {
-          x: maxX + GAME.grid.nodeSize,
+          x: maxX - (GAME.grid.nodeSize * 3),
           y: isWall ? minY + ( GAME.grid.nodeSize * 2) : gridUtil.getRandomGridWithinXY(minY, maxY),
           width: GAME.grid.nodeSize,
           height: isWall ? (HERO.cameraHeight * 2) - (GAME.grid.nodeSize * 6) : GAME.grid.nodeSize,
         }
         addAnticipatedObject(newObject)
-      } else if (bottomDiff > GAME.grid.nodeSize - 10 && hero.directions.down) {
+      } else if (bottomDiff > GAME.grid.nodeSize - 5 && hero.directions.down) {
         let newObject = {
           x: isWall ? minX + ( GAME.grid.nodeSize * 2) : gridUtil.getRandomGridWithinXY(minX, maxX),
-          y: maxY + GAME.grid.nodeSize,
+          y: maxY - (GAME.grid.nodeSize * 3),
           width: isWall ? (HERO.cameraWidth * 2) - (GAME.grid.nodeSize * 12) : GAME.grid.nodeSize,
           height: GAME.grid.nodeSize,
         }
@@ -546,9 +569,14 @@ class Objects{
       }
     }
 
+
+    if(object.failCount > 100) {
+      object.bypassGameBoundaries = true
+    }
+    
     function addAnticipatedObject(newObject) {
       let {x , y} = gridUtil.snapXYToGrid(newObject.x, newObject.y)
-      if((!collisions.check(newObject, GAME.objects) || isPlatform) && gridUtil.keepXYWithinBoundaries({x, y}) && gridUtil.keepXYWithinBoundaries({x: (x + newObject.width), y: (y + newObject.height)})) {
+      if((!collisions.check(newObject, GAME.objects) || isPlatform) && gridUtil.keepXYWithinBoundaries({x, y}, { bypassGameBoundaries: object.bypassGameBoundaries}) && gridUtil.keepXYWithinBoundaries({x: (x + newObject.width), y: (y + newObject.height)}, { bypassGameBoundaries: object.bypassGameBoundaries})) {
         const createMe = {...newObject, ...object}
 
         //here be dragons
@@ -558,6 +586,7 @@ class Objects{
         const created = OBJECTS.create([createMe])
         GAME.lastAnticipatedObjectId = created[0].id
         object.numberToAdd--
+        object.failCount = 0
         if(object.numberToAdd) {
         } else {
           window.local.emit('onAnticipateCompleted', object)

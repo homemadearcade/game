@@ -81,11 +81,7 @@ export default class Creator extends React.Component {
       const { textureIdSelected } = this.props
 
       let newObject
-      // maybe use isObstacle instead since thats what is used for mouse move
-      // const isObstacle = MAPEDITOR.objectHighlighted.id && MAPEDITOR.objectHighlighted.tags.obstacle
-
-      //if((!MAPEDITOR.objectHighlighted.id || (MAPEDITOR.objectHighlighted.tags && !MAPEDITOR.objectHighlighted.tags.obstacle) || MAPEDITOR.objectHighlighted.CREATOR) && creatorObjectSelected.JSON) {
-
+      
       const isObstacle = MAPEDITOR.objectHighlighted.id && MAPEDITOR.objectHighlighted.tags.obstacle
       if(!isObstacle && creatorObjectSelected.JSON) {
         newObject = _.cloneDeep(creatorObjectSelected.JSON)

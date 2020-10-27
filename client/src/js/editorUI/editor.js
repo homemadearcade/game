@@ -197,6 +197,26 @@ class Editor {
       sendWorldUpdate({ tags: { ...window.defaultWorld.tags }})
     }
 
+    if(worldName === 'AdventureStart') {
+      if(EDITOR.shiftPressed) {
+        GAME.grid.width = 44
+        GAME.grid.height = 22
+        window.socket.emit('updateGrid', GAME.grid)
+        window.socket.emit('resetObjects')
+        setWorldAndHeroSpawnPointsTo('gridCenter')
+        setTimeout(() => {
+          respawnAllHeros()
+        })
+      }
+
+      setGameBoundaryBehavior('boundaryAll')
+      setGameBoundaryTo('gridMinusOne')
+      setCameraLockTo('gridMinusOne')
+      setHerosZoomTo('gridMinusOne')
+
+      sendWorldUpdate({ tags: { ...window.defaultWorld.tags }})
+    }
+
     if(worldName === 'Purgatory') {
       if(EDITOR.shiftPressed) {
         setGridTo('default')
