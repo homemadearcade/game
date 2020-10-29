@@ -33,10 +33,10 @@ function setDefault() {
   }
 
   window.featureOptimizationTags = {
-    //no awareness, oncollide, interact, correction, anything
+    //no awareness, oncollide, interact, correction, anything, NOTHING. Most performant
     notInCollisions: false,
 
-    //skips correction phase ( it will not move for obstacles ) ( replace with stationary )
+    //skips correction phase ( it will not move! but it will have collision effects  )
     skipCorrectionPhase: false,
 
     //skips awareness areas if false

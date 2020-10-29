@@ -573,7 +573,7 @@ class Objects{
     if(object.failCount > 100) {
       object.bypassGameBoundaries = true
     }
-    
+
     function addAnticipatedObject(newObject) {
       let {x , y} = gridUtil.snapXYToGrid(newObject.x, newObject.y)
       if((!collisions.check(newObject, GAME.objects) || isPlatform) && gridUtil.keepXYWithinBoundaries({x, y}, { bypassGameBoundaries: object.bypassGameBoundaries}) && gridUtil.keepXYWithinBoundaries({x: (x + newObject.width), y: (y + newObject.height)}, { bypassGameBoundaries: object.bypassGameBoundaries})) {
@@ -1335,8 +1335,7 @@ class Objects{
     })
   }
 
-  onResetPhysicsProperties(objectId) {
-    const object = OBJECTS.getObjectOrHeroById(objectId)
+  resetPhysicsProperties(object) {
     object.velocityY = 0
     object.velocityX = 0
     object.velocityAngle = 0
@@ -1344,6 +1343,11 @@ class Objects{
     object._skipNextGravity = true
     object.angle = null
     object.keysDown = {}
+  }
+
+  onResetPhysicsProperties(objectId) {
+    const object = OBJECTS.getObjectOrHeroById(objectId)
+    OBJECTS.resetPhysicsProperties(object)
   }
 
   hasRandomPathAI(object) {

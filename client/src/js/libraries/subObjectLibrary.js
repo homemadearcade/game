@@ -34,6 +34,22 @@ window.local.on('onFirstPageGameLoaded', () => {
         }
       },
       actionState: {}
+    },
+    marioCap: {
+      x: 0, y: 0, width: 10, height: 10,
+      color: 'red',
+      // relativeX: GAME.grid.nodeSize/5,
+      // relativeY: -GAME.grid.nodeSize,
+      // relativeWidth: -GAME.grid.nodeSize * .75,
+      // relativeHeight: -GAME.grid.nodeSize * .75,
+      subObjectName: 'Mario hat',
+      tags: { pickupable: true, pickupOnHeroInteract: true, equipOnPickup: true },
+      actionButtonBehavior: 'mod',
+      actionProps: {
+        effectJSON: window.modLibrary.mario.effectJSON,
+        revertable: true
+      },
+      actionState: {}
     }
   }
 

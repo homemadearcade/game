@@ -253,6 +253,7 @@ export default class Root extends React.Component {
         this.gameLogRef.current.onEscPressed()
         return
       }
+      this.setState({ showHeroMenuModal: false, showInventoryModal: false, showControlsInfoModal: false })
     }
 
     if(PAGE.typingMode) return

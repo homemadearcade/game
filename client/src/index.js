@@ -6,59 +6,48 @@
 
 TODO
 
-LEVEL 1 POWERS
-Get guns working
-- GUN PARAMETERS
-various guns
-  - SPREAD GUN
-  - GRAPLING HOOK
-  - BOOMERANG
-  - ARROW SHOOTER
-  - SNIPER
-  - BIG GUN, SMALL GUN
-  - MAGIC
-  SHOTGUN
-Sword - pickaxe? ax? Are these the same thing?
-Sword options..
-  time quota - Time it takes for one 'hit'
+0. Projectile ( DONE )
+1. Hook
+2. Creator object
+3. Mod object
+4. Special jumps
+5. Create strong library of these ^
 
-bullets that ping around!
----> Rotational velocity bullets
+//CREATORS?
+GUNS THAT CREATE THINGS....?
+Things that expand?
+Is that the bomb?
+BOMBS
 
-Other weapons?
-- BOMB DROPPER
-
+///////
+HOOKS
 Shrink ray, grow ray
-
 SUCK THINGS IN AND ADD TO INVENTORY?
-
-GUNS THAT CREATE THINGs....
-
-Gun from the swapper
-
-Bouncing ball action - mario
-
-Maybe dual stick shooter potential?
+GRAPLING HOOK
+Generally a different way to effect objects...
 
 Ill need a functionality called like 'closest object in direction'. When a power is about editing current objects rather than ADDING new ones
+or maybe well call it 'expandLeft, expandRight'
+and then we can either do an onCollide coming from the tool or on the recieving object
+  coming from the tool: ANY OBJECT CAN BE EFFECTED BY THIS
+  coming from the guest object: only specifically tagged objects can be effected by this
 
-MODS
-
+///////
+GAME FEEL MODS
 Fly power
-
 Metal mario! How did I not think of this. Sink and don't drown
-
 Vanish cap ( lets you walk through walls )
-
 Change speed and game feel to something else ( racoon type thing )
+Shrink power, think metroid or CROUCH even
+REVEAL things power ( see living objects, see through foreground )
 
+///////
 JUMPING POWERS
  Wall jump
+ double jump
  DASH
- , teleport dash
-
-Shrink power
-REVEAL things power
+ teleport dash
+ Bounce
 
 -----
 
@@ -74,6 +63,8 @@ Toggle between drawing types?
 
 SIMPLE SEQUENCE ( Opening Sequence )
 PUZZLE INTERFACES
+
+
 -----
 
 SEQUENCE EDITOR UPGRADE
@@ -98,12 +89,11 @@ never close right click menu if shift is pressed
 Improve Add Sub Object
 GENRE libraries ( creator, generatedMenu )
 
+///
 GAME FEEL UPGRADE
-more space bar actions -> 'double jump', 'dash'
-// all objects fade in, all objects fade in random
-Bounce
 Implement special extra physics for objects, not just heros
 
+///
 INVENTORY UPGRADE
 Inventory Context Menu -> Drop, Equip to Hero, Add to Shortcuts
 show inventory in HUD tag, like RTS resources VS team...yeahh
@@ -113,7 +103,7 @@ actually build in this whole equipping system
 // drop last object when full ( boolean )
 // prevent add when full ( boolean )
 
-
+///
 ANIMATION UPGRADE
 Random Particle Designer
 // a system that like randomly generates how particles and things interact and we get to test it out and save it! GREAT WAY TO CUSTOMIZE WITHOUT MUCH EFFORT
@@ -122,12 +112,14 @@ allow chaining of animations and effects
 onAnimationEnd
 Wait for animation to complete
 
+///
 QUESTS UPGRADE
 Add Quest starting, completing, and succeeding to effects
 Auto Complete/Fail quest based on goals the quest has
 View Quests UI in player menu
 onSucceedSequence, onFailSequence
 
+///
 GOALS UPGRADE
 Goal number -> as many as possible
 Chances -> fail on death
@@ -135,6 +127,7 @@ collect, score, create, destroy ( not implemented )
 a Score parameter on objects
 Win/Lose States that can connect to the meta of the engine ( picking new game or replaying current game )
 
+///
 COMBAT UPGRADE
 Main questions for this upgrade is
   -- How to detect the destroyer! Thats key... how does _destroyedById work -- by weapon, by bullet, by player?
@@ -156,6 +149,17 @@ Game Over State
 BRANCH
 Different roots for the branches...
 
+
+///////
+WEAPONS
+various guns
+  - BOOMERANG
+  Bouncing ball action - mario fireball
+Sword - pickaxe? ax? Are these the same thing?
+Sword options..
+  time quota - Time that the collision boxes are active
+bullets that ping around!
+Maybe dual stick shooter potential?
 --
 
 ////////////////////////////////////////////////////
@@ -187,6 +191,8 @@ LEVELS ( sub worlds )
 
 VISIBLE TO - tag
 STORY - Fade in/out to game
+
+speed boost tile
 
 --
 
@@ -454,6 +460,11 @@ Engine trail on a car u know what I mean?
 /// INFRASTRUCTURE
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
+
+// UGH so my pixi shit is bad. I cant be updating constantly.
+// collisions also bad performance after a certain # I don't know how to deal with # of obstacles on screen
+// I cant let players make something TOO big. The world have to be pretty small and we have to limit the projectile count
+
 // SERVER MODE USING NENGI
 // basically... HOST MODE and ARCADE MODE work as a great combo for home made arcade
 // ^^ host mode and arcade mode would BREAK if i used a server model for running the game

@@ -170,7 +170,38 @@ function onKeyUp(key, hero) {
   }
   GAME.heroInputs[hero.id][key] = false
 
+  if(key === 'z' && hero.mod().zButtonBehavior) {
+    revertActions(hero, hero.mod().zButtonBehavior)
+  }
+  if(key === 'x' && hero.mod().xButtonBehavior) {
+    revertActions(hero, hero.mod().xButtonBehavior)
+  }
+  if(key === 'c' && hero.mod().cButtonBehavior) {
+    revertActions(hero, hero.mod().cButtonBehavior)
+  }
+
   window.local.emit('onKeyUp', key, hero)
+}
+
+function revertActions(hero, action) {
+  let subObject = false
+  Object.keys(hero.subObjects).forEach((name) => {
+    const so = hero.subObjects[name]
+    if(so.id === action) {
+      action = so.actionButtonBehavior
+      subObject = so
+    }
+  })
+  if(!subObject) return
+
+  if(subObject.actionState.manualRevertId) {
+    const change = subObject.actionProps.effectJSON
+    if(change.tags && change.tags.gravityY) {
+      OBJECTS.resetPhysicsProperties(hero)
+    }
+    window.emitGameEvent('onEndMod', subObject.actionState.manualRevertId)
+    subObject.actionState.manualRevertId = null
+  }
 }
 
 function handleActionButtonBehavior(hero, action, delta) {
@@ -198,12 +229,14 @@ function handleActionButtonBehavior(hero, action, delta) {
   }
 
   if(action === 'mod') {
-    if(subObject) {
+    if(subObject && !subObject.actionState.manualRevertId) {
+      const manualRevertId = 'modrevert-' + window.uniqueID()
       window.emitGameEvent('onStartMod', {
         ownerId: hero.id,
         effectJSON: subObject.actionProps.effectJSON,
-        manualRevertId: subObject.actionProps.modId
+        manualRevertId
       })
+      subObject.actionState.manualRevertId = 'modrevert-' + window.uniqueID()
     }
   }
 

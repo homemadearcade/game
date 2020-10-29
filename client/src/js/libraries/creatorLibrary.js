@@ -239,6 +239,11 @@ function onFirstPageGameLoaded() {
       columnName: 'Items',
       JSON: window.subObjectLibrary.gun,
     },
+    marioCap: {
+      label: 'Mario Hat',
+      columnName: 'Items',
+      JSON: window.subObjectLibrary.marioCap,
+    },
   }
 
   window.homemadearcadeBasicLibrary = {
@@ -296,6 +301,7 @@ function onFirstPageGameLoaded() {
     ufoPowerBlock: true,
     starViewBlock: true,
     gunPickupable: true,
+    marioCap: true,
   }
 }
 

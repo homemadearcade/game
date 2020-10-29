@@ -189,9 +189,11 @@ PIXIMAP.onRender = function() {
       PIXIMAP.initializePixiObjectsFromGame()
     } else {
       GAME.objects.forEach((object) => {
+        if(object.mod().removed) return
         updatePixiObject(object, PIXIMAP.stage)
       })
       GAME.heroList.forEach((hero) => {
+        if(hero.mod().removed) return
         updatePixiObject(hero, PIXIMAP.stage)
       })
     }
