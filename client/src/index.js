@@ -40,6 +40,8 @@ Bouncing ball action - mario
 
 Maybe dual stick shooter potential?
 
+Ill need a functionality called like 'closest object in direction'. When a power is about editing current objects rather than ADDING new ones
+
 MODS
 
 Fly power
@@ -68,7 +70,6 @@ Parallax scroller ( 0-10 )
 Change on collide to on touch start for certain tags
 Try uploading game JSON on non host
 Low bandwidth mode
-Color icon in creator menu
 Toggle between drawing types?
 
 SIMPLE SEQUENCE ( Opening Sequence )

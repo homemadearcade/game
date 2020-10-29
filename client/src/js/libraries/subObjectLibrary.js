@@ -1,5 +1,6 @@
-window.local.on('onFirstPageGameLoaded', () => {
+window.radianCircle = 6.28319
 
+window.local.on('onFirstPageGameLoaded', () => {
   window.subObjectLibrary = {
     spear: {
       // x: 0, y: 0, width: 6, height: 30,
@@ -23,8 +24,9 @@ window.local.on('onFirstPageGameLoaded', () => {
       actionButtonBehavior: 'shoot',
       actionProps: {
         debounceTime: 2,
-        shootSpread: true,
         shootVelocity: 200,
+        // shootRadius: window.radianCircle,
+        shootBulletsPerRound: 20,
         shootTags: {
           monsterDestroyer: true,
           destroyOnCollideWithObstacle: true,
