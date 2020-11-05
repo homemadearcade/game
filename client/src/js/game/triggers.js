@@ -82,6 +82,8 @@ function addTrigger(ownerObject, trigger) {
   if(!PAGE.role.isHost) return
 
   ownerObject.triggers[trigger.id].removeEventListener = window.local.on(eventName, (mainObject, guestObject) => {
+    if(!GAME.gameState.started) return
+    
     let fx = () => triggerEffectSmart(trigger, ownerObject, mainObject, guestObject)
 
     let eventMatch = false
