@@ -791,7 +791,16 @@ class Hero{
         SI.snapshot.add(updatedHerosPos)
       } else {
         updatedHerosPos.state.forEach((hero) => {
-          window.mergeDeep(GAME.heros[hero.id], hero)
+          GAME.heros[hero.id].x = hero.x
+          GAME.heros[hero.id].y = hero.y
+          if(hero.subObjects) {
+            OBJECTS.forAllSubObjects(hero.subObjects, (so, name) => {
+              if(GAME.heros[hero.id].subObjects[name]) {
+                GAME.heros[hero.id].subObjects[name].x = so.x
+                GAME.heros[hero.id].subObjects[name].y = so.y
+              }
+            })
+          }
         })
       }
     }

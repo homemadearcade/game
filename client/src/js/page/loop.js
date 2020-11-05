@@ -113,11 +113,23 @@ function update(delta) {
 
   if(PAGE.role.isHost) {
     window.socket.emit('updateHerosPos', SI.snapshot.create(GAME.heroList.map((hero) => {
-      return {
+      const data = {
         id: hero.id,
         x: hero.x,
         y: hero.y,
       }
+
+      if(hero.subObjects) {
+        data.subObjects = {}
+        OBJECTS.forAllSubObjects(hero.subObjects, (so, name) => {
+          data.subObjects[name] = {
+            x: so.x,
+            y: so.y,
+          }
+        })
+      }
+
+      return data
     })))
   }
 }

@@ -20,7 +20,7 @@ function onPlayerIdentified() {
     onHeroDeposit: { mainObject: 'hero', guestObject: 'object' },
     // onHeroRespawn: { mainObject: 'hero', guestObject: null },
     // onHeroEquip: { mainObject: 'hero', guestObject: 'anything'},
-    onGameStart: { mainObject: null, guestObject: null },
+    onGameStarted: { mainObject: null, guestObject: null },
     onStoryStart: { mainObject: null, guestObject: null },
     onObjectDestroyed: { mainObject: 'object', guestObject: 'anything', guestObjectOptional: true },
     onObjectAware: { mainObject: 'object', guestObject: 'anything' },
@@ -83,7 +83,7 @@ function addTrigger(ownerObject, trigger) {
 
   ownerObject.triggers[trigger.id].removeEventListener = window.local.on(eventName, (mainObject, guestObject) => {
     if(!GAME.gameState.started) return
-    
+
     let fx = () => triggerEffectSmart(trigger, ownerObject, mainObject, guestObject)
 
     let eventMatch = false

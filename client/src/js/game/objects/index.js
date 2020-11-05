@@ -569,12 +569,12 @@ class Objects{
       }
     }
 
-
-    if(object.failCount > 100) {
-      object.bypassGameBoundaries = true
-    }
-
     function addAnticipatedObject(newObject) {
+      if(object.failCount > 100) {
+        object.bypassGameBoundaries = true
+        object.tags.fresh = true
+      }
+
       let {x , y} = gridUtil.snapXYToGrid(newObject.x, newObject.y)
       if((!collisions.check(newObject, GAME.objects) || isPlatform) && gridUtil.keepXYWithinBoundaries({x, y}, { bypassGameBoundaries: object.bypassGameBoundaries}) && gridUtil.keepXYWithinBoundaries({x: (x + newObject.width), y: (y + newObject.height)}, { bypassGameBoundaries: object.bypassGameBoundaries})) {
         const createMe = {...newObject, ...object}
