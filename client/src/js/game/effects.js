@@ -36,6 +36,14 @@ import { setPathTarget, setTarget } from './ai/pathfinders.js'
       // label: 'Mod name: ',
       footer: 'Mod Condition:'
     },
+    temporaryEquip: {
+      smallText: true,
+      label: 'name of subobject',
+      condition: true,
+      // smallText: true,
+      // label: 'Mod name: ',
+      footer: 'Condition:'
+    },
     branchApply: {
       libraryBranch: true,
     },
@@ -79,6 +87,10 @@ import { setPathTarget, setTarget } from './ai/pathfinders.js'
     setPath: {
       mapSelect: true,
     },
+
+    // pickupLibrarySubObject: {
+    //   librarySubObject: true
+    // },
 
     //EDITOR
     openWorld: {
@@ -317,6 +329,10 @@ function processEffect(effect, effected, effector, ownerObject) {
     // if(effectJSON.creator && effected.tags.hero) {
     //   window.socket.emit('emitGameEvent', 'onUpdatePlayerUI', effected)
     // }
+  }
+
+  if(effectName === 'temporaryEquip') {
+    window.emitGameEvent('onStartMod', {ownerId: effected.id, temporaryEquip: true, ...effect})
   }
 
   if(effectName === 'libraryMod') {

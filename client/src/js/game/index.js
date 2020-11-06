@@ -13,6 +13,7 @@ import tracking from './tracking.js'
 import dayNightCycle from './daynightcycle.js'
 import metadata from './metadata.js'
 import effects from './effects'
+import { dropObject, equipSubObject, unequipSubObject } from './heros/inventory.js'
 
 import onTalk from './heros/onTalk'
 import { startQuest } from './heros/quests'
@@ -1036,6 +1037,7 @@ class Game{
       const modOwnerObject = OBJECTS.getObjectOrHeroById(mod.ownerId)
 
       if(mod._remove) {
+        if(mod.temporaryEquip) unequipSubObject(modOwnerObject, modOwnerObject.subObject[mod.effectValue])
         if(mod.removeEventListener) mod.removeEventListener()
         return false
       }
@@ -1044,14 +1046,28 @@ class Game{
       if(mod.testAndModOwnerWhenEquipped) {
         if(modOwnerObject.ownerId && modOwnerObject.isEquipped) {
           const testObject = OBJECTS.getObjectOrHeroById(modOwnerObject.ownerId)
-          return GAME.testMod(mod, testObject)
+          const passed = GAME.testMod(mod, testObject)
+          return passed
         } else {
           mod._disabled = true
           return true
         }
       }
 
+
       const testObject = modOwnerObject
+
+      if(mod.temporaryEquip) {
+        const subObject = modOwnerObject.subObjects[mod.effectValue]
+        if(subObject) {
+          if(mod._disabled && subObject.isEquipped) {
+            unequipSubObject(modOwnerObject, modOwnerObject.subObjects[mod.effectValue])
+          } else if(!mod._disabled && !subObject.isEquipped) {
+            equipSubObject(modOwnerObject, modOwnerObject.subObjects[mod.effectValue])
+          }
+        }
+      }
+
       return GAME.testMod(mod, testObject)
     })
 
@@ -1116,6 +1132,7 @@ class Game{
 
       activeMods.forEach((mod) => {
         if(mod._disabled) return
+        if(mod.temporaryEquip) return
         OBJECTS.mergeWithJSON(objectCopy, mod.effectJSON)
       })
 

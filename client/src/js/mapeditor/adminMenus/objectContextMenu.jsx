@@ -58,6 +58,9 @@ export default class ObjectContextMenu extends React.Component{
       if(key === 'drop') {
         window.socket.emit('dropObject', objectSelected.ownerId, objectSelected.subObjectName)
       }
+      if(key === 'unequip') {
+        window.socket.emit('unequipObject', objectSelected.ownerId, objectSelected.subObjectName)
+      }
     }
   }
 
@@ -138,6 +141,7 @@ export default class ObjectContextMenu extends React.Component{
       {Object.keys(objectSelected.subObjects || {}).length && <SubMenu title="Sub Objects">
         <SelectSubObjectMenu objectSelected={objectSelected} selectSubObject={this.props.selectSubObject}/>
       </SubMenu>}
+      { subObject && objectSelected.isEquipped && <MenuItem key="unequip">Unequip</MenuItem> }
       { subObject && objectSelected.tags.pickupable && <MenuItem key="drop">Drop</MenuItem> }
       { (GAME.gameState.started || GAME.gameState.branch) ? <MenuItem key="remove">Remove</MenuItem> : <MenuItem key="delete">Delete</MenuItem> }
       <SubMenu title="Advanced">

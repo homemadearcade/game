@@ -470,6 +470,9 @@ function socketEvents(fs, io, socket, options = { arcadeMode: false }){
   socket.on('dropObject', (objectId, subObjectName) => {
     io.emit('onDropObject', objectId, subObjectName)
   })
+  socket.on('unequipObject', (objectId, subObjectName) => {
+    io.emit('onUnequipObject', objectId, subObjectName)
+  })
   socket.on('deleteQuest', (heroId, questId) => {
     io.emit('onDeleteQuest', heroId, questId)
   })

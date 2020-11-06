@@ -831,7 +831,7 @@ class Objects{
     }
   }
 
-  addSubObject(owner, subObject, subObjectName, options = {}) {
+  addSubObject(owner, subObject, subObjectName) {
     if(!PAGE.role.isHost) {
       if(subObject.id && !PHYSICS.objects[subObject.id]) PHYSICS.addObject(subObject)
       return
@@ -875,8 +875,12 @@ class Objects{
       }
     }
 
-    if(options.equipAfterCreated) {
+    if(subObject.tags.startsEquipped) {
       equipSubObject(OBJECTS.getObjectOrHeroById(owner.id), subObject)
+    }
+
+    if(subObject.tags.startsInInventory) {
+      subObject.inInventory = true
     }
   }
 
@@ -1010,6 +1014,12 @@ class Objects{
     const dropper = OBJECTS.getObjectOrHeroById(objectId)
     const dropping = dropper.subObjects[subObjectName]
     dropObject(dropper, dropping)
+  }
+
+  onUnequipObject(objectId, subObjectName) {
+    const dropper = OBJECTS.getObjectOrHeroById(objectId)
+    const dropping = dropper.subObjects[subObjectName]
+    unequipSubObject(dropper, dropping)
   }
 
   onNetworkUpdateObjects(objectsUpdated) {

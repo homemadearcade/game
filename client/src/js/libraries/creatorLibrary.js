@@ -47,7 +47,8 @@ function toggleSubObject(subObjectId, modId) {
   return {
     onToggleOn: () => {
       const so = _.cloneDeep(window.subObjectLibrary[subObjectId])
-      window.socket.emit('addSubObject', GAME.heros[HERO.editingId || HERO.id], so, subObjectId, { equipAfterCreated: !!so.actionButtonBehavior })
+      so.tags.startsEquipped = true
+      window.socket.emit('addSubObject', GAME.heros[HERO.editingId || HERO.id], so, subObjectId)
     },
     onToggleOff: () => {
       window.socket.emit('deleteSubObject', GAME.heros[HERO.editingId || HERO.id], subObjectId)

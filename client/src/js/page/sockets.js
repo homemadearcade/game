@@ -383,6 +383,9 @@ function init() {
   window.socket.on('onDropObject', (objectId, subObjectName) => {
     window.local.emit('onDropObject', objectId, subObjectName)
   })
+  window.socket.on('onUnequipObject', (objectId, subObjectName) => {
+    window.local.emit('onUnequipObject', objectId, subObjectName)
+  })
 
   window.socket.on('onAddAnimation', (name, animationData) => {
     window.local.emit('onAddAnimation', name, animationData)

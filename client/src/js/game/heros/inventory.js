@@ -156,8 +156,10 @@ function equipSubObject(hero, subObject, keyBinding = 'available') {
 
   if(subObject.tags.onMapWhenEquipped) {
     subObject.removed = false
+    subObject.tags.invisible = false
   } else {
     subObject.tags.potential = true
+    subObject.tags.invisible = true
   }
 
   window.local.emit('onHeroEquip', hero, subObject)
@@ -170,6 +172,10 @@ function unequipSubObject(hero, subObject) {
     hero.xButtonBehavior = null
   } else if(hero.cButtonBehavior === subObject.id) {
     hero.cButtonBehavior = null
+  }
+
+  if(subObject.tags.onMapWhenEquipped) {
+    subObject.tags.invisible = true
   }
 
   subObject.isEquipped = false

@@ -116,6 +116,16 @@ function SingleLibraryModSelect({sequenceItem, valueProp, onChange, title}) {
   </div>
 }
 
+function SingleLibrarySubObjectSelect({sequenceItem, valueProp, onChange, title}) {
+  return <div className="SequenceItem__test">{title || 'Sub Object Name:'}<Select
+    value={{ value: sequenceItem[valueProp], label: sequenceItem[valueProp]}}
+    onChange={onChange}
+    options={Object.keys(window.subObjectLibrary).map(objectName => { return { value: objectName, label: objectName }})}
+    styles={window.reactSelectStyle}
+    theme={window.reactSelectTheme}/>
+  </div>
+}
+
 function SingleLibraryBranchSelect({sequenceItem, valueProp, onChange, title}) {
   return <div className="SequenceItem__test">{title || 'Branch Name:'}<Select
     value={{ value: sequenceItem[valueProp], label: sequenceItem[valueProp]}}
@@ -126,11 +136,11 @@ function SingleLibraryBranchSelect({sequenceItem, valueProp, onChange, title}) {
   </div>
 }
 
-
 export {
   SingleEventSelect,
   SingleTagSelect,
   SingleIdSelect,
+  SingleLibrarySubObjectSelect,
   SingleLibraryObjectSelect,
   SingleLibraryBranchSelect,
   SingleLibraryModSelect,

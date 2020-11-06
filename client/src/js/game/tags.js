@@ -179,6 +179,9 @@ function setDefault() {
     stackable: false,
     onMapWhenEquipped: false, //cant change
     // dropOnOwnerDestroyed: false,
+    
+    startsInInventory: true,
+    startsEquipped: true,
   }
 
   window.particleTags = {
