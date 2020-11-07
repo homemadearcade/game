@@ -6,6 +6,7 @@ function onPlayerIdentified() {
   window.triggerEvents = {
     onHeroCollide: { mainObject: 'hero', guestObject: 'anything' },
     onHeroLand: { mainObject: 'hero', guestObject: 'anything' },
+    onHeroHeadHit: { mainObject: 'hero', guestObject: 'anything' },
     onHeroInteract: { mainObject: 'hero', guestObject: 'anything' },
     onHeroDestroyed: { mainObject: 'hero', guestObject: 'anything', guestObjectOptional: true },
     onHeroAware: { mainObject: 'hero', guestObject: 'anything' },
@@ -176,9 +177,9 @@ function triggerEffectSmart(trigger, ownerObject, mainObject, guestObject) {
     })
   }
 
-  // if(trigger.triggerRemoverOwnerAfter) {
-  //   GAME.objectsById[trigger.ownerId]._remove = true
-  // }
+  if(trigger.triggerDestroyAfter) {
+    if(ownerObject) ownerObject._destroy = true
+  }
 }
 
 export default {

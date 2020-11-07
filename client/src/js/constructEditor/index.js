@@ -121,8 +121,8 @@ class ConstructEditor {
     // const gridObject = {x: 0, y: 0, width: this.grid.gridWidth * this.grid.nodeSize, height: this.grid.gridHeight * this.grid.nodeSize}
     // this.camera.setLimitRect(gridObject)
 
-    let gridWidth = (object.width/this.grid.nodeSize)
-    let gridHeight = (object.height/this.grid.nodeSize)
+    let gridWidth = (object.mod().width/this.grid.nodeSize)
+    let gridHeight = (object.mod().height/this.grid.nodeSize)
     if(gridWidth < GAME.grid.nodeSize) gridWidth = GAME.grid.nodeSize
     if(gridHeight < GAME.grid.nodeSize) gridHeight = GAME.grid.nodeSize
     const zoomMultiplierX = (gridWidth)/16
@@ -134,9 +134,9 @@ class ConstructEditor {
     const height = zoomMultiplier * HERO.cameraHeight
     if(startAtHero) {
       const hero = GAME.heros[HERO.id]
-      this.cameraController = {x: hero.x, width: hero.width, y: hero.y, height: hero.height, zoomMultiplier}
+      this.cameraController = {x: hero.x, width: hero.mod().width, y: hero.y, height: hero.mod().height, zoomMultiplier}
     } else {
-      this.cameraController = {x: object.x, width: object.width, y: object.y, height: object.height, zoomMultiplier}
+      this.cameraController = {x: object.x, width: object.mod().width, y: object.y, height: object.mod().height, zoomMultiplier}
     }
     this.camera.set(this.cameraController)
 
@@ -311,9 +311,9 @@ class ConstructEditor {
 
   seperateRectangleIntoSquares(object, parent) {
     const squares = []
-    if(object.height !== this.grid.nodeSize || object.width !== this.grid.nodeSize) {
-      for(let x = object.x; x < object.x + object.width; x += this.grid.nodeSize) {
-        for(let y = object.y; y < object.y + object.height; y += this.grid.nodeSize) {
+    if(object.mod().height !== this.grid.nodeSize || object.mod().width !== this.grid.nodeSize) {
+      for(let x = object.x; x < object.x + object.mod().width; x += this.grid.nodeSize) {
+        for(let y = object.y; y < object.y + object.mod().height; y += this.grid.nodeSize) {
           squares.push({
             x, y,
             ...this.grid.getGridXYfromXY(x, y),

@@ -287,6 +287,9 @@ class Objects{
                   notificationDuration,
                   modEndOthers,
                   modId,
+                  modPriority,
+                  modResetPhysics,
+                  triggerDestroyAfter,
                  } = object.triggers[triggerId]
 
         properties.triggers[triggerId] = {
@@ -328,6 +331,8 @@ class Objects{
           conditionGuestObjectTag,
           modEndOthers,
           modId,
+          modPriority,
+          modResetPhysics,
 
           notificationLog,
           notificationChat,
@@ -338,6 +343,9 @@ class Objects{
           notificationAllHeros,
           notificationAllHerosInvolved,
           notificationDuration,
+
+
+          triggerDestroyAfter,
         }
 
         window.removeFalsey(properties.triggers[triggerId])
@@ -353,8 +361,8 @@ class Objects{
       x: object.x,
       y: object.y,
       chat: object.chat,
-      width: object.width,
-      height: object.height,
+      width: object.mod().width,
+      height: object.mod().height,
       color: object.color,
       name: object.name,
       sprite: object.sprite,
@@ -576,7 +584,7 @@ class Objects{
       }
 
       let {x , y} = gridUtil.snapXYToGrid(newObject.x, newObject.y)
-      if((!collisions.check(newObject, GAME.objects) || isPlatform) && gridUtil.keepXYWithinBoundaries({x, y}, { bypassGameBoundaries: object.bypassGameBoundaries}) && gridUtil.keepXYWithinBoundaries({x: (x + newObject.width), y: (y + newObject.height)}, { bypassGameBoundaries: object.bypassGameBoundaries})) {
+      if((!collisions.check(newObject, GAME.objects) || isPlatform) && gridUtil.keepXYWithinBoundaries({x, y}, { bypassGameBoundaries: object.bypassGameBoundaries}) && gridUtil.keepXYWithinBoundaries({x: (x + newObject.mod().width), y: (y + newObject.mod().height)}, { bypassGameBoundaries: object.bypassGameBoundaries})) {
         const createMe = {...newObject, ...object}
 
         //here be dragons
@@ -637,16 +645,16 @@ class Objects{
       }
 
       //ALWAYS CONTAIN WITHIN BOUNDARIES OF THE GRID!!
-      if(newObject.x + newObject.width > (GAME.grid.nodeSize * GAME.grid.width) + GAME.grid.startX) {
-        const diff = newObject.x + newObject.width - ((GAME.grid.nodeSize * GAME.grid.width) + GAME.grid.startX)
+      if(newObject.x + newObject.mod().width > (GAME.grid.nodeSize * GAME.grid.width) + GAME.grid.startX) {
+        const diff = newObject.x + newObject.mod().width - ((GAME.grid.nodeSize * GAME.grid.width) + GAME.grid.startX)
         if(PAGE.role.isPlayEditor && !window.playEditorKeysDown[18] && !hasBeenWarned) alert('adding obj outside grid system, canceled')
         hasBeenWarned = true
 
         GAME.grid.width += Math.ceil(diff/GAME.grid.nodeSize)
         // return null
       }
-      if(newObject.y + newObject.height > (GAME.grid.nodeSize * GAME.grid.height) + GAME.grid.startY) {
-        const diff = newObject.y + newObject.height - ((GAME.grid.nodeSize * GAME.grid.height) + GAME.grid.startY)
+      if(newObject.y + newObject.mod().height > (GAME.grid.nodeSize * GAME.grid.height) + GAME.grid.startY) {
+        const diff = newObject.y + newObject.mod().height - ((GAME.grid.nodeSize * GAME.grid.height) + GAME.grid.startY)
         if(PAGE.role.isPlayEditor && !window.playEditorKeysDown[18] && !hasBeenWarned) alert('adding obj outside grid system, canceled')
         hasBeenWarned = true
         // return null
@@ -1107,10 +1115,10 @@ class Objects{
     // originalPosition.height += (GAME.grid.nodeSize * 2)
 
     const quakeSpeed = options.speed
-    const left = { x: object.x, height: object.height, y: object.y, width: GAME.grid.nodeSize, velocityX: -quakeSpeed, tags: options.tags, color: options.color, velocityMax: 1000, opacity: 1 }
-    const top = { y: object.y, width: object.width, x: object.x, height: GAME.grid.nodeSize, velocityY: -quakeSpeed, tags: options.tags, color: options.color, velocityMax: 1000, opacity: 1 }
-    const right = { x: object.x + object.width - GAME.grid.nodeSize, height: object.height, y: object.y, width: GAME.grid.nodeSize, velocityX: quakeSpeed, tags: options.tags, color: options.color, velocityMax: 1000, opacity: 1 }
-    const bottom = { y: object.y + object.height - GAME.grid.nodeSize, width: object.width, x: object.x, height: GAME.grid.nodeSize, velocityY: quakeSpeed, tags: options.tags, color: options.color, velocityMax: 1000, opacity: 1 }
+    const left = { x: object.x, height: object.mod().height, y: object.y, width: GAME.grid.nodeSize, velocityX: -quakeSpeed, tags: options.tags, color: options.color, velocityMax: 1000, opacity: 1 }
+    const top = { y: object.y, width: object.mod().width, x: object.x, height: GAME.grid.nodeSize, velocityY: -quakeSpeed, tags: options.tags, color: options.color, velocityMax: 1000, opacity: 1 }
+    const right = { x: object.x + object.mod().width - GAME.grid.nodeSize, height: object.mod().height, y: object.y, width: GAME.grid.nodeSize, velocityX: quakeSpeed, tags: options.tags, color: options.color, velocityMax: 1000, opacity: 1 }
+    const bottom = { y: object.y + object.mod().height - GAME.grid.nodeSize, width: object.mod().width, x: object.x, height: GAME.grid.nodeSize, velocityY: quakeSpeed, tags: options.tags, color: options.color, velocityMax: 1000, opacity: 1 }
     stage++
 
     // the diagonal buggers have 3 stages

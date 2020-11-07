@@ -126,6 +126,9 @@ function heroCorrection(hero) {
           if(result.overlap_y === 1) {
             landingObject = body
           }
+          if(result.overlap_y === -1) {
+            landingObject = body
+          }
         }
       }
     }
@@ -152,6 +155,7 @@ function heroCorrection(hero) {
             if(hero.velocityAngle) hero.velocityAngle *= .09
           }
         } else if(result.overlap_y < 0){
+          if(landingObject) window.local.emit('onHeroHeadHit', hero, landingObject.gameObject, result)
           if(hero.velocityY < 0) hero.velocityY = 0
           if(hero.velocityAngle) hero.velocityAngle *= .09
         }
@@ -418,12 +422,12 @@ function containObjectWithinGridBoundaries(object) {
         hero = window.editingHero
       }
 
-      if(objectToEdit.x + objectToEdit.width > gameBoundaries.x + gameBoundaries.width - ((HERO.cameraWidth * hero.zoomMultiplier)/2 )) {
-        objectToEdit.x = gameBoundaries.x + gameBoundaries.width - objectToEdit.width - (HERO.cameraWidth * hero.zoomMultiplier)/2
+      if(objectToEdit.x + objectToEdit.mod().width > gameBoundaries.x + gameBoundaries.width - ((HERO.cameraWidth * hero.zoomMultiplier)/2 )) {
+        objectToEdit.x = gameBoundaries.x + gameBoundaries.width - objectToEdit.mod().width - (HERO.cameraWidth * hero.zoomMultiplier)/2
         legal = false
       }
-      if(objectToEdit.y + objectToEdit.height > gameBoundaries.y + gameBoundaries.height - ((HERO.cameraHeight * hero.zoomMultiplier)/2 )) {
-        objectToEdit.y = gameBoundaries.y + gameBoundaries.height - objectToEdit.height - ((HERO.cameraHeight * hero.zoomMultiplier)/2 )
+      if(objectToEdit.y + objectToEdit.mod().height > gameBoundaries.y + gameBoundaries.height - ((HERO.cameraHeight * hero.zoomMultiplier)/2 )) {
+        objectToEdit.y = gameBoundaries.y + gameBoundaries.height - objectToEdit.mod().height - ((HERO.cameraHeight * hero.zoomMultiplier)/2 )
         legal = false
         bottom = true
       }
@@ -441,20 +445,20 @@ function containObjectWithinGridBoundaries(object) {
       }
     } else if(gameBoundaries.behavior === 'pacmanFlip' || (gameBoundaries.behavior === 'purgatory' && object.id.indexOf('hero') > -1)) {
 
-      if(objectToEdit.x < gameBoundaries.x - objectToEdit.width) {
+      if(objectToEdit.x < gameBoundaries.x - objectToEdit.mod().width) {
         objectToEdit.x = gameBoundaries.x + gameBoundaries.width
         legal = false
       }
       if (objectToEdit.x > gameBoundaries.x + gameBoundaries.width) {
-        objectToEdit.x = gameBoundaries.x - objectToEdit.width
+        objectToEdit.x = gameBoundaries.x - objectToEdit.mod().width
         legal = false
       }
-      if(objectToEdit.y < gameBoundaries.y - objectToEdit.height) {
+      if(objectToEdit.y < gameBoundaries.y - objectToEdit.mod().height) {
         objectToEdit.y = gameBoundaries.y + gameBoundaries.height
         legal = false
       }
       if (objectToEdit.y > gameBoundaries.y + gameBoundaries.height) {
-        objectToEdit.y = gameBoundaries.y - objectToEdit.height
+        objectToEdit.y = gameBoundaries.y - objectToEdit.mod().height
         legal = false
         bottom = true
       }
@@ -465,16 +469,16 @@ function containObjectWithinGridBoundaries(object) {
     } else {
       const shouldContain = gameBoundaries.behavior == 'boundaryAll' || objectToEdit.id.indexOf('hero') > -1
       //CONTAIN WITHIN BOUNDARIES OF THE GAME BOUNDARY PREF!!
-      if(objectToEdit.x + objectToEdit.width > gameBoundaries.x + gameBoundaries.width) {
+      if(objectToEdit.x + objectToEdit.mod().width > gameBoundaries.x + gameBoundaries.width) {
         if(shouldContain) {
-          objectToEdit.x = gameBoundaries.x + gameBoundaries.width - objectToEdit.width
+          objectToEdit.x = gameBoundaries.x + gameBoundaries.width - objectToEdit.mod().width
           objectToEdit.velocityX = 0
         }
         legal = false
       }
-      if(objectToEdit.y + objectToEdit.height > gameBoundaries.y + gameBoundaries.height) {
+      if(objectToEdit.y + objectToEdit.mod().height > gameBoundaries.y + gameBoundaries.height) {
         if(shouldContain) {
-          objectToEdit.y = gameBoundaries.y + gameBoundaries.height - objectToEdit.height
+          objectToEdit.y = gameBoundaries.y + gameBoundaries.height - objectToEdit.mod().height
           objectToEdit.velocityY = 0
         }
         legal = false
@@ -514,11 +518,11 @@ function containObjectWithinGridBoundaries(object) {
 
   //ALWAYS CONTAIN WITHIN BOUNDARIES OF THE GRID!!
   if(GAME.world.tags.preventHeroGridBypass || object.tags.hero == false) {
-    if(object.x + object.width > (GAME.grid.nodeSize * GAME.grid.width) + GAME.grid.startX) {
-      object.x = (GAME.grid.nodeSize * GAME.grid.width) + GAME.grid.startX - object.width
+    if(object.x + object.mod().width > (GAME.grid.nodeSize * GAME.grid.width) + GAME.grid.startX) {
+      object.x = (GAME.grid.nodeSize * GAME.grid.width) + GAME.grid.startX - object.mod().width
     }
-    if(object.y + object.height > (GAME.grid.nodeSize * GAME.grid.height) + GAME.grid.startY) {
-      object.y = (GAME.grid.nodeSize * GAME.grid.height) + GAME.grid.startY - object.height
+    if(object.y + object.mod().height > (GAME.grid.nodeSize * GAME.grid.height) + GAME.grid.startY) {
+      object.y = (GAME.grid.nodeSize * GAME.grid.height) + GAME.grid.startY - object.mod().height
     }
     if(object.x < GAME.grid.startX) {
       object.x = GAME.grid.startX
@@ -540,8 +544,8 @@ function rotatePoint(point, center, radian){
 
 function attachSubObjects(owner, subObjects) {
   OBJECTS.forAllSubObjects(subObjects, (subObject) => {
-    if(subObject.relativeWidth) subObject.width = owner.width + (subObject.relativeWidth)
-    if(subObject.relativeHeight) subObject.height = owner.height + (subObject.relativeHeight)
+    if(subObject.relativeWidth) subObject.width = owner.mod().width + (subObject.relativeWidth)
+    if(subObject.relativeHeight) subObject.height = owner.mod().height + (subObject.relativeHeight)
 
     if(subObject.mod().tags.rotateable && (subObject.mod().tags.relativeToDirection || subObject.mod().tags.relativeToAngle)) {
       const direction = owner.inputDirection || owner._movementDirection
@@ -570,13 +574,13 @@ function attachSubObjects(owner, subObjects) {
       var rotatedRelativeX = Math.cos(radians) * (subObject.mod().relativeX) - Math.sin(radians) * (subObject.mod().relativeY);
       var rotatedRelativeY = Math.sin(radians) * (subObject.mod().relativeX) + Math.cos(radians) * (subObject.mod().relativeY);
 
-      subObject.x = owner.x + owner.width/2 + rotatedRelativeX - subObject.width/2
-      subObject.y = owner.y + owner.height/2 + rotatedRelativeY - subObject.height/2
+      subObject.x = owner.x + owner.mod().width/2 + rotatedRelativeX - subObject.mod().width/2
+      subObject.y = owner.y + owner.mod().height/2 + rotatedRelativeY - subObject.mod().height/2
 
       subObject.angle = radians
     } else {
-      if(typeof subObject.mod().relativeX === 'number') subObject.x = owner.x + owner.width/2 + subObject.mod().relativeX - subObject.width/2
-      if(typeof subObject.mod().relativeY === 'number') subObject.y = owner.y + owner.height/2 + subObject.mod().relativeY - subObject.height/2
+      if(typeof subObject.mod().relativeX === 'number') subObject.x = owner.x + owner.mod().width/2 + subObject.mod().relativeX - subObject.mod().width/2
+      if(typeof subObject.mod().relativeY === 'number') subObject.y = owner.y + owner.mod().height/2 + subObject.mod().relativeY - subObject.mod().height/2
     }
   })
 }
@@ -608,7 +612,7 @@ function attachToRelative(object) {
 function addObject(object) {
   if(PHYSICS.objects[object.id]) return console.log("we already have added a physics object with id " + object.id)
   if(object.tags && object.tags.notInCollisions) return
-  const physicsObject = new Polygon(object.x, object.y, [ [ 0, 0], [object.width, 0], [object.width, object.height] , [0, object.height]])
+  const physicsObject = new Polygon(object.x, object.y, [ [ 0, 0], [object.mod().width, 0], [object.mod().width, object.mod().height] , [0, object.mod().height]])
   PHYSICS.system.insert(physicsObject)
   PHYSICS.objects[object.id] = physicsObject
   return physicsObject
@@ -651,8 +655,8 @@ function applyCorrection(object, po) {
   object.x = po.x
   object.y = po.y
   if(object.mod().tags.rotateable) {
-    object.x -= object.width/2
-    object.y -= object.height/2
+    object.x -= object.mod().width/2
+    object.y -= object.mod().height/2
   }
 }
 

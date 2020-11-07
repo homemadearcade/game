@@ -203,9 +203,16 @@ export default class Effect extends React.Component{
 
       if(effectName === 'mod' || effectName === 'libraryMod') {
         chosenEffectForm.push(<div className="SequenceItem__effect-input"><input onChange={() => this.props._onToggleValue('modEndOthers')} checked={sequenceItem.modEndOthers} type="checkbox"></input>Mod End Others</div>)
+        chosenEffectForm.push(<div className="SequenceItem__effect-input"><input onChange={() => this.props._onToggleValue('modResetPhysics')} checked={sequenceItem.modResetPhysics} type="checkbox"></input>Mod Reset Physics</div>)
         chosenEffectForm.push(<React.Fragment>
+          Mod Id
           <i className="fa fas fa-edit Manager__button" onClick={() => this.props._openEditTextValueModal('modId')}/>
           <div className="SequenceItem__summary SequenceItem__summary--json">{sequenceItem.modId}</div>
+        </React.Fragment>)
+        chosenEffectForm.push(<React.Fragment>
+          Mod Priority
+          <i className="fa fas fa-edit Manager__button" onClick={() => this.props._openEditNumberModal('modPriority')}/>
+          <div className="SequenceItem__summary SequenceItem__summary--json">{sequenceItem.modPriority}</div>
         </React.Fragment>)
       }
     }
@@ -242,6 +249,9 @@ export default class Effect extends React.Component{
           {notificationOptions.length > 0 && <Collapsible trigger='Notifications'>{notificationOptions}</Collapsible>}
         </div>
         <Collapsible trigger='Effected objects'>{this._renderEffecteds()}</Collapsible>
+        {isTrigger &&
+          <div className="SequenceItem__effect-input"><input onChange={() => this.props._onToggleValue('triggerDestroyAfter')} checked={sequenceItem.triggerDestroyAfter} type="checkbox"></input>Delete after trigger is fired</div>
+        }
       </div>
       <NextSelect isTrigger={this.props.isTrigger} sequenceItem={sequenceItem} nextOptions={this.props.nextOptions} nextValue={sequenceItem.next} onChange={this.props._selectNext}/>
     </div>

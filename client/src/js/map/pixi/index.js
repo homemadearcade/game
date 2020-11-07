@@ -136,7 +136,6 @@ PIXIMAP.deleteObject = function(object, stage) {
 }
 
 PIXIMAP.deleteEmitter = function(emitterToDelete) {
-  console.trace(emitterToDelete)
   PIXIMAP.objectStage.emitters = PIXIMAP.objectStage.emitters.filter((emitter) => {
     if(emitterToDelete === emitter) {
       return false
@@ -189,11 +188,17 @@ PIXIMAP.onRender = function() {
       PIXIMAP.initializePixiObjectsFromGame()
     } else {
       GAME.objects.forEach((object) => {
-        if(object.mod().removed) return
+        if(object.mod().removed) {
+          PIXIMAP.childrenById[object.id].visible = false
+          return
+        }
         updatePixiObject(object, PIXIMAP.stage)
       })
       GAME.heroList.forEach((hero) => {
-        if(hero.mod().removed) return
+        if(hero.mod().removed) {
+          PIXIMAP.childrenById[hero.id].visible = false
+          return
+        }
         updatePixiObject(hero, PIXIMAP.stage)
       })
     }

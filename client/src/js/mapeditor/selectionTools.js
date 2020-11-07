@@ -51,7 +51,7 @@ function findSmallestObjectInArea(area, objects) {
     }
     collisions.checkObject(area, object, () => {
       if(!smallestObject) smallestObject = object
-      else if(object.width < smallestObject.width) {
+      else if(object.mod().width < smallestObject.mod().width) {
         smallestObject = object
       }
     })

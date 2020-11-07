@@ -117,7 +117,7 @@ function update(camera) {
   GAME.objects.forEach((object) => {
     object = object.mod()
 
-    if(object.mod().removed) return
+    if(object.removed) return
     if(object.id === CONSTRUCTEDITOR.objectId || object.id === PATHEDITOR.objectId) return
     if(object.tags.outline) {
       if(camera.hasHitLimit || !camera.allowOcclusion || collisionsUtil.checkObject(viewBoundaries, object)) {
@@ -136,7 +136,7 @@ function update(camera) {
     if(object.subObjects) {
       OBJECTS.forAllSubObjects(object.subObjects, (subObject) => {
         if(subObject.tags.potential) return
-        if(subObject.tags.mod().removed) return
+        if(subObject.tags.removed) return
         if(!subObject.tags.outline) return
         drawTools.drawObject(ctx, subObject, camera)
       })
@@ -145,7 +145,7 @@ function update(camera) {
 
   GAME.heroList.forEach((hero) => {
     hero = hero.mod()
-    if(hero.mod().removed) return
+    if(hero.removed) return
 
     if(hero.tags.outline) {
       drawTools.drawObject(ctx, hero, camera);
@@ -154,7 +154,7 @@ function update(camera) {
     if(hero.subObjects) {
       OBJECTS.forAllSubObjects(hero.subObjects, (subObject) => {
         if(subObject.tags.potential) return
-        if(subObject.tags.mod().removed) return
+        if(subObject.tags.removed) return
         if(!subObject.tags.outline) return
         drawTools.drawObject(ctx, subObject, camera)
       })
@@ -165,7 +165,7 @@ function update(camera) {
   if(!clientHero.animationZoomMultiplier) {
     GAME.objects.forEach((obj) => {
       obj = obj.mod()
-      if(obj.name && !obj.mod().removed) {
+      if(obj.name && !obj.removed) {
         if(obj.namePosition === "center") drawNameCenter(ctx, obj, camera)
         if(obj.namePosition === "above") drawNameAbove(ctx, obj, camera)
       }
@@ -187,7 +187,7 @@ function update(camera) {
 
     if(interactableObject.tags.outline) {
       let thickness = 3
-      drawTools.drawBorder(ctx, {color: 'white', x: interactableObject.x-thickness, y: interactableObject.y - thickness, width: interactableObject.width + (thickness*2), height: interactableObject.height + (thickness*2)}, camera, { thickness })
+      drawTools.drawBorder(ctx, {color: 'white', x: interactableObject.x-thickness, y: interactableObject.y - thickness, width: interactableObject.width + (thickness*2), height: interactableobject.height + (thickness*2)}, camera, { thickness })
     }
   }
 
@@ -203,7 +203,7 @@ function update(camera) {
     const { minX, maxX, minY, maxY, centerY, centerX, leftDiff, rightDiff, topDiff, bottomDiff, cameraHeight, cameraWidth } = HERO.getViewBoundaries(clientHero)
 
     const target = GAME.objectsById[clientHero.navigationTargetId]
-    const inView = collisionsUtil.checkObject(target, {x: clientHero.x - (HERO.cameraWidth * clientHero.zoomMultiplier)/2 + clientHero.width/2, y: clientHero.y - (HERO.cameraHeight * clientHero.zoomMultiplier)/2 + clientHero.height/2, width: (HERO.cameraWidth * clientHero.zoomMultiplier), height: (HERO.cameraHeight * clientHero.zoomMultiplier)})
+    const inView = collisionsUtil.checkObject(target, {x: clientHero.x - (HERO.cameraWidth * clientHero.zoomMultiplier)/2 + clientHero.width/2, y: clientHero.y - (HERO.cameraHeight * clientHero.zoomMultiplier)/2 + clienthero.height/2, width: (HERO.cameraWidth * clientHero.zoomMultiplier), height: (HERO.cameraHeight * clientHero.zoomMultiplier)})
 
     if(inView) {
       drawArrow(ctx, ((target.x + target.width/2) *camera.multiplier - camera.x), ((target.y - 60) *camera.multiplier - camera.y), ((target.x + target.width/2) *camera.multiplier - camera.x), ((target.y - 20) *camera.multiplier - camera.y), { size: .2 })

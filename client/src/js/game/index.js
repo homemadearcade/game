@@ -428,8 +428,8 @@ class Game{
       y -= diffY
       y = y/GAME.grid.nodeSize
 
-      let gridWidth = object.width / GAME.grid.nodeSize;
-      let gridHeight = object.height / GAME.grid.nodeSize;
+      let gridWidth = object.mod().width / GAME.grid.nodeSize;
+      let gridHeight = object.mod().height / GAME.grid.nodeSize;
 
       for(let currentx = x; currentx < x + gridWidth; currentx++) {
         for(let currenty = y; currenty < y + gridHeight; currenty++) {
@@ -466,8 +466,8 @@ class Game{
     y -= diffY
     y = y/GAME.grid.nodeSize
 
-    let gridWidth = object.width / GAME.grid.nodeSize;
-    let gridHeight = object.height / GAME.grid.nodeSize;
+    let gridWidth = object.mod().width / GAME.grid.nodeSize;
+    let gridHeight = object.mod().height / GAME.grid.nodeSize;
 
     for(let currentx = x; currentx < x + gridWidth; currentx++) {
       for(let currenty = y; currenty < y + gridHeight; currenty++) {
@@ -970,20 +970,23 @@ class Game{
   startMod(ownerId, mod) {
     mod = JSON.parse(JSON.stringify(mod))
     mod.ownerId = ownerId
+
     if(mod.modEndOthers) {
       GAME.gameState.activeModList = GAME.gameState.activeModList.filter(({ownerId}) => mod.ownerId !== ownerId)
     }
+
     if(mod.modId) {
       if(GAME.gameState.activeModList.some(({modId, ownerId}) => {
         if(modId === mod.modId && ownerId == mod.ownerId) return true
       })) return console.log('mod already applied to this object', id, ownerId)
     }
+
     GAME.gameState.activeModList.push(mod)
 
     if(mod.conditionType && mod.conditionType.length && mod.conditionType !== 'none') {
       if(mod.conditionType === 'onEvent') {
         mod.removeEventListener = window.local.on(mod.conditionEventName, (mainObject, guestObject) => {
-          const ownerObject = OBJECTS.getObjectOrHeroById(mod.ownerId)
+          let ownerObject = OBJECTS.getObjectOrHeroById(mod.ownerId)
           const eventMatch = testEventMatch(mod.conditionEventName, mainObject, guestObject, mod, ownerObject, { testPassReverse: mod.testPassReverse, testModdedVersion: mod.testModdedVersion })
           if(eventMatch) {
             mod._remove = true
@@ -1033,8 +1036,17 @@ class Game{
       testAndModOwnerWhenEquipped
     }
     */
+
+    GAME.gameState.activeModList = GAME.gameState.activeModList.sort(function(a, b){
+      if(!a.modPriority) return -1
+      if(!b.modPriority) return 1
+      return a.modPriority-b.modPriority
+    }); // Sort the numbers in the array in ascending order
+
     GAME.gameState.activeModList = GAME.gameState.activeModList.filter(mod => {
       const modOwnerObject = OBJECTS.getObjectOrHeroById(mod.ownerId)
+
+      const prevDisabled = mod._disabled
 
       if(mod._remove) {
         if(mod.temporaryEquip) unequipSubObject(modOwnerObject, modOwnerObject.subObject[mod.effectValue])
@@ -1046,16 +1058,17 @@ class Game{
       if(mod.testAndModOwnerWhenEquipped) {
         if(modOwnerObject.ownerId && modOwnerObject.isEquipped) {
           const testObject = OBJECTS.getObjectOrHeroById(modOwnerObject.ownerId)
-          const passed = GAME.testMod(mod, testObject)
-          return passed
+          const keepInActiveMods = GAME.testMod(mod, testObject)
+          return keepInActiveMods
         } else {
           mod._disabled = true
           return true
         }
       }
 
-
       const testObject = modOwnerObject
+
+      const keepInActiveMods = GAME.testMod(mod, testObject)
 
       if(mod.temporaryEquip) {
         const subObject = modOwnerObject.subObjects[mod.effectValue]
@@ -1068,7 +1081,13 @@ class Game{
         }
       }
 
-      return GAME.testMod(mod, testObject)
+      if(prevDisabled && !mod._disabled) {
+        if(mod.modResetPhysics) {
+          OBJECTS.resetPhysicsProperties(modOwnerObject)
+        }
+      }
+
+      return keepInActiveMods
     })
 
     GAME.loadActiveMods()
@@ -1104,8 +1123,8 @@ class Game{
         //moddable propertys
         // tags: JSON.parse(JSON.stringify(object.tags)),
         // speed: object.speed,
-        // width: object.width,
-        // height: object.height,
+        // width: object.mod().width,
+        // height: object.mod().height,
         // color: object.color,
         // actionButtonBehavior: object.actionButtonBehavior,
         // arrowKeysBehavior: object.arrowKeysBehavior,

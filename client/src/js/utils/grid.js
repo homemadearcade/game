@@ -13,8 +13,8 @@ function convertToGridXY(object, options = { }) {
   y -= diffY
   let gridY = y/(options.nodeHeight || GAME.grid.nodeSize)
 
-  let gridWidth = Math.floor(object.width / (options.nodeWidth || GAME.grid.nodeSize))
-  let gridHeight = Math.floor(object.height / (options.nodeHeight || GAME.grid.nodeSize))
+  let gridWidth = Math.floor(object.mod().width / (options.nodeWidth || GAME.grid.nodeSize))
+  let gridHeight = Math.floor(object.mod().height / (options.nodeHeight || GAME.grid.nodeSize))
 
   return { x, y, gridX, gridY, diffX, diffY, gridWidth, gridHeight }
 }
@@ -96,18 +96,18 @@ function snapObjectToGrid(object) {
     object.y -= diffY
   }
 
-  let diffWidth = object.width % GAME.grid.nodeSize;
+  let diffWidth = object.mod().width % GAME.grid.nodeSize;
   if(diffWidth > GAME.grid.nodeSize/2) {
-    object.width += (GAME.grid.nodeSize - diffWidth)
+    object.mod().width += (GAME.grid.nodeSize - diffWidth)
   } else {
-    object.width -= diffWidth
+    object.mod().width -= diffWidth
   }
 
-  let diffHeight = object.height % GAME.grid.nodeSize;
+  let diffHeight = object.mod().height % GAME.grid.nodeSize;
   if(diffHeight > GAME.grid.nodeSize/2) {
-    object.height += (GAME.grid.nodeSize - diffHeight)
+    object.mod().height += (GAME.grid.nodeSize - diffHeight)
   } else {
-    object.height -= diffHeight
+    object.mod().height -= diffHeight
   }
 }
 
@@ -123,13 +123,13 @@ function snapTinyObjectToGrid(object, tinySize) {
 
 function snapDragToGrid(object) {
   // if negative width
-  if(object.width < 0) {
-    object.x += object.width
-    object.width = Math.abs(object.width)
+  if(object.mod().width < 0) {
+    object.x += object.mod().width
+    object.width = Math.abs(object.mod().width)
   }
-  if(object.height < 0) {
-    object.y += object.height
-    object.height = Math.abs(object.height)
+  if(object.mod().height < 0) {
+    object.y += object.mod().height
+    object.height = Math.abs(object.mod().height)
   }
 
   let diffX = object.x % GAME.grid.nodeSize
@@ -146,34 +146,34 @@ function snapDragToGrid(object) {
     diffY -= GAME.grid.nodeSize/2
   }
 
-  let diffWidth = object.width % GAME.grid.nodeSize;
+  let diffWidth = object.mod().width % GAME.grid.nodeSize;
   if(diffWidth > GAME.grid.nodeSize/2) {
-    // object.width += (GAME.grid.nodeSize - diffWidth)
+    // object.mod().width += (GAME.grid.nodeSize - diffWidth)
   } else {
-    // object.width -= diffWidth
+    // object.mod().width -= diffWidth
   }
 
-  let diffHeight = object.height % GAME.grid.nodeSize;
+  let diffHeight = object.mod().height % GAME.grid.nodeSize;
   if(diffHeight > GAME.grid.nodeSize/2) {
-    // object.height += (GAME.grid.nodeSize - diffHeight)
+    // object.mod().height += (GAME.grid.nodeSize - diffHeight)
   } else {
-    // object.height -= diffHeight
+    // object.mod().height -= diffHeight
   }
 
-  object.width = Math.ceil(object.width/GAME.grid.nodeSize) * GAME.grid.nodeSize
-  object.height = Math.ceil(object.height/GAME.grid.nodeSize) * GAME.grid.nodeSize
+  object.width = Math.ceil(object.mod().width/GAME.grid.nodeSize) * GAME.grid.nodeSize
+  object.height = Math.ceil(object.mod().height/GAME.grid.nodeSize) * GAME.grid.nodeSize
 
   if(diffY + diffHeight > GAME.grid.nodeSize) {
-    object.height += GAME.grid.nodeSize
+    object.mod().height += GAME.grid.nodeSize
   }
   if(diffX + diffWidth > GAME.grid.nodeSize) {
-    object.width += GAME.grid.nodeSize
+    object.mod().width += GAME.grid.nodeSize
   }
 
   object.gridX = object.x/GAME.grid.nodeSize
   object.gridY = object.y/GAME.grid.nodeSize
-  object.gridWidth = object.width/GAME.grid.nodeSize
-  object.gridHeight = object.height/GAME.grid.nodeSize
+  object.gridWidth = object.mod().width/GAME.grid.nodeSize
+  object.gridHeight = object.mod().height/GAME.grid.nodeSize
 }
 
 function createGridNodeAt(x, y) {

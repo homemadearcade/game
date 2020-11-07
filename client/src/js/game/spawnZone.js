@@ -143,8 +143,8 @@ function getSpawnObjectData(object, subObject, spawnPending = [], isRespawn = fa
     const check = [...spawnPending, ...GAME.objects.filter(({id}) => id !== object.id) ]
 
     for(var i = 0; i <= 1000; i++) {
-      newObject.x = gridUtil.getRandomGridWithinXY(object.x, object.x + object.width)
-      newObject.y = gridUtil.getRandomGridWithinXY(object.y, object.y + object.height)
+      newObject.x = gridUtil.getRandomGridWithinXY(object.x, object.x + object.mod().width)
+      newObject.y = gridUtil.getRandomGridWithinXY(object.y, object.y + object.mod().height)
 
       if(object.mod().tags.spawnOverObstacles) {
         break

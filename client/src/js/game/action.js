@@ -109,27 +109,27 @@ function dropWall(hero) {
   if(direction === 'up') {
     Object.assign(wall, {
       x: hero.x,
-      y: hero.y - hero.height,
+      y: hero.y - hero.mod().height,
     })
   }
 
   if(direction === 'down') {
     Object.assign(wall, {
       x: hero.x,
-      y: hero.y + hero.height,
+      y: hero.y + hero.mod().height,
     })
   }
 
   if(direction === 'right') {
     Object.assign(wall, {
-      x: hero.x + hero.width,
+      x: hero.x + hero.mod().width,
       y: hero.y,
     })
   }
 
   if(direction === 'left') {
     Object.assign(wall, {
-      x: hero.x - hero.width,
+      x: hero.x - hero.mod().width,
       y: hero.y,
     })
   }

@@ -577,6 +577,9 @@ class Hero{
               notificationDuration,
               modEndOthers,
               modId,
+              modPriority,
+              modResetPhysics,
+              triggerDestroyAfter,
             } = hero.triggers[triggerId]
 
         properties.triggers[triggerId] = {
@@ -605,6 +608,8 @@ class Hero{
 
           modEndOthers,
           modId,
+          modPriority,
+          modResetPhysics,
           // just for mods right now, not actual Condition
           testAndModOwnerWhenEquipped,
           testFailDestroyMod,
@@ -628,6 +633,8 @@ class Hero{
           notificationAllHeros,
           notificationAllHerosInvolved,
           notificationDuration,
+
+          triggerDestroyAfter,
         }
 
         window.removeFalsey(properties.triggers[triggerId])
@@ -641,8 +648,8 @@ class Hero{
     let mapState = {
       id: hero.id,
       chat: hero.chat,
-      width: hero.width,
-      height: hero.height,
+      width: hero.mod().width,
+      height: hero.mod().height,
       interactableObject: hero.interactableObject,
       dialogue: hero.dialogue,
       choiceOptions: hero.choiceOptions,

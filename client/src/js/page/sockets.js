@@ -300,7 +300,7 @@ function init() {
   //   window.local.emit('onAskHeroToNameObject', object, heroId)
   //   // let ctx = document.getElementById('swal-canvas').getContext('2d')
   //   // ctx.fillStyle = object.color
-  //   // ctx.fillRect(10, 10, object.width, object.height);
+  //   // ctx.fillRect(10, 10, object.mod().width, object.mod().height);
   // })
   //
   // window.socket.on('onAskHeroToWriteDialogue', (object, heroId) => {

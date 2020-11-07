@@ -56,8 +56,8 @@ function convertCustomGridToPathfindingGrid(props) {
       y -= diffY
       y = y/props.nodeHeight
 
-      let gridWidth = object.width / props.nodeWidth;
-      let gridHeight = object.height / props.nodeHeight;
+      let gridWidth = object.mod().width / props.nodeWidth;
+      let gridHeight = object.mod().height / props.nodeHeight;
 
       for(let currentx = x; currentx < x + gridWidth; currentx++) {
         for(let currenty = y; currenty < y + gridHeight; currenty++) {

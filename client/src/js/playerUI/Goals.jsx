@@ -18,8 +18,8 @@ export default class Goals extends React.Component{
     if(possibleObjects && possibleObjects.length) {
       const target = possibleObjects[0]
       const p1 = {
-        x: hero.x + hero.width/2,
-        y: hero.y + hero.height/2,
+        x: hero.x + hero.mod().width/2,
+        y: hero.y + hero.mod().height/2,
       }
       const p2 = {
         x: target.x + target.width/2,

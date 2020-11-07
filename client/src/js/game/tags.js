@@ -179,7 +179,7 @@ function setDefault() {
     stackable: false,
     onMapWhenEquipped: false, //cant change
     // dropOnOwnerDestroyed: false,
-    
+
     startsInInventory: true,
     startsEquipped: true,
   }
@@ -278,6 +278,7 @@ function setDefault() {
 
   window.keyInputTags = {
     disableUpKeyMovement: false,
+    disableDownKeyMovement: false,
     zButtonOnce: false,
     xButtonOnce: false,
     cButtonOnce: false,

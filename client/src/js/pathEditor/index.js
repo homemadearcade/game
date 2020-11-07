@@ -99,9 +99,9 @@ class PathEditor {
     this.open = true
     if(PAGE.isLogOpen) PAGE.closeLog()
     if(GAME.world.gameBoundaries) {
-      this.grid = new Grid(GAME.world.gameBoundaries.x, GAME.world.gameBoundaries.y, GAME.world.gameBoundaries.width/GAME.grid.nodeSize, GAME.world.gameBoundaries.height/GAME.grid.nodeSize, object.width, object.height)
+      this.grid = new Grid(GAME.world.gameBoundaries.x, GAME.world.gameBoundaries.y, GAME.world.gameBoundaries.width/GAME.grid.nodeSize, GAME.world.gameBoundaries.height/GAME.grid.nodeSize, object.mod().width, object.mod().height)
     } else {
-      this.grid = new Grid(GAME.grid.startX, GAME.grid.startY, GAME.grid.width, GAME.grid.height, object.width, object.height)
+      this.grid = new Grid(GAME.grid.startX, GAME.grid.startY, GAME.grid.width, GAME.grid.height, object.mod().width, object.mod().height)
     }
     this.spawnPointX = object.spawnPointX
     this.spawnPointY = object.spawnPointY
@@ -110,8 +110,8 @@ class PathEditor {
     // const gridObject = {x: 0, y: 0, width: this.grid.gridWidth * this.grid.nodeSize, height: this.grid.gridHeight * this.grid.nodeSize}
     // this.camera.setLimitRect(gridObject)
 
-    let gridWidth = (object.width/this.grid.nodeWidth)
-    let gridHeight = (object.height/this.grid.nodeHeight)
+    let gridWidth = (object.mod().width/this.grid.nodeWidth)
+    let gridHeight = (object.mod().height/this.grid.nodeHeight)
     if(gridWidth < GAME.grid.nodeWidth) gridWidth = GAME.grid.nodeWidth
     if(gridHeight < GAME.grid.nodeHeight) gridHeight = GAME.grid.nodeHeight
     const zoomMultiplierX = (gridWidth)/16
@@ -124,9 +124,9 @@ class PathEditor {
     const height = zoomMultiplier * HERO.cameraHeight
     if(startAtHero) {
       const hero = GAME.heros[HERO.id]
-      this.cameraController = {x: hero.x, width: hero.width, y: hero.y, height: hero.height, zoomMultiplier}
+      this.cameraController = {x: hero.x, width: hero.mod().width, y: hero.y, height: hero.mod().height, zoomMultiplier}
     } else {
-      this.cameraController = {x: object.x, width: object.width, y: object.y, height: object.height, zoomMultiplier}
+      this.cameraController = {x: object.x, width: object.mod().width, y: object.y, height: object.mod().height, zoomMultiplier}
     }
     this.camera.set(this.cameraController)
 

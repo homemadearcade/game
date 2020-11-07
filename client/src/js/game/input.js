@@ -348,14 +348,14 @@ function onUpdate(hero, keysDown, delta) {
   const xSpeed = hero.mod().speed + (hero.mod().speedXExtra || 0)
   const ySpeed = hero.mod().speed + (hero.mod().speedYExtra || 0)
 
-  if (upPressed) {
+  if (upPressed && !hero.mod().tags.disableUpKeyMovement) {
     if(hero.mod().arrowKeysBehavior === 'acc' || hero.mod().arrowKeysBehavior === 'acceleration') {
       hero.accY -= (ySpeed) * delta;
     } else if (hero.mod().arrowKeysBehavior === 'velocity') {
       hero.velocityY -= (ySpeed) * delta;
     }
   }
-  if (downPressed) {
+  if (downPressed && !hero.mod().tags.disableDownKeyMovement) {
     if(hero.mod().arrowKeysBehavior === 'acc' || hero.mod().arrowKeysBehavior === 'acceleration') {
       hero.accY += (ySpeed) * delta;
     } else if (hero.mod().arrowKeysBehavior === 'velocity') {
@@ -381,10 +381,10 @@ function onUpdate(hero, keysDown, delta) {
     if(typeof hero.angle !== 'number') hero.angle = 0
     if(typeof hero.velocityAngle !== 'number') hero.velocityAngle = 0
 
-    if (upPressed) {
+    if (upPressed && !hero.mod().tags.disableUpKeyMovement) {
       hero.velocityAngle += (hero.mod().speed) * delta;
     }
-    if (downPressed) {
+    if (downPressed && !hero.mod().tags.disableDownKeyMovement) {
       hero.velocityAngle -= (hero.mod().speed) * delta;
     }
     if (leftPressed) {
@@ -396,9 +396,9 @@ function onUpdate(hero, keysDown, delta) {
   }
 
   if(hero.mod().arrowKeysBehavior === 'skating') {
-    if(hero.inputDirection === 'up') {
+    if(hero.inputDirection === 'up' && !hero.mod().tags.disableUpKeyMovement) {
       hero.y -= Math.ceil(ySpeed * delta);
-    } else if(hero.inputDirection === 'down') {
+    } else if(hero.inputDirection === 'down' && !hero.mod().tags.disableDownKeyMovement) {
       hero.y += Math.ceil(ySpeed * delta);
     } else if(hero.inputDirection === 'left') {
       hero.x -= Math.ceil(xSpeed * delta);
@@ -435,7 +435,7 @@ function onUpdate(hero, keysDown, delta) {
     if(hero.mod().arrowKeysBehavior === 'flatDiagonal') {
       if (upPressed && !hero.mod().tags.disableUpKeyMovement) {
         hero._flatVelocityY = -ySpeed
-      } else if (downPressed) {
+      } else if (downPressed && !hero.mod().tags.disableDownKeyMovement) {
         hero._flatVelocityY = ySpeed
       } else {
         hero._flatVelocityY = 0
@@ -461,7 +461,7 @@ function onUpdate(hero, keysDown, delta) {
         return
       }
 
-      if (downPressed && hero.inputDirection == 'down') {
+      if (downPressed && hero.inputDirection == 'down' && !hero.mod().tags.disableDownKeyMovement) {
         hero._flatVelocityY = Math.ceil(ySpeed * delta) * 100
         return
       }
@@ -480,7 +480,7 @@ function onUpdate(hero, keysDown, delta) {
         hero._flatVelocityY = -Math.ceil(ySpeed * delta) * 100
       }
 
-      if (downPressed) {
+      if (downPressed && !hero.mod().tags.disableDownKeyMovement) {
         hero._flatVelocityY = Math.ceil(ySpeed * delta) * 100
       }
 
