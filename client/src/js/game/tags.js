@@ -166,6 +166,7 @@ function setDefault() {
     cameraShakeOnCollide_quick: false,
     cameraShakeOnCollide_short: false,
     cameraShakeOnCollide_long: false,
+    cameraLock: false,
   }
 
   window.inventoryTags = {

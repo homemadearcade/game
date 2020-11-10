@@ -36,6 +36,7 @@ export function onHeroTrigger(hero, collider, result, options = { fromInteractBu
             hero.flags.paused = false
             hero.dialogueName = null
             hero.choiceOptions = null
+            hero._cantInteract = true
             triggerInteraction(interaction.interaction, hero, collider, result, options)
             window.emitGameEvent('onUpdatePlayerUI', hero)
           })

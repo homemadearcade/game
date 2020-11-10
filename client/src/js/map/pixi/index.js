@@ -2,6 +2,8 @@ import tinycolor from 'tinycolor2'
 import { updatePixiObject, initPixiObject, initEmitter } from './objects'
 import { initPixiApp } from './app'
 import gridUtil from '../../utils/grid'
+import collisionsUtil from '../../utils/collisions'
+
 import * as PIXI from 'pixi.js'
 import { GlowFilter, OutlineFilter, GodrayFilter, EmbossFilter, ReflectionFilter, ShockwaveFilter } from 'pixi-filters'
 import { Ease, ease } from 'pixi-ease'
@@ -187,13 +189,28 @@ PIXIMAP.onRender = function() {
       PIXIMAP.objectStage._reInitialize = false
       PIXIMAP.initializePixiObjectsFromGame()
     } else {
+      let newCameraLock = null
       GAME.objects.forEach((object) => {
         if(object.mod().removed) {
           PIXIMAP.childrenById[object.id].visible = false
           return
         }
+
+        if(object.tags.cameraLock && collisionsUtil.checkObject(object, GAME.heros[HERO.id])) {
+          newCameraLock = object
+        }
+
         updatePixiObject(object, PIXIMAP.stage)
       })
+
+      if(newCameraLock) {
+        MAP.camera.setLimitRect(newCameraLock)
+      } else if(GAME.world.lockCamera){
+        MAP.camera.setLimit(GAME.world.lockCamera)
+      } else {
+        MAP.camera.clearLimit()
+      }
+
       GAME.heroList.forEach((hero) => {
         if(hero.mod().removed) {
           PIXIMAP.childrenById[hero.id].visible = false

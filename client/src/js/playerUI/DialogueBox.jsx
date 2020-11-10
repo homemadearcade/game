@@ -47,8 +47,12 @@ export default class DialogueBox extends React.Component{
       }
     }
 
-    if(e.keyCode == 86) {
+    if(e.keyCode == 86 || e.keyCode == 69) {
       window.socket.emit('heroChooseOption', HERO.id, this.props.options[selectedOptionIndex].id)
+    }
+
+    if(e.keyCode == 27) {
+      window.socket.emit('heroChooseOption', HERO.id, null)
     }
 
     if(e.keyCode == 49 && this.props.options[0]) {
@@ -83,7 +87,7 @@ export default class DialogueBox extends React.Component{
     if(dialogue) {
       return <div className="DialogueBox">
         {name && <div className="DialogueBox__name">{name}</div>}
-        <Textfit id='fitty' max={22}>{dialogue[0]}
+        <Textfit className="DialogueBox__content" id='fitty' max={22}>{dialogue[0]}
         <i className="DialogueBox__arrow fa fas fa-sort-down"></i>
         </Textfit>
       </div>
@@ -92,19 +96,22 @@ export default class DialogueBox extends React.Component{
     if(options) {
       return <div className="DialogueBox DialogueBox--options">
         {name && <div className="DialogueBox__name">{name}</div>}
-        {options.map((option, index) => {
-          return <div key={option.id}
-            className={classnames("DialogueBox__option", { "DialogueBox__option--selected": this.state.selectedOptionIndex === index })}
-            onMouseEnter={() => {
-              this.setState({
-                selectedOptionIndex: index
-              })
-            }}
-            onClick={() => {
-              window.socket.emit('heroChooseOption', HERO.id, option.id)
-            }}>{(index + 1) + '. ' + option.effectValue}
-        </div>
-      })}</div>
+        <div className="DialogueBox__content">
+          {options.map((option, index) => {
+            return <div key={option.id}
+              className={classnames("DialogueBox__option", { "DialogueBox__option--selected": this.state.selectedOptionIndex === index })}
+              onMouseEnter={() => {
+                this.setState({
+                  selectedOptionIndex: index
+                })
+              }}
+              onClick={() => {
+                window.socket.emit('heroChooseOption', HERO.id, option.id)
+              }}>{(index + 1) + '. ' + option.effectValue}
+          </div>
+        })}
+      </div>
+    </div>
     }
   }
 }

@@ -12,6 +12,15 @@ function camera() {
   this.hasHitLimit = false
   this.allowOcclusion = true
 
+  // this.setLimitFromObject = function(object) {
+  //   if(PAGE.role.isHost) object = object.mod()
+  //   this.centerX = object.x + object.width/2
+  //   this.limitX = object.width
+  //
+  //   this.centerY = object.y + object.height/2
+  //   this.limitY = object.height
+  // }
+
   this.setLimit = function(limitX = null, limitY = null, centerX = this.x, centerY = this.y) {
     this.centerX = centerX
     this.centerY = centerY

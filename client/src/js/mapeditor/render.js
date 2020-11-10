@@ -144,8 +144,8 @@ function update() {
     drawTools.drawLine(ctx, { x: owner.x + owner.width/2, y: owner.y + owner.height/2 }, { x: draggingRelativeObject.x + draggingRelativeObject.width/2, y: draggingRelativeObject.y + draggingRelativeobject.height/2 }, {color: 'white', thickness: 5 }, camera)
   }
 
-  if(PAGE.role.isAdmin && GAME.world.lockCamera) {
-    drawTools.drawBorder(ctx, { color: '#0A0', ...GAME.world.lockCamera }, camera, { thickness: 2} );
+  if(PAGE.role.isAdmin && (MAP.camera.limitX === 0 || MAP.camera.limitX)) {
+    drawTools.drawBorder(ctx, { color: '#0A0', x: (MAP.camera.centerX - MAP.camera.limitX), y: (MAP.camera.centerY - MAP.camera.limitY), width: MAP.camera.limitX * 2, height: MAP.camera.limitY * 2}, camera, { thickness: 2} );
   }
 
   if(PAGE.role.isAdmin && GAME.pfgrid) drawTools.drawPFGrid(ctx, camera, GAME.pfgrid, { nodeWidth: GAME.grid.nodeSize, nodeHeight: GAME.grid.nodeSize, startX: GAME.grid.startX, startY: GAME.grid.startY})

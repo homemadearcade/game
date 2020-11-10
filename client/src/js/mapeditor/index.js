@@ -66,6 +66,7 @@ class MapEditor {
       if (!MAPEDITOR.paused) handleMouseDown(event)
     })
     document.body.addEventListener("dblclick", (e) => {
+      if(!window.isClickingMap(e.target.className)) return
       if(MAPEDITOR.objectHighlighted && MAPEDITOR.objectHighlighted.id) {
         OBJECTS.editingId = MAPEDITOR.objectHighlighted.id
         BELOWMANAGER.open({ objectSelected: MAPEDITOR.objectHighlighted, selectedManager: 'ObjectManager', selectedMenu: 'detail', selectedId: OBJECTS.editingId })

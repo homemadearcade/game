@@ -981,6 +981,8 @@ class Game{
       })) return console.log('mod already applied to this object', id, ownerId)
     }
 
+    mod._disabled = true
+
     GAME.gameState.activeModList.push(mod)
 
     if(mod.conditionType && mod.conditionType.length && mod.conditionType !== 'none') {
@@ -1082,9 +1084,14 @@ class Game{
       }
 
       if(prevDisabled && !mod._disabled) {
+        window.emitGameEvent('onModEnabled', mod)
         if(mod.modResetPhysics) {
           OBJECTS.resetPhysicsProperties(modOwnerObject)
         }
+      }
+
+      if(!prevDisabled && mod._disabled) {
+        window.emitGameEvent('onModDisabled', mod)
       }
 
       return keepInActiveMods

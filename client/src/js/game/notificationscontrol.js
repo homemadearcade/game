@@ -70,7 +70,7 @@ class NotificationsControl{
     }
   }
 
-  onStartMod(mod) {
+  onModEnabled(mod) {
     if(mod.effectJSON.spaceBarBehavior) {
       window.socket.emit('sendNotification', { playerUIHeroId: mod.ownerId, toast: true, text: 'Press Space Bar', viewControlsOnClick: true })
     }

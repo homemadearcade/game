@@ -178,6 +178,7 @@ function processSequence(sequence) {
         defaultEffected.flags.paused = false
         defaultEffected.dialogueName = null
         defaultEffected.choiceOptions = null
+        defaultEffected._cantInteract = true
         sequence.currentItemId = sequence.itemMap[choiceId].next
         if(sequence.currentItemId === 'end') {
           endSequence(sequence)
