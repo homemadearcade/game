@@ -172,9 +172,8 @@ function update(camera) {
     })
   }
 
-  if(clientHero && clientHero.interactableObject && !clientHero.flags.showDialogue) {
-    const { interactableObject } = clientHero
-
+  if(clientHero && clientHero.interactableObjectId && !clientHero.flags.showDialogue) {
+    const interactableObject = OBJECTS.getObjectOrHeroById(clientHero.interactableObjectId)
     // if(interactableObject.tags.invisible) {
       ctx.fillStyle = "rgb(255, 255, 255)";
       let text = "Press V to interact"
@@ -187,7 +186,7 @@ function update(camera) {
 
     if(interactableObject.tags.outline) {
       let thickness = 3
-      drawTools.drawBorder(ctx, {color: 'white', x: interactableObject.x-thickness, y: interactableObject.y - thickness, width: interactableObject.width + (thickness*2), height: interactableobject.height + (thickness*2)}, camera, { thickness })
+      drawTools.drawBorder(ctx, {color: 'white', x: interactableObject.x-thickness, y: interactableObject.y - thickness, width: interactableObject.width + (thickness*2), height: interactableObject.height + (thickness*2)}, camera, { thickness })
     }
   }
 

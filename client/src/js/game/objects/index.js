@@ -403,8 +403,54 @@ class Objects{
     return mapState
   }
 
+  getInteractions(object) {
+    let interactions = []
+    if((object.mod().tags['completeQuestOnHeroInteract'] && object.mod().tags['questCompleter'])) {
+      interactions.push({text: 'Complete Quest', tag: 'completeQuestOnHeroInteract', interaction: 'completeQuest'})
+    }
+
+    if((object.mod().tags['giveQuestOnHeroInteract'] && object.mod().tags['questGiver'])) {
+      interactions.push({text: 'Get Quest', tag: 'giveQuestOnHeroInteract', interaction: 'giveQuest'})
+    }
+
+    if(object.mod().tags['spawnOnHeroInteract'] && object.mod().tags.spawnZone) {
+      interactions.push({text: 'Open', tag: 'spawnOnHeroInteract', interaction: 'spawn'})
+    }
+
+    // if(object.mod().tags['updateHeroOnHeroInteract'] && object.mod().tags.heroUpdate) {
+    //   interactions.push({text: 'Open', tag: 'spawnOnHeroInteract'})
+    // }
+
+    if(object.mod().tags['talkOnHeroInteract'] && object.mod().tags.talker) {
+      interactions.push({text: 'Talk/Examine', tag: 'talkOnHeroInteract', interaction: 'talk'})
+    }
+
+    if(object.mod().tags['pickupOnHeroInteract'] && object.mod().tags.pickupable) {
+      interactions.push({text: 'Pickup', tag: 'pickupOnHeroInteract', interaction: 'pickup'})
+    }
+
+    if(object.mod().tags['spawnAllInHeroInventoryOnHeroInteract'] && object.mod().tags.spawnZone) {
+      interactions.push({text: 'Open', tag: 'spawnAllInHeroInventoryOnHeroInteract', interaction: 'spawnAllInHeroInventory'})
+    }
+
+    if(object.mod().tags['resourceWithdrawOnInteract'] && object.mod().tags.resourceZone) {
+      interactions.push({text: 'Withdraw', tag: 'resourceWithdrawOnInteract', interaction: 'resourceWithdraw'})
+    }
+
+    if(object.mod().tags['resourceDepositOnInteract'] && object.mod().tags.resourceZone) {
+      interactions.push({text: 'Deposit', tag: 'resourceDepositOnInteract', interaction: 'resourceDeposit'})
+    }
+
+    // if(object.mod().tags['interactable']) return true
+
+    return interactions
+  }
+
+
   isInteractable(object) {
-    if((object.mod().tags['completeQuestOnHeroInteract'] && object.mod().tags['questCompleter']) || (object.mod().tags['giveQuestOnHeroInteract'] && object.mod().tags['questGiver'])) return true
+    if((object.mod().tags['completeQuestOnHeroInteract'] && object.mod().tags['questCompleter'])) return true
+
+    if((object.mod().tags['giveQuestOnHeroInteract'] && object.mod().tags['questGiver'])) return true
 
     if(object.mod().tags['spawnOnHeroInteract'] && object.mod().tags.spawnZone) return true
 

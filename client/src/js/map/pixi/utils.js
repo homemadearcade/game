@@ -270,9 +270,9 @@ function updateSprite(pixiChild, gameObject) {
 function getVisibility(pixiChild, gameObject) {
   let invisible = gameObject.tags.outline || gameObject.tags.invisible || gameObject.removed || gameObject.tags.potential || gameObject.constructParts
 
-  if(gameObject.id === 'subObject-993564579775') {
-    console.log('hello', invisible)
-  }
+  // if(gameObject.id === 'subObject-993564579775') {
+  //   console.log('hello', invisible)
+  // }
   if(CONSTRUCTEDITOR.open) {
     if(gameObject.tags.background && CONSTRUCTEDITOR.mapVisible.background === false) invisible = true
     if(gameObject.tags.foreground && CONSTRUCTEDITOR.mapVisible.foreground === false) invisible = true

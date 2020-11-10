@@ -144,9 +144,14 @@
   &__option {
     padding: 5px 0px;
     cursor: pointer;
-    &:hover {
+
+    &--selected {
       background-color: #333;
     }
+  }
+
+  &__name {
+    font-weight: 800;
   }
 }
 

@@ -145,8 +145,8 @@ export default class Root extends React.Component {
 
     return (
       <div className="PlayerUI">
-        {hero.flags && hero.flags.showDialogue && hero.dialogue && hero.dialogue.length > 0 && <DialogueBox dialogue={hero.dialogue} />}
-        {hero.flags && hero.flags.showDialogue && hero.choiceOptions && <DialogueBox options={hero.choiceOptions} />}
+        {hero.flags && hero.flags.showDialogue && hero.dialogue && hero.dialogue.length > 0 && <DialogueBox dialogue={hero.dialogue} name={hero.dialogueName} />}
+        {hero.flags && hero.flags.showDialogue && hero.choiceOptions && <DialogueBox options={hero.choiceOptions} name={hero.dialogueName}/>}
         {hero.flags && hero.flags.showCutscene && hero.cutscenes && <Cutscene scenes={hero.cutscenes} />}
         {hero.goals && hero.goals.length && <Goals goals={hero.goals} />}
         {showHeroMenuModal && <HeroMenuModal

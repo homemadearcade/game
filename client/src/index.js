@@ -73,7 +73,6 @@ Animate
 Editor
 
 AGGREGATION MENUS
-subinteractmenu ( find all interact triggers involving this object and display all possible )
 // view everything this object is involved in
 // view all current modifications
 

@@ -170,6 +170,7 @@ function processSequence(sequence) {
     } else {
       defaultEffected.dialogueName = null
     }
+    window.emitGameEvent('onUpdatePlayerUI', defaultEffected)
     const removeEventListener = window.local.on('onHeroChooseOption', (heroId, choiceId) => {
       if(defaultEffected.id === heroId && sequence.itemMap[choiceId]) {
         removeEventListener()
@@ -181,6 +182,7 @@ function processSequence(sequence) {
         if(sequence.currentItemId === 'end') {
           endSequence(sequence)
         }
+        window.emitGameEvent('onUpdatePlayerUI', hero)
       }
     })
     sequence.eventListeners.push(removeEventListener)

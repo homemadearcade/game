@@ -240,6 +240,11 @@ function onFirstPageGameLoaded() {
       columnName: 'Items',
       JSON: window.subObjectLibrary.gun,
     },
+    spearPickupable: {
+      label: 'Spear',
+      columnName: 'Items',
+      JSON: window.subObjectLibrary.spear,
+    },
     marioCap: {
       label: 'Mario Hat',
       columnName: 'Items',
@@ -302,6 +307,7 @@ function onFirstPageGameLoaded() {
     ufoPowerBlock: true,
     starViewBlock: true,
     gunPickupable: true,
+    spearPickupable: true,
     marioCap: true,
   }
 }

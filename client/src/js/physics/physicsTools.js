@@ -249,12 +249,13 @@ function objectCollisionEffects(po) {
           }
 
           if(passed) {
-            if(!hero.interactableObject) {
-              hero.interactableObject = collider
-              hero.interactableObjectResult = result
-            } else if(collider.mod().width < hero.interactableObject.mod().width || collider.mod().height < hero.interactableObject.mod().height) {
-              hero.interactableObject = collider
-              hero.interactableObjectResult = result
+            if(!hero.interactableObjectId) {
+              hero.interactableObjectId = collider.id
+            } else {
+              const interactableObject = OBJECTS.getObjectOrHeroById(hero.interactableObjectId)
+              if(collider.mod().width < interactableObject.mod().width || collider.mod().height < interactableObject.mod().height) {
+                hero.interactableObjectId = collider.id
+              }
             }
           }
         }

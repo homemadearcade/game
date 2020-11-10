@@ -231,8 +231,7 @@ function prepareObjectsAndHerosForMovementPhase() {
     object._skipPosUpdate = false
     object._flatVelocityX = null
     object._flatVelocityY = null
-    object.interactableObject = null
-    object.interactableObjectResult = null
+    object.interactableObjectId = null
 
     if(object.constructParts) {
       object.constructParts.forEach((part) => {
@@ -377,16 +376,15 @@ function postPhysics() {
   // GET DELTA
   allHeros.forEach((hero) => {
     if(hero.mod().removed) return
-    if(hero.interactableObject) {
+    if(hero.interactableObjectId) {
       let input = GAME.heroInputs[hero.id]
       // INTERACT WITH SMALLEST OBJECT
-      // window.emitGameEvent('onObjectInteractable', hero.interactableObject, hero)
+      // window.emitGameEvent('onObjectInteractable', hero.interactableObjectId, hero)
       if(input && (input['e'] === true || input['v'] === true) && !hero._cantInteract && !hero.flags.paused) {
-        window.local.emit('onHeroInteract', hero, hero.interactableObject)
+        const interactableObject = OBJECTS.getObjectOrHeroById(hero.interactableObjectId)
+        window.local.emit('onHeroInteract', hero, interactableObject)
         hero._cantInteract = true
       }
-      // bad for JSON
-      hero.interactableObjectResult = null
     }
     processAwarenessAndWithinEvents(hero)
   })
@@ -550,7 +548,7 @@ function removeAndRespawn() {
       } else hero._remove = true
       hero._destroy = null
       hero._destroyedById = null
-      window.emitGameEvent('onHeroDestroyed', {...hero, interactableObject: null, interactableObjectResult: null }, OBJECTS.getObjectOrHeroById(hero._destroyedById))
+      window.emitGameEvent('onHeroDestroyed', {...hero, interactableObjectId: null }, OBJECTS.getObjectOrHeroById(hero._destroyedById))
     }
 
     if(hero._respawn) {

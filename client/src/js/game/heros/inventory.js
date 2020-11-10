@@ -35,8 +35,7 @@ function pickupObject(hero, collider) {
 
   subObject.inInventory = true
 
-  hero.interactableObject = null
-  hero.interactableObjectResult = null
+  hero.interactableObjectId = null
   if(subObject.tags['equipOnPickup']) {
     equipSubObject(hero, subObject)
   }
@@ -83,8 +82,7 @@ function dropObject(hero, subObject, dropAmount = 1) {
   // window.local.emit('onHeroDrop', hero, object)
 
   if(!subObjectStillHasCount) {
-    hero.interactableObject = null
-    hero.interactableObjectResult = null
+    hero.interactableObjectId = null
     window.socket.emit('deleteSubObject', hero, subObject.subObjectName)
   }
 
@@ -115,8 +113,7 @@ function withdrawFromInventory(withdrawer, owner, subObjectName, withdrawAmount)
   newObject.inInventory = true
 
   if(!subObjectStillHasCount) {
-    owner.interactableObject = null
-    owner.interactableObjectResult = null
+    owner.interactableObjectId = null
     window.socket.emit('deleteSubObject', owner, subObjectName)
   }
 

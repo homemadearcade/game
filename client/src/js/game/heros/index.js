@@ -1,4 +1,4 @@
-import onHeroTrigger from './onHeroTrigger'
+import { onHeroTrigger } from './onHeroTrigger'
 import ghost from './ghost.js'
 import pathfinding from '../../utils/pathfinding.js'
 import collisions from '../../utils/collisions'
@@ -425,7 +425,7 @@ class Hero{
       choiceOptions: hero.choiceOptions,
       _parentId: hero._parentId,
       _skipNextGravity: hero._skipNextGravity,
-      interactableObject: hero.interactableObject,
+      interactableObjectId: hero.interactableObjectId,
       gridHeight: hero.gridHeight,
       gridWidth: hero.gridWidth,
       updateHistory: hero.updateHistory,
@@ -650,7 +650,7 @@ class Hero{
       chat: hero.chat,
       width: hero.mod().width,
       height: hero.mod().height,
-      interactableObject: hero.interactableObject,
+      interactableObjectId: hero.interactableObjectId,
       dialogue: hero.dialogue,
       choiceOptions: hero.choiceOptions,
       sprite: hero.sprite,
