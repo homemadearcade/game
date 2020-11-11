@@ -1,6 +1,10 @@
 import onTalk from './heros/onTalk'
 import { startSequence } from './sequence'
 import { setPathTarget, setTarget } from './ai/pathfinders.js'
+import axios from 'axios';
+import gridUtil from '../utils/grid.js'
+import pathfinding from '../utils/pathfinding.js'
+
   // { effectName: remove, anything: true, hero: false, object: false, world: false, spawnZone: false, timer: false
   //allowed: [anything, plain, hero, object, world, spawnZone, timer]
   // requirements: {
@@ -93,6 +97,10 @@ import { setPathTarget, setTarget } from './ai/pathfinders.js'
     // },
 
     //EDITOR
+    openGameAsLevel: {
+      smallText: true,
+      noEffected: true,
+    },
     openWorld: {
       smallText: true,
       noEffected: true,
@@ -352,6 +360,52 @@ function processEffect(effect, effected, effector, ownerObject) {
     EDITOR.shiftPressed = true
     EDITOR.transformWorldTo(effectValue)
     EDITOR.shiftPressed = false
+  }
+  if(effectName === 'openGameAsLevel') {
+    console.log(effect)
+    axios.get(window.HAGameServerUrl + '/game', {
+      params: {
+        gameId: effect.effectValue
+      }
+    }).then((res) => {
+      const game = res.data.game
+      GAME.objects.forEach((object) => {
+        OBJECTS.unloadObject(object)
+      })
+      GAME.removeListeners()
+
+      GAME.objectsById = {}
+      GAME.objects = game.objects.map((object) => {
+        OBJECTS.addObject(object)
+        OBJECTS.respawn(object)
+        return object
+      })
+
+      // grid
+      GAME.world = game.world
+      GAME.grid.nodes = gridUtil.generateGridNodes(GAME.grid)
+      GAME.updateGridObstacles()
+      GAME.pfgrid = pathfinding.convertGridToPathfindingGrid(GAME.grid.nodes)
+      GAME.handleWorldUpdate(GAME.world)
+
+      GAME.defaultHero = game.defaultHero || window.defaultHero
+
+      GAME.heroList.forEach((hero) => {
+        const oldTags = hero.tags
+        GAME.heros[hero.id] = HERO.summonFromGameData(hero)
+        GAME.heros[hero.id].tags.saveAsDefaultHero = oldTags.saveAsDefaultHero
+        GAME.heros[hero.id].id = hero.id
+        HERO.respawn(hero)
+      })
+
+      GAME.heroList = []
+      HERO.forAll((hero) => {
+        GAME.heroList.push(hero)
+        HERO.addHero(hero)
+      })
+
+      window.emitGameEvent('onGameStarted')
+    })
   }
 
   if(effectName === 'anticipatedAdd' && effect.effectLibraryObject) {

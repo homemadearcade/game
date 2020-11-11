@@ -64,7 +64,6 @@ Toggle between drawing types?
 SIMPLE SEQUENCE ( Opening Sequence )
 PUZZLE INTERFACES
 
-
 -----
 
 SEQUENCE EDITOR UPGRADE
@@ -188,6 +187,13 @@ LEVELS ( sub worlds )
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
 
+tag
+  dont move down
+  create bloody corpse when destroyed
+
+  slow down tag ( MOD lowers speed of anything inside of it )
+  water tag ( MOD lowers gravity of anything inside of it )
+
 VISIBLE TO - tag
 STORY - Fade in/out to game
 
@@ -198,11 +204,6 @@ speed boost tile
 Create an onSequenceComplete thing..? So when its done we know to move onto the next event
 
 —
-Apply sprite change to all sprites
-
-in triggers also allow
-— delete object after
-
 Start mod on collide tag
 
 --
@@ -210,8 +211,6 @@ Start mod on collide tag
 sub object top vs bottom...
 
 every one gets their own construct editor drawing things, the problem is then that I have to deal with the layering issue...
-
-Right click ( start game with heros here )
 
 bouncing ball
 

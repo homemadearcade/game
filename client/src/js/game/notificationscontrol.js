@@ -82,12 +82,7 @@ class NotificationsControl{
     // }
   }
 
-  onEndMod(manualRevertId) {
-    const mod = GAME.gameState.activeModList.filter((mod) => {
-      if(mod.manualRevertId === manualRevertId) return true
-      else return false
-    })[0]
-    if(!mod) return
+  onModDisabled(mod) {
     // if(mod.effectJSON.arrowKeysBehavior || mod.effectJSON.spaceBarBehavior || mod.effectJSON.zButtonBehavior || mod.effectJSON.xButtonBehavior || mod.effectJSON.cButtonBehavior) {
     //   window.socket.emit('sendNotification', { playerUIHeroId: mod.ownerId, toast: true, text: 'Your controls updated have been updated. Click to see more', viewControlsOnClick: true })
     // }

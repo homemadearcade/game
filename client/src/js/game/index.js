@@ -84,6 +84,9 @@ class Game{
 
           GAME.objects.forEach((object) => {
             if(object.mod().removed) return
+            if(object.mod().tags.destroySoon) {
+              if(object.createdTime + 20000 < Date.now()) object._destroy = true
+            }
             window.local.emit('onUpdateObject', object, delta)
           })
           timeouts.onUpdate(delta)
@@ -981,7 +984,9 @@ class Game{
       })) return console.log('mod already applied to this object', id, ownerId)
     }
 
-    mod._disabled = true
+    if(mod.conditionType) {
+      mod._disabled = true
+    }
 
     GAME.gameState.activeModList.push(mod)
 
@@ -1243,11 +1248,22 @@ class Game{
   }
   onEndMod(manualRevertId) {
     GAME.gameState.activeModList = GAME.gameState.activeModList.filter((mod) => {
-      mod._remove = true
-      if(mod.effectJSON.removed || (mod.effectJSON.tags && mod.effectJSON.tags.obstacle)) window.local.emit('onUpdatePFgrid')
-      if(mod.manualRevertId === manualRevertId) return false
+      if(mod.manualRevertId === manualRevertId) {
+        mod._remove = true
+        if(mod.effectJSON.removed || (mod.effectJSON.tags && mod.effectJSON.tags.obstacle)) window.local.emit('onUpdatePFgrid')
+        return false
+      }
+      if(mod.modId === manualRevertId) {
+        mod._remove = true
+        if(mod.effectJSON.removed || (mod.effectJSON.tags && mod.effectJSON.tags.obstacle)) window.local.emit('onUpdatePFgrid')
+        return false
+      }
       return true
     })
+  }
+
+  onModDisabled(mod) {
+    if(PAGE.role.isHost) if(mod.effectJSON.removed || (mod.effectJSON.tags && mod.effectJSON.tags.obstacle)) window.local.emit('onUpdatePFgrid')
   }
 
   onStartSequence(sequenceId, ownerId) {

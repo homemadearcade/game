@@ -54,6 +54,9 @@ function setDefault() {
     trackObjectsTouching: false,
 
     seperateParts: false,
+
+    // this deletes it after 10 seconds
+    destroySoon: false,
   }
 
   // window.otherTags = {
@@ -181,8 +184,8 @@ function setDefault() {
     onMapWhenEquipped: false, //cant change
     // dropOnOwnerDestroyed: false,
 
-    startsInInventory: true,
-    startsEquipped: true,
+    startsInInventory: false,
+    startsEquipped: false,
   }
 
   window.particleTags = {
@@ -269,6 +272,7 @@ function setDefault() {
 
   window.subObjectTags = {
     subObject: true,
+    onMap: false,
     heroInteractTriggerArea: false,
     awarenessTriggerArea: false,
     objectInteractTriggerArea: false,

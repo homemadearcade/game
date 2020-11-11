@@ -27,10 +27,14 @@ function pickupObject(hero, collider) {
     return
   }
 
-  if(!collider.mod().tags['dontDestroyOnPickup']) {
-    collider.removed = true
-    // since were duplicating objects here, this gets tricky. the id could pick up the new object in the ._remove processing tool.
-    // keep it like this unless ur sure what ur doing
+  // if(!collider.mod().tags['dontDestroyOnPickup']) {
+  //   collider.removed = true
+  //   // since were duplicating objects here, this gets tricky. the id could pick up the new object in the ._remove processing tool.
+  //   // keep it like this unless ur sure what ur doing
+  // }
+
+  if(!subObject.tags.onMap) {
+    subObject.removed = true
   }
 
   subObject.inInventory = true
@@ -153,10 +157,7 @@ function equipSubObject(hero, subObject, keyBinding = 'available') {
 
   if(subObject.tags.onMapWhenEquipped) {
     subObject.removed = false
-    subObject.tags.invisible = false
-  } else {
-    subObject.tags.potential = true
-    subObject.tags.invisible = true
+    console.log('???', subObject.removed)
   }
 
   window.local.emit('onHeroEquip', hero, subObject)
@@ -171,8 +172,8 @@ function unequipSubObject(hero, subObject) {
     hero.cButtonBehavior = null
   }
 
-  if(subObject.tags.onMapWhenEquipped) {
-    subObject.tags.invisible = true
+  if(subObject.tags.onMapWhenEquipped && !subObject.tags.onMap) {
+    subObject.removed = true
   }
 
   subObject.isEquipped = false

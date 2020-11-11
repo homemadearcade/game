@@ -24,14 +24,15 @@ window.local.on('onFirstPageGameLoaded', () => {
       tags: { rotateable: true, relativeToAngle: true, relativeToDirection: true, pickupable: true, pickupOnHeroInteract: true, equipOnPickup: true, onMapWhenEquipped: true },
       actionButtonBehavior: 'shoot',
       actionProps: {
-        debounceTime: 2,
-        shootVelocity: 200,
+        debounceTime: 1.2,
+        shootVelocity: 600,
         // shootRadius: window.radianCircle,
-        shootBulletsPerRound: 20,
+        shootBulletsPerRound: 1,
         shootTags: {
           monsterDestroyer: true,
           destroyOnCollideWithObstacle: true,
-          moving: true
+          moving: true,
+          destroySoon: true,
         }
       },
       actionState: {}

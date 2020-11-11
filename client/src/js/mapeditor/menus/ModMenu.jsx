@@ -16,6 +16,9 @@ export default class ModMenu extends React.Component{
         window.socket.emit('endMod', data.manualRevertId)
         window.socket.emit('resetPhysicsProperties', objectSelected.id)
       }
+      if(data.action === 'end') {
+        window.socket.emit('disableMod', data.manualRevertId)
+      }
     }
   }
 
@@ -27,11 +30,29 @@ export default class ModMenu extends React.Component{
     if(!objectMods) return items
 
     objectMods.forEach((mod) => {
-      if(mod.manualRevertId) {
-        items.push(
-          <MenuItem key={JSON.stringify({action: 'end', manualRevertId: mod.manualRevertId})}>{`End ${mod.manualRevertId}`}</MenuItem>
-        )
+      if(mod._disabled) {
+        if(mod.manualRevertId) {
+          items.push(
+            <MenuItem key={JSON.stringify({action: 'end', manualRevertId: mod.manualRevertId})}>{`End ${mod.manualRevertId}`}</MenuItem>
+          )
+        } else if(mod.modId) {
+          items.push(
+            <MenuItem key={JSON.stringify({action: 'end', manualRevertId: mod.modId})}>{`End ${mod.modId}`}</MenuItem>
+          )
+        }
       }
+      if(!mod._disabled) {
+        if(mod.manualRevertId) {
+          items.push(
+            <MenuItem key={JSON.stringify({action: 'disable', manualRevertId: mod.manualRevertId})}>{`Disable ${mod.manualRevertId}`}</MenuItem>
+          )
+        } else if(mod.modId) {
+          items.push(
+            <MenuItem key={JSON.stringify({action: 'diabled', manualRevertId: mod.modId})}>{`Disable ${mod.modId}`}</MenuItem>
+          )
+        }
+      }
+
       // else if(mod.modId)
     })
 

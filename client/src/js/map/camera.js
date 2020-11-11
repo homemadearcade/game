@@ -60,7 +60,7 @@ function camera() {
     let editorZoom = EDITOR.preferences.zoomMultiplier
     if(GAME.gameState.started && !PAGE.role.isAdmin) editorZoom = 0
 
-    let multiplier = (editorZoom + hero.zoomMultiplier)
+    let multiplier = (editorZoom + hero.mod().zoomMultiplier)
     if(multiplier == 0) multiplier = .2
     this.multiplier =  multiplier / MAP.canvasMultiplier
 
@@ -135,7 +135,7 @@ function camera() {
 
   this.update = function(hero, delta) {
     const cameraTweenSpeedX = hero.cameraTweenSpeed + hero.cameraTweenSpeedXExtra
-    if(hero.cameraTweenToTargetX && typeof this.x == 'number') {
+    if(hero.mod().cameraTweenToTargetX && typeof this.x == 'number') {
       const distanceX = this.targetX - this.x
       this.x += (distanceX) * delta * cameraTweenSpeedX
     } else {
@@ -143,7 +143,7 @@ function camera() {
     }
 
     const cameraTweenSpeedY = hero.cameraTweenSpeed + hero.cameraTweenSpeedYExtra
-    if(hero.cameraTweenToTargetY && typeof this.y == 'number') {
+    if(hero.mod().cameraTweenToTargetY && typeof this.y == 'number') {
       const distanceY = this.targetY - this.y
       this.y += (distanceY) * delta * cameraTweenSpeedY
     } else {

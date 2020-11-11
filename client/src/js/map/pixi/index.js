@@ -191,10 +191,7 @@ PIXIMAP.onRender = function() {
     } else {
       let newCameraLock = null
       GAME.objects.forEach((object) => {
-        if(object.mod().removed) {
-          PIXIMAP.childrenById[object.id].visible = false
-          return
-        }
+        if(!PIXIMAP.makeInvisibleIfRemoved(object)) return
 
         if(object.tags.cameraLock && collisionsUtil.checkObject(object, GAME.heros[HERO.id])) {
           newCameraLock = object
@@ -692,4 +689,28 @@ PIXIMAP.convertToPartObject = function(gameObject, part) {
   if(gameObject.id === CONSTRUCTEDITOR.objectId) partObject.tags.invisible = true
 
   return partObject
+}
+
+PIXIMAP.makeInvisibleIfRemoved = function(object) {
+  if(object.mod().removed) {
+    PIXIMAP.childrenById[object.id].visible = false
+    if(object.subObjects) {
+      Object.keys(object.subObjects).forEach((subObjectName) => {
+        const so = object.subObjects[subObjectName]
+        PIXIMAP.childrenById[subObject.id].visible = false
+      })
+    }
+    return false
+  }
+  if(object.subObjects) {
+    Object.keys(object.subObjects).forEach((subObjectName) => {
+      const so = object.subObjects[subObjectName]
+      if(object.mod().removed) {
+        PIXIMAP.childrenById[subObject.id].visible = false
+        return
+      }
+    })
+  }
+
+  return true
 }

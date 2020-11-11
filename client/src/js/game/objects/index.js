@@ -131,7 +131,6 @@ class Objects{
       path: object.path,
       _targetPursueId: object._targetPursueId,
       //^^ older
-
       // targetFollowId:  object.targetFollowId,
 
       _pathIdIndex: object._pathIdIndex,
@@ -141,6 +140,8 @@ class Objects{
       _pfGrid: object.pfGrid,
 
       navigationTargetId:  object.navigationTargetId,
+
+      createdTime: object.createdTime,
 
       actionState: object.actionState,
     }
@@ -731,6 +732,10 @@ class Objects{
         window.socket.emit('updateGrid', GAME.grid)
       }
 
+      if(newObject.tags.destroySoon) {
+        newObject.createdTime = Date.now()
+      }
+
       return newObject
     }).filter(obj => !!obj)
 
@@ -935,6 +940,13 @@ class Objects{
 
     if(subObject.tags.startsInInventory) {
       subObject.inInventory = true
+    }
+
+    if(subObject.tags.onMap) {
+      subObject.removed = false
+    }
+    if(subObject.tags.onMapWhenEquipped && !subObject.inInventory && !subObject.tags.startsEquipped) {
+      subObject.removed = true
     }
   }
 
