@@ -232,7 +232,7 @@ function walkIntoWall(object) {
     }
   }
 
-  if(object._goalDirection === 'up') {
+  if(object._goalDirection === 'up' && !object.mod().tags.pathfindAvoidUp) {
     if ( isGridWalkable(gridX, gridY - 1, options) ){
       return { x: gridX, y: gridY - 1}
     }
@@ -249,7 +249,7 @@ function walkIntoWall(object) {
   let directions = [
     'left',
     'right',
-    'up',
+    !object.mod().tags.pathfindAvoidUp && 'up',
     'down',
   ].filter((dir) => dir !== object._goalDirection)
   object._goalDirection = directions[Math.floor(Math.random() * 3)]
@@ -265,7 +265,7 @@ function exploreCave(object) {
 
   // console.log('couldnt find directional movement, finding random space')
   let nearbyGrids = [
-    { x: gridX, y: gridY-1, direction: 'up'},
+    !object.mod().tags.pathfindAvoidUp && { x: gridX, y: gridY-1, direction: 'up'},
     { x: gridX+1, y: gridY, direction: 'right'},
     { x: gridX, y: gridY+1, direction: 'down'},
     { x: gridX-1, y: gridY, direction: 'left'},
@@ -294,7 +294,7 @@ function exploreCave(object) {
       }
     }
 
-    if(object._goalDirection === 'up') {
+    if(object._goalDirection === 'up' && !object.mod().tags.pathfindAvoidUp) {
       if ( isGridWalkable(gridX, gridY - 1, options) ){
         return { x: gridX, y: gridY - 1}
       }
@@ -311,7 +311,7 @@ function exploreCave(object) {
     let directions = [
       'left',
       'right',
-      'up',
+      !object.mod().tags.pathfindAvoidUp && 'up',
       'down',
     ].filter((dir) => dir !== object._goalDirection)
     object._goalDirection = directions[Math.floor(Math.random() * (object._goalDirection ? 3 : 4))]
@@ -336,7 +336,7 @@ function walkWithPurpose(object) {
     let directions = [
       'left',
       'right',
-      'up',
+      !object.mod().tags.pathfindAvoidUp && 'up',
       'down',
     ].filter((dir) => dir !== object._goalDirection)
     object._goalDirection = directions[Math.floor(Math.random() * (object._goalDirection ? 3 : 4))]
@@ -354,7 +354,7 @@ function walkWithPurpose(object) {
     }
   }
 
-  if(object._goalDirection === 'up') {
+  if(object._goalDirection === 'up' && !object.mod().tags.pathfindAvoidUp) {
     if ( isGridWalkable(gridX, gridY - 1, options) ){
       return { x: gridX, y: gridY - 1}
     }
@@ -423,7 +423,7 @@ function walkAround(object) {
     }
   } else if(random >= .75) {
     // go up
-    if(direction !== 'down') {
+    if(direction !== 'down' && !object.mod().tags.pathfindAvoidUp) {
       if ( isGridWalkable(gridX, gridY - 1, options) ){
         object._goalDirection = 'up'
         return { x: gridX, y: gridY - 1}

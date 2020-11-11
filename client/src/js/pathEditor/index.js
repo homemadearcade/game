@@ -234,6 +234,8 @@ class PathEditor {
 
     this.pathParts = object.pathParts || []
     this.pathParts.forEach((square) => {
+      square.gridX = ((square.x - this.grid.startX)/this.grid.nodeWidth)
+      square.gridY = ((square.y - this.grid.startY)/this.grid.nodeHeight)
       this.grid.updateNode(square.gridX, square.gridY, { color: square.color, filled: true, index: square.index })
     })
   }

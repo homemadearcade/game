@@ -404,6 +404,18 @@ function processEffect(effect, effected, effector, ownerObject) {
         HERO.addHero(hero)
       })
 
+      GAME.objects.forEach((object) => {
+        if(object.tags.talkOnStart) {
+          GAME.heroList.forEach((hero) => {
+            onTalk(hero, object, {}, [], [], { fromStart: true })
+          })
+        }
+        if(object.tags.giveQuestOnStart) {
+          GAME.heroList.forEach((hero) => {
+            startQuest(hero, object.questGivingId)
+          })
+        }
+      })
       window.emitGameEvent('onGameStarted')
     })
   }

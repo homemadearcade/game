@@ -188,7 +188,7 @@ function createGridNodeAt(x, y) {
   }
 }
 
-function keepXYWithinBoundaries(object) {
+function keepXYWithinBoundaries(object, options) {
   const {gridX, gridY} = convertToGridXY(object)
   if(!options) options = { bypassGameBoundaries : false, pathfindingLimit: null }
   return keepGridXYWithinBoundaries(gridX, gridY, options)

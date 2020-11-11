@@ -13,6 +13,7 @@ function setDefault() {
     homing: false,
     zombie: false,
     targetAuto: false,
+    targetBehind: false,
     targetHeroOnAware: false,
     targetVictimOnAware: false,
     targetSwitchOnAware: false,
@@ -228,6 +229,7 @@ function setDefault() {
     pathfindPatrol: false,
     pathfindDumb: false,
     pathfindWait: false,
+    pathfindAvoidUp: false,
   }
 
   window.defaultTags = {

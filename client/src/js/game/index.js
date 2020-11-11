@@ -77,6 +77,7 @@ class Game{
             if(GAME.heroInputs[hero.id]) input.onUpdate(hero, GAME.heroInputs[hero.id], delta)
             window.local.emit('onUpdateHero', hero, GAME.heroInputs[hero.id], delta)
             PHYSICS.updatePosition(hero, delta)
+            if(hero.mod().flags.isAdmin) return
             PHYSICS.prepareObjectsAndHerosForCollisionsPhase(hero, [], [])
             PHYSICS.heroCorrection(hero, [], [])
             PHYSICS.postPhysics([], [])

@@ -1026,6 +1026,10 @@ class Objects{
     delete GAME.objectsById[object.id]
   }
 
+  onDeleteObjectId(id) {
+    OBJECTS.onDeleteObject(OBJECTS.getObjectOrHeroById(id))
+  }
+
   onDeleteObject(object) {
     OBJECTS.deleteObject(object)
     window.local.emit('onUpdatePFgrid', 'delete', object)

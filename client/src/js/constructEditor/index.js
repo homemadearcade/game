@@ -138,6 +138,7 @@ class ConstructEditor {
     } else {
       this.cameraController = {x: object.x, width: object.mod().width, y: object.y, height: object.mod().height, zoomMultiplier}
     }
+
     this.camera.set(this.cameraController)
 
     this._mouseDownListener = (e) => {

@@ -183,7 +183,7 @@ function processSequence(sequence) {
         if(sequence.currentItemId === 'end') {
           endSequence(sequence)
         }
-        window.emitGameEvent('onUpdatePlayerUI', hero)
+        window.emitGameEvent('onUpdatePlayerUI', defaultEffected)
       }
     })
     sequence.eventListeners.push(removeEventListener)

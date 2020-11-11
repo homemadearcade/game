@@ -193,6 +193,7 @@ export default class Toolbar extends React.Component {
             LIVEEDITOR.open(GAME.heros[HERO.editingId], 'guidance')
           }}/>
 
+        {/* anticipate object
           <ToolbarButton iconName="fa-plus-square" onClick={() => {
             window.socket.emit('anticipateObject', { tags: { obstacle: true }}, HERO.editingId);
           }}
@@ -200,6 +201,8 @@ export default class Toolbar extends React.Component {
             window.socket.emit('anticipateObject', { tags: { obstacle: true }, wall: true}, HERO.editingId);
           }}
           />
+        */}
+
           <ToolbarButton iconName="fa-sliders-h" onClick={() => {
             LIVEEDITOR.open(GAME.heros[HERO.editingId], 'hero')
           }}/>
@@ -210,10 +213,13 @@ export default class Toolbar extends React.Component {
               window.socket.emit('editHero', { id: hero.id, animationZoomTarget: window.constellationDistance, animationZoomMultiplier: hero.zoomMultiplier, endAnimation: false })
           }}/>}
 
-          {/* camera shake */}
-          <ToolbarButton iconName="fa-camera" onClick={() => {
-            window.socket.emit('heroCameraEffect', 'cameraShake', HERO.editingId, { duration: 500, frequency: 20, amplitude: 36 })
-          }}/>
+          {/* camera shake
+
+            <ToolbarButton iconName="fa-camera" onClick={() => {
+              window.socket.emit('heroCameraEffect', 'cameraShake', HERO.editingId, { duration: 500, frequency: 20, amplitude: 36 })
+            }}/>
+            */}
+
         <ToolbarButton iconName="fa-camera-retro" onClick={async () => {
             const { value: name } = await Swal.fire({
               title: "What is the name of this photo?",
@@ -272,8 +278,10 @@ export default class Toolbar extends React.Component {
           {/* Quests -> Menu
             <ToolbarButton iconName="fa-check-square"></i>
           */}
-          {/* Scenarios -> Menu */}
-          <ToolbarButton iconName="fa-trophy"/>
+          {/* Scenarios -> Menu
+            <ToolbarButton iconName="fa-trophy"/>
+
+            */}
           {/* Sequences -> Menu */}
           <ToolbarButton iconName="fa-sitemap" onClick={() => {
             BELOWMANAGER.open({ selectedManager: 'GameManager', selectedMenu: 'sequence'})
@@ -296,8 +304,10 @@ export default class Toolbar extends React.Component {
             window.socket.emit('editGameHeroJSON', 'default', window.defaultHero)
           }}
           />
-          {/* Compendium -> Menu */}
-          <ToolbarButton iconName="fa-book-dead"/>
+          {/* Compendium -> Menu
+            <ToolbarButton iconName="fa-book-dead"/>
+
+             */}
         </ToolbarRow>
 
         {/* Grid -> Menu
