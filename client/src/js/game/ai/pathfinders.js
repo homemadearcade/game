@@ -10,8 +10,12 @@ function pathfindingAI(object) {
   }
 
   if(object.tags && object.mod().tags['homing'] && autoTarget) {
+    if(object.mod().tags.targetResetEveryRound || object.mod().tags.targetBehind) object.path = []
     if(!object.path || (object.path && !object.path.length)) {
       setPathTarget(object, hero)
+    }
+    if(object.path.length && (object.mod().tags.targetResetEveryRound || object.mod().tags.targetBehind)) {
+      object.path.shift()
     }
   }
 
@@ -137,7 +141,7 @@ function setPathTarget(object, target, pursue) {
 
   if(object.mod().tags.targetBehind) {
     const direction = target.inputDirection || target._movementDirection
-    
+
     if(direction === 'up') {
       pathFrom.y += 2
     } else if(direction === 'down') {
@@ -155,6 +159,21 @@ function setPathTarget(object, target, pursue) {
 
 function setTarget(object, target, pursue) {
   object.targetXY = { x: target.x, y: target.y }
+
+  if(object.mod().tags.targetBehind) {
+    const direction = target.inputDirection || target._movementDirection
+
+    if(direction === 'up') {
+      object.targetXY.y += (GAME.grid.nodeSize * 2)
+    } else if(direction === 'down') {
+      object.targetXY.y -= (GAME.grid.nodeSize * 2)
+    } else if(direction === 'left') {
+      object.targetXY.x += (GAME.grid.nodeSize * 2)
+    } else if(direction === 'right') {
+      object.targetXY.x -= (GAME.grid.nodeSize * 2)
+    }
+  }
+
   if(pursue) object._targetPursueId = target.id
 }
 

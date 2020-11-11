@@ -187,12 +187,17 @@ LEVELS ( sub worlds )
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
 
-tag
-  dont move down
-  create bloody corpse when destroyed
+bug - it seems if a world is too wide or something??
+theres a problem with the construct editor camera not being able
+to go far enough right or down
 
+tag
+  go down when hit obstacle ( mainly for goombas you feel me? )
+  create bloody corpse when destroyed
   slow down tag ( MOD lowers speed of anything inside of it )
   water tag ( MOD lowers gravity of anything inside of it )
+  -- temp mods !! so these would be tags that use the mod system essentially...
+
 
 VISIBLE TO - tag
 STORY - Fade in/out to game

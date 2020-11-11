@@ -441,7 +441,7 @@ function containObjectWithinGridBoundaries(object) {
         legal = false
       }
       if(legal && object.mod().tags.fresh){
-        object.mod().tags.fresh = false
+        object.tags.fresh = false
         object.path = null
       }
     } else if(gameBoundaries.behavior === 'pacmanFlip' || (gameBoundaries.behavior === 'purgatory' && object.id.indexOf('hero') > -1)) {
@@ -464,7 +464,7 @@ function containObjectWithinGridBoundaries(object) {
         bottom = true
       }
       if(legal && object.mod().tags.fresh){
-        object.mod().tags.fresh = false
+        object.tags.fresh = false
         object.path = null
       }
     } else {
@@ -502,7 +502,7 @@ function containObjectWithinGridBoundaries(object) {
     }
 
     if(legal && object.mod().tags.fresh){
-      object.mod().tags.fresh = false
+      object.tags.fresh = false
       object.path = null
     }
 

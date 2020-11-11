@@ -14,6 +14,7 @@ function setDefault() {
     zombie: false,
     targetAuto: false,
     targetBehind: false,
+    targetResetEveryRound: false,
     targetHeroOnAware: false,
     targetVictimOnAware: false,
     targetSwitchOnAware: false,

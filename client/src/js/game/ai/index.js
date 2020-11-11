@@ -90,7 +90,6 @@ function moveOnPath(object, delta) {
     object.gridY = gridY
   }
 
-
   let pathSpeedX = object.mod().speed || -100
   let pathSpeedY = object.mod().speed || -100
 
@@ -212,6 +211,7 @@ function onUpdate(objects, delta) {
         object.velocityX = 0
         object.velocityY = 0
       } else {
+        console.log(object.id, object.path)
         moveOnPath(object, delta)
       }
     } else if(object.targetXY) {
