@@ -145,22 +145,28 @@ function shootBullet({ shooter, actionProps, direction }) {
   }
 }
 
-function dropWall(hero) {
+function dropOne({ hero, actionProps, direction }) {
   let directions = hero.directions
   let wall = {
     id: 'wall-' + window.uniqueID(),
-    width: GAME.grid.nodeSize,
-    height: GAME.grid.nodeSize,
+    width: actionProps.width,
+    height: actionProps.height,
     tags: {
-      obstacle: true,
-      stationary: true,
+      ...actionProps.dropTags,
+      rotateable: true,
     },
+  }
+
+  let angle
+  if(hero.angle === 0 || hero.angle) {
+    angle = hero.angle
   }
 
   if(direction === 'up') {
     Object.assign(wall, {
       x: hero.x,
       y: hero.y - hero.mod().height,
+      angle: angle ? angle : 0,
     })
   }
 
@@ -168,6 +174,7 @@ function dropWall(hero) {
     Object.assign(wall, {
       x: hero.x,
       y: hero.y + hero.mod().height,
+      angle: angle ? angle : 1.5708 * 2,
     })
   }
 
@@ -175,6 +182,7 @@ function dropWall(hero) {
     Object.assign(wall, {
       x: hero.x + hero.mod().width,
       y: hero.y,
+      angle: angle ? angle : 1.5708,
     })
   }
 
@@ -182,6 +190,7 @@ function dropWall(hero) {
     Object.assign(wall, {
       x: hero.x - hero.mod().width,
       y: hero.y,
+      angle: angle ? angle : 1.5708 * 3,
     })
   }
 
@@ -190,6 +199,6 @@ function dropWall(hero) {
 
 export {
   shootBullet,
-  dropWall,
+  dropOne,
   closestObjectBehavior
 }

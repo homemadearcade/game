@@ -140,17 +140,42 @@ function setPathTarget(object, target, pursue) {
   }
 
   if(object.mod().tags.targetBehind) {
-    const direction = target.inputDirection || target._movementDirection
+    // const direction = target.inputDirection || target._movementDirection
+    //
+    // if(direction === 'up') {
+    //   pathFrom.y += 2
+    // } else if(direction === 'down') {
+    //   pathFrom.y -= 2
+    // } else if(direction === 'left') {
+    //   pathFrom.x += 2
+    // } else if(direction === 'right') {
+    //   pathFrom.x -= 2
+    // }
 
-    if(direction === 'up') {
-      pathFrom.y += 2
-    } else if(direction === 'down') {
-      pathFrom.y -= 2
-    } else if(direction === 'left') {
-      pathFrom.x += 2
-    } else if(direction === 'right') {
-      pathFrom.x -= 2
-    }
+    const options = [
+      { y: pathFrom.y + 2, x: pathFrom.x },
+      { y: pathFrom.y - 2, x: pathFrom.x },
+      { y: pathFrom.y, x: pathFrom.x + 2},
+      { y: pathFrom.y, x: pathFrom.x - 2},
+      // { y: pathFrom.y + 2, x: pathFrom.x + 2},
+      // { y: pathFrom.y - 2, x: pathFrom.x - 2},
+      // { y: pathFrom.y - 2, x: pathFrom.x + 2},
+      // { y: pathFrom.y + 2, x: pathFrom.x - 2}
+    ]
+
+    let smallestDiff = Infinity
+    let choice = options[0]
+    options.forEach((opt) => {
+      const diffX = Math.abs(pathTo.x - opt.x)
+      const diffY = Math.abs(pathTo.y - opt.y)
+      if((diffX + diffY) < smallestDiff) {
+        smallestDiff = diffX + diffY
+        choice = opt
+      }
+    })
+
+    pathFrom.x = choice.x
+    pathFrom.y = choice.y
   }
 
   object.path = pathfinding.findPath(pathTo, pathFrom, pfOptions)
@@ -161,17 +186,38 @@ function setTarget(object, target, pursue) {
   object.targetXY = { x: target.x, y: target.y }
 
   if(object.mod().tags.targetBehind) {
-    const direction = target.inputDirection || target._movementDirection
+    // const direction = target.inputDirection || target._movementDirection
+    //
+    // if(direction === 'up') {
+    //   object.targetXY.y += (GAME.grid.nodeSize * 2)
+    // } else if(direction === 'down') {
+    //   object.targetXY.y -= (GAME.grid.nodeSize * 2)
+    // } else if(direction === 'left') {
+    //   object.targetXY.x += (GAME.grid.nodeSize * 2)
+    // } else if(direction === 'right') {
+    //   object.targetXY.x -= (GAME.grid.nodeSize * 2)
+    // }
 
-    if(direction === 'up') {
-      object.targetXY.y += (GAME.grid.nodeSize * 2)
-    } else if(direction === 'down') {
-      object.targetXY.y -= (GAME.grid.nodeSize * 2)
-    } else if(direction === 'left') {
-      object.targetXY.x += (GAME.grid.nodeSize * 2)
-    } else if(direction === 'right') {
-      object.targetXY.x -= (GAME.grid.nodeSize * 2)
-    }
+    const options = [
+      { y: object.targetXY.y + (GAME.grid.nodeSize * 2), x: object.targetXY.x },
+      { y: object.targetXY.y - (GAME.grid.nodeSize * 2), x: object.targetXY.x },
+      { y: object.targetXY.y, x: object.targetXY.x + (GAME.grid.nodeSize * 2)},
+      { y: object.targetXY.y, x: object.targetXY.x - (GAME.grid.nodeSize * 2)},
+    ]
+
+    let smallestDiff = Infinity
+    let choice = options[0]
+    options.forEach((opt) => {
+      const diffX = Math.abs(object.x - opt.x)
+      const diffY = Math.abs(object.y - opt.y)
+      if((diffX + diffY) < smallestDiff) {
+        smallestDiff = diffX + diffY
+        choice = opt
+      }
+    })
+
+    object.targetXY.x = choice.x
+    object.targetXY.y = choice.y
   }
 
   if(pursue) object._targetPursueId = target.id

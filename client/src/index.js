@@ -40,9 +40,9 @@ JUMPING POWERS
 -----
 
 SEQUENCE EDITOR UPGRADE
-Create
+Create/Editor
 Animate
-Editor
+Sound
 
 SPAWN UPGRADE
 Hero removed -> respawn UI
