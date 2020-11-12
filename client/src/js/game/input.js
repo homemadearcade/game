@@ -1,5 +1,5 @@
 import keycode from 'keycode'
-import { shootBullet, dropWall } from './action.js';
+import { shootBullet, dropWall, closestObjectBehavior } from './action.js';
 
 window.defaultWASD =  {
   w: 'Move Up',
@@ -228,6 +228,26 @@ function handleActionButtonBehavior(hero, action, delta) {
     }
   }
 
+  if(action === 'shrink') {
+    if(subObject) {
+      closestObjectBehavior({
+        direction: hero.inputDirection,
+        shooter: subObject,
+        actionProps: subObject.actionProps,
+        behavior: 'shrink'
+      })
+    } else {
+      closestObjectBehavior({
+        direction: hero.inputDirection,
+        shooter: hero,
+        actionProps: {
+            distance: 100
+        },
+        behavior: 'shrink'
+      })
+    }
+  }
+
   if(action === 'mod') {
     if(subObject && !subObject.actionState.manualRevertId) {
       const manualRevertId = 'modrevert-' + window.uniqueID()
@@ -318,6 +338,7 @@ function onUpdate(hero, keysDown, delta) {
     }
 
     hero._skipPosUpdate = true
+    hero._skipCorrections = true
 
     return
   }

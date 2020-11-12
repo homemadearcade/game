@@ -200,6 +200,12 @@ function onFirstPageGameLoaded() {
       toggleId: 'gun',
       ...toggleSubObject('gun')
     },
+    shrinkRay: {
+      label: 'Shrink Ray',
+      columnName: 'Equip',
+      toggleId: 'shrinkRay',
+      ...toggleSubObject('shrinkRay')
+    },
     zeldaPowerBlock: {
       label: 'Zelda',
       columnName: 'Blocks',
@@ -301,6 +307,7 @@ function onFirstPageGameLoaded() {
     snake: true,
     spear: true,
     gun: true,
+    shrinkRay: true,
     zeldaPowerBlock: true,
     marioPowerBlock: true,
     asteroidsPowerBlock: true,

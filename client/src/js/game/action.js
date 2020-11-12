@@ -1,3 +1,23 @@
+import collisionsUtil from '../utils/collisions.js'
+
+function closestObjectBehavior({ shooter, actionProps, direction, behavior }) {
+  const closestObject = collisionsUtil.getClosestObjectInDirection(
+    shooter,
+    actionProps.distance,
+    actionProps.tagsSeeking[0],
+    direction,
+  )
+
+  if(closestObject) {
+    if(behavior === 'shrink') {
+      closestObject.width -= actionProps.power;
+      closestObject.height -= actionProps.power;
+      closestObject.x += actionProps.power/2
+      closestObject.y += actionProps.power/2
+    }
+  }
+}
+
 function createBullet({ shooter, actionProps, direction }) {
   let shot = {
     id: 'bullet-' + window.uniqueID(),
@@ -75,7 +95,7 @@ function shootBullet({ shooter, actionProps, direction }) {
     }
     OBJECTS.create(shooted, { fromLiveGame: true })
   } else {
-    if(actionProps.shootBulletsPerRound) {
+    if(actionProps.shootBulletsPerRound > 1) {
       let shotBullets = 1
       shooted = [createBullet({ shooter, actionProps, direction })]
       OBJECTS.create(shooted, { fromLiveGame: true })
@@ -83,7 +103,7 @@ function shootBullet({ shooter, actionProps, direction }) {
         shooted = [createBullet({ shooter: OBJECTS.getObjectOrHeroById(shooter.id), actionProps, direction })]
         OBJECTS.create(shooted, { fromLiveGame: true })
         shotBullets++
-        if(shotBullets == actionProps.shootBulletsPerRound) {
+        if(shotBullets >= actionProps.shootBulletsPerRound) {
           clearInterval(shootInterval)
         }
       }, 2)
@@ -140,4 +160,5 @@ function dropWall(hero) {
 export {
   shootBullet,
   dropWall,
+  closestObjectBehavior
 }

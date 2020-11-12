@@ -387,6 +387,27 @@ function postPhysics() {
       }
     }
     processAwarenessAndWithinEvents(hero)
+
+    if(hero.subObjects) {
+      Object.keys(hero.subObjects).forEach((subObjectName) => {
+        const subObject = hero.subObjects[subObjectName]
+        processAwarenessAndWithinEvents(subObject)
+
+        // if(subObject.closestObjectsWithinAction && subObject._objectsWithin) {
+        //   subObject._objectsWithin.forEach((id) => {
+        //     const object = OBJECTS.getObjectOrHeroById(id)
+        //
+        //     const diffX = hero.x - object.x
+        //     const diffY = hero.y - object.y
+        //     const diffTotal = diffX + diffY
+        //     if(diffTotal > currentHighestDiff) {
+        //       currentHighestDiff = diffTotal
+        //       currentClosestObject = id
+        //     }
+        //   })
+        // }
+      })
+    }
   })
 
   // NON CHILD GO FIRST
@@ -398,6 +419,13 @@ function postPhysics() {
       object._deltaY = object.y - object._initialY
     }
     processAwarenessAndWithinEvents(object)
+
+    if(object.subObjects) {
+      Object.keys(object.subObjects).forEach((subObjectName) => {
+        const subObject = object.subObjects[subObjectName]
+        processAwarenessAndWithinEvents(subObject)
+      })
+    }
   })
 
   allHeros.forEach((hero) => {

@@ -86,7 +86,7 @@ class Game{
           GAME.objects.forEach((object) => {
             if(object.mod().removed) return
             if(object.mod().tags.destroySoon) {
-              if(object.createdTime + 20000 < Date.now()) object._destroy = true
+              OBJECTS.deleteObject(object)
             }
             window.local.emit('onUpdateObject', object, delta)
           })
@@ -153,6 +153,10 @@ class Game{
         if(GAME.gameState.started) {
           GAME.objects.forEach((object) => {
             if(object.mod().removed) return
+            if(object.mod().tags.destroySoon) {
+              console.log(object.id, object.createdTime + 20000, Date.now())
+              if(object.createdTime + 20000 < Date.now()) object._destroy = true
+            }
             PHYSICS.updatePosition(object, delta)
           })
         }

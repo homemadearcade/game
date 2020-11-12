@@ -52,7 +52,22 @@ window.local.on('onFirstPageGameLoaded', () => {
         revertable: true
       },
       actionState: {}
-    }
+    },
+    shrinkRay: {
+      x: 0, y: 0, width: 10, height: 10,
+      relativeX: GAME.grid.nodeSize/5,
+      relativeY: -GAME.grid.nodeSize,
+      subObjectName: 'Shrink Ray',
+      tags: { rotateable: true, relativeToAngle: true, relativeToDirection: true, pickupable: true, pickupOnHeroInteract: true, equipOnPickup: true, onMapWhenEquipped: true },
+      actionButtonBehavior: 'shrink',
+      actionProps: {
+        debounceTime: 1.2,
+        distance: 1000,
+        power: 10,
+        tagsSeeking: ['obstacle'],
+      },
+      actionState: {}
+    },
   }
 
 })

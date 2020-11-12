@@ -211,7 +211,6 @@ function onUpdate(objects, delta) {
         object.velocityX = 0
         object.velocityY = 0
       } else {
-        console.log(object.id, object.path)
         moveOnPath(object, delta)
       }
     } else if(object.targetXY) {
