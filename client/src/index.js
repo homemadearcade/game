@@ -4,42 +4,30 @@
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
 
-TODO
+FINAL TODO FOR HA
+-
+SOUND FX
+GAME FEEL
+MORE TOOLS
+COMBINE COMBAT WITH GOALS AND QUESTS
+INVENTORY HUD
+GRAPHICAL, PARTICLE, ANIMATED INTEGRATION
 
-0. Projectile ( DONE )
-1. Hook
-2. Creator object
-3. Mod object
-4. Special jumps
-5. Create strong library of these ^
+-------
+TODO right now
 
-//CREATORS?
-GUNS THAT CREATE THINGS....?
-Things that expand?
-Is that the bomb?
-BOMBS
-
-///////
-HOOKS
-Shrink ray, grow ray
-SUCK THINGS IN AND ADD TO INVENTORY?
-GRAPLING HOOK
-Generally a different way to effect objects...
-
-Ill need a functionality called like 'closest object in direction'. When a power is about editing current objects rather than ADDING new ones
-or maybe well call it 'expandLeft, expandRight'
-and then we can either do an onCollide coming from the tool or on the recieving object
-  coming from the tool: ANY OBJECT CAN BE EFFECTED BY THIS
-  coming from the guest object: only specifically tagged objects can be effected by this
+1. Bomb? Can we just use bullets? USe bullet system and also add a timer object
+2. Special jumps
+3. Create strong library of these ^
 
 ///////
 GAME FEEL MODS
 Fly power
 Metal mario! How did I not think of this. Sink and don't drown
-Vanish cap ( lets you walk through walls )
-Change speed and game feel to something else ( racoon type thing )
-Shrink power, think metroid or CROUCH even
-REVEAL things power ( see living objects, see through foreground )
+Vanish cap ( lets you walk through walls? )
+Fast fast cap..? Like mario racoon essentially, gives you better soaring and speed?
+Shrink power, think metroid ball or CROUCH even
+REVEAL things power ( see living objects through foreground, see through all foreground, see hidden objects )
 
 ///////
 JUMPING POWERS
@@ -51,37 +39,19 @@ JUMPING POWERS
 
 -----
 
-experience password for ha-live. Use month+day - 100
-
-Non scroller object ( sun )
-Parallax scroller ( 0-10 )
-
-Change on collide to on touch start for certain tags
-Try uploading game JSON on non host
-Low bandwidth mode
-Toggle between drawing types?
-
-SIMPLE SEQUENCE ( Opening Sequence )
-PUZZLE INTERFACES
-
------
-
 SEQUENCE EDITOR UPGRADE
 Create
 Animate
 Editor
 
-AGGREGATION MENUS
-// view everything this object is involved in
-// view all current modifications
-
 SPAWN UPGRADE
 Hero removed -> respawn UI
 HOOK UP RESPAWNS TO A SPAWN ZONE
-death by jump
+death by jump tag?
 spawn on interact ( spawn effect )
 
 EDITOR UPGRADES
+action props editor
 Light Editor
 never close right click menu if shift is pressed
 Improve Add Sub Object
@@ -90,6 +60,13 @@ GENRE libraries ( creator, generatedMenu )
 ///
 GAME FEEL UPGRADE
 Implement special extra physics for objects, not just heros
+Hero jump attack and movement ATTACK
+ATTACK which is like initial acceleration when there is no acceleration yet, jump attack speed, etc
+tag: sharpTurns ( velocity is positive and decreasing, increase this power )
+event: onObjectTurn
+Object 'swinging' like on a rope. I mean... awesome right?
+input modifiers....'on ice', 'flat'
+// planet gravity! Would be cool to have..
 
 ///
 INVENTORY UPGRADE
@@ -147,9 +124,82 @@ Game Over State
 BRANCH
 Different roots for the branches...
 
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+// BIG FEATURES
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
 
-///////
+SOUND FX
+
+PUZZLE INTERFACES
+
+!!!!!!!! !!!! READY FOR HOME MADE ARCADE !!!! !!!!!!
+
+SIMPLE SEQUENCE
+(ELEMENTAL SYSTEM) Lava, water, tree (?), fire, mountain, sand, ice, ROCK ( FIRST WEAPONS )-> Trees. ( ROBOT PARTS TOO)
+LEVEL UP SYSTEM
+
+PIXEL EDITOR
+DETAIL VIEW
+LOBBY - HERO SELECTION + CUSTOMIZATION
+TEAMS
+PROCEDURAL LARGE SCALE
+FOG OF WAR
+LEVELS ( sub worlds )
+
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+/// BUGS
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+sub object top vs bottom...
+
+If object is outside of its custom grid to start off, It will not be able to find the correct grid
+Theres needs to be a flag, perhaps the _fresh flag that allows it to use the other pathfinding grid to make its away to the new path
+
+Try uploading game JSON on non host
+Construct Editor on ha-demo bug?
+  bug - it seems if a world is too wide or something??
+  theres a problem with the construct editor camera not being able
+  to go far enough right or down
+
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+/// SMALL FEATURES
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+
+Add title menu (press start)
+Add controls menu to opening sequence
+
+Low bandwidth mode
+
+Toggle between drawing types?
+
+experience password for ha-live. Use month+day - 100
+
+Change on collide to on touch start for certain tags
+
+tag
+  speed boost tile
+  go down when hit obstacle ( mainly for goombas you feel me? )
+  create bloody corpse when destroyed
+  slow down tag ( MOD lowers speed of anything inside of it )
+  water tag ( MOD lowers gravity of anything inside of it )
+  -- temp mods !! so these would be tags that use the mod system essentially...
+  Non scroller object ( sun )
+  Parallax scroller slower
+  Parallax scroller faster
+    special camera relation, 0, .5, 2, 10, etc. might wanna encapsulale the camera changing logic into a function?
+
+
+Create an onSequenceComplete thing..? So when its done we know to move onto the next event
+
+--
+
 WEAPONS
+bouncing ball
 various guns
   - BOOMERANG
   Bouncing ball action - mario fireball
@@ -158,69 +208,14 @@ Sword options..
   time quota - Time that the collision boxes are active
 bullets that ping around!
 Maybe dual stick shooter potential?
---
-
-////////////////////////////////////////////////////
-////////////////////////////////////////////////////
-// BIG FEATURES
-////////////////////////////////////////////////////
-////////////////////////////////////////////////////
-
-(ELEMENTAL SYSTEM) Lava, water, tree (?), fire, mountain, sand, ice, ROCK ( FIRST WEAPONS )-> Trees. ( ROBOT PARTS TOO)
-
-LEVEL UP SYSTEM
-
-!!!!!!!! !!!! READY FOR HOME MADE ARCADE !!!! !!!!!!
-
-PIXEL EDITOR
-DETAIL VIEW
-LOBBY - HERO SELECTION + CUSTOMIZATION
-TEAMS
-SOUND FX
-PROCEDURAL LARGE SCALE
-FOG OF WAR
-LEVELS ( sub worlds )
-
-////////////////////////////////////////////////////
-////////////////////////////////////////////////////
-/// SMALL FEATURES
-////////////////////////////////////////////////////
-////////////////////////////////////////////////////
-
-bug - it seems if a world is too wide or something??
-theres a problem with the construct editor camera not being able
-to go far enough right or down
-
-tag
-  go down when hit obstacle ( mainly for goombas you feel me? )
-  create bloody corpse when destroyed
-  slow down tag ( MOD lowers speed of anything inside of it )
-  water tag ( MOD lowers gravity of anything inside of it )
-  -- temp mods !! so these would be tags that use the mod system essentially...
+// gun that swaps places with what it hits! so cool..
 
 VISIBLE TO - tag
 STORY - Fade in/out to game
 
-speed boost tile
-
---
-
-Create an onSequenceComplete thing..? So when its done we know to move onto the next event
-
-—
-Start mod on collide tag
-
---
-
-sub object top vs bottom...
-
 every one gets their own construct editor drawing things, the problem is then that I have to deal with the layering issue...
 
-bouncing ball
-
 ADMIN to reselect sprites, remove sprites, combine sprites into animations
-
-special camera relation, 0, .5, 2, 10, etc. might wanna encapsulale the camera changing logic into a function?
 
 add object needs to be its own thing with effect, wait, condition, etc.
 Its getting really complicated. For now im going to cheat it. It should have its own service and its own sequence type, feel me?
@@ -239,18 +234,7 @@ Select emitter from right click menu list, this is not a live emitter, its a dir
 
 right click - follow object, follow with path object
 
-If object is outside of its custom grid to start off, It will not be able to find the correct grid
-Theres needs to be a flag, perhaps the _fresh flag that allows it to use the other pathfinding grid to make its away to the new path
-
-ATTACK which is like initial acceleration when there is no acceleration yet, jump attack speed, etc
-tag: sharpTurns ( velocity is positive and decreasing, increase this power )
-event: onObjectTurn
-Object 'swinging' like on a rope. I mean... awesome right?
-input modifiers....'on ice', 'flat'
-// planet gravity! Would be cool to have..
-
 I want actual grid node by grid node movement and grid collision system. I want grid movement for OBJECTS too
-TRUE zelda camera work
 
 mini-map
 map rotation having problems 1) object stage already pivoted for camera reason 2) admin canvas is not rotating with
@@ -261,7 +245,6 @@ Background animation tag ( perhaps background stage and everything…)
 Add animations to an object, custom animations? More than one like an array of them.. lol
 add custom input behavior is broken but maybe thats good
 in-game checkpoints
-// gun that swaps places with what it hits! so cool..
 // 3d sound effects system from papa bear
 // layered object select when right clicking. ( for invisible areas and parent areas ) ( object selected will be an array and then the menu will choose between those )
 // global compendium service that I can add to remove without copying and pasting JSON
@@ -352,9 +335,7 @@ TEAM DETAIL MENU
 
 OBJECT DETAIL MENU
 TABS Info, Triggers, Color, Sprite, Tags, Combat Info, HERO: ( Quests, Skills, Inventory, Equipment, Controls )
-
-TRIGGERS
-Need to make each trigger reach a sequence? and look up that sequence and display in list
+// DEBUG - view everything this object is possibly involved in -> triggers, sequences, tags
 
 INFO
 Sprite Profile photo
@@ -382,6 +363,7 @@ EDITORS
 light editor
 timer editor
 quest editor ( inside of default hero editor )
+action props editor
 
 ////////////////////////////////
 ////////////////////////////////

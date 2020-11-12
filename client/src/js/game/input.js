@@ -216,7 +216,10 @@ function handleActionButtonBehavior(hero, action, delta) {
 
   if(subObject && !subObject.actionState) subObject.actionState = {}
 
-  if(subObject && subObject.actionState.waiting) return
+  if(subObject && subObject.actionState.waiting) {
+    console.log('action button waiting')
+    return
+  }
 
   if(action === 'shoot') {
     if(subObject) {
@@ -228,22 +231,24 @@ function handleActionButtonBehavior(hero, action, delta) {
     }
   }
 
-  if(action === 'shrink') {
+  if(action === 'shrink' || action === 'grow' || action === 'vacuum') {
     if(subObject) {
       closestObjectBehavior({
         direction: hero.inputDirection,
         shooter: subObject,
         actionProps: subObject.actionProps,
-        behavior: 'shrink'
+        behavior: action,
+        delta,
       })
     } else {
       closestObjectBehavior({
         direction: hero.inputDirection,
         shooter: hero,
         actionProps: {
-            distance: 100
+          distance: 100
         },
-        behavior: 'shrink'
+        behavior: action,
+        delta,
       })
     }
   }

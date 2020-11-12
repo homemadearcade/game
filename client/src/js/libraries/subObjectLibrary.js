@@ -61,9 +61,8 @@ window.local.on('onFirstPageGameLoaded', () => {
       tags: { rotateable: true, relativeToAngle: true, relativeToDirection: true, pickupable: true, pickupOnHeroInteract: true, equipOnPickup: true, onMapWhenEquipped: true },
       actionButtonBehavior: 'shrink',
       actionProps: {
-        debounceTime: 1.2,
         distance: 1000,
-        power: 10,
+        power: 1,
         tagsSeeking: ['obstacle'],
       },
       actionState: {}

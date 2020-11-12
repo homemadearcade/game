@@ -1,6 +1,6 @@
 import collisionsUtil from '../utils/collisions.js'
 
-function closestObjectBehavior({ shooter, actionProps, direction, behavior }) {
+function closestObjectBehavior({ shooter, actionProps, direction, behavior, delta }) {
   const closestObject = collisionsUtil.getClosestObjectInDirection(
     shooter,
     actionProps.distance,
@@ -9,11 +9,42 @@ function closestObjectBehavior({ shooter, actionProps, direction, behavior }) {
   )
 
   if(closestObject) {
+    let power = actionProps.power
+    if(!actionProps.debounceTime) {
+      power = power * delta
+    }
     if(behavior === 'shrink') {
-      closestObject.width -= actionProps.power;
-      closestObject.height -= actionProps.power;
-      closestObject.x += actionProps.power/2
-      closestObject.y += actionProps.power/2
+      closestObject.width -= power;
+      closestObject.height -= power;
+      closestObject.x += power/2
+      closestObject.y += power/2
+      if(closestObject.width <= 1 && closestObject.height <= 1) closestObject._destroy = true
+      if(closestObject.width <= 1) closestObject.width = 1
+      if(closestObject.height <= 1) closestObject.height = 1
+    }
+    if(behavior === 'grow') {
+      closestObject.width += power;
+      closestObject.height += power;
+      closestObject.x -= power/2
+      closestObject.y -= power/2
+    }
+    if(behavior === 'vacuum') {
+      const x = closestObject.x + (closestObject.width/2)
+      if(x > shooter.x) {
+        closestObject.x -= power
+      } else if(x < shooter.x){
+        closestObject.x += power
+      }
+
+      const y = closestObject.y + (closestObject.height/2)
+      if(y > shooter.y) {
+        closestObject.y -= power
+      } else if(y < shooter.y){
+        closestObject.y += power
+      }
+    }
+    if(behavior === 'grapplingHook') {
+      // grapple and allow climbing with this hook
     }
   }
 }

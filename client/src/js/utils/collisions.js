@@ -87,7 +87,7 @@ function getClosestObjectInDirection(start, distance, tag, direction) {
     y: start.y,
     angle: direction ? radians : start.angle,
     width: start.width,
-    height: GAME.grid.nodeSize,
+    height: start.height,
     velocityAngle: GAME.grid.nodeSize,
     tags: {
       rotateable: true,
@@ -98,7 +98,6 @@ function getClosestObjectInDirection(start, distance, tag, direction) {
   let objects = GAME.objectsByTag[tag]
   let closestObject;
   for(let totalDiff = 0; totalDiff < distance;) {
-    console.log(totalDiff)
     for(let i = 0; i < objects.length; i++) {
       const object = objects[i]
       if(object.mod().removed) continue
