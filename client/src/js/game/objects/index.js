@@ -732,7 +732,7 @@ class Objects{
         window.socket.emit('updateGrid', GAME.grid)
       }
 
-      if(newObject.tags.destroySoon) {
+      if(newObject.tags.destroySoon || newObject.tags.destroyQuickly || newObject.tags.destroyEventually) {
         newObject.createdTime = Date.now()
       }
 
@@ -1341,6 +1341,9 @@ class Objects{
     }
     if(object.mod().tags.spinOffOnDestroy) {
       window.local.emit('onObjectAnimation', 'spinOff', object.id)
+    }
+    if(object.mod().tags.spawnAllOnDestroy) {
+      spawnAllNow(object)
     }
   }
 

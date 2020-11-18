@@ -1,5 +1,5 @@
 import keycode from 'keycode'
-import { shootBullet, dropWall, closestObjectBehavior } from './action.js';
+import { shootBullet, dropOne, closestObjectBehavior } from './action.js';
 
 window.defaultWASD =  {
   w: 'Move Up',
@@ -249,6 +249,16 @@ function handleActionButtonBehavior(hero, action, delta) {
         },
         behavior: action,
         delta,
+      })
+    }
+  }
+
+  if(action === 'drop') {
+    if(subObject) {
+      dropOne({
+        direction: hero.inputDirection,
+        dropper: hero,
+        actionProps: subObject.actionProps
       })
     }
   }

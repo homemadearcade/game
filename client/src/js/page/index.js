@@ -138,7 +138,6 @@ class Page{
     }
     window.HALandingUrl = landingUrl
 
-
     if(PAGE.getParameterByName('arcadeMode')) {
       events.establishALocalHost()
       PAGE.establishRoleFromQueryOnly()
@@ -173,6 +172,8 @@ class Page{
     const heroOptions = Object.keys(window.heroLibrary)
     const hasSavedHero = localStorage.getItem('hero')
     if(hasSavedHero) heroOptions.unshift('resume')
+
+    console.log('XXX')
 
     let heroSummonType = 'singlePlayer'
     if(PAGE.getParameterByName('heroSummonType')) {

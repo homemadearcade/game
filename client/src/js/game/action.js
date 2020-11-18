@@ -145,8 +145,8 @@ function shootBullet({ shooter, actionProps, direction }) {
   }
 }
 
-function dropOne({ hero, actionProps, direction }) {
-  let directions = hero.directions
+function dropOne({ dropper, actionProps, direction }) {
+  let directions = dropper.directions
   let wall = {
     id: 'wall-' + window.uniqueID(),
     width: actionProps.width,
@@ -157,39 +157,57 @@ function dropOne({ hero, actionProps, direction }) {
     },
   }
 
+  if(actionProps.explosionTags) {
+    wall.subObjects = {
+      explosion: {
+        subObjectName: 'explosion',
+        relativeX: -wall.width,
+        width: wall.width * 3,
+        relativeY: -wall.height,
+        height: wall.height * 3,
+        tags: actionProps.explosionTags,
+        color: 'red',
+        opacity: .2,
+      }
+    }
+    wall.subObjectChances = {explosion:{randomWeight:1,conditionList:null}}
+    wall.spawnPoolInitial = 1
+    wall.tags.spawnAllOnDestroy = true
+  }
+
   let angle
-  if(hero.angle === 0 || hero.angle) {
-    angle = hero.angle
+  if(dropper.angle === 0 || dropper.angle) {
+    angle = dropper.angle
   }
 
   if(direction === 'up') {
     Object.assign(wall, {
-      x: hero.x,
-      y: hero.y - hero.mod().height,
+      x: dropper.x,
+      y: dropper.y - dropper.mod().height,
       angle: angle ? angle : 0,
     })
   }
 
   if(direction === 'down') {
     Object.assign(wall, {
-      x: hero.x,
-      y: hero.y + hero.mod().height,
+      x: dropper.x,
+      y: dropper.y + dropper.mod().height,
       angle: angle ? angle : 1.5708 * 2,
     })
   }
 
   if(direction === 'right') {
     Object.assign(wall, {
-      x: hero.x + hero.mod().width,
-      y: hero.y,
+      x: dropper.x + dropper.mod().width,
+      y: dropper.y,
       angle: angle ? angle : 1.5708,
     })
   }
 
   if(direction === 'left') {
     Object.assign(wall, {
-      x: hero.x - hero.mod().width,
-      y: hero.y,
+      x: dropper.x - dropper.mod().width,
+      y: dropper.y,
       angle: angle ? angle : 1.5708 * 3,
     })
   }

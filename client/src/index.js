@@ -13,6 +13,8 @@ COMBINE COMBAT WITH GOALS AND QUESTS
 INVENTORY HUD
 GRAPHICAL, PARTICLE, ANIMATED INTEGRATION
 
+  Sleep is death has good game feel in their interface… take a look at that
+  Better Dialogue Box like sleep is death
 -------
 TODO right now
 
@@ -182,6 +184,7 @@ experience password for ha-live. Use month+day - 100
 Change on collide to on touch start for certain tags
 
 tag
+  cameraZoomToFit
   speed boost tile
   go down when hit obstacle ( mainly for goombas you feel me? )
   create bloody corpse when destroyed

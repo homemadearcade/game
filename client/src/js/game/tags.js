@@ -57,8 +57,14 @@ function setDefault() {
 
     seperateParts: false,
 
+    // this deletes it after 60 seconds
+    destroyEventually: false,
+
     // this deletes it after 10 seconds
     destroySoon: false,
+
+    // this deletes it after 3 seconds
+    destroyQuickly: false,
   }
 
   // window.otherTags = {
@@ -72,7 +78,7 @@ function setDefault() {
     monster: false,
     respawn: false,
     // knockBackOnHit,
-    // explodeOnDestroy,
+    explodeOnDestroy: false,
     // fadeOutOnDestroy,
     // flashWhiteOnHit,
   }
@@ -97,7 +103,7 @@ function setDefault() {
   }
 
   window.projectileTags = {
-    destoryOnCollideWithObstacle: false,
+    destroyOnCollideWithObstacle: false,
   }
 
   window.spawnZoneTags = {
@@ -107,7 +113,7 @@ function setDefault() {
 
     // spawnAllOnStart: false,
     // spawnOnHeroCollide: false,
-    // spawnAllOnDestroy: false,
+    spawnAllOnDestroy: false,
     spawnAllInHeroInventoryOnHeroInteract: false,
     // spawnOnHeroInteract: false,
     // spawnDontOverlap: false
