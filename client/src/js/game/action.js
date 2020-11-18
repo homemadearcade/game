@@ -1,4 +1,5 @@
 import collisionsUtil from '../utils/collisions.js'
+import { dropObject } from '../heros/inventory.js'
 
 function closestObjectBehavior({ shooter, actionProps, direction, behavior, delta }) {
   const closestObject = collisionsUtil.getClosestObjectInDirection(
@@ -145,34 +146,29 @@ function shootBullet({ shooter, actionProps, direction }) {
   }
 }
 
-function dropOne({ dropper, actionProps, direction }) {
+function dropAndModify({ dropper, dropping, actionProps, direction }) {
   let directions = dropper.directions
-  let wall = {
-    id: 'wall-' + window.uniqueID(),
-    width: actionProps.width,
-    height: actionProps.height,
-    tags: {
-      ...actionProps.dropTags,
-      rotateable: true,
-    },
-  }
 
-  if(actionProps.explosionTags) {
-    wall.subObjects = {
+  dropping.tags.rotateable = true
+
+  Object.assign(dropping.tags, actionProps.tags)
+
+  if(actionProps.explosionProps) {
+    dropping.subObjects = {
       explosion: {
         subObjectName: 'explosion',
-        relativeX: -wall.width,
-        width: wall.width * 3,
-        relativeY: -wall.height,
-        height: wall.height * 3,
-        tags: actionProps.explosionTags,
-        color: 'red',
-        opacity: .2,
+        relativeX: -dropper.width,
+        width: dropper.width * 3,
+        relativeY: -dropper.height,
+        height: dropper.height * 3,
+        tags: actionProps.explosionProps.tags,
+        opacity: actionProps.explosionProps.opacity,
+        color: actionProps.explosionProps.color,
       }
     }
-    wall.subObjectChances = {explosion:{randomWeight:1,conditionList:null}}
-    wall.spawnPoolInitial = 1
-    wall.tags.spawnAllOnDestroy = true
+    dropping.subObjectChances = {explosion:{randomWeight:1,conditionList:null}}
+    dropping.spawnPoolInitial = 1
+    dropping.tags.spawnAllOnDestroy = true
   }
 
   let angle
@@ -181,7 +177,7 @@ function dropOne({ dropper, actionProps, direction }) {
   }
 
   if(direction === 'up') {
-    Object.assign(wall, {
+    Object.assign(dropping, {
       x: dropper.x,
       y: dropper.y - dropper.mod().height,
       angle: angle ? angle : 0,
@@ -189,7 +185,7 @@ function dropOne({ dropper, actionProps, direction }) {
   }
 
   if(direction === 'down') {
-    Object.assign(wall, {
+    Object.assign(dropping, {
       x: dropper.x,
       y: dropper.y + dropper.mod().height,
       angle: angle ? angle : 1.5708 * 2,
@@ -197,7 +193,7 @@ function dropOne({ dropper, actionProps, direction }) {
   }
 
   if(direction === 'right') {
-    Object.assign(wall, {
+    Object.assign(dropping, {
       x: dropper.x + dropper.mod().width,
       y: dropper.y,
       angle: angle ? angle : 1.5708,
@@ -205,18 +201,19 @@ function dropOne({ dropper, actionProps, direction }) {
   }
 
   if(direction === 'left') {
-    Object.assign(wall, {
+    Object.assign(dropping, {
       x: dropper.x - dropper.mod().width,
       y: dropper.y,
       angle: angle ? angle : 1.5708 * 3,
     })
   }
 
-  OBJECTS.create([wall], { fromLiveGame: true })
+  dropObject(dropper, dropping, 1, false)
+  // OBJECTS.create([wall], { fromLiveGame: true })
 }
 
 export {
   shootBullet,
-  dropOne,
+  dropAndModify,
   closestObjectBehavior
 }

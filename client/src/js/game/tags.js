@@ -78,7 +78,7 @@ function setDefault() {
     monster: false,
     respawn: false,
     // knockBackOnHit,
-    explodeOnDestroy: false,
+    // explodeOnDestroy: false,
     // fadeOutOnDestroy,
     // flashWhiteOnHit,
   }

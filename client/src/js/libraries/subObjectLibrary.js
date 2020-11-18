@@ -67,25 +67,37 @@ window.local.on('onFirstPageGameLoaded', () => {
       },
       actionState: {}
     },
-    bombBag: {
+    bombs: {
       x: 0, y: 0, width: 32, height: 32,
       relativeX: 0,
       relativeY: 0,
       subObjectName: 'Bomb Bag',
-      tags: { rotateable: true, relativeToAngle: true, relativeToDirection: true, pickupable: true, pickupOnHeroInteract: true, equipOnPickup: true },
-      actionButtonBehavior: '',
+      tags: {
+        rotateable: true,
+        relativeToAngle: true,
+        relativeToDirection: true,
+        pickupable: true,
+        pickupOnHeroInteract: true,
+        equipOnPickup: true,
+        stackable: true,
+      },
+      count: 10,
+      actionButtonBehavior: 'dropAndModify',
       actionProps: {
         tags: {
           destroySoon: true,
           countDownToDestroy: true,
-          AOEDamageOnDestroy__small: true,
           pickupable: true,
           pickupOnHeroInteract: true
         },
-        AOETags: {
-          monsterDestroyer: true,
-          monster: true,
-          destroyQuickly: true
+        explosionProps: {
+          tags: {
+            monsterDestroyer: true,
+            monster: true,
+            destroyQuickly: true
+          },
+          color: 'red',
+          opacity: .2,
         }
       },
 

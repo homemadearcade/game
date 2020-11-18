@@ -51,7 +51,7 @@ function pickupObject(hero, collider) {
   window.local.emit('onAddSubObject', hero, subObject, subObject.subObjectName )
 }
 
-function dropObject(hero, subObject, dropAmount = 1) {
+function dropObject(hero, subObject, dropAmount = 1, snapToGrid = true) {
   let object = _.cloneDeep(subObject.mod())
 
   let subObjectStillHasCount = false
@@ -72,10 +72,11 @@ function dropObject(hero, subObject, dropAmount = 1) {
   delete object.isEquipped
   delete object.ownerId
 
-  const {x, y} = gridUtil.snapXYToGrid(object.x, object.y)
-  object.x = x
-  object.y = y
-
+  if(snapToGrid) {
+    const {x, y} = gridUtil.snapXYToGrid(object.x, object.y)
+    object.x = x
+    object.y = y
+  }
 
   // if(object.tags.stackable) {
   //   collisionsUtil.check(object, GAME.objects.filter(({subObjectName}) => {
@@ -91,7 +92,7 @@ function dropObject(hero, subObject, dropAmount = 1) {
   }
 
   window.emitGameEvent('onHeroDrop', hero, object)
-  window.socket.emit('addObjects', [object])
+  OBJECTS.create(object)
 }
 
 function withdrawFromInventory(withdrawer, owner, subObjectName, withdrawAmount) {

@@ -253,12 +253,13 @@ function handleActionButtonBehavior(hero, action, delta) {
     }
   }
 
-  if(action === 'drop') {
+  if(action === 'dropAndModify') {
     if(subObject) {
-      dropOne({
+      dropAndModify({
         direction: hero.inputDirection,
         dropper: hero,
-        actionProps: subObject.actionProps
+        actionProps: subObject.actionProps,
+        dropping: subObject,
       })
     }
   }
