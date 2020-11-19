@@ -13,7 +13,7 @@ export default class ControlsHUD extends React.Component {
     let actionNameFromSubObject;
     let actionName;
     Object.keys(hero.subObjects).forEach((name) => {
-      if(hero[behaviorPropName] === hero.subObjects[name].id) {
+      if(hero[behaviorPropName] === hero.subObjects[name].subObjectName) {
         actionName = hero.subObjects.actionButtonBehavior
         actionNameFromSubObject = name
       }
@@ -21,8 +21,15 @@ export default class ControlsHUD extends React.Component {
 
     if(actionNameFromSubObject) {
       const key = behaviorPropName.charAt(0)
+      let so = hero.subObjects[actionNameFromSubObject]
+      if(so.actionButtonBehaviorLabel) {
+        return {
+          behavior: so.actionButtonBehaviorLabel,
+          key
+        }
+      }
       return {
-        behavior: window.actionButtonBehavior[hero.subObjects[actionNameFromSubObject].actionButtonBehavior],
+        behavior: window.actionButtonBehavior[so.actionButtonBehavior],
         key
       }
     }

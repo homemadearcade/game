@@ -42,8 +42,15 @@ export default class ControlsInfo extends React.Component {
 
     if(actionNameFromSubObject) {
       const key = behaviorPropName.charAt(0)
+      let so = hero.subObjects[actionNameFromSubObject]
+      if(so.actionButtonBehaviorLabel) {
+        return {
+          behavior: so.actionButtonBehaviorLabel,
+          key
+        }
+      }
       return {
-        behavior: window.actionButtonBehavior[hero.subObjects[actionNameFromSubObject].actionButtonBehavior],
+        behavior: window.actionButtonBehavior[so.actionButtonBehavior],
         key
       }
     }

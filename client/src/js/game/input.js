@@ -82,7 +82,7 @@ function setDefault() {
     'deccelerateToZero': 'Slow Down',
     'brakeToZero': 'Fast Stop',
     'mod': 'Activate Power',
-    'dropAndModify': 'Drop Bomb',
+    'dropAndModify': 'Drop',
     'shrink': 'Shrink',
     'grow': 'Grow',
     'vacuum': 'Suck In',

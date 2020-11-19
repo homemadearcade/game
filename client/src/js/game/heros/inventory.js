@@ -162,7 +162,6 @@ function equipSubObject(hero, subObject, keyBinding = 'available') {
 
   if(subObject.tags.onMapWhenEquipped) {
     subObject.removed = false
-    console.log('???', subObject.removed)
   }
 
   window.local.emit('onHeroEquip', hero, subObject)

@@ -84,6 +84,7 @@ window.local.on('onFirstPageGameLoaded', () => {
       },
       count: 10,
       actionButtonBehavior: 'dropAndModify',
+      actionButtonBehaviorLabel: 'Drop Bomb',
       actionProps: {
         tags: {
           destroySoon: true,
