@@ -82,5 +82,21 @@ window.local.on('onFirstPageGameLoaded', () => {
         arrowKeysBehavior: 'skating',
       }
     },
+    seeThroughForeground: {
+      modId: 'seeThroughForeground',
+      effectJSON: {
+        tags: {
+          seeThroughForegrounds: true,
+        }
+      }
+    },
+    seeHidden: {
+      modId: 'seeHidden',
+      effectJSON: {
+        tags: {
+          seeHiddenObjects: true,
+        }
+      }
+    },
   }
 })

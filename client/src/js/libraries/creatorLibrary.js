@@ -262,6 +262,18 @@ function onFirstPageGameLoaded() {
       columnName: 'Items',
       JSON: window.subObjectLibrary.marioCap,
     },
+    seeHiddenPower: {
+      label: 'Uncoverer',
+      columnName: 'Equip',
+      toggleId: 'uncoverer',
+      ...toggleSubObject('seeHiddenPower')
+    },
+    seeThroughForegroundPower: {
+      label: 'Spyglass',
+      columnName: 'Equip',
+      toggleId: 'spyglass',
+      ...toggleSubObject('seeThroughForegroundPower')
+    },
   }
 
   window.homemadearcadeBasicLibrary = {
@@ -315,6 +327,9 @@ function onFirstPageGameLoaded() {
     gun: true,
     shrinkRay: true,
     bombs: true,
+    marioCap: true,
+    seeThroughForegroundPower: true,
+    seeHiddenPower: true,
     zeldaPowerBlock: true,
     marioPowerBlock: true,
     asteroidsPowerBlock: true,
@@ -322,7 +337,6 @@ function onFirstPageGameLoaded() {
     starViewBlock: true,
     gunPickupable: true,
     spearPickupable: true,
-    marioCap: true,
   }
 }
 

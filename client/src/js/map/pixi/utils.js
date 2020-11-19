@@ -164,14 +164,16 @@ function updateAlpha(pixiChild, gameObject) {
     }
 
     if(gameObject.tags.hidden) {
-      if(gameObject.id === HERO.originalId) {
+      if(GAME.heros[HERO.id].mod().tags.seeHiddenObjects) {
+        pixiChild.alpha = 1
+      } else if(gameObject.id === HERO.originalId) {
         pixiChild.alpha = .3
       } else {
         pixiChild.alpha = 0
       }
     } else if(gameObject.tags.foreground && gameObject.tags.seeThroughOnHeroCollide)  {
-      if(isColliding(GAME.heros[HERO.id], gameObject)) {
-        pixiChild.alpha = .3
+      if(isColliding(GAME.heros[HERO.id], gameObject) || GAME.heros[HERO.id].mod().tags.seeThroughForegrounds) {
+        pixiChild.alpha = .2
       } else {
         pixiChild.alpha = 1
       }

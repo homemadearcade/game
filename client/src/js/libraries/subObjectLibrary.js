@@ -103,7 +103,30 @@ window.local.on('onFirstPageGameLoaded', () => {
           opacity: .2,
         }
       },
-
+      actionState: {}
+    },
+    seeThroughForegroundPower: {
+      x: 0, y: 0, width: 10, height: 10,
+      subObjectName: 'seeThroughForegroundPower',
+      tags: { potential: true, pickupable: true, pickupOnHeroInteract: true, equipOnPickup: true },
+      actionButtonBehavior: 'mod',
+      actionButtonBehaviorLabel: 'Spy',
+      actionProps: {
+        effectJSON: window.modLibrary.seeThroughForeground.effectJSON,
+        revertable: true
+      },
+      actionState: {}
+    },
+    seeHiddenPower: {
+      x: 0, y: 0, width: 10, height: 10,
+      subObjectName: 'seeHiddenPower',
+      tags: { potential: true, pickupable: true, pickupOnHeroInteract: true, equipOnPickup: true },
+      actionButtonBehavior: 'mod',
+      actionButtonBehaviorLabel: 'Uncover',
+      actionProps: {
+        effectJSON: window.modLibrary.seeHidden.effectJSON,
+        revertable: true
+      },
       actionState: {}
     },
   }

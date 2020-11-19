@@ -277,6 +277,9 @@ function setDefault() {
     trackObjectsWithin: false,
     trackObjectsTouching: true,
     // allowCameraRotation: false,
+
+    seeThroughForegrounds: false,
+    seeHiddenObjects: false,
   }
 
   window.subObjectTags = {

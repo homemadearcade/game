@@ -96,6 +96,8 @@ export default class ControlsHUD extends React.Component {
   render() {
     const hero = GAME.heros[HERO.id].mod()
 
+    if(!hero.keysDown) return null
+    
     return <div className="ControlsHUD">
       {hero.zButtonBehavior && <div className="ControlsHUD__actioninfo">
         {this._renderSubObject(hero, 'zButtonBehavior')}

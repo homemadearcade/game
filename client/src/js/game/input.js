@@ -271,7 +271,7 @@ function handleActionButtonBehavior(hero, action, delta) {
         effectJSON: subObject.actionProps.effectJSON,
         manualRevertId
       })
-      subObject.actionState.manualRevertId = 'modrevert-' + window.uniqueID()
+      subObject.actionState.manualRevertId = manualRevertId
     }
   }
 

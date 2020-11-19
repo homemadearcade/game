@@ -60,7 +60,6 @@ Metal mario! How did I not think of this. Sink and don't drown
 Vanish cap ( lets you walk through walls? )
 Fast fast cap..? Like mario racoon essentially, gives you better soaring and speed?
 Shrink power, think metroid ball or CROUCH even
-REVEAL things power ( see living objects through foreground, see through all foreground, see hidden objects )
 
 POWERS
  Wall jump
@@ -193,6 +192,7 @@ experience password for ha-live. Use month+day - 100
 Change on collide to on touch start for certain tags
 
 tag
+  destoryOnHeroLand
   countDownToDestroy
   cameraZoomToFit
   speed boost tile

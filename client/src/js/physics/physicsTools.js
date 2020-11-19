@@ -256,7 +256,10 @@ function objectCollisionEffects(po) {
       if(agent.mod().tags['heroInteractTriggerArea'] && colliderIsInteractable) {
         let hero = GAME.heros[agent.ownerId]
         // sometimes the hero could be logged off
-        if(hero) {
+
+        const colliderIsHidden = collider.mod().tags.hidden && !hero.mod().tags.seeHiddenObjects
+
+        if(hero && !colliderIsHidden) {
           const hooks = window.getHooksByEventName(collider.mod(), 'onObjectInteractable')
 
           let passed = true
