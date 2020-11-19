@@ -427,6 +427,7 @@ class Hero{
       choiceOptions: hero.choiceOptions,
       _parentId: hero._parentId,
       _skipNextGravity: hero._skipNextGravity,
+      _breakMaxVelocity: object._breakMaxVelocity,
       interactableObjectId: hero.interactableObjectId,
       gridHeight: hero.gridHeight,
       gridWidth: hero.gridWidth,
@@ -485,9 +486,9 @@ class Hero{
 
       userId: hero.userId,
 
-      zBehavior: hero.zBehavior,
-      xBehavior: hero.xBehavior,
-      cBehavior: hero.cBehavior,
+      zButtonBehavior: hero.zButtonBehavior,
+      xButtonBehavior: hero.xButtonBehavior,
+      cButtonBehavior: hero.cButtonBehavior,
       arrowKeysBehavior: hero.arrowKeysBehavior,
       spaceBarBehavior: hero.spaceBarBehavior,
 

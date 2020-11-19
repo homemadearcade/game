@@ -1,5 +1,5 @@
 import collisionsUtil from '../utils/collisions.js'
-import { dropObject } from '../heros/inventory.js'
+import { dropObject } from './heros/inventory.js'
 
 function closestObjectBehavior({ shooter, actionProps, direction, behavior, delta }) {
   const closestObject = collisionsUtil.getClosestObjectInDirection(

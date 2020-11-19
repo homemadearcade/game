@@ -318,22 +318,25 @@ function handleActionButtonBehavior(hero, action, delta) {
     }
 
     if(hero._dashable === true) {
+      let dashVelocity = hero.mod().dashVelocity
+      if(!dashVelocity) dashVelocity = 300
       if(hero.mod().tags.rotateable && hero.angle) {
-        hero.velocityAngle = hero.mod().dashVelocity
+        hero.velocityAngle = dashVelocity
       } else {
         if(hero.inputDirection === 'up') {
-          hero.velocityY -= hero.mod().dashVelocity;
+          hero.velocityY -= dashVelocity;
         } else if(hero.inputDirection === 'down') {
-          hero.velocityY += hero.mod().dashVelocity;
+          hero.velocityY += dashVelocity;
         } else if(hero.inputDirection === 'left') {
-          hero.velocityX -= hero.mod().dashVelocity;
+          hero.velocityX -= dashVelocity;
         } else if(hero.inputDirection === 'right') {
-          hero.velocityX += hero.mod().dashVelocity;
+          hero.velocityX += dashVelocity;
         }
       }
       GAME.addTimeout(hero.id + '-dashable', hero.mod().dashTimeout || .6, () => {
         hero._dashable = true
       })
+      hero._breakMaxVelocity = true
       hero._dashable = false
     }
 
@@ -424,19 +427,6 @@ function onUpdate(hero, keysDown, delta) {
   /// DEFAULT GAME FX
   if(hero.flags.paused || GAME.gameState.paused) return
 
-  if(keysDown['z'] && hero.mod().tags.zButtonHoldable == true && hero.mod().zButtonBehavior) {
-    handleActionButtonBehavior(hero, hero.mod().zButtonBehavior, delta)
-  }
-  if(keysDown['x'] && hero.mod().tags.xButtonHoldable == true && hero.mod().xButtonBehavior) {
-    handleActionButtonBehavior(hero, hero.mod().xButtonBehavior, delta)
-  }
-  if(keysDown['c'] && hero.mod().tags.cButtonHoldable == true && hero.mod().cButtonBehavior) {
-    handleActionButtonBehavior(hero, hero.mod().cButtonBehavior, delta)
-  }
-  if(keysDown['space'] && hero.mod().tags.spaceBarHoldable == true && hero.mod().spaceBarBehavior) {
-    handleActionButtonBehavior(hero, hero.mod().spaceBarBehavior, delta)
-  }
-
   const xSpeed = hero.mod().speed + (hero.mod().speedXExtra || 0)
   const ySpeed = hero.mod().speed + (hero.mod().speedYExtra || 0)
 
@@ -522,6 +512,7 @@ function onUpdate(hero, keysDown, delta) {
     hero.velocityY = hero.velocityAngle * Math.sin(hero.angle - angleCorrection)
   }
 
+
   function positionInput() {
 
     if(hero.mod().arrowKeysBehavior === 'flatDiagonal') {
@@ -596,6 +587,19 @@ function onUpdate(hero, keysDown, delta) {
   //     hero.cameraRotation -= delta
   //   }
   // }
+
+  if(keysDown['z'] && hero.mod().tags.zButtonHoldable == true && hero.mod().zButtonBehavior) {
+    handleActionButtonBehavior(hero, hero.mod().zButtonBehavior, delta)
+  }
+  if(keysDown['x'] && hero.mod().tags.xButtonHoldable == true && hero.mod().xButtonBehavior) {
+    handleActionButtonBehavior(hero, hero.mod().xButtonBehavior, delta)
+  }
+  if(keysDown['c'] && hero.mod().tags.cButtonHoldable == true && hero.mod().cButtonBehavior) {
+    handleActionButtonBehavior(hero, hero.mod().cButtonBehavior, delta)
+  }
+  if(keysDown['space'] && hero.mod().tags.spaceBarHoldable == true && hero.mod().spaceBarBehavior) {
+    handleActionButtonBehavior(hero, hero.mod().spaceBarBehavior, delta)
+  }
 }
 
 function onKeyDown(key, hero) {
@@ -629,16 +633,16 @@ function onKeyDown(key, hero) {
   }
 
   if('z' === key && hero.mod().tags.zButtonHoldable != true && hero.mod().zButtonBehavior) {
-    handleActionButtonBehavior(hero, hero.mod().zButtonBehavior, delta)
+    handleActionButtonBehavior(hero, hero.mod().zButtonBehavior, .018)
   }
   if('x' === key && hero.mod().tags.xButtonHoldable != true && hero.mod().xButtonBehavior) {
-    handleActionButtonBehavior(hero, hero.mod().xButtonBehavior, delta)
+    handleActionButtonBehavior(hero, hero.mod().xButtonBehavior, .018)
   }
   if('c' === key && hero.mod().tags.cButtonHoldable != true && hero.mod().cButtonBehavior) {
-    handleActionButtonBehavior(hero, hero.mod().cButtonBehavior, delta)
+    handleActionButtonBehavior(hero, hero.mod().cButtonBehavior, .018)
   }
   if('space' === key && hero.mod().tags.spaceBarHoldable != true && hero.mod().spaceBarBehavior) {
-    handleActionButtonBehavior(hero, hero.mod().spaceBarBehavior, delta)
+    handleActionButtonBehavior(hero, hero.mod().spaceBarBehavior, .018)
   }
 
   const upPressed = 'w' === key || 'up' === key

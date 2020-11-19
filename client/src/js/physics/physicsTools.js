@@ -142,9 +142,11 @@ function heroCorrection(hero) {
       let result = corrections.reduce((acc, next) => {
         if(Math.abs(next.overlap_y) !== 0 && acc.overlap_y == 0) {
           acc.overlap_y = next.overlap * next.overlap_y
+          acc.overlap_yOG = next.overlap_y
         }
         if(Math.abs(next.overlap_x) !== 0 && acc.overlap_x == 0) {
           acc.overlap_x = next.overlap * next.overlap_x
+          acc.overlap_xOG = next.overlap_x
         }
         return acc
       }, { overlap_y: 0, overlap_x: 0 })
@@ -166,9 +168,9 @@ function heroCorrection(hero) {
           if(hero.velocityAngle) hero.velocityAngle *= .09
         }
         heroPO.y -= result.overlap_y
-        if(po.gameObject.mod().bouncyness) {
-          if(result.overlap_y === 1 || result.overlap_y === -1) {
-            po.gameObject.velocityY = (prevVelocityY * po.gameObject.mod().bouncyness * -1)
+        if(heroPO.gameObject.mod().bouncyness) {
+          if(result.overlap_yOG === 1 || result.overlap_yOG === -1) {
+            heroPO.gameObject.velocityY = (prevVelocityY * heroPO.gameObject.mod().bouncyness * -1)
           }
         }
       }
@@ -185,7 +187,7 @@ function heroCorrection(hero) {
         }
         heroPO.x -= result.overlap_x
         if(heroPO.gameObject.mod().bouncyness) {
-          if(result.overlap_x === 1 || result.overlap_x === -1) {
+          if(result.overlap_xOG === 1 || result.overlap_xOG === -1) {
             heroPO.gameObject.velocityX = (prevVelocityY * heroPO.gameObject.mod().bouncyness * -1)
           }
         }

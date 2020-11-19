@@ -102,10 +102,19 @@ function updatePosition(object, delta) {
 
   if(object.mod().tags.rotateable && typeof object.velocityAngle === 'number') setAngleVelocity(object)
 
+  let isXWithinMaxVelocity = false
   const maxVelocityX = object.mod().velocityMax + (object.mod().velocityMaxXExtra || 0)
   if(object.velocityX) {
-    if(object.velocityX >= maxVelocityX) object.velocityX = maxVelocityX
-    else if(object.velocityX <= maxVelocityX * -1) object.velocityX = maxVelocityX * -1
+
+    if(object._breakMaxVelocity) {
+      if(object.velocityX < maxVelocityX && object.velocityX > maxVelocityX * -1) {
+        isXWithinMaxVelocity = true
+      }
+    } else {
+      if(object.velocityX >= maxVelocityX) object.velocityX = maxVelocityX
+      else if(object.velocityX <= maxVelocityX * -1) object.velocityX = maxVelocityX * -1
+    }
+
     object.x += object.velocityX * delta
   }
   if(object._flatVelocityX) {
@@ -146,11 +155,16 @@ function updatePosition(object, delta) {
 
   const maxVelocityY = object.mod().velocityMax + (object.mod().velocityMaxYExtra || 0)
   if(object.velocityY) {
-    if(object.velocityY >= maxVelocityY) {
-      object.velocityY = maxVelocityY
-    }
-    else if(object.velocityY <= maxVelocityY * -1) {
-      object.velocityY = maxVelocityY * -1
+
+    if(object._breakMaxVelocity && isXWithinMaxVelocity) {
+      if(object.velocityY < maxVelocityY && object.velocityY > maxVelocityY * -1) object._breakMaxVelocity = false
+    } else {
+      if(object.velocityY >= maxVelocityY) {
+        object.velocityY = maxVelocityY
+      }
+      else if(object.velocityY <= maxVelocityY * -1) {
+        object.velocityY = maxVelocityY * -1
+      }
     }
 
     if(object.tags && !object.mod().tags.gravityY) {

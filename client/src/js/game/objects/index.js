@@ -112,6 +112,7 @@ class Objects{
       sprite: object.sprite,
       _parentId: object._parentId,
       _skipNextGravity: object._skipNextGravity,
+      _breakMaxVelocity: object._breakMaxVelocity,
       gridHeight: object.gridHeight,
       gridWidth: object.gridWidth,
       onGround: object.onGround,

@@ -45,15 +45,17 @@ export default class HeroLive extends React.Component {
       speedXExtra: hero.speedXExtra,
       speedYExtra: hero.speedYExtra,
       jumpVelocity: hero.jumpVelocity,
+      dashVelocity: hero.dashVelocity,
       velocityMax: hero.velocityMax,
       velocityMaxXExtra: hero.velocityMaxXExtra,
       velocityMaxYExtra: hero.velocityMaxYExtra,
-      dashVelocity: hero.dashVelocity,
       velocityDecay: hero.velocityDecay,
       velocityDecayXExtra: hero.velocityDecayXExtra,
       velocityDecayYExtra: hero.velocityDecayYExtra,
       floatJumpTimeout: hero.floatJumpTimeout,
+      dashTimeout: hero.dashTimeout,
       gravityVelocityY: hero.gravityVelocityY,
+      bouncyness: hero.bouncyness,
     }
 
     if (PAGE.role.isHost) {
@@ -74,11 +76,12 @@ export default class HeroLive extends React.Component {
             <DatNumber path='objectSelected.speed' label='Speed' min={0} max={1000} step={1} />
             <DatNumber path='objectSelected.velocityMax' label="Maximum Velocity" min={0} max={1000} step={10} />
             <DatNumber path='objectSelected.jumpVelocity' label="Jump Velocity" min={-1000} max={1000} step={10}/>
+            <DatNumber path='objectSelected.dashVelocity' label="Dash Velocity" min={-1000} max={1000} step={10}/>
             <DatNumber path='objectSelected.velocityDecay' label="Velocity Decay" min={0} max={1000} step={10} />
             <DatNumber path='objectSelected.floatJumpTimeout' label="Float Jump Reset (Seconds)" min={0} max={5} step={.1}/>
             <DatNumber path='objectSelected.dashTimeout' label="Dash Reset (Seconds)" min={0} max={5} step={.1}/>
             <DatNumber path='objectSelected.gravityVelocityY' label="Gravity Velocity Y" min={0} max={1000} step={10}/>
-            <DatNumber path='objectSelected.bouncyness' label="Bouncyness" min={0} max={1} step={.1}/>
+            <DatNumber path='objectSelected.bouncyness' label="Bouncyness" min={0} max={2} step={.1}/>
             <DatFolder title='Additional X/Y'>
               <DatNumber path='objectSelected.speedXExtra' label="Additional Speed X" min={0} max={1000} step={1} />
               <DatNumber path='objectSelected.speedYExtra' label="Additional Speed Y" min={0} max={1000} step={1} />
