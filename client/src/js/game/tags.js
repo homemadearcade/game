@@ -26,7 +26,7 @@ function setDefault() {
     ignoreWorldGravity: false,
     obstacle: false,
     // projectile: false,
-    onlyHeroAllowed: false,
+    noMonsterAllowed: false,
     noHeroAllowed: false,
     movingPlatform: false,
     heroPushable: false,
@@ -293,13 +293,16 @@ function setDefault() {
   window.keyInputTags = {
     disableUpKeyMovement: false,
     disableDownKeyMovement: false,
-    zButtonOnce: false,
-    xButtonOnce: false,
-    cButtonOnce: false,
+    zButtonHoldable: false,
+    xButtonHoldable: false,
+    cButtonHoldable: false,
+    spaceBarHoldable: false,
   }
 
   window.generatedTags = {
     lastAnticipatedObject: false,
+    fresh: false,
+    adminInch: false,
   }
 
   window.tags = JSON.parse(JSON.stringify(window.defaultTags))

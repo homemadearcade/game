@@ -1,5 +1,5 @@
 import keycode from 'keycode'
-import { shootBullet, dropOne, closestObjectBehavior } from './action.js';
+import { shootBullet, dropAndModify, closestObjectBehavior } from './action.js';
 
 window.defaultWASD =  {
   w: 'Move Up',
@@ -81,28 +81,21 @@ function setDefault() {
     'accelerateBackwards': 'Go Backwards',
     'deccelerateToZero': 'Slow Down',
     'brakeToZero': 'Fast Stop',
-    'mod': 'Activate Power'
-  }
-
-  window.spaceBarBehavior = {
-    'groundJump': {
-      'space': 'Jump ( On Ground )'
-    },
-    'floatJump': {
-      'space': 'Jump ( On Ground or In Air )'
-    },
-    'none': {
-
-    }
+    'mod': 'Activate Power',
+    'dropAndModify': 'Drop Bomb',
+    'shrink': 'Shrink',
+    'grow': 'Grow',
+    'vacuum': 'Suck In',
+    'dash': 'Dash',
+    'groundJump': 'Jump ( On Ground )',
+    'floatJump': 'Jump ( On Ground or In Air )',
+    'wallJump': 'Jump ( on Ground or On Wall )'
   }
 }
 
 function addCustomInputBehavior(behaviorList) {
   behaviorList.forEach((behavior) => {
     const { behaviorProp, behaviorName } = behavior
-    if(behaviorProp === 'spaceBarBehavior') {
-      window.spaceBarBehavior.unshift(behaviorName)
-    }
     if(behaviorProp === 'actionButtonBehavior') {
       window.actionButtonBehavior.unshift(behaviorName)
     }
@@ -171,19 +164,22 @@ function onKeyUp(key, hero) {
   GAME.heroInputs[hero.id][key] = false
 
   if(key === 'z' && hero.mod().zButtonBehavior) {
-    revertActions(hero, hero.mod().zButtonBehavior)
+    handleActionEnd(hero, hero.mod().zButtonBehavior)
   }
   if(key === 'x' && hero.mod().xButtonBehavior) {
-    revertActions(hero, hero.mod().xButtonBehavior)
+    handleActionEnd(hero, hero.mod().xButtonBehavior)
   }
   if(key === 'c' && hero.mod().cButtonBehavior) {
-    revertActions(hero, hero.mod().cButtonBehavior)
+    handleActionEnd(hero, hero.mod().cButtonBehavior)
+  }
+  if(key === 'space' && hero.mod().spaceBarBehavior) {
+    handleActionEnd(hero, hero.mod().spaceBarBehavior)
   }
 
   window.local.emit('onKeyUp', key, hero)
 }
 
-function revertActions(hero, action) {
+function handleActionEnd(hero, action) {
   let subObject = false
   Object.keys(hero.subObjects).forEach((name) => {
     const so = hero.subObjects[name]
@@ -315,6 +311,62 @@ function handleActionButtonBehavior(hero, action, delta) {
     hero.velocityAngle -= hero.speed * delta
   }
 
+  if(action === 'dash') {
+    if(hero._dashable === false && hero.onGround) {
+      if(GAME.gameState.timeoutsById[hero.id + '-dashable']) GAME.clearTimeout(hero.id + '-dashable')
+      hero._dashable = true
+    }
+
+    if(hero._dashable === true) {
+      if(hero.mod().tags.rotateable && hero.angle) {
+        hero.velocityAngle = hero.mod().dashVelocity
+      } else {
+        if(hero.inputDirection === 'up') {
+          hero.velocityY -= hero.mod().dashVelocity;
+        } else if(hero.inputDirection === 'down') {
+          hero.velocityY += hero.mod().dashVelocity;
+        } else if(hero.inputDirection === 'left') {
+          hero.velocityX -= hero.mod().dashVelocity;
+        } else if(hero.inputDirection === 'right') {
+          hero.velocityX += hero.mod().dashVelocity;
+        }
+      }
+      GAME.addTimeout(hero.id + '-dashable', hero.mod().dashTimeout || .6, () => {
+        hero._dashable = true
+      })
+      hero._dashable = false
+    }
+
+    if(hero._dashable === undefined || hero._dashable === null || !GAME.gameState.timeoutsById[hero.id + '-dashable']) {
+      hero._dashable = true
+    }
+  }
+
+  if(hero.onGround && action === 'groundJump') {
+    hero.velocityY = hero.mod().jumpVelocity
+    // lastJump = Date.now();
+  }
+
+  if(action === 'floatJump') {
+    if(hero._floatable === false && hero.onGround) {
+      if(GAME.gameState.timeoutsById[hero.id + '-floatable']) GAME.clearTimeout(hero.id + '-floatable')
+      hero._floatable = true
+    }
+
+    if(hero._floatable === true) {
+      hero.velocityY = hero.mod().jumpVelocity
+      GAME.addTimeout(hero.id + '-floatable', hero.mod().floatJumpTimeout || .6, () => {
+        hero._floatable = true
+      })
+      hero._floatable = false
+      // lastJump = Date.now();
+    }
+
+    if(hero._floatable === undefined || hero._floatable === null || !GAME.gameState.timeoutsById[hero.id + '-floatable']) {
+      hero._floatable = true
+    }
+  }
+
   if(subObject && subObject.actionProps.debounceTime) {
     const timeoutId = 'debounce-action-' + subObject.id + subObject.actionButtonBehavior
     subObject.actionState.waiting = true
@@ -372,14 +424,17 @@ function onUpdate(hero, keysDown, delta) {
   /// DEFAULT GAME FX
   if(hero.flags.paused || GAME.gameState.paused) return
 
-  if(keysDown['z'] && hero.mod().tags.zButtonOnce != true && hero.mod().zButtonBehavior) {
+  if(keysDown['z'] && hero.mod().tags.zButtonHoldable == true && hero.mod().zButtonBehavior) {
     handleActionButtonBehavior(hero, hero.mod().zButtonBehavior, delta)
   }
-  if(keysDown['x'] && hero.mod().tags.xButtonOnce != true && hero.mod().xButtonBehavior) {
+  if(keysDown['x'] && hero.mod().tags.xButtonHoldable == true && hero.mod().xButtonBehavior) {
     handleActionButtonBehavior(hero, hero.mod().xButtonBehavior, delta)
   }
-  if(keysDown['c'] && hero.mod().tags.cButtonOnce != true && hero.mod().cButtonBehavior) {
+  if(keysDown['c'] && hero.mod().tags.cButtonHoldable == true && hero.mod().cButtonBehavior) {
     handleActionButtonBehavior(hero, hero.mod().cButtonBehavior, delta)
+  }
+  if(keysDown['space'] && hero.mod().tags.spaceBarHoldable == true && hero.mod().spaceBarBehavior) {
+    handleActionButtonBehavior(hero, hero.mod().spaceBarBehavior, delta)
   }
 
   const xSpeed = hero.mod().speed + (hero.mod().speedXExtra || 0)
@@ -573,31 +628,17 @@ function onKeyDown(key, hero) {
     return
   }
 
-  if('space' === key) {
-    if(hero.onGround && hero.mod().spaceBarBehavior === 'groundJump') {
-      hero.velocityY = hero.mod().jumpVelocity
-      // lastJump = Date.now();
-    }
-
-    if(hero.mod().spaceBarBehavior === 'floatJump') {
-      if(hero._floatable === false && hero.onGround) {
-        if(GAME.gameState.timeoutsById[hero.id + '-floatable']) GAME.clearTimeout(hero.id + '-floatable')
-        hero._floatable = true
-      }
-
-      if(hero._floatable === true) {
-        hero.velocityY = hero.mod().jumpVelocity
-        GAME.addTimeout(hero.id + '-floatable', hero.mod().floatJumpTimeout || .6, () => {
-          hero._floatable = true
-        })
-        hero._floatable = false
-        // lastJump = Date.now();
-      }
-
-      if(hero._floatable === undefined || hero._floatable === null || !GAME.gameState.timeoutsById[hero.id + '-floatable']) {
-        hero._floatable = true
-      }
-    }
+  if('z' === key && hero.mod().tags.zButtonHoldable != true && hero.mod().zButtonBehavior) {
+    handleActionButtonBehavior(hero, hero.mod().zButtonBehavior, delta)
+  }
+  if('x' === key && hero.mod().tags.xButtonHoldable != true && hero.mod().xButtonBehavior) {
+    handleActionButtonBehavior(hero, hero.mod().xButtonBehavior, delta)
+  }
+  if('c' === key && hero.mod().tags.cButtonHoldable != true && hero.mod().cButtonBehavior) {
+    handleActionButtonBehavior(hero, hero.mod().cButtonBehavior, delta)
+  }
+  if('space' === key && hero.mod().tags.spaceBarHoldable != true && hero.mod().spaceBarBehavior) {
+    handleActionButtonBehavior(hero, hero.mod().spaceBarBehavior, delta)
   }
 
   const upPressed = 'w' === key || 'up' === key

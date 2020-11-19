@@ -179,6 +179,7 @@ class Objects{
 
       velocityMax: object.velocityMax,
       gravityVelocityY: object.gravityVelocityY,
+      bouncyness: object.bouncyness,
 
       speed: object.speed,
       width: object.width,

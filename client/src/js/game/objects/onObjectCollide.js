@@ -37,7 +37,7 @@ export default function onObjectCollide(agent, collider, result) {
     hero.score++
   }
 
-  if(agent.tags && agent.mod().tags['goomba'] && collider.tags && (collider.mod().tags['obstacle'] || collider.mod().tags['onlyHeroAllowed'])) {
+  if(agent.tags && agent.mod().tags['goomba'] && collider.tags && (collider.mod().tags['obstacle'] || collider.mod().tags['noMonsterAllowed'])) {
     if(result.overlap_x === 1 && agent._goalDirection === 'right') {
       agent._goalDirection = 'left'
     }
@@ -46,7 +46,7 @@ export default function onObjectCollide(agent, collider, result) {
     }
   }
 
-  if(agent.tags && agent.mod().tags['goombaSideways'] && collider.tags && (collider.mod().tags['obstacle'] || collider.mod().tags['onlyHeroAllowed'])) {
+  if(agent.tags && agent.mod().tags['goombaSideways'] && collider.tags && (collider.mod().tags['obstacle'] || collider.mod().tags['noMonsterAllowed'])) {
     if(result.overlap_y === 1 && agent._goalDirection === 'down') {
       agent._goalDirection = 'up'
     }

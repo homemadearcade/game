@@ -43,7 +43,7 @@ function convertCustomGridToPathfindingGrid(props) {
   const pfgrid = new PF.Grid(props.gridWidth, props.gridHeight);
 
   GAME.objects.forEach((object) => {
-    if((object.tags.obstacle || object.tags.onlyHeroAllowed) && (!object.tags.moving || GAME.world.tags.calculateMovingObstaclePaths)) {
+    if((object.tags.obstacle || object.tags.noMonsterAllowed) && (!object.tags.moving || GAME.world.tags.calculateMovingObstaclePaths)) {
       // pretend we are dealing with a 0,0 plane
       let x = object.x - props.startX
       let y = object.y - props.startY

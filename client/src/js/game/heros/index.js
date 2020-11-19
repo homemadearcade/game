@@ -407,6 +407,7 @@ class Hero{
       _flatVelocityX: hero._flatVelocityX,
       _flatVelocityY: hero._flatVelocityY,
       _floatable: hero._floatable,
+      _dashable: hero._dashable,
       lastHeroUpdateId: hero.lastHeroUpdateId,
       lastDialogueId: hero.lastDialogueId,
       directions: hero.directions,
@@ -532,7 +533,6 @@ class Hero{
       liveEmitterData: hero.liveEmitterData,
 
       jumpVelocity: hero.jumpVelocity,
-      dashVelocity: hero.dashVelocity,
       velocityMax: hero.velocityMax,
       velocityMaxXExtra: hero.velocityMaxXExtra,
       velocityMaxYExtra: hero.velocityMaxYExtra,
@@ -544,6 +544,10 @@ class Hero{
       velocityDecayYExtra: hero.velocityDecayYExtra,
       floatJumpTimeout: hero.floatJumpTimeout,
       gravityVelocityY: hero.gravityVelocityY,
+      bouncyness: hero.bouncyness,
+
+      dashTimeout: hero.dashTimeout,
+      dashVelocity: hero.dashVelocity,
 
       pathId: hero.pathId,
       pathfindingLimitId: hero.pathfindingLimitId,

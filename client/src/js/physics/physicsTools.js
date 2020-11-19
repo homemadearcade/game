@@ -150,6 +150,7 @@ function heroCorrection(hero) {
       }, { overlap_y: 0, overlap_x: 0 })
 
       function correctHeroY() {
+        let prevVelocityY = hero.velocityY
         if(result.overlap_y > 0) {
           hero.onGround = true
           if(landingObject) window.local.emit('onHeroLand', hero, landingObject.gameObject, result)
@@ -165,9 +166,16 @@ function heroCorrection(hero) {
           if(hero.velocityAngle) hero.velocityAngle *= .09
         }
         heroPO.y -= result.overlap_y
+        if(po.gameObject.mod().bouncyness) {
+          if(result.overlap_y === 1 || result.overlap_y === -1) {
+            po.gameObject.velocityY = (prevVelocityY * po.gameObject.mod().bouncyness * -1)
+          }
+        }
       }
 
       function correctHeroX() {
+        let prevVelocityY = hero.velocityX
+
         if(result.overlap_x > 0) {
           hero.velocityX = 0
           if(hero.velocityAngle) hero.velocityAngle *= .09
@@ -176,6 +184,11 @@ function heroCorrection(hero) {
           if(hero.velocityAngle) hero.velocityAngle *= .09
         }
         heroPO.x -= result.overlap_x
+        if(heroPO.gameObject.mod().bouncyness) {
+          if(result.overlap_x === 1 || result.overlap_x === -1) {
+            heroPO.gameObject.velocityX = (prevVelocityY * heroPO.gameObject.mod().bouncyness * -1)
+          }
+        }
       }
 
       // there was a problem with a double object collision. One Would
@@ -275,7 +288,7 @@ function objectCollisionEffects(po) {
       }
 
 
-      const isSafeZone = agent.mod().tags['monster'] && collider.mod().tags && collider.mod().tags['onlyHeroAllowed']
+      const isSafeZone = agent.mod().tags['monster'] && collider.mod().tags && collider.mod().tags['noMonsterAllowed']
       const bothAreObstacles = agent.tags && agent.mod().tags['obstacle'] && collider.tags && collider.mod().tags['obstacle']
       if(agent.mod().tags.trackObjectsWithin) {
         if(!isSafeZone && !bothAreObstacles) {
@@ -327,8 +340,8 @@ function objectCorrection(po, final) {
     }
     if(body.gameObject.mod().removed || (body.constructPart && body.constructPart.removed)) continue
     if(po.collides(body, result)) {
-      // OK onlyHeroAllowed basically acts as a SAFE ZONE for now
-      if(po.gameObject.mod().tags['monster'] && body.gameObject.tags && body.gameObject.mod().tags['onlyHeroAllowed']) {
+      // OK noMonsterAllowed basically acts as a SAFE ZONE for now
+      if(po.gameObject.mod().tags['monster'] && body.gameObject.tags && body.gameObject.mod().tags['noMonsterAllowed']) {
         if(Math.abs(result.overlap_x) !== 0) {
           illegal = true
           correction.x -= result.overlap * result.overlap_x
@@ -371,19 +384,36 @@ function objectCorrection(po, final) {
   }
 
   if(illegal) {
+    let prevVelocityY = po.gameObject.velocityY
+    let prevVelocityX = po.gameObject.velocityX
+
     if(result.overlap_y === 1) {
-      po.gameObject.velocityY = 0
-      po.gameObject.onGround = true
+      // if(po.gameObject.velocityY > 0) {
+        po.gameObject.velocityY = 0
+        po.gameObject.onGround = true
+      // }
     } else if(result.overlap_y === -1){
-      po.gameObject.velocityY = 0
+      // if(po.gameObject.velocityY < 0)
+       po.gameObject.velocityY = 0
     }
     if(result.overlap_x === 1) {
+      // if(po.gameObject.velocityX > 0)
       po.gameObject.velocityX = 0
     } else if(result.overlap_x === -1){
+      // if(po.gameObject.velocityX < 0)
       po.gameObject.velocityX = 0
     }
     po.x = correction.x
     po.y = correction.y
+
+    if(po.gameObject.mod().bouncyness) {
+      if(result.overlap_y === 1 || result.overlap_y === -1) {
+        po.gameObject.velocityY = (prevVelocityY * po.gameObject.mod().bouncyness * -1)
+      }
+      if(result.overlap_x === 1 || result.overlap_x === -1) {
+        po.gameObject.velocityX = (prevVelocityY * po.gameObject.mod().bouncyness * -1)
+      }
+    }
   }
 
   if(final) {

@@ -216,7 +216,7 @@ export default class HeroContextMenu extends React.Component {
           {this._renderInputBehaviorMenu('cButtonBehavior', Object.keys(window.actionButtonBehavior))}
         </SubMenu>
         <SubMenu title="Space Bar">
-          {this._renderInputBehaviorMenu('spaceBarBehavior', Object.keys(window.spaceBarBehavior))}
+          {this._renderInputBehaviorMenu('spaceBarBehavior', Object.keys(window.actionButtonBehavior))}
         </SubMenu>
         <SubMenu title="Modifiers">
           <Menu onClick={this._handleTagMenuClick}>

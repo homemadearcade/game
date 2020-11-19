@@ -428,7 +428,7 @@ class Game{
   }
 
   addObstacle(object) {
-    if(((!object.path || !object.path.length) && (!object.tags.moving) && object.tags.obstacle) || GAME.world.tags.calculateMovingObstaclePaths || object.tags.onlyHeroAllowed) {
+    if(((!object.path || !object.path.length) && (!object.tags.moving) && object.tags.obstacle) || GAME.world.tags.calculateMovingObstaclePaths || object.tags.noMonsterAllowed) {
       // pretend we are dealing with a 0,0 plane
       let x = object.x - GAME.grid.startX
       let y = object.y - GAME.grid.startY
@@ -502,7 +502,7 @@ class Game{
     GAME.objects.forEach((obj) => {
       if(obj.mod().removed) return
 
-      if(obj.tags && obj.tags.obstacle || obj.tags.onlyHeroAllowed) {
+      if(obj.tags && obj.tags.obstacle || obj.tags.noMonsterAllowed) {
         if(obj.constructParts) {
           obj.constructParts.forEach((part) => {
             GAME.addObstacle({...part, tags: obj.tags})

@@ -34,8 +34,6 @@ REVEAL things power ( see living objects through foreground, see through all for
 ///////
 JUMPING POWERS
  Wall jump
- double jump
- DASH
  teleport dash
  Bounce
 
