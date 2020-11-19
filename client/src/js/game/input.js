@@ -183,7 +183,7 @@ function handleActionEnd(hero, action) {
   let subObject = false
   Object.keys(hero.subObjects).forEach((name) => {
     const so = hero.subObjects[name]
-    if(so.id === action) {
+    if(so.subObjectName === action) {
       action = so.actionButtonBehavior
       subObject = so
     }
@@ -204,7 +204,7 @@ function handleActionButtonBehavior(hero, action, delta) {
   let subObject = false
   Object.keys(hero.subObjects).forEach((name) => {
     const so = hero.subObjects[name]
-    if(so.id === action) {
+    if(so.subObjectName === action) {
       action = so.actionButtonBehavior
       subObject = so
     }

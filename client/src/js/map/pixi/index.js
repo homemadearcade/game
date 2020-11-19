@@ -692,12 +692,12 @@ PIXIMAP.convertToPartObject = function(gameObject, part) {
 }
 
 PIXIMAP.makeInvisibleIfRemoved = function(object) {
-  if(object.mod().removed) {
+  if(object.mod().removed && PIXIMAP.childrenById[object.id]) {
     PIXIMAP.childrenById[object.id].visible = false
     if(object.subObjects) {
       Object.keys(object.subObjects).forEach((subObjectName) => {
         const so = object.subObjects[subObjectName]
-        PIXIMAP.childrenById[subObject.id].visible = false
+        if(PIXIMAP.childrenById[so.id]) PIXIMAP.childrenById[so.id].visible = false
       })
     }
     return false
@@ -706,7 +706,7 @@ PIXIMAP.makeInvisibleIfRemoved = function(object) {
     Object.keys(object.subObjects).forEach((subObjectName) => {
       const so = object.subObjects[subObjectName]
       if(object.mod().removed) {
-        PIXIMAP.childrenById[subObject.id].visible = false
+        if(PIXIMAP.childrenById[so.id]) PIXIMAP.childrenById[subObject.id].visible = false
         return
       }
     })

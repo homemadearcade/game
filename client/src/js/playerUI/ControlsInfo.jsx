@@ -15,7 +15,7 @@ export default class ControlsInfo extends React.Component {
 
     scheme1.push({ key: 'v', behavior: 'Interact'})
     scheme1.push(...this._getKeyDataArray('arrowKeysBehavior', hero))
-    scheme1.push(...this._getKeyDataArray('spaceBarBehavior', hero))
+    scheme1.push(this._getKeyDataArray('spaceBarBehavior', hero))
     scheme1.push(this._getKeyDataArray('zButtonBehavior', hero))
     scheme1.push(this._getKeyDataArray('xButtonBehavior', hero))
     scheme1.push(this._getKeyDataArray('cButtonBehavior', hero))
@@ -23,7 +23,7 @@ export default class ControlsInfo extends React.Component {
     const scheme2 = []
     scheme2.push({ key: 'e', behavior: 'Interact'})
     scheme2.push(...this._getKeyDataArray('arrowKeysBehavior', hero, true))
-    scheme2.push(...this._getKeyDataArray('spaceBarBehavior', hero))
+    scheme2.push(this._getKeyDataArray('spaceBarBehavior', hero))
     scheme2.push(this._getKeyDataArray('mButtonBehavior', hero))
     scheme2.push(this._getKeyDataArray('nButtonBehavior', hero))
     scheme2.push(this._getKeyDataArray('bButtonBehavior', hero))
@@ -52,10 +52,17 @@ export default class ControlsInfo extends React.Component {
     let windowName = behaviorPropName
     let key
 
-    if(behaviorPropName === 'mButtonBehavior' || behaviorPropName === 'nButtonBehavior' ||  behaviorPropName === 'bButtonBehavior' ||  behaviorPropName === 'xButtonBehavior' ||  behaviorPropName === 'zButtonBehavior' ||  behaviorPropName === 'cButtonBehavior') {
+    if(behaviorPropName === 'spaceBarBehavior' || behaviorPropName === 'mButtonBehavior' || behaviorPropName === 'nButtonBehavior' ||  behaviorPropName === 'bButtonBehavior' ||  behaviorPropName === 'xButtonBehavior' ||  behaviorPropName === 'zButtonBehavior' ||  behaviorPropName === 'cButtonBehavior') {
       if(!hero[behaviorPropName]) return null
       windowName = 'actionButtonBehavior'
       const key = behaviorPropName.charAt(0)
+
+      if(hero.subObjects[behaviorPropName]) {
+        return {
+          behavior: window[windowName][hero.subObjects[behaviorPropName].actionButtonBehavior],
+          key
+        }
+      }
       return {
         behavior: window[windowName][hero[behaviorPropName]],
         key

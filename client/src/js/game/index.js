@@ -154,13 +154,15 @@ class Game{
           GAME.objects.forEach((object) => {
             if(object.mod().removed) return
             if(object.mod().tags.destroyQuickly) {
-              if(object.createdTime + 6666 < Date.now()) object._destroy = true
+              // console.log(object.id, object.createdTime + 3000, Date.now())
+              if(object.createdTime + 3000 < Date.now()) object._destroy = true
             }
             if(object.mod().tags.destroySoon) {
-              if(object.createdTime + 20000 < Date.now()) object._destroy = true
+              // console.log(object.id, object.createdTime + 10000, Date.now())
+              if(object.createdTime + 10000 < Date.now()) object._destroy = true
             }
             if(object.mod().tags.destroyEventually) {
-              if(object.createdTime + 120000 < Date.now()) object._destroy = true
+              if(object.createdTime + 200000 < Date.now()) object._destroy = true
             }
             PHYSICS.updatePosition(object, delta)
           })

@@ -139,19 +139,23 @@ function depositToInventory(depositor, retriever, subObjectName, amount) {
 
 function equipSubObject(hero, subObject, keyBinding = 'available') {
   if(keyBinding === 'available') {
+    if(hero.zButtonBehavior === subObject.subObjectName || hero.xButtonBehavior === subObject.subObjectName || hero.cButtonBehavior === subObject.subObjectName) {
+      console.log('already equipped to a slot')
+      return
+    }
     if(!hero.zButtonBehavior || hero.zButtonBehavior === '') {
-      hero.zButtonBehavior = subObject.id
+      hero.zButtonBehavior = subObject.subObjectName
     } else if(!hero.xButtonBehavior || hero.xButtonBehavior === '') {
-      hero.xButtonBehavior = subObject.id
+      hero.xButtonBehavior = subObject.subObjectName
     } else if(!hero.cButtonBehavior || hero.cButtonBehavior === '') {
-      hero.cButtonBehavior = subObject.id
+      hero.cButtonBehavior = subObject.subObjectName
     }
   } else if(keyBinding === 'z') {
-    hero.zButtonBehavior = subObject.id
+    hero.zButtonBehavior = subObject.subObjectName
   } else if(keyBinding === 'x') {
-    hero.xButtonBehavior = subObject.id
+    hero.xButtonBehavior = subObject.subObjectName
   } else if(keyBinding === 'c') {
-    hero.cButtonBehavior = subObject.id
+    hero.cButtonBehavior = subObject.subObjectName
   }
 
   subObject.isEquipped = true
@@ -165,11 +169,13 @@ function equipSubObject(hero, subObject, keyBinding = 'available') {
 }
 
 function unequipSubObject(hero, subObject) {
-  if(hero.zButtonBehavior === subObject.id) {
+  if(hero.zButtonBehavior === subObject.subObjectName) {
     hero.zButtonBehavior = null
-  } else if(hero.xButtonBehavior === subObject.id) {
+  }
+  if(hero.xButtonBehavior === subObject.subObjectName) {
     hero.xButtonBehavior = null
-  } else if(hero.cButtonBehavior === subObject.id) {
+  }
+  if(hero.cButtonBehavior === subObject.subObjectName) {
     hero.cButtonBehavior = null
   }
 

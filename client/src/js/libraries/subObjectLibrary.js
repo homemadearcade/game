@@ -73,6 +73,7 @@ window.local.on('onFirstPageGameLoaded', () => {
       relativeY: 0,
       subObjectName: 'Bomb Bag',
       tags: {
+        potential: true,
         rotateable: true,
         relativeToAngle: true,
         relativeToDirection: true,
@@ -87,8 +88,9 @@ window.local.on('onFirstPageGameLoaded', () => {
         tags: {
           destroySoon: true,
           countDownToDestroy: true,
-          pickupable: true,
-          pickupOnHeroInteract: true
+          explodeOnDestroy: true,
+          // pickupable: true,
+          // pickupOnHeroInteract: true
         },
         explosionProps: {
           tags: {

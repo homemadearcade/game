@@ -157,11 +157,14 @@ function dropAndModify({ dropper, dropping, actionProps, direction }) {
     dropping.subObjects = {
       explosion: {
         subObjectName: 'explosion',
-        relativeX: -dropper.width,
+        relativeX: 0,
         width: dropper.width * 3,
-        relativeY: -dropper.height,
+        relativeY: 0,
         height: dropper.height * 3,
-        tags: actionProps.explosionProps.tags,
+        tags: {
+          ...actionProps.explosionProps.tags,
+          potential: true,
+        },
         opacity: actionProps.explosionProps.opacity,
         color: actionProps.explosionProps.color,
       }
