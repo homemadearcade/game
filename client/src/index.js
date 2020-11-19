@@ -13,51 +13,39 @@ COMBINE COMBAT WITH GOALS AND QUESTS
 INVENTORY HUD
 GRAPHICAL, PARTICLE, ANIMATED INTEGRATION
 
-  Sleep is death has good game feel in their interface… take a look at that
-  Better Dialogue Box like sleep is death
 -------
-TODO right now
 
-1. Bomb? Can we just use bullets? USe bullet system and also add a timer object
-2. Special jumps
-3. Create strong library of these ^
-
-///////
-GAME FEEL MODS
-Fly power
-Metal mario! How did I not think of this. Sink and don't drown
-Vanish cap ( lets you walk through walls? )
-Fast fast cap..? Like mario racoon essentially, gives you better soaring and speed?
-Shrink power, think metroid ball or CROUCH even
-REVEAL things power ( see living objects through foreground, see through all foreground, see hidden objects )
-
-///////
-JUMPING POWERS
- Wall jump
- teleport dash
-
------
-
+////////////////////////////////
+////////////////////////////////
 SEQUENCE EDITOR UPGRADE
+////////////////////////////////
 Create/Editor
 Animate
 Sound
 
+////////////////////////////////
+////////////////////////////////
 SPAWN UPGRADE
+////////////////////////////////
 Hero removed -> respawn UI
 HOOK UP RESPAWNS TO A SPAWN ZONE
 death by jump tag?
 spawn on interact ( spawn effect )
 
+////////////////////////////////
+////////////////////////////////
 EDITOR UPGRADES
+////////////////////////////////
 action props editor
 Light Editor
 never close right click menu if shift is pressed
 Improve Add Sub Object
 GENRE libraries ( creator, generatedMenu )
 
-///
+////////////////////////////////
+////////////////////////////////
 GAME FEEL UPGRADE
+////////////////////////////////
 Implement special extra physics for objects, not just heros
 Hero jump attack and movement ATTACK
 ATTACK which is like initial acceleration when there is no acceleration yet, jump attack speed, etc
@@ -67,8 +55,22 @@ Object 'swinging' like on a rope. I mean... awesome right?
 input modifiers....'on ice', 'flat'
 // planet gravity! Would be cool to have..
 
-///
+MODS
+Fly power
+Metal mario! How did I not think of this. Sink and don't drown
+Vanish cap ( lets you walk through walls? )
+Fast fast cap..? Like mario racoon essentially, gives you better soaring and speed?
+Shrink power, think metroid ball or CROUCH even
+REVEAL things power ( see living objects through foreground, see through all foreground, see hidden objects )
+
+POWERS
+ Wall jump
+ teleport dash
+
+////////////////////////////////
+////////////////////////////////
 INVENTORY UPGRADE
+////////////////////////////////
 Inventory Context Menu -> Drop, Equip to Hero, Add to Shortcuts
 show inventory in HUD tag, like RTS resources VS team...yeahh
 actually build in this whole equipping system
@@ -77,8 +79,10 @@ actually build in this whole equipping system
 // drop last object when full ( boolean )
 // prevent add when full ( boolean )
 
-///
+////////////////////////////////
+////////////////////////////////
 ANIMATION UPGRADE
+////////////////////////////////
 Random Particle Designer
 // a system that like randomly generates how particles and things interact and we get to test it out and save it! GREAT WAY TO CUSTOMIZE WITHOUT MUCH EFFORT
 // Needs to be attached to system ( AKA the combat system )
@@ -86,23 +90,29 @@ allow chaining of animations and effects
 onAnimationEnd
 Wait for animation to complete
 
-///
+////////////////////////////////
+////////////////////////////////
 QUESTS UPGRADE
+////////////////////////////////
 Add Quest starting, completing, and succeeding to effects
 Auto Complete/Fail quest based on goals the quest has
 View Quests UI in player menu
 onSucceedSequence, onFailSequence
 
-///
+////////////////////////////////
+////////////////////////////////
 GOALS UPGRADE
+////////////////////////////////
 Goal number -> as many as possible
 Chances -> fail on death
 collect, score, create, destroy ( not implemented )
 a Score parameter on objects
 Win/Lose States that can connect to the meta of the engine ( picking new game or replaying current game )
 
-///
+////////////////////////////////
+////////////////////////////////
 COMBAT UPGRADE
+////////////////////////////////
 Main questions for this upgrade is
   -- How to detect the destroyer! Thats key... how does _destroyedById work -- by weapon, by bullet, by player?
   -- How much damage does it do?
@@ -120,7 +130,10 @@ CONSTRUCT EDITOR - Destroy parts
 Game Over State
 	specifically allow a hero to be destoyed and have the game run still?
 
+////////////////////////////////
+////////////////////////////////
 BRANCH
+////////////////////////////////
 Different roots for the branches...
 
 ////////////////////////////////////////////////////
@@ -181,6 +194,7 @@ experience password for ha-live. Use month+day - 100
 Change on collide to on touch start for certain tags
 
 tag
+  countDownToDestroy
   cameraZoomToFit
   speed boost tile
   go down when hit obstacle ( mainly for goombas you feel me? )
@@ -396,6 +410,10 @@ https://www.engadget.com/alt254-zelda-style-indie-game-pixels-174504609.html
 https://typeitjs.com/
 https://safi.me.uk/typewriterjs/
 HELP WITH COLOR PALLETE?
+
+SLEEP IS DEATH
+Sleep is death has good game feel in their interface… take a look at that
+Better Dialogue Box like sleep is death
 
 RECORDING
 https://codepen.io/adkanojia/pen/EZJvJL

@@ -95,6 +95,7 @@ class Hero{
       cameraTweenSpeedXExtra: 0,
       cameraTweenSpeedYExtra: 0,
       cameraTweenSpeed: 2,
+      // velocityDecay: 50,
       // cameraRotation: 0,
       heroSummonType: 'default',
     }

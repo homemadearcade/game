@@ -116,7 +116,9 @@ export default class HeroContextMenu extends React.Component {
       const { networkEditObject } = MAPEDITOR
 
       const data = JSON.parse(key)
-      if(data.new) {
+      if(data.none) {
+        networkEditObject(objectSelected, { [data.behaviorProp]: null })
+      } else if(data.new) {
         modals.addCustomInputBehavior(data.behaviorProp)
       } else if(data.behaviorName && data.behaviorProp) {
         networkEditObject(objectSelected, { [data.behaviorProp]: data.behaviorName })
@@ -155,6 +157,7 @@ export default class HeroContextMenu extends React.Component {
     const { objectSelected } = this.props
 
     const newBehavior = <MenuItem key={JSON.stringify({behaviorProp, new: true})}>Add new behavior</MenuItem>
+    const none = <MenuItem key={JSON.stringify({behaviorProp, none: true})}>None</MenuItem>
 
     return [...behaviorList.map((behaviorName) => {
       const key = {
@@ -167,7 +170,7 @@ export default class HeroContextMenu extends React.Component {
       } else {
         return <MenuItem key={JSON.stringify(key)}>{behaviorName}</MenuItem>
       }
-    }), newBehavior]
+    }), none, newBehavior]
   }
 
   render() {

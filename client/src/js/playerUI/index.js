@@ -44,6 +44,12 @@ class PlayerUI {
     }
   }
 
+  onKeyUp(key, hero) {
+    if(hero.id === HERO.id) {
+      PLAYERUI.ref.onUpdateState()
+    }
+  }
+
   onUpdatePlayerUI(hero) {
     if(hero.id === HERO.id) {
       PLAYERUI.ref.onUpdateState(hero)

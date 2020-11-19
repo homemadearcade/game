@@ -7,6 +7,7 @@ import InventoryModal from './InventoryModal.jsx'
 import MainMenuModal from './MainMenuModal.jsx'
 import HeroMenuModal from './HeroMenuModal.jsx'
 import ControlsInfo from './ControlsInfo.jsx'
+import ControlsHUD from './ControlsHUD.jsx'
 import GameLogs from './GameLogs.jsx'
 import Modal from '../components/Modal.jsx'
 import { ToastContainer, toast, Slide, Zoom, Flip, Bounce } from 'react-toastify';
@@ -170,6 +171,7 @@ export default class Root extends React.Component {
         {!PAGE.role.isArcadeMode && <Toolbar/>}
         {hero.flags.showBrandImageScreen && <div className="Cutscene" style={{backgroundImage: "url('"+window.HomemadeArcadeImageAssetURL + 'homemade-arcade-play.png'+"')" }}>
         </div>}
+        <ControlsHUD/>
       </div>
     )
   }

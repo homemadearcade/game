@@ -953,7 +953,10 @@ class Objects{
   }
 
   deleteSubObject(owner, subObject, subObjectName) {
-    if(subObject.isEquipped) unequipSubObject(owner, subObject)
+    if(subObject.isEquipped) {
+      console.log('uneqipping')
+      unequipSubObject(owner, subObject)
+    }
     PIXIMAP.deleteObject(subObject)
     if(PAGE.role.isHost && !subObject.tags.potential) PHYSICS.removeObject(subObject)
     delete owner.subObjects[subObjectName]

@@ -218,6 +218,7 @@ function handleActionButtonBehavior(hero, action, delta) {
   }
 
   if(action === 'shoot') {
+    if(!GAME.gameState.started) return
     if(subObject) {
       shootBullet({direction: hero.inputDirection, shooter: subObject, actionProps: subObject.actionProps })
     } else {
@@ -228,6 +229,7 @@ function handleActionButtonBehavior(hero, action, delta) {
   }
 
   if(action === 'shrink' || action === 'grow' || action === 'vacuum') {
+    if(!GAME.gameState.started) return
     if(subObject) {
       closestObjectBehavior({
         direction: hero.inputDirection,
@@ -250,6 +252,7 @@ function handleActionButtonBehavior(hero, action, delta) {
   }
 
   if(action === 'dropAndModify') {
+    if(!GAME.gameState.started) return
     if(subObject) {
       dropAndModify({
         direction: hero.inputDirection,
