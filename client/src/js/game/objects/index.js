@@ -855,7 +855,7 @@ class Objects{
 
   onUpdateObject(object, delta) {
     if(object.mod().removed) return
-    
+
     if(object.mod().tags.realRotate) {
       if(typeof object.angle != 'number') object.angle = 0
       object.angle += 1 * delta

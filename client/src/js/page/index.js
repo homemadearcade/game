@@ -173,8 +173,6 @@ class Page{
     const hasSavedHero = localStorage.getItem('hero')
     if(hasSavedHero) heroOptions.unshift('resume')
 
-    console.log('XXX')
-
     let heroSummonType = 'singlePlayer'
     if(PAGE.getParameterByName('heroSummonType')) {
       if(hasSavedHero) heroSummonType = 'resume'

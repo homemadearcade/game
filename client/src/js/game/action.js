@@ -149,14 +149,14 @@ function shootBullet({ shooter, actionProps, direction }) {
 function dropAndModify({ dropper, dropping, actionProps, direction }) {
   let directions = dropper.directions
 
-  dropping = _.cloneDeep(dropping)
+  let newObject = _.cloneDeep(dropping)
 
-  dropping.tags.rotateable = true
+  newObject.tags.rotateable = true
 
-  Object.assign(dropping.tags, actionProps.tags)
+  Object.assign(newObject.tags, actionProps.tags)
 
   if(actionProps.explosionProps) {
-    dropping.subObjects = {
+    newObject.subObjects = {
       explosion: {
         subObjectName: 'explosion',
         relativeX: 0,
@@ -171,9 +171,9 @@ function dropAndModify({ dropper, dropping, actionProps, direction }) {
         color: actionProps.explosionProps.color,
       }
     }
-    dropping.subObjectChances = {explosion:{randomWeight:1,conditionList:null}}
-    dropping.spawnPoolInitial = 1
-    dropping.tags.spawnAllOnDestroy = true
+    newObject.subObjectChances = {explosion:{randomWeight:1,conditionList:null}}
+    newObject.spawnPoolInitial = 1
+    newObject.tags.spawnAllOnDestroy = true
   }
 
   let angle
@@ -182,7 +182,7 @@ function dropAndModify({ dropper, dropping, actionProps, direction }) {
   }
 
   if(direction === 'up') {
-    Object.assign(dropping, {
+    Object.assign(newObject, {
       x: dropper.x,
       y: dropper.y - dropper.mod().height,
       angle: angle ? angle : 0,
@@ -190,7 +190,7 @@ function dropAndModify({ dropper, dropping, actionProps, direction }) {
   }
 
   if(direction === 'down') {
-    Object.assign(dropping, {
+    Object.assign(newObject, {
       x: dropper.x,
       y: dropper.y + dropper.mod().height,
       angle: angle ? angle : 1.5708 * 2,
@@ -198,7 +198,7 @@ function dropAndModify({ dropper, dropping, actionProps, direction }) {
   }
 
   if(direction === 'right') {
-    Object.assign(dropping, {
+    Object.assign(newObject, {
       x: dropper.x + dropper.mod().width,
       y: dropper.y,
       angle: angle ? angle : 1.5708,
@@ -206,14 +206,14 @@ function dropAndModify({ dropper, dropping, actionProps, direction }) {
   }
 
   if(direction === 'left') {
-    Object.assign(dropping, {
+    Object.assign(newObject, {
       x: dropper.x - dropper.mod().width,
       y: dropper.y,
       angle: angle ? angle : 1.5708 * 3,
     })
   }
 
-  dropObject(dropper, dropping, 1, false)
+  dropObject(dropper, newObject, 1, false)
   // OBJECTS.create([wall], { fromLiveGame: true })
 }
 

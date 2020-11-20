@@ -27,11 +27,11 @@ function pickupObject(hero, collider) {
     return
   }
 
-  // if(!collider.mod().tags['dontDestroyOnPickup']) {
-  //   collider.removed = true
-  //   // since were duplicating objects here, this gets tricky. the id could pick up the new object in the ._remove processing tool.
-  //   // keep it like this unless ur sure what ur doing
-  // }
+  if(!collider.mod().tags['dontDestroyOnPickup']) {
+    OBJECTS.removeObject(collider)
+    // since were duplicating objects here, this gets tricky. the id could pick up the new object in the ._remove processing tool IF you are using _remove
+    // thats why I directly remove object
+  }
 
   if(!subObject.tags.onMap) {
     subObject.removed = true
@@ -53,6 +53,9 @@ function pickupObject(hero, collider) {
 
 function dropObject(hero, subObject, dropAmount = 1, snapToGrid = true) {
   let object = _.cloneDeep(subObject.mod())
+
+  // sometimes the subObject dropped in here can be a copy...  to make sure you are editing the real thing, look up original
+  subObject = OBJECTS.getObjectOrHeroById(subObject.id)
 
   let subObjectStillHasCount = false
   if(subObject.tags.stackable) {
@@ -141,14 +144,14 @@ function equipSubObject(hero, subObject, keyBinding = 'available') {
   if(keyBinding === 'available') {
     if(hero.zButtonBehavior === subObject.subObjectName || hero.xButtonBehavior === subObject.subObjectName || hero.cButtonBehavior === subObject.subObjectName) {
       console.log('already equipped to a slot')
-      return
-    }
-    if(!hero.zButtonBehavior || hero.zButtonBehavior === '') {
-      hero.zButtonBehavior = subObject.subObjectName
-    } else if(!hero.xButtonBehavior || hero.xButtonBehavior === '') {
-      hero.xButtonBehavior = subObject.subObjectName
-    } else if(!hero.cButtonBehavior || hero.cButtonBehavior === '') {
-      hero.cButtonBehavior = subObject.subObjectName
+    } else {
+      if(!hero.zButtonBehavior || hero.zButtonBehavior === '') {
+        hero.zButtonBehavior = subObject.subObjectName
+      } else if(!hero.xButtonBehavior || hero.xButtonBehavior === '') {
+        hero.xButtonBehavior = subObject.subObjectName
+      } else if(!hero.cButtonBehavior || hero.cButtonBehavior === '') {
+        hero.cButtonBehavior = subObject.subObjectName
+      }
     }
   } else if(keyBinding === 'z') {
     hero.zButtonBehavior = subObject.subObjectName

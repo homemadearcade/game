@@ -66,7 +66,7 @@ class NotificationsControl{
 
   onHeroEquip(hero, subObject) {
     if(subObject.actionButtonBehavior) {
-      window.socket.emit('sendNotification', { playerUIHeroId: hero.id, toast: true, text: 'Your controls updated have been updated. Click to see more', viewControlsOnClick: true })
+      // window.socket.emit('sendNotification', { playerUIHeroId: hero.id, toast: true, text: 'Your controls updated have been updated. Click to see more', viewControlsOnClick: true })
     }
   }
 

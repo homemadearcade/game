@@ -18,6 +18,16 @@ import keycode from 'keycode'
 
 window.readyForControlsToast = true
 
+window.currentToasts = []
+
+function getToastTextData(text) {
+  let parenthesisIndex = text.indexOf('(')
+  if(parenthesisIndex >= 0) {
+    text = text.slice(0, parenthesisIndex - 1)
+  }
+  return text
+}
+
 export default class Root extends React.Component {
   constructor(props) {
     super(props)
@@ -88,11 +98,30 @@ export default class Root extends React.Component {
 
   onSendNotification = (data) => {
     if(data.toast) {
+      let currentToast
+      window.currentToasts.forEach((toast) => {
+        const text = getToastTextData(toast.text)
+        if(data.text === text) currentToast = toast
+      })
+      if(currentToast) {
+        let newText = getToastTextData(currentToast.text)
+        currentToast.count++
+        toast.update(currentToast.id, {
+          render: newText + ` (${currentToast.count})`
+        })
+        return
+      }
+
       const toastInfo = {
         // position: "top-right",
         autoClose: (data.duration * 1000) || 4000,
         newestOnTop: true,
         closeOnClick: data.duration <= 0,
+        onClose: (props) => {
+          window.currentToasts = window.currentToasts.filter((toast) => {
+            return toast.id !== toastId
+          })
+        }
       }
       if(data.viewControlsOnClick) {
         // sometimes we edit the controls a lot... so we dont show if theres too many. We need a... id control system for this
@@ -107,7 +136,13 @@ export default class Root extends React.Component {
           window.readyForControlsToast = true
         }, 4000)
       }
-      toast(data.text, toastInfo)
+
+      let toastId = toast(data.text, toastInfo)
+      window.currentToasts.push({
+        id: toastId,
+        text: data.text,
+        count: 1,
+      })
     }
 
     if(data.modal) {
