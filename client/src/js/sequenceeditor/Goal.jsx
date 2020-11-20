@@ -23,7 +23,7 @@ window.goalTypes = {
     number: true,
     tag: true,
   },
-  'createX' : {
+  'dropX' : {
     number: true,
     tag: true,
   },
@@ -31,10 +31,14 @@ window.goalTypes = {
     number: true,
     tag: true,
   },
-  'scoreX' : {
+  'xInInventory' : {
     number: true,
     tag: true,
-  }
+  },
+  // 'scoreX' : {
+  //   number: true,
+  //   tag: true,
+  // }
 }
 
 window.defaultSequenceGoal = {

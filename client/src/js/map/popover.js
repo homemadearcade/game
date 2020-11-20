@@ -38,12 +38,12 @@ window.local.on('onFirstPageGameLoaded', () => {
     MAP.popoverInstances.push(instance)
   }
 
-  setInterval(() => {
+  MAP.updatePopovers = function() {
     MAP.popoverInstances.forEach((instance) => {
       let object = OBJECTS.getObjectOrHeroById(instance.objectId)
       setPopoverPosition(instance, object)
-    }, 40)
-  })
+    })
+  }
 })
 
 function setPopoverPosition(instance, object) {

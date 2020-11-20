@@ -175,13 +175,13 @@ function update(camera) {
   if(clientHero && clientHero.interactableObjectId && !clientHero.flags.showDialogue) {
     const interactableObject = OBJECTS.getObjectOrHeroById(clientHero.interactableObjectId)
     // if(interactableObject.tags.invisible) {
-      ctx.fillStyle = "rgb(255, 255, 255)";
-      let text = "Press V to interact"
-      ctx.textAlign = 'center'
-      // ctx.textBaseline = 'alphabetic'
-      ctx.font =`${18 * MAP.canvasMultiplier}pt Courier New`
-      // console.log(MAP.canvas.width/2 - (200 * MAP.canvasMultiplier), 240 * MAP.canvasMultiplier)
-      ctx.fillText(text, MAP.canvas.width/2, MAP.canvas.height - (36 * MAP.canvasMultiplier))
+      // ctx.fillStyle = "rgb(255, 255, 255)";
+      // let text = "Press V to interact"
+      // ctx.textAlign = 'center'
+      // // ctx.textBaseline = 'alphabetic'
+      // ctx.font =`${18 * MAP.canvasMultiplier}pt Courier New`
+      // // console.log(MAP.canvas.width/2 - (200 * MAP.canvasMultiplier), 240 * MAP.canvasMultiplier)
+      // ctx.fillText(text, MAP.canvas.width/2, MAP.canvas.height - (36 * MAP.canvasMultiplier))
     // }
 
     if(interactableObject.tags.outline) {

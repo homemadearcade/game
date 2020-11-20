@@ -97,7 +97,7 @@ export default class ControlsHUD extends React.Component {
     const hero = GAME.heros[HERO.id].mod()
 
     if(!hero.keysDown) return null
-    
+
     return <div className="ControlsHUD">
       {hero.zButtonBehavior && <div className="ControlsHUD__actioninfo">
         {this._renderSubObject(hero, 'zButtonBehavior')}
@@ -114,6 +114,12 @@ export default class ControlsHUD extends React.Component {
       {hero.spaceBarBehavior && <div className="ControlsHUD__actioninfo">
         {this._renderSubObject(hero, 'spaceBarBehavior')}
         {this._renderKeySprite('space', hero.keysDown.space)}
+      </div>}
+      {hero.interactableObjectId && <div className="ControlsHUD__actioninfo">
+        <div className="ControlsHUD__keyinfo">
+            Interact
+        </div>
+        {this._renderKeySprite('v', hero.keysDown.v)}
       </div>}
     </div>
   }

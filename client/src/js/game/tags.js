@@ -189,9 +189,7 @@ function setDefault() {
     equipOnPickup: false,
     // potential: false,
     stackable: false,
-    onMapWhenEquipped: false, //cant change
     // dropOnOwnerDestroyed: false,
-
     startsInInventory: false,
     startsEquipped: false,
   }
@@ -285,6 +283,8 @@ function setDefault() {
   window.subObjectTags = {
     subObject: true,
     onMap: false,
+    onMapWhenEquipped: false, //cant change,
+    showCountInHUD: false,
     heroInteractTriggerArea: false,
     awarenessTriggerArea: false,
     objectInteractTriggerArea: false,

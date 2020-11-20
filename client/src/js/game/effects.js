@@ -514,15 +514,17 @@ function processEffect(effect, effected, effector, ownerObject) {
   if(effectName === 'startGoal') {
     if(effected.tags.hero) {
       function startTimer() {
-        GAME.addTimeout(effect.goalId, effect.goalTimeLimit, () => {
-          effect.goalChances--
-          if(effect.goalChances <= 0) {
-            processEffect({ effectName: 'startSequence', effectSequenceId: effect.successSequenceId }, effected, effector, ownerObject)
-            GAME.gameState.goals[effect.goalId].failed = true
-            return
-          }
-          startTimer()
-        })
+        if(effect.goalTimeLimit > 0) {
+          GAME.addTimeout(effect.goalId, effect.goalTimeLimit, () => {
+            effect.goalChances--
+            if(effect.goalChances <= 0) {
+              if(effect.failSequenceId) processEffect({ effectName: 'startSequence', effectSequenceId: effect.failSequenceId }, effected, effector, ownerObject)
+              GAME.gameState.goals[effect.goalId].failed = true
+              return
+            }
+            startTimer()
+          })
+        }
       }
 
       const tracker = TRACKING.startTracking({

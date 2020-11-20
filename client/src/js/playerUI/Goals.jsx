@@ -62,7 +62,7 @@ export default class Goals extends React.Component{
     if(GAME.gameState.timeoutsById[goal.goalId]) timeRemaining = GAME.gameState.timeoutsById[goal.goalId].timeRemaining
     if(timeRemaining > 60) {
       timeRemaining = Math.floor(timeRemaining/60) + ' minutes remaining'
-    } else timeRemaining = Math.floor(timeRemaining) + ' second remaining'
+    } else if(timeRemaining > 0) timeRemaining = Math.floor(timeRemaining) + ' second remaining'
 
     const tracker = GAME.gameState.trackersById[goal.trackerId]
 

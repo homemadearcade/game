@@ -8,6 +8,7 @@ import MainMenuModal from './MainMenuModal.jsx'
 import HeroMenuModal from './HeroMenuModal.jsx'
 import ControlsInfo from './ControlsInfo.jsx'
 import ControlsHUD from './ControlsHUD.jsx'
+import InventoryHUD from './InventoryHUD.jsx'
 import GameLogs from './GameLogs.jsx'
 import Modal from '../components/Modal.jsx'
 import { ToastContainer, toast, Slide, Zoom, Flip, Bounce } from 'react-toastify';
@@ -149,7 +150,11 @@ export default class Root extends React.Component {
         {hero.flags && hero.flags.showDialogue && hero.dialogue && hero.dialogue.length > 0 && <DialogueBox dialogue={hero.dialogue} name={hero.dialogueName} />}
         {hero.flags && hero.flags.showDialogue && hero.choiceOptions && <DialogueBox options={hero.choiceOptions} name={hero.dialogueName}/>}
         {hero.flags && hero.flags.showCutscene && hero.cutscenes && <Cutscene scenes={hero.cutscenes} />}
-        {hero.goals && hero.goals.length && <Goals goals={hero.goals} />}
+        <div className="RightHUD" style={{ right: PAGE.isLogOpen ? '22%' : '20px'}}>
+          <InventoryHUD/>
+          {hero.goals && hero.goals.length && <Goals goals={hero.goals} />}
+        </div>
+
         {showHeroMenuModal && <HeroMenuModal
           hero={hero}
           onClose={() => this.setState({ showHeroMenuModal: false })}

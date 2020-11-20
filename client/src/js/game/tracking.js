@@ -24,12 +24,18 @@ class Tracking {
     })
   }
 
-  eventHappened(tracker) {
-    const { targetCount, onTargetCountReached, trackingObject, isGoal } = tracker
-    tracker.count++
-
+  eventHappened(tracker, count = 1) {
+    const { targetCount, trackingObject } = tracker
+    tracker.count+= count
     if(targetCount) window.emitGameEvent('onUpdatePlayerUI', trackingObject)
-    if(targetCount && targetCount === tracker.count) {
+
+    TRACKING.checkIfTrackerShouldStop(tracker)
+  }
+
+  checkIfTrackerShouldStop(tracker) {
+    const { targetCount, trackingObject, onTargetCountReached } = tracker
+
+    if(targetCount && tracker.count >= targetCount) {
       if(onTargetCountReached) onTargetCountReached()
       this.stopTracking(tracker.trackerId)
     }
@@ -44,6 +50,25 @@ class Tracking {
           tracker.trackingObject.navigationTargetId = possibleObjects[0].id
         }
       }
+
+      if(tracker.targetEvent === 'xInInventory') {
+        const { trackingObject, targetTags, targetCount } = tracker
+
+        let initialCount = tracker.count
+        tracker.count = 0
+        Object.keys(trackingObject.subObjects).forEach((soname) => {
+          const so = trackingObject.subObjects[soname]
+
+          if(so.inInventory && TRACKING.tagMatch(targetTags, so)) {
+            tracker.count += (so.count || 1)
+          }
+        })
+
+        if(targetCount && initialCount !== tracker.count) {
+          window.emitGameEvent('onUpdatePlayerUI', trackingObject)
+          TRACKING.checkIfTrackerShouldStop(tracker)
+        }
+      }
     })
   }
 
@@ -52,6 +77,55 @@ class Tracking {
       if(tracker.stopped) return
       const { trackingObject, targetEvent, targetTags } = tracker
       if(targetEvent === 'touchX' &&
+        trackingObject.id === hero.id &&
+        this.tagMatch(targetTags, object)) {
+          this.eventHappened(tracker)
+      }
+    })
+  }
+
+  onHeroPickup = (hero, object) => {
+    if(GAME.gameState.trackers.length) GAME.gameState.trackers.forEach((tracker) => {
+      if(tracker.stopped) return
+      const { trackingObject, targetEvent, targetTags } = tracker
+      if(targetEvent === 'collectX' &&
+        trackingObject.id === hero.id &&
+        this.tagMatch(targetTags, object)) {
+          this.eventHappened(tracker, object.count || 1)
+      }
+    })
+  }
+
+
+  onHeroDrop = (hero, object) => {
+    if(GAME.gameState.trackers.length) GAME.gameState.trackers.forEach((tracker) => {
+      if(tracker.stopped) return
+      const { trackingObject, targetEvent, targetTags } = tracker
+      if(targetEvent === 'dropX' &&
+        trackingObject.id === hero.id &&
+        this.tagMatch(targetTags, object)) {
+          this.eventHappened(tracker, object.count || 1)
+      }
+    })
+  }
+
+  onObjectDestroyed = (object, hero) => {
+    if(GAME.gameState.trackers.length) GAME.gameState.trackers.forEach((tracker) => {
+      if(tracker.stopped) return
+      const { trackingObject, targetEvent, targetTags } = tracker
+      if(targetEvent === 'destroyX' &&
+        trackingObject.id === hero.id &&
+        this.tagMatch(targetTags, object)) {
+          this.eventHappened(tracker)
+      }
+    })
+  }
+
+  onHeroDestroyed = (object, hero) => {
+    if(GAME.gameState.trackers.length) GAME.gameState.trackers.forEach((tracker) => {
+      if(tracker.stopped) return
+      const { trackingObject, targetEvent, targetTags } = tracker
+      if(targetEvent === 'destroyX' &&
         trackingObject.id === hero.id &&
         this.tagMatch(targetTags, object)) {
           this.eventHappened(tracker)

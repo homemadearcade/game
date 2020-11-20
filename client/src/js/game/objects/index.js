@@ -854,6 +854,8 @@ class Objects{
   }
 
   onUpdateObject(object, delta) {
+    if(object.mod().removed) return
+    
     if(object.mod().tags.realRotate) {
       if(typeof object.angle != 'number') object.angle = 0
       object.angle += 1 * delta
@@ -867,6 +869,18 @@ class Objects{
       object.tags.lastAnticipatedObject = true
     } else {
       object.tags.lastAnticipatedObject = false
+    }
+
+    if(object.mod().tags.destroyQuickly) {
+      // console.log(object.id, object.createdTime + 3000, Date.now())
+      if(object.createdTime + 3000 < Date.now()) object._destroy = true
+    }
+    if(object.mod().tags.destroySoon) {
+      // console.log(object.id, object.createdTime + 10000, Date.now())
+      if(object.createdTime + 10000 < Date.now()) object._destroy = true
+    }
+    if(object.mod().tags.destroyEventually) {
+      if(object.createdTime + 200000 < Date.now()) object._destroy = true
     }
   }
 

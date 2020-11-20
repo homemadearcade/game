@@ -167,6 +167,7 @@ class MapEditor {
   }
 
   onRender() {
+    MAP.updatePopovers()
     render.update()
   }
 

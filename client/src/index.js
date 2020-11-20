@@ -7,12 +7,11 @@
 FINAL TODO FOR HA
 -
 SOUND FX
+VISUAL TIMERS/COOLDOWNS AND INVENTORY
+FILL OUT LIBRARY and EFFECTS
+
 COMBINE COMBAT WITH GOALS AND QUESTS
 GRAPHICAL, PARTICLE, ANIMATED INTEGRATION
-CHAT TOOLTIPS ( DIALOGUE, INFO )
-VISUAL TIMERS/COOLDOWNS
-FILL OUT LIBRARY
-
 -------
 
 ////////////////////////////////
@@ -29,8 +28,16 @@ SPAWN UPGRADE
 ////////////////////////////////
 Hero removed -> respawn UI
 HOOK UP RESPAWNS TO A SPAWN ZONE
-death by jump tag?
 spawn on interact ( spawn effect )
+
+////////////////////////////////
+////////////////////////////////
+MODS
+////////////////////////////////
+Metal mario! How did I not think of this. Sink and don't drown
+Vanish cap ( lets you walk through walls? )
+Fast fast cap..? Like mario racoon essentially, gives you better soaring and speed?
+Shrink power, think metroid ball or CROUCH even
 
 ////////////////////////////////
 ////////////////////////////////
@@ -41,12 +48,6 @@ Light Editor
 never close right click menu if shift is pressed
 Improve Add Sub Object
 GENRE libraries ( creator, generatedMenu )
-
-MODS
-Metal mario! How did I not think of this. Sink and don't drown
-Vanish cap ( lets you walk through walls? )
-Fast fast cap..? Like mario racoon essentially, gives you better soaring and speed?
-Shrink power, think metroid ball or CROUCH even
 
 ////////////////////////////////
 ////////////////////////////////
@@ -168,6 +169,8 @@ Construct Editor on ha-demo bug?
 ###### SMALL FEATURES
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ////////////////////////////////////////////////////
+chatOnHover. use current chat service to create one that occurs on hover and is removed when mouse moves off...
+
 Add title menu (press start)
 Add controls menu to opening sequence
 

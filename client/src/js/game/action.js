@@ -149,6 +149,8 @@ function shootBullet({ shooter, actionProps, direction }) {
 function dropAndModify({ dropper, dropping, actionProps, direction }) {
   let directions = dropper.directions
 
+  dropping = _.cloneDeep(dropping)
+
   dropping.tags.rotateable = true
 
   Object.assign(dropping.tags, actionProps.tags)
