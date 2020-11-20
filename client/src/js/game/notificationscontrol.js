@@ -56,7 +56,7 @@ class NotificationsControl{
 
   onEditHero(updatedHero) {
     if(updatedHero.spaceBarBehavior) {
-      window.socket.emit('sendNotification', { playerUIHeroId: mod.ownerId, toast: true, text: 'Press Space Bar', viewControlsOnClick: true })
+      // window.socket.emit('sendNotification', { playerUIHeroId: mod.ownerId, toast: true, text: 'Press Space Bar', viewControlsOnClick: true })
     }
     //
     // if(updatedHero.arrowKeysBehavior || updatedHero.spaceBarBehavior || updatedHero.zButtonBehavior || updatedHero.xButtonBehavior || updatedHero.cButtonBehavior) {
@@ -72,7 +72,7 @@ class NotificationsControl{
 
   onModEnabled(mod) {
     if(mod.effectJSON.spaceBarBehavior) {
-      window.socket.emit('sendNotification', { playerUIHeroId: mod.ownerId, toast: true, text: 'Press Space Bar', viewControlsOnClick: true })
+      // window.socket.emit('sendNotification', { playerUIHeroId: mod.ownerId, toast: true, text: 'Press Space Bar', viewControlsOnClick: true })
     }
     if(mod.effectJSON.creator) {
       window.emitGameEvent('onUpdatePlayerUI', GAME.heros[mod.ownerId])

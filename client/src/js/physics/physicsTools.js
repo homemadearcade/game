@@ -149,7 +149,7 @@ function heroCorrection(hero) {
           acc.overlap_xOG = next.overlap_x
         }
         return acc
-      }, { overlap_y: 0, overlap_x: 0 })
+      }, { overlap_y: 0, overlap_x: 0, overlap_xOG: 0, overlap_yOG: 0 })
 
       function correctHeroY() {
         let prevVelocityY = hero.velocityY
@@ -163,8 +163,10 @@ function heroCorrection(hero) {
             if(hero.velocityAngle) hero.velocityAngle *= .09
           }
         } else if(result.overlap_y < 0){
-          if(landingObject) window.local.emit('onHeroHeadHit', hero, landingObject.gameObject, result)
-          if(hero.velocityY < 0) hero.velocityY = 0
+          if(hero.velocityY < 0) {
+            hero.velocityY = 0
+            if(landingObject) window.local.emit('onHeroHeadHit', hero, landingObject.gameObject, result)
+          }
           if(hero.velocityAngle) hero.velocityAngle *= .09
         }
         heroPO.y -= result.overlap_y
@@ -178,11 +180,20 @@ function heroCorrection(hero) {
       function correctHeroX() {
         let prevVelocityY = hero.velocityX
 
+        hero._canWallJumpLeft = false
+        hero._canWallJumpRight = false
+
         if(result.overlap_x > 0) {
-          hero.velocityX = 0
+          if(hero.velocityX > 0 || hero._flatVelocityX > 0) {
+            hero.velocityX = 0
+            hero._canWallJumpLeft = true
+          }
           if(hero.velocityAngle) hero.velocityAngle *= .09
         } else if(result.overlap_x < 0){
-          hero.velocityX = 0
+          if(hero.velocityX < 0 || hero._flatVelocityX < 0) {
+            hero.velocityX = 0
+            hero._canWallJumpRight = true
+          }
           if(hero.velocityAngle) hero.velocityAngle *= .09
         }
         heroPO.x -= result.overlap_x

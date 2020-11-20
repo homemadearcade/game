@@ -11,6 +11,8 @@ GAME FEEL
 MORE TOOLS
 COMBINE COMBAT WITH GOALS AND QUESTS
 GRAPHICAL, PARTICLE, ANIMATED INTEGRATION
+CHAT TOOLTIPS ( DIALOGUE, INFO )
+VISUAL TIMERS/COOLDOWNS
 
 -------
 
@@ -55,15 +57,14 @@ input modifiers....'on ice', 'flat'
 // planet gravity! Would be cool to have..
 
 MODS
-Fly power
 Metal mario! How did I not think of this. Sink and don't drown
 Vanish cap ( lets you walk through walls? )
 Fast fast cap..? Like mario racoon essentially, gives you better soaring and speed?
 Shrink power, think metroid ball or CROUCH even
 
 POWERS
- Wall jump
- teleport dash
+ Wall jump - to get this working property I need to implement a basic movement plan based on velocity instead of flat velocity
+              I wonder if I should seperate from air velocity vs controlled velocity. Generated velocity vs input velocity 
 
 ////////////////////////////////
 ////////////////////////////////

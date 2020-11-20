@@ -173,9 +173,32 @@ function updatePosition(object, delta) {
   }
   if(object._flatVelocityY) object.y += object._flatVelocityY * delta
 
-  if(typeof object.mod().velocityDecay == 'number') {
-    const velocityDecayY = object.mod().velocityDecay + (object.mod().velocityDecayYExtra || 0)
-    const velocityDecayX = object.mod().velocityDecay + (object.mod().velocityDecayXExtra || 0)
+  const isVelocityDecayNumber = typeof object.mod().velocityDecay == 'number'
+  if(isVelocityDecayNumber || object.arrowKeysBehavior === 'advancedPlatformer') {
+    let velocityDecayY
+    let velocityDecayX
+    let velocityInAirDecayExtra
+    let velocityOnGroundDecayExtra
+
+    if(!isVelocityDecayNumber) {
+      velocityDecayY = window.advancedPlatformerDefaults.velocityDecay
+      velocityDecayX = window.advancedPlatformerDefaults.velocityDecay
+      velocityOnGroundDecayExtra = window.advancedPlatformerDefaults.velocityOnGroundDecayExtra
+      velocityInAirDecayExtra = window.advancedPlatformerDefaults.velocityInAirDecayExtra
+    } else {
+      velocityDecayY = object.mod().velocityDecay + (object.mod().velocityDecayYExtra || 0)
+      velocityDecayX = object.mod().velocityDecay + (object.mod().velocityDecayXExtra || 0)
+      velocityInAirDecayExtra = object.mod().velocityInAirDecayExtra
+      velocityOnGroundDecayExtra = object.mod().velocityOnGroundDecayExtra
+    }
+
+    if(object.onGround && velocityOnGroundDecayExtra) {
+      velocityDecayY += velocityOnGroundDecayExtra
+      velocityDecayX += velocityOnGroundDecayExtra
+    } else if(velocityInAirDecayExtra) {
+      velocityDecayY += velocityInAirDecayExtra
+      velocityDecayX += velocityInAirDecayExtra
+    }
 
     if(object.velocityX < 0) {
       object.velocityX += (velocityDecayX * delta)

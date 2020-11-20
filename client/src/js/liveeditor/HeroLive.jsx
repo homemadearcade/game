@@ -41,10 +41,13 @@ export default class HeroLive extends React.Component {
       cameraTweenSpeedXExtra: hero.cameraTweenSpeedXExtra,
       cameraTweenSpeedYExtra: hero.cameraTweenSpeedYExtra,
       cameraTweenSpeed: hero.cameraTweenSpeed,
-      speed: hero.speed,
-      speedXExtra: hero.speedXExtra,
-      speedYExtra: hero.speedYExtra,
+      velocityInitial: hero.velocityInitial,
+      velocityInitialXExtra: hero.velocityInitialXExtra,
+      velocityInitialYExtra: hero.velocityInitialYExtra,
+      velocityDelta: hero.velocityDelta,
+      velocityInputGoal: hero.velocityInputGoal,
       jumpVelocity: hero.jumpVelocity,
+      wallJumpVelocity: hero.wallJumpVelocity,
       dashVelocity: hero.dashVelocity,
       velocityMax: hero.velocityMax,
       velocityMaxXExtra: hero.velocityMaxXExtra,
@@ -52,6 +55,8 @@ export default class HeroLive extends React.Component {
       velocityDecay: hero.velocityDecay,
       velocityDecayXExtra: hero.velocityDecayXExtra,
       velocityDecayYExtra: hero.velocityDecayYExtra,
+      velocityOnGroundDecayExtra: hero.velocityOnGroundDecayExtra,
+      velocityInAirDecayExtra: hero.velocityInAirDecayExtra,
       floatJumpTimeout: hero.floatJumpTimeout,
       dashTimeout: hero.dashTimeout,
       gravityVelocityY: hero.gravityVelocityY,
@@ -73,9 +78,12 @@ export default class HeroLive extends React.Component {
         <DatGui labelWidth="64%" data={this.state} onUpdate={this.handleUpdate}>
           <div className="LiveEditor__title">{'Hero'}</div>
           <DatFolder title='Physics'>
-            <DatNumber path='objectSelected.speed' label='Speed' min={0} max={1000} step={1} />
+            <DatNumber path='objectSelected.velocityInitial' label='Initial Velocity' min={0} max={1000} step={1} />
+            <DatNumber path='objectSelected.velocityDelta' label='Increase of Velocity' min={0} max={1000} step={1} />
+            <DatNumber path='objectSelected.velocityInputGoal' label='Goal Input Velocity' min={0} max={1000} step={1} />
             <DatNumber path='objectSelected.velocityMax' label="Maximum Velocity" min={0} max={1000} step={10} />
             <DatNumber path='objectSelected.jumpVelocity' label="Jump Velocity" min={-1000} max={1000} step={10}/>
+            <DatNumber path='objectSelected.wallJumpVelocity' label="Wall Jump Velocity" min={0} max={1000} step={10}/>
             <DatNumber path='objectSelected.dashVelocity' label="Dash Velocity" min={-1000} max={1000} step={10}/>
             <DatNumber path='objectSelected.velocityDecay' label="Velocity Decay" min={0} max={1000} step={10} />
             <DatNumber path='objectSelected.floatJumpTimeout' label="Float Jump Reset (Seconds)" min={0} max={5} step={.1}/>
@@ -83,12 +91,14 @@ export default class HeroLive extends React.Component {
             <DatNumber path='objectSelected.gravityVelocityY' label="Gravity Velocity Y" min={0} max={1000} step={10}/>
             <DatNumber path='objectSelected.bouncyness' label="Bouncyness" min={0} max={2} step={.1}/>
             <DatFolder title='Additional X/Y'>
-              <DatNumber path='objectSelected.speedXExtra' label="Additional Speed X" min={0} max={1000} step={1} />
-              <DatNumber path='objectSelected.speedYExtra' label="Additional Speed Y" min={0} max={1000} step={1} />
+              <DatNumber path='objectSelected.velocityInitialXExtra' label="Additional Initial Velocity X" min={0} max={1000} step={1} />
+              <DatNumber path='objectSelected.velocityInitialYExtra' label="Additional Initial Velocity Y" min={0} max={1000} step={1} />
               <DatNumber path='objectSelected.velocityMaxXExtra' label="Additional Maximum Velocity X" min={0} max={1000} step={1} />
               <DatNumber path='objectSelected.velocityMaxYExtra' label="Additional Maximum Velocity Y" min={0} max={1000} step={1} />
               <DatNumber path='objectSelected.velocityDecayXExtra' label="Additional Velocity Decay X" min={0} max={1000} step={1} />
               <DatNumber path='objectSelected.velocityDecayYExtra' label="Additional Velocity Decay Y" min={0} max={1000} step={1} />
+              <DatNumber path='objectSelected.velocityInAirDecayExtra' label="Additional Velocity Decay In Air" min={0} max={1000} step={1} />
+              <DatNumber path='objectSelected.velocityOnGroundDecayExtra' label="Additional Velocity Decay On Ground" min={0} max={1000} step={1} />
             </DatFolder>
           </DatFolder>
           <DatFolder title='Animations'>

@@ -14883,7 +14883,7 @@
       "terms": [
         "data",
         "distance",
-        "speed",
+        "velocityInitial",
         "tachometer"
       ]
     },
@@ -49569,7 +49569,7 @@
         "dashboard",
         "fast",
         "odometer",
-        "speed",
+        "velocityInitial",
         "speedometer"
       ]
     },

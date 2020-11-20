@@ -63,11 +63,11 @@ function pathfindingAI(object) {
     }
 
     if(object._goalDirection === 'right' ) {
-      object.velocityX = object.speed || 100
+      object.velocityX = object.mod().velocityInitial || 100
     }
 
     if(object._goalDirection === 'left') {
-      object.velocityX = -object.speed || -100
+      object.velocityX = -object.mod().velocityInitial || -100
     }
   }
 
@@ -79,11 +79,11 @@ function pathfindingAI(object) {
     }
 
     if(object._goalDirection === 'down' ) {
-      object.velocityY = object.speed || 100
+      object.velocityY = object.mod().velocityInitial || 100
     }
 
     if(object._goalDirection === 'up') {
-      object.velocityY = -object.speed || -100
+      object.velocityY = -object.mod().velocityInitial || -100
     }
   }
 }

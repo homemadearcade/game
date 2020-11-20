@@ -20,7 +20,7 @@ export default class PhysicsLive extends React.Component {
     })
 
     const updatedProps = {
-      speed: newData.speed,
+      velocityInitial: newData.velocityInitial,
       jumpVelocity: newData.jumpVelocity,
       velocityMax: newData.velocityMax
     }
@@ -52,7 +52,7 @@ export default class PhysicsLive extends React.Component {
     return (
       <div className='PhysicsLive'>
         <DatGui data={objectSelected} onUpdate={this.handleUpdate}>
-          <DatNumber path='speed' label='Speed' min={0} max={1000} step={1} />
+          <DatNumber path='velocityInitial' label='Speed' min={0} max={1000} step={1} />
           <DatNumber path='velocityMax' label="velocityMax" min={0} max={1000} step={1} />
           <DatNumber path='jumpVelocity' label="jumpVelocity" min={-1000} max={1000} />
         </DatGui>

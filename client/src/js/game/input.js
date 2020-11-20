@@ -14,6 +14,14 @@ window.defaultArrowKeys =  {
   right: 'Move Right',
 }
 
+window.advancedPlatformerDefaults = {
+  velocityDecay: 300,
+  velocityInAirDecayExtra: 0,
+  velocityOnGroundDecayExtra: 100,
+  velocityDelta: 1000,
+  velocityInputGoal: 300,
+}
+
 function setDefault() {
   window.arrowKeysBehavior = {
     'flatDiagonal' : {
@@ -26,6 +34,9 @@ function setDefault() {
       ...window.defaultArrowKeys,
     },
     'flatRecent': {
+      ...window.defaultArrowKeys,
+    },
+    'advancedPlatformer': {
       ...window.defaultArrowKeys,
     },
     'angle' : {
@@ -55,6 +66,9 @@ function setDefault() {
       ...window.defaultWASD,
     },
     'flatRecent': {
+      ...window.defaultWASD,
+    },
+    'advancedPlatformer': {
       ...window.defaultWASD,
     },
     'angleAndVelocity' : {
@@ -87,6 +101,7 @@ function setDefault() {
     'grow': 'Grow',
     'vacuum': 'Suck In',
     'dash': 'Dash',
+    'teleportDash': 'Dash ( Teleport )',
     'groundJump': 'Jump ( On Ground )',
     'floatJump': 'Jump ( On Ground or In Air )',
     'wallJump': 'Jump ( on Ground or On Wall )'
@@ -276,7 +291,7 @@ function handleActionButtonBehavior(hero, action, delta) {
   }
 
   if(action === 'accelerate') {
-    hero.velocityAngle += hero.speed * delta
+    hero.velocityAngle += hero.mod().velocityDelta * delta
   }
   if(action === 'deccelerateToZero') {
     if((hero.velocityAngle < .1 && hero.velocityAngle > 0) ||  (hero.velocityAngle > -.1 && hero.velocityAngle < 0)) {
@@ -286,11 +301,11 @@ function handleActionButtonBehavior(hero, action, delta) {
       return
     }
     if(hero.velocityAngle > 0) {
-      hero.velocityAngle -= hero.speed * delta
+      hero.velocityAngle -= hero.mod().velocityDelta * delta
       return
     }
     if(hero.velocityAngle < 0) {
-      hero.velocityAngle += hero.speed * delta
+      hero.velocityAngle += hero.mod().velocityDelta * delta
       return
     }
   }
@@ -302,38 +317,54 @@ function handleActionButtonBehavior(hero, action, delta) {
       return
     }
     if(hero.velocityAngle > 0) {
-      hero.velocityAngle -= hero.speed * delta * 4
+      hero.velocityAngle -= hero.mod().velocityDelta * delta * 4
       return
     }
     if(hero.velocityAngle < 0) {
-      hero.velocityAngle += hero.speed * delta * 4
+      hero.velocityAngle += hero.mod().velocityDelta * delta * 4
       return
     }
   }
   if(action === 'accelerateBackwards') {
-    hero.velocityAngle -= hero.speed * delta
+    hero.velocityAngle -= hero.mod().velocityDelta * delta
   }
 
-  if(action === 'dash') {
+  if(action === 'dash' || action === 'teleportDash') {
     if(hero._dashable === false && hero.onGround) {
       if(GAME.gameState.timeoutsById[hero.id + '-dashable']) GAME.clearTimeout(hero.id + '-dashable')
       hero._dashable = true
     }
 
     if(hero._dashable === true) {
-      let dashVelocity = hero.mod().dashVelocity
-      if(!dashVelocity) dashVelocity = 300
-      if(hero.mod().tags.rotateable && hero.angle) {
-        hero.velocityAngle = dashVelocity
-      } else {
+      if(action === 'teleportDash') {
+        let power = 5
+        if(subObject && subObject.actionProps.power) {
+          power = subObject.actionProps.power
+        }
         if(hero.inputDirection === 'up') {
-          hero.velocityY -= dashVelocity;
+          hero.y -= power * GAME.grid.nodeSize;
         } else if(hero.inputDirection === 'down') {
-          hero.velocityY += dashVelocity;
+          hero.y += power * GAME.grid.nodeSize;
         } else if(hero.inputDirection === 'left') {
-          hero.velocityX -= dashVelocity;
+          hero.x -= power * GAME.grid.nodeSize;
         } else if(hero.inputDirection === 'right') {
-          hero.velocityX += dashVelocity;
+          hero.x += power * GAME.grid.nodeSize;
+        }
+      } else {
+        let dashVelocity = hero.mod().dashVelocity
+        if(!dashVelocity) dashVelocity = 300
+        if(hero.mod().tags.rotateable && hero.angle) {
+          hero.velocityAngle = dashVelocity
+        } else {
+          if(hero.inputDirection === 'up') {
+            hero.velocityY -= dashVelocity;
+          } else if(hero.inputDirection === 'down') {
+            hero.velocityY += dashVelocity;
+          } else if(hero.inputDirection === 'left') {
+            hero.velocityX -= dashVelocity;
+          } else if(hero.inputDirection === 'right') {
+            hero.velocityX += dashVelocity;
+          }
         }
       }
       GAME.addTimeout(hero.id + '-dashable', hero.mod().dashTimeout || .6, () => {
@@ -351,6 +382,24 @@ function handleActionButtonBehavior(hero, action, delta) {
   if(hero.onGround && action === 'groundJump') {
     hero.velocityY = hero.mod().jumpVelocity
     // lastJump = Date.now();
+  }
+
+  if(action === 'wallJump') {
+    const velocity = hero.mod().wallJumpVelocity || 400
+
+    if(hero.onGround) {
+      hero.velocityY = hero.mod().jumpVelocity
+    }
+    if(hero._canWallJumpLeft) {
+      hero.velocityX = -velocity
+      hero.velocityY = - velocity
+      hero._canWallJumpLeft = false
+    }
+    if(hero._canWallJumpRight) {
+      hero.velocityX = velocity
+      hero.velocityY = - velocity
+      hero._canWallJumpRight = false
+    }
   }
 
   if(action === 'floatJump') {
@@ -430,8 +479,8 @@ function onUpdate(hero, keysDown, delta) {
   /// DEFAULT GAME FX
   if(hero.flags.paused || GAME.gameState.paused) return
 
-  const xSpeed = hero.mod().speed + (hero.mod().speedXExtra || 0)
-  const ySpeed = hero.mod().speed + (hero.mod().speedYExtra || 0)
+  const xSpeed = hero.mod().velocityInitial + (hero.mod().velocityInitialXExtra || 0)
+  const ySpeed = hero.mod().velocityInitial + (hero.mod().velocityInitialYExtra || 0)
 
   if (upPressed && !hero.mod().tags.disableUpKeyMovement) {
     if(hero.mod().arrowKeysBehavior === 'acc' || hero.mod().arrowKeysBehavior === 'acceleration') {
@@ -467,10 +516,10 @@ function onUpdate(hero, keysDown, delta) {
     if(typeof hero.velocityAngle !== 'number') hero.velocityAngle = 0
 
     if (upPressed && !hero.mod().tags.disableUpKeyMovement) {
-      hero.velocityAngle += (hero.mod().speed) * delta;
+      hero.velocityAngle += (hero.mod().rotationSpeed || 100) * delta;
     }
     if (downPressed && !hero.mod().tags.disableDownKeyMovement) {
-      hero.velocityAngle -= (hero.mod().speed) * delta;
+      hero.velocityAngle -= (hero.mod().rotationSpeed || 100) * delta;
     }
     if (leftPressed) {
       hero.angle -= 1 * delta;
@@ -534,6 +583,105 @@ function onUpdate(hero, keysDown, delta) {
       } else {
         hero._flatVelocityX = 0
       }
+    }
+
+    if(hero.mod().arrowKeysBehavior === 'advancedPlatformer') {
+      let lowestXVelocityAllowed = xSpeed
+      let lowestYVelocityAllowed = ySpeed
+      let normalDelta = (hero.mod().velocityDelta || window.advancedPlatformerDefaults.velocityDelta) * delta
+      let goalVelocity = hero.mod().velocityInputGoal ||  window.advancedPlatformerDefaults.velocityInputGoal
+
+      if (upPressed && hero.inputDirection == 'up' && !hero.mod().tags.disableUpKeyMovement) {
+        if(hero.velocityY > -lowestYVelocityAllowed) {
+          if(hero.velocityY < lowestYVelocityAllowed && hero.velocityY > 0) {
+            // moving in other direction
+            hero.velocityY -= normalDelta
+            return
+          } else if(hero.velocityY > lowestYVelocityAllowed) {
+            // moving VERY FAST in other direction
+            hero.velocityY -= normalDelta * 2
+            return
+          } else {
+            hero.velocityY = -lowestYVelocityAllowed
+          }
+        }
+
+        hero.velocityY -= normalDelta
+
+        if(hero.velocityY < -goalVelocity) hero.velocityY = -goalVelocity
+        return
+      }
+
+      if (downPressed && hero.inputDirection == 'down' && !hero.mod().tags.disableDownKeyMovement) {
+        if(hero.velocityY < lowestYVelocityAllowed) {
+          if(hero.velocityY > -lowestYVelocityAllowed && hero.velocityY < 0) {
+            // moving in other direction
+            hero.velocityY += normalDelta
+            return
+          } else if(hero.velocityY < -lowestYVelocityAllowed) {
+            // moving VERY FAST in other direction
+            hero.velocityY += normalDelta * 2
+            return
+          } else {
+            hero.velocityY = lowestYVelocityAllowed
+          }
+        }
+
+        hero.velocityY += normalDelta
+
+        if(hero.velocityY > goalVelocity) hero.velocityY = goalVelocity
+        return
+      }
+
+      if (leftPressed && hero.inputDirection == 'left') {
+        if(hero.velocityX > -lowestXVelocityAllowed) {
+          if(hero.velocityX < lowestXVelocityAllowed && hero.velocityX > 0) {
+            // moving in other direction
+            hero.velocityX -= normalDelta
+            hero._turningLeft = true
+            return
+          } else if(hero.velocityX > lowestXVelocityAllowed) {
+            // moving VERY FAST in other direction
+            hero.velocityX -= normalDelta * 2
+            return
+          } else if(!hero._turningLeft){
+            hero.velocityX = -lowestXVelocityAllowed
+          }
+        } else {
+          hero._turningLeft = false
+        }
+        hero.velocityX -= normalDelta
+
+        if(hero.velocityX < -goalVelocity) hero.velocityX = -goalVelocity
+        return
+      }
+
+      if (rightPressed && hero.inputDirection == 'right') {
+        if(hero.velocityX < lowestXVelocityAllowed) {
+          if(hero.velocityX > -lowestXVelocityAllowed && hero.velocityX < 0) {
+            // moving in other direction
+            hero.velocityX += normalDelta
+            hero._turningRight = true
+            return
+          } else if(hero.velocityX < -lowestXVelocityAllowed) {
+            // moving VERY FAST in other direction
+            hero.velocityX += normalDelta * 2
+            return
+          } else if(!hero._turningRight){
+            hero.velocityX = lowestXVelocityAllowed
+          }
+        } else {
+          hero._turningRight = false
+        }
+
+        hero.velocityX += normalDelta
+
+        if(hero.velocityX > goalVelocity) hero.velocityX = goalVelocity
+        return
+      }
+
+      hero._turningLeft = false
+      hero._turningRight = false
     }
 
     if(hero.mod().arrowKeysBehavior === 'flatRecent') {

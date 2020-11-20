@@ -21,7 +21,7 @@ class Objects{
       velocityX: 0,
       velocityY: 0,
       velocityMax: 100,
-      speed: 100,
+      velocityInitial: 100,
       subObjects: {},
       objectType: 'plainObject',
     }
@@ -182,7 +182,10 @@ class Objects{
       gravityVelocityY: object.gravityVelocityY,
       bouncyness: object.bouncyness,
 
-      speed: object.speed,
+      velocityInitial: object.velocityInitial,
+      velocityDelta: object.velocityDelta,
+      // velocityInitialXExtra: object.velocityInitialXExtra,
+      // velocityInitialYExtra: object.velocityInitialYExtra,
       width: object.width,
       height: object.height,
       tags: object.tags,

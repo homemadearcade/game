@@ -30,33 +30,33 @@ function moveTowardsTarget(object, target, delta, options = { flat: false, force
   let oldY = object.y
 
   if(typeof target.x == 'number' && object.x > target.x) {
-    if(options.flat) object.velocityX = -object.mod().speed || -100
+    if(options.flat) object.velocityX = -object.mod().velocityInitial || -100
     else if(options.force) {
       object.x -= options.force
     } else {
-      object.velocityX -= (object.mod().speed || 100) * delta
+      object.velocityX -= (object.mod().velocityDelta || 100) * delta
     }
   }
   if(typeof target.x == 'number' && object.x < target.x) {
-    if(options.flat) object.velocityX = object.mod().speed || 100
+    if(options.flat) object.velocityX = object.mod().velocityInitial || 100
     else if(options.force) {
       object.x += options.force
-    } else object.velocityX += (object.mod().speed || 100) * delta
+    } else object.velocityX += (object.mod().velocityDelta || 100) * delta
   }
   let newX = object.x + object.velocityX * delta
 
   if(typeof target.y == 'number' && object.y > target.y) {
-    if(options.flat) object.velocityY = -object.mod().speed || -100
+    if(options.flat) object.velocityY = -object.mod().velocityInitial || -100
     else if(options.force) {
       object.y -= options.force
-    } else object.velocityY -= (object.mod().speed || 100) * delta
+    } else object.velocityY -= (object.mod().velocityDelta || 100) * delta
   }
   if(typeof target.y == 'number' && object.y < target.y) {
-    if(options.flat) object.velocityY = object.mod().speed || 100
+    if(options.flat) object.velocityY = object.mod().velocityInitial || 100
     else if(options.force) {
       object.y += options.force
     }
-    else object.velocityY += (object.mod().speed || 100) * delta
+    else object.velocityY += (object.mod().velocityDelta || 100) * delta
   }
   let newY = object.y + object.velocityY * delta
 
@@ -90,8 +90,8 @@ function moveOnPath(object, delta) {
     object.gridY = gridY
   }
 
-  let pathSpeedX = object.mod().speed || -100
-  let pathSpeedY = object.mod().speed || -100
+  let pathSpeedX = object.mod().velocityInitial || -100
+  let pathSpeedY = object.mod().velocityInitial || -100
 
   moveTowardsTarget(object, {x: pathX, y: pathY }, delta, { flat: true })
 

@@ -52,7 +52,7 @@ class Hero{
     	// accX: 0,
     	// accDecayX: 0,
     	// accDecayY: 0,
-    	speed: 250,
+    	velocityInitial: 250,
     	arrowKeysBehavior: 'flatDiagonal',
       // actionButtonBehavior: 'dropWall',
     	jumpVelocity: -480,
@@ -405,6 +405,8 @@ class Hero{
       velocityY: hero.velocityY,
       velocityX: hero.velocityX,
       _cantInteract: hero._cantInteract,
+      _canWallJumpLeft: hero._canWallJumpLeft,
+      _canWallJumpRight: hero._canWallJumpRight,
       _flatVelocityX: hero._flatVelocityX,
       _flatVelocityY: hero._flatVelocityY,
       _floatable: hero._floatable,
@@ -534,22 +536,28 @@ class Hero{
 
       liveEmitterData: hero.liveEmitterData,
 
-      jumpVelocity: hero.jumpVelocity,
+
       velocityMax: hero.velocityMax,
       velocityMaxXExtra: hero.velocityMaxXExtra,
       velocityMaxYExtra: hero.velocityMaxYExtra,
-      speed: hero.speed,
-      speedXExtra: hero.speedXExtra,
-      speedYExtra: hero.speedYExtra,
+      velocityInputGoal: hero.velocityInputGoal,
+
+      velocityInitial: hero.velocityInitial,
+      velocityInitialXExtra: hero.velocityInitialXExtra,
+      velocityInitialYExtra: hero.velocityInitialYExtra,
+      velocityDelta: hero.velocityDelta,
+
       velocityDecay: hero.velocityDecay,
       velocityDecayXExtra: hero.velocityDecayXExtra,
       velocityDecayYExtra: hero.velocityDecayYExtra,
-      floatJumpTimeout: hero.floatJumpTimeout,
       gravityVelocityY: hero.gravityVelocityY,
-      bouncyness: hero.bouncyness,
+
+      floatJumpTimeout: hero.floatJumpTimeout,
+      jumpVelocity: hero.jumpVelocity,
 
       dashTimeout: hero.dashTimeout,
       dashVelocity: hero.dashVelocity,
+      bouncyness: hero.bouncyness,
 
       pathId: hero.pathId,
       pathfindingLimitId: hero.pathfindingLimitId,
@@ -976,7 +984,7 @@ class Hero{
       if(hero.jumpVelocity !== GAME.heros[hero.id].jumpVelocity || !hero.reachablePlatformHeight) {
         hero.reachablePlatformHeight = HERO.resetReachablePlatformHeight(GAME.heros[hero.id])
       }
-      if(hero.jumpVelocity !== GAME.heros[hero.id].jumpVelocity || hero.speed !== GAME.heros[hero.id].speed || !hero.reachablePlatformWidth) {
+      if(hero.jumpVelocity !== GAME.heros[hero.id].jumpVelocity || hero.mod().velocityInitial!== GAME.heros[hero.id].mod().velocityInitial|| !hero.reachablePlatformWidth) {
         hero.reachablePlatformWidth = HERO.resetReachablePlatformWidth(GAME.heros[hero.id])
       }
     } else {
@@ -1000,7 +1008,7 @@ class Hero{
 
   resetReachablePlatformWidth(hero) {
     // for flatDiagonal
-    let velocityX = hero.speed
+    let velocityX = hero.mod().velocityInitial
     if(Math.abs(velocityX) > Math.abs(hero.velocityMax)) velocityX = Math.abs(hero.velocityMax)
 
 
