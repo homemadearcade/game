@@ -127,6 +127,8 @@ function onPlayerIdentified(){
 
   window.addEventListener("keydown", function (e) {
     const key = keycode(e.keyCode)
+    
+    if(window.isTargetTextInput(e)) return
 
     if(key === 'space' || key === 'left' || key === 'right' || key === 'up' || key === 'down') {
       e.preventDefault()

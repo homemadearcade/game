@@ -315,16 +315,21 @@ function updateChatBox(pixiChild, gameObject) {
     pixiChild.chatBox.textWidth = textMetrics.width
     pixiChild.chatBox.textHeight = textMetrics.height
     pixiChild.chatBox.text = gameObject.chat
+    pixiChild.chatBox.visible = false
+
+    MAP.openPopover(gameObject)
   }
 
   if(pixiChild.chatBox && !gameObject.chat) {
     PIXIMAP.objectStage.removeChild(pixiChild.chatBox)
+    MAP.closePopover(gameObject)
     delete pixiChild.chatBox
   }
 
   if(pixiChild.chatBox) {
     if(gameObject.chat !== pixiChild.chatBox.text) {
       PIXIMAP.objectStage.removeChild(pixiChild.chatBox)
+      MAP.closePopover(gameObject)
       delete pixiChild.chatBox
       return
     }

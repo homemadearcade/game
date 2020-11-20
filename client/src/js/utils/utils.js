@@ -199,7 +199,6 @@ window.animateCSS = (element, animation, prefix = 'animate__') =>
     node.addEventListener('animationend', handleAnimationEnd);
   });
 
-
 window.convertToGameXY = function(event) {
   var rect = PIXIMAP.app.view.getClientRects()[0];
   return {
@@ -216,4 +215,17 @@ window.getAngle = function(cx, cy, ex, ey, degrees = false) {
   theta *= 180 / Math.PI; // rads to degs, range (-180, 180]
   //if (theta < 0) theta = 360 + theta; // range [0, 360)
   return theta;
+}
+
+
+window.isTargetTextInput = function(keyEvent) {
+  const target = keyEvent.target;
+  const targetName = target.localName.toLowerCase();
+  const contenteditable = target.getAttribute('contenteditable');
+  const isContentEditable =
+    contenteditable === 'true' || contenteditable === '';
+
+  return (
+    targetName === 'input' || targetName === 'textarea' || isContentEditable
+  );
 }

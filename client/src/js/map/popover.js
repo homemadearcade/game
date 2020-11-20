@@ -2,47 +2,67 @@ import tippy, {roundArrow} from 'tippy.js';
 // import 'tippy.js/themes/light.css';
 import 'tippy.js/dist/tippy.css'; // optional for styling
 
-window.local.on('onGameReady', () => {
+
+window.local.on('onFirstPageGameLoaded', () => {
+  MAP.popoverInstances = []
   const tippyArea = document.querySelector('#GameContainer');
 
-  const instance = tippy(tippyArea, {
-    content: `<div class="Popover">
-    HELLO
-    </div>`,
-    // appendTo: tippyArea,
-    theme: 'light',
-    allowHTML: true,
-    placement: 'top',
-    trigger: 'manual',
-    interactive: true,
-    hideOnClick: false,
-    arrow: true,
-    // offset: [0, 0],
-  });
+  MAP.closePopover = function(object) {
+    MAP.popoverInstances =  MAP.popoverInstances.filter((instance) => {
+      if(object.id === instance.objectId) {
+        instance.destroy()
+        return false
+      } else return true
+    })
+  }
 
-  let object = GAME.objectsById['object-260804255271']
+  MAP.openPopover = function(object) {
+    const instance = tippy(tippyArea, {
+      content: `<div class="Popover">
+        ${object.chat}
+      </div>`,
+      // appendTo: tippyArea,
+      theme: 'light',
+      allowHTML: true,
+      placement: 'top',
+      trigger: 'manual',
+      interactive: true,
+      hideOnClick: false,
+      arrow: true,
+      // offset: [0, 0],
+    });
+
+    instance.objectId = object.id
+    setPopoverPosition(instance, object)
+    instance.show();
+    MAP.popoverInstances.push(instance)
+  }
 
   setInterval(() => {
-    instance.setProps({
-      getReferenceClientRect: () => {
-        let y = (object.y * MAP.camera.multiplier) - MAP.camera.y
-        let y2 = (object.y + object.height * MAP.camera.multiplier) - MAP.camera.y
-
-        y+= 45
-        y2+= 45
-
-        return ({
-          width: (object.width * MAP.camera.multiplier),
-          height: (object.height * MAP.camera.multiplier),
-          top: y,
-          bottom: y2,
-          left: (object.x * MAP.camera.multiplier) - MAP.camera.x,
-          right: (object.x + object.width * MAP.camera.multiplier) - MAP.camera.x,
-        })
-      },
-    });
-  }, 40)
-
-
-  instance.show();
+    MAP.popoverInstances.forEach((instance) => {
+      let object = OBJECTS.getObjectOrHeroById(instance.objectId)
+      setPopoverPosition(instance, object)
+    }, 40)
+  })
 })
+
+function setPopoverPosition(instance, object) {
+  instance.setProps({
+    getReferenceClientRect: () => {
+      let y = (object.y * MAP.camera.multiplier) - MAP.camera.y
+      let y2 = (object.y + object.height * MAP.camera.multiplier) - MAP.camera.y
+
+      y+= 45 - window.scrollY
+      y2+= 45 - window.scrollY
+
+      return ({
+        width: (object.width * MAP.camera.multiplier),
+        height: (object.height * MAP.camera.multiplier),
+        top: y,
+        bottom: y2,
+        left: (object.x * MAP.camera.multiplier) - MAP.camera.x,
+        right: (object.x + object.width * MAP.camera.multiplier) - MAP.camera.x,
+      })
+    },
+  });
+}

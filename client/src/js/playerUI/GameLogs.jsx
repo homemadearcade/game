@@ -63,18 +63,17 @@ export default class GameLogs extends React.Component{
     const { chat } = this.state;
 
     return (
-      <div style={{
-        position:'absolute',
-        bottom: '0px',
-        left: '0px',
-        width: '100%',
-        height: '47px',
-      }}>
         <input
           ref={this.inputRef}
           value={chat} onChange={(e) => this.setState({chat: e.target.value})}
           placeholder='Press enter to chat'
           style={{
+            position:'absolute',
+            bottom: '0px',
+            left: '0px',
+            width: '100%',
+            height: '47px',
+
             backgroundColor: '#0f0f0f',
             border:'0px',
             borderTop:'1px solid #999',
@@ -83,9 +82,9 @@ export default class GameLogs extends React.Component{
             fontSize: '22px',
             width: '100%',
             color:'white',
+            boxSizing: 'border-box'
           }}
         />
-      </div>
     )
   }
 
