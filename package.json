@@ -98,6 +98,7 @@
     "sweetalert2": "^9.10.13",
     "terser-webpack-plugin": "^1.4.1",
     "tinycolor2": "^1.4.1",
+    "tippy.js": "^6.2.7",
     "url-loader": "^2.1.0",
     "webpack": "^4.39.3",
     "webpack-cli": "^3.3.7",

@@ -21,6 +21,7 @@ function onPlayerIdentified() {
     onHeroDeposit: { mainObject: 'hero', guestObject: 'object' },
     // onHeroRespawn: { mainObject: 'hero', guestObject: null },
     // onHeroEquip: { mainObject: 'hero', guestObject: 'anything'},
+    // onHeroTurn
     onGameStarted: { mainObject: null, guestObject: null },
     onStoryStart: { mainObject: null, guestObject: null },
     onObjectDestroyed: { mainObject: 'object', guestObject: 'anything', guestObjectOptional: true },

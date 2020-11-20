@@ -7,12 +7,11 @@
 FINAL TODO FOR HA
 -
 SOUND FX
-GAME FEEL
-MORE TOOLS
 COMBINE COMBAT WITH GOALS AND QUESTS
 GRAPHICAL, PARTICLE, ANIMATED INTEGRATION
 CHAT TOOLTIPS ( DIALOGUE, INFO )
 VISUAL TIMERS/COOLDOWNS
+FILL OUT LIBRARY
 
 -------
 
@@ -43,28 +42,11 @@ never close right click menu if shift is pressed
 Improve Add Sub Object
 GENRE libraries ( creator, generatedMenu )
 
-////////////////////////////////
-////////////////////////////////
-GAME FEEL UPGRADE
-////////////////////////////////
-Implement special extra physics for objects, not just heros
-Hero jump attack and movement ATTACK
-ATTACK which is like initial acceleration when there is no acceleration yet, jump attack speed, etc
-tag: sharpTurns ( velocity is positive and decreasing, increase this power )
-event: onObjectTurn
-Object 'swinging' like on a rope. I mean... awesome right?
-input modifiers....'on ice', 'flat'
-// planet gravity! Would be cool to have..
-
 MODS
 Metal mario! How did I not think of this. Sink and don't drown
 Vanish cap ( lets you walk through walls? )
 Fast fast cap..? Like mario racoon essentially, gives you better soaring and speed?
 Shrink power, think metroid ball or CROUCH even
-
-POWERS
- Wall jump - to get this working property I need to implement a basic movement plan based on velocity instead of flat velocity
-              I wonder if I should seperate from air velocity vs controlled velocity. Generated velocity vs input velocity 
 
 ////////////////////////////////
 ////////////////////////////////
@@ -137,8 +119,10 @@ Different roots for the branches...
 
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
-// BIG FEATURES
 ////////////////////////////////////////////////////
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+###### BIG FEATURES
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ////////////////////////////////////////////////////
 
 SOUND FX
@@ -161,8 +145,10 @@ LEVELS ( sub worlds )
 
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
-/// BUGS
 ////////////////////////////////////////////////////
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+###### BUGS
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ////////////////////////////////////////////////////
 sub object top vs bottom...
 
@@ -177,10 +163,11 @@ Construct Editor on ha-demo bug?
 
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
-/// SMALL FEATURES
 ////////////////////////////////////////////////////
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+###### SMALL FEATURES
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ////////////////////////////////////////////////////
-
 Add title menu (press start)
 Add controls menu to opening sequence
 
@@ -206,7 +193,6 @@ tag
   Parallax scroller slower
   Parallax scroller faster
     special camera relation, 0, .5, 2, 10, etc. might wanna encapsulale the camera changing logic into a function?
-
 
 Create an onSequenceComplete thing..? So when its done we know to move onto the next event
 
@@ -265,9 +251,27 @@ in-game checkpoints
 // KING MODE ( where its like you make various yes/no choices and that changes whats happening on the world map )
 // local mods? ( client only mods for specific players/situations )
 // pixiChild._stillUsed property as well as a PIXIMAP.objectsById system. We scrap app PIXICHILDs that arent in use every like 10s
-////////////////////////////////////////////////////
 
+////////////////////////////////
+////////////////////////////////
+GAME FEEL UPGRADE
+////////////////////////////////
+Implement special extra physics for objects, not just heros
+Object 'swinging' like on a rope. I mean... awesome right?
+// planet gravity! Would be cool to have.. directional gravity
+
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 NOTES
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+////////////////////////////////////////////////////
 
 ---
 Story/cutscenes SIMPLE EDITOR
@@ -457,10 +461,13 @@ Particles being sucked into the player ( POWER!!! )
 
 Engine trail on a car u know what I mean?
 */
+/*
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
-/// INFRASTRUCTURE
 ////////////////////////////////////////////////////
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+###### INFRASTUCTURE
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ////////////////////////////////////////////////////
 
 // UGH so my pixi shit is bad. I cant be updating constantly.
@@ -529,6 +536,15 @@ Engine trail on a car u know what I mean?
 // queuing world and other updates so we can 'flush' them like feedly does
 
 // admin vs player code much better seperated
+
+
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+###### LINKS FOR INSPIRATION
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+////////////////////////////////////////////////////
 
 // HONESTLY USING BOX 2D PHYSICS WOULD BE INCREDIBLE
 // https://zimjs.com/bits/physics.html

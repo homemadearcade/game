@@ -1,6 +1,7 @@
 import render from './render'
 import Camera from './camera.js'
 import Shake from './cameraShake.js'
+import popover from './popover.js'
 import constellation from './constellation.js'
 import './pixi/index'
 
