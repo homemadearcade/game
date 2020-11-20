@@ -389,6 +389,9 @@ class Game{
       HERO.deleteHero(hero)
     })
 
+    MAP.popoverInstances.forEach((instance) => {
+      instance.destroy()
+    })
     GAME.removeListeners()
     GAME.gameState = JSON.parse(JSON.stringify(window.defaultGameState))
   }

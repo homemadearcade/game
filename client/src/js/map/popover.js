@@ -50,19 +50,26 @@ function setPopoverPosition(instance, object) {
   instance.setProps({
     getReferenceClientRect: () => {
       let y = (object.y * MAP.camera.multiplier) - MAP.camera.y
-      let y2 = (object.y + object.height * MAP.camera.multiplier) - MAP.camera.y
+      let y2 = ((object.y + object.height) * MAP.camera.multiplier) - MAP.camera.y
 
       y+= 45 - window.scrollY
       y2+= 45 - window.scrollY
 
-      return ({
+      let pos = {
         width: (object.width * MAP.camera.multiplier),
         height: (object.height * MAP.camera.multiplier),
         top: y,
         bottom: y2,
         left: (object.x * MAP.camera.multiplier) - MAP.camera.x,
-        right: (object.x + object.width * MAP.camera.multiplier) - MAP.camera.x,
-      })
+        right: ((object.x + object.width) * MAP.camera.multiplier) - MAP.camera.x,
+      }
+
+      if(object.id === HERO.id && instance.lastPos && Math.abs(instance.lastPos.left - pos.left) < 4 && Math.abs(instance.lastPos.top - pos.top) < 4) {
+        return instance.lastPos
+      }
+
+      instance.lastPos = pos
+      return pos
     },
   });
 }
