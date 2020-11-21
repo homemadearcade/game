@@ -34,7 +34,7 @@ function pickupObject(hero, collider) {
   }
 
   if(!subObject.tags.onMap) {
-    subObject.removed = true
+    OBJECTS.removeSubObject(subObject)
   }
 
   subObject.inInventory = true
@@ -182,7 +182,7 @@ function unequipSubObject(hero, subObject) {
   }
 
   if(subObject.tags.onMapWhenEquipped && !subObject.tags.onMap) {
-    subObject.removed = true
+    OBJECTS.removeSubObject(subObject)
   }
 
   subObject.isEquipped = false

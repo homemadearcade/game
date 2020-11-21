@@ -13,6 +13,7 @@ window.local.on('onFirstPageGameLoaded', () => {
     MAP.popoverInstances =  MAP.popoverInstances.filter((instance) => {
       if(object.id === instance.objectId) {
         window.popoverOpen[object.id] = false
+        ReactDOM.unmountComponentAtNode(document.getElementById(instance.domId))
         instance.destroy()
         return false
       } else return true
@@ -36,6 +37,7 @@ window.local.on('onFirstPageGameLoaded', () => {
       // offset: [0, 0],
     });
 
+    instance.domId = popoverDomId
     instance.objectId = object.id
     setPopoverPosition(instance, object)
     instance.show();

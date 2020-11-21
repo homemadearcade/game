@@ -1,4 +1,5 @@
 import React from 'react'
+import { Line } from 'rc-progress'
 
 window.popoverProperties = [
   '_timeUntilDestroyed',
@@ -44,8 +45,11 @@ export default class Popover extends React.Component {
     let render = []
 
     if(object._timeUntilDestroyed) {
-      render.push(<div className="Popover__countdown">
-        {this._getFormattedTime(object._timeUntilDestroyed, true)}
+      // label={this._getFormattedTime(object._timeUntilDestroyed)}
+      let percent = ((object._timeUntilDestroyed - 100)/object._totalTimeUntilDestroyed) * 100
+      if(percent < 0) percent = 0
+      render.push(<div className="Popover__progress">
+        <Line percent={percent} strokeWidth="4" strokeColor="red" strokeLinecap="none"/>
       </div>)
     }
 

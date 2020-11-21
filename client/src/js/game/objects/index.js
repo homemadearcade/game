@@ -876,15 +876,18 @@ class Objects{
     if(object.mod().tags.destroyQuickly) {
       // console.log(object.id, object.createdTime + 3000, Date.now())
       object._timeUntilDestroyed = (object.createdTime + 3000) - Date.now()
+      object._totalTimeUntilDestroyed = 3000
       if(object._timeUntilDestroyed <= 0) object._destroy = true
     }
     if(object.mod().tags.destroySoon) {
       // console.log(object.id, object.createdTime + 10000, Date.now())
-      object._timeUntilDestroyed = (object.createdTime + 1000) - Date.now()
+      object._timeUntilDestroyed = (object.createdTime + 10000) - Date.now()
+      object._totalTimeUntilDestroyed = 10000
       if(object._timeUntilDestroyed <= 0) object._destroy = true
     }
     if(object.mod().tags.destroyEventually) {
-      object._timeUntilDestroyed = (object.createdTime + 20000) - Date.now()
+      object._timeUntilDestroyed = (object.createdTime + 200000) - Date.now()
+      object._totalTimeUntilDestroyed = 200000
       if(object._timeUntilDestroyed <= 0) object._destroy = true
     }
   }
@@ -970,7 +973,7 @@ class Objects{
       subObject.removed = false
     }
     if(subObject.tags.onMapWhenEquipped && !subObject.inInventory && !subObject.tags.startsEquipped) {
-      subObject.removed = true
+      OBJECTS.removeSubObject(subObject)
     }
   }
 
@@ -1013,9 +1016,10 @@ class Objects{
 
   removeObject(object) {
     GAME.objectsById[object.id].removed = true
+    if(window.popoverOpen[object.id]) MAP.closePopover(object)
     if(object.subObjects) {
-        OBJECTS.forAllSubObjects(object.subObjects, (subObject, subObjectName) => {
-        subObject.removed = true
+      OBJECTS.forAllSubObjects(object.subObjects, (subObject, subObjectName) => {
+        OBJECTS.removeSubObject(subObject)
       })
     }
     window.local.emit('onUpdatePFgrid', 'remove', object)
@@ -1094,12 +1098,16 @@ class Objects{
   }
 
   onRemoveSubObject(ownerId, subObjectName) {
-    OBJECTS.removeSubObject(ownerId, subObjectName)
+    const owner = OBJECTS.getObjectOrHeroById(ownerId)
+    let so = owner.subObjects[subObjectName]
+    OBJECTS.removeSubObject(so)
   }
 
-  removeSubObject(ownerId, subObjectName) {
-    const owner = OBJECTS.getObjectOrHeroById(ownerId)
-    owner.subObjects[subObjectName].removed = true
+  removeSubObject(so) {
+    so.removed = true
+    if(window.popoverOpen[so.id]) {
+      MAP.closePopover(so)
+    }
   }
 
   onEditSubObject(ownerId, subObjectName, update) {
@@ -1372,8 +1380,6 @@ class Objects{
     if(object.mod().tags.spawnAllOnDestroy) {
       spawnAllNow(object)
     }
-
-    if(window.popoverOpen[object.id]) MAP.closePopover(object)
   }
 
   mergeWithJSON(object, JSON) {

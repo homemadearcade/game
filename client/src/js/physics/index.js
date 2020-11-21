@@ -621,7 +621,6 @@ function removeAndRespawn() {
       hero._respawn = null
     }
     if(hero._remove) {
-      hero.removed = true
       HERO.removeHero(hero)
       hero._remove = null
     }
@@ -646,8 +645,8 @@ function processSubObjectRemoval(object) {
   }
 
   if(object._remove) {
-    object.removed = true
     object._remove = null
+    OBJECTS.removeObject(object)
   }
 }
 
@@ -668,7 +667,6 @@ function processObjectRemoval(object) {
     object._respawn = null
   }
   if(object._remove) {
-    object.removed = true
     OBJECTS.removeObject(object)
     object._remove = null
   }

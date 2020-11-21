@@ -756,9 +756,10 @@ class Hero{
 
   removeHero(hero) {
     OBJECTS.forAllSubObjects(hero.subObjects, (subObject) => {
-      subObject.removed = true
+      OBJECTS.removeSubObject(subObject)
     })
     GAME.heros[hero.id].removed = true
+    if(window.popoverOpen[hero.id]) MAP.closePopover(hero)
   }
 
   onDeleteHero(heroId) {

@@ -84,7 +84,6 @@ class Game{
           })
 
           GAME.objects.forEach((object) => {
-            if(object.mod().removed) return
             if(object.mod().tags.destroySoon || object.mod().tags.destroyQuickly || object.mod().tags.destroyEventually) {
               OBJECTS.deleteObject(object)
             }
@@ -126,7 +125,12 @@ class Game{
         ai.onUpdate(GAME.objects, delta)
         GAME.resetPaths = false
         GAME.objects.forEach((object) => {
-          if(object.mod().removed) return
+          if(object.mod().removed) {
+            if(window.popoverOpen[object.id]) {
+              MAP.closePopover(object)
+            }
+            return
+          }
           window.local.emit('onUpdateObject', object, delta)
         })
 
@@ -721,7 +725,7 @@ class Game{
     const branch = _.cloneDeep(GAME.library.branches[id])
     const addedObjects = branch.addedObjects.map((addedObj) => {
       addedObj.id = 'branchadded-'+window.uniqueID()
-      addedObj.removed = true
+      OBJECTS.removeObject(addedObj)
       return addedObj
     })
     window.socket.emit('addObjects', addedObjects)
