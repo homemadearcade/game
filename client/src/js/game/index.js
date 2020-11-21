@@ -127,7 +127,7 @@ class Game{
         GAME.objects.forEach((object) => {
           if(object.mod().removed) {
             if(window.popoverOpen[object.id]) {
-              MAP.closePopover(object)
+              MAP.closePopover(object.id)
             }
             return
           }
@@ -375,6 +375,11 @@ class Game{
   unload() {
     window.local.emit('onGameUnload')
 
+    MAP.popoverInstances.forEach((instance) => {
+      instance.destroy()
+    })
+    window.popoverOpen = {}
+
     GAME.objects.forEach((object) => {
       OBJECTS.unloadObject(object)
     })
@@ -383,9 +388,6 @@ class Game{
       HERO.deleteHero(hero)
     })
 
-    MAP.popoverInstances.forEach((instance) => {
-      instance.destroy()
-    })
     GAME.removeListeners()
     GAME.gameState = JSON.parse(JSON.stringify(window.defaultGameState))
   }
@@ -599,7 +601,6 @@ class Game{
 
   onGameStart(options) {
     if(!options) options = {}
-    if(!options.respawn) options.respawn = true
 
     if(GAME.gameState.started) {
       return console.log('trying to start game that has already started')
@@ -614,7 +615,7 @@ class Game{
       localStorage.setItem('initialGameState', JSON.stringify(initialGameState))
 
       GAME.heroList.forEach((hero) => {
-        if(options.respawn) HERO.spawn(hero)
+        if(!options.dontRespawn) HERO.spawn(hero)
         hero.questState = {}
         if(hero.quests) {
           Object.keys(hero.quests).forEach((questId) => {
@@ -628,7 +629,7 @@ class Game{
       })
 
       GAME.objects.forEach((object) => {
-        if(options.respawn) OBJECTS.respawn(object)
+        if(!options.dontRespawn) OBJECTS.respawn(object)
         if(object.tags.talkOnStart) {
           GAME.heroList.forEach((hero) => {
             onTalk(hero, object, {}, [], [], { fromStart: true })

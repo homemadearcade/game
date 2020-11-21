@@ -312,13 +312,13 @@ function updateChatBox(pixiChild, gameObject) {
       if(gameObject[prop]) shouldOpenPopover = true
     }
   })
-
+  
   if(shouldOpenPopover && !window.popoverOpen[gameObject.id]) {
     MAP.openPopover(gameObject)
   }
 
   if(!shouldOpenPopover && window.popoverOpen[gameObject.id]) {
-    MAP.closePopover(gameObject)
+    MAP.closePopover(gameObject.id)
   }
 
   if(gameObject.chat && !pixiChild.chatBox) {

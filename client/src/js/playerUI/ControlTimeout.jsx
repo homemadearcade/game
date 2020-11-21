@@ -20,6 +20,6 @@ export default class ControlTimeout extends React.Component{
     const { timeout } = this.props
     let percent = 100 - ((timeout.timeRemaining/timeout.totalTime) * 100)
 
-    return <Line className="ControlsHUD__cooldown" percent={percent} strokeWidth="4" strokeColor="yellow" strokeLinecap="none"/>
+    return <Line className="ControlsHUD__cooldown" percent={percent} strokeWidth="4" strokeColor="white" strokeLinecap="none"/>
   }
 }

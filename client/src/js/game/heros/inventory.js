@@ -28,7 +28,8 @@ function pickupObject(hero, collider) {
   }
 
   if(!collider.mod().tags['dontDestroyOnPickup']) {
-    OBJECTS.removeObject(collider)
+    // OBJECTS.deleteObject(collider)
+    window.emitGameEvent('onDeleteObject', collider)
     // since were duplicating objects here, this gets tricky. the id could pick up the new object in the ._remove processing tool IF you are using _remove
     // thats why I directly remove object
   }
@@ -102,6 +103,13 @@ function withdrawFromInventory(withdrawer, owner, subObjectName, withdrawAmount)
   const subObject = owner.subObjects[subObjectName]
   const newObject = _.cloneDeep(subObject)
 
+
+  if(subObject.tags.stackable && subObject.count === 0) {
+    if(withdrawer.tags.hero) window.emitGameEvent('onHeroWithdrawFail', withdrawer, subObject)
+    else window.emitGameEvent('onHeroDepositFail', owner, subObject)
+    return
+  }
+
   if(withdrawer.subObjects && withdrawer.subObjects[subObject.subObjectName] && !subObject.tags.stackable) {
     if(withdrawer.tags.hero) window.emitGameEvent('onHeroWithdrawFail', withdrawer, subObject)
     else window.emitGameEvent('onHeroDepositFail', owner, subObject)
@@ -121,8 +129,12 @@ function withdrawFromInventory(withdrawer, owner, subObjectName, withdrawAmount)
   newObject.inInventory = true
 
   if(!subObjectStillHasCount) {
-    owner.interactableObjectId = null
-    window.socket.emit('deleteSubObject', owner, subObjectName)
+    if(owner.tags.resourceZone) {
+      subObject.count = 0
+    } else {
+      owner.interactableObjectId = null
+      window.socket.emit('deleteSubObject', owner, subObjectName)
+    }
   }
 
   if(withdrawer.tags.hero) {

@@ -751,6 +751,10 @@ class Hero{
         triggers.addTrigger(hero, trigger)
       })
     }
+
+    hero._dashable = true
+    hero._floatable = true
+
     PHYSICS.addObject(hero)
   }
 
@@ -759,7 +763,7 @@ class Hero{
       OBJECTS.removeSubObject(subObject)
     })
     GAME.heros[hero.id].removed = true
-    if(window.popoverOpen[hero.id]) MAP.closePopover(hero)
+    // if(window.popoverOpen[hero.id]) MAP.closePopover(hero)
   }
 
   onDeleteHero(heroId) {

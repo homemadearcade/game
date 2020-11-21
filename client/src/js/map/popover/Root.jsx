@@ -1,9 +1,13 @@
 import React from 'react'
 import { Line } from 'rc-progress'
+import PixiMapSprite from '../../components/PixiMapSprite.jsx'
 
 window.popoverProperties = [
-  { prop: '_timeUntilDestroyed', tag: 'showCountDownTimer'},
-  'chat'
+  { prop: '_timeUntilDestroyed', tag: 'popCountDownTimer'},
+  'chat',
+  { prop: 'inInventory', tag: 'popInventoryCount'},
+  { prop: 'resourceTags', tag: 'popResourceCount'},
+  'popoverText'
 ]
 
 window.popoverOpen = {}
@@ -44,7 +48,7 @@ export default class Popover extends React.Component {
 
     let render = []
 
-    if(object._timeUntilDestroyed && object.mod().tags.showCountDownTimer) {
+    if(object._timeUntilDestroyed && object.mod().tags.popCountDownTimer) {
       // label={this._getFormattedTime(object._timeUntilDestroyed)}
       let percent = ((object._timeUntilDestroyed - 100)/object._totalTimeUntilDestroyed) * 100
       if(percent < 0) percent = 0
@@ -53,8 +57,37 @@ export default class Popover extends React.Component {
       </div>)
     }
 
+    if(object.tags.popInventoryCount && object.inInventory) {
+      render.push(<div className="Popover__resource">
+        {!object.defaultSprite || object.defaultSprite == 'solidcolorsprite' && <div className="InventoryHUD__name">{object.name || object.subObjectName}</div>}
+        {object.defaultSprite !== 'solidcolorsprite' && <div className="InventoryHUD__sprite"><PixiMapSprite textureId={object.defaultSprite} width="20" height="20"/></div>}
+        <div className="InventoryHUD__count">
+          {object.count || 0}
+        </div>
+      </div>)
+    }
+
+    if(object.resourceTags) {
+      let soName = window.getResourceSubObjectNames(object, object)
+      if(soName) {
+        let so = object.subObjects[soName]
+        render.push(<div className="Popover__resource">
+          {!so.defaultSprite || so.defaultSprite == 'solidcolorsprite' &&  <div className="InventoryHUD__name">{so.name || so.subObjectName}</div>}
+          {so.defaultSprite !== 'solidcolorsprite' && <div className="InventoryHUD__sprite"><PixiMapSprite textureId={so.defaultSprite} width="20" height="20"/></div>}
+          <div className="InventoryHUD__count">
+            {so.count || 0}
+            {object.resourceLimit >= 0 && ("/" + object.resourceLimit) }
+          </div>
+        </div>)
+      }
+    }
+
+    if(object.popoverText) {
+      render.push(object.popoverText)
+    }
+
     if(object.chat) {
-      render.push(object.chat)
+      render.push('"' + object.chat + '"')
     }
 
     return render

@@ -186,24 +186,23 @@ export function handleExtraMenuClicks(key, objectSelected, openColorPicker, subO
         return
     }
 
-    if (key === 'add-resource-tag') {
-        modals.openSelectTag((result) => {
-            if (result && result.value) {
-                const resourceTags = objectSelected.resourceTags
-                resourceTags.push(Object.keys(window.allTags)[result.value])
-                networkEditObject(objectSelected, { resourceTags })
-            }
-        })
-        return
+    if(key === 'add-resource-tag') {
+      modals.openSelectTag((result) => {
+        if(result && result.value) {
+          const resourceTags = objectSelected.resourceTags
+          resourceTags[Object.keys(window.allTags)[result.value]] = true
+          networkEditObject(objectSelected, { resourceTags })
+        }
+      })
     }
 
-    if (key.indexOf(removeResourceTagPrefix) === 0) {
-        let tagToRemove = key.substr(removeResourceTagPrefix.length)
+    if(key.indexOf(removeResourceTagPrefix) === 0) {
+      let tagToRemove = key.substr(removeResourceTagPrefix.length)
 
-        const resourceTags = objectSelected.resourceTags.filter((tag) => tag !== tagToRemove)
-        networkEditObject(objectSelected, { resourceTags })
-        return
+      const resourceTags = objectSelected.resourceTags[tagToRemove] = false
+      networkEditObject(objectSelected, { resourceTags })
     }
+    
     if (key === 'add-new-subobject') {
         modals.addNewSubObjectTemplate(objectSelected)
         return

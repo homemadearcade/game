@@ -45,7 +45,7 @@ const updatePixiObject = (gameObject) => {
   // SUB OBJECTS
   if(gameObject.subObjects) {
     OBJECTS.forAllSubObjects(gameObject.subObjects, (subObject) => {
-      if(subObject.tags.potential) return
+      // if(subObject.tags.potential) return
       const subObjectPixiChild = updatePixiObject(subObject)
       subObjectPixiChild.ownerName = gameObject.id
     })

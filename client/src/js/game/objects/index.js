@@ -451,6 +451,10 @@ class Objects{
       interactions.push({text: 'Deposit', tag: 'resourceDepositOnInteract', interaction: 'resourceDeposit'})
     }
 
+    // if(object.mod().tags['resourceDepositOnTouchStart'] && object.mod().tags.resourceZone) {
+    //   interactions.push({text: 'Deposit', tag: 'resourceDepositOnTouchStart', interaction: 'resourceDeposit'})
+    // }
+
     // if(object.mod().tags['interactable']) return true
 
     return interactions
@@ -936,7 +940,7 @@ class Objects{
       const existingSubObject = owner.subObjects[subObject.subObjectName]
       if(existingSubObject.id !== subObject.id) {
         if(subObject.tags.stackable) {
-          if(!existingSubObject.count) existingSubObject.count = 1
+          if(!existingSubObject.count && existingSubObject.count !== 0) existingSubObject.count = 1
           existingSubObject.count+= (subObject.count || 1)
           subObjectAlreadyExisted = true
           if(subObject.isEquipped) {
@@ -1018,7 +1022,7 @@ class Objects{
 
   removeObject(object) {
     GAME.objectsById[object.id].removed = true
-    if(window.popoverOpen[object.id]) MAP.closePopover(object)
+    // if(window.popoverOpen[object.id]) MAP.closePopover(object)
     if(object.subObjects) {
       OBJECTS.forAllSubObjects(object.subObjects, (subObject, subObjectName) => {
         OBJECTS.removeSubObject(subObject)
@@ -1065,6 +1069,7 @@ class Objects{
 
   onDeleteObject(object) {
     OBJECTS.deleteObject(object)
+    MAP.closePopover(object.id)
     window.local.emit('onUpdatePFgrid', 'delete', object)
   }
 
@@ -1076,6 +1081,7 @@ class Objects{
   onDeleteSubObject(owner, subObjectName) {
     const subObject = owner.subObjects[subObjectName]
     if(!subObject) return console.log('no sub Object?', subObjectName)
+    MAP.closePopover(subObject.id)
     if(owner.tags.hero) {
       OBJECTS.deleteSubObject(GAME.heros[owner.id], subObject, subObjectName)
     } else {
@@ -1107,9 +1113,9 @@ class Objects{
 
   removeSubObject(so) {
     so.removed = true
-    if(window.popoverOpen[so.id]) {
-      MAP.closePopover(so)
-    }
+    // if(window.popoverOpen[so.id]) {
+    //   MAP.closePopover(so)
+    // }
   }
 
   onEditSubObject(ownerId, subObjectName, update) {

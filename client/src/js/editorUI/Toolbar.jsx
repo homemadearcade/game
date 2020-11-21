@@ -60,7 +60,7 @@ export default class Toolbar extends React.Component {
             window.socket.emit('startGame')
           }}
           onShiftClick={() => {
-            window.socket.emit('startGame', { respawn: false })
+            window.socket.emit('startGame', { dontRespawn: true })
           }}
           >
             <ToolbarButton iconName='fa-code-branch' onClick={async () => {

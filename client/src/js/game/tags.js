@@ -94,7 +94,7 @@ function setDefault() {
     resource: false,
     resourceZone: false,
     resourceDepositOnInteract: false,
-    resourceDepositOnCollide: false,
+    resourceDepositAllOnCollide: false,
     resourceWithdrawOnInteract: false,
     resourceWithdrawOnCollide: false,
     // resourceOnMap: false,
@@ -192,6 +192,7 @@ function setDefault() {
     // dropOnOwnerDestroyed: false,
     startsInInventory: false,
     startsEquipped: false,
+    showCountInHUD: false,
   }
 
   window.particleTags = {
@@ -238,7 +239,9 @@ function setDefault() {
   }
 
   window.popoverTags = {
-    showCountDownTimer: false,
+    popCountDownTimer: false,
+    popResourceCount: false,
+    popInventoryCount: false,
   }
 
   window.defaultTags = {
@@ -289,7 +292,7 @@ function setDefault() {
     subObject: true,
     onMap: false,
     onMapWhenEquipped: false, //cant change,
-    showCountInHUD: false,
+    // showCountInHUD: false,
     heroInteractTriggerArea: false,
     awarenessTriggerArea: false,
     objectInteractTriggerArea: false,

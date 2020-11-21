@@ -83,7 +83,8 @@ window.local.on('onFirstPageGameLoaded', () => {
         stackable: true,
         startsInInventory: true,
         showCountInHUD: true,
-        bomb: true,
+        // popInventoryCount: true,
+        // bomb: true,
       },
       count: 10,
       actionButtonBehavior: 'dropAndModify',
@@ -93,7 +94,7 @@ window.local.on('onFirstPageGameLoaded', () => {
           destroySoon: true,
           countDownToDestroy: true,
           explodeOnDestroy: true,
-          showCountDownTimer: true,
+          popCountDownTimer: true,
           showCountInHUD: false
           // pickupable: true,
           // pickupOnHeroInteract: true
@@ -103,7 +104,7 @@ window.local.on('onFirstPageGameLoaded', () => {
             monsterDestroyer: true,
             monster: true,
             destroyQuickly: true,
-            // showCountDownTimer: true,
+            // popCountDownTimer: true,
           },
           color: 'red',
           opacity: .2,

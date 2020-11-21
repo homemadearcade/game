@@ -3,12 +3,12 @@
   position: absolute;
   background: #19191a;
   color: white;
-  z-index: 1;
+  z-index: 999;
   box-shadow: 0 0 4px #19191a;
 }
 
 .top-menu-item {
-  z-index: 2;
+  z-index: 999;
 }
 
 .bold-menu-item {
@@ -104,6 +104,7 @@
 }
 .rc-menu-submenu-popup {
   position: absolute;
+  z-index: 999;
 }
 .rc-menu-submenu-popup .submenu-title-wrapper {
   padding-right: 0px;

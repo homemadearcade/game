@@ -49,7 +49,7 @@ export default class ObjectAdvancedMenu extends React.Component{
       }
 
       if(key === 'turn-into-resource-zone') {
-        networkEditObject(objectSelected, { tags: {resourceZone: true}, resourceWithdrawAmount: 1, resourceLimit: -1, resourceTags: ['resource'] })
+        networkEditObject(objectSelected, { tags: {resourceZone: true}, resourceWithdrawAmount: 1, resourceLimit: -1, resourceTags: { resource: true } })
       }
 
       if(key === 'open-construct-editor') {

@@ -26,7 +26,7 @@ export default class ResourceZoneMenu extends React.Component{
         modals.openSelectTag((result) => {
           if(result && result.value) {
             const resourceTags = objectSelected.resourceTags
-            resourceTags.push(Object.keys(window.allTags)[result.value])
+            resourceTags[Object.keys(window.allTags)[result.value]] = true
             networkEditObject(objectSelected, { resourceTags })
           }
         })
@@ -35,7 +35,7 @@ export default class ResourceZoneMenu extends React.Component{
       if(key.indexOf(removeResourceTagPrefix) === 0) {
         let tagToRemove = key.substr(removeResourceTagPrefix.length)
 
-        const resourceTags = objectSelected.resourceTags.filter((tag) => tag !== tagToRemove)
+        const resourceTags = objectSelected.resourceTags[tagToRemove] = false
         networkEditObject(objectSelected, { resourceTags })
       }
     }

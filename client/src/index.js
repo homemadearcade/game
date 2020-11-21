@@ -7,54 +7,38 @@
 FINAL TODO FOR HA
 -
 SOUND FX
-INVENTORY CONTEXT, RESOURCE CONTEXT
 FILL OUT LIBRARY and EFFECTS
 PUZZLE INTERFACES
-
-COMBINE COMBAT WITH GOALS AND QUESTS
-
-GRAPHICAL, PARTICLE, ANIMATED INTEGRATION
-  THEMES that connect with goal terms such as collect, destroy, etc
-  and also maybe add a filter??? and maybe adds creator objects u can use? and sprite packs?? yes!
+COMBAT + GOALS + QUESTS + UI
 -------
+
+right click - follow object, follow with path object
+Inventory Context Menu -> Drop, Equip to Hero, Add to Shortcuts
+
+chatOnHover. use current chat service to create one that occurs on hover and is removed when mouse moves off...
+
+Add title menu (press start)
+Add controls menu to opening sequence
+
+experience password for ha-live. Use month+day - 100
+
+Change on collide to on touch start for certain tags
 
 ////////////////////////////////
 ////////////////////////////////
 SEQUENCE EDITOR UPGRADE
 ////////////////////////////////
-Create/Editor
+Create
+Editor
 Animate
 Sound
 
 ////////////////////////////////
 ////////////////////////////////
-EDITOR UPGRADES
-////////////////////////////////
-action props editor
-Light Editor
-never close right click menu if shift is pressed
-Improve Add Sub Object
-GENRE libraries ( creator, generatedMenu )
-
-////////////////////////////////
-////////////////////////////////
-INVENTORY UPGRADE
-////////////////////////////////
-Inventory Context Menu -> Drop, Equip to Hero, Add to Shortcuts
-// max inventory ( number )
-// drop last object when full ( boolean )
-// prevent add when full ( boolean )
-
-////////////////////////////////
-////////////////////////////////
 ANIMATION UPGRADE
 ////////////////////////////////
-Random Particle Designer
-// a system that like randomly generates how particles and things interact and we get to test it out and save it! GREAT WAY TO CUSTOMIZE WITHOUT MUCH EFFORT
-// Needs to be attached to system ( AKA the combat system )
-allow chaining of animations and effects
-onAnimationEnd
-Wait for animation to complete
+Make sure library emitters can be accessed via right click menu and selected and switched between
+allow for groups of custom emitters
 
 ////////////////////////////////
 ////////////////////////////////
@@ -91,15 +75,8 @@ VICTIMS, ENEMIES, NEUTRAL,
 Rock Paper Scissors?
 AGGRESIVE
 level system, ranged attacks, etc
-CONSTRUCT EDITOR - Destroy parts
 Game Over State
 	specifically allow a hero to be destoyed and have the game run still?
-
-////////////////////////////////
-////////////////////////////////
-BRANCH
-////////////////////////////////
-Different roots for the branches...
 
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
@@ -109,15 +86,18 @@ Different roots for the branches...
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ////////////////////////////////////////////////////
 
-!!!!!!!! !!!! READY FOR HOME MADE ARCADE !!!! !!!!!!
+!!!!!!!! !!!! READY FOR HA BETA !!!! !!!!!!
+THEMES
 PIXEL EDITOR
 DETAIL VIEW
+!!!!!!!! !!!! READY FOR HA RELEASE !!!! !!!!!!
 
 SIMPLE SEQUENCE
 (ELEMENTAL SYSTEM) Lava, water, tree (?), fire, mountain, sand, ice, ROCK ( FIRST WEAPONS )-> Trees. ( ROBOT PARTS TOO)
 LEVEL UP SYSTEM
 
-LOBBY - HERO SELECTION + CUSTOMIZATION
+LOBBY - HERO SELECTION + CUSTOMIZATION.
+  Basically get the game data and then BEFORE loading it, you can ask what hero they are, and then load the game
 TEAMS
 PROCEDURAL LARGE SCALE
 FOG OF WAR
@@ -130,7 +110,7 @@ LEVELS ( sub worlds )
 ###### BUGS
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ////////////////////////////////////////////////////
-sub object top vs bottom...
+sub object top vs bottom... I HAVE SAME PROBLEM WITH CONSTRUCT PARTS
 
 If object is outside of its custom grid to start off, It will not be able to find the correct grid
 Theres needs to be a flag, perhaps the _fresh flag that allows it to use the other pathfinding grid to make its away to the new path
@@ -159,6 +139,7 @@ Metal mario! How did I not think of this. Sink and don't drown
 Vanish cap ( lets you walk through walls? )
 Fast fast cap..? Like mario racoon essentially, gives you better soaring and speed?
 Shrink power, think metroid ball or CROUCH even
+jetpack!
 
 //WEAPONS
 bouncing ball
@@ -172,23 +153,22 @@ bullets that ping around!
 Maybe dual stick shooter potential?
 // gun that swaps places with what it hits! so cool..
 
-
 //TAGS
   destoryOnHeroLand
-  countDownToDestroy
   cameraZoomToFit
   speed boost tile
   go down when hit obstacle ( mainly for goombas you feel me? )
   create bloody corpse when destroyed
   slow down tag ( MOD lowers speed of anything inside of it )
   water tag ( MOD lowers gravity of anything inside of it )
-  -- temp mods !! so these would be tags that use the mod system essentially...
   Non scroller object ( sun )
+  -- temp mods !! so these would be tags that use the mod system essentially...
   Parallax scroller slower
   Parallax scroller faster
     special camera relation, 0, .5, 2, 10, etc. might wanna encapsulale the camera changing logic into a function?
   VISIBLE TO - select tags its visible to, ( visible to is an object with tags: true )
   Background animation tag ( perhaps background stage and everything…)
+  one way platform ( can land on but can jump through from below)
 
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
@@ -197,61 +177,66 @@ Maybe dual stick shooter potential?
 ###### SMALL FEATURES
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ////////////////////////////////////////////////////
-chatOnHover. use current chat service to create one that occurs on hover and is removed when mouse moves off...
 
-Add title menu (press start)
-Add controls menu to opening sequence
+Team mods?
+
+HAve an object twist to the left and the right, its common cheap animation for games it seems
 
 Low bandwidth mode
 
+multiple resources to deposit and withdraw
+
+Different roots for the branches...
+
 Toggle between drawing types?
-
-experience password for ha-live. Use month+day - 100
-
-Change on collide to on touch start for certain tags
 
 Create an onSequenceComplete thing..? So when its done we know to move onto the next event
 
---
-
 STORY - Fade in/out to game
-
-every one gets their own construct editor drawing things, the problem is then that I have to deal with the layering issue...
-
-ADMIN to reselect sprites, remove sprites, combine sprites into animations
 
 add object needs to be its own thing with effect, wait, condition, etc.
 Its getting really complicated. For now im going to cheat it. It should have its own service and its own sequence type, feel me?
-
-Combine spawning with anticipatedAdd. create like spawnType variable which defaults to, hatchFromParent
 
 WORLDLIBRARY - Turn the editor world switching into something pulled out of a library, you feel me?..
 
 Allow circles and triangles?
 
-Camera filters ??? Yeah? Like the pixie demo? Let them customize the LOOK and feel of it all
+ELEVATION IS POSSIBLE THROUGH A VISUAL ILLUSION ( see littlewood game )
 
-Randomize animations and physics?
-
-Select emitter from right click menu list, this is not a live emitter, its a direct lookup :)
-
-right click - follow object, follow with path object
-
-I want actual grid node by grid node movement and grid collision system. I want grid movement for OBJECTS too
-
-mini-map
-map rotation having problems 1) object stage already pivoted for camera reason 2) admin canvas is not rotating with
-
-// ELEVATION IS POSSIBLE THROUGH A VISUAL ILLUSION ( see littlewood game )
-By view so you can see certain objects based on ur view like 'xray goggles'! teehee
-Add animations to an object, custom animations? More than one like an array of them.. lol
 in-game checkpoints
-// 3d sound effects system from papa bear
-// layered object select when right clicking. ( for invisible areas and parent areas ) ( object selected will be an array and then the menu will choose between those )
-// global compendium service that I can add to remove without copying and pasting JSON
-// KING MODE ( where its like you make various yes/no choices and that changes whats happening on the world map )
-// local mods? ( client only mods for specific players/situations )
-// pixiChild._stillUsed property as well as a PIXIMAP.objectsById system. We scrap app PIXICHILDs that arent in use every like 10s
+
+3d sound effects system from papa bear
+
+KING MODE ( where its like you make various yes/no choices and that changes whats happening on the world map )
+
+local mods? ( client only mods for specific players/situations )
+
+pixiChild._stillUsed property as well as a PIXIMAP.objectsById system. We scrap app PIXICHILDs that arent in use every like 10s
+
+////////////////////////////////
+////////////////////////////////
+EDITOR UPGRADES
+////////////////////////////////
+action props editor
+Light Editor
+timer editor
+quest editor ( inside of default hero editor )
+never close right click menu if shift is pressed
+GENRE libraries ( creator, generatedMenu )
+global compendium service that I can add to remove without copying and pasting JSON
+VISIBLE TAGS LIKE IN CONSTRUCT EDITOR --- OR layered object select when right clicking. ( for invisible areas and parent areas ) ( object selected will be an array and then the menu will choose between those )
+
+////////////////////////////////
+////////////////////////////////
+ADD SUBOBJECT UPGRADES
+////////////////////////////////
+Spear
+Gun
+Inventory Item
+Area x 2
+Area X 3
+Area x 4
+Potential Sub Object
 
 ////////////////////////////////
 ////////////////////////////////
@@ -260,6 +245,7 @@ GAME FEEL UPGRADE
 Implement special extra physics for objects, not just heros
 Object 'swinging' like on a rope. I mean... awesome right?
 // planet gravity! Would be cool to have.. directional gravity
+I want actual grid node by grid node movement and grid collision system. I want grid movement for OBJECTS too
 
 ////////////////////////////////
 ////////////////////////////////
@@ -268,6 +254,36 @@ SPAWN UPGRADE
 Hero removed -> respawn UI
 HOOK UP RESPAWNS TO A SPAWN ZONE
 spawn on interact ( spawn effect )
+Combine spawning with anticipatedAdd. create like spawnType variable which defaults to, hatchFromParent
+
+////////////////////////////////
+////////////////////////////////
+INVENTORY UPGRADE
+////////////////////////////////
+// max inventory ( number )
+// drop last object when full ( boolean )
+// prevent add when full ( boolean )
+
+////////////////////////////////
+////////////////////////////////
+ANIMATION UPGRADE
+////////////////////////////////
+Random Particle Designer
+// a system that like randomly generates how particles and things interact and we get to test it out and save it! GREAT WAY TO CUSTOMIZE WITHOUT MUCH EFFORT
+// Needs to be attached to system ( AKA the combat system )
+allow chaining of animations and effects
+onAnimationEnd
+Wait for animation to complete
+Randomize animations and physics together?
+ADMIN to reselect sprites, remove sprites, combine sprites into animations
+
+////////////////////////////////
+////////////////////////////////
+MAP UPGRADE
+////////////////////////////////
+Camera filters ??? Yeah? Like the pixie demo? Let them customize the LOOK and feel of it all
+mini-map
+map rotation having problems 1) object stage already pivoted for camera reason 2) admin canvas is not rotating with
 
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
@@ -380,21 +396,6 @@ Sequences, Stories, Scenarios, Sprites, Custom Mod/Objects/Heros/Animations
 CHAT ON BOTTOM TOO
 
 ---
-
-ADD SUB OBJECT
-Spear
-Gun
-Inventory Item
-Area x 2
-Area X 3
-Area x 4
-Potential Sub Object
-
-EDITORS
-light editor
-timer editor
-quest editor ( inside of default hero editor )
-action props editor
 
 ////////////////////////////////
 ////////////////////////////////
@@ -593,10 +594,6 @@ https://github.com/kittykatattack/sound.js
 IMAGE MANIPULATION
 http://camanjs.com/examples/
 // aparently also FABRIC.js is good for that, I MEAN IDK MAN
-
-Tooltips
-https://github.com/atomiks/tippyjs-react
-https://wwayne.github.io/react-tooltip/
 
 P COOL IDK
 https://game-icons.net/

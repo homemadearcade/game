@@ -1,5 +1,4 @@
 .Creator {
-
   &__sprite-container {
     margin: 0 auto;
     width: 40px;
@@ -15,14 +14,14 @@
     position: absolute;
     top: 70px;
     cursor: default;
-    z-index: 1;
+    z-index: 3;
   }
 
   &__category-container {
     // width: 10%;
     // margin: 10px;
     width: 120px;
-    z-index: 1;
+    z-index: 3;
   }
 
   &__category {

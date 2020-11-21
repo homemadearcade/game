@@ -125,7 +125,7 @@ export default class Root extends React.Component {
   render() {
     const { open, selectedHistory, tabIndex } = this.state
 
-    if(!open || selectedHistory.length == 0) return null
+    if(!open || selectedHistory.length == 0) return <div className="Manager Manager--empty"></div>
 
     return <Tabs selectedIndex={tabIndex} onSelect={index => {
       this.setState({tabIndex: index})

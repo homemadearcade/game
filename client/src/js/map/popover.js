@@ -7,12 +7,12 @@ import Popover from './popover/Root.jsx'
 
 window.local.on('onFirstPageGameLoaded', () => {
   MAP.popoverInstances = []
-  const tippyArea = document.querySelector('#GameContainer');
+  const tippyArea = document.querySelector('#game-canvas');
 
-  MAP.closePopover = function(object) {
+  MAP.closePopover = function(objectId) {
     MAP.popoverInstances =  MAP.popoverInstances.filter((instance) => {
-      if(object.id === instance.objectId) {
-        window.popoverOpen[object.id] = false
+      if(objectId === instance.objectId) {
+        window.popoverOpen[objectId] = false
         ReactDOM.unmountComponentAtNode(document.getElementById(instance.domId))
         instance.destroy()
         return false
@@ -34,6 +34,7 @@ window.local.on('onFirstPageGameLoaded', () => {
       interactive: true,
       hideOnClick: false,
       arrow: true,
+      zIndex: 1,
       // offset: [0, 0],
     });
 
@@ -53,6 +54,11 @@ window.local.on('onFirstPageGameLoaded', () => {
   MAP.updatePopovers = function() {
     MAP.popoverInstances.forEach((instance) => {
       let object = OBJECTS.getObjectOrHeroById(instance.objectId)
+      if(!object) {
+        MAP.closePopover(instance.objectId)
+        return
+      }
+
       setPopoverPosition(instance, object)
     })
   }

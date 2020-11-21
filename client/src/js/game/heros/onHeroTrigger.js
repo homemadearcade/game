@@ -115,29 +115,14 @@ export function onHeroTrigger(hero, collider, result, options = { fromInteractBu
     }
 
     if(collider.tags && collider.mod().tags['resourceZone'] && collider.mod().tags['resourceWithdrawOnCollide']) {
-      let subObjectNameToWithdraw
-      Object.keys(collider.subObjects).forEach((subObjectName) => {
-        const so = collider.subObjects[subObjectName]
-        const tagsAllowed = collider.resourceTags
-        const hasTag = tagsAllowed.some((tag) => {
-          return so.tags[tag]
-        })
-        if(hasTag) subObjectNameToWithdraw = subObjectName
-      })
+      let subObjectNameToWithdraw = window.getResourceSubObjectNames(collider, collider)
+
       if(subObjectNameToWithdraw) withdrawFromInventory(hero, collider, subObjectNameToWithdraw, collider.resourceWithdrawAmount)
       triggered = true
     }
 
-    if(collider.tags && collider.mod().tags['resourceZone'] && collider.mod().tags['resourceDepositOnCollide']) {
-      let subObjectNameToWithdraw
-      Object.keys(hero.subObjects).forEach((subObjectName) => {
-        const so = hero.subObjects[subObjectName]
-        const tagsAllowed = collider.resourceTags
-        const hasTag = tagsAllowed.some((tag) => {
-          return so.tags[tag]
-        })
-        if(hasTag) subObjectNameToWithdraw = subObjectName
-      })
+    if(collider.tags && collider.mod().tags['resourceZone'] && collider.mod().tags['resourceDepositAllOnCollide']) {
+      let subObjectNameToWithdraw = window.getResourceSubObjectNames(hero, collider)
 
       if(subObjectNameToWithdraw) {
         const so = hero.subObjects[subObjectNameToWithdraw]
@@ -197,29 +182,14 @@ export function triggerInteraction(interaction, hero, collider, result, options)
   }
 
   if(interaction === 'resourceWithdraw') {
-    let subObjectNameToWithdraw
-    Object.keys(collider.subObjects).forEach((subObjectName) => {
-      const so = collider.subObjects[subObjectName]
-      const tagsAllowed = collider.resourceTags
-      const hasTag = tagsAllowed.some((tag) => {
-        return so.tags[tag]
-      })
-      if(hasTag) subObjectNameToWithdraw = subObjectName
-    })
+    let subObjectNameToWithdraw = window.getResourceSubObjectNames(collider, collider)
+
     if(subObjectNameToWithdraw) withdrawFromInventory(hero, collider, subObjectNameToWithdraw, collider.resourceWithdrawAmount)
     triggered = true
   }
 
   if(interaction === 'resourceDeposit') {
-    let subObjectNameToWithdraw
-    Object.keys(hero.subObjects).forEach((subObjectName) => {
-      const so = hero.subObjects[subObjectName]
-      const tagsAllowed = collider.resourceTags
-      const hasTag = tagsAllowed.some((tag) => {
-        return so.tags[tag]
-      })
-      if(hasTag) subObjectNameToWithdraw = subObjectName
-    })
+    let subObjectNameToWithdraw = window.getResourceSubObjectNames(hero, collider)
 
     if(subObjectNameToWithdraw) {
       const so = hero.subObjects[subObjectNameToWithdraw]
@@ -231,4 +201,22 @@ export function triggerInteraction(interaction, hero, collider, result, options)
   if(collider.tags && triggered && collider.mod().tags['destroyAfterTrigger']) {
     collider._remove = true
   }
+}
+
+window.getResourceSubObjectNames = function(object, zone) {
+  if(!object.subObjects) return null
+
+  let subObjectNames = []
+
+  const tagsAllowed = zone.resourceTags
+  Object.keys(object.subObjects).forEach((subObjectName) => {
+    const so = object.subObjects[subObjectName]
+    const hasTag = Object.keys(tagsAllowed).some((tag) => {
+      if(!tagsAllowed[tag]) return false
+      return so.tags[tag]
+    })
+    if(hasTag) subObjectNames.push(subObjectName)
+  })
+
+  return subObjectNames[0]
 }
