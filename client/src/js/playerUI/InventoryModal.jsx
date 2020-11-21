@@ -40,8 +40,8 @@ export default class InventoryModal extends React.Component {
   }
 
   _renderSprite(item) {
-    if(item.sprite && (!item.tags.invisible || item.tags.emitter || item.tags.outline)) {
-      return <div className="Inventory__sprite"><PixiMapSprite width="32" height="32" textureId={item.sprite}/></div>
+    if(item.defaultSprite && (!item.tags.invisible || item.tags.emitter || item.tags.outline)) {
+      return <div className="Inventory__sprite"><PixiMapSprite width="32" height="32" textureId={item.defaultSprite}/></div>
     } else {
       return <div className="Inventory__sprite Inventory__sprite--box"/>
     }

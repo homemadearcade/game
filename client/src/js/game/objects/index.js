@@ -145,6 +145,8 @@ class Objects{
       createdTime: object.createdTime,
 
       actionState: object.actionState,
+
+      _timeUntilDestroyed: object._timeUntilDestroyed,
     }
 
     if(object.subObjects) {
@@ -873,14 +875,17 @@ class Objects{
 
     if(object.mod().tags.destroyQuickly) {
       // console.log(object.id, object.createdTime + 3000, Date.now())
-      if(object.createdTime + 3000 < Date.now()) object._destroy = true
+      object._timeUntilDestroyed = (object.createdTime + 3000) - Date.now()
+      if(object._timeUntilDestroyed <= 0) object._destroy = true
     }
     if(object.mod().tags.destroySoon) {
       // console.log(object.id, object.createdTime + 10000, Date.now())
-      if(object.createdTime + 10000 < Date.now()) object._destroy = true
+      object._timeUntilDestroyed = (object.createdTime + 1000) - Date.now()
+      if(object._timeUntilDestroyed <= 0) object._destroy = true
     }
     if(object.mod().tags.destroyEventually) {
-      if(object.createdTime + 200000 < Date.now()) object._destroy = true
+      object._timeUntilDestroyed = (object.createdTime + 20000) - Date.now()
+      if(object._timeUntilDestroyed <= 0) object._destroy = true
     }
   }
 
@@ -1367,6 +1372,8 @@ class Objects{
     if(object.mod().tags.spawnAllOnDestroy) {
       spawnAllNow(object)
     }
+
+    if(window.popoverOpen[object.id]) MAP.closePopover(object)
   }
 
   mergeWithJSON(object, JSON) {

@@ -40,6 +40,7 @@ export default class GameLogs extends React.Component{
 
   _getAuthorName = (id) => {
     const object = OBJECTS.getObjectOrHeroById(id)
+    if(!object) return id
     if(object.name) return object.name
     if(object.subObjectName) return object.subObjectName
     return object.id
@@ -64,6 +65,7 @@ export default class GameLogs extends React.Component{
 
     return (
         <input
+          className="Log__input"
           ref={this.inputRef}
           value={chat} onChange={(e) => this.setState({chat: e.target.value})}
           placeholder='Press enter to chat'
@@ -91,21 +93,23 @@ export default class GameLogs extends React.Component{
   _renderLogs(logs) {
     logs = [...logs]
     return logs.reverse().map((log, i) => {
+      if(!log) return
       let background = '#0f0f0f'
       // if(i % 2) background = '#1a1a1a'
 
       if(!log.text || log.text.trim().length === 0) return
       if(log.logRecipientId && log.logRecipientId !== HERO.id) return
 
-      return <div style={{background, padding: '8px 15px'}}>
-        {log.logAuthorId && <div style={{color: 'white', fontSize:'12px', fontWeight:200, color: '#aaa', marginBottom:'2px'}}>{this._getAuthorName(log.logAuthorId)}</div>}
-        <div style={{fontWeight:500}}>{log.text}</div>
+      return <div className="Log" style={{background, padding: '8px 15px'}}>
+        {log.logAuthorId && <div className="Log__author" style={{color: 'white', fontSize:'12px', fontWeight:200, color: '#aaa', marginBottom:'2px'}}>{this._getAuthorName(log.logAuthorId)}</div>}
+        <div className="Log__text"style={{fontWeight:500}}>{log.text}</div>
       </div>
     })
   }
 
   render() {
     const { logs } = this.props
+
     return <div className="GameLogsContainer" style={{height: PIXIMAP.app.screen.height}}>
       <div className="GameLogs">
       <div className="GameLogs__list">{this._renderLogs(logs)}</div>

@@ -304,36 +304,47 @@ function getGameObjectStage(gameObject) {
 }
 
 function updateChatBox(pixiChild, gameObject) {
-  if(gameObject.chat && !pixiChild.chatBox) {
-    let style = new PIXI.TextStyle({fontFamily: 'Courier', fontSize: 24 * MAP.camera.multiplier, wordWrap: true, "wordWrapWidth": 200,  fill: 0xFFFFFF, align: 'center'})
-    let textMetrics = PIXI.TextMetrics.measureText(gameObject.chat, style)
+  let shouldOpenPopover = false
+  window.popoverProperties.forEach((prop) => {
+    if(gameObject[prop]) shouldOpenPopover = true
+  })
 
-    const text = new PIXI.Text(gameObject.chat, style);
-    pixiChild.chatBox = PIXIMAP.objectStage.addChild(text)
-    pixiChild.chatBox.ownerName = gameObject.id
-    pixiChild.chatBox.isChat = true
-    pixiChild.chatBox.textWidth = textMetrics.width
-    pixiChild.chatBox.textHeight = textMetrics.height
-    pixiChild.chatBox.text = gameObject.chat
-    pixiChild.chatBox.visible = false
-
+  if(shouldOpenPopover && !window.popoverOpen[gameObject.id]) {
     MAP.openPopover(gameObject)
   }
 
-  if(pixiChild.chatBox && !gameObject.chat) {
-    PIXIMAP.objectStage.removeChild(pixiChild.chatBox)
+  if(!shouldOpenPopover && window.popoverOpen[gameObject.id]) {
     MAP.closePopover(gameObject)
-    delete pixiChild.chatBox
+  }
+
+  if(gameObject.chat && !pixiChild.chatBox) {
+    // let style = new PIXI.TextStyle({fontFamily: 'Courier', fontSize: 24 * MAP.camera.multiplier, wordWrap: true, "wordWrapWidth": 200,  fill: 0xFFFFFF, align: 'center'})
+    // let textMetrics = PIXI.TextMetrics.measureText(gameObject.chat, style)
+    //
+    // const text = new PIXI.Text(gameObject.chat, style);
+    // pixiChild.chatBox = PIXIMAP.objectStage.addChild(text)
+    // pixiChild.chatBox.ownerName = gameObject.id
+    // pixiChild.chatBox.isChat = true
+    // pixiChild.chatBox.textWidth = textMetrics.width
+    // pixiChild.chatBox.textHeight = textMetrics.height
+    // pixiChild.chatBox.text = gameObject.chat
+    // pixiChild.chatBox.visible = false
+  }
+
+  if(pixiChild.chatBox && !gameObject.chat) {
+    // PIXIMAP.objectStage.removeChild(pixiChild.chatBox)
+    // MAP.closePopover(gameObject)
+    // delete pixiChild.chatBox
   }
 
   if(pixiChild.chatBox) {
-    if(gameObject.chat !== pixiChild.chatBox.text) {
-      PIXIMAP.objectStage.removeChild(pixiChild.chatBox)
-      MAP.closePopover(gameObject)
-      delete pixiChild.chatBox
-      return
-    }
-    updatePosition(pixiChild.chatBox, {...gameObject, x: gameObject.x - (pixiChild.chatBox.textWidth/2), y: gameObject.y - 18 - pixiChild.chatBox.textHeight })
+    // if(gameObject.chat !== pixiChild.chatBox.text) {
+    //   PIXIMAP.objectStage.removeChild(pixiChild.chatBox)
+    //   MAP.closePopover(gameObject)
+    //   delete pixiChild.chatBox
+    //   return
+    // }
+    // updatePosition(pixiChild.chatBox, {...gameObject, x: gameObject.x - (pixiChild.chatBox.textWidth/2), y: gameObject.y - 18 - pixiChild.chatBox.textHeight })
   }
 }
 

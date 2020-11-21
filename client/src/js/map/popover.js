@@ -1,7 +1,9 @@
+import React from 'react'
+import ReactDOM from 'react-dom'
 import tippy, {roundArrow} from 'tippy.js';
 // import 'tippy.js/themes/light.css';
 import 'tippy.js/dist/tippy.css'; // optional for styling
-
+import Popover from './popover/Root.jsx'
 
 window.local.on('onFirstPageGameLoaded', () => {
   MAP.popoverInstances = []
@@ -10,6 +12,7 @@ window.local.on('onFirstPageGameLoaded', () => {
   MAP.closePopover = function(object) {
     MAP.popoverInstances =  MAP.popoverInstances.filter((instance) => {
       if(object.id === instance.objectId) {
+        window.popoverOpen[object.id] = false
         instance.destroy()
         return false
       } else return true
@@ -17,9 +20,10 @@ window.local.on('onFirstPageGameLoaded', () => {
   }
 
   MAP.openPopover = function(object) {
+    window.popoverOpen[object.id] = true
+    const popoverDomId = object.id + '-popover'
     const instance = tippy(tippyArea, {
-      content: `<div class="Popover">
-        ${object.chat}
+      content: `<div id="${popoverDomId}">
       </div>`,
       // appendTo: tippyArea,
       theme: 'light',
@@ -35,6 +39,12 @@ window.local.on('onFirstPageGameLoaded', () => {
     instance.objectId = object.id
     setPopoverPosition(instance, object)
     instance.show();
+
+    ReactDOM.render(
+      React.createElement(Popover, { object: object }),
+      document.getElementById(popoverDomId)
+    )
+
     MAP.popoverInstances.push(instance)
   }
 

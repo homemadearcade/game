@@ -28,6 +28,7 @@ class contextMenuEl extends React.Component{
     super(props)
 
     document.body.addEventListener("contextmenu", e => {
+      console.log(e)
       if(!window.isClickingMap(e.target.className)) return
 
       if(!PAGE.showEditorTools()) {
@@ -103,7 +104,6 @@ class contextMenuEl extends React.Component{
     MAPEDITOR.contextMenu.style.left = `${left}px`
     MAPEDITOR.contextMenu.style.top = `${top}px`
 
-    console.log(top, left, MAPEDITOR.contextMenu)
     this._toggleContextMenu('show')
   }
 

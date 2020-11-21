@@ -9,9 +9,13 @@ FINAL TODO FOR HA
 SOUND FX
 VISUAL TIMERS/COOLDOWNS AND INVENTORY
 FILL OUT LIBRARY and EFFECTS
+PUZZLE INTERFACES
 
 COMBINE COMBAT WITH GOALS AND QUESTS
+
 GRAPHICAL, PARTICLE, ANIMATED INTEGRATION
+  THEMES that connect with goal terms such as collect, destroy, etc
+  and also maybe add a filter??? and maybe adds creator objects u can use? and sprite packs?? yes!
 -------
 
 ////////////////////////////////
@@ -21,23 +25,6 @@ SEQUENCE EDITOR UPGRADE
 Create/Editor
 Animate
 Sound
-
-////////////////////////////////
-////////////////////////////////
-SPAWN UPGRADE
-////////////////////////////////
-Hero removed -> respawn UI
-HOOK UP RESPAWNS TO A SPAWN ZONE
-spawn on interact ( spawn effect )
-
-////////////////////////////////
-////////////////////////////////
-MODS
-////////////////////////////////
-Metal mario! How did I not think of this. Sink and don't drown
-Vanish cap ( lets you walk through walls? )
-Fast fast cap..? Like mario racoon essentially, gives you better soaring and speed?
-Shrink power, think metroid ball or CROUCH even
 
 ////////////////////////////////
 ////////////////////////////////
@@ -54,9 +41,6 @@ GENRE libraries ( creator, generatedMenu )
 INVENTORY UPGRADE
 ////////////////////////////////
 Inventory Context Menu -> Drop, Equip to Hero, Add to Shortcuts
-show inventory in HUD tag, like RTS resources VS team...yeahh
-actually build in this whole equipping system
-  quick equip menu
 // max inventory ( number )
 // drop last object when full ( boolean )
 // prevent add when full ( boolean )
@@ -85,10 +69,9 @@ onSucceedSequence, onFailSequence
 ////////////////////////////////
 GOALS UPGRADE
 ////////////////////////////////
-Goal number -> as many as possible
+Goal number -> as many as possible ( so its just tracking basically )
 Chances -> fail on death
-collect, score, create, destroy ( not implemented )
-a Score parameter on objects
+a Score parameter on heros and objects? ( score holding vs score giving )
 Win/Lose States that can connect to the meta of the engine ( picking new game or replaying current game )
 
 ////////////////////////////////
@@ -126,18 +109,14 @@ Different roots for the branches...
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ////////////////////////////////////////////////////
 
-SOUND FX
-
-PUZZLE INTERFACES
-
 !!!!!!!! !!!! READY FOR HOME MADE ARCADE !!!! !!!!!!
+PIXEL EDITOR
+DETAIL VIEW
 
 SIMPLE SEQUENCE
 (ELEMENTAL SYSTEM) Lava, water, tree (?), fire, mountain, sand, ice, ROCK ( FIRST WEAPONS )-> Trees. ( ROBOT PARTS TOO)
 LEVEL UP SYSTEM
 
-PIXEL EDITOR
-DETAIL VIEW
 LOBBY - HERO SELECTION + CUSTOMIZATION
 TEAMS
 PROCEDURAL LARGE SCALE
@@ -165,6 +144,55 @@ Construct Editor on ha-demo bug?
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+LIBRARY IDEAS
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+////////////////////////////////////////////////////
+
+//MODS
+Metal mario! How did I not think of this. Sink and don't drown
+Vanish cap ( lets you walk through walls? )
+Fast fast cap..? Like mario racoon essentially, gives you better soaring and speed?
+Shrink power, think metroid ball or CROUCH even
+
+//WEAPONS
+bouncing ball
+various guns
+  - BOOMERANG
+  Bouncing ball action - mario fireball
+Sword - pickaxe? ax? Are these the same thing?
+Sword options..
+  time quota - Time that the collision boxes are active
+bullets that ping around!
+Maybe dual stick shooter potential?
+// gun that swaps places with what it hits! so cool..
+
+
+//TAGS
+  destoryOnHeroLand
+  countDownToDestroy
+  cameraZoomToFit
+  speed boost tile
+  go down when hit obstacle ( mainly for goombas you feel me? )
+  create bloody corpse when destroyed
+  slow down tag ( MOD lowers speed of anything inside of it )
+  water tag ( MOD lowers gravity of anything inside of it )
+  -- temp mods !! so these would be tags that use the mod system essentially...
+  Non scroller object ( sun )
+  Parallax scroller slower
+  Parallax scroller faster
+    special camera relation, 0, .5, 2, 10, etc. might wanna encapsulale the camera changing logic into a function?
+  VISIBLE TO - select tags its visible to, ( visible to is an object with tags: true )
+  Background animation tag ( perhaps background stage and everything…)
+
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ###### SMALL FEATURES
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -182,38 +210,10 @@ experience password for ha-live. Use month+day - 100
 
 Change on collide to on touch start for certain tags
 
-tag
-  destoryOnHeroLand
-  countDownToDestroy
-  cameraZoomToFit
-  speed boost tile
-  go down when hit obstacle ( mainly for goombas you feel me? )
-  create bloody corpse when destroyed
-  slow down tag ( MOD lowers speed of anything inside of it )
-  water tag ( MOD lowers gravity of anything inside of it )
-  -- temp mods !! so these would be tags that use the mod system essentially...
-  Non scroller object ( sun )
-  Parallax scroller slower
-  Parallax scroller faster
-    special camera relation, 0, .5, 2, 10, etc. might wanna encapsulale the camera changing logic into a function?
-
 Create an onSequenceComplete thing..? So when its done we know to move onto the next event
 
 --
 
-WEAPONS
-bouncing ball
-various guns
-  - BOOMERANG
-  Bouncing ball action - mario fireball
-Sword - pickaxe? ax? Are these the same thing?
-Sword options..
-  time quota - Time that the collision boxes are active
-bullets that ping around!
-Maybe dual stick shooter potential?
-// gun that swaps places with what it hits! so cool..
-
-VISIBLE TO - tag
 STORY - Fade in/out to game
 
 every one gets their own construct editor drawing things, the problem is then that I have to deal with the layering issue...
@@ -244,9 +244,7 @@ map rotation having problems 1) object stage already pivoted for camera reason 2
 
 // ELEVATION IS POSSIBLE THROUGH A VISUAL ILLUSION ( see littlewood game )
 By view so you can see certain objects based on ur view like 'xray goggles'! teehee
-Background animation tag ( perhaps background stage and everything…)
 Add animations to an object, custom animations? More than one like an array of them.. lol
-add custom input behavior is broken but maybe thats good
 in-game checkpoints
 // 3d sound effects system from papa bear
 // layered object select when right clicking. ( for invisible areas and parent areas ) ( object selected will be an array and then the menu will choose between those )
@@ -262,6 +260,14 @@ GAME FEEL UPGRADE
 Implement special extra physics for objects, not just heros
 Object 'swinging' like on a rope. I mean... awesome right?
 // planet gravity! Would be cool to have.. directional gravity
+
+////////////////////////////////
+////////////////////////////////
+SPAWN UPGRADE
+////////////////////////////////
+Hero removed -> respawn UI
+HOOK UP RESPAWNS TO A SPAWN ZONE
+spawn on interact ( spawn effect )
 
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
@@ -370,6 +376,10 @@ SpriteSheets, Sounds, Music, Games, Default Mod/Objects/Heros/Animations
 
 GAME DETAIL MENU
 Sequences, Stories, Scenarios, Sprites, Custom Mod/Objects/Heros/Animations
+
+CHAT ON BOTTOM TOO
+
+---
 
 ADD SUB OBJECT
 Spear

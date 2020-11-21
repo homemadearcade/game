@@ -816,6 +816,7 @@ class Game{
 
   onUpdateGameState(gameState) {
     if(!PAGE.gameLoaded) return
+    delete gameState.logs
     if(!PAGE.role.isHost) window.mergeDeep(GAME.gameState, gameState)
   }
 
