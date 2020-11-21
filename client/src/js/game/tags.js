@@ -241,7 +241,7 @@ function setDefault() {
   window.popoverTags = {
     popCountDownTimer: false,
     popResourceCount: false,
-    popInventoryCount: false,
+    popSubObjectCount: false,
   }
 
   window.defaultTags = {

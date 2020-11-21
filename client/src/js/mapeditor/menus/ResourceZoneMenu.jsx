@@ -48,7 +48,8 @@ export default class ResourceZoneMenu extends React.Component{
       <MenuItem key="edit-withdraw-amount">Edit Withdraw Amount</MenuItem>
       <MenuItem key="edit-resource-limit">Edit Resource Limit</MenuItem>
       <SubMenu title="Resource Tags">
-        {objectSelected.resourceTags.map((tag) => {
+        {Object.keys(objectSelected.resourceTags).map((tag) => {
+          if(objectSelected.resourceTags[tag] === false) return null
           return <MenuItem key={`${removeResourceTagPrefix}${tag}`}>{'Remove ' + tag}</MenuItem>
         })}
         <MenuItem key="add-resource-tag">Add Resource Tag</MenuItem>

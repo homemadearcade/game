@@ -170,9 +170,9 @@
 .rc-menu-vertical-left > .rc-menu-submenu > .rc-menu-submenu-title,
 .rc-menu-vertical-right > .rc-menu-submenu > .rc-menu-submenu-title,
 .rc-menu-inline > .rc-menu-submenu > .rc-menu-submenu-title {
-  padding-top: 6px;
-  padding-bottom: 6px;
-  padding-left: 12px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 9px;
 }
 .rc-menu-rtl.rc-menu-vertical > .rc-menu-item,
 .rc-menu-rtl.rc-menu-vertical-left > .rc-menu-item,
@@ -252,8 +252,8 @@
 }
 .rc-menu-sub.rc-menu-inline > .rc-menu-item,
 .rc-menu-sub.rc-menu-inline > .rc-menu-submenu > .rc-menu-submenu-title {
-  padding-top: 8px;
-  padding-bottom: 8px;
+  padding-top: 3px;
+  padding-bottom: 3px;
   padding-right: 0;
 }
 .rc-menu-rtl .rc-menu-sub.rc-menu-inline > .rc-menu-item,
