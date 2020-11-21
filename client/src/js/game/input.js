@@ -293,7 +293,7 @@ function handleActionButtonBehavior(hero, action, delta) {
   }
 
   if(action === 'accelerate') {
-    hero.velocityAngle += hero.mod().velocityDelta * delta
+    hero.velocityAngle += (hero.mod().velocityDelta || 400) * delta
   }
   if(action === 'deccelerateToZero') {
     if((hero.velocityAngle < .1 && hero.velocityAngle > 0) ||  (hero.velocityAngle > -.1 && hero.velocityAngle < 0)) {
@@ -303,11 +303,11 @@ function handleActionButtonBehavior(hero, action, delta) {
       return
     }
     if(hero.velocityAngle > 0) {
-      hero.velocityAngle -= hero.mod().velocityDelta * delta
+      hero.velocityAngle -= (hero.mod().velocityDelta || 400)  * delta
       return
     }
     if(hero.velocityAngle < 0) {
-      hero.velocityAngle += hero.mod().velocityDelta * delta
+      hero.velocityAngle += (hero.mod().velocityDelta || 400)  * delta
       return
     }
   }
@@ -319,16 +319,16 @@ function handleActionButtonBehavior(hero, action, delta) {
       return
     }
     if(hero.velocityAngle > 0) {
-      hero.velocityAngle -= hero.mod().velocityDelta * delta * 4
+      hero.velocityAngle -= (hero.mod().velocityDelta || 400)  * delta * 4
       return
     }
     if(hero.velocityAngle < 0) {
-      hero.velocityAngle += hero.mod().velocityDelta * delta * 4
+      hero.velocityAngle += (hero.mod().velocityDelta || 400)  * delta * 4
       return
     }
   }
   if(action === 'accelerateBackwards') {
-    hero.velocityAngle -= hero.mod().velocityDelta * delta
+    hero.velocityAngle -= (hero.mod().velocityDelta || 400)  * delta
   }
 
   if(action === 'dash' || action === 'teleportDash') {

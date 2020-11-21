@@ -154,7 +154,7 @@ function depositToInventory(depositor, retriever, subObjectName, amount) {
 
 function equipSubObject(hero, subObject, keyBinding = 'available') {
   if(keyBinding === 'available') {
-    if(hero.zButtonBehavior === subObject.subObjectName || hero.xButtonBehavior === subObject.subObjectName || hero.cButtonBehavior === subObject.subObjectName) {
+    if(hero.zButtonBehavior === subObject.subObjectName || hero.xButtonBehavior === subObject.subObjectName || hero.cButtonBehavior === subObject.subObjectName || hero.spaceBarBehavior === subObject.subObjectName) {
       console.log('already equipped to a slot')
     } else {
       if(!hero.zButtonBehavior || hero.zButtonBehavior === '') {
@@ -171,6 +171,8 @@ function equipSubObject(hero, subObject, keyBinding = 'available') {
     hero.xButtonBehavior = subObject.subObjectName
   } else if(keyBinding === 'c') {
     hero.cButtonBehavior = subObject.subObjectName
+  } else if(keyBinding === 'space') {
+    hero.spaceBarBehavior = subObject.subObjectName
   }
 
   subObject.isEquipped = true
@@ -191,6 +193,9 @@ function unequipSubObject(hero, subObject) {
   }
   if(hero.cButtonBehavior === subObject.subObjectName) {
     hero.cButtonBehavior = null
+  }
+  if(hero.spaceBarBehavior === subObject.subObjectName) {
+    hero.spaceBarBehavior = null
   }
 
   if(subObject.tags.onMapWhenEquipped && !subObject.tags.onMap) {

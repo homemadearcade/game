@@ -36,21 +36,21 @@ export default class InventoryModal extends React.Component {
 
   _getItemCount(item) {
     let count = item.count + 'x'
-    return <div className="Inventory__item-count">{count}</div>
+    return <div className="Inventory__item-count" data-inventoryMenuId={item.id}>{count}</div>
   }
 
   _renderSprite(item) {
-    if(item.defaultSprite && (!item.tags.invisible || item.tags.emitter || item.tags.outline)) {
-      return <div className="Inventory__sprite"><PixiMapSprite width="32" height="32" textureId={item.defaultSprite}/></div>
+    if(item.defaultSprite && item.defaultSprite !== 'solidcolorsprite' && (!item.tags.invisible || item.tags.emitter || item.tags.outline)) {
+      return <div className="Inventory__sprite" data-inventoryMenuId={item.id}><PixiMapSprite width="32" height="32" textureId={item.defaultSprite}/></div>
     } else {
-      return <div className="Inventory__sprite Inventory__sprite--box"/>
+      return <div className="Inventory__sprite Inventory__sprite--box" data-inventoryMenuId={item.id}/>
     }
   }
 
   _renderItem = (item) => {
-    return <div key={item.id} className="Inventory__item">
+    return <div key={item.id} data-inventoryMenuId={item.id} className="Inventory__item">
       {this._renderSprite(item)}
-      <div className="Inventory__item-text">
+      <div className="Inventory__item-text" data-inventoryMenuId={item.id}>
         {item.name}
       </div>
       {item.tags.stackable && this._getItemCount(item)}

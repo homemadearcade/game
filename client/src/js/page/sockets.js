@@ -380,12 +380,16 @@ function init() {
     window.local.emit('onHeroCompleteQuest', heroId, questId)
   })
 
-  window.socket.on('onDropObject', (objectId, subObjectName) => {
-    window.local.emit('onDropObject', objectId, subObjectName)
+  window.socket.on('onDropObject', (objectId, subObjectName, amount) => {
+    window.local.emit('onDropObject', objectId, subObjectName, amount)
   })
   window.socket.on('onUnequipObject', (objectId, subObjectName) => {
     window.local.emit('onUnequipObject', objectId, subObjectName)
   })
+  window.socket.on('onEquipObject', (objectId, subObjectName, key) => {
+    window.local.emit('onEquipObject', objectId, subObjectName, key)
+  })
+
 
   window.socket.on('onAddAnimation', (name, animationData) => {
     window.local.emit('onAddAnimation', name, animationData)

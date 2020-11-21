@@ -28,11 +28,13 @@ class NotificationsControl{
   }
 
   onHeroWithdrawFail(hero, subObject) {
-    window.socket.emit('sendNotification', { playerUIHeroId: hero.id, logRecipientId: hero.id, toast: true, log: true, text: 'You can\'t withraw. You already have a ' + subObject.subObjectName})
+    //. You already have a ' + subObject.subObjectName
+    window.socket.emit('sendNotification', { playerUIHeroId: hero.id, logRecipientId: hero.id, toast: true, log: true, text: 'You can\'t withraw'})
   }
 
   onHeroDepositFail(hero, subObject) {
-    window.socket.emit('sendNotification', { playerUIHeroId: hero.id, logRecipientId: hero.id, toast: true, log: true, text: 'You can\'t deposit. Target already has a ' + subObject.subObjectName})
+    //Target already has a ' + subObject.subObjectName
+    window.socket.emit('sendNotification', { playerUIHeroId: hero.id, logRecipientId: hero.id, toast: true, log: true, text: 'You can\'t deposit'})
   }
 
   onHeroDrop(hero, object) {

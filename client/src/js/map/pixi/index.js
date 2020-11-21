@@ -554,10 +554,13 @@ PIXIMAP.onObjectAnimation = function(type, objectId, options = {}) {
 }
 
 PIXIMAP.onConstructEditorClose = function() {
-  resetConstructParts()
+  setTimeout(() => {
+    resetConstructParts()
+  },  50)
 }
 
 PIXIMAP.onConstructEditorStart = function() {
+  MAP.closeAllPopovers()
   resetConstructParts()
 }
 PIXIMAP.onPathEditorClose = function() {
@@ -567,6 +570,7 @@ PIXIMAP.onPathEditorClose = function() {
 }
 
 PIXIMAP.onPathEditorStart = function() {
+  MAP.closeAllPopovers()
   resetConstructParts()
 }
 PIXIMAP.onGameReady = function() {

@@ -178,6 +178,8 @@ Maybe dual stick shooter potential?
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ////////////////////////////////////////////////////
 
+Pop Heros inventory to others, but only if sub object has certain tags..?
+
 Team mods?
 
 HAve an object twist to the left and the right, its common cheap animation for games it seems

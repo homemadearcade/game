@@ -1123,16 +1123,22 @@ class Objects{
     window.mergeDeep(owner.subObjects[subObjectName], update)
   }
 
-  onDropObject(objectId, subObjectName) {
+  onDropObject(objectId, subObjectName, amount) {
     const dropper = OBJECTS.getObjectOrHeroById(objectId)
     const dropping = dropper.subObjects[subObjectName]
-    dropObject(dropper, dropping)
+    dropObject(dropper, dropping, amount)
   }
 
   onUnequipObject(objectId, subObjectName) {
     const dropper = OBJECTS.getObjectOrHeroById(objectId)
     const dropping = dropper.subObjects[subObjectName]
     unequipSubObject(dropper, dropping)
+  }
+
+  onEquipObject(objectId, subObjectName, key) {
+    const dropper = OBJECTS.getObjectOrHeroById(objectId)
+    const dropping = dropper.subObjects[subObjectName]
+    equipSubObject(dropper, dropping, key)
   }
 
   onNetworkUpdateObjects(objectsUpdated) {

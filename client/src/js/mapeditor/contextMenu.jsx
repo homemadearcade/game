@@ -8,6 +8,8 @@ import EditingObjectContextMenu from './adminMenus/EditingObjectContextMenu.jsx'
 import EditingSequenceContextMenu from './adminMenus/EditingSequenceContextMenu.jsx';
 import WorldContextMenu from './adminMenus/worldContextMenu.jsx';
 import GeneratedMenu from './playerMenus/generatedMenu.jsx';
+import InventoryMenu from './playerMenus/InventoryMenu.jsx';
+
 import '../libraries/playerMenuLibrary.js';
 
 import modals from './modals.js';
@@ -28,7 +30,12 @@ class contextMenuEl extends React.Component{
     super(props)
 
     document.body.addEventListener("contextmenu", e => {
-      console.log(e)
+      if(e.target.dataset.inventorymenuid) {
+        this._openMenuWithEvent(e)
+        this._setContextMenuSpecialItem('inventory', OBJECTS.getObjectOrHeroById(e.target.dataset.inventorymenuid))
+        return false;
+      }
+
       if(!window.isClickingMap(e.target.className)) return
 
       if(!PAGE.showEditorTools()) {
@@ -36,13 +43,7 @@ class contextMenuEl extends React.Component{
       }
 
       if(!MAPEDITOR.paused) {
-        e.preventDefault();
-        const { x, y } = window.convertToGameXY(e)
-        const origin = {
-          left: x,
-          top: y
-        };
-        this._setContextMenuPosition(origin);
+        this._openMenuWithEvent(e)
         return false;
       }
     });
@@ -79,8 +80,24 @@ class contextMenuEl extends React.Component{
     if(command === "show") {
       this.setState({ hide: false, objectSelected: MAPEDITOR.objectHighlighted })
     } else {
-      this.setState({ hide: true, subObjectSelected: {}, subObjectSelectedName: null })
+      this.setState({ hide: true, subObjectSelected: {}, subObjectSelectedName: null, objectSelected: null, coloringObject: null, specialItemType: null, item: null })
     }
+  }
+
+  _openMenuWithEvent(e) {
+    e.preventDefault();
+    const { x, y } = window.convertToGameXY(e)
+    const origin = {
+      left: x,
+      top: y
+    };
+    this._setContextMenuPosition(origin);
+  }
+  _setContextMenuSpecialItem(type, item) {
+    this.setState({
+      specialItemType: type,
+      item
+    })
   }
 
   _setContextMenuPosition = ({ top, left }) => {
@@ -124,7 +141,14 @@ class contextMenuEl extends React.Component{
   }
 
   _renderAdminMenus() {
-    const { objectSelected, subObjectSelected, subObjectSelectedName } = this.state;
+    const { objectSelected, subObjectSelected, subObjectSelectedName, specialItemType, item } = this.state;
+
+    if(specialItemType === 'inventory') {
+      return <InventoryMenu
+        item={item}
+      />
+    }
+
     const { networkEditObject } = MAPEDITOR
 
     MAPEDITOR.contextMenuVisible = true

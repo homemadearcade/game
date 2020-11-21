@@ -20,9 +20,10 @@ export default class Goals extends React.Component{
 
     return <div className="InventoryHUD">
       {subObjects.map((so) => {
-        return <div className="InventoryHUD__item">
-          <div className="InventoryHUD__name">{so.name || so.subObjectName}</div>
-          {so.defaultSprite && so.defaultSprite !== 'solidcolorsprite' && <div className="InventoryHUD__sprite"><PixiMapSprite textureId={so.defaultSprite} width="20" height="20"/></div>}<div className="InventoryHUD__count">x{so.count || 0}</div>
+        return <div className="InventoryHUD__item" data-inventoryMenuId={so.id}>
+          <div className="InventoryHUD__name" data-inventoryMenuId={so.id}>{so.name || so.subObjectName}</div>
+          {so.defaultSprite && so.defaultSprite !== 'solidcolorsprite' && <div data-inventoryMenuId={so.id} className="InventoryHUD__sprite"><PixiMapSprite textureId={so.defaultSprite} width="20" height="20"/></div>}
+          <div className="InventoryHUD__count" data-inventoryMenuId={so.id}>x{so.count || 0}</div>
         </div>
       })}
     </div>

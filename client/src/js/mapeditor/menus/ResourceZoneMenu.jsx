@@ -35,7 +35,8 @@ export default class ResourceZoneMenu extends React.Component{
       if(key.indexOf(removeResourceTagPrefix) === 0) {
         let tagToRemove = key.substr(removeResourceTagPrefix.length)
 
-        const resourceTags = objectSelected.resourceTags[tagToRemove] = false
+        objectSelected.resourceTags[tagToRemove] = false
+        const resourceTags = objectSelected.resourceTags
         networkEditObject(objectSelected, { resourceTags })
       }
     }
