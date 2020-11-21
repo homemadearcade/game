@@ -99,6 +99,9 @@ export default class TagMenu extends React.Component{
       <SubMenu title="Optimization">
         {this._renderTagMenuItems(window.featureOptimizationTags)}
       </SubMenu>
+      <SubMenu title="Popover">
+        {this._renderTagMenuItems(window.popoverTags)}
+      </SubMenu>
     </Menu>
   }
 }

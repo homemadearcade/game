@@ -93,6 +93,8 @@ window.local.on('onFirstPageGameLoaded', () => {
           destroySoon: true,
           countDownToDestroy: true,
           explodeOnDestroy: true,
+          showCountDownTimer: true,
+          showCountInHUD: false
           // pickupable: true,
           // pickupOnHeroInteract: true
         },
@@ -100,7 +102,8 @@ window.local.on('onFirstPageGameLoaded', () => {
           tags: {
             monsterDestroyer: true,
             monster: true,
-            destroyQuickly: true
+            destroyQuickly: true,
+            // showCountDownTimer: true,
           },
           color: 'red',
           opacity: .2,

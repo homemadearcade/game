@@ -677,7 +677,7 @@ class Hero{
       lives: hero.lives,
       _flipY: hero._flipY,
       score: hero.score,
-      removed: hero.mod().removed,
+      removed: hero.removed,
       questState: hero.questState,
       angle: hero.angle,
       customMapState: hero.customMapState,

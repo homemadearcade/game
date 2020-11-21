@@ -237,6 +237,10 @@ function setDefault() {
     pathfindAvoidUp: false,
   }
 
+  window.popoverTags = {
+    showCountDownTimer: false,
+  }
+
   window.defaultTags = {
     ...window.physicsTags,
     ...window.spawnZoneTags,
@@ -257,6 +261,7 @@ function setDefault() {
     ...window.featureOptimizationTags,
     ...window.proceduralTags,
     ...window.pathTags,
+    ...window.popoverTags,
   }
 
   window.heroTags = {

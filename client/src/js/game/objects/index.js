@@ -220,6 +220,7 @@ class Objects{
       // equipment
       actionButtonBehavior: object.actionButtonBehavior,
       actionProps: object.actionProps,
+      actionButtonBehaviorLabel: object.actionButtonBehaviorLabel,
 
       // inventory
       count: object.count,
@@ -369,8 +370,8 @@ class Objects{
       x: object.x,
       y: object.y,
       chat: object.chat,
-      width: object.mod().width,
-      height: object.mod().height,
+      width: object.width,
+      height: object.height,
       color: object.color,
       name: object.name,
       sprite: object.sprite,
@@ -399,6 +400,7 @@ class Objects{
       targetXY: object.targetXY,
 
       actionState: object.actionState,
+      actionButtonBehaviorLabel: object.actionButtonBehaviorLabel,
     }
 
     if(object.subObjects) {

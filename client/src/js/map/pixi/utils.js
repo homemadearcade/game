@@ -306,7 +306,11 @@ function getGameObjectStage(gameObject) {
 function updateChatBox(pixiChild, gameObject) {
   let shouldOpenPopover = false
   window.popoverProperties.forEach((prop) => {
-    if(gameObject[prop]) shouldOpenPopover = true
+    if(prop.tag) {
+      if(gameObject[prop.prop] && gameObject.mod().tags[prop.tag]) shouldOpenPopover = true
+    } else {
+      if(gameObject[prop]) shouldOpenPopover = true
+    }
   })
 
   if(shouldOpenPopover && !window.popoverOpen[gameObject.id]) {

@@ -2,7 +2,7 @@ import React from 'react'
 import { Line } from 'rc-progress'
 
 window.popoverProperties = [
-  '_timeUntilDestroyed',
+  { prop: '_timeUntilDestroyed', tag: 'showCountDownTimer'},
   'chat'
 ]
 
@@ -44,7 +44,7 @@ export default class Popover extends React.Component {
 
     let render = []
 
-    if(object._timeUntilDestroyed) {
+    if(object._timeUntilDestroyed && object.mod().tags.showCountDownTimer) {
       // label={this._getFormattedTime(object._timeUntilDestroyed)}
       let percent = ((object._timeUntilDestroyed - 100)/object._totalTimeUntilDestroyed) * 100
       if(percent < 0) percent = 0
