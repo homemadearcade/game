@@ -31,20 +31,28 @@
     float: left;
   }
 
-  &__keysprite {
+  &__key {
     position: relative;
     // left: 10px;
     top: 15px;
-    div {
-      margin: 0 auto;
-      transform: scale(3);
-      image-rendering: -moz-crisp-edges;
-      image-rendering: -webkit-crisp-edges;
-      image-rendering: pixelated;
-      image-rendering: crisp-edges;
-    }
   }
 }
+
+.ReactSpriteSheet {
+  div {
+    margin: 0 auto;
+    transform: scale(3);
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-crisp-edges;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+  }
+}
+
+.blink {
+  animation: blinker 1s step-start infinite;
+}
+
 
 .ControlsInfo {
   text-align: center;
@@ -78,14 +86,6 @@
     width: 30%;
     text-align: center;
     padding: 10px;
-    div {
-      margin: 0 auto;
-      transform: scale(3);
-      image-rendering: -moz-crisp-edges;
-      image-rendering: -webkit-crisp-edges;
-      image-rendering: pixelated;
-      image-rendering: crisp-edges;
-    }
   }
 
   &__behavior {
@@ -120,6 +120,12 @@
     .ControlsInfo {
       width: 30%;
       margin: 0 auto;
+    }
+
+    &__corner-key {
+      position: absolute;
+      right: 50px;
+      bottom: 50px;
     }
   }
 
@@ -202,15 +208,8 @@
     position: absolute;
     bottom: 12px;
     right: 7px;
-    animation: blinker 1s step-start infinite;
     div {
-
-      margin: 0 auto;
       transform: scale(2);
-      image-rendering: -moz-crisp-edges;
-      image-rendering: -webkit-crisp-edges;
-      image-rendering: pixelated;
-      image-rendering: crisp-edges;
     }
   }
 

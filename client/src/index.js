@@ -6,13 +6,9 @@
 
 FINAL TODO FOR HA
 
-Opening titles
-Emitters
-Quests
-Goals
--
+EMITTERS
 SOUND FX
-FILL OUT LIBRARY and EFFECTS
+FILL OUT SEQUENCE EDITOR, LIBRARY, EFFECTS, TAGS
 PUZZLE INTERFACES
 COMBAT + GOALS + QUESTS + UI
 -------
@@ -21,8 +17,7 @@ right click - follow object, follow with path object
 
 chatOnHover. use current chat service to create one that occurs on hover and is removed when mouse moves off...
 
-Add title menu (press start)
-Add controls menu to opening sequence
+Add title menu (press enter or v to start)
 
 one time use inventory objects, such as potions, speed boosters.  Keep as action props so we can equip it too, FLEXIBLE nice!
 
@@ -103,6 +98,7 @@ SIMPLE SEQUENCE
 LEVEL UP SYSTEM
 
 LOBBY - HERO SELECTION + CUSTOMIZATION.
+  Might want to put this inside of PREGAME
   Basically get the game data and then BEFORE loading it, you can ask what hero they are, and then load the game
 TEAMS
 PROCEDURAL LARGE SCALE
