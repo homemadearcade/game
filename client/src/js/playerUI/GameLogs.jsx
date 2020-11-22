@@ -12,14 +12,22 @@ export default class GameLogs extends React.Component{
     }
   }
 
-  onEnterPressed = () => {
+
+  onEnterPressed() {
+    if(GAME.heros[HERO.id].flags.showCutscene || CONSTRUCTEDITOR.open || PATHEDITOR.open) return
+    this.submit()
+  }
+
+  onTPressed = (e) => {
+    if(PAGE.typingMode) return
     if(GAME.heros[HERO.id].flags.showCutscene || CONSTRUCTEDITOR.open || PATHEDITOR.open) return
 
     if(document.activeElement !== this.inputRef.current) {
       this.inputRef.current.focus()
-    } else {
-      this.submit()
     }
+
+    e.stopPropagation()
+    e.preventDefault()
   }
 
   onEscPressed = () => {
@@ -70,7 +78,7 @@ export default class GameLogs extends React.Component{
           className="Log__input"
           ref={this.inputRef}
           value={chat} onChange={(e) => this.setState({chat: e.target.value})}
-          placeholder='Press enter to chat'
+          placeholder='Press T to chat'
           style={{
             position:'absolute',
             bottom: '0px',

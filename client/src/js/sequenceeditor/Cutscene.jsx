@@ -46,6 +46,9 @@ export default class Cutscene extends React.Component{
     const { sequenceItem } = this.props;
     return <Collapsible trigger={'Scene - ' + index.toString()}>
         <div key={sequenceItem.id + '-' + index} className="SequenceItem__option" >
+          <div className="SequenceItem__effect-input"><input onChange={() => {
+              scene.cutsceneControls = !scene.cutsceneControls
+          }} checked={scene.cutsceneControls} type="checkbox"></input>Show controls</div>
           <h4>{'Scene ' + (index + 1)}</h4>
           Text:
           <i className="fa fas fa-edit Manager__button" onClick={() => this.props._editScene('text', index)}/>

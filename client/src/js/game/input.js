@@ -175,7 +175,7 @@ function onPlayerIdentified(){
 }
 
 function onKeyUp(key, hero) {
-  if(key === 'e' || key === 'v') {
+  if(key === 'e' || key === 'v' || key === 'enter') {
     hero._cantInteract = false
   }
   GAME.heroInputs[hero.id][key] = false
@@ -756,7 +756,7 @@ function onUpdate(hero, keysDown, delta) {
 }
 
 function onKeyDown(key, hero) {
-  if('e' === key || 'v' === key) {
+  if('e' === key || 'v' === key || 'enter' === key) {
     if(hero.dialogue && hero.dialogue.length) {
       hero.dialogue.shift()
       if(!hero.dialogue.length) {

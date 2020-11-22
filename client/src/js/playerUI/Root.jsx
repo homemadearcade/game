@@ -295,8 +295,12 @@ export default class Root extends React.Component {
   _onKeyDown = (event) => {
     const key = keycode(event.keyCode)
 
+    if(GAME.world.tags.allowHeroChat && key === 't' && PAGE.isLogOpen) {
+      this.gameLogRef.current.onTPressed(event)
+    }
+
     if(GAME.world.tags.allowHeroChat && key === 'enter' && PAGE.isLogOpen) {
-      this.gameLogRef.current.onEnterPressed()
+      this.gameLogRef.current.onEnterPressed(event)
     }
 
     if(key === 'esc') {

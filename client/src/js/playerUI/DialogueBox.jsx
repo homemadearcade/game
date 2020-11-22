@@ -47,7 +47,7 @@ export default class DialogueBox extends React.Component{
       }
     }
 
-    if(e.keyCode == 86 || e.keyCode == 69) {
+    if(e.keyCode == 86 || e.keyCode == 69 || e.keyCode == 13) {
       window.socket.emit('heroChooseOption', HERO.id, this.props.options[selectedOptionIndex].id)
     }
 

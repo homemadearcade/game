@@ -34,7 +34,7 @@ export default class ControlsInfo extends React.Component {
     let actionNameFromSubObject;
     let actionName;
     Object.keys(hero.subObjects).forEach((name) => {
-      if(hero[behaviorPropName] === hero.subObjects[name].id) {
+      if(hero[behaviorPropName] === hero.subObjects[name].subObjectName) {
         actionName = hero.subObjects.actionButtonBehavior
         actionNameFromSubObject = name
       }
@@ -91,12 +91,12 @@ export default class ControlsInfo extends React.Component {
   }
 
   render() {
-    const { onClose } = this.props;
+    const { onClose, dontShowAlt, showPressV } = this.props;
 
     const { scheme1, scheme2 } = this._getUsedKeys(GAME.heros[HERO.id].mod())
 
     return <div className="ControlsInfo">
-       <div className="ControlsInfo__header">Control Scheme</div>
+       <div className="ControlsInfo__header">Controls</div>
        <div className="ControlsInfo__content">
       {scheme1.map((data) => {
         if(!data) return null
@@ -105,14 +105,19 @@ export default class ControlsInfo extends React.Component {
           <div className="ControlsInfo__behavior">{data.behavior}</div>
         </div>
       })}
-      <div className="ControlsInfo__header">Alternative Control Scheme</div>
-      {scheme2.map((data) => {
-        if(!data) return null
-        return <div className="ControlsInfo__item">
-          <div className="ControlsInfo__key">{this._renderKeySprite(data.key)}</div>
-          <div className="ControlsInfo__behavior">{data.behavior}</div>
-        </div>
-      })}
+      {!dontShowAlt && <React.Fragment>
+        <div className="ControlsInfo__header">Alternative Controls</div>
+        {scheme2.map((data) => {
+          if(!data) return null
+          return <div className="ControlsInfo__item">
+            <div className="ControlsInfo__key">{this._renderKeySprite(data.key)}</div>
+            <div className="ControlsInfo__behavior">{data.behavior}</div>
+          </div>
+        })}
+      </React.Fragment>}
+      {showPressV && <div className="ControlsInfo__header">Press
+        <div className="ControlsInfo__key">{this._renderKeySprite('v')}</div>
+         to continue</div>}
       </div>
     </div>
   }

@@ -68,6 +68,10 @@
     margin: 0 auto;
     padding: 20px;
     font-weight: 700;
+
+    .ControlsInfo__key {
+      width: auto;
+    }
   }
 
   &__key {
@@ -109,8 +113,14 @@
     height: 100%;
     background-color: black;
 
+    overflow-y: scroll;
     background-size: contain;
     z-index: 5;
+
+    .ControlsInfo {
+      width: 30%;
+      margin: 0 auto;
+    }
   }
 
   &__open-log, &__close-log {
