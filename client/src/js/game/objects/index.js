@@ -691,6 +691,14 @@ class Objects{
         newObject.id = 'object-' + window.uniqueID();
       }
 
+      if(newObject.subObjects) {
+        OBJECTS.forAllSubObjects(newObject.subObjects, (subObject, subObjectName) => {
+          if(!subObject.id){
+            subObject.id = 'subObject-' + window.uniqueID();
+          }
+        })
+      }
+
       if(newObject.compendiumId) {
         newObject.fromCompendiumId = newObject.compendiumId
         newObject.compendiumId = null

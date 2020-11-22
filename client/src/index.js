@@ -13,6 +13,8 @@ PUZZLE INTERFACES
 COMBAT + GOALS + QUESTS + UI
 -------
 
+emitterType needs to be changeable and looks up library of emitters
+
 right click - follow object, follow with path object
 
 chatOnHover. use current chat service to create one that occurs on hover and is removed when mouse moves off...
@@ -247,6 +249,8 @@ VISIBLE TAGS LIKE IN CONSTRUCT EDITOR --- OR layered object select when right cl
 ////////////////////////////////
 ADD SUBOBJECT UPGRADES
 ////////////////////////////////
+Similar to right click create object. I need a right click - create subobject
+  // and it should have similar options as the object one
 Spear
 Gun
 Inventory Item

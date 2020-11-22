@@ -226,6 +226,18 @@ function processSequence(sequence) {
         return
       }
     } else if(item.conditionType === 'onPreviousItemCompleted') {
+      // Dialogue
+      // startSequence
+      // anticiaptedAdd
+      //
+      // pathfindTo
+      // goTo
+      //
+      // Goal complete
+      //
+      // Animation end
+      //
+      // Sound end
 
       function resolveWaiting() {
         item.waiting = false

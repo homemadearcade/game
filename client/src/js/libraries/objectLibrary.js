@@ -56,6 +56,7 @@ window.local.on('onFirstPageGameLoaded', () => {
       subObjects: {
         resource: {
           subObjectName: 'resource',
+          count: 0,
           tags: { potential: true, stackable: true, resource: true, pickupable: true, pickupOnHeroInteract: true }, count: 0 }
       },
       tags: { outline: true, resourceZone: true, resourceDepositAllOnCollide: false, resourceDepositOnInteract: true, resourceWithdrawOnInteract: true, popResourceCount: true },
