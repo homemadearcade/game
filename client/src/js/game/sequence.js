@@ -162,28 +162,31 @@ function processSequence(sequence) {
   }
 
   if(item.sequenceType === 'sequenceChoice') {
-    defaultEffected.choiceOptions = item.options.slice()
-    defaultEffected.flags.showDialogue = true
-    defaultEffected.flags.paused = true
-    if(defaultEffector.name) {
-      defaultEffected.dialogueName = defaultEffector.name
+    const effectedObjects = effects.getEffectedObjects(item, item.mainObject, item.guestObject, sequence.ownerObject)
+    item.waiting = true
+    effectedObjects[0].choiceOptions = item.options.slice()
+    effectedObjects[0].flags.showDialogue = true
+    effectedObjects[0].flags.paused = true
+    if(defaultEffector && defaultEffector.name) {
+      effectedObjects[0].dialogueName = defaultEffector.name
     } else {
-      defaultEffected.dialogueName = null
+      effectedObjects[0].dialogueName = null
     }
-    window.emitGameEvent('onUpdatePlayerUI', defaultEffected)
+    window.emitGameEvent('onUpdatePlayerUI', effectedObjects[0])
     const removeEventListener = window.local.on('onHeroChooseOption', (heroId, choiceId) => {
-      if(defaultEffected.id === heroId && sequence.itemMap[choiceId]) {
+      if(effectedObjects[0].id === heroId && sequence.itemMap[choiceId]) {
         removeEventListener()
-        defaultEffected.flags.showDialogue = false
-        defaultEffected.flags.paused = false
-        defaultEffected.dialogueName = null
-        defaultEffected.choiceOptions = null
-        defaultEffected._cantInteract = true
+        effectedObjects[0].flags.showDialogue = false
+        effectedObjects[0].flags.paused = false
+        effectedObjects[0].dialogueName = null
+        effectedObjects[0].choiceOptions = null
+        effectedObjects[0]._cantInteract = true
         sequence.currentItemId = sequence.itemMap[choiceId].next
         if(sequence.currentItemId === 'end') {
           endSequence(sequence)
         }
-        window.emitGameEvent('onUpdatePlayerUI', defaultEffected)
+        item.waiting = true
+        window.emitGameEvent('onUpdatePlayerUI', effectedObjects[0])
       }
     })
     sequence.eventListeners.push(removeEventListener)
@@ -201,22 +204,18 @@ function processSequence(sequence) {
         }
       })
     } else if(item.conditionType === 'onEvent') {
-      if(item.conditionEventName === 'onAnticipateCompleted' && !OBJECTS.anticipatedForAdd) {
-        sequence.currentItemId = item.next
-      } else {
-        const removeEventListener = window.local.on(item.conditionEventName, (mainObject, guestObject) => {
-          const eventMatch = testEventMatch(item.conditionEventName, mainObject, guestObject, item, null, { testPassReverse: item.testPassReverse, testModdedVersion: item.testModdedVersion })
-          if(eventMatch) {
-            item.waiting = false
-            sequence.currentItemId = item.next
-            if(sequence.currentItemId === 'end') {
-              endSequence(sequence)
-            }
-            removeEventListener()
+      const removeEventListener = window.local.on(item.conditionEventName, (mainObject, guestObject) => {
+        const eventMatch = testEventMatch(item.conditionEventName, mainObject, guestObject, item, null, { testPassReverse: item.testPassReverse, testModdedVersion: item.testModdedVersion })
+        if(eventMatch) {
+          item.waiting = false
+          sequence.currentItemId = item.next
+          if(sequence.currentItemId === 'end') {
+            endSequence(sequence)
           }
-        })
-        sequence.eventListeners.push(removeEventListener)
-      }
+          removeEventListener()
+        }
+      })
+      sequence.eventListeners.push(removeEventListener)
     } else if(item.conditionType === 'onAdminApproval') {
       if(PAGE.role.isArcadeMode) {
         sequence.currentItemId = item.next
@@ -225,6 +224,41 @@ function processSequence(sequence) {
         sequence.currentItemId = item.next
         window.socket.emit('requestAdminApproval', 'unpauseSequence', { sequenceId: sequence.id, text: item.conditionValue || 'Sequence ' + sequence.id + ' needs approval to continue', approveButtonText: 'Resume', rejectButtonText: 'Stop', requestId: 'request-'+window.uniqueID()})
         return
+      }
+    } else if(item.conditionType === 'onPreviousItemCompleted') {
+
+      function resolveWaiting() {
+        item.waiting = false
+        sequence.currentItemId = item.next
+        if(sequence.currentItemId === 'end') {
+          endSequence(sequence)
+        }
+        removeEventListener()
+      }
+
+      const previousItem = sequence.itemMap[sequence.previousItemId]
+      if(previousItem.effectName && previousItem.effectName.indexOf('add') >= 0) {
+        if(!OBJECTS.anticipatedForAdd) {
+          sequence.currentItemId = previousItem.next
+        } else {
+          const removeEventListener = window.local.on('onAnticipateCompleted', (mainObject) => {
+            resolveWaiting()
+          })
+          sequence.eventListeners.push(removeEventListener)
+        }
+      }
+
+      if(previousItem.sequenceType === 'sequenceCutscene') {
+        const removeEventListener = window.local.on('onCutsceneCompleted', (mainObject) => {
+          let idIndex = previousItem.effectedIds.indexOf(mainObject.id)
+          if(idIndex >= 0) {
+            previousItem.effectedIds.splice(idIndex, 1)
+          }
+          if(previousItem.effectedIds.length === 0) {
+            resolveWaiting()
+          }
+        })
+        sequence.eventListeners.push(removeEventListener)
       }
     }
   }
@@ -285,16 +319,19 @@ function processSequence(sequence) {
   if(item.sequenceType === 'sequenceCutscene') {
     const effectedObjects = effects.getEffectedObjects(item, item.mainObject, item.guestObject, sequence.ownerObject)
 
+    item.effectedIds = []
     const effect = {
       effectName: 'startCutscene',
       effectValue: item.scenes
     }
     effectedObjects.forEach((object) => {
+      item.effectedIds.push(object.id)
       effects.processEffect(effect, object, defaultEffector, sequence.ownerObject)
     })
 
     if(item.notificationAllHeros) {
       GAME.heroList.forEach((hero) => {
+        item.effectedIds.push(hero.id)
         effects.processEffect(effect, hero, defaultEffector, sequence.ownerObject)
       })
     }
@@ -341,6 +378,7 @@ function processSequence(sequence) {
   if(!item.waiting && item.next === 'end') {
     endSequence(sequence)
   } else if(!item.waiting && item.next) {
+    sequence.previousItemId = sequence.currentItemId
     sequence.currentItemId = item.next
   }
 }

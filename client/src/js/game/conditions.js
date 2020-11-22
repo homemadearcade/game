@@ -56,6 +56,9 @@ window.conditionTypes = {
   },
   onAdminApproval: {
     smallText: true,
+  },
+  onPreviousItemCompleted: {
+
   }
 }
 

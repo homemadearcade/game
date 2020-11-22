@@ -13,6 +13,8 @@ export default class GameLogs extends React.Component{
   }
 
   onEnterPressed = () => {
+    if(GAME.heros[HERO.id].flags.showCutscene || CONSTRUCTEDITOR.open || PATHEDITOR.open) return
+
     if(document.activeElement !== this.inputRef.current) {
       this.inputRef.current.focus()
     } else {

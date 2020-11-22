@@ -12,10 +12,10 @@ window.local.on('onFirstPageGameLoaded', () => {
   MAP.closePopover = function(objectId) {
     MAP.popoverInstances =  MAP.popoverInstances.filter((instance) => {
       if(objectId === instance.objectId) {
-        window.popoverOpen[objectId] = false
         instance.hide()
         ReactDOM.unmountComponentAtNode(document.getElementById(instance.domId))
         instance.destroy()
+        window.popoverOpen[objectId] = false
         return false
       } else return true
     })
@@ -32,7 +32,7 @@ window.local.on('onFirstPageGameLoaded', () => {
   }
 
   MAP.openPopover = function(object) {
-    if(PATHEDITOR.open || CONSTRUCTEDITOR.open) return 
+    if(PATHEDITOR.open || CONSTRUCTEDITOR.open) return
     window.popoverOpen[object.id] = true
     const popoverDomId = object.id + '-popover'
     const instance = tippy(tippyArea, {
@@ -66,7 +66,7 @@ window.local.on('onFirstPageGameLoaded', () => {
   MAP.updatePopovers = function() {
     MAP.popoverInstances.forEach((instance) => {
       let object = OBJECTS.getObjectOrHeroById(instance.objectId)
-      if(!object) {
+      if(!object && window.popoverOpen[instance.objectId]) {
         MAP.closePopover(instance.objectId)
         return
       }

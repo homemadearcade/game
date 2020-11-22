@@ -66,6 +66,13 @@ class Game{
     GAME.getObjectsByTag()
 
     if(PAGE.role.isHost) {
+      if(GAME.gameState.pregame) {
+        GAME.gameState.sequenceQueue.forEach((sequence) => {
+          if(sequence.id == 'pregame') {
+            processSequence(sequence)
+          }
+        })
+      }
       // remove second part when a player can host a multiplayer game
       if(!GAME.gameState.paused && (!PAGE.role.isPlayer || !GAME.heros[HERO.id].flags.paused)) {
         //// PREPARE ALL
@@ -599,6 +606,24 @@ class Game{
     }, 100)
   }
 
+  onStartPregame(options) {
+    GAME.onGameStart(options)
+
+    if(GAME.library.sequences.pregame) {
+      GAME.gameState.pregame = true
+      GAME.gameState.paused = true
+
+      startSequence('pregame', {})
+      const removeEventListener = window.local.on('onSequenceEnded', (id) => {
+        if(id === 'pregame') {
+          removeEventListener()
+          GAME.gameState.pregame = false
+          GAME.gameState.paused = false
+        }
+      })
+    }
+  }
+
   onGameStart(options) {
     if(!options) options = {}
 
@@ -608,12 +633,12 @@ class Game{
 
     window.local.emit('onLoadingScreenStart')
 
-    setTimeout(() => {
-      const initialGameState = GAME.cleanForSave(GAME)
-      initialGameState.heros = GAME.heros
-      // remove all references to the objects, state, heros, world, etc so we can consider them state while the game is running!
-      localStorage.setItem('initialGameState', JSON.stringify(initialGameState))
+    const initialGameState = GAME.cleanForSave(GAME)
+    initialGameState.heros = GAME.heros
+    // remove all references to the objects, state, heros, world, etc so we can consider them state while the game is running!
+    localStorage.setItem('initialGameState', JSON.stringify(initialGameState))
 
+    setTimeout(() => {
       GAME.heroList.forEach((hero) => {
         if(!options.dontRespawn) HERO.spawn(hero)
         hero.questState = {}
@@ -1278,8 +1303,12 @@ class Game{
   }
 
   onStartSequence(sequenceId, ownerId) {
-    const ownerObject = OBJECTS.getObjectOrHeroById(ownerId)
-    startSequence(sequenceId, { ownerObject })
+    if(ownerId) {
+      const ownerObject = OBJECTS.getObjectOrHeroById(ownerId)
+      startSequence(sequenceId, { ownerObject })
+    } else {
+      startSequence(sequenceId)
+    }
   }
 
   onTogglePauseSequence(sequenceId) {

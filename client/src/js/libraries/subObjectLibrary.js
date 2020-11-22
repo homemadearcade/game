@@ -83,7 +83,7 @@ window.local.on('onFirstPageGameLoaded', () => {
         stackable: true,
         startsInInventory: true,
         showCountInHUD: true,
-        // popSubObjectCount: true,
+        // popCount: true,
         // bomb: true,
       },
       count: 10,

@@ -2,6 +2,7 @@ import React from 'react'
 import modals from './modals.js'
 import Select from 'react-select'
 import classnames from 'classnames'
+import Collapsible from 'react-collapsible';
 import {
   SingleEventSelect,
   SingleTagSelect,
@@ -314,6 +315,14 @@ export default class SequenceItem extends React.Component{
         </div>
       })}
       <i className="fa fas fa-plus Manager__button" onClick={this._addOption}/>
+      <Collapsible className="SequenceItem__body" trigger='Effected objects'>
+          <div className="SequenceItem__effect-input"><input onChange={() => this.props._onToggleValue('effectedMainObject')} checked={sequenceItem.effectedMainObject} type="checkbox"></input>Effect Main Object</div>
+          <div className="SequenceItem__effect-input"><input onChange={() => this.props._onToggleValue('effectedGuestObject')} checked={sequenceItem.effectedGuestObject} type="checkbox"></input>Effect Guest Object</div>
+          <div className="SequenceItem__effect-input"><input onChange={() => this.props._onToggleValue('effectedOwnerObject')} checked={sequenceItem.effectedOwnerObject} type="checkbox"></input>Effect Owner Object</div>
+          <div className="SequenceItem__effect-input"><input onChange={() => this.props._onToggleValue('effectedWorldObject')} checked={sequenceItem.effectedWorldObject} type="checkbox"></input>Effect World Object</div>
+          <MultiIdSelect sequenceItem={sequenceItem} valueProp='effectedIds' onChange={this._onAddEffectedId} title='Effected Ids:'/>
+          <MultiTagSelect sequenceItem={sequenceItem} valueProp='effectedTags' onChange={this._onAddEffectedTag} title='Effected Tags:'/>
+      </Collapsible>
     </div>
   }
 

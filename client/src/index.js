@@ -185,8 +185,13 @@ Maybe dual stick shooter potential?
 ////////////////////////////////////////////////////
 
 Pop Heros inventory to others, but only if sub object has certain tags..?
+  popCount vs popHeroInventoryToOthers. popcount should NOT pop if its in inventory
+
+Add popovers to all UI everywhere, oh yeah! Including in creator
 
 Team mods?
+
+Visalize sequences
 
 HAve an object twist to the left and the right, its common cheap animation for games it seems
 

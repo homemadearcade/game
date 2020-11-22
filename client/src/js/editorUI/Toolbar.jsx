@@ -63,6 +63,9 @@ export default class Toolbar extends React.Component {
             window.socket.emit('startGame', { dontRespawn: true })
           }}
           >
+            <ToolbarButton iconName='fa-play-circle' onClick={() => {
+              window.socket.emit('startPregame')
+            }}/>
             <ToolbarButton iconName='fa-code-branch' onClick={async () => {
               const branchOptions = Object.keys(GAME.library.branches)
               branchOptions.unshift('New branch')

@@ -776,6 +776,7 @@ function onKeyDown(key, hero) {
         hero.onGround = false
       }
       hero._cantInteract = true
+      window.emitGameEvent('onSequenceComplete', hero.id)
       window.emitGameEvent('onUpdatePlayerUI', hero)
     }
   }

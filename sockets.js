@@ -188,6 +188,10 @@ function socketEvents(fs, io, socket, options = { arcadeMode: false }){
     io.emit('onGameStart', options)
   })
 
+  socket.on('startPregame', (options) => {
+    io.emit('onStartPregame', options)
+  })
+
   socket.on('stopGame', (options) => {
     io.emit('onStopGame', options)
   })

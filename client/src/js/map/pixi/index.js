@@ -160,7 +160,7 @@ PIXIMAP.onResetObjects = function() {
 PIXIMAP.onRender = function() {
 
   if(!MAP._isOutOfDate) {
-    console.log('prevented extra render')
+    // console.log('prevented extra render')
     return
   }
 

@@ -244,6 +244,11 @@ function init() {
     window.local.emit('onGameStart', options)
   })
 
+  // EDITOR CALLS THIS
+  window.socket.on('onStartPregame', (options) => {
+    window.local.emit('onStartPregame', options)
+  })
+
   // EVERYONE CALLS THIS
   window.socket.on('onAddObjects', (objectsAdded) => {
     window.local.emit('onNetworkAddObjects', objectsAdded)

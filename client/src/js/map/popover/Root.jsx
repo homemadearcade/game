@@ -5,7 +5,7 @@ import PixiMapSprite from '../../components/PixiMapSprite.jsx'
 window.popoverProperties = [
   { prop: '_timeUntilDestroyed', tag: 'popCountDownTimer'},
   'chat',
-  { prop: 'inInventory', tag: 'popSubObjectCount'},
+  { prop: 'count', tag: 'popCount'},
   { prop: 'resourceTags', tag: 'popResourceCount'},
   'popoverText'
 ]
@@ -57,10 +57,10 @@ export default class Popover extends React.Component {
       </div>)
     }
 
-    if(object.tags.popSubObjectCount && object.inInventory) {
+    if(object.tags.popCount && object.count > 0) {
       render.push(<div className="Popover__resource">
-        {!object.defaultSprite || object.defaultSprite == 'solidcolorsprite' && <div className="InventoryHUD__name">{object.name || object.subObjectName}</div>}
-        {object.defaultSprite !== 'solidcolorsprite' && <div className="InventoryHUD__sprite"><PixiMapSprite textureId={object.defaultSprite} width="20" height="20"/></div>}
+        {object.inInventory && (!object.defaultSprite || object.defaultSprite == 'solidcolorsprite') && <div className="InventoryHUD__name">{object.name || object.subObjectName}</div>}
+        {object.inInventory && object.defaultSprite !== 'solidcolorsprite' && <div className="InventoryHUD__sprite"><PixiMapSprite textureId={object.defaultSprite} width="20" height="20"/></div>}
         <div className="InventoryHUD__count">
           {object.count || 0}
         </div>
