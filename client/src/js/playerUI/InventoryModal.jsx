@@ -1,6 +1,7 @@
 import React from 'react'
 import PixiMapSprite from '../components/PixiMapSprite.jsx'
 import Modal from '../components/Modal.jsx'
+import classnames from 'classnames';
 
 export default class InventoryModal extends React.Component {
   constructor(props) {
@@ -48,7 +49,7 @@ export default class InventoryModal extends React.Component {
   }
 
   _renderItem = (item) => {
-    return <div key={item.id} data-inventoryMenuId={item.id} className="Inventory__item">
+    return <div key={item.id} data-inventoryMenuId={item.id} className={classnames("Inventory__item", { "Inventory__item--border": item.isEquipped})}>
       {this._renderSprite(item)}
       <div className="Inventory__item-text" data-inventoryMenuId={item.id}>
         {item.name}
@@ -61,7 +62,7 @@ export default class InventoryModal extends React.Component {
     const { onClose } = this.props;
     const { inventoryDisplay } = this.state;
 
-    return <Modal className="InventoryModal" size="medium" onClose={onClose}>
+    return <Modal className="InventoryModal" size="medium" onClose={onClose} onContainerClick={() => {}}>
       <div className="Modal__header">Inventory</div>
       <div className="Inventory">
         {inventoryDisplay.map((item) => {

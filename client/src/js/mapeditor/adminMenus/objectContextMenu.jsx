@@ -101,8 +101,7 @@ export default class ObjectContextMenu extends React.Component{
     const { objectSelected, subObject } = this.props
 
     return <Menu onClick={this._handleObjectMenuClick}>
-      {objectSelected.name && <MenuItem className="bold-menu-item">{objectSelected.name}</MenuItem>}
-      {objectSelected.tags.subObject && <MenuItem className="bold-menu-item">{objectSelected.subObjectName}</MenuItem>}
+      <MenuItem className="bold-menu-item">{objectSelected.subObjectName || objectSelected.name || objectSelected.id}</MenuItem>
       {!subObject && <MenuItem key="drag">Drag</MenuItem>}
       {!objectSelected.constructParts && <MenuItem key="resize">Resize</MenuItem>}
       {subObject && <MenuItem key="resize-grid">Resize On Grid</MenuItem>}

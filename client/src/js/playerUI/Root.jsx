@@ -160,6 +160,15 @@ export default class Root extends React.Component {
     </React.Fragment>
   }
 
+  showInventoryModal = () => {
+    console.log('?')
+    this.setState({
+      showInventoryModal: true,
+      showControlsInfoModal: false,
+      showHeroMenuModal: false,
+    })
+  }
+
   render() {
     const { showInventoryModal, showControlsInfoModal, showHeroMenuModal, hero } = this.state;
 

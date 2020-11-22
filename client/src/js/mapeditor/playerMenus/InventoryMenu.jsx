@@ -55,6 +55,7 @@ export default class InventoryMenu extends React.Component{
     const owner = OBJECTS.getObjectOrHeroById(item.ownerId)
 
     return <Menu onClick={this._handleInventoryMenuClick}>
+      <MenuItem className="bold-menu-item">{item.name || item.subObjectName}</MenuItem>
       {item.isEquipped && <MenuItem key="unequip">Unequip</MenuItem>}
       {!item.isEquipped && item.actionButtonBehavior && <SubMenu title="Equip">
         {(owner.zButtonBehavior === null || owner.xButtonBehavior == null || owner.cButtonBehavior == null) && <MenuItem key="equip">Equip</MenuItem>}

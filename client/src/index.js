@@ -5,6 +5,11 @@
 ////////////////////////////////////////////////////
 
 FINAL TODO FOR HA
+
+Opening titles
+Emitters
+Quests
+Goals
 -
 SOUND FX
 FILL OUT LIBRARY and EFFECTS
@@ -13,12 +18,13 @@ COMBAT + GOALS + QUESTS + UI
 -------
 
 right click - follow object, follow with path object
-Inventory Context Menu -> Drop, Equip to Hero, Add to Shortcuts
 
 chatOnHover. use current chat service to create one that occurs on hover and is removed when mouse moves off...
 
 Add title menu (press start)
 Add controls menu to opening sequence
+
+one time use inventory objects, such as potions, speed boosters.  Keep as action props so we can equip it too, FLEXIBLE nice!
 
 experience password for ha-live. Use month+day - 100
 
@@ -162,7 +168,7 @@ Maybe dual stick shooter potential?
   slow down tag ( MOD lowers speed of anything inside of it )
   water tag ( MOD lowers gravity of anything inside of it )
   Non scroller object ( sun )
-  -- temp mods !! so these would be tags that use the mod system essentially...
+  -- temp mods !! so these would be tags that use the mod system essentially... the mod only lasts one loop, but it will keep getting reset
   Parallax scroller slower
   Parallax scroller faster
     special camera relation, 0, .5, 2, 10, etc. might wanna encapsulale the camera changing logic into a function?
@@ -485,6 +491,8 @@ Engine trail on a car u know what I mean?
 ###### INFRASTUCTURE
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ////////////////////////////////////////////////////
+
+// only allow modding for certain properties and certain tags, not for all...confusing with design AND bad for performance
 
 // UGH so my pixi shit is bad. I cant be updating constantly.
 // collisions also bad performance after a certain # I don't know how to deal with # of obstacles on screen
