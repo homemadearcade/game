@@ -197,6 +197,23 @@
     animation: blinker 1s step-start infinite;
   }
 
+  &__key {
+    width: 22px;
+    position: absolute;
+    bottom: 12px;
+    right: 7px;
+    animation: blinker 1s step-start infinite;
+    div {
+
+      margin: 0 auto;
+      transform: scale(2);
+      image-rendering: -moz-crisp-edges;
+      image-rendering: -webkit-crisp-edges;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+    }
+  }
+
   &__option {
     padding: 5px 0px;
     cursor: pointer;
