@@ -221,7 +221,11 @@ export default class Toolbar extends React.Component {
             <ToolbarButton iconName="fa-camera" onClick={() => {
               window.socket.emit('heroCameraEffect', 'cameraShake', HERO.editingId, { duration: 500, frequency: 20, amplitude: 36 })
             }}/>
-            */}
+
+            <ToolbarButton iconName="fa-cloud-meatball" onClick={() => {
+              LIVEEDITOR.open(GAME.heros[HERO.editingId], 'particle')
+            }}/>
+          */}
 
         <ToolbarButton iconName="fa-camera-retro" onClick={async () => {
             const { value: name } = await Swal.fire({
@@ -246,9 +250,7 @@ export default class Toolbar extends React.Component {
           <ToolbarButton iconName="fa-code" onClick={() => {
             modals.editObjectCode(hero, 'Editing Hero JSON', hero);
           }}/>
-          <ToolbarButton iconName="fa-cloud-meatball" onClick={() => {
-            LIVEEDITOR.open(GAME.heros[HERO.editingId], 'particle')
-          }}/>
+
           <ToolbarButton iconName="fa-recycle" onClick={() => {
               window.socket.emit('resetPhysicsProperties', hero.id)
             }}

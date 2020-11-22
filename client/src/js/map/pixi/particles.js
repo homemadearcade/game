@@ -8,7 +8,7 @@ const pixiParticles = require('pixi-particles');
 function updatePixiEmitterData(pixiChild, gameObject, options) {
 
   const emitter = pixiChild.emitter
-  const data = gameObject.liveEmitterData
+  const data = gameObject.emitterData
   // console.log(emitter, data)
 
   emitter.maxSpeed = data.maxSpeed

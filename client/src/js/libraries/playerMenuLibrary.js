@@ -86,7 +86,7 @@ window.local.on('onGameReady', () => {
     move: false,
     color: false,
     respawn: false,
-    properties: false,
+    // properties: false,
     spriteChooser: false,
     physicsLive: false,
   }
@@ -98,11 +98,11 @@ window.local.on('onGameReady', () => {
     color: false,
     name: false,
     dialogue: false,
-    group: false,
-    properties: false,
+    // group: false,
+    // properties: false,
     spriteChooser: false,
     physicsLive: false,
-    pathEditor: false,
+    // pathEditor: false,
     constructEditor: false,
     delete: false,
   }

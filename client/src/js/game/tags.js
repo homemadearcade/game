@@ -196,8 +196,7 @@ function setDefault() {
   }
 
   window.particleTags = {
-    emitter: false, //cant change
-    liveEmitter: false,
+    emitter: false,
     hasTrail: false,
     explodeOnDestroy: false,
     spinOffOnDestroy: false,

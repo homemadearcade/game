@@ -21,6 +21,10 @@ export default class HeroContextMenu extends React.Component {
       const { objectSelected, openColorPicker } = this.props;
       const { startResize, onStartDrag, deleteObject, removeObject } = MAPEDITOR
 
+      if(key === 'copy-id') {
+        PAGE.copyToClipBoard(objectSelected.id)
+      }
+
       if(key === 'resize') {
         startResize(objectSelected)
       }
@@ -176,7 +180,16 @@ export default class HeroContextMenu extends React.Component {
   render() {
     const { objectSelected } = this.props
 
+    // <MenuItem key="edit-properties-json">Edit Properties JSON</MenuItem>
+    // <MenuItem key="edit-state-json">Edit State JSON</MenuItem>
+    // <SubMenu title="Hooks">
+    //   <HookMenu objectSelected={objectSelected}/>
+    // </SubMenu>
+    // <MenuItem key='set-world-respawn-point'>Set current position as world respawn point</MenuItem>
+
+
     return <Menu onClick={this._handleHeroMenuClick}>
+      <MenuItem key='copy-id' className="bold-menu-item">{objectSelected.name || objectSelected.id}</MenuItem>
       <MenuItem key='drag'>Drag</MenuItem>
       <MenuItem key='resize'>Resize</MenuItem>
       <MenuItem key='respawn'>Respawn</MenuItem>
@@ -189,7 +202,7 @@ export default class HeroContextMenu extends React.Component {
         {this._renderEditQuestList(objectSelected.quests)}
         {this._renderDeleteQuestList(objectSelected.quests)}
       </SubMenu>
-      <SubMenu title="Tags">
+      <SubMenu title="Current Tags">
         <CurrentTagsMenu objectSelected={objectSelected} currentTags={objectSelected.tags}></CurrentTagsMenu>
       </SubMenu>
       <SubMenu title="All Tags">
@@ -200,9 +213,6 @@ export default class HeroContextMenu extends React.Component {
       </SubMenu>}
       <SubMenu title="Triggers">
         <TriggerMenu objectSelected={objectSelected}/>
-      </SubMenu>
-      <SubMenu title="Hooks">
-        <HookMenu objectSelected={objectSelected}/>
       </SubMenu>
       <SubMenu title='Sprite'><SpriteMenu objectSelected={objectSelected}/></SubMenu>
       <SubMenu title="Controls">
@@ -232,15 +242,11 @@ export default class HeroContextMenu extends React.Component {
       </SubMenu>}
       {GAME.gameState.started ? <MenuItem key="remove">Remove</MenuItem> : <MenuItem key="delete">Delete</MenuItem>}
       <SubMenu title="Advanced">
-        <MenuItem key="copy-id">Copy id to clipboard</MenuItem>
         <MenuItem key="reset-to-game-default">Reset To Game Default</MenuItem>
         <MenuItem key="reset-to-core-default">Reset To Core Default</MenuItem>
         <MenuItem key='add-new-subobject'>Add new sub object</MenuItem>
-        <MenuItem key="edit-properties-json">Edit Properties JSON</MenuItem>
-        <MenuItem key="edit-state-json">Edit State JSON</MenuItem>
         <MenuItem key="edit-all-json">Edit All JSON</MenuItem>
-        <MenuItem key='set-world-respawn-point'>Set current position as world respawn point</MenuItem>
-        <MenuItem key="open-hero-live-edit">Live Edit</MenuItem>
+        <MenuItem key="open-hero-live-edit">Live Hero Edit</MenuItem>
       </SubMenu>
     </Menu>
   }

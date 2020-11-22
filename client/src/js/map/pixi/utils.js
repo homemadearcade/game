@@ -297,6 +297,10 @@ function getGameObjectStage(gameObject) {
   // }
   // if(!object) console.log(gameObject, object)
 
+  if((gameObject.tags.emitter) && gameObject.tags.background) return PIXIMAP.emitterBackgroundStage
+  if((gameObject.tags.emitter) && gameObject.tags.foreground) return PIXIMAP.emitterForegroundStage
+  if(gameObject.tags.emitter) return PIXIMAP.emitterObjectStage
+
   let stage = PIXIMAP.objectStage
   if(object.tags.foreground) stage = PIXIMAP.foregroundStage
 
@@ -312,7 +316,7 @@ function updateChatBox(pixiChild, gameObject) {
       if(gameObject[prop]) shouldOpenPopover = true
     }
   })
-  
+
   if(shouldOpenPopover && !window.popoverOpen[gameObject.id]) {
     MAP.openPopover(gameObject)
   }

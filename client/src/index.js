@@ -17,7 +17,7 @@ right click - follow object, follow with path object
 
 chatOnHover. use current chat service to create one that occurs on hover and is removed when mouse moves off...
 
-Add title menu (press enter or v to start)
+Add GAME title menu (press enter or v to start)
 
 one time use inventory objects, such as potions, speed boosters.  Keep as action props so we can equip it too, FLEXIBLE nice!
 
@@ -180,6 +180,12 @@ Maybe dual stick shooter potential?
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ////////////////////////////////////////////////////
 
+
+maybe the key to rendering optimization is switching thigns like scale and position to the layers...?
+also cacheing colors
+
+// onGameStart or onHeroLand sequences === automatically trigger on those events
+
 Pop Heros inventory to others, but only if sub object has certain tags..?
   popCount vs popHeroInventoryToOthers. popcount should NOT pop if its in inventory
 
@@ -221,6 +227,8 @@ KING MODE ( where its like you make various yes/no choices and that changes what
 local mods? ( client only mods for specific players/situations )
 
 pixiChild._stillUsed property as well as a PIXIMAP.objectsById system. We scrap app PIXICHILDs that arent in use every like 10s
+
+allow invisible obstacle creation on like a...background rpg or dnd map
 
 ////////////////////////////////
 ////////////////////////////////

@@ -30,7 +30,9 @@ window.local.on('onFirstPageGameLoaded', () => {
       tags: {
         emitter: true,
         light: true,
-      }
+      },
+      opacity: 0,
+      emitterType: 'smallFire'
     },
     spawnZone: {
       objectType: 'plainObject',

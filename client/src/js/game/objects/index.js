@@ -215,7 +215,8 @@ class Objects{
       reserved: object.reserved,
       opacity: object.opacity,
 
-      liveEmitterData: object.liveEmitterData,
+      emitterData: object.emitterData,
+      emitterType: object.emitterType,
 
       // equipment
       actionButtonBehavior: object.actionButtonBehavior,
@@ -261,6 +262,8 @@ class Objects{
       resourceLimit: object.resourceLimit,
 
       powerUpTimer: object.powerUpTimer,
+
+      popoverText: object.popoverText,
 
       //compendium
       compendiumId: object.compendiumId,
@@ -381,7 +384,7 @@ class Objects{
       _flipY: object._flipY,
       spawnPointX: object.spawnPointX,
       spawnPointY: object.spawnPointY,
-      liveEmitterData: object.liveEmitterData,
+      emitterData: object.emitterData,
       tags: object.tags,
       ownerId: object.ownerId,
       constructParts: object.constructParts && object.constructParts.map((part) => {

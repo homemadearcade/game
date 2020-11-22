@@ -12,6 +12,7 @@ import NameMenu from '../menus/NameMenu.jsx';
 import ObjectAdvancedMenu from '../menus/ObjectAdvancedMenu.jsx';
 import SelectSubObjectMenu from '../menus/SelectSubObjectMenu.jsx';
 import RelativeMenu from '../menus/RelativeMenu.jsx';
+import ServicesMenu from '../menus/ServicesMenu.jsx';
 import TriggerMenu from '../menus/TriggerMenu.jsx';
 import HookMenu from '../menus/HookMenu.jsx';
 import LiveMenu from '../menus/LiveMenu.jsx';
@@ -26,6 +27,10 @@ export default class ObjectContextMenu extends React.Component{
       const { startResize, onStartDrag, deleteObject, onCopy } = MAPEDITOR
       const { selectSubObject, objectSelected, subObject } = this.props;
       const { removeObject } = MAPEDITOR
+
+      if(key === 'copy-id') {
+        PAGE.copyToClipBoard(objectSelected.id)
+      }
 
       if(key === 'resize') {
         if(subObject) {
@@ -100,8 +105,14 @@ export default class ObjectContextMenu extends React.Component{
   render() {
     const { objectSelected, subObject } = this.props
 
+    // <SubMenu title="Hooks">
+    //   <HookMenu objectSelected={objectSelected}/>
+    // </SubMenu>
+
+    //      {this._renderObjectQuestMenu()}
+
     return <Menu onClick={this._handleObjectMenuClick}>
-      <MenuItem className="bold-menu-item">{objectSelected.subObjectName || objectSelected.name || objectSelected.id}</MenuItem>
+      <MenuItem key='copy-id' className="bold-menu-item">{objectSelected.subObjectName || objectSelected.name || objectSelected.id}</MenuItem>
       {!subObject && <MenuItem key="drag">Drag</MenuItem>}
       {!objectSelected.constructParts && <MenuItem key="resize">Resize</MenuItem>}
       {subObject && <MenuItem key="resize-grid">Resize On Grid</MenuItem>}
@@ -119,7 +130,6 @@ export default class ObjectContextMenu extends React.Component{
       <SubMenu title="Name">
         <NameMenu objectSelected={objectSelected} subObject={subObject}/>
       </SubMenu>
-      {this._renderObjectQuestMenu()}
       {this._renderObjectSpawnZoneMenu()}
       {this._renderObjectResourceZoneMenu()}
       <SubMenu title="Group">
@@ -128,10 +138,7 @@ export default class ObjectContextMenu extends React.Component{
       <SubMenu title="Triggers">
         <TriggerMenu objectSelected={objectSelected}/>
       </SubMenu>
-      <SubMenu title="Hooks">
-        <HookMenu objectSelected={objectSelected}/>
-      </SubMenu>
-      <SubMenu title="Tags">
+      <SubMenu title="Current Tags">
         <CurrentTagsMenu objectSelected={objectSelected} currentTags={objectSelected.tags}></CurrentTagsMenu>
       </SubMenu>
       <SubMenu title="All Tags">
@@ -143,7 +150,10 @@ export default class ObjectContextMenu extends React.Component{
       { subObject && objectSelected.isEquipped && <MenuItem key="unequip">Unequip</MenuItem> }
       { subObject && objectSelected.tags.pickupable && <MenuItem key="drop">Drop</MenuItem> }
       { (GAME.gameState.started || GAME.gameState.branch) ? <MenuItem key="remove">Remove</MenuItem> : <MenuItem key="delete">Delete</MenuItem> }
-      <SubMenu title="Advanced">
+      <SubMenu title="Services">
+        <ServicesMenu objectSelected={objectSelected} subObject={subObject}/>
+      </SubMenu>
+      <SubMenu title="Data">
         <ObjectAdvancedMenu objectSelected={objectSelected} subObject={subObject}/>
       </SubMenu>
     </Menu>

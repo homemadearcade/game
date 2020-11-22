@@ -22,8 +22,8 @@ PIXIMAP.onResetLiveParticle = function(objectId) {
   let object = OBJECTS.getObjectOrHeroById(objectId)
   const stage = getGameObjectStage(object)
   const pixiChild = stage.getChildByName(objectId)
-  PIXIMAP.deleteEmitter(pixiChild.liveEmitter)
-  delete pixiChild.liveEmitter
+  PIXIMAP.deleteEmitter(pixiChild.emitter)
+  delete pixiChild.emitter
 }
 
 PIXIMAP.initializePixiObjectsFromGame = function() {
@@ -78,8 +78,11 @@ PIXIMAP.onGameLoaded = function() {
     })
   } else if(PIXIMAP.assetsLoaded) {
     PIXIMAP.shadowStage.removeChildren()
+    PIXIMAP.emitterBackgroundStage.removeChildren()
     PIXIMAP.objectStage.removeChildren()
+    PIXIMAP.emitterObjectStage.removeChildren()
     PIXIMAP.foregroundStage.removeChildren()
+    PIXIMAP.emitterForegroundStage.removeChildren()
     PIXIMAP.initializeDarknessSprites()
     PIXIMAP.initializePixiObjectsFromGame()
     window.local.emit('onGameReady')
@@ -126,9 +129,9 @@ PIXIMAP.deleteObject = function(object, stage) {
     PIXIMAP.deleteEmitter(pixiChild.emitter)
     delete pixiChild.emitter
   }
-  if(pixiChild.liveEmitter) {
-    PIXIMAP.deleteEmitter(pixiChild.liveEmitter)
-    delete pixiChild.liveEmitter
+  if(pixiChild.emitter) {
+    PIXIMAP.deleteEmitter(pixiChild.emitter)
+    delete pixiChild.emitter
   }
   if(pixiChild.trailEmitter) {
     PIXIMAP.deleteEmitter(pixiChild.trailEmitter)
@@ -152,8 +155,11 @@ PIXIMAP.addObject = function(object) {
 }
 
 PIXIMAP.onResetObjects = function() {
+  PIXIMAP.emitterBackgroundStage.removeChildren()
   PIXIMAP.objectStage.removeChildren()
+  PIXIMAP.emitterObjectStage.removeChildren()
   PIXIMAP.foregroundStage.removeChildren()
+  PIXIMAP.emitterForegroundStage.removeChildren()
   PIXIMAP.objectStage._reInitialize = true
 }
 
@@ -234,6 +240,18 @@ PIXIMAP.onRender = function() {
     if(PIXIMAP.backgroundStage) {
       PIXIMAP.backgroundOverlay.transform.scale.x = (PIXIMAP.app.view.width/PIXIMAP.backgroundOverlay.texture._frame.width)
       PIXIMAP.backgroundOverlay.transform.scale.y = (PIXIMAP.app.view.width/PIXIMAP.backgroundOverlay.texture._frame.width)
+    }
+    if(PIXIMAP.emitterBackgroundStage) {
+      PIXIMAP.emitterBackgroundStage.pivot.x = camera.x
+      PIXIMAP.emitterBackgroundStage.pivot.y = camera.y
+    }
+    if(PIXIMAP.emitterForegroundStage) {
+      PIXIMAP.emitterForegroundStage.pivot.x = camera.x
+      PIXIMAP.emitterForegroundStage.pivot.y = camera.y
+    }
+    if(PIXIMAP.emitterObjectStage) {
+      PIXIMAP.emitterObjectStage.pivot.x = camera.x
+      PIXIMAP.emitterObjectStage.pivot.y = camera.y
     }
 
     // const gameEligibleForLoading = (GAME.grid.width > 80 || GAME.objects.length > 300)

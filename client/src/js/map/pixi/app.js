@@ -5,6 +5,12 @@ import { GlowFilter, ColorMatrixFilter } from 'pixi-filters'
 import tinycolor from 'tinycolor2'
 import axios from 'axios';
 
+//https://pixijs.io/examples/#/masks/filter.js
+//https://pixijs.io/examples/#/masks/filter.js
+//https://pixijs.io/examples/#/masks/filter.js
+//https://codepen.io/xno/pen/YOQZzw
+
+
 const textures = {};
 let stage
 
@@ -130,12 +136,11 @@ const initPixiApp = (canvasRef, onLoad) => {
   // SORT GROUP
   PIXIMAP.sortGroup = new PIXI.display.Group(0, true);
   PIXIMAP.sortGroup.on('sort', function(sprite) {
-      // emitters and chats are just kinda messed up and need a high zOrder I guess. They dont have a correct sprite.y?
-      // WORK AROUND -> I could put foreground elements on a different higher stage than the emitters
-      if(sprite.emitter || sprite.isChat) {
-        sprite.zOrder = 1000000000000
-        return
-      }
+      // // emitters and chats are just kinda messed up and need a high zOrder I guess. They dont have a correct sprite.y?
+      // if(sprite.emitter || sprite.isChat) {
+      //   sprite.zOrder = 1000000000000
+      //   return
+      // }
 
       let object
       if(sprite.ownerName) {
@@ -169,13 +174,21 @@ const initPixiApp = (canvasRef, onLoad) => {
   ///////////////
   ///////////////
   // OBJECT STAGE
+  PIXIMAP.emitterBackgroundStage = new PIXI.display.Layer()
+  world.addChild(PIXIMAP.emitterBackgroundStage);
+
   PIXIMAP.objectStage = new PIXI.display.Layer(PIXIMAP.sortGroup)
   PIXIMAP.objectStage.sortableChildren = true;
   world.addChild(PIXIMAP.objectStage);
 
+  PIXIMAP.emitterObjectStage = new PIXI.display.Layer()
+  world.addChild(PIXIMAP.emitterObjectStage);
 
   PIXIMAP.foregroundStage = new PIXI.display.Layer()
   world.addChild(PIXIMAP.foregroundStage);
+
+  PIXIMAP.emitterForegroundStage = new PIXI.display.Layer()
+  world.addChild(PIXIMAP.emitterForegroundStage);
 
   ///////////////
   ///////////////

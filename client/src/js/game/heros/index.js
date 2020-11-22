@@ -444,7 +444,7 @@ class Hero{
       _objectsAwareOf: hero._objectsAwareOf,
       _flipY: hero._flipY,
       // conditionTestCounts: hero.conditionTestCounts,
-      liveEmitterData: hero.liveEmitterData,
+      emitterData: hero.emitterData,
 
       _pathIdIndex: hero._pathIdIndex,
       _pathWait: hero._pathWait,
@@ -534,7 +534,7 @@ class Hero{
       resourceTags: hero.resourceTags,
       resourceLimit: hero.resourceLimit,
 
-      liveEmitterData: hero.liveEmitterData,
+      emitterData: hero.emitterData,
 
 
       velocityMax: hero.velocityMax,

@@ -81,20 +81,9 @@ const updatePixiObject = (gameObject) => {
     updatePixiEmitter(pixiChild.trailEmitter, gameObject)
   }
 
-  if(pixiChild.liveEmitter && gameObject.tags.liveEmitter) {
-    updatePixiEmitterData(pixiChild.liveEmitter, gameObject)
-    updatePixiEmitter(pixiChild.liveEmitter, gameObject)
-  }
-
-  if(gameObject.tags.emitter) {
-    updatePixiEmitter(pixiChild, gameObject)
-    return
-  } else if(pixiChild.emitter) {
-    PIXIMAP.deleteEmitter(pixiChild.emitter)
-    delete pixiChild.emitter
-
-    initPixiObject(gameObject)
-    return
+  if(pixiChild.emitter && gameObject.tags.emitter) {
+    if(gameObject.emitterData) updatePixiEmitterData(pixiChild.emitter, gameObject)
+    updatePixiEmitter(pixiChild.emitter, gameObject)
   }
 
   if(pixiChild.children && pixiChild.children.length) {
@@ -122,12 +111,6 @@ const updatePixiEmitter = (pixiChild, gameObject) => {
   }
 
   const stage = getGameObjectStage(gameObject)
-
-  if(gameObject.tags.emitter && !pixiChild.emitter) {
-    stage.removeChild(pixiChild)
-    pixiChild = initEmitter(gameObject, 'smallFire', {}, { hasNoOwner: true })
-    return
-  }
 
   const emitter = pixiChild.emitter
 
@@ -201,6 +184,7 @@ function initEmitter(gameObject, emitterType = 'smallFire', options = {}, metaOp
   container.emitter.hasNoOwner = metaOptions.hasNoOwner
   container.emitter.type = emitterType
   container.emitter.useUpdateOwnerPos = options.useUpdateOwnerPos
+  container.emitterType = emitterType
 
   updatePixiEmitter(container, gameObject)
 
@@ -235,13 +219,17 @@ function updateProperties(pixiChild, gameObject) {
   }
 
 
-  if(gameObject.tags.liveEmitter && !pixiChild.liveEmitter && gameObject.liveEmitterData) {
-    pixiChild.liveEmitter = initEmitter(gameObject, 'live', gameObject.liveEmitterData)
+  if(gameObject.tags.emitter && !pixiChild.emitter && gameObject.emitterData) {
+    pixiChild.emitter = initEmitter(gameObject, 'live', gameObject.emitterData)
   }
 
-  if(!gameObject.tags.liveEmitter && pixiChild.liveEmitter) {
-    PIXIMAP.deleteEmitter(pixiChild.liveEmitter)
-    delete pixiChild.liveEmitter
+  if(gameObject.tags.emitter && !pixiChild.emitter && gameObject.emitterType) {
+    pixiChild.emitter = initEmitter(gameObject, gameObject.emitterType)
+  }
+
+  if(!gameObject.tags.emitter && pixiChild.emitter || (pixiChild.emitter && gameObject.emitterType && pixiChild.emitter.emitterType !== gameObject.emitterType)) {
+    PIXIMAP.deleteEmitter(pixiChild.emitter)
+    delete pixiChild.emitter
   }
 
 
@@ -316,11 +304,6 @@ const addGameObjectToStage = (gameObject, stage) => {
 const initPixiObject = (gameObject) => {
   const stage = getGameObjectStage(gameObject)
   if(PAGE.role.isHost) gameObject = gameObject.mod()
-
-  if(gameObject.tags.emitter) {
-    initEmitter(gameObject, 'smallFire', {}, { hasNoOwner: true })
-    return
-  }
 
   if(gameObject.constructParts) {
     gameObject.constructParts.forEach((part) => {
