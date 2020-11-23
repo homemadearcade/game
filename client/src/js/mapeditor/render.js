@@ -231,15 +231,53 @@ function update() {
 
   drawTools.drawLoadingScreen(ctx, camera)
 
+  let pauseWindowUp = false
   if(!window.focused) {
     ctx.fillStyle = "rgba(0,0,0,.8)"
     ctx.fillRect(0, 0, MAP.canvas.width, MAP.canvas.height)
     // if(PAGE.role.isAdmin) {
       // drawTools.drawGrid(ctx, {...GAME.grid, gridWidth: GAME.grid.width, gridHeight: GAME.grid.height }, camera)
     // }
-    MAPEDITOR.blurElement.style.display = "block"
+    pauseWindowUp = true
+    MAPEDITOR.focusPausedElement.style.display = "block"
   } else {
-    MAPEDITOR.blurElement.style.display = "none"
+    MAPEDITOR.focusPausedElement.style.display = "none"
+  }
+
+  if(GAME.gameState.paused && !pauseWindowUp) {
+    ctx.fillStyle = "rgba(0,0,0,.8)"
+    ctx.fillRect(0, 0, MAP.canvas.width, MAP.canvas.height)
+    // if(PAGE.role.isAdmin) {
+      // drawTools.drawGrid(ctx, {...GAME.grid, gridWidth: GAME.grid.width, gridHeight: GAME.grid.height }, camera)
+    // }
+    pauseWindowUp = true
+    MAPEDITOR.gamePausedElement.style.display = "block"
+  } else {
+    MAPEDITOR.gamePausedElement.style.display = "none"
+  }
+
+  if(GAME.gameState._pausedByHost && !PAGE.role.isHost && !pauseWindowUp) {
+    ctx.fillStyle = "rgba(0,0,0,.8)"
+    ctx.fillRect(0, 0, MAP.canvas.width, MAP.canvas.height)
+    // if(PAGE.role.isAdmin) {
+      // drawTools.drawGrid(ctx, {...GAME.grid, gridWidth: GAME.grid.width, gridHeight: GAME.grid.height }, camera)
+    // }
+    pauseWindowUp = true
+    MAPEDITOR.hostPausedElement.style.display = "block"
+  } else {
+    MAPEDITOR.hostPausedElement.style.display = "none"
+  }
+
+  if(GAME.heros[HERO.id].flags.paused && !pauseWindowUp) {
+    ctx.fillStyle = "rgba(0,0,0,.8)"
+    ctx.fillRect(0, 0, MAP.canvas.width, MAP.canvas.height)
+    // if(PAGE.role.isAdmin) {
+      // drawTools.drawGrid(ctx, {...GAME.grid, gridWidth: GAME.grid.width, gridHeight: GAME.grid.height }, camera)
+    // }
+    pauseWindowUp = true
+    MAPEDITOR.heroPausedElement.style.display = "block"
+  } else {
+    MAPEDITOR.heroPausedElement.style.display = "none"
   }
 }
 

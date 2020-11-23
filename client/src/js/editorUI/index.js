@@ -62,9 +62,9 @@ class EditorUI {
       EDITORUI.ref.forceUpdate()
   }
 
-  onUpdateGameState() {
-    if(EDITORUI.ref) EDITORUI.ref.forceUpdate()
-  }
+  // onUpdateGameState() {
+  //   if(EDITORUI.ref) EDITORUI.ref.forceUpdate()
+  // }
 
   onEditHero(hero) {
     if(hero.id === HERO.id && GAME.heros[hero.id]) {

@@ -7,6 +7,14 @@ class Editor {
     this.preferences = {
       zoomMultiplier: 0,
       creatorColorSelected: null,
+      selectable: {
+        invisible: false,
+        darkness: false,
+        background: false,
+        foreground: false,
+        hero: false,
+        structure: false,
+      }
     }
     this.zoomDelta = .1250
 

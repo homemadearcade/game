@@ -14,7 +14,31 @@
   }
 }
 
-.blur {
+.unfocused {
+  &:after {
+    color: white;
+    font-size: 20px;
+    content: 'Paused ( click to resume )'
+  }
+}
+
+.host {
+  &:after {
+    color: white;
+    font-size: 20px;
+    content: 'Paused by host'
+  }
+}
+
+.game {
+  &:after {
+    color: white;
+    font-size: 20px;
+    content: 'Paused'
+  }
+}
+
+.paused {
   position: absolute;
   top: 45%;
   left: 50%;
@@ -23,11 +47,6 @@
   transform: -moz-translate(-50%, -50%);
   transform: -ms-translate(-50%, -50%);
   font-family: Courier;
-  &:after {
-    color: white;
-    font-size: 20px;
-    content: 'Paused ( click to resume )'
-  }
 }
 
 // .loader,

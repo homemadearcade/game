@@ -46,11 +46,29 @@ class MapEditor {
     document.getElementById('GameContainer').appendChild(loader)
     loader.style.display = "none"
 
-    const blur = document.createElement('div')
-    blur.className = 'blur'
-    MAPEDITOR.blurElement = blur
-    document.getElementById('GameContainer').appendChild(blur)
-    blur.style.display = "none"
+    const focusPaused = document.createElement('div')
+    focusPaused.className = 'paused unfocused'
+    MAPEDITOR.focusPausedElement = focusPaused
+    document.getElementById('GameContainer').appendChild(focusPaused)
+    focusPaused.style.display = "none"
+
+    const hostPaused = document.createElement('div')
+    hostPaused.className = 'paused host'
+    MAPEDITOR.hostPausedElement = hostPaused
+    document.getElementById('GameContainer').appendChild(hostPaused)
+    hostPaused.style.display = "none"
+
+    const gamePaused = document.createElement('div')
+    gamePaused.className = 'paused game'
+    MAPEDITOR.gamePausedElement = gamePaused
+    document.getElementById('GameContainer').appendChild(gamePaused)
+    gamePaused.style.display = "none"
+
+    const heroPaused = document.createElement('div')
+    heroPaused.className = 'paused'
+    MAPEDITOR.heroPausedElement = heroPaused
+    document.getElementById('GameContainer').appendChild(heroPaused)
+    heroPaused.style.display = "none"
   }
 
   set(ctx, canvas, camera) {
@@ -365,7 +383,7 @@ function updateGridHighlight(location) {
   }
 
   // find the smallest one stacked up
-  let smallestObject = selectionTools.findSmallestObjectInArea(mouseLocation, GAME.objects.filter(({ reserved }) => !reserved))
+  let smallestObject = selectionTools.findSmallestObjectInArea(mouseLocation, GAME.objects)
 
   collisionsUtil.check(mouseLocation, GAME.heroList, (hero) => {
     if (hero.mod().removed) return

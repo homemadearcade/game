@@ -317,24 +317,22 @@ export default class Toolbar extends React.Component {
         </ToolbarRow>
         <br/>
 
-        <ToolbarRow open iconName='fa-layer-group'>
-          <ToolbarButton text="Mario" onShiftClick onClick={() => {
-            EDITOR.transformWorldTo('Mario')
+        <ToolbarRow open iconName='fa-hand-pointer'>
+          <ToolbarButton text="Invisible" active={EDITOR.preferences.selectable.invisible} onClick={() => {
+            EDITOR.preferences.selectable.invisible = !EDITOR.preferences.selectable.invisible
+            this.forceUpdate()
           }}/>
-          <ToolbarButton text="Zelda" onShiftClick onClick={() => {
-            EDITOR.transformWorldTo('Zelda')
+          <ToolbarButton text="Foreground" active={EDITOR.preferences.selectable.foreground} onClick={() => {
+            EDITOR.preferences.selectable.foreground = !EDITOR.preferences.selectable.foreground
+            this.forceUpdate()
           }}/>
-          <ToolbarButton text="Pacman" onShiftClick onClick={() => {
-            EDITOR.transformWorldTo('Pacman')
+          <ToolbarButton text="Background" active={EDITOR.preferences.selectable.background} onClick={() => {
+            EDITOR.preferences.selectable.background = !EDITOR.preferences.selectable.background
+            this.forceUpdate()
           }}/>
-          <ToolbarButton text="Smash" onShiftClick onClick={() => {
-            EDITOR.transformWorldTo('Smash')
-          }}/>
-          <ToolbarButton text="Purg" onShiftClick onClick={() => {
-            EDITOR.transformWorldTo('Purgatory')
-          }}/>
-          <ToolbarButton text="Default" onShiftClick onClick={() => {
-            EDITOR.transformWorldTo('Default')
+          <ToolbarButton text="Structure" active={EDITOR.preferences.selectable.structure} onClick={() => {
+            EDITOR.preferences.selectable.structure = !EDITOR.preferences.selectable.structure
+            this.forceUpdate()
           }}/>
         </ToolbarRow>
 

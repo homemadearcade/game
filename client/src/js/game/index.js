@@ -73,8 +73,11 @@ class Game{
           }
         })
       }
+
+      GAME.gameState._pausedByHost = false
+      if(GAME.heros[HERO.id].flags.paused) GAME.gameState._pausedByHost = true
       // remove second part when a player can host a multiplayer game
-      if(!GAME.gameState.paused && (!PAGE.role.isPlayer || !GAME.heros[HERO.id].flags.paused)) {
+      if(!GAME.gameState.paused && !GAME.gameState._pausedByHost) {
         //// PREPARE ALL
         PHYSICS.prepareObjectsAndHerosForMovementPhase()
 
