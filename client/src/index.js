@@ -182,6 +182,8 @@ Maybe dual stick shooter potential?
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ////////////////////////////////////////////////////
 
+if you are a ghost, then shift+arrowkey should change camera temporarily instead of movement thing
+
 maybe the key to rendering optimization is switching thigns like scale and position to the layers...?
 also cacheing colors
 
@@ -650,7 +652,6 @@ https://github.com/redblobgames/mapgen4
 https://github.com/kchapelier/procedural-generation
 https://github.com/Dannark/BWO
 
-
 SHADOW ON CANVAS
 https://codepen.io/mladen___/pen/gbvqBo
 */
@@ -685,6 +686,10 @@ import './js/editorUI/index.js'
 import './js/game/notificationscontrol.js'
 import './js/liveeditor/index.js'
 import './js/creator/index.js'
+import audio from './js/sound/sound.js'
+window.audio = audio
+
+
 import './styles/index.scss'
 import './styles/jsoneditor.css'
 
