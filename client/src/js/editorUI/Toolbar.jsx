@@ -334,6 +334,10 @@ export default class Toolbar extends React.Component {
             EDITOR.preferences.selectable.structure = !EDITOR.preferences.selectable.structure
             this.forceUpdate()
           }}/>
+          <ToolbarButton text="Constructs" active={EDITOR.preferences.selectable.constructParts} onClick={() => {
+            EDITOR.preferences.selectable.constructParts = !EDITOR.preferences.selectable.constructParts
+            this.forceUpdate()
+          }}/>
         </ToolbarRow>
 
         {/* Grid -> Menu

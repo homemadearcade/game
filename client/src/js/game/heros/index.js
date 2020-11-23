@@ -369,7 +369,6 @@ class Hero{
       if(libraryHero.useGameDefault && GAME.defaultHero) {
         const gameDefaultHero = JSON.parse(JSON.stringify(GAME.defaultHero))
         newHero = window.mergeDeep(defaultHero, gameDefaultHero, libraryHero.JSON)
-        console.log(newHero)
       } else if(libraryHero) {
         newHero = window.mergeDeep(defaultHero, libraryHero.JSON)
       }

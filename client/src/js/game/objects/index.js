@@ -14,6 +14,7 @@ class Objects{
     window.defaultSubObject = {
       relativeX: 0, relativeY: 0,
       objectType: 'subObject',
+      defaultSprite: 'solidcolorsprite',
       count: 1,
     }
 
@@ -24,6 +25,7 @@ class Objects{
       velocityInitial: 100,
       subObjects: {},
       objectType: 'plainObject',
+      defaultSprite: 'solidcolorsprite',
     }
   }
 
@@ -982,14 +984,13 @@ class Objects{
       equipSubObject(OBJECTS.getObjectOrHeroById(owner.id), subObject)
     }
 
-    if(subObject.tags.startsInInventory) {
+    if(subObject.tags.startsInInventory || subObject.tags.startsEquipped || subObject.actionProps || subObject.tags.pickupable) {
       subObject.inInventory = true
     }
   }
 
   deleteSubObject(owner, subObject, subObjectName) {
     if(subObject.isEquipped) {
-      console.log('uneqipping')
       unequipSubObject(owner, subObject)
     }
     PIXIMAP.deleteObject(subObject)

@@ -231,6 +231,7 @@ window.isTargetTextInput = function(keyEvent) {
 }
 
 window.isObjectSelectable = function(gameObject) {
+  if(gameObject.constructParts && (!PAGE.role.isAdmin || EDITOR.preferences.selectable.constructParts === false)) return false
   // if(gameObject.tags.background && EDITOR.preferences.mapVisible.darkness === false) invisible = true
   if(gameObject.tags.invisible && (!PAGE.role.isAdmin || EDITOR.preferences.selectable.invisible === false)) return false
   // if(gameObject.tags.resourceZone && EDITOR.preferences.selectable.resourceZone === false) return false

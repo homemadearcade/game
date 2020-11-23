@@ -171,7 +171,7 @@ function equipSubObject(hero, subObject, keyBinding = 'available') {
   }
 
   subObject.isEquipped = true
-
+  
   window.local.emit('onHeroEquip', hero, subObject)
 }
 

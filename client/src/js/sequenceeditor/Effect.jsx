@@ -139,14 +139,15 @@ export default class Effect extends React.Component{
        }}/>)
       }
 
-      // if(effectData.librarySubObject) {
-      //   chosenEffectForm.push(<SingleLibrarySubObjectSelect sequenceItem={sequenceItem} valueProp='effectLibrarySubObject' onChange={(event) => {
-      //    if(event.value) {
-      //      sequenceItem.effectLibrarySubObject = event.value
-      //      this.props.setState({sequenceItem})
-      //    }
-      //  }}/>)
-      // }
+      if(effectData.librarySubObject) {
+        console.log('XXXX')
+        chosenEffectForm.push(<SingleLibrarySubObjectSelect sequenceItem={sequenceItem} valueProp='effectLibrarySubObject' onChange={(event) => {
+         if(event.value) {
+           sequenceItem.effectLibrarySubObject = event.value
+           this.props.setState({sequenceItem})
+         }
+       }}/>)
+      }
 
       if(effectData.libraryBranch) {
         chosenEffectForm.push(<SingleLibraryBranchSelect sequenceItem={sequenceItem} valueProp='effectBranchName' onChange={(event) => {

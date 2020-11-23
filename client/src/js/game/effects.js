@@ -1,6 +1,8 @@
 import onTalk from './heros/onTalk'
 import { startSequence } from './sequence'
 import { setPathTarget, setTarget } from './ai/pathfinders.js'
+import { equipSubObject, unequipSubObject } from './heros/inventory.js'
+
 import axios from 'axios';
 import gridUtil from '../utils/grid.js'
 import pathfinding from '../utils/pathfinding.js'
@@ -48,6 +50,16 @@ import pathfinding from '../utils/pathfinding.js'
       // label: 'Mod name: ',
       footer: 'Condition:'
     },
+    equipSubObject: {
+      smallText: true
+    },
+    unequipSubObject: {
+      smallText: true
+    },
+    addLibrarySubObject: {
+      librarySubObject: true
+    },
+
     branchApply: {
       libraryBranch: true,
     },
@@ -91,10 +103,6 @@ import pathfinding from '../utils/pathfinding.js'
     setPath: {
       mapSelect: true,
     },
-
-    // pickupLibrarySubObject: {
-    //   librarySubObject: true
-    // },
 
     //EDITOR
     openGameAsLevel: {
@@ -165,30 +173,26 @@ import pathfinding from '../utils/pathfinding.js'
     // 'questStart',
     // 'questComplete',
 
-    // 'increaseInputDirectionVelocity',
+    // 'increaseInputDirectionVelocity', <<--- better as tags probably
     // 'increaseMovementDirectionVelocity',
 
-    // 'pathfindTo',
-    // 'moveTo',
     // 'attachToEffectorAsParent'
     // 'attachToEffectorAsRelative'
     // 'emitCustomEvent',
 
-    // setPathTarget
     // setTarget
 
     // play sound FX
     // stop music
     // start music
 
-    // rest player physics
+    // reset player physics
     //
     // Teleport
     //
     // Deposit object
     //
     // Withdraw object
-
 
     // THESE ARE MAYBE JUST MUTATE? EXCEPT FOR TOGGLE, MAYBE ADD THAT TO SPECIAL SYNTAX
     // skipHeroGravity
@@ -265,6 +269,18 @@ function processEffect(effect, effected, effector, ownerObject) {
   }
   if(effectName === 'remove') {
     OBJECTS.removeObject(effected)
+  }
+
+  if(effectName === 'addLibrarySubObject') {
+    OBJECTS.addSubObject(effected, window.subObjectLibrary[effect.effectLibrarySubObject], effect.effectLibrarySubObject)
+  }
+
+  if(effectName === 'equipSubObject') {
+    equipSubObject(effected, effected.subObjects[effectValue])
+  }
+
+  if(effectName === 'equipSubObject') {
+    unequipSubObject(effected, effected.subObjects[effectValue])
   }
 
   // if(effectName === 'spawnTotalIncrement') {
