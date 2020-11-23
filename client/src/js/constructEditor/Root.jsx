@@ -173,7 +173,7 @@ export default class Root extends React.Component{
           window.local.emit('onZoomChange')
         }}/>
       </ToolbarRow>
-      <ToolbarRow iconName="fa-eye-slash"
+      <ToolbarRow iconName="fa-layer-group"
         active={this.state.isMapVisible.all}
         onClick={() => {
           CONSTRUCTEDITOR.toggleMapVisibility('all')

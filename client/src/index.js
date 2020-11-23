@@ -143,7 +143,7 @@ Metal mario! How did I not think of this. Sink and don't drown
 Vanish cap ( lets you walk through walls? )
 Fast fast cap..? Like mario racoon essentially, gives you better soaring and speed?
 Shrink power, think metroid ball or CROUCH even
-jetpack!
+JETPACK!!!
 
 //WEAPONS
 bouncing ball
@@ -181,7 +181,6 @@ Maybe dual stick shooter potential?
 ###### SMALL FEATURES
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ////////////////////////////////////////////////////
-
 
 maybe the key to rendering optimization is switching thigns like scale and position to the layers...?
 also cacheing colors
@@ -464,6 +463,8 @@ but honeslty I could just do a 'pick objects to be recorded moment' and we keep 
 // little glowy things all around ( particle effects, see hyper light drifter )
 
 rain and snow particle overlays
+
+Falling down action, like being destroyed like a castle
 
 FIREWORK PARTICLES, ( UNLEASH THE POWER OF THE PARTICLE SYSTEM )
 Pulsing size and rotating

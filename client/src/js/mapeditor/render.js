@@ -114,10 +114,12 @@ function update() {
 
   if(MAPEDITOR.groupGridHighlights && (PAGE.role.isAdmin || GAME.heros[HERO.id] && GAME.heros[HERO.id].flags && GAME.heros[HERO.id].flags.showOtherUsersMapHighlight)) {
     Object.keys(MAPEDITOR.groupGridHighlights).forEach((heroId) => {
+      const highlight = MAPEDITOR.groupGridHighlights[heroId]
       if(heroId !== HERO.originalId) {
-        drawTools.drawBorder(ctx, {...MAPEDITOR.groupGridHighlights[heroId], color: 'rgba(255,255,255,0.4)'}, camera)
+        if(highlight.initials) drawTextCenter(ctx, {...highlight, x: highlight.x + 5 }, 'rgba(200,255,200,1)', highlight.initials, camera)
+        drawTools.drawBorder(ctx, {...highlight, color: 'rgba(200,255,200,1)'}, camera, { thickness: 5})
       }
-    })
+    });
   }
 
   let currentObject = resizingObject || pathfindingLimit || draggingObject || copiedObject || draggingRelativeObject
@@ -125,7 +127,7 @@ function update() {
     currentObject = objectHighlighted
   }
   if(currentObject) {
-    if(currentObject.tags && currentObject.tags.invisible || currentObject.tags.hidden || object.opacity == 0) {
+    if(currentObject.tags && currentObject.tags.invisible || currentObject.tags.hidden || currentObject.opacity == 0) {
       ctx.setLineDash([5, 15]);
       drawTools.drawObject(ctx, {...currentObject, tags: { invisible: false, outline: true }, color: 'rgba(255,255,255,1)'}, camera)
       ctx.setLineDash([]);

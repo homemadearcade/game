@@ -34,10 +34,6 @@ function pickupObject(hero, collider) {
     // thats why I directly remove object
   }
 
-  if(!subObject.tags.onMap) {
-    OBJECTS.removeSubObject(subObject)
-  }
-
   subObject.inInventory = true
 
   hero.interactableObjectId = null
@@ -69,7 +65,6 @@ function dropObject(hero, subObject, dropAmount = 1, snapToGrid = true) {
     object.count = dropAmount
   }
 
-  object.removed = false
   object.tags.potential = false
   object.tags.subObject = false
   delete object.inInventory
@@ -177,10 +172,6 @@ function equipSubObject(hero, subObject, keyBinding = 'available') {
 
   subObject.isEquipped = true
 
-  if(subObject.tags.onMapWhenEquipped) {
-    subObject.removed = false
-  }
-
   window.local.emit('onHeroEquip', hero, subObject)
 }
 
@@ -196,10 +187,6 @@ function unequipSubObject(hero, subObject) {
   }
   if(hero.spaceBarBehavior === subObject.subObjectName) {
     hero.spaceBarBehavior = null
-  }
-
-  if(subObject.tags.onMapWhenEquipped && !subObject.tags.onMap) {
-    OBJECTS.removeSubObject(subObject)
   }
 
   subObject.isEquipped = false

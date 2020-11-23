@@ -232,6 +232,7 @@ function processSequence(sequence) {
       //
       // pathfindTo
       // goTo
+      // onPathComplete
       //
       // Goal complete
       //

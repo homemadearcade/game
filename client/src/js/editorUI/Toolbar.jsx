@@ -313,11 +313,33 @@ export default class Toolbar extends React.Component {
             <ToolbarButton iconName="fa-book-dead"/>
 
              */}
+
+        </ToolbarRow>
+        <br/>
+
+        <ToolbarRow open iconName='fa-layer-group'>
+          <ToolbarButton text="Mario" onShiftClick onClick={() => {
+            EDITOR.transformWorldTo('Mario')
+          }}/>
+          <ToolbarButton text="Zelda" onShiftClick onClick={() => {
+            EDITOR.transformWorldTo('Zelda')
+          }}/>
+          <ToolbarButton text="Pacman" onShiftClick onClick={() => {
+            EDITOR.transformWorldTo('Pacman')
+          }}/>
+          <ToolbarButton text="Smash" onShiftClick onClick={() => {
+            EDITOR.transformWorldTo('Smash')
+          }}/>
+          <ToolbarButton text="Purg" onShiftClick onClick={() => {
+            EDITOR.transformWorldTo('Purgatory')
+          }}/>
+          <ToolbarButton text="Default" onShiftClick onClick={() => {
+            EDITOR.transformWorldTo('Default')
+          }}/>
         </ToolbarRow>
 
         {/* Grid -> Menu
           <ToolbarButton iconName="fa-th"></i>*/}
-        <br/>
         <ToolbarRow iconName='fa-search'>
           <ToolbarButton iconName="fa-search-plus" onClick={() => {
             EDITOR.preferences.zoomMultiplier -= (EDITOR.zoomDelta * 4)

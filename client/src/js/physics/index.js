@@ -7,6 +7,7 @@ import { Collisions } from 'collisions';
 import decomp from 'poly-decomp';
 
 import {
+  checkIfShouldRunPhysics,
   attachToParent,
   attachToRelative,
   attachSubObjects,
@@ -79,7 +80,7 @@ function setAngleVelocity(hero) {
 }
 
 function updatePosition(object, delta) {
-  if(object.mod().removed || object.mod().relativeId) return
+  if(!checkIfShouldRunPhysics(object) || object.mod().relativeId) return
   if(object._skipPosUpdate) return
   if(!object.mod().tags['moving']) return
 
@@ -381,7 +382,7 @@ function objectPhysics() {
       if(PHYSICS.debug) console.log('no game object found for phyics object id: ' + id)
       continue
     }
-    if(po.gameObject.mod().removed || (po.constructPart && po.constructPart.removed)) continue
+    if(!checkIfShouldRunPhysics(po.gameObject) || (po.constructPart && po.constructPart.removed)) continue
     if(po.gameObject.mod().tags.hero) continue
     objectCollisionEffects(po)
   }
@@ -395,7 +396,7 @@ function objectPhysics() {
       let po = PHYSICS.objects[id]
       if(!po.gameObject) continue
       if(po.gameObject.mod().relativeId) continue
-      if(po.gameObject.mod().removed) continue
+      if(checkIfShouldRunPhysics(po.gameObject)) continue
       if(po.gameObject.mod().tags.hero) continue
       if(po.gameObject.mod().tags['skipCorrectionPhase']) {
         applyCorrection(po.gameObject, po)
@@ -449,7 +450,7 @@ function postPhysics() {
 
   // NON CHILD GO FIRST
   GAME.objects.forEach((object, i) => {
-    if(object.mod().removed) return
+    if(checkIfShouldRunPhysics(object)) return
     if(!object.mod().parentId && !object._parentId) {
       containObjectWithinGridBoundaries(object)
       object._deltaX = object.x - object._initialX
@@ -476,7 +477,7 @@ function postPhysics() {
 
   // THEN ATTACH CHILDREN OBJECTS TO PARENT
   GAME.objects.forEach((object, i) => {
-    if(object.mod().removed) return
+    if(checkIfShouldRunPhysics(object)) return
     if(object.mod().parentId || object._parentId ) {
       attachToParent(object)
       containObjectWithinGridBoundaries(object)
@@ -494,7 +495,7 @@ function postPhysics() {
 
   // ATTACH OBJECTS THAT ARE SEPERATE FROM BOUNDARIES
   GAME.objects.forEach((object, i) => {
-    if(object.mod().removed) return
+    if(checkIfShouldRunPhysics(object)) return
     if(object.mod().relativeId) {
       attachToRelative(object)
     }

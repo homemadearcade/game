@@ -985,13 +985,6 @@ class Objects{
     if(subObject.tags.startsInInventory) {
       subObject.inInventory = true
     }
-
-    if(subObject.tags.onMap) {
-      subObject.removed = false
-    }
-    if(subObject.tags.onMapWhenEquipped && !subObject.inInventory && !subObject.tags.startsEquipped) {
-      OBJECTS.removeSubObject(subObject)
-    }
   }
 
   deleteSubObject(owner, subObject, subObjectName) {

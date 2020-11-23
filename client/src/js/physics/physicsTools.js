@@ -712,7 +712,19 @@ function applyCorrection(object, po) {
   }
 }
 
+function checkIfShouldRunPhysics(gameObject) {
+  gameObject = gameObject.mod()
+
+  if(gameObject.removed || gameObject.tags.potential || gameObject.tags.notInCollisions) return false
+
+  if(gameObject.tags.onMapWhenEquipped && gameObject.isEquipped) return true
+  if(gameObject.tags.onMapWhenEquipped && !gameObject.isEquipped) return false
+
+  return true
+}
+
 export {
+  checkIfShouldRunPhysics,
   applyCorrection,
   attachToParent,
   attachToRelative,

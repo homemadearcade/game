@@ -137,10 +137,10 @@ const initPixiApp = (canvasRef, onLoad) => {
   PIXIMAP.sortGroup = new PIXI.display.Group(0, true);
   PIXIMAP.sortGroup.on('sort', function(sprite) {
       // // emitters and chats are just kinda messed up and need a high zOrder I guess. They dont have a correct sprite.y?
-      // if(sprite.emitter || sprite.isChat) {
-      //   sprite.zOrder = 1000000000000
-      //   return
-      // }
+      if(sprite.emitter || sprite.isChat) {
+        sprite.zOrder = 1000000000000
+        return
+      }
 
       let object
       if(sprite.ownerName) {

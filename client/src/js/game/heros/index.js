@@ -382,7 +382,7 @@ class Hero{
 
     if(newHero) {
       newHero.id = id
-      newHero.userId = hero.userId
+      newHero.user = hero.user
       newHero.heroSummonType = heroSummonType
       OBJECTS.forAllSubObjects(newHero.subObjects, (subObject) => {
         subObject.id = 'subObject-'+window.uniqueID()
@@ -487,7 +487,7 @@ class Hero{
 
       heroSummonType: hero.heroSummonType,
 
-      userId: hero.userId,
+      user: hero.user,
 
       zButtonBehavior: hero.zButtonBehavior,
       xButtonBehavior: hero.xButtonBehavior,
@@ -703,6 +703,11 @@ class Hero{
       targetXY: hero.targetXY,
 
       heroSummonType: hero.heroSummonType,
+
+      zButtonBehavior: hero.zButtonBehavior,
+      xButtonBehavior: hero.xButtonBehavior,
+      cButtonBehavior: hero.cButtonBehavior,
+      spaceBarBehavior: hero.spaceBarBehavior,
     }
 
     if(hero.subObjects) {

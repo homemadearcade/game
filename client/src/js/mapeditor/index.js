@@ -172,8 +172,12 @@ class MapEditor {
   }
 
   onSendHeroMapEditor(remoteState, heroId) {
+    if(heroId == HERO.id) return
+    const hero = GAME.heros[heroId]
     if(!MAPEDITOR.groupGridHighlights) MAPEDITOR.groupGridHighlights = {}
     MAPEDITOR.groupGridHighlights[heroId] = remoteState
+    if(hero.user) MAPEDITOR.groupGridHighlights[heroId].initials = hero.user.firstName[0] + hero.user.lastName[0]
+    MAPEDITOR.groupGridHighlights[heroId].heroName = hero.name || hero.id
   }
 
   onAskHeroToNameObject(object, heroId) {
@@ -269,7 +273,7 @@ function handleMouseDown(event) {
   } else if (MAPEDITOR.isSettingPathfindingLimit) {
     if (MAPEDITOR.pathfindingLimit) {
       const { pathfindingLimit, objectHighlighted } = MAPEDITOR
-      gridUtil.snapDragToGrid(pathfindingLimit, { dragging: true })
+      gridUtil.snapObjectToGrid(pathfindingLimit, { dragging: true })
       networkEditObject(objectHighlighted, { id: objectHighlighted.id, pathfindingLimit, path: null })
       document.body.style.cursor = "default";
       MAPEDITOR.isSettingPathfindingLimit = false
@@ -400,7 +404,7 @@ function updateResizingObject(object, options = { allowTiny: true }) {
     if (tinySize) {
       gridUtil.snapTinyObjectToGrid(object, tinySize)
     } else {
-      gridUtil.snapDragToGrid(object)
+      gridUtil.snapObjectToGrid(object)
     }
   }
 }
@@ -423,7 +427,7 @@ function updateDraggingObject(object) {
     if (tinySize) {
       gridUtil.snapTinyObjectToGrid(object, tinySize)
     } else {
-      gridUtil.snapDragToGrid(object)
+      gridUtil.snapObjectToGrid(object)
     }
   }
 

@@ -92,13 +92,6 @@ function init() {
       window.local.emit('onAnticipateObject', object)
   	})
 
-    window.socket.on('onAddTrigger', (ownerId, trigger) => {
-      window.local.emit('onAddTrigger', ownerId, trigger)
-    })
-    window.socket.on('onEditTrigger', (ownerId, triggerId, trigger) => {
-      window.local.emit('onEditTrigger', ownerId, triggerId, trigger)
-    })
-
     window.socket.on('onAddHook', (ownerId, hook) => {
       window.local.emit('onAddHook', ownerId, hook)
     })
@@ -110,6 +103,13 @@ function init() {
       window.local.emit('onAddSubObject', ownerId, subObject, subObjectName, options)
     })
   }
+
+  window.socket.on('onAddTrigger', (ownerId, trigger) => {
+    window.local.emit('onAddTrigger', ownerId, trigger)
+  })
+  window.socket.on('onEditTrigger', (ownerId, triggerId, trigger) => {
+    window.local.emit('onEditTrigger', ownerId, triggerId, trigger)
+  })
 
   window.socket.on('onEditGameHeroJSON', (gameHeroName, JSON) => {
     window.local.emit('onEditGameHeroJSON', gameHeroName, JSON)

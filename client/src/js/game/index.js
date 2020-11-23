@@ -224,12 +224,12 @@ class Game{
     }
   }
 
-  onAskJoinGame(heroId, role, userId) {
+  onAskJoinGame(heroId, role, user) {
     let hero = GAME.heros[heroId]
     if(!hero) {
       hero = HERO.summonFromGameData({id: heroId, heroSummonType: role })
       hero.id = heroId
-      hero.userId = userId
+      hero.user = user
       window.socket.emit('heroJoinedGamed', hero)
     }
   }
@@ -264,7 +264,8 @@ class Game{
     if(GAME.heros[HERO.id]) {
       window.local.emit('onHeroFound', GAME.heros[HERO.id])
     } else {
-      window.socket.emit('askJoinGame', HERO.id, heroName, window.user._id)
+      if(PAGE.role.isHost) window.user.isHost = true
+      window.socket.emit('askJoinGame', HERO.id, heroName, window.user)
     }
   }
 
@@ -1033,7 +1034,7 @@ class Game{
           const eventMatch = testEventMatch(mod.conditionEventName, mainObject, guestObject, mod, ownerObject, { testPassReverse: mod.testPassReverse, testModdedVersion: mod.testModdedVersion })
           if(eventMatch) {
             mod._remove = true
-            mod.removeEventListener()
+            if(mod.removeEventListener) mod.removeEventListener()
             delete mod.removeEventListener
           }
         })
