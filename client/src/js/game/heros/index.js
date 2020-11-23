@@ -427,6 +427,7 @@ class Hero{
       goals: hero.goals,
       dialogue: hero.dialogue,
       dialogueName: hero.dialogueName,
+      dialogueId: hero.dialogueId,
       choiceOptions: hero.choiceOptions,
       _parentId: hero._parentId,
       _skipNextGravity: hero._skipNextGravity,
@@ -663,10 +664,13 @@ class Hero{
     let mapState = {
       id: hero.id,
       chat: hero.chat,
-      width: hero.mod().width,
-      height: hero.mod().height,
+      width: hero.width,
+      height: hero.height,
       interactableObjectId: hero.interactableObjectId,
       dialogue: hero.dialogue,
+      dialogueName: hero.dialogueName,
+      dialogueId: hero.dialogueId,
+
       choiceOptions: hero.choiceOptions,
       sprite: hero.sprite,
       directions: hero.directions,

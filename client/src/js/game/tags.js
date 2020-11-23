@@ -131,6 +131,7 @@ function setDefault() {
     talkOnHeroInteract: false,
     // talkOnDestroy: false,
     oneTimeTalker: false,
+    autoInteractOnInteractable: false,
   }
 
   window.heroUpdateTags = {

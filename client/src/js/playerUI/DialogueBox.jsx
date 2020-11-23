@@ -2,6 +2,7 @@ import React from 'react'
 import { Textfit } from 'react-textfit';
 import classnames from 'classnames';
 import KeySprite from './KeySprite.jsx';
+import PixiMapSprite from '../components/PixiMapSprite.jsx'
 
 export default class DialogueBox extends React.Component{
   constructor(props) {
@@ -82,14 +83,37 @@ export default class DialogueBox extends React.Component{
     }
   }
 
+  _renderSprite(item) {
+    if(item.tags.invisible || item.tags.outline) {
+      return <div className="DialogueBox__sprite DialogueBox__sprite--box"/>
+    } else if(item.defaultSprite == 'solidcolorsprite'){
+      return <div className="DialogueBox__sprite" style={{background: item.color || GAME.world.defaultObjectColor || window.defaultObjectColor}}/>
+    } else if(item.defaultSprite) {
+      return <div className="DialogueBox__sprite"><PixiMapSprite width="50" height="50" textureId={item.defaultSprite}/></div>
+    }
+  }
+
+  _renderAvatar() {
+    const { id, name } = this.props
+
+    let object
+    if(id) {
+      object = OBJECTS.getObjectOrHeroById(id)
+    }
+    return <div className="DialogueBox__avatar">
+      {object && this._renderSprite(object)}
+      {name && <div className="DialogueBox__name-container"><div className="DialogueBox__name">{name}</div></div>}
+    </div>
+  }
+
   render() {
-    const { dialogue, options, name, hideV } = this.props
+    const { dialogue, options, hideV, verticleMiddle } = this.props
 
     // <i className="DialogueBox__arrow fa fas fa-sort-down"></i>
 
     if(dialogue) {
-      return <div className="DialogueBox">
-        {name && <div className="DialogueBox__name">{name}</div>}
+      return <div className={classnames("DialogueBox", { "DialogueBox--vertical-middle": verticleMiddle })}>
+        {this._renderAvatar()}
         <Textfit className="DialogueBox__content" id='fitty' max={22}>
           {dialogue[0]}
         </Textfit>
@@ -98,8 +122,8 @@ export default class DialogueBox extends React.Component{
     }
 
     if(options) {
-      return <div className="DialogueBox DialogueBox--options">
-        {name && <div className="DialogueBox__name">{name}</div>}
+      return <div className={classnames("DialogueBox DialogueBox--options", { "DialogueBox--vertical-middle": verticleMiddle })}>
+        {this._renderAvatar()}
         <div className="DialogueBox__content">
           {options.map((option, index) => {
             return <div key={option.id}

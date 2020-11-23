@@ -167,11 +167,15 @@ function processSequence(sequence) {
     effectedObjects[0].choiceOptions = item.options.slice()
     effectedObjects[0].flags.showDialogue = true
     effectedObjects[0].flags.paused = true
-    if(defaultEffector && defaultEffector.name) {
-      effectedObjects[0].dialogueName = defaultEffector.name
-    } else {
-      effectedObjects[0].dialogueName = null
+    if(defaultEffector) {
+      effectedObjects[0].id = defaultEffector.id
+      if(defaultEffector && defaultEffector.name) {
+        effectedObjects[0].dialogueName = defaultEffector.name
+      } else {
+        effectedObjects[0].dialogueName = null
+      }
     }
+
     window.emitGameEvent('onUpdatePlayerUI', effectedObjects[0])
     const removeEventListener = window.local.on('onHeroChooseOption', (heroId, choiceId) => {
       if(effectedObjects[0].id === heroId && sequence.itemMap[choiceId]) {
@@ -179,6 +183,7 @@ function processSequence(sequence) {
         effectedObjects[0].flags.showDialogue = false
         effectedObjects[0].flags.paused = false
         effectedObjects[0].dialogueName = null
+        effectedObjects[0].dialogueId = null
         effectedObjects[0].choiceOptions = null
         effectedObjects[0]._cantInteract = true
         sequence.currentItemId = sequence.itemMap[choiceId].next

@@ -240,11 +240,15 @@ function processEffect(effect, effected, effector, ownerObject) {
       effected.dialogue = [effectValue]
       effected.flags.showDialogue = true
       effected.flags.paused = true
-      if(effector.name) {
-        effected.dialogueName = effector.mod().name
-      } else {
-        effected.dialogueName = null
+      if(effector) {
+        effected.dialogueId = effector.id
+        if(effector.name) {
+          effected.dialogueName = effector.mod().name
+        } else {
+          effected.dialogueName = null
+        }
       }
+
       window.emitGameEvent('onUpdatePlayerUI', effected)
     } else {
       console.log('cannot dialogue effect non hero')

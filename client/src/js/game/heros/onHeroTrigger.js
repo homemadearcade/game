@@ -21,11 +21,15 @@ export function onHeroTrigger(hero, collider, result, options = { fromInteractBu
       })
       hero.flags.showDialogue = true
       hero.flags.paused = true
-      if(collider.name) {
-        hero.dialogueName = collider.name
-      } else {
-        hero.dialogueName = null
+      if(collider) {
+        hero.dialogueId = collider.id
+        if(collider.name) {
+          hero.dialogueName = collider.name
+        } else {
+          hero.dialogueName = null
+        }
       }
+
       window.emitGameEvent('onUpdatePlayerUI', hero)
       const removeEventListener = window.local.on('onHeroChooseOption', (heroId, choiceId) => {
         if(hero.id === heroId) {
@@ -35,6 +39,7 @@ export function onHeroTrigger(hero, collider, result, options = { fromInteractBu
             hero.flags.showDialogue = false
             hero.flags.paused = false
             hero.dialogueName = null
+            hero.dialogueId = null
             hero.choiceOptions = null
             hero._cantInteract = true
             triggerInteraction(interaction.interaction, hero, collider, result, options)

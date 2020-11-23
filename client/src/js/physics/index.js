@@ -416,10 +416,19 @@ function postPhysics() {
     if(hero.mod().removed) return
     if(hero.interactableObjectId) {
       let input = GAME.heroInputs[hero.id]
+      const interactableObject = OBJECTS.getObjectOrHeroById(hero.interactableObjectId)
       // INTERACT WITH SMALLEST OBJECT
       // window.emitGameEvent('onObjectInteractable', hero.interactableObjectId, hero)
+      if(interactableObject.mod().tags.autoInteractOnInteractable && !hero._cantInteract && !hero.flags.paused && !hero._cantAutoInteract) {
+        // if(interactableObject.mod().tags.autoInteractOnce) {
+          interactableObject.tags.autoInteractOnInteractable = false
+          // interactableObject.tags.autoInteractOnce = false
+          window.local.emit('onHeroInteract', hero, interactableObject)
+          hero._cantInteract = true
+        // }
+      }
+      
       if(input && (input['e'] === true || input['v'] === true || input['enter'] === true) && !hero._cantInteract && !hero.flags.paused) {
-        const interactableObject = OBJECTS.getObjectOrHeroById(hero.interactableObjectId)
         window.local.emit('onHeroInteract', hero, interactableObject)
         hero._cantInteract = true
       }
