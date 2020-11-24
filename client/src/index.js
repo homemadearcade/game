@@ -4,16 +4,12 @@
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
 
-FINAL TODO FOR HA
-
 EMITTERS
 SOUND FX
 FILL OUT SEQUENCE EDITOR, LIBRARY, EFFECTS, TAGS
 PUZZLE INTERFACES
-COMBAT + GOALS + QUESTS + UI
+COMBAT + GOALS + QUESTS
 -------
-
-emitterType needs to be changeable and looks up library of emitters
 
 right click - follow object, follow with path object
 
@@ -35,6 +31,7 @@ Create
 Editor
 Animate
 Sound
+Mod honestly needs its own...
 
 ////////////////////////////////
 ////////////////////////////////
@@ -319,6 +316,38 @@ map rotation having problems 1) object stage already pivoted for camera reason 2
 NOTES
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ////////////////////////////////////////////////////
+
+THEMES
+   I mean ugh fuck themes. I think maybe we can have a 'mediaControlCenter' similar to NotificationsControl center
+   With this I can randomize the effects the world has
+   dont forget to randomize physics too!
+   and randomize perhaps the camera filter!!
+   I Think you have tags like
+    touchStartAnimation1
+    touchStartAnimation2
+    touchStartAnimation3
+    destroyAnimation/1/2/3
+    shootAnimation1/2/3
+    pickupAnimation1/2/3
+    interactAnimation1/2/3
+    useAnimation1/2/3
+
+    whileModdedAnimation1/2/3 <- what mod?
+    mods Should just have an animation they can choose from
+
+    touchStartSFX1
+    touchStartSFX2
+    touchStartSFX3
+    destroySFX1/2/3
+    shootSFX1/2/3
+    pickupSFX1/2/3
+    useSFX1/2/3
+    interactSFX1/2/3
+    jumpSFX1/2/3
+
+    and then you can say like. add SFX1 tag to all monsters or all pickupable or all resources, etc
+
+    I THINK THATS IT!
 
 ---
 Story/cutscenes SIMPLE EDITOR

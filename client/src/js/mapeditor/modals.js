@@ -276,8 +276,14 @@ function openSelectParticleAnimation(cb) {
   })
 
   const inputOptionValues = inputOptions.map((name) => {
-    if(GAME.library.animations[name]) return GAME.library.animations[name]
-    if(window.particleEmitterLibrary[name]) return window.particleEmitterLibrary[name]
+    if(GAME.library.animations[name]) {
+      GAME.library.animations[name].type = name
+      return GAME.library.animations[name]
+    }
+    if(window.particleEmitterLibrary[name]) {
+      window.particleEmitterLibrary[name].type = name
+      return window.particleEmitterLibrary[name]
+    }
   })
 
   Swal.fire({

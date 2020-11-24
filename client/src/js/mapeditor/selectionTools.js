@@ -40,6 +40,21 @@ function getObjectRelations(object, game) {
 
 function findSmallestObjectInArea(area, objects) {
   const objectsToSearch = [...objects]
+  objects.forEach((object) => {
+    if(object.subObjects) {
+      Object.keys(object.subObjects).forEach((name) => {
+        objectsToSearch.push(object.subObjects[name])
+      })
+    }
+  })
+
+  GAME.heroList.forEach((object) => {
+    if(object.subObjects) {
+      Object.keys(object.subObjects).forEach((name) => {
+        objectsToSearch.push(object.subObjects[name])
+      })
+    }
+  })
 
   let smallestObject
   for(let i = 0; i < objectsToSearch.length; i++) {

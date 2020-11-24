@@ -9,6 +9,7 @@ import QuestMenu from '../menus/QuestMenu.jsx';
 import SpawnZoneMenu from '../menus/SpawnZoneMenu.jsx';
 import ResourceZoneMenu from '../menus/ResourceZoneMenu.jsx';
 import NameMenu from '../menus/NameMenu.jsx';
+import EmitterMenu from '../menus/EmitterMenu.jsx';
 import ObjectAdvancedMenu from '../menus/ObjectAdvancedMenu.jsx';
 import SelectSubObjectMenu from '../menus/SelectSubObjectMenu.jsx';
 import RelativeMenu from '../menus/RelativeMenu.jsx';
@@ -105,9 +106,20 @@ export default class ObjectContextMenu extends React.Component{
     }
   }
 
-  render() {
+  _renderObjectEmitterMenu() {
     const { objectSelected, subObject } = this.props
+    if(objectSelected.tags.emitter) {
+      return <SubMenu title="Emitter">
+        <EmitterMenu objectSelected={objectSelected} subObject={subObject}></EmitterMenu>}
+      </SubMenu>
+    }
 
+  }
+
+  render() {
+    const { objectSelected } = this.props
+
+    let subObject = objectSelected.tags.subObject
     // <SubMenu title="Hooks">
     //   <HookMenu objectSelected={objectSelected}/>
     // </SubMenu>
@@ -117,9 +129,9 @@ export default class ObjectContextMenu extends React.Component{
     return <Menu onClick={this._handleObjectMenuClick}>
       <MenuItem key='copy-id' className="bold-menu-item">{objectSelected.subObjectName || objectSelected.name || objectSelected.id}</MenuItem>
       {!subObject && <MenuItem key="drag">Drag</MenuItem>}
-      {!objectSelected.constructParts && <MenuItem key="resize">Resize</MenuItem>}
+      {!objectSelected.constructParts && !objectSelected.pathParts && <MenuItem key="resize">Resize</MenuItem>}
       {subObject && <MenuItem key="resize-grid">Resize On Grid</MenuItem>}
-      <MenuItem key="copy">Copy</MenuItem>
+      {!subObject && <MenuItem key="copy">Copy</MenuItem>}
       <SubMenu title='Sprite'><SpriteMenu objectSelected={objectSelected} subObject={subObject}/></SubMenu>
       {(objectSelected.ownerId || objectSelected.relativeId) && <SubMenu title="Relative">
         <RelativeMenu objectSelected={objectSelected} subObject={subObject}/>
@@ -135,6 +147,7 @@ export default class ObjectContextMenu extends React.Component{
       </SubMenu>
       {this._renderObjectSpawnZoneMenu()}
       {this._renderObjectResourceZoneMenu()}
+      {this._renderObjectEmitterMenu()}
       <SubMenu title="Group">
         <GameTagMenu objectSelected={objectSelected} subObject={subObject}/>
       </SubMenu>
@@ -147,7 +160,7 @@ export default class ObjectContextMenu extends React.Component{
       <SubMenu title="All Tags">
         <TagMenu objectSelected={objectSelected} subObject={subObject}></TagMenu>
       </SubMenu>
-      {Object.keys(objectSelected.subObjects || {}).length && <SubMenu title="Sub Objects">
+      {!subObject && Object.keys(objectSelected.subObjects || {}).length && <SubMenu title="Sub Objects">
         <SelectSubObjectMenu objectSelected={objectSelected} selectSubObject={this.props.selectSubObject}/>
       </SubMenu>}
       { subObject && !objectSelected.isEquipped && <MenuItem key="equip">Equip</MenuItem> }
