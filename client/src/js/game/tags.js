@@ -167,6 +167,7 @@ function setDefault() {
     foreground: false,
     seeThroughOnHeroCollide: false,
     hidden: false,
+    showXWhenRemoved: false,
     // invisibleOnHeroCollide: false
 
     // randomColor: false,

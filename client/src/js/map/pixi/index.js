@@ -215,10 +215,7 @@ PIXIMAP.onRender = function() {
       }
 
       GAME.heroList.forEach((hero) => {
-        if(hero.mod().removed) {
-          PIXIMAP.childrenById[hero.id].visible = false
-          return
-        }
+        if(!PIXIMAP.makeInvisibleIfRemoved(hero)) return
         updatePixiObject(hero, PIXIMAP.stage)
       })
     }
@@ -715,7 +712,9 @@ PIXIMAP.convertToPartObject = function(gameObject, part) {
 
 PIXIMAP.makeInvisibleIfRemoved = function(object) {
   if(object.mod().removed && PIXIMAP.childrenById[object.id]) {
-    PIXIMAP.childrenById[object.id].visible = false
+    if(!object.tags.showXWhenRemoved) {
+      PIXIMAP.childrenById[object.id].visible = false
+    }
     if(object.subObjects) {
       Object.keys(object.subObjects).forEach((subObjectName) => {
         const so = object.subObjects[subObjectName]

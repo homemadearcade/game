@@ -117,7 +117,13 @@ function update(camera) {
   GAME.objects.forEach((object) => {
     object = object.mod()
 
-    if(object.removed) return
+    if(object.removed) {
+      if(object.tags.showXWhenRemoved) {
+        drawTools.drawFilledObject(ctx, {...object, color: 'rgba(0,0,0, 0.33)'}, camera)
+        drawTools.drawX(ctx, camera, object)
+      }
+      return
+    }
     if(object.id === CONSTRUCTEDITOR.objectId || object.id === PATHEDITOR.objectId) return
     if(object.tags.outline) {
       if(camera.hasHitLimit || !camera.allowOcclusion || collisionsUtil.checkObject(viewBoundaries, object)) {
@@ -136,7 +142,13 @@ function update(camera) {
     if(object.subObjects) {
       OBJECTS.forAllSubObjects(object.subObjects, (subObject) => {
         if(subObject.tags.potential) return
-        if(subObject.tags.removed) return
+        if(subObject.removed) {
+          if(subObject.tags.showXWhenRemoved) {
+            drawTools.drawFilledObject(ctx, {...object, color: 'rgba(0,0,0, 0.33)'}, camera)
+            drawTools.drawX(ctx, camera, object)
+          }
+          return
+        }
         if(!subObject.tags.outline) return
         drawTools.drawObject(ctx, subObject, camera)
       })
@@ -145,7 +157,13 @@ function update(camera) {
 
   GAME.heroList.forEach((hero) => {
     hero = hero.mod()
-    if(hero.removed) return
+    if(hero.removed) {
+      if(object.tags.showXWhenRemoved) {
+        drawTools.drawFilledObject(ctx, {...object, color: 'rgba(0,0,0, 0.33)'}, camera)
+        drawTools.drawX(ctx, camera, object)
+      }
+      return
+    }
 
     if(hero.tags.outline) {
       drawTools.drawObject(ctx, hero, camera);
@@ -154,7 +172,13 @@ function update(camera) {
     if(hero.subObjects) {
       OBJECTS.forAllSubObjects(hero.subObjects, (subObject) => {
         if(subObject.tags.potential) return
-        if(subObject.tags.removed) return
+        if(subObject.removed) {
+          if(subObject.tags.showXWhenRemoved) {
+            drawTools.drawFilledObject(ctx, {...object, color: 'rgba(0,0,0, 0.33)'}, camera)
+            drawTools.drawX(ctx, camera, object)
+          }
+          return
+        }
         if(!subObject.tags.outline) return
         drawTools.drawObject(ctx, subObject, camera)
       })

@@ -195,6 +195,25 @@ function drawLine(ctx, pointA, pointB, options, camera) {
   }
 }
 
+function drawX(ctx, camera, object) {
+  drawVertice(ctx, {a: {
+    x: object.x,
+    y: object.y,
+  },
+  b: {
+    x: object.width + object.x,
+    y: object.height + object.y,
+  }, color: 'rgba(255, 0,0, 0.8)', thickness: 4}, camera)
+  drawVertice(ctx, {a: {
+    x: object.width + object.x,
+    y: object.y,
+  },
+  b: {
+    x: object.x,
+    y: object.height + object.y,
+  }, color: 'rgba(255, 0,0, 0.8)', thickness: 4}, camera)
+}
+
 function drawPFGrid(ctx, camera, pfGrid, props, options = {}) {
   pfGrid.nodes.forEach((nodeRow) => {
     nodeRow.forEach((node) => {
@@ -304,4 +323,5 @@ export default {
   drawFilledObject,
   drawGrid,
   drawPFGrid,
+  drawX,
 }

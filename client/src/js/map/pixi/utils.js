@@ -270,8 +270,14 @@ function updateSprite(pixiChild, gameObject) {
 }
 
 function getVisibility(pixiChild, gameObject) {
-  let invisible = gameObject.tags.outline || gameObject.tags.invisible || gameObject.removed || gameObject.tags.potential || gameObject.constructParts
-  if(gameObject.tags.foreground) console.log(window.isObjectSelectable(gameObject))
+  if(gameObject.tags.potential) return true
+
+  let invisible = gameObject.tags.outline || gameObject.tags.invisible || gameObject.removed || gameObject.constructParts
+
+  // if(gameObject.removed && gameObject.tags.showXWhenRemoved) {
+  //   // && !gameObject.tags.invisible && !gameObject.constructParts
+  //   invisible = false
+  // }
 
   if(gameObject.tags.subObject && gameObject.tags.onMapWhenEquipped) {
     if(gameObject.isEquipped && (gameObject.actionButtonBehavior !== 'toggle' || !gameObject._toggledOff)) invisible = false
