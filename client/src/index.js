@@ -11,17 +11,32 @@ PUZZLE INTERFACES
 COMBAT + GOALS + QUESTS
 -------
 
+add/delete customDialogueChoice via actionProps
+{
+  tags: {},
+  text: '',
+  heroEffect: '',
+  guestEffect:
+}
+
+
 right click - follow object, follow with path object
 
 chatOnHover. use current chat service to create one that occurs on hover and is removed when mouse moves off...
 
 Add GAME title menu (press enter or v to start)
 
+unequip action
 one time use inventory objects, such as potions, speed boosters.  Keep as action props so we can equip it too, FLEXIBLE nice!
 
 experience password for ha-live. Use month+day - 100
 
 Change on collide to on touch start for certain tags
+
+draw absurd path with mouse ( as spencer suggested, just use like drag? but record mouse points. this is LOL but awesome )
+
+//get better js editor so I dont have to format so fuckin much, use the current json editor?
+//action props, spawn zones, etc would be better editing using this json editor not the ae editor and not context menus
 
 ////////////////////////////////
 ////////////////////////////////
@@ -209,6 +224,8 @@ Create an onSequenceComplete thing..? So when its done we know to move onto the 
 
 STORY - Fade in/out to game
 
+send clones power like that one game I made
+
 add object needs to be its own thing with effect, wait, condition, etc.
 Its getting really complicated. For now im going to cheat it. It should have its own service and its own sequence type, feel me?
 
@@ -323,27 +340,58 @@ THEMES
    dont forget to randomize physics too!
    and randomize perhaps the camera filter!!
    I Think you have tags like
+
+   MODS
+   --
+
+   whileModdedAnimation
+   whileModdedMusic
+   mods Should just have an animation they can choose from
+
+   ANIMATIONS
+   --
     touchStartAnimation1
     touchStartAnimation2
     touchStartAnimation3
     destroyAnimation/1/2/3
-    shootAnimation1/2/3
+
     pickupAnimation1/2/3
     interactAnimation1/2/3
+
+    shootAnimation1/2/3
     useAnimation1/2/3
 
-    whileModdedAnimation1/2/3 <- what mod?
-    mods Should just have an animation they can choose from
+    jumpAnimation1/2/3
+    dashAnimation1/2/3
+    teleportAnimation1/2/3
+    turnAroundAnimation1/2/3
+    bounceAnimation1/2/3
+
+    splashWaterAnimation1/2/3
+
+  SFX
+  ---
 
     touchStartSFX1
     touchStartSFX2
     touchStartSFX3
     destroySFX1/2/3
-    shootSFX1/2/3
     pickupSFX1/2/3
-    useSFX1/2/3
     interactSFX1/2/3
+
+    shootSFX1/2/3
+    useSFX1/2/3
+
+    movingSFX1/2/3
+    stopMovingSFX1/2/3 ( spaceship type thing? )
     jumpSFX1/2/3
+    dashSFX1/2/3
+    teleportSFX1/2/3
+    turnAroundSFX1/2/3
+    bounceSFX1/2/3
+
+    splashWaterSFX1/2/3
+
 
     and then you can say like. add SFX1 tag to all monsters or all pickupable or all resources, etc
 

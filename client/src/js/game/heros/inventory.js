@@ -148,31 +148,43 @@ function depositToInventory(depositor, retriever, subObjectName, amount) {
 }
 
 function equipSubObject(hero, subObject, keyBinding = 'available') {
-  if(keyBinding === 'available') {
-    if(hero.zButtonBehavior === subObject.subObjectName || hero.xButtonBehavior === subObject.subObjectName || hero.cButtonBehavior === subObject.subObjectName || hero.spaceBarBehavior === subObject.subObjectName) {
-      console.log('already equipped to a slot')
-    } else {
-      if(!hero.zButtonBehavior || hero.zButtonBehavior === '') {
-        hero.zButtonBehavior = subObject.subObjectName
-      } else if(!hero.xButtonBehavior || hero.xButtonBehavior === '') {
-        hero.xButtonBehavior = subObject.subObjectName
-      } else if(!hero.cButtonBehavior || hero.cButtonBehavior === '') {
-        hero.cButtonBehavior = subObject.subObjectName
+
+  if(subObject.actionProps) {
+    if(keyBinding === 'available') {
+      if(hero.zButtonBehavior === subObject.subObjectName || hero.xButtonBehavior === subObject.subObjectName || hero.cButtonBehavior === subObject.subObjectName || hero.spaceBarBehavior === subObject.subObjectName) {
+        console.log('already equipped to a slot')
+      } else {
+        if(!hero.zButtonBehavior || hero.zButtonBehavior === '') {
+          hero.zButtonBehavior = subObject.subObjectName
+        } else if(!hero.xButtonBehavior || hero.xButtonBehavior === '') {
+          hero.xButtonBehavior = subObject.subObjectName
+        } else if(!hero.cButtonBehavior || hero.cButtonBehavior === '') {
+          hero.cButtonBehavior = subObject.subObjectName
+        }
       }
+    } else if(keyBinding === 'z') {
+      hero.zButtonBehavior = subObject.subObjectName
+    } else if(keyBinding === 'x') {
+      hero.xButtonBehavior = subObject.subObjectName
+    } else if(keyBinding === 'c') {
+      hero.cButtonBehavior = subObject.subObjectName
+    } else if(keyBinding === 'space') {
+      hero.spaceBarBehavior = subObject.subObjectName
     }
-  } else if(keyBinding === 'z') {
-    hero.zButtonBehavior = subObject.subObjectName
-  } else if(keyBinding === 'x') {
-    hero.xButtonBehavior = subObject.subObjectName
-  } else if(keyBinding === 'c') {
-    hero.cButtonBehavior = subObject.subObjectName
-  } else if(keyBinding === 'space') {
-    hero.spaceBarBehavior = subObject.subObjectName
+  }
+
+  console.log(subObject.equipBehavior)
+  if(subObject.equipBehavior === 'addDialogueChoice') {
+    console.log('X')
+    // if(!subObject.equipState) subObject.equipState = {}
+    if(subObject.equipProps.dialogueChoiceJSON) {
+      window.socket.emit('addDialogueChoice', hero.id, subObject.id, subObject.equipProps.dialogueChoiceJSON)
+    }
   }
 
   subObject.isEquipped = true
-  
-  window.local.emit('onHeroEquip', hero, subObject)
+
+  window.emitGameEvent('onHeroEquip', hero, subObject)
 }
 
 function unequipSubObject(hero, subObject) {
@@ -189,9 +201,13 @@ function unequipSubObject(hero, subObject) {
     hero.spaceBarBehavior = null
   }
 
+  if(subObject.equipBehavior === 'temporaryDialogueOption') {
+    window.socket.emit('deleteDialogueChoice', hero.id, subObject.id)
+  }
+
   subObject.isEquipped = false
 
-  window.local.emit('onHeroUnequip', hero, subObject)
+  window.emitGameEvent('onHeroUnequip', hero, subObject)
 }
 
 export {

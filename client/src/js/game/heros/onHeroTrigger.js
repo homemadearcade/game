@@ -5,6 +5,7 @@ import onCombat from './onCombat'
 import { startQuest, completeQuest } from './quests'
 import { pickupObject, withdrawFromInventory } from './inventory'
 import { spawnAllNow } from '../spawnZone'
+import { processEffect } from '../effects'
 
 export function onHeroTrigger(hero, collider, result, options = { fromInteractButton: false }) {
   const isInteraction = options.fromInteractButton
@@ -42,7 +43,16 @@ export function onHeroTrigger(hero, collider, result, options = { fromInteractBu
             hero.dialogueId = null
             hero.choiceOptions = null
             hero._cantInteract = true
-            triggerInteraction(interaction.interaction, hero, collider, result, options)
+            if(interaction.heroEffect) {
+              processEffect(interaction.heroEffect, hero, collider)
+            }
+            if(interaction.guestEffect) {
+              processEffect(interaction.guestEffect, collider, hero)
+            }
+
+            if(interaction.interaction) {
+              triggerInteraction(interaction.interaction, hero, collider, result, options)
+            }
             window.emitGameEvent('onUpdatePlayerUI', hero)
           })
         }

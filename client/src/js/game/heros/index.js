@@ -98,6 +98,8 @@ class Hero{
       // velocityDecay: 50,
       // cameraRotation: 0,
       heroSummonType: 'default',
+
+
     }
 
     window.local.on('onGridLoaded', () => {
@@ -562,6 +564,8 @@ class Hero{
       pathId: hero.pathId,
       pathfindingLimitId: hero.pathfindingLimitId,
       pathfindingGridId: hero.pathfindingGridId,
+
+      dialogueChoices: hero.dialogueChoices,
     }
 
     if(hero.subObjects) {
@@ -1034,6 +1038,17 @@ class Hero{
     let deltaInAir = (0 - deltaVelocityYToUse)/gravityVelocityY
     let width = (velocityX * deltaInAir)
     return width * 2
+  }
+
+  onAddDialogueChoice(heroId, choiceId, choice) {
+    if(!GAME.heros[heroId].dialogueChoices) {
+      GAME.heros[heroId].dialogueChoices = {}
+    }
+    GAME.heros[heroId].dialogueChoices[choiceId] = choice
+  }
+
+  onDeleteDialogueChoice(heroId, choiceId) {
+    GAME.heros[heroId].dialogueChoices[choiceId] = null
   }
 }
 

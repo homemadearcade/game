@@ -717,8 +717,11 @@ function checkIfShouldRunPhysics(gameObject) {
 
   if(gameObject.removed || gameObject.tags.potential || gameObject.tags.notInCollisions) return false
 
-  if(gameObject.tags.onMapWhenEquipped && gameObject.isEquipped) return true
-  if(gameObject.tags.onMapWhenEquipped && !gameObject.isEquipped) return false
+
+  if(gameObject.tags.subObject && gameObject.tags.onMapWhenEquipped) {
+    if(gameObject.isEquipped && (gameObject.actionButtonBehavior !== 'toggle' || !gameObject._toggledOff)) return true
+    if(!gameObject.isEquipped || gameObject._toggledOff) return false
+  }
 
   return true
 }

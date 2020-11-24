@@ -92,13 +92,6 @@ function init() {
       window.local.emit('onAnticipateObject', object)
   	})
 
-    window.socket.on('onAddHook', (ownerId, hook) => {
-      window.local.emit('onAddHook', ownerId, hook)
-    })
-    window.socket.on('onEditHook', (ownerId, hookId, hook) => {
-      window.local.emit('onEditHook', ownerId, hookId, hook)
-    })
-
     window.socket.on('onAddSubObject', (ownerId, subObject, subObjectName, options) => {
       window.local.emit('onAddSubObject', ownerId, subObject, subObjectName, options)
     })
@@ -109,6 +102,26 @@ function init() {
   })
   window.socket.on('onEditTrigger', (ownerId, triggerId, trigger) => {
     window.local.emit('onEditTrigger', ownerId, triggerId, trigger)
+  })
+  window.socket.on('onDeleteTrigger', (ownerId, triggerId) => {
+    window.local.emit('onDeleteTrigger', ownerId, triggerId)
+  })
+
+  window.socket.on('onAddHook', (ownerId, hook) => {
+    window.local.emit('onAddHook', ownerId, hook)
+  })
+  window.socket.on('onEditHook', (ownerId, hookId, hook) => {
+    window.local.emit('onEditHook', ownerId, hookId, hook)
+  })
+  window.socket.on('onDeleteHook', (ownerId, hookId) => {
+    window.local.emit('onDeleteHook', ownerId, hookId)
+  })
+
+  window.socket.on('onAddDialogueChoice', (ownerId, choiceId, choice) => {
+    window.local.emit('onAddDialogueChoice', ownerId, choiceId, choice)
+  })
+  window.socket.on('onDeleteDialogueChoice', (ownerId, choiceId) => {
+    window.local.emit('onDeleteDialogueChoice', ownerId, choiceId)
   })
 
   window.socket.on('onEditGameHeroJSON', (gameHeroName, JSON) => {
@@ -145,12 +158,7 @@ function init() {
   window.socket.on('onDeleteSubObjectChance', (ownerId, subObjectName) => {
     window.local.emit('onDeleteSubObjectChance', ownerId, subObjectName)
   })
-  window.socket.on('onDeleteTrigger', (ownerId, triggerId) => {
-    window.local.emit('onDeleteTrigger', ownerId, triggerId)
-  })
-  window.socket.on('onDeleteHook', (ownerId, hookId) => {
-    window.local.emit('onDeleteHook', ownerId, hookId)
-  })
+
 
   // EDITOR CALLS THIS
   window.socket.on('onEditObjects', (editedObjects) => {

@@ -96,6 +96,7 @@ function setDefault() {
     'deccelerateToZero': 'Slow Down',
     'brakeToZero': 'Fast Stop',
     'mod': 'Activate Power',
+    'toggle': 'Toggle',
     'dropAndModify': 'Drop',
     'shrink': 'Shrink',
     'grow': 'Grow',
@@ -228,6 +229,10 @@ function handleActionButtonBehavior(hero, action, delta) {
   })
 
   if(subObject && !subObject.actionState) subObject.actionState = {}
+
+  if(action === 'toggle' && subObject) {
+    subObject._toggledOff = !subObject._toggledOff
+  }
 
   if(subObject && subObject.actionState.waiting) {
     console.log('action button waiting')
@@ -424,7 +429,7 @@ function handleActionButtonBehavior(hero, action, delta) {
     }
   }
 
-  if(subObject && subObject.actionProps.debounceTime) {
+  if(subObject && subObject.actionProps && subObject.actionProps.debounceTime) {
     const timeoutId = 'debounce-action-' + subObject.id + subObject.actionButtonBehavior
     subObject.actionState.waiting = true
     subObject.actionState.timeoutId = timeoutId

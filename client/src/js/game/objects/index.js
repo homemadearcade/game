@@ -142,6 +142,8 @@ class Objects{
 
       _pfGrid: object.pfGrid,
 
+      _toggledOff: object._toggledOff,
+
       navigationTargetId:  object.navigationTargetId,
 
       createdTime: object.createdTime,
@@ -224,6 +226,9 @@ class Objects{
       actionButtonBehavior: object.actionButtonBehavior,
       actionProps: object.actionProps,
       actionButtonBehaviorLabel: object.actionButtonBehaviorLabel,
+
+      equipBehavior: object.equipBehavior,
+      equipProps: object.equipProps,
 
       // inventory
       count: object.count,

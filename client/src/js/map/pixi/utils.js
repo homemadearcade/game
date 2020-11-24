@@ -273,8 +273,10 @@ function getVisibility(pixiChild, gameObject) {
   let invisible = gameObject.tags.outline || gameObject.tags.invisible || gameObject.removed || gameObject.tags.potential || gameObject.constructParts
   if(gameObject.tags.foreground) console.log(window.isObjectSelectable(gameObject))
 
-  if(gameObject.tags.onMapWhenEquipped && gameObject.isEquipped) invisible = false
-  if(gameObject.tags.onMapWhenEquipped && !gameObject.isEquipped) invisible = true
+  if(gameObject.tags.subObject && gameObject.tags.onMapWhenEquipped) {
+    if(gameObject.isEquipped && (gameObject.actionButtonBehavior !== 'toggle' || !gameObject._toggledOff)) invisible = false
+    if(!gameObject.isEquipped || gameObject._toggledOff) invisible = true
+  }
 
   if(CONSTRUCTEDITOR.open) {
     if(gameObject.tags.background && CONSTRUCTEDITOR.mapVisible.background === false) invisible = true

@@ -572,6 +572,14 @@ function socketEvents(fs, io, socket, options = { arcadeMode: false }){
   socket.on('hostJoined', () => {
     io.emit('onHostJoined')
   })
+
+
+  socket.on('deleteDialogueChoice', (ownerId, choiceId) => {
+    io.emit('onDeleteDialogueChoice', ownerId, choiceId)
+  })
+  socket.on('addDialogueChoice', (ownerId, choiceId, choice) => {
+    io.emit('onAddDialogueChoice', ownerId, choiceId, choice)
+  })
 }
 
 module.exports = socketEvents

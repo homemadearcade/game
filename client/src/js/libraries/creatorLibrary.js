@@ -194,6 +194,18 @@ function onFirstPageGameLoaded() {
       toggleId: 'spear',
       ...toggleSubObject('spear')
     },
+    spearToggleable: {
+      label: 'Spear Toggle',
+      columnName: 'Equip',
+      toggleId: 'spearToggleable',
+      ...toggleSubObject('spearToggleable')
+    },
+    spearDialogueChoice: {
+      label: 'Spear Choice',
+      columnName: 'Equip',
+      toggleId: 'spearDialogueChoice',
+      ...toggleSubObject('spearDialogueChoice')
+    },
     gun: {
       label: 'Gun',
       columnName: 'Equip',
@@ -324,6 +336,8 @@ function onFirstPageGameLoaded() {
     kirby: true,
     snake: true,
     spear: true,
+    spearToggleable: true,
+    spearDialogueChoice: true,
     gun: true,
     shrinkRay: true,
     bombs: true,
