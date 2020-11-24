@@ -11,6 +11,12 @@ PUZZLE INTERFACES
 COMBAT + GOALS + QUESTS
 -------
 
+Interesting that bar of dreams and homemade arcade i've wanted to have audio... props, everything possible available!! In both scenarios I've wanted them to feel like anything could happen. Anything is possible. Is is my lack of decision making and vision or is it part of my style?
+
+Perhaps like right click on creator service and click--Create new
+
+right click creator service - add to heros guidance? NOT BAD!
+
 right click - follow object, follow with path object
 
 chatOnHover. use current chat service to create one that occurs on hover and is removed when mouse moves off...

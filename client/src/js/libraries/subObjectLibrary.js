@@ -38,14 +38,29 @@ window.local.on('onFirstPageGameLoaded', () => {
       // opacity: 1,
       name: 'Spear',
       subObjectName: 'spearDialogueChoice',
-      equipBehavior: 'addDialogueChoice',
-      equipProps: {
-        dialogueChoiceJSON: {
-          tags: {
-            monster: true
+      "triggers": {
+        "addDialogueOptionMod": {
+          "id": "addDialogueOptionMod",
+          "effectName": "mod",
+          "effectJSON": {
+            "dialogueChoices": {
+              "spearDialogueChoice": {
+                "tags": {
+                  "monster": true
+                },
+                "text": "Stab with spear",
+                "guestEffect": "destroy"
+              }
+            }
           },
-          text: 'Stab with spear',
-          guestEffect: 'destroy',
+          "effectedTags": [
+            "hero"
+          ],
+          "eventName": "onGameStarted",
+          "eventThreshold": -1,
+          "initialTriggerPool": -1,
+          "conditionValue": "spearDialogueChoice",
+          "conditionType": "isSubObjectEquipped",
         }
       },
       tags: { rotateable: true, relativeToAngle: true, relativeToDirection: true, pickupable: true, pickupOnHeroInteract: true, equipOnPickup: true, onMapWhenEquipped: true },

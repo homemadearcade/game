@@ -195,6 +195,11 @@ export function triggerInteraction(interaction, hero, collider, result, options)
     triggered = true
   }
 
+  if(interactionName === 'integratedInteractEvent') {
+    window.local.emit('onHeroInteract--integrated', hero, collider)
+    triggered = true
+  }
+
   if(interactionName === 'resourceWithdraw') {
     let subObjectNameToWithdraw = window.getResourceSubObjectNames(collider, collider)
 

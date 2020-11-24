@@ -65,6 +65,23 @@ function addTrigger(owner) {
   })
 }
 
+function addMod(owner) {
+  PAGE.typingMode = true
+  openAddMod((result) => {
+    if(result && result.value) {
+      const mod = { modId: result.value, soloMod: true, modRevertId: result.value, ownerId: owner.id }
+      PAGE.typingMode = true
+      openEditMod(mod, (result) => {
+        if (result && result.value) {
+          const mod = result.value
+          window.socket.emit('startMod', owner.id, mod)
+        }
+        PAGE.typingMode = false
+      })
+    }
+  })
+}
+
 function addHook(owner, eventName) {
   PAGE.typingMode = true
   openAddHook((result) => {
@@ -322,6 +339,22 @@ function openSelectEaseAnimation(cb) {
 function openAddTrigger(cb) {
   Swal.fire({
     title: 'What is the name of this trigger?',
+    showClass: {
+      popup: 'animated fadeInDown faster'
+    },
+    hideClass: {
+      popup: 'animated fadeOutUp faster'
+    },
+    input: 'text',
+    inputAttributes: {
+      autocapitalize: 'off'
+    },
+  }).then(cb)
+}
+
+function openAddMod(cb) {
+  Swal.fire({
+    title: 'What is the name of this mod?',
     showClass: {
       popup: 'animated fadeInDown faster'
     },
@@ -609,6 +642,32 @@ function openEditTriggerModal(effect, cb) {
 
 }
 
+function openEditMod(mod, cb) {
+  Swal.fire({
+    title: 'Edit Mod',
+    showClass: {
+      popup: 'animated fadeInDown faster'
+    },
+    hideClass: {
+      popup: 'animated fadeOutUp faster'
+    },
+    html:`<div id='edit-mod-container'></div>`,
+    preConfirm: (result) => {
+      return ref.current.getSequenceJSON()
+    }
+  }).then(cb)
+
+  mod.sequenceType = 'sequenceEffect'
+  mod.effectName = 'mod'
+
+  // Mount React App
+  const ref = React.createRef()
+  ReactDOM.render(
+    React.createElement(SequenceItem, { ref, sequenceItems: mod, isMod: true }),
+    document.getElementById('edit-mod-container')
+  )
+}
+
 function openEditConditionListModal(conditionList, cb) {
   Swal.fire({
     title: 'Edit Conditions',
@@ -691,6 +750,9 @@ export default {
   openSelectEaseAnimation,
   openSelectParticleAnimation,
   // editTriggerEvent,
+  openEditMod,
+  addMod,
+
   editTrigger,
   editSubObjectChanceConditions
 }

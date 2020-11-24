@@ -8,6 +8,7 @@ function onPlayerIdentified() {
     onHeroLand: { mainObject: 'hero', guestObject: 'anything' },
     onHeroHeadHit: { mainObject: 'hero', guestObject: 'anything' },
     onHeroInteract: { mainObject: 'hero', guestObject: 'anything' },
+    'onHeroInteract--integrated': { mainObject: 'hero', guestObject: 'anything' },
     onHeroDestroyed: { mainObject: 'hero', guestObject: 'anything', guestObjectOptional: true },
     onHeroAware: { mainObject: 'hero', guestObject: 'anything' },
     onHeroUnaware: { mainObject: 'hero', guestObject: 'anything' },
@@ -84,30 +85,40 @@ function addTrigger(ownerObject, trigger) {
   if(!PAGE.role.isHost) return
 
   ownerObject.triggers[trigger.id].removeEventListener = window.local.on(eventName, (mainObject, guestObject) => {
-    if(!GAME.gameState.started) return
+    fireTrigger(trigger, ownerObject, mainObject, guestObject, true)
+  })
+}
 
-    let fx = () => triggerEffectSmart(trigger, ownerObject, mainObject, guestObject)
+function fireTrigger(trigger, ownerObject, mainObject, guestObject, fire = true) {
+  if(!GAME.gameState.started) return
 
-    let eventMatch = false
+  let fx = () => triggerEffectSmart(trigger, ownerObject, mainObject, guestObject)
 
-    if(eventName === 'onTagDepleted') {
-      eventMatch = mainObject === trigger.mainObjectTag
-    } else {
-      eventMatch = testEventMatch(eventName, mainObject, guestObject, trigger, ownerObject)
-    }
+  let eventMatch = false
 
-    if(eventMatch) {
-      if(trigger.triggerPool == 0) return
-      trigger.eventCount++
-      if(!trigger.eventThreshold) {
-        fx()
-        if(trigger.triggerPool > 0) trigger.triggerPool--
-      } else if(trigger.eventCount >= trigger.eventThreshold) {
+  if(trigger.eventName === 'onTagDepleted') {
+    eventMatch = mainObject === trigger.mainObjectTag
+  } else {
+    eventMatch = testEventMatch(trigger.eventName, mainObject, guestObject, trigger, ownerObject)
+  }
+
+  if(eventMatch) {
+    if(trigger.triggerPool == 0) return
+    if(fire) trigger.eventCount++
+    if(!trigger.eventThreshold) {
+      if(fire) {
         fx()
         if(trigger.triggerPool > 0) trigger.triggerPool--
       }
+      return true
+    } else if(trigger.eventCount >= trigger.eventThreshold) {
+      if(fire) {
+        fx()
+        if(trigger.triggerPool > 0) trigger.triggerPool--
+      }
+      return true
     }
-  })
+  }
 }
 
 function triggerEffectSmart(trigger, ownerObject, mainObject, guestObject) {
@@ -188,4 +199,5 @@ export default {
   addTrigger,
   deleteTrigger,
   removeTriggerEventListener,
+  fireTrigger,
 }

@@ -10,15 +10,21 @@ export default class ModMenu extends React.Component{
       const { objectSelected } = this.props
       const { networkEditObject } = MAPEDITOR
 
+      if(key === 'add-mod') {
+        modals.addMod(objectSelected)
+        return
+      }
+
       const data = JSON.parse(key)
 
       if(data.action === 'end') {
         window.socket.emit('endMod', data.manualRevertId)
         window.socket.emit('resetPhysicsProperties', objectSelected.id)
       }
-      if(data.action === 'end') {
+      if(data.action === 'disable') {
         window.socket.emit('disableMod', data.manualRevertId)
       }
+
     }
   }
 
@@ -60,6 +66,9 @@ export default class ModMenu extends React.Component{
   }
 
   render() {
+
+    // <MenuItem key={'add-mod'}>Add Mod</MenuItem>
+
     return <Menu onClick={this._handleModMenuClick}>
       {this._renderModMenu()}
     </Menu>

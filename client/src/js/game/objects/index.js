@@ -227,8 +227,8 @@ class Objects{
       actionProps: object.actionProps,
       actionButtonBehaviorLabel: object.actionButtonBehaviorLabel,
 
-      equipBehavior: object.equipBehavior,
-      equipProps: object.equipProps,
+      // equipBehavior: object.equipBehavior,
+      // equipProps: object.equipProps,
 
       // inventory
       count: object.count,
@@ -461,9 +461,9 @@ class Objects{
       interactions.push({text: 'Deposit', tag: 'resourceDepositOnInteract', interaction: 'resourceDeposit'})
     }
 
-    if(hero.dialogueChoices) {
-      Object.keys(hero.dialogueChoices).forEach((id) => {
-        let choice = hero.dialogueChoices[id]
+    if(Object.keys(hero.mod().dialogueChoices).length) {
+      Object.keys(hero.mod().dialogueChoices).forEach((id) => {
+        let choice = hero.mod().dialogueChoices[id]
         if(!choice) return
         let added
         Object.keys(choice.tags).forEach((tag) => {
@@ -475,6 +475,20 @@ class Objects{
         })
       })
       interactions.push({text: 'Cancel'})
+    }
+
+    if(object.triggers) {
+      Object.keys(object.triggers).forEach((id) => {
+        let trigger = object.triggers[id]
+        if(!trigger) return
+
+        // check if this trigger would fire..
+        if(triggers.fireTrigger(trigger, object, hero, object, false)) {
+          if(trigger.eventName === 'onHeroInteract--integrated') {
+            interactions.push({text: id, interaction: 'integratedInteractEvent'})
+          }
+        }
+      })
     }
 
     return interactions
@@ -1110,7 +1124,7 @@ class Objects{
 
     if(subObject.triggers) {
       Object.keys(subObject.triggers).forEach((triggerId) => {
-        triggers.removeTriggerEventListener(object, triggerId)
+        triggers.removeTriggerEventListener(subObject, triggerId)
       })
     }
   }

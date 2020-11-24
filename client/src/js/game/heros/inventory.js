@@ -173,11 +173,11 @@ function equipSubObject(hero, subObject, keyBinding = 'available') {
     }
   }
 
-  if(subObject.equipBehavior === 'addDialogueChoice') {
-    if(subObject.equipProps.dialogueChoiceJSON) {
-      window.socket.emit('addDialogueChoice', hero.id, subObject.id, subObject.equipProps.dialogueChoiceJSON)
-    }
-  }
+  // if(subObject.equipBehavior === 'addDialogueChoice') {
+  //   if(subObject.equipProps.dialogueChoiceJSON) {
+  //     window.socket.emit('addDialogueChoice', hero.id, subObject.id, subObject.equipProps.dialogueChoiceJSON)
+  //   }
+  // }
 
   subObject.isEquipped = true
 
@@ -198,9 +198,9 @@ function unequipSubObject(hero, subObject) {
     hero.spaceBarBehavior = null
   }
 
-  if(subObject.equipBehavior === 'addDialogueChoice') {
-    window.socket.emit('deleteDialogueChoice', hero.id, subObject.id)
-  }
+  // if(subObject.equipBehavior === 'addDialogueChoice') {
+  //   window.socket.emit('deleteDialogueChoice', hero.id, subObject.id)
+  // }
 
   subObject.isEquipped = false
 

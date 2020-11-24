@@ -427,7 +427,7 @@ function postPhysics() {
           hero._cantInteract = true
         // }
       }
-      
+
       if(input && (input['e'] === true || input['v'] === true || input['enter'] === true) && !hero._cantInteract && !hero.flags.paused) {
         window.local.emit('onHeroInteract', hero, interactableObject)
         hero._cantInteract = true
