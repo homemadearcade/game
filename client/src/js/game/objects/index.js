@@ -423,7 +423,7 @@ class Objects{
     return mapState
   }
 
-  getInteractions(object) {
+  getInteractions(hero, object) {
     let interactions = []
     if((object.mod().tags['completeQuestOnHeroInteract'] && object.mod().tags['questCompleter'])) {
       interactions.push({text: 'Complete Quest', tag: 'completeQuestOnHeroInteract', interaction: 'completeQuest'})
@@ -461,11 +461,21 @@ class Objects{
       interactions.push({text: 'Deposit', tag: 'resourceDepositOnInteract', interaction: 'resourceDeposit'})
     }
 
-    // if(object.mod().tags['resourceDepositOnTouchStart'] && object.mod().tags.resourceZone) {
-    //   interactions.push({text: 'Deposit', tag: 'resourceDepositOnTouchStart', interaction: 'resourceDeposit'})
-    // }
-
-    // if(object.mod().tags['interactable']) return true
+    if(hero.dialogueChoices) {
+      Object.keys(hero.dialogueChoices).forEach((id) => {
+        let choice = hero.dialogueChoices[id]
+        if(!choice) return
+        let added
+        Object.keys(choice.tags).forEach((tag) => {
+          if(added) return
+          if(object.mod().tags[tag]) {
+            added = true
+            interactions.push({text: choice.text, heroEffect: choice.heroEffect, guestEffect: choice.guestEffect})
+          }
+        })
+      })
+      interactions.push({text: 'Cancel'})
+    }
 
     return interactions
   }

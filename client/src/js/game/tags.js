@@ -286,6 +286,7 @@ function setDefault() {
 
     seeThroughForegrounds: false,
     seeHiddenObjects: false,
+    autoUpdateMaxVelocity: true,
   }
 
   window.subObjectTags = {

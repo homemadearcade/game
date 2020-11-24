@@ -5,13 +5,13 @@ import onCombat from './onCombat'
 import { startQuest, completeQuest } from './quests'
 import { pickupObject, withdrawFromInventory } from './inventory'
 import { spawnAllNow } from '../spawnZone'
-import { processEffect } from '../effects'
+import effects from '../effects'
 
 export function onHeroTrigger(hero, collider, result, options = { fromInteractButton: false }) {
   const isInteraction = options.fromInteractButton
 
   if(isInteraction) {
-    const interactions = OBJECTS.getInteractions(collider)
+    const interactions = OBJECTS.getInteractions(hero, collider)
     if(interactions.length > 1) {
       hero.choiceOptions = interactions.slice().map((interaction) => {
         return {
@@ -43,22 +43,13 @@ export function onHeroTrigger(hero, collider, result, options = { fromInteractBu
             hero.dialogueId = null
             hero.choiceOptions = null
             hero._cantInteract = true
-            if(interaction.heroEffect) {
-              processEffect(interaction.heroEffect, hero, collider)
-            }
-            if(interaction.guestEffect) {
-              processEffect(interaction.guestEffect, collider, hero)
-            }
-
-            if(interaction.interaction) {
-              triggerInteraction(interaction.interaction, hero, collider, result, options)
-            }
+            triggerInteraction(interaction, hero, collider, result, options)
             window.emitGameEvent('onUpdatePlayerUI', hero)
           })
         }
       })
-    } else {
-      triggerInteraction(interactions[0].interaction, hero, collider, result, options)
+    } else if(interactions.length){
+      triggerInteraction(interactions[0], hero, collider, result, options)
     }
   } else {
     onCombat(hero, collider, result, options)
@@ -154,56 +145,64 @@ export function onHeroTrigger(hero, collider, result, options = { fromInteractBu
 
 
 export function triggerInteraction(interaction, hero, collider, result, options) {
+  let interactionName = interaction.interaction
   let triggered = false
 
-  if(interaction === 'behavior') {
+  if(interaction.heroEffect) {
+    effects.processEffect({ effectName: interaction.heroEffect }, hero, collider)
+  }
+  if(interaction.guestEffect) {
+    effects.processEffect({ effectName: interaction.guestEffect }, collider, hero)
+  }
+
+  if(interactionName === 'behavior') {
     onBehavior(hero, collider, result, options)
     triggered = true
   }
 
-  if(interaction === 'updateHero') {
+  if(interactionName === 'updateHero') {
     onHeroUpdate(hero, collider, result, options)
     triggered = true
   }
 
-  if(interaction === 'talk' && collider.heroDialogue && collider.heroDialogue.length) {
+  if(interactionName === 'talk' && collider.heroDialogue && collider.heroDialogue.length) {
     onTalk(hero, collider, result, options)
     triggered = true
   }
 
-  if(interaction === 'giveQuest' && collider.questGivingId && hero.quests && hero.questState && hero.questState[collider.questGivingId] && !hero.questState[collider.questGivingId].started && !hero.questState[collider.questGivingId].completed) {
+  if(interactionName === 'giveQuest' && collider.questGivingId && hero.quests && hero.questState && hero.questState[collider.questGivingId] && !hero.questState[collider.questGivingId].started && !hero.questState[collider.questGivingId].completed) {
     startQuest(hero, collider.mod().questGivingId)
     triggered = true
   }
 
-  if(interaction === 'completeQuest' && collider.questCompleterId && hero.quests && hero.questState && hero.questState[collider.questCompleterId] && hero.questState[collider.questCompleterId].started && !hero.questState[collider.questCompleterId].completed) {
+  if(interactionName === 'completeQuest' && collider.questCompleterId && hero.quests && hero.questState && hero.questState[collider.questCompleterId] && hero.questState[collider.questCompleterId].started && !hero.questState[collider.questCompleterId].completed) {
     completeQuest(hero, collider.mod().questCompleterId)
     triggered = true
   }
 
-  if(interaction === 'pickup') {
+  if(interactionName === 'pickup') {
     pickupObject(hero, collider)
     triggered = true
   }
 
-  if(interaction === 'spawnAllInHeroInventory') {
+  if(interactionName === 'spawnAllInHeroInventory') {
     spawnAllNow(collider, hero)
     triggered = true
   }
 
-  if(interaction === 'spawn') {
+  if(interactionName === 'spawn') {
     spawnAllNow(collider)
     triggered = true
   }
 
-  if(interaction === 'resourceWithdraw') {
+  if(interactionName === 'resourceWithdraw') {
     let subObjectNameToWithdraw = window.getResourceSubObjectNames(collider, collider)
 
     if(subObjectNameToWithdraw) withdrawFromInventory(hero, collider, subObjectNameToWithdraw, collider.resourceWithdrawAmount)
     triggered = true
   }
 
-  if(interaction === 'resourceDeposit') {
+  if(interactionName === 'resourceDeposit') {
     let subObjectNameToWithdraw = window.getResourceSubObjectNames(hero, collider)
 
     if(subObjectNameToWithdraw) {

@@ -11,15 +11,6 @@ PUZZLE INTERFACES
 COMBAT + GOALS + QUESTS
 -------
 
-add/delete customDialogueChoice via actionProps
-{
-  tags: {},
-  text: '',
-  heroEffect: '',
-  guestEffect:
-}
-
-
 right click - follow object, follow with path object
 
 chatOnHover. use current chat service to create one that occurs on hover and is removed when mouse moves off...
@@ -185,6 +176,7 @@ Maybe dual stick shooter potential?
   VISIBLE TO - select tags its visible to, ( visible to is an object with tags: true )
   Background animation tag ( perhaps background stage and everything…)
   one way platform ( can land on but can jump through from below)
+  equipped?
 
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
@@ -338,7 +330,7 @@ THEMES
    I mean ugh fuck themes. I think maybe we can have a 'mediaControlCenter' similar to NotificationsControl center
    With this I can randomize the effects the world has
    dont forget to randomize physics too!
-   and randomize perhaps the camera filter!!
+   and randomize perhaps the camera filter!! <--- yes on camera filter and also dont forget about camera shakes too, those are good animations, or EASE! remember ease..
    I Think you have tags like
 
    MODS
@@ -365,9 +357,15 @@ THEMES
     dashAnimation1/2/3
     teleportAnimation1/2/3
     turnAroundAnimation1/2/3
+    landAnimation1/2/3
     bounceAnimation1/2/3
 
     splashWaterAnimation1/2/3
+    swimAnimation1/2/3
+    walkPathAnimation1/2/3
+    walkGrassAnimation1/2/3
+    walkMudAnimation1/2/3
+    walkMetalAnimation1/2/3
 
   SFX
   ---
@@ -388,10 +386,26 @@ THEMES
     dashSFX1/2/3
     teleportSFX1/2/3
     turnAroundSFX1/2/3
+    landSFX1/2/3
     bounceSFX1/2/3
 
+    swimSFX1/2/3
     splashWaterSFX1/2/3
+    walkPathSFX1/2/3
+    walkGrassSFX1/2/3
+    walkMudSFX1/2/3
+    walkMetalSFX1/2/3
 
+--
+  AMBIENCE --- these tags would play an ambience in any area
+    caveAmbience
+    waterAmbience
+    jungleAmbience
+    farmAmbience
+    marketAmbience
+    fireAmbience
+    machineAmbience
+    stopOtherAmbience
 
     and then you can say like. add SFX1 tag to all monsters or all pickupable or all resources, etc
 

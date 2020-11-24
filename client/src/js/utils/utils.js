@@ -233,16 +233,12 @@ window.isTargetTextInput = function(keyEvent) {
 window.isObjectSelectable = function(gameObject) {
   if(gameObject.tags.subObject && (!PAGE.role.isAdmin || EDITOR.preferences.selectable.subObjects === false)) return false
   if(gameObject.constructParts && (!PAGE.role.isAdmin || EDITOR.preferences.selectable.constructParts === false)) return false
-  // if(gameObject.tags.background && EDITOR.preferences.mapVisible.darkness === false) invisible = true
   if(gameObject.tags.invisible && (!PAGE.role.isAdmin || EDITOR.preferences.selectable.invisible === false)) return false
-  // if(gameObject.tags.resourceZone && EDITOR.preferences.selectable.resourceZone === false) return false
-  // if(gameObject.tags.cameraOverlay && EDITOR.preferences.selectable.cameraOverlay === false) return false
-  // if(gameObject.tags.spawnZone && EDITOR.preferences.selectable.spawnZone === false) return false
+  // if(gameObject.id !== 'globalConstructStationaryBackground' && gameObject.tags.background && (!PAGE.role.isAdmin || EDITOR.preferences.selectable.background === false)) return false
+  // if(gameObject.id !== 'globalConstructStationaryForeground' && gameObject.tags.foreground && (!PAGE.role.isAdmin || EDITOR.preferences.selectable.foreground === false)) return false
+  if(gameObject.id === 'globalConstructStationaryObstacle' && (!PAGE.role.isAdmin || EDITOR.preferences.selectable.structure === false)) return false
   if(gameObject.tags.background && (!PAGE.role.isAdmin || EDITOR.preferences.selectable.background === false)) return false
   if(gameObject.tags.foreground && (!PAGE.role.isAdmin || EDITOR.preferences.selectable.foreground === false)) return false
-  // if(gameObject.tags.hero && EDITOR.preferences.selectable.hero === false) return false
-  if(gameObject.id === 'globalConstructStationaryObstacle' && (!PAGE.role.isAdmin || EDITOR.preferences.selectable.structure === false)) return false
-  // if(!gameObject.tags.background && !gameObject.tags.foreground && !gameObject.tags.hero && EDITOR.preferences.selectable.objects === false) return false
 
   return true
 }

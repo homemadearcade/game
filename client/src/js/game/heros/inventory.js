@@ -173,10 +173,7 @@ function equipSubObject(hero, subObject, keyBinding = 'available') {
     }
   }
 
-  console.log(subObject.equipBehavior)
   if(subObject.equipBehavior === 'addDialogueChoice') {
-    console.log('X')
-    // if(!subObject.equipState) subObject.equipState = {}
     if(subObject.equipProps.dialogueChoiceJSON) {
       window.socket.emit('addDialogueChoice', hero.id, subObject.id, subObject.equipProps.dialogueChoiceJSON)
     }
@@ -201,7 +198,7 @@ function unequipSubObject(hero, subObject) {
     hero.spaceBarBehavior = null
   }
 
-  if(subObject.equipBehavior === 'temporaryDialogueOption') {
+  if(subObject.equipBehavior === 'addDialogueChoice') {
     window.socket.emit('deleteDialogueChoice', hero.id, subObject.id)
   }
 

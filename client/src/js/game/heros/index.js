@@ -854,6 +854,20 @@ class Hero{
       if(typeof hero.angle != 'number') hero.angle = 0
       hero.angle += 7 * delta
     }
+
+    if(hero.mod().tags.autoUpdateMaxVelocity) {
+      let highest = hero.velocityMax
+      if(Math.abs(hero.jumpVelocity) > highest) {
+        highest = Math.abs(hero.jumpVelocity)
+      }
+      if(Math.abs(hero.dashVelocity) > highest) {
+        highest = Math.abs(hero.dashVelocity)
+      }
+      if(Math.abs(hero.velocityInputGoal) > highest) {
+        highest = Math.abs(hero.velocityInputGoal)
+      }
+      hero.velocityMax = highest
+    }
   }
 
   onRender(delta) {
@@ -1048,7 +1062,7 @@ class Hero{
   }
 
   onDeleteDialogueChoice(heroId, choiceId) {
-    GAME.heros[heroId].dialogueChoices[choiceId] = null
+    delete GAME.heros[heroId].dialogueChoices[choiceId]
   }
 }
 
