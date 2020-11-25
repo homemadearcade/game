@@ -4,8 +4,14 @@
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
 
-EMITTERS
 SOUND FX
+  this is the beginning of THEME and randomize THEME
+    randomize soundFX
+    pick random song
+    randomize particleFX
+    randomize sprite theme ( this would require sprite tags )
+    randomize hero physics
+
 FILL OUT SEQUENCE EDITOR, LIBRARY, EFFECTS, TAGS
 PUZZLE INTERFACES
 COMBAT + GOALS + QUESTS
@@ -13,7 +19,7 @@ COMBAT + GOALS + QUESTS
 
 Interesting that bar of dreams and homemade arcade i've wanted to have audio... props, everything possible available!! In both scenarios I've wanted them to feel like anything could happen. Anything is possible. Is is my lack of decision making and vision or is it part of my style?
 
-Perhaps like right click on creator service and click--Create new
+Perhaps like right click on creator service and click--Create new or COPY and EDIT JSON
 
 right click creator service - add to heros guidance? NOT BAD!
 
@@ -44,13 +50,6 @@ Editor
 Animate
 Sound
 Mod honestly needs its own...
-
-////////////////////////////////
-////////////////////////////////
-ANIMATION UPGRADE
-////////////////////////////////
-Make sure library emitters can be accessed via right click menu and selected and switched between
-allow for groups of custom emitters
 
 ////////////////////////////////
 ////////////////////////////////
@@ -134,6 +133,8 @@ Construct Editor on ha-demo bug?
   theres a problem with the construct editor camera not being able
   to go far enough right or down
 
+Bombs need to be able to spawn the explosion onto real objects
+
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
@@ -207,6 +208,8 @@ Add popovers to all UI everywhere, oh yeah! Including in creator
 Team mods?
 
 Visalize sequences
+
+Perhaps actual branch view of branches??? Like I mean yes binary tree or whatever this is
 
 HAve an object twist to the left and the right, its common cheap animation for games it seems
 

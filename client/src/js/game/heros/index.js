@@ -90,6 +90,7 @@ class Hero{
       triggers: {},
       triggerState: {},
       tags: {},
+      dialogueChoices: {},
       cameraTweenToTargetX: false,
       cameraTweenToTargetY: false,
       cameraTweenSpeedXExtra: 0,

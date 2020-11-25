@@ -20,6 +20,11 @@ function pickupObject(hero, collider) {
 
   // const name = getInventoryName(subObject)
 
+  if(!collider.mod().tags.pickupable) {
+    window.emitGameEvent('onHeroPickupFail', hero, subObject)
+    return
+  }
+
   if(!subObject.subObjectName) subObject.subObjectName = subObject.id
 
   if(hero.subObjects && hero.subObjects[subObject.subObjectName] && !collider.tags.stackable) {

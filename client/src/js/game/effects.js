@@ -1,7 +1,7 @@
 import onTalk from './heros/onTalk'
 import { startSequence } from './sequence'
 import { setPathTarget, setTarget } from './ai/pathfinders.js'
-import { equipSubObject, unequipSubObject } from './heros/inventory.js'
+import { equipSubObject, unequipSubObject, pickupObject, dropObject } from './heros/inventory.js'
 
 import axios from 'axios';
 import gridUtil from '../utils/grid.js'
@@ -56,8 +56,33 @@ import pathfinding from '../utils/pathfinding.js'
     unequipSubObject: {
       smallText: true
     },
+    dropSubObject: {
+      smallText: true,
+    },
+    removeSubObject: {
+      smallText: true,
+    },
     addLibrarySubObject: {
       librarySubObject: true
+    },
+    equipLibrarySubObject: {
+      librarySubObject: true
+    },
+    pickupObject: {
+      effectorObject: true,
+    },
+
+    addDialogueChoice: {
+      JSON: true,
+      label: 'Dialogue Choice id',
+      smallText: true,
+    },
+    temporaryDialogueChoice: {
+      JSON: true,
+      label: 'Dialogue Choice id',
+      smallText: true,
+      condition: true,
+      footer: 'Condition:'
     },
 
     branchApply: {
@@ -279,9 +304,36 @@ function processEffect(effect, effected, effector, ownerObject) {
     equipSubObject(effected, effected.subObjects[effectValue])
   }
 
-  if(effectName === 'equipSubObject') {
+  if(effectName === 'unequipSubObject') {
     unequipSubObject(effected, effected.subObjects[effectValue])
   }
+
+  if(effectName === 'dropSubObject') {
+    dropObject(effected, effected.subObjects[effectValue])
+  }
+
+  if(effectName === 'equipLibrarySubObject') {
+    const subObject = _.cloneDeep(window.subObjectLibrary[effect.effectLibrarySubObject])
+    subObject.tags.startsEquipped = true
+    OBJECTS.addSubObject(effected, subObject, effect.effectLibrarySubObject)
+  }
+
+  if(effectName === 'removeSubObject') {
+    OBJECTS.removeSubObject(effected.subObjects[effectValue])
+  }
+
+  if(effectName === 'pickupObject') {
+    pickupObject(effected, effector)
+  }
+
+  if(effectName === 'temporaryDialogueChoice') {
+    window.emitGameEvent('onStartMod', {ownerId: effected.id, temporaryDialogueChoice: true, ...effect})
+  }
+
+  if(effectName === 'addDialogueChoice') {
+    window.local.emit('onAddDialogueChoice', effected.id, effectValue, effect.effectJSON)
+  }
+
 
   // if(effectName === 'spawnTotalIncrement') {
   //   effected.spawnTotal += effectValue || 1

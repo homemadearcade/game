@@ -1146,6 +1146,9 @@ class Objects{
   }
 
   removeSubObject(so) {
+    if(so.isEquipped) {
+      unequipSubObject(OBJECTS.getObjectOrHeroById(so.ownerId), so)
+    }
     so.removed = true
     // if(window.popoverOpen[so.id]) {
     //   MAP.closePopover(so)

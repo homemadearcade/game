@@ -168,6 +168,7 @@ function setDefault() {
     seeThroughOnHeroCollide: false,
     hidden: false,
     showXWhenRemoved: false,
+    showX: false,
     // invisibleOnHeroCollide: false
 
     // randomColor: false,

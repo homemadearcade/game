@@ -1032,6 +1032,7 @@ class Game{
 
     if(mod.conditionType && mod.conditionType.length && mod.conditionType !== 'none') {
       if(mod.conditionType === 'onEvent') {
+        mod._disabled = false
         mod.removeEventListener = window.local.on(mod.conditionEventName, (mainObject, guestObject) => {
           let ownerObject = OBJECTS.getObjectOrHeroById(mod.ownerId)
           const eventMatch = testEventMatch(mod.conditionEventName, mainObject, guestObject, mod, ownerObject, { testPassReverse: mod.testPassReverse, testModdedVersion: mod.testModdedVersion })
@@ -1043,6 +1044,7 @@ class Game{
         })
       }
       if(mod.conditionType === 'onTimerEnd') {
+        mod._disabled = false
         GAME.addTimeout(window.uniqueID(), mod.conditionValue || 10, () => {
           mod._remove = true
         })
@@ -1097,6 +1099,7 @@ class Game{
 
       if(mod._remove) {
         if(mod.temporaryEquip) unequipSubObject(modOwnerObject, modOwnerObject.subObject[mod.effectValue])
+        if(mod.temporaryDialogueChoice) window.local.emit('onDeleteDialogueChoice', modOwnerObject.id, mod.effectValue)
         if(mod.removeEventListener) mod.removeEventListener()
         return false
       }
@@ -1125,6 +1128,15 @@ class Game{
           } else if(!mod._disabled && !subObject.isEquipped) {
             equipSubObject(modOwnerObject, modOwnerObject.subObjects[mod.effectValue])
           }
+        }
+      }
+
+      if(mod.temporaryDialogueChoice) {
+        const dialogueChoices = modOwnerObject.dialogueChoices[mod.effectValue]
+        if(dialogueChoices && mod._disabled) {
+          window.local.emit('onDeleteDialogueChoice', modOwnerObject.id, mod.effectValue)
+        } else if(!mod._disabled && !dialogueChoices) {
+          window.local.emit('onAddDialogueChoice', modOwnerObject.id, mod.effectValue, mod.effectJSON)
         }
       }
 
@@ -1204,6 +1216,8 @@ class Game{
       activeMods.forEach((mod) => {
         if(mod._disabled) return
         if(mod.temporaryEquip) return
+        if(mod.temporaryDialogueChoice) return
+
         OBJECTS.mergeWithJSON(objectCopy, mod.effectJSON)
       })
 

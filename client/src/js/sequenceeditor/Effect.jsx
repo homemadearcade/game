@@ -108,9 +108,9 @@ export default class Effect extends React.Component{
       }
 
       if(effectData.effectorObject) {
-        chosenEffectForm.push(<SingleIdSelect sequenceItem={sequenceItem} isTrigger={this.props.isTrigger} valueProp='effector' onChange={(event) => {
+        chosenEffectForm.push(<SingleIdSelect sequenceItem={sequenceItem} isTrigger={this.props.isTrigger} valueProp='effectorObject' onChange={(event) => {
          if(event.value) {
-           sequenceItem.effector = event.value
+           sequenceItem.effectorObject = event.value
            this.props.setState({sequenceItem})
          }
        }}
@@ -140,7 +140,6 @@ export default class Effect extends React.Component{
       }
 
       if(effectData.librarySubObject) {
-        console.log('XXXX')
         chosenEffectForm.push(<SingleLibrarySubObjectSelect sequenceItem={sequenceItem} valueProp='effectLibrarySubObject' onChange={(event) => {
          if(event.value) {
            sequenceItem.effectLibrarySubObject = event.value

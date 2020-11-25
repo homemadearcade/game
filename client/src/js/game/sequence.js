@@ -124,25 +124,29 @@ function processSequence(sequence) {
   }
 
   if(item.sequenceType === 'sequenceEffect') {
-    const effectedObjects = effects.getEffectedObjects(item, item.mainObject, item.guestObject, sequence.ownerObject)
+    const effectedObjects = effects.getEffectedObjects(item, sequence.mainObject, sequence.guestObject, sequence.ownerObject)
 
     let effector = defaultEffector
+
+    console.log('XXX', item.effectorObject, item)
+
     if(item.effectorObject) {
       if(item.effectorObject === 'ownerObject') {
         effector = sequence.ownerObject
       } else if(item.effectorObject === 'mainObject') {
-        effector = item.mainObject
+        effector = sequence.mainObject
       } else if(item.effectorObject === 'guestObject') {
-        effector = item.guestObject
+        effector = sequence.guestObject
       } else if(item.effectorObject !== 'default') {
         effector = GAME.objectsById[item.effectorObject]
         if(!effector) {
           effector = GAME.heros[item.effectorObject]
         }
-        if(!effector) {
-          effector = defaultEffector
-        }
       }
+    }
+
+    if(!effector) {
+      effector = defaultEffector
     }
 
     // inside of ObjectId is currently the only id selector that can also select main Object, guest Object, etc
@@ -150,9 +154,9 @@ function processSequence(sequence) {
     // this also exists when a trigger is fired
     if(item.conditionType === 'insideOfObjectId') {
       if(item.conditionValue === 'mainObject') {
-        item.conditionValue = item.mainObject.id
+        item.conditionValue = sequence.mainObject.id
       } else if(item.conditionValue === 'guestObject') {
-        item.conditionValue = item.guestObject.id
+        item.conditionValue = sequence.guestObject.id
       }
     }
 
@@ -162,7 +166,7 @@ function processSequence(sequence) {
   }
 
   if(item.sequenceType === 'sequenceChoice') {
-    const effectedObjects = effects.getEffectedObjects(item, item.mainObject, item.guestObject, sequence.ownerObject)
+    const effectedObjects = effects.getEffectedObjects(item, sequence.mainObject, sequence.guestObject, sequence.ownerObject)
     item.waiting = true
     effectedObjects[0].choiceOptions = item.options.slice()
     effectedObjects[0].flags.showDialogue = true
@@ -335,7 +339,7 @@ function processSequence(sequence) {
   }
 
   if(item.sequenceType === 'sequenceCutscene') {
-    const effectedObjects = effects.getEffectedObjects(item, item.mainObject, item.guestObject, sequence.ownerObject)
+    const effectedObjects = effects.getEffectedObjects(item, sequence.mainObject, sequence.guestObject, sequence.ownerObject)
 
     item.effectedIds = []
     const effect = {
@@ -355,7 +359,7 @@ function processSequence(sequence) {
     }
   }
   if(item.sequenceType === 'sequenceNotification') {
-    const effectedObjects = effects.getEffectedObjects(item, item.mainObject, item.guestObject, sequence.ownerObject)
+    const effectedObjects = effects.getEffectedObjects(item, sequence.mainObject, sequence.guestObject, sequence.ownerObject)
 
     const herosNotified = []
     effectedObjects.forEach((effected) => {
@@ -376,7 +380,7 @@ function processSequence(sequence) {
   }
 
   if(item.sequenceType === 'sequenceGoal') {
-    const effectedObjects = effects.getEffectedObjects(item, item.mainObject, item.guestObject, sequence.ownerObject)
+    const effectedObjects = effects.getEffectedObjects(item, sequence.mainObject, sequence.guestObject, sequence.ownerObject)
 
     const effect = {
       effectName: 'startGoal',

@@ -117,11 +117,11 @@ function update(camera) {
   GAME.objects.forEach((object) => {
     object = object.mod()
 
+    if((object.tags.showXWhenRemoved && object.removed) || object.tags.showX) {
+      drawTools.drawFilledObject(ctx, {...object, color: 'rgba(0,0,0, 0.33)'}, camera)
+      drawTools.drawX(ctx, camera, object)
+    }
     if(object.removed) {
-      if(object.tags.showXWhenRemoved) {
-        drawTools.drawFilledObject(ctx, {...object, color: 'rgba(0,0,0, 0.33)'}, camera)
-        drawTools.drawX(ctx, camera, object)
-      }
       return
     }
     if(object.id === CONSTRUCTEDITOR.objectId || object.id === PATHEDITOR.objectId) return
@@ -142,13 +142,11 @@ function update(camera) {
     if(object.subObjects) {
       OBJECTS.forAllSubObjects(object.subObjects, (subObject) => {
         if(subObject.tags.potential) return
-        if(subObject.removed) {
-          if(subObject.tags.showXWhenRemoved) {
-            drawTools.drawFilledObject(ctx, {...object, color: 'rgba(0,0,0, 0.33)'}, camera)
-            drawTools.drawX(ctx, camera, object)
-          }
-          return
+        if((subObject.tags.showXWhenRemoved && subObject.removed) || subObject.tags.showX) {
+          drawTools.drawFilledObject(ctx, {...subObject, color: 'rgba(0,0,0, 0.33)'}, camera)
+          drawTools.drawX(ctx, camera, subObject)
         }
+        if(subObject.removed) return
         if(!subObject.tags.outline) return
         drawTools.drawObject(ctx, subObject, camera)
       })
@@ -157,11 +155,11 @@ function update(camera) {
 
   GAME.heroList.forEach((hero) => {
     hero = hero.mod()
+    if((hero.tags.showXWhenRemoved && hero.removed) || hero.tags.showX) {
+      drawTools.drawFilledObject(ctx, {...hero, color: 'rgba(0,0,0, 0.33)'}, camera)
+      drawTools.drawX(ctx, camera, hero)
+    }
     if(hero.removed) {
-      if(object.tags.showXWhenRemoved) {
-        drawTools.drawFilledObject(ctx, {...object, color: 'rgba(0,0,0, 0.33)'}, camera)
-        drawTools.drawX(ctx, camera, object)
-      }
       return
     }
 
@@ -172,13 +170,11 @@ function update(camera) {
     if(hero.subObjects) {
       OBJECTS.forAllSubObjects(hero.subObjects, (subObject) => {
         if(subObject.tags.potential) return
-        if(subObject.removed) {
-          if(subObject.tags.showXWhenRemoved) {
-            drawTools.drawFilledObject(ctx, {...object, color: 'rgba(0,0,0, 0.33)'}, camera)
-            drawTools.drawX(ctx, camera, object)
-          }
-          return
+        if((subObject.tags.showXWhenRemoved && subObject.removed) || subObject.tags.showX) {
+          drawTools.drawFilledObject(ctx, {...subObject, color: 'rgba(0,0,0, 0.33)'}, camera)
+          drawTools.drawX(ctx, camera, subObject)
         }
+        if(subObject.removed) return
         if(!subObject.tags.outline) return
         drawTools.drawObject(ctx, subObject, camera)
       })
