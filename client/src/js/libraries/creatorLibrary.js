@@ -88,26 +88,36 @@ function onFirstPageGameLoaded() {
     standingNPC: {
       label: 'Standing',
       columnName: 'NPCs',
+      libraryName:'objectLibrary',
+      libraryId:'standingNPC',
       JSON: window.objectLibrary.standingNPC,
     },
     wanderingNPC: {
       label: 'Wandering',
       columnName: 'NPCs',
+      libraryName:'objectLibrary',
+      libraryId:'wanderingNPC',
       JSON: window.objectLibrary.wanderingNPC,
     },
     light: {
       label: 'Medium  Light',
       columnName: 'Lights',
+      libraryName:'objectLibrary',
+      libraryId:'light',
       JSON: window.objectLibrary.light,
     },
     fire: {
       label: 'Fire',
       columnName: 'Lights',
+      libraryName:'objectLibrary',
+      libraryId:'fire',
       JSON: window.objectLibrary.fire,
     },
     spawnZone: {
       label: 'Spawn Zone',
       columnName: 'Zones',
+      libraryName:'objectLibrary',
+      libraryId:'spawnZone',
       JSON: window.objectLibrary.spawnZone,
       // onCreateObject: (object) => {
       //   window.socket.emit('addSubObject', object, { tags: { potential: true } }, 'spawner')
@@ -116,27 +126,37 @@ function onFirstPageGameLoaded() {
     resourceZone: {
       label: 'Resource Zone',
       columnName: 'Zones',
+      libraryName:'objectLibrary',
+      libraryId:'resourceZone',
       JSON: window.objectLibrary.resourceZone
     },
     resource: {
       label: 'Resource',
       columnName: 'Items',
+      libraryName:'objectLibrary',
+      libraryId:'items',
       JSON: window.objectLibrary.resource
     },
     chest: {
       label: 'Chest',
       columnName: 'Items',
+      libraryName:'objectLibrary',
+      libraryId:'chest',
       JSON: window.objectLibrary.chest,
     },
     homing: {
       label: 'Homing',
       columnName: 'Monsters',
+      libraryName:'objectLibrary',
+      libraryId:'homing',
       JSON: window.objectLibrary.homing,
     },
     spin: {
       label: 'Spin',
       columnName: 'Hero',
       toggleId: 'heroSpin',
+      libraryName:'modLibrary',
+      libraryId:'spin',
       ...toggleMod('spin')
     },
     mario: {
@@ -144,6 +164,8 @@ function onFirstPageGameLoaded() {
       columnName: 'Hero',
       columnExclusiveToggle: true,
       toggleId: 'mario',
+      libraryName:'modLibrary',
+      libraryId:'mario',
       ...toggleMod('mario')
     },
     kirby: {
@@ -151,6 +173,8 @@ function onFirstPageGameLoaded() {
       columnName: 'Hero',
       columnExclusiveToggle: true,
       toggleId: 'kirby',
+      libraryName:'modLibrary',
+      libraryId:'kirby',
       ...toggleMod('kirby')
     },
     zelda: {
@@ -158,6 +182,8 @@ function onFirstPageGameLoaded() {
       columnName: 'Hero',
       columnExclusiveToggle: true,
       toggleId: 'zelda',
+      libraryName:'modLibrary',
+      libraryId:'zelda',
       ...toggleMod('zelda')
     },
     ufo: {
@@ -165,6 +191,8 @@ function onFirstPageGameLoaded() {
       columnName: 'Hero',
       columnExclusiveToggle: true,
       toggleId: 'ufo',
+      libraryName:'modLibrary',
+      libraryId:'ufo',
       ...toggleMod('ufo')
     },
     asteroids: {
@@ -172,6 +200,8 @@ function onFirstPageGameLoaded() {
       columnName: 'Hero',
       columnExclusiveToggle: true,
       toggleId: 'asteroids',
+      libraryName:'modLibrary',
+      libraryId:'asteroids',
       ...toggleMod('asteroids')
     },
     car: {
@@ -179,6 +209,8 @@ function onFirstPageGameLoaded() {
       columnName: 'Hero',
       columnExclusiveToggle: true,
       toggleId: 'car',
+      libraryName:'modLibrary',
+      libraryId:'car',
       ...toggleMod('car')
     },
     snake: {
@@ -186,104 +218,129 @@ function onFirstPageGameLoaded() {
       columnName: 'Hero',
       columnExclusiveToggle: true,
       toggleId: 'snake',
+      libraryName:'modLibrary',
+      libraryId:'snake',
       ...toggleMod('snake')
     },
     spear: {
       label: 'Spear',
       columnName: 'Equip',
       toggleId: 'spear',
+      libraryName:'subObjectLibrary',
+      libraryId:'spear',
       ...toggleSubObject('spear')
     },
     spearToggleable: {
       label: 'Spear Toggle',
       columnName: 'Equip',
       toggleId: 'spearToggleable',
+      libraryName:'subObjectLibrary',
+      libraryId:'spearToggleable',
       ...toggleSubObject('spearToggleable')
     },
     spearDialogueChoice: {
       label: 'Spear Choice',
       columnName: 'Equip',
       toggleId: 'spearDialogueChoice',
+      libraryName:'subObjectLibrary',
+      libraryId:'spearDialogueChoice',
       ...toggleSubObject('spearDialogueChoice')
     },
     gun: {
       label: 'Gun',
       columnName: 'Equip',
       toggleId: 'gun',
+      libraryName:'subObjectLibrary',
+      libraryId:'gun',
       ...toggleSubObject('gun')
     },
     shrinkRay: {
       label: 'Shrink Ray',
       columnName: 'Equip',
       toggleId: 'shrinkRay',
+      libraryName:'subObjectLibrary',
+      libraryId:'shrinkRay',
       ...toggleSubObject('shrinkRay')
     },
     bombs: {
       label: 'Bombs',
       columnName: 'Equip',
       toggleId: 'bombs',
+      libraryName:'subObjectLibrary',
+      libraryId:'bombs',
       ...toggleSubObject('bombs')
     },
     zeldaPowerBlock: {
       label: 'Zelda',
       columnName: 'Blocks',
+      libraryName:'objectLibrary',
+      libraryId:'zeldaPowerBlock',
       JSON: window.objectLibrary.zeldaPowerBlock,
     },
     marioPowerBlock: {
       label: 'Mario',
       columnName: 'Blocks',
+      libraryName:'objectLibrary',
+      libraryId:'marioPowerBlock',
       JSON: window.objectLibrary.marioPowerBlock,
     },
     asteroidsPowerBlock: {
       label: 'Asteroids',
       columnName: 'Blocks',
+      libraryName:'objectLibrary',
+      libraryId:'asteroidsPowerBlock',
       JSON: window.objectLibrary.asteroidsPowerBlock,
     },
     ufoPowerBlock: {
       label: 'UFO',
       columnName: 'Blocks',
+      libraryName:'objectLibrary',
+      libraryId:'ufoPowerBlock',
       JSON: window.objectLibrary.ufoPowerBlock,
     },
     starViewBlock: {
       label: 'Star View',
       columnName: 'Blocks',
+      libraryName:'objectLibrary',
+      libraryId:'starViewBlock',
       JSON: window.objectLibrary.starViewBlock,
-    },
-    obstacle: {
-      label: 'Obstacle',
-      columnName: 'Basic',
-      JSON: window.objectLibrary.default,
     },
     roof: {
       label: 'Roof',
       columnName: 'Basic',
+      libraryName:'objectLibrary',
+      libraryId:'roof',
       JSON: window.objectLibrary.roof,
     },
-    gunPickupable: {
-      label: 'Gun',
-      columnName: 'Items',
-      JSON: window.subObjectLibrary.gun,
-    },
-    spearPickupable: {
-      label: 'Spear',
-      columnName: 'Items',
-      JSON: window.subObjectLibrary.spear,
-    },
-    marioCap: {
-      label: 'Mario Hat',
-      columnName: 'Items',
-      JSON: window.subObjectLibrary.marioCap,
-    },
+    // gunPickupable: {
+    //   label: 'Gun',
+    //   columnName: 'Items',
+    //   JSON: window.subObjectLibrary.gun,
+    // },
+    // spearPickupable: {
+    //   label: 'Spear',
+    //   columnName: 'Items',
+    //   JSON: window.subObjectLibrary.spear,
+    // },
+    // marioCap: {
+    //   label: 'Mario Hat',
+    //   columnName: 'Items',
+    //   JSON: window.subObjectLibrary.marioCap,
+    // },
     seeHiddenPower: {
       label: 'Uncoverer',
       columnName: 'Equip',
       toggleId: 'uncoverer',
+      libraryName:'subObjectLibrary',
+      libraryId:'seeHiddenPower',
       ...toggleSubObject('seeHiddenPower')
     },
     seeThroughForegroundPower: {
       label: 'Spyglass',
       columnName: 'Equip',
       toggleId: 'spyglass',
+      libraryName:'subObjectLibrary',
+      libraryId:'seeThroughForegroundPower',
       ...toggleSubObject('seeThroughForegroundPower')
     },
   }
@@ -341,7 +398,6 @@ function onFirstPageGameLoaded() {
     gun: true,
     shrinkRay: true,
     bombs: true,
-    marioCap: true,
     seeThroughForegroundPower: true,
     seeHiddenPower: true,
     zeldaPowerBlock: true,
@@ -349,8 +405,20 @@ function onFirstPageGameLoaded() {
     asteroidsPowerBlock: true,
     ufoPowerBlock: true,
     starViewBlock: true,
-    gunPickupable: true,
-    spearPickupable: true,
+    // marioCap: true,
+    // gunPickupable: true,
+    // spearPickupable: true,
+  }
+
+  window.creatorLibrary.addGameLibrary = function() {
+    if(GAME.library.creator) {
+      return {
+        ...GAME.library.creator,
+        ...window.creatorLibrary,
+      }
+    } else {
+      return window.creatorLibrary
+    }
   }
 }
 

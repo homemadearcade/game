@@ -9,6 +9,7 @@ import EditingSequenceContextMenu from './adminMenus/EditingSequenceContextMenu.
 import WorldContextMenu from './adminMenus/worldContextMenu.jsx';
 import GeneratedMenu from './playerMenus/generatedMenu.jsx';
 import InventoryMenu from './playerMenus/InventoryMenu.jsx';
+import LibraryObjectContextMenu from './adminMenus/LibraryObjectContextMenu.jsx';
 
 import '../libraries/playerMenuLibrary.js';
 
@@ -33,6 +34,19 @@ class contextMenuEl extends React.Component{
       if(e.target.dataset.inventorymenuid) {
         this._openMenuWithEvent(e)
         this._setContextMenuSpecialItem('inventory', OBJECTS.getObjectOrHeroById(e.target.dataset.inventorymenuid))
+        return false;
+      }
+
+      if(e.target.dataset.creatorlibraryid) {
+        this._openMenuWithEvent(e)
+
+        const creatorLibraryObject = window.creatorLibrary.addGameLibrary()[e.target.dataset.creatorlibraryid]
+        if(creatorLibraryObject.libraryName && creatorLibraryObject.libraryId) {
+          const libraryObject = window[creatorLibraryObject.libraryName].addGameLibrary()[creatorLibraryObject.libraryId]
+          this._setContextMenuSpecialItem(creatorLibraryObject.libraryName, libraryObject, {creatorLibraryId: e.target.dataset.creatorlibraryid, libraryName: creatorLibraryObject.libraryName, libraryId: creatorLibraryObject.libraryId})
+        } else if(creatorLibraryObject.JSON) {
+          this._setContextMenuSpecialItem('creatorLibrary', creatorLibraryObject.JSON, {creatorLibraryId: e.target.dataset.creatorlibraryid, libraryName: 'creatorLibrary', libraryId: e.target.dataset.creatorlibraryid})
+        }
         return false;
       }
 
@@ -80,7 +94,7 @@ class contextMenuEl extends React.Component{
     if(command === "show") {
       this.setState({ hide: false, objectSelected: MAPEDITOR.objectHighlighted })
     } else {
-      this.setState({ hide: true, subObjectSelected: {}, subObjectSelectedName: null, objectSelected: null, coloringObject: null, specialItemType: null, item: null })
+      this.setState({ hide: true, subObjectSelected: {}, subObjectSelectedName: null, objectSelected: null, coloringObject: null, specialItemType: null, item: null, libraryName: null, libraryId: null })
     }
   }
 
@@ -93,10 +107,11 @@ class contextMenuEl extends React.Component{
     };
     this._setContextMenuPosition(origin);
   }
-  _setContextMenuSpecialItem(type, item) {
+  _setContextMenuSpecialItem(type, item, other) {
     this.setState({
       specialItemType: type,
-      item
+      item,
+      ...other
     })
   }
 
@@ -141,7 +156,35 @@ class contextMenuEl extends React.Component{
   }
 
   _renderAdminMenus() {
-    const { objectSelected, subObjectSelected, subObjectSelectedName, specialItemType, item } = this.state;
+    const { objectSelected, subObjectSelected, subObjectSelectedName, specialItemType, item, libraryName, libraryId, creatorLibraryId } = this.state;
+
+    if(specialItemType === 'creatorLibrary') {
+      return <LibraryObjectContextMenu
+        objectSelected={item}
+        creatorLibraryId={creatorLibraryId}
+        libraryName={libraryName}
+        libraryId={libraryId}
+      />
+    }
+
+    if(specialItemType === 'objectLibrary') {
+      return <LibraryObjectContextMenu
+        objectSelected={item}
+        creatorLibraryId={creatorLibraryId}
+        libraryName={libraryName}
+        libraryId={libraryId}
+      />
+    }
+
+    if(specialItemType === 'subObjectLibrary') {
+      return <LibraryObjectContextMenu
+        libraryName={libraryName}
+        libraryId={libraryId}
+        creatorLibraryId={creatorLibraryId}
+        objectSelected={item}
+        subObject={true}
+      />
+    }
 
     if(specialItemType === 'inventory') {
       return <InventoryMenu

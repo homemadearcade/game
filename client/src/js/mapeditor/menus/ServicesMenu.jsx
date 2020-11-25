@@ -29,7 +29,7 @@ export default class ServicesMenu extends React.Component{
 
       if (key === "add-to-creator-library") {
         const { value: name } = await Swal.fire({
-          title: 'Create Game',
+          title: 'Add to creator library',
           text: "What is the name of this object?",
           input: 'text',
           inputAttributes: {
@@ -39,7 +39,7 @@ export default class ServicesMenu extends React.Component{
           confirmButtonText: 'Next',
         })
         const { value: columnName } = await Swal.fire({
-          title: 'Create Game',
+          title: 'Add to creator library',
           text: "What column? (enter name case sensitive)",
           input: 'text',
           inputAttributes: {
@@ -54,6 +54,34 @@ export default class ServicesMenu extends React.Component{
           JSON: OBJECTS.getProperties(objectSelected)
         } } })
       }
+
+      if (key === "add-to-object-library") {
+        const { value: name } = await Swal.fire({
+          title: 'Add to object library',
+          text: "What will be the library id of this object?",
+          input: 'text',
+          inputAttributes: {
+            autocapitalize: 'off'
+          },
+          showCancelButton: true,
+          confirmButtonText: 'Next',
+        })
+        window.socket.emit('updateLibrary', { object: {...GAME.library.objects, [name]: OBJECTS.getProperties(objectSelected)} })
+      }
+
+      if (key === "add-to-subobject-library") {
+        const { value: name } = await Swal.fire({
+          title: 'Add to sub object library',
+          text: "What will be the library id of this object?",
+          input: 'text',
+          inputAttributes: {
+            autocapitalize: 'off'
+          },
+          showCancelButton: true,
+          confirmButtonText: 'Next',
+        })
+        window.socket.emit('updateLibrary', { subObject: {...GAME.library.subObject, [name]: OBJECTS.getProperties(objectSelected)} })
+      }
     }
   }
 
@@ -67,6 +95,8 @@ export default class ServicesMenu extends React.Component{
 
     return <Menu onClick={this._handleServicesMenuClick}>
       <MenuItem key="add-to-creator-library">Add to creator library</MenuItem>
+      <MenuItem key="add-to-object-library">Add to object library</MenuItem>
+      <MenuItem key="add-to-subobject-library">Add to sub object library</MenuItem>
       <MenuItem key='open-construct-editor'>Open construct editor</MenuItem>
       <MenuItem key='open-path-editor'>Open path editor</MenuItem>
       <MenuItem key='open-physics-live-editor'>Live Edit Physics</MenuItem>

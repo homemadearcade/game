@@ -1,25 +1,18 @@
 /*
 // THE BEST FEATURES ARE THE ONES THAT THE PLAYER THINKS EXISTS BUT ACTUALLY DOESNT
 // U CAN HAVE COOL GRAPHICS BUT IF THEY DONT MEAN ANYTHING MEANINGFUL TO THE GAMEPLAY IT DOESNT MATTER
+
+Interesting that bar of dreams and homemade arcade i've wanted to have audio... props, everything possible available!! In both scenarios I've wanted them to feel like anything could happen. Anything is possible. Is is my lack of decision making and vision or is it part of my style?
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
 
-SOUND FX
-  this is the beginning of THEME and randomize THEME
-    randomize soundFX
-    pick random song
-    randomize particleFX
-    randomize sprite theme ( this would require sprite tags )
-    randomize hero physics
-
+SOUND FX w THEME
 FILL OUT SEQUENCE EDITOR, LIBRARY, EFFECTS, TAGS
 PUZZLE INTERFACES
 COMBAT + GOALS + QUESTS
 -------
 
-Interesting that bar of dreams and homemade arcade i've wanted to have audio... props, everything possible available!! In both scenarios I've wanted them to feel like anything could happen. Anything is possible. Is is my lack of decision making and vision or is it part of my style?
-
-awareness areas toggleable, interact area toggleable in subobject library??idk
+3d sound effects system from papa bear
 
 combine all effects to all happen through effects service. all dialogue, all editor things ALL GAME effects should be done through effects? I think...?
 I need to feel like I have CONTROL over effects and causes, right now I feel like my own tools have pulled me out of control!! thats why Ineed to keep it via tags and libray objects, I feel like I have control over those
@@ -30,8 +23,6 @@ right click creator service - add to heros guidance? NOT BAD!
 
 right click - follow object, follow with path object
 
-chatOnHover. use current chat service to create one that occurs on hover and is removed when mouse moves off...
-
 Add GAME title menu (press enter or v to start)
 
 unequip action
@@ -41,10 +32,9 @@ experience password for ha-live. Use month+day - 100
 
 Change on collide to on touch start for certain tags
 
-draw absurd path with mouse ( as spencer suggested, just use like drag? but record mouse points. this is LOL but awesome )
+onGameStart, etc events for sequence library names
 
-//get better js editor so I dont have to format so fuckin much, use the current json editor?
-//action props, spawn zones, etc would be better editing using this json editor not the ae editor and not context menus
+// suggested tags
 
 ////////////////////////////////
 ////////////////////////////////
@@ -55,6 +45,10 @@ Editor
 Animate
 Sound
 Mod honestly needs its own...
+add object needs to be its own thing with effect, wait, condition, etc.
+Its getting really complicated. For now im going to cheat it. It should have its own service and its own sequence type, feel me?
+// onGameStart or onHeroLand sequences === automatically trigger on those events
+Visalize sequences
 
 ////////////////////////////////
 ////////////////////////////////
@@ -153,6 +147,10 @@ LIBRARY IDEAS
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ////////////////////////////////////////////////////
 
+WORLDLIBRARY - Turn the editor world switching into something pulled out of a library, you feel me?..
+
+local mods? ( client only mods for specific players/situations )
+
 //MODS
 Metal mario! How did I not think of this. Sink and don't drown
 Vanish cap ( lets you walk through walls? )
@@ -171,6 +169,7 @@ Sword options..
 bullets that ping around!
 Maybe dual stick shooter potential?
 // gun that swaps places with what it hits! so cool..
+send clones power like that one game I made
 
 //TAGS
   destoryOnHeroLand
@@ -199,60 +198,35 @@ Maybe dual stick shooter potential?
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ////////////////////////////////////////////////////
 
-if you are a ghost, then shift+arrowkey should change camera temporarily instead of movement thing
-
-maybe the key to rendering optimization is switching thigns like scale and position to the layers...?
-also cacheing colors
-
-// onGameStart or onHeroLand sequences === automatically trigger on those events
-
-Pop Heros inventory to others, but only if sub object has certain tags..?
-  popCount vs popHeroInventoryToOthers. popcount should NOT pop if its in inventory
-
-Add popovers to all UI everywhere, oh yeah! Including in creator
-
 Team mods?
-
-Visalize sequences
-
-Perhaps actual branch view of branches??? Like I mean yes binary tree or whatever this is
-https://bl.ocks.org/d3noob/8326869
-
 
 Low bandwidth mode
 
-multiple resources to deposit and withdraw
-
-Different roots for the branches...
-
-Toggle between drawing types?
-
-Create an onSequenceComplete thing..? So when its done we know to move onto the next event
-
 STORY - Fade in/out to game
-
-send clones power like that one game I made
-
-add object needs to be its own thing with effect, wait, condition, etc.
-Its getting really complicated. For now im going to cheat it. It should have its own service and its own sequence type, feel me?
-
-WORLDLIBRARY - Turn the editor world switching into something pulled out of a library, you feel me?..
-
-Allow circles and triangles?
-
-ELEVATION IS POSSIBLE THROUGH A VISUAL ILLUSION ( see littlewood game )
 
 in-game checkpoints
 
-3d sound effects system from papa bear
-
 KING MODE ( where its like you make various yes/no choices and that changes whats happening on the world map )
-
-local mods? ( client only mods for specific players/situations )
 
 pixiChild._stillUsed property as well as a PIXIMAP.objectsById system. We scrap app PIXICHILDs that arent in use every like 10s
 
+////////////////////////////////
+////////////////////////////////
+BRANCH UPGRADES
+///////////////////////////////
+Perhaps actual branch view of branches??? Like I mean yes binary tree or whatever this is
+https://bl.ocks.org/d3noob/8326869
+Different roots for the branches...
+
+////////////////////////////////
+////////////////////////////////
+PHYSICS UPGRADES
+///////////////////////////////
+Allow circles and triangles?
+ELEVATION IS POSSIBLE THROUGH A VISUAL ILLUSION ( see littlewood game )
 allow invisible obstacle creation on like a...background rpg or dnd map
+Friction variable?
+increases the velocity decay..also combine bounciness?
 
 ////////////////////////////////
 ////////////////////////////////
@@ -265,7 +239,10 @@ quest editor ( inside of default hero editor )
 never close right click menu if shift is pressed
 GENRE libraries ( creator, generatedMenu )
 global compendium service that I can add to remove without copying and pasting JSON
-VISIBLE TAGS LIKE IN CONSTRUCT EDITOR --- OR layered object select when right clicking. ( for invisible areas and parent areas ) ( object selected will be an array and then the menu will choose between those )
+Toggle between drawing types??
+draw absurd path with mouse ( as spencer suggested, just use like drag? but record mouse points. this is LOL but awesome )
+//get better json editor so I dont have to format so fuckin much, use the current json editor?
+//action props, spawn zones, etc would be better editing using this json editor not the ae editor and not context menus
 
 ////////////////////////////////
 ////////////////////////////////
@@ -280,6 +257,7 @@ Area x 2
 Area X 3
 Area x 4
 Potential Sub Object
+awareness areas toggleable, interact area toggleable in subobject library??idk
 
 ////////////////////////////////
 ////////////////////////////////
@@ -307,6 +285,17 @@ INVENTORY UPGRADE
 // drop last object when full ( boolean )
 // prevent add when full ( boolean )
 
+
+////////////////////////////////
+////////////////////////////////
+POPOVER UPGRADE
+////////////////////////////////
+UI - multiple resources to deposit and withdraw
+Pop Heros inventory to others, but only if sub object has certain tags..?
+  popCount vs popHeroInventoryToOthers. popcount should NOT pop if its in inventory
+Add popovers to all UI everywhere, oh yeah! Including in creator
+chatOnHover. use current chat service to create one that occurs on hover and is removed when mouse moves off...
+
 ////////////////////////////////
 ////////////////////////////////
 ANIMATION UPGRADE
@@ -327,6 +316,9 @@ MAP UPGRADE
 Camera filters ??? Yeah? Like the pixie demo? Let them customize the LOOK and feel of it all
 mini-map
 map rotation having problems 1) object stage already pivoted for camera reason 2) admin canvas is not rotating with
+maybe the key to rendering optimization is switching thigns like scale and position to the layers...?
+cacheing colors
+if you are a ghost, then shift+arrowkey should change camera temporarily instead of movement thing
 
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
@@ -342,6 +334,12 @@ NOTES
 ////////////////////////////////////////////////////
 
 THEMES
+randomize soundFX
+pick random song
+randomize particleFX
+randomize sprite theme ( this would require sprite tags )
+randomize hero physics
+
    I mean ugh fuck themes. I think maybe we can have a 'mediaControlCenter' similar to NotificationsControl center
    With this I can randomize the effects the world has
    dont forget to randomize physics too!

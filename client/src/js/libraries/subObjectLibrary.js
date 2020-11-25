@@ -189,4 +189,15 @@ window.local.on('onFirstPageGameLoaded', () => {
     },
   }
 
+  window.subObjectLibrary.addGameLibrary = function() {
+    if(GAME.library.subObject) {
+      return {
+        ...GAME.library.subObject,
+        ...window.subObjectLibrary,
+      }
+    } else {
+      return window.subObjectLibrary
+    }
+  }
+
 })
