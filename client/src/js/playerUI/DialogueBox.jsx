@@ -97,12 +97,14 @@ export default class DialogueBox extends React.Component{
     const { id, name } = this.props
 
     let object
+    let usingName = name
     if(id) {
       object = OBJECTS.getObjectOrHeroById(id)
+      if(!usingName) usingName = object.name
     }
     return <div className="DialogueBox__avatar">
       {object && this._renderSprite(object)}
-      {name && <div className="DialogueBox__name-container"><div className="DialogueBox__name">{name}</div></div>}
+      {usingName && <div className="DialogueBox__name-container"><div className="DialogueBox__name">{usingName}</div></div>}
     </div>
   }
 

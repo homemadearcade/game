@@ -464,13 +464,14 @@ class Objects{
     if(Object.keys(hero.mod().dialogueChoices).length) {
       Object.keys(hero.mod().dialogueChoices).forEach((id) => {
         let choice = hero.mod().dialogueChoices[id]
-        if(!choice) return
+        if(!choice || choice.triggerPool === 0) return
         let added
+        choice.id = id
         Object.keys(choice.tags).forEach((tag) => {
           if(added) return
           if(object.mod().tags[tag]) {
             added = true
-            interactions.push({text: choice.text, heroEffect: choice.heroEffect, guestEffect: choice.guestEffect})
+            interactions.push({text: choice.text, dialogueChoice: choice})
           }
         })
       })

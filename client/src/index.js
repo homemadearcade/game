@@ -134,6 +134,10 @@ Construct Editor on ha-demo bug?
 
 Bombs need to be able to spawn the explosion onto real objects
 
+possibly turn dialogue choices into sub objects?? or no? They can have their own ACTION prop thing that modifies interactions, IDK, and other subObjects can hook into that
+
+
+//WHAT DO WE DO IF WE WANT TO EDIT A MOD, for example I have the dialogue choice mod here i wanted it do have a triggerPool but that doesnt matter because I cant edit the triggerpool???? I CANT EDIT THE MOD COUNT??? ugh.MODS ARE IMMUTABLE
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
@@ -260,9 +264,10 @@ awareness areas toggleable, interact area toggleable in subobject library??idk
 LIBRARY UPGRADE
 ////////////////////////////////
 WORLDLIBRARY - Turn the editor world switching into something pulled out of a library, you feel me?..
-objectLibrary, subobjectLibrary, use getGameLibrary function to get games custom objects from the library..
-Figure out adding to creator library vs object library vs subobject library?? I just left that confused af, it was working but I was confused af
 The real thing is going from object/subobject -> creator
+need to create interface for the entire library/compendium!
+have CREATOR service always look up the JSON from the library, it should not store its own JSON
+
 ////////////////////////////////
 ////////////////////////////////
 MOD UPGRADE
@@ -813,7 +818,7 @@ import './js/libraries/subObjectLibrary.js'
 import './js/libraries/objectLibrary.js'
 import './js/libraries/heroLibrary.js'
 import './js/libraries/spriteSheetLibrary.js'
-
+import './js/libraries/dialogueChoiceLibrary.js'
 
 // Broadcast that you're opening a page.
 let otherPageOpen = false

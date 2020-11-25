@@ -148,12 +148,23 @@ export function triggerInteraction(interaction, hero, collider, result, options)
   let interactionName = interaction.interaction
   let triggered = false
 
-  if(interaction.heroEffect) {
-    effects.processEffect({ effectName: interaction.heroEffect }, hero, collider)
+  if(interaction.dialogueChoice) {
+    const { heroEffect, heroEffectValue, guestEffectValue, guestEffect, heroDialogue } = interaction.dialogueChoice
+    if(heroDialogue) {
+      effects.processEffect({ effectName: 'dialogue', effectValue: heroDialogue }, hero, collider)
+    }
+    if(heroEffect) {
+      effects.processEffect({ effectName: heroEffect, effectValue: heroEffectValue }, hero, collider)
+    }
+    if(guestEffect) {
+      effects.processEffect({ effectName: guestEffect, effectValue: guestEffectValue }, collider, hero)
+    }
+
+    if(interaction.dialogueChoice.triggerPool) {
+      interaction.dialogueChoice.triggerPool -= 1
+    }
   }
-  if(interaction.guestEffect) {
-    effects.processEffect({ effectName: interaction.guestEffect }, collider, hero)
-  }
+
 
   if(interactionName === 'behavior') {
     onBehavior(hero, collider, result, options)

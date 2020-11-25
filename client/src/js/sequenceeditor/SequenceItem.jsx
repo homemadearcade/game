@@ -199,12 +199,7 @@ export default class SequenceItem extends React.Component{
     sequenceItem.effectName = event.value;
 
     if(sequenceItem.effectName === 'temporaryDialogueChoice' || sequenceItem.effectName === 'addDialogueChoice') {
-      sequenceItem.effectJSON = {
-        tags: {},
-        heroEffect: '',
-        guestEffect: '',
-        text: 'Choice'
-      }
+      sequenceItem.effectJSON = window.defaultDialogueChoice
     }
     this.setState({sequenceItem})
   }
