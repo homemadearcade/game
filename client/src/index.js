@@ -188,7 +188,8 @@ Maybe dual stick shooter potential?
   VISIBLE TO - select tags its visible to, ( visible to is an object with tags: true )
   Background animation tag ( perhaps background stage and everything…)
   one way platform ( can land on but can jump through from below)
-  equipped?
+  equippable?
+  HAve an object twist to the left and the right, its common cheap animation for games it seems
 
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
@@ -215,8 +216,8 @@ Team mods?
 Visalize sequences
 
 Perhaps actual branch view of branches??? Like I mean yes binary tree or whatever this is
+https://bl.ocks.org/d3noob/8326869
 
-HAve an object twist to the left and the right, its common cheap animation for games it seems
 
 Low bandwidth mode
 

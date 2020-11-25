@@ -768,6 +768,15 @@ function onKeyDown(key, hero) {
         hero.flags.showDialogue = false
         hero.flags.paused = false
         hero.onGround = false
+        if(hero._dialogueFireComplete) {
+          if(hero.dialogueId) {
+            const object = OBJECTS.getObjectOrHeroById(hero.dialogueId)
+            window.emitGameEvent('onHeroDialogueComplete', hero, object)
+          } else {
+            window.emitGameEvent('onHeroDialogueComplete', hero, object)
+          }
+        }
+        hero._dialogueFireComplete = false
       }
       hero._cantInteract = true
       window.emitGameEvent('onUpdatePlayerUI', hero)

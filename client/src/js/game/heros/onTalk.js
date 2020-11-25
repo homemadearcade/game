@@ -4,6 +4,7 @@ export default function onTalk(hero, collider, result, options) {
     hero.dialogue = collider.mod().heroDialogue.slice()
     hero.flags.showDialogue = true
     hero.flags.paused = true
+    hero._dialogueFireComplete = true
     if(collider) {
       hero.dialogueId = collider.id
       if(collider.name) {

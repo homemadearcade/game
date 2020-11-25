@@ -14,6 +14,7 @@ function onPlayerIdentified() {
     onHeroUnaware: { mainObject: 'hero', guestObject: 'anything' },
     onHeroEnter: { mainObject: 'hero', guestObject: 'anything' },
     onHeroLeave: { mainObject: 'hero', guestObject: 'anything' },
+    onHeroDialogueComplete: { mainObject: 'hero', guestObject: 'anything' },
     onHeroStartQuest: { mainObject: 'hero', guestObject: 'questId', guestObjectOptional: true },
     onHeroCompleteQuest: { mainObject: 'hero', guestObject: 'questId', guestObjectOptional: true },
     onHeroPickup: { mainObject: 'hero', guestObject: 'object' },

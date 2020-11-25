@@ -18,7 +18,7 @@ class Hero{
     this.cameraHeight = 320
     this.setDefault()
   }
-  // 
+  //
   // onHeroInteract(hero, interactor, result) {
   //   onHeroTrigger(hero, interactor, result, { fromInteractButton: true })
   // }
@@ -452,6 +452,8 @@ class Hero{
       _pathIdIndex: hero._pathIdIndex,
       _pathWait: hero._pathWait,
       _pathOnWayBack:  hero._pathOnWayBack,
+
+      _dialogueFireComplete: hero._dialogueFireComplete,
     }
 
     if(hero.subObjects) {
