@@ -48,20 +48,49 @@ export default class LibraryObjectContextMenu extends React.Component{
           showCancelButton: true,
           confirmButtonText: 'Add to library',
         })
-        window.socket.emit('updateLibrary', { creator: {...GAME.library.creator, [name]: {
-          label: name,
-          columnName,
-          JSON: OBJECTS.getProperties(objectSelected)
-        } } })
+
+        if(objectSelected.tags.hero) {
+
+        } else if(subObject) {
+          window.socket.emit('updateLibrary', { subObject: {...GAME.library.subObject, [name]: OBJECTS.getProperties(objectSelected)} })
+          window.socket.emit('updateLibrary', { creator: {...GAME.library.creator, [name]: {
+            label: name,
+            columnName,
+            libraryName: 'subObjectLibrary',
+            libraryId: name,
+            JSON: OBJECTS.getProperties(objectSelected)
+          } } })
+        } else {
+          window.socket.emit('updateLibrary', { object: {...GAME.library.object, [name]: OBJECTS.getProperties(objectSelected)} })
+          window.socket.emit('updateLibrary', { creator: {...GAME.library.creator, [name]: {
+            label: name,
+            columnName,
+            libraryName: 'objectLibrary',
+            libraryId: name,
+            JSON: OBJECTS.getProperties(objectSelected)
+          } } })
+        }
       }
 
       if( key === 'edit-library-object-json') {
         modals.openEditCodeModal('Edit Library Object - ' + creatorLibraryId, objectSelected, (result) => {
           if(result && result.value) {
+            const editedCode = JSON.parse(result.value)
             if(GAME.library.creator[creatorLibraryId]) {
-              const editedCode = JSON.parse(result.value)
               GAME.library.creator[creatorLibraryId].JSON = editedCode
               window.socket.emit('updateLibrary', { creator: GAME.library.creator })
+            }
+
+            if(!subObject && GAME.library.object[libraryId]) {
+              const editedCode = JSON.parse(result.value)
+              GAME.library.object[libraryId] = editedCode
+              window.socket.emit('updateLibrary', { object: GAME.library.object })
+            }
+
+            if(subObject && GAME.library.subObject[libraryId]) {
+              const editedCode = JSON.parse(result.value)
+              GAME.library.subObject[libraryId] = editedCode
+              window.socket.emit('updateLibrary', { subObject: GAME.library.subObject })
             }
           }
         })

@@ -282,6 +282,8 @@ class Game{
     else GAME.library = {}
     if(!GAME.library.branches) GAME.library.branches = {}
     if(!GAME.library.creator) GAME.library.creator = {}
+    if(!GAME.library.object) GAME.library.object = {}
+    if(!GAME.library.subObject) GAME.library.subObject = {}
 
     if(GAME.library.tags) {
       tags.addGameTags(GAME.library.tags)
@@ -1147,11 +1149,9 @@ class Game{
       if(mod.temporaryLibrarySubObject) {
         const subObject = modOwnerObject.subObjects[mod.effectLibrarySubObject]
         if(subObject && mod._disabled) {
-          console.log('XX')
           window.local.emit('onDeleteSubObject', modOwnerObject, mod.effectLibrarySubObject)
         } else if(!mod._disabled && !subObject) {
-          console.log(mod)
-          window.local.emit('onAddSubObject', modOwnerObject, window.subObjectLibrary[mod.effectLibrarySubObject],  mod.effectLibrarySubObject)
+          window.local.emit('onAddSubObject', modOwnerObject, window.subObjectLibrary.addGameLibrary()[mod.effectLibrarySubObject],  mod.effectLibrarySubObject)
         }
       }
 

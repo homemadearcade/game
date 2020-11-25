@@ -147,10 +147,6 @@ LIBRARY IDEAS
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ////////////////////////////////////////////////////
 
-WORLDLIBRARY - Turn the editor world switching into something pulled out of a library, you feel me?..
-
-local mods? ( client only mods for specific players/situations )
-
 //MODS
 Metal mario! How did I not think of this. Sink and don't drown
 Vanish cap ( lets you walk through walls? )
@@ -258,6 +254,21 @@ Area X 3
 Area x 4
 Potential Sub Object
 awareness areas toggleable, interact area toggleable in subobject library??idk
+
+////////////////////////////////
+////////////////////////////////
+LIBRARY UPGRADE
+////////////////////////////////
+WORLDLIBRARY - Turn the editor world switching into something pulled out of a library, you feel me?..
+objectLibrary, subobjectLibrary, use getGameLibrary function to get games custom objects from the library..
+Figure out adding to creator library vs object library vs subobject library?? I just left that confused af, it was working but I was confused af
+The real thing is going from object/subobject -> creator
+////////////////////////////////
+////////////////////////////////
+MOD UPGRADE
+////////////////////////////////
+local mods? ( client only mods for specific players/situations ) --- essentially this is a visibility mod for a player?
+global mods -- all heros, or ANY object
 
 ////////////////////////////////
 ////////////////////////////////

@@ -46,7 +46,7 @@ function toggleSubObject(subObjectId, modId) {
   let objectId = null
   return {
     onToggleOn: () => {
-      const so = _.cloneDeep(window.subObjectLibrary[subObjectId])
+      const so = _.cloneDeep(window.subObjectLibrary.addGameLibrary()[subObjectId])
       so.tags.startsEquipped = true
       window.socket.emit('addSubObject', GAME.heros[HERO.editingId || HERO.id], so, subObjectId)
     },

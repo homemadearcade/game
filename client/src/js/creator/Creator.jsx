@@ -252,7 +252,8 @@ export default class Creator extends React.Component {
     const selected = name === creatorObjectSelected.columnName
     const open = columnsOpen[name] || selected
 
-    return <div className="Creator__category-container"><div className={classnames("Creator__category", {"Creator__category--selected": selected } )} onMouseEnter={() => {
+    return <div className="Creator__category-container"><div className={classnames("Creator__category", {"Creator__category--selected": selected } )}
+      onMouseEnter={() => {
         this._toggleOpenColumn(name)
       }}
       onMouseLeave={() => {

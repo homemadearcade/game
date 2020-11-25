@@ -713,7 +713,9 @@ PIXIMAP.convertToPartObject = function(gameObject, part) {
 
 PIXIMAP.makeInvisibleIfRemoved = function(object) {
   if(object.mod().removed && PIXIMAP.childrenById[object.id]) {
-    if(!object.tags.showXWhenRemoved) {
+    if(object.tags.showXWhenRemoved) {
+      PIXIMAP.childrenById[object.id].filters = []
+    } else {
       PIXIMAP.childrenById[object.id].visible = false
     }
     if(object.subObjects) {

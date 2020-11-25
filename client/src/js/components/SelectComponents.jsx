@@ -100,7 +100,7 @@ function SingleLibraryObjectSelect({sequenceItem, valueProp, onChange, title}) {
   return <div className="SequenceItem__test">{title || 'Library Object Name:'}<Select
     value={{ value: sequenceItem[valueProp], label: sequenceItem[valueProp]}}
     onChange={onChange}
-    options={Object.keys(window.objectLibrary).map(objectName => { return { value: objectName, label: objectName }})}
+    options={Object.keys(window.objectLibrary.addGameLibrary()).map(objectName => { return { value: objectName, label: objectName }})}
     styles={window.reactSelectStyle}
     theme={window.reactSelectTheme}/>
   </div>
@@ -120,7 +120,7 @@ function SingleLibrarySubObjectSelect({sequenceItem, valueProp, onChange, title}
   return <div className="SequenceItem__test">{title || 'Sub Object Name:'}<Select
     value={{ value: sequenceItem[valueProp], label: sequenceItem[valueProp]}}
     onChange={onChange}
-    options={Object.keys(window.subObjectLibrary).map(objectName => { return { value: objectName, label: objectName }})}
+    options={Object.keys(window.subObjectLibrary.addGameLibrary()).map(objectName => { return { value: objectName, label: objectName }})}
     styles={window.reactSelectStyle}
     theme={window.reactSelectTheme}/>
   </div>

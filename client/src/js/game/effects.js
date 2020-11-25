@@ -298,7 +298,7 @@ function processEffect(effect, effected, effector, ownerObject) {
   }
 
   if(effectName === 'addLibrarySubObject') {
-    OBJECTS.addSubObject(effected, window.subObjectLibrary[effect.effectLibrarySubObject], effect.effectLibrarySubObject)
+    OBJECTS.addSubObject(effected, window.subObjectLibrary.addGameLibrary()[effect.effectLibrarySubObject], effect.effectLibrarySubObject)
   }
 
   if(effectName === 'equipSubObject') {
@@ -314,7 +314,7 @@ function processEffect(effect, effected, effector, ownerObject) {
   }
 
   if(effectName === 'equipLibrarySubObject') {
-    const subObject = _.cloneDeep(window.subObjectLibrary[effect.effectLibrarySubObject])
+    const subObject = _.cloneDeep(window.subObjectLibrary.addGameLibrary()[effect.effectLibrarySubObject])
     subObject.tags.startsEquipped = true
     OBJECTS.addSubObject(effected, subObject, effect.effectLibrarySubObject)
   }
@@ -498,35 +498,35 @@ function processEffect(effect, effected, effector, ownerObject) {
   }
 
   if(effectName === 'anticipatedAdd' && effect.effectLibraryObject) {
-    const object = window.objectLibrary[effect.effectLibraryObject]
+    const object = window.objectLibrary.addGameLibrary()[effect.effectLibraryObject]
     window.local.emit('onAnticipateObject', object);
   }
   if(effectName === 'anticipatedAddWall' && effect.effectLibraryObject) {
-    const object = window.objectLibrary[effect.effectLibraryObject]
+    const object = window.objectLibrary.addGameLibrary()[effect.effectLibraryObject]
     window.local.emit('onAnticipateObject', { ...object, wall: true, numberToAdd: effectValue  });
   }
   if(effectName === 'anticipatedAddPlatform' && effect.effectLibraryObject) {
-    const object = window.objectLibrary[effect.effectLibraryObject]
+    const object = window.objectLibrary.addGameLibrary()[effect.effectLibraryObject]
     window.local.emit('onAnticipateObject', { ...object, platform: true, numberToAdd: effectValue  });
   }
   if(effectName === 'viewAdd' && effect.effectLibraryObject) {
-    const object = window.objectLibrary[effect.effectLibraryObject]
+    const object = window.objectLibrary.addGameLibrary()[effect.effectLibraryObject]
     window.local.emit('onAnticipateObject', {...object, random: true, numberToAdd: effectValue });
   }
   if(effectName === 'viewAddWall' && effect.effectLibraryObject) {
-    const object = window.objectLibrary[effect.effectLibraryObject]
+    const object = window.objectLibrary.addGameLibrary()[effect.effectLibraryObject]
     window.local.emit('onAnticipateObject', { ...object, wall: true, random: true, numberToAdd: effectValue });
   }
   if(effectName === 'viewAddBlock' && effect.effectLibraryObject) {
-    const object = window.objectLibrary[effect.effectLibraryObject]
+    const object = window.objectLibrary.addGameLibrary()[effect.effectLibraryObject]
     window.local.emit('onAnticipateObject', { ...object, block: true, random: true, numberToAdd: effectValue });
   }
   if(effectName === 'viewAddPlatform' && effect.effectLibraryObject) {
-    const object = window.objectLibrary[effect.effectLibraryObject]
+    const object = window.objectLibrary.addGameLibrary()[effect.effectLibraryObject]
     window.local.emit('onAnticipateObject', { ...object, platform: true, random: true, numberToAdd: effectValue });
   }
   if(effectName === 'addOnTop' && effect.effectLibraryObject) {
-    const object = window.objectLibrary[effect.effectLibraryObject]
+    const object = window.objectLibrary.addGameLibrary()[effect.effectLibraryObject]
     window.local.emit('onAnticipateObject', { ...object, onTop: true, nodesAbove: effectValue, targetTags: effect.effectTags });
   }
 
