@@ -105,6 +105,7 @@ PIXIMAP.onDeleteObject = function(object) {
 
 PIXIMAP.onDeleteSubObject = function(object, subObjectName) {
   const subObject = object.subObjects[subObjectName]
+  if(!subObject) return console.log('already removed subobject from map')
   PIXIMAP.deleteObject(subObject)
 }
 

@@ -5,6 +5,7 @@ just make sure to set something to stationary if its not supposed to be move, or
 
 import { Collisions } from 'collisions';
 import decomp from 'poly-decomp';
+import { onHeroTrigger } from '../game/heros/onHeroTrigger';
 
 import {
   checkIfShouldRunPhysics,
@@ -424,12 +425,14 @@ function postPhysics() {
           interactableObject.tags.autoInteractOnInteractable = false
           // interactableObject.tags.autoInteractOnce = false
           window.local.emit('onHeroInteract', hero, interactableObject)
+          onHeroTrigger(hero, interactableObject, {}, {fromInteractButton: true})
           hero._cantInteract = true
         // }
       }
 
       if(input && (input['e'] === true || input['v'] === true || input['enter'] === true) && !hero._cantInteract && !hero.flags.paused) {
         window.local.emit('onHeroInteract', hero, interactableObject)
+        onHeroTrigger(hero, interactableObject, {}, {fromInteractButton: true})
         hero._cantInteract = true
       }
     }

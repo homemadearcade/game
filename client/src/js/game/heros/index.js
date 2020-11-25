@@ -18,10 +18,10 @@ class Hero{
     this.cameraHeight = 320
     this.setDefault()
   }
-
-  onHeroInteract(hero, interactor, result) {
-    onHeroTrigger(hero, interactor, result, { fromInteractButton: true })
-  }
+  // 
+  // onHeroInteract(hero, interactor, result) {
+  //   onHeroTrigger(hero, interactor, result, { fromInteractButton: true })
+  // }
 
   onHeroCollide(hero, collider, result) {
     if(collider.ownerId === hero.id) return

@@ -1098,8 +1098,12 @@ class Game{
       const prevDisabled = mod._disabled
 
       if(mod._remove) {
-        if(mod.temporaryEquip) unequipSubObject(modOwnerObject, modOwnerObject.subObject[mod.effectValue])
+        if(mod.temporaryEquip && modOwnerObject.subObject[mod.effectValue]) unequipSubObject(modOwnerObject, modOwnerObject.subObject[mod.effectValue])
         if(mod.temporaryDialogueChoice) window.local.emit('onDeleteDialogueChoice', modOwnerObject.id, mod.effectValue)
+        if(mod.temporaryLibrarySubObject) {
+          console.log('X', modOwnerObject)
+          window.local.emit('onDeleteSubObject', modOwnerObject, mod.effectLibrarySubObject)
+        }
         if(mod.removeEventListener) mod.removeEventListener()
         return false
       }
@@ -1132,11 +1136,22 @@ class Game{
       }
 
       if(mod.temporaryDialogueChoice) {
-        const dialogueChoices = modOwnerObject.dialogueChoices[mod.effectValue]
-        if(dialogueChoices && mod._disabled) {
+        const dialogueChoice = modOwnerObject.dialogueChoices[mod.effectValue]
+        if(dialogueChoice && mod._disabled) {
           window.local.emit('onDeleteDialogueChoice', modOwnerObject.id, mod.effectValue)
-        } else if(!mod._disabled && !dialogueChoices) {
+        } else if(!mod._disabled && !dialogueChoice) {
           window.local.emit('onAddDialogueChoice', modOwnerObject.id, mod.effectValue, mod.effectJSON)
+        }
+      }
+
+      if(mod.temporaryLibrarySubObject) {
+        const subObject = modOwnerObject.subObjects[mod.effectLibrarySubObject]
+        if(subObject && mod._disabled) {
+          console.log('XX')
+          window.local.emit('onDeleteSubObject', modOwnerObject, mod.effectLibrarySubObject)
+        } else if(!mod._disabled && !subObject) {
+          console.log(mod)
+          window.local.emit('onAddSubObject', modOwnerObject, window.subObjectLibrary[mod.effectLibrarySubObject],  mod.effectLibrarySubObject)
         }
       }
 

@@ -19,6 +19,11 @@ COMBAT + GOALS + QUESTS
 
 Interesting that bar of dreams and homemade arcade i've wanted to have audio... props, everything possible available!! In both scenarios I've wanted them to feel like anything could happen. Anything is possible. Is is my lack of decision making and vision or is it part of my style?
 
+awareness areas toggleable, interact area toggleable in subobject library??idk
+
+combine all effects to all happen through effects service. all dialogue, all editor things ALL GAME effects should be done through effects? I think...?
+I need to feel like I have CONTROL over effects and causes, right now I feel like my own tools have pulled me out of control!! thats why Ineed to keep it via tags and libray objects, I feel like I have control over those
+
 Perhaps like right click on creator service and click--Create new or COPY and EDIT JSON
 
 right click creator service - add to heros guidance? NOT BAD!

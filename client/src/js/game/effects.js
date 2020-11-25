@@ -38,16 +38,17 @@ import pathfinding from '../utils/pathfinding.js'
       JSON: true,
       JSONlabel: 'Mod JSON: ',
       condition: true,
-      // smallText: true,
-      // label: 'Mod name: ',
       footer: 'Mod Condition:'
     },
     temporaryEquip: {
       smallText: true,
       label: 'name of subobject',
       condition: true,
-      // smallText: true,
-      // label: 'Mod name: ',
+      footer: 'Condition:'
+    },
+    temporaryLibrarySubObject: {
+      librarySubObject: true,
+      condition: true,
       footer: 'Condition:'
     },
     equipSubObject: {
@@ -413,6 +414,10 @@ function processEffect(effect, effected, effector, ownerObject) {
 
   if(effectName === 'temporaryEquip') {
     window.emitGameEvent('onStartMod', {ownerId: effected.id, temporaryEquip: true, ...effect})
+  }
+
+  if(effectName === 'temporaryLibrarySubObject') {
+    window.emitGameEvent('onStartMod', {ownerId: effected.id, temporaryLibrarySubObject: true, ...effect})
   }
 
   if(effectName === 'libraryMod') {
