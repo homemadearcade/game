@@ -6,12 +6,12 @@ window.local.on('onFirstPageGameLoaded', () => {
     },
     standingNPC: {
       objectType: 'plainObject',
-      heroDialogue: [_.cloneDeep(window.defaultDialogue)],
+      heroDialogue: [{...window.defaultDialogue}],
       tags: { obstacle: true, talker: true, talkOnHeroInteract: true },
     },
     wanderingNPC: {
       objectType: 'plainObject',
-      heroDialogue: [_.cloneDeep(window.defaultDialogue)],
+      heroDialogue: [{...window.defaultDialogue}],
       tags: { obstacle: true, wander: true, moving: true, talker: true, talkOnHeroInteract: true },
     },
     light: {
@@ -109,7 +109,7 @@ window.local.on('onFirstPageGameLoaded', () => {
     		"targetResetEveryRound": true,
     		"autoTalkOnInteractable": true
     	},
-      heroDialogue: [_.cloneDeep(window.defaultDialogue)],
+      heroDialogue: [{...window.defaultDialogue}],
     	"subObjects": {
     		"awarenessTriggerArea": {
     			"objectType": "subObject",

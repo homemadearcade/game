@@ -79,7 +79,10 @@ window.local.on('onFirstPageGameLoaded', () => {
             "text": "Present Evidence",
             "heroEffect": "addLibrarySubObject",
             heroEffectProps: { effectLibrarySubObject: "evidenceChain2"},
-            "heroDialogue": "You presented the evidence 1",
+            heroDialogue: [{
+              ..._.cloneDeep(window.defaultDialogue),
+              text: "You presented evidence 1"
+            }],
             triggerPool: 1,
           },
           "effectValue": 'Present Evidence 1',
@@ -109,7 +112,10 @@ window.local.on('onFirstPageGameLoaded', () => {
             "text": "Present Evidence",
             "heroEffect": "addLibrarySubObject",
             heroEffectProps: { effectLibrarySubObject: "evidenceChain3"},
-            "heroDialogue": "You presented evidence 2",
+            heroDialogue: [{
+              ..._.cloneDeep(window.defaultDialogue),
+              text: "You presented evidence 2"
+            }],
             triggerPool: 1,
           },
           "effectValue": 'Present Evidence 2',

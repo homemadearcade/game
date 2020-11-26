@@ -136,8 +136,9 @@ export default class DialogueBox extends React.Component{
       </div>
     }
 
+//, { "DialogueBox--vertical-middle": verticleMiddle }
     if(options) {
-      return <div className={classnames("DialogueBox DialogueBox--options", { "DialogueBox--vertical-middle": verticleMiddle })}>
+      return <div className={classnames("DialogueBox DialogueBox--options")}>
         {this._renderAvatar()}
         <div className="DialogueBox__content">
           {options.map((option, index) => {

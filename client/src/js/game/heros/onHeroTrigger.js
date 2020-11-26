@@ -48,7 +48,9 @@ export function onHeroTrigger(hero, collider, result, options = { fromInteractBu
             hero.dialogueId = null
             hero.choiceOptions = null
             hero._cantInteract = true
+            console.log(interaction, hero, collider, result, options)
             triggerInteraction(interaction, hero, collider, result, options)
+            console.log(hero.flags.showDialogue)
             window.emitGameEvent('onUpdatePlayerUI', hero)
           })
         }
@@ -156,7 +158,8 @@ export function triggerInteraction(interaction, hero, collider, result, options)
   if(interaction.dialogueChoice) {
     const { heroEffect, heroEffectValue, guestEffectValue, guestEffect, heroDialogue } = interaction.dialogueChoice
     if(heroDialogue) {
-      effects.processEffect({ effectName: 'dialogue', effectValue: heroDialogue }, hero, collider)
+      console.log(heroDialogue)
+      effects.processEffect({ effectName: 'dialogue', effectJSON: heroDialogue }, hero, collider)
     }
     if(heroEffect) {
       effects.processEffect({ effectName: heroEffect, ...interaction.dialogueChoice.heroEffectProps }, hero, collider)

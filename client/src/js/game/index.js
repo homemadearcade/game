@@ -1326,6 +1326,7 @@ class Game{
   }
 
   onStartMod(mod) {
+    console.log(mod)
     GAME.startMod(mod.ownerId, mod)
   }
   onEndMod(manualRevertId) {

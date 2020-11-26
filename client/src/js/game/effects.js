@@ -299,7 +299,8 @@ function processEffect(effect, effected, effector, ownerObject) {
   }
 
   if(effectName === 'dialogue') {
-    if(effected.tags.hero) {
+    if(effected.tags.hero && typeof effect.effectJSON !== 'string') {
+      console.log(effect.effectJSON)
       let newDialogue = _.cloneDeep(effect.effectJSON)
       if(effected.dialogue && effected.dialogue.length) {
         effected.dialogue.push(...newDialogue)
