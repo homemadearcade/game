@@ -770,6 +770,7 @@ class Hero{
     hero._dashable = true
     hero._floatable = true
 
+    if(GAME.gameState.started) window.emitGameEvent('onHeroAwake', hero)
     PHYSICS.addObject(hero)
   }
 

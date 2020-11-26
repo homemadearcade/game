@@ -9,6 +9,7 @@ function onPlayerIdentified() {
     onHeroHeadHit: { mainObject: 'hero', guestObject: 'anything' },
     onHeroInteract: { mainObject: 'hero', guestObject: 'anything' },
     'onHeroInteract--integrated': { mainObject: 'hero', guestObject: 'anything' },
+    onHeroAwake: { mainObject: 'hero', guestObject: null },
     onHeroDestroyed: { mainObject: 'hero', guestObject: 'anything', guestObjectOptional: true },
     onHeroAware: { mainObject: 'hero', guestObject: 'anything' },
     onHeroUnaware: { mainObject: 'hero', guestObject: 'anything' },
@@ -26,6 +27,7 @@ function onPlayerIdentified() {
     // onHeroTurn
     onGameStarted: { mainObject: null, guestObject: null },
     onStoryStart: { mainObject: null, guestObject: null },
+    onObjectAwake: { mainObject: 'object', guestObject: null },
     onObjectDestroyed: { mainObject: 'object', guestObject: 'anything', guestObjectOptional: true },
     onObjectAware: { mainObject: 'object', guestObject: 'anything' },
     onObjectUnaware: { mainObject: 'object', guestObject: 'anything' },
@@ -39,7 +41,8 @@ function onPlayerIdentified() {
     onHeroTouchEnd: { mainObject: 'hero', guestObject: 'anything' },
     onTagDepleted: { mainObject: 'tag' },
     onAnticipateCompleted: {},
-    onSequenceEnded: {}
+    onSequenceEnded: {},
+    // 'onUpdate':{} //-> for sequences with conditions
   }
   // 'onHeroExamine' <-- only for notifications/logs
   // 'onHeroSwitch'
@@ -48,9 +51,7 @@ function onPlayerIdentified() {
     // 'onObjectSpawn',
     // 'onHeroCanInteract'
     // 'onQuestFail',
-    // 'onObjectAwake',
     // 'onTimerEnd',
-    // 'onUpdate' -> for sequences with conditions
 }
 
 function deleteTrigger(object, triggerId) {
@@ -86,12 +87,14 @@ function addTrigger(ownerObject, trigger) {
   if(!PAGE.role.isHost) return
 
   ownerObject.triggers[trigger.id].removeEventListener = window.local.on(eventName, (mainObject, guestObject) => {
+    // console.log('triggered', eventName)
     fireTrigger(trigger, ownerObject, mainObject, guestObject, true)
   })
 }
 
 function fireTrigger(trigger, ownerObject, mainObject, guestObject, fire = true) {
   if(!GAME.gameState.started) return
+  // console.log(trigger.eventName, mainObject, guestObject, trigger, ownerObject)
 
   let fx = () => triggerEffectSmart(trigger, ownerObject, mainObject, guestObject)
 

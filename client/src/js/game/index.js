@@ -645,8 +645,12 @@ class Game{
     localStorage.setItem('initialGameState', JSON.stringify(initialGameState))
 
     setTimeout(() => {
+      GAME.gameState.paused = false
+      GAME.gameState.started = true
+      
       GAME.heroList.forEach((hero) => {
         if(!options.dontRespawn) HERO.spawn(hero)
+        window.emitGameEvent('onHeroAwake', hero)
         hero.questState = {}
         if(hero.quests) {
           Object.keys(hero.quests).forEach((questId) => {
@@ -657,10 +661,16 @@ class Game{
             }
           })
         }
+        if(hero.subObjects) {
+          Object.keys(hero.subObjects).forEach((subObjectName) => {
+            window.emitGameEvent('onObjectAwake', hero.subObjects[subObjectName])
+          })
+        }
       })
 
       GAME.objects.forEach((object) => {
         if(!options.dontRespawn) OBJECTS.respawn(object)
+        window.emitGameEvent('onObjectAwake', object)
         if(object.tags.talkOnStart) {
           GAME.heroList.forEach((hero) => {
             onTalk(hero, object, {}, [], [], { fromStart: true })
@@ -671,14 +681,17 @@ class Game{
             startQuest(hero, object.questGivingId)
           })
         }
+        if(object.subObjects) {
+          Object.keys(object.subObjects).forEach((subObjectName) => {
+            window.emitGameEvent('onObjectAwake', object.subObjects[subObjectName])
+          })
+        }
       })
 
       if(!PAGE.role.isAdmin && EDITOR.preferences.zoomMultiplier) {
         window.local.emit('onZoomChange')
       }
 
-      GAME.gameState.paused = false
-      GAME.gameState.started = true
       window.local.emit('onGameStarted')
     }, 100)
   }

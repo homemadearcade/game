@@ -964,6 +964,8 @@ class Objects{
         triggers.addTrigger(object, trigger)
       })
     }
+
+    if(PAGE.role.isAdmin && GAME.gameState.started) window.emitGameEvent('onObjectAwake', object)
   }
 
   addSubObject(owner, subObject, subObjectName) {
@@ -1008,6 +1010,7 @@ class Objects{
           triggers.addTrigger(subObject, trigger)
         })
       }
+      if(GAME.gameState.started) window.emitGameEvent('onObjectAwake', subObject)
     }
 
     if(subObject.tags.startsEquipped) {
