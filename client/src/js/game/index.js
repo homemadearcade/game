@@ -647,7 +647,7 @@ class Game{
     setTimeout(() => {
       GAME.gameState.paused = false
       GAME.gameState.started = true
-      
+
       GAME.heroList.forEach((hero) => {
         if(!options.dontRespawn) HERO.spawn(hero)
         window.emitGameEvent('onHeroAwake', hero)

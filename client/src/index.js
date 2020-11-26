@@ -17,11 +17,9 @@ COMBAT + GOALS + QUESTS
 combine all effects to all happen through effects service. all dialogue, all editor things ALL GAME effects should be done through effects? I think...?
 I need to feel like I have CONTROL over effects and causes, right now I feel like my own tools have pulled me out of control!! thats why Ineed to keep it via tags and libray objects, I feel like I have control over those
 
-Perhaps like right click on creator service and click--Create new or COPY and EDIT JSON
-
 right click creator service - add to heros guidance? NOT BAD!
 
-right click - follow object, follow with path object
+right click - follow, pathfindTo
 
 Add GAME title menu (press enter or v to start)
 
@@ -210,6 +208,16 @@ in-game checkpoints
 KING MODE ( where its like you make various yes/no choices and that changes whats happening on the world map )
 
 pixiChild._stillUsed property as well as a PIXIMAP.objectsById system. We scrap app PIXICHILDs that arent in use every like 10s
+
+////////////////////////////////
+////////////////////////////////
+DIALOGUE UPGRADES
+///////////////////////////////
+reverseSpeaker: true
+dialogueId: ‘??’ <— this is for onHeroDialogueComplete event
+text: dialogueText
+talkingToId: the objects id for name and stuff….
+style: ‘modal vs bottom’
 
 ////////////////////////////////
 ////////////////////////////////

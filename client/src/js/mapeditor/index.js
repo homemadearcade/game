@@ -306,7 +306,7 @@ function handleMouseDown(event) {
     const { resizingObject } = MAPEDITOR
     if(resizingObject.relativeWidth || resizingObject.relativeHeight) {
       const owner = OBJECTS.getOwner(resizingObject)
-      networkEditObject(resizingObject, { id: resizingObject.id, x: resizingObject.x, y: resizingObject.y, relativeWidth: owner.width - resizingObject.width, relativeHeight: owner.width - resizingObject.height })
+      networkEditObject(resizingObject, { id: resizingObject.id, x: resizingObject.x, y: resizingObject.y, relativeWidth: resizingObject.width - owner.width, relativeHeight: resizingObject.height - owner.height })
     } else {
       networkEditObject(resizingObject, { id: resizingObject.id, x: resizingObject.x, y: resizingObject.y, width: resizingObject.width, height: resizingObject.height })
     }

@@ -27,6 +27,34 @@ export default class LibraryObjectContextMenu extends React.Component{
     this._handleLibraryObjectMenuClick = async ({ key }) => {
       const { objectSelected, subObject, libraryName, libraryId, creatorLibraryId } = this.props
 
+      if (key === "rename") {
+        const { value: name } = await Swal.fire({
+          title: 'Rename ' + libraryName,
+          text: "What is the new name",
+          input: 'text',
+          inputAttributes: {
+            autocapitalize: 'off'
+          },
+          showCancelButton: true,
+          confirmButtonText: 'Next',
+        })
+
+        GAME.library.creator[name] = {
+          label: name,
+          columnName: GAME.library.creator[libraryId].columnName,
+          libraryName,
+          libraryId,
+          JSON: OBJECTS.getProperties(objectSelected)
+        }
+        GAME.library.creator[creatorLibraryId] = null
+        window.socket.emit('updateLibrary', { creator: GAME.library.creator })
+      }
+
+      if (key === "remove-from-library") {
+        GAME.library.creator[creatorLibraryId] = false
+        window.socket.emit('updateLibrary', { creator: GAME.library.creator })
+      }
+
       if (key === "copy-to-creator-library") {
         const { value: name } = await Swal.fire({
           title: 'Copy creator library',
@@ -203,7 +231,8 @@ export default class LibraryObjectContextMenu extends React.Component{
       {libraryId && <MenuItem className="bold-menu-item">{libraryId}</MenuItem>}
       <MenuItem key='copy-to-creator-library'>Copy</MenuItem>
       {GAME.library.creator[creatorLibraryId] && <MenuItem key='edit-library-object-json'>Edit JSON</MenuItem>}
-
+      {GAME.library.creator[creatorLibraryId] && <MenuItem key='rename'>Rename</MenuItem>}
+      {GAME.library.creator[creatorLibraryId] && <MenuItem key='remove-from-library'>Remove</MenuItem>}
     </Menu>
   }
 }
