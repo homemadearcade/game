@@ -14,7 +14,8 @@ export default class DialogueMenu extends React.Component{
         if(!objectSelected.heroDialogue) {
           objectSelected.heroDialogue = []
         }
-        objectSelected.heroDialogue.push('')
+        objectSelected.heroDialogue.push(_.cloneDeep(window.defaultDialogue))
+        objectSelected.heroDialogue[objectSelected.heroDialogue.length-1].text = ''
         modals.writeDialogue(objectSelected, objectSelected.heroDialogue.length-1)
       }
 

@@ -4,6 +4,13 @@ import classnames from 'classnames';
 import KeySprite from './KeySprite.jsx';
 import PixiMapSprite from '../components/PixiMapSprite.jsx'
 
+window.defaultDialogue = {
+  reverseSpeaker: false,
+  dialogueId: null,//‘??’ <— this is for onHeroDialogueComplete event
+  text: 'hello',
+  style: 'modal'//‘modal vs bottom’
+}
+
 export default class DialogueBox extends React.Component{
   constructor(props) {
     super(props)
@@ -93,7 +100,7 @@ export default class DialogueBox extends React.Component{
     }
   }
 
-  _renderAvatar() {
+  _renderAvatar(dialogue) {
     const { id, name } = this.props
 
     let object
@@ -102,6 +109,12 @@ export default class DialogueBox extends React.Component{
       object = OBJECTS.getObjectOrHeroById(id)
       if(!usingName) usingName = object.name
     }
+
+    if(dialogue.reverseSpeaker) {
+      object = GAME.heros[HERO.id]
+      usingName = GAME.heros[HERO.id].name
+    }
+    
     return <div className="DialogueBox__avatar">
       {object && this._renderSprite(object)}
       {usingName && <div className="DialogueBox__name-container"><div className="DialogueBox__name">{usingName}</div></div>}
@@ -114,10 +127,10 @@ export default class DialogueBox extends React.Component{
     // <i className="DialogueBox__arrow fa fas fa-sort-down"></i>
 
     if(dialogue) {
-      return <div className={classnames("DialogueBox", { "DialogueBox--vertical-middle": verticleMiddle })}>
-        {this._renderAvatar()}
+      return <div className={classnames("DialogueBox", { "DialogueBox--vertical-middle": dialogue[0].style === 'modal' })}>
+        {this._renderAvatar(dialogue[0])}
         <Textfit className="DialogueBox__content" id='fitty' max={22}>
-          {dialogue[0]}
+          {dialogue[0].text}
         </Textfit>
         {!hideV && <KeySprite className="DialogueBox__key blink" keySprite={'v'}></KeySprite>}
       </div>

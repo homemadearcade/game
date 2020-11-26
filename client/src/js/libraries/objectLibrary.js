@@ -6,16 +6,12 @@ window.local.on('onFirstPageGameLoaded', () => {
     },
     standingNPC: {
       objectType: 'plainObject',
-      heroDialogue: [
-        "hello!"
-      ],
+      heroDialogue: [_.cloneDeep(window.defaultDialogue)],
       tags: { obstacle: true, talker: true, talkOnHeroInteract: true },
     },
     wanderingNPC: {
       objectType: 'plainObject',
-      heroDialogue: [
-        "hello!"
-      ],
+      heroDialogue: [_.cloneDeep(window.defaultDialogue)],
       tags: { obstacle: true, wander: true, moving: true, talker: true, talkOnHeroInteract: true },
     },
     light: {
@@ -113,9 +109,7 @@ window.local.on('onFirstPageGameLoaded', () => {
     		"targetResetEveryRound": true,
     		"autoTalkOnInteractable": true
     	},
-    	"heroDialogue": [
-        "Hello, welcome"
-    	],
+      heroDialogue: [_.cloneDeep(window.defaultDialogue)],
     	"subObjects": {
     		"awarenessTriggerArea": {
     			"objectType": "subObject",
@@ -146,6 +140,7 @@ window.local.on('onFirstPageGameLoaded', () => {
     					"targetHeroOnAware": false,
     					"targetResetEveryRound": false
     				},
+            "popoverText": null,
     				"_targetPursueId": null,
     				"path": null,
             "velocityX": null,
@@ -156,7 +151,8 @@ window.local.on('onFirstPageGameLoaded', () => {
     			"eventThreshold": -1,
     			"initialTriggerPool": -1,
     		}
-      }
+      },
+      "popoverText": "!",
     },
     pacmanMonster: {
       objectType: 'plainObject',

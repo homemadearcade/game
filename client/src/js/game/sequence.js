@@ -128,8 +128,6 @@ function processSequence(sequence) {
 
     let effector = defaultEffector
 
-    console.log('XXX', item.effectorObject, item)
-
     if(item.effectorObject) {
       if(item.effectorObject === 'ownerObject') {
         effector = sequence.ownerObject

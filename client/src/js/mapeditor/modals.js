@@ -181,11 +181,10 @@ function editPropertyNumber(object, property, currentValue, options = {}) {
 
 function writeDialogue(object, dialogueIndex, cb) {
   PAGE.typingMode = true
-  openWriteDialogueModal(object, object.heroDialogue[dialogueIndex], (result) => {
+  openWriteDialogueModal(object, object.heroDialogue[dialogueIndex].text, (result) => {
     if(result && result.value && result.value[0] && result.value[0].length) {
-      if(!object.heroDialogue) object.heroDialogue = []
       object.tags.talker = true
-      object.heroDialogue[dialogueIndex] = result.value[0]
+      object.heroDialogue[dialogueIndex].text = result.value[0]
       if(object.tags.talkOnHeroInteract == false && object.tags.talkOnHeroCollide == false) {
         object.tags.talkOnHeroInteract = true
       }

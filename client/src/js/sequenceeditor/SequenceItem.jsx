@@ -201,6 +201,9 @@ export default class SequenceItem extends React.Component{
     if(sequenceItem.effectName === 'temporaryDialogueChoice' || sequenceItem.effectName === 'addDialogueChoice') {
       sequenceItem.effectJSON = window.defaultDialogueChoice
     }
+    if(sequenceItem.effectName === 'dialogue') {
+      sequenceItem.effectJSON = [_.cloneDeep(window.defaultDialogue)]
+    }
     this.setState({sequenceItem})
   }
 
@@ -214,7 +217,10 @@ export default class SequenceItem extends React.Component{
     const { sequenceItem } = this.state;
 
     let initial = ''
-    if(sequenceItem.sequenceType === 'sequenceDialogue' || sequenceItem.sequenceType === 'sequenceEffect' ) {
+    if(sequenceItem.sequenceType === 'sequenceDialogue') {
+      initial = [_.cloneDeep(window.defaultDialogue)]
+    }
+    if(sequenceItem.sequenceType === 'sequenceEffect' ) {
       initial = sequenceItem.effectValue
     }
     if(sequenceItem.sequenceType === 'sequenceChoice') {
@@ -297,8 +303,10 @@ export default class SequenceItem extends React.Component{
   _renderDialogue() {
     const { sequenceItem } = this.state;
     return <div className="SequenceItem__dialogue">
-      <i className="fa fas fa-edit Manager__button" onClick={this._openWriteDialogueModal}/>
-      Dialogue: <div className="SequenceItem__summary">{sequenceItem.effectValue}</div>
+      <i className="fa fas fa-edit Manager__button" onClick={() => {
+          this._openEditCodeModal('Edit Dialogue', 'effectJSON')
+        }}/>
+      Dialogue: <div className="SequenceItem__summary SequenceItem__summary--json">{JSON.stringify(sequenceItem.effectJSON)}</div>
       <NextSelect sequenceItem={sequenceItem} isTrigger={this.props.isTrigger} nextOptions={this.state.nextOptions} nextValue={sequenceItem.next} onChange={this._selectNext}/>
     </div>
   }

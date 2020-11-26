@@ -166,7 +166,7 @@ export default class SequenceEditor extends React.Component {
     const sequenceItem = {id: this._findNextId(), sequenceType: selectedType }
 
     if(selectedType === 'sequenceDialogue') {
-      sequenceItem.effectValue = ''
+      sequenceItem.effectJSON = [_.cloneDeep(window.defaultDialogue)]
       sequenceItem.next = 'sequential'
     }
     if(selectedType === 'sequenceCondition') {

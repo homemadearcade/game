@@ -30,7 +30,11 @@ experience password for ha-live. Use month+day - 100
 
 Change on collide to on touch start for certain tags
 
-onGameStart, etc events for sequence library names
+Key? If you have a key u can open ____
+
+bring back Auto generate maze Functionality
+
+something that is missing is being able to do 2 of something...i need to transform trigger effects into trigger sequences and heroEffects in dialogue into an array as well....
 
 // suggested tags
 
@@ -119,6 +123,8 @@ LEVELS ( sub worlds )
 ###### BUGS
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ////////////////////////////////////////////////////
+I think that maybe because dialogue is an array, and there are other arrays in this engine, I think my new diff system will send them as null if they are changed, please test this
+
 sub object top vs bottom... I HAVE SAME PROBLEM WITH CONSTRUCT PARTS
 
 If object is outside of its custom grid to start off, It will not be able to find the correct grid
@@ -212,11 +218,7 @@ pixiChild._stillUsed property as well as a PIXIMAP.objectsById system. We scrap 
 ////////////////////////////////
 DIALOGUE UPGRADES
 ///////////////////////////////
-reverseSpeaker: true
-dialogueId: ‘??’ <— this is for onHeroDialogueComplete event
-text: dialogueText
-talkingToId: the objects id for name and stuff….
-style: ‘modal vs bottom’
+speakerId on each individual dialogue node so that we can have like a group conversation?
 
 ////////////////////////////////
 ////////////////////////////////

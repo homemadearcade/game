@@ -100,6 +100,11 @@ import pathfinding from '../utils/pathfinding.js'
     },
     dialogue: {
       heroOnly: true,
+      JSON: true,
+      effectorObject: true,
+    },
+    simpleDialogue: {
+      heroOnly: true,
       largeText: true,
       effectorObject: true,
     },
@@ -265,9 +270,41 @@ function processEffect(effect, effected, effector, ownerObject) {
   //   completeQuest(hero, effectValue)
   // }
 
+  if(effectName === 'simpleDialogue') {
+    if(effected.tags.hero) {
+      let newDialogue = {
+        ...window.defaultDialogue,
+        text: effect.effectValue
+      }
+      if(effected.dialogue && effected.dialogue.length) {
+        effected.dialogue.push(newDialogue)
+      } else {
+        effected.dialogue = [newDialogue]
+      }
+      effected.flags.showDialogue = true
+      effected.flags.paused = true
+      if(effector) {
+        effected.dialogueId = effector.id
+        if(effector.name) {
+          effected.dialogueName = effector.mod().name
+        } else {
+          effected.dialogueName = null
+        }
+      }
+
+      window.emitGameEvent('onUpdatePlayerUI', effected)
+    } else {
+      console.log('cannot dialogue effect non hero')
+    }
+  }
+
   if(effectName === 'dialogue') {
     if(effected.tags.hero) {
-      effected.dialogue = [effectValue]
+      if(effected.dialogue && effected.dialogue.length) {
+        effected.dialogue.push(...effect.effectJSON)
+      } else {
+        effected.dialogue = effect.effectJSON
+      }
       effected.flags.showDialogue = true
       effected.flags.paused = true
       if(effector) {
