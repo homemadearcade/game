@@ -298,6 +298,7 @@ function processEffect(effect, effected, effector, ownerObject) {
   }
 
   if(effectName === 'addLibrarySubObject') {
+    console.log(effect)
     OBJECTS.addSubObject(effected, window.subObjectLibrary.addGameLibrary()[effect.effectLibrarySubObject], effect.effectLibrarySubObject)
   }
 

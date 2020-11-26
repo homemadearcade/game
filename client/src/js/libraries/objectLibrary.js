@@ -111,7 +111,7 @@ window.local.on('onFirstPageGameLoaded', () => {
     		"targetHeroOnAware": true,
     		"homing": true,
     		"targetResetEveryRound": true,
-    		"autoInteractOnInteractable": true
+    		"autoTalkOnInteractable": true
     	},
     	"heroDialogue": [
         "Hello, welcome"

@@ -39,9 +39,9 @@ window.local.on('onFirstPageGameLoaded', () => {
       name: 'Spear',
       subObjectName: 'spearDialogueChoice',
       "triggers": {
-        "addDialogueOptionMod": {
-          "id": "addDialogueOptionMod",
-          "effectName": "mod",
+        "addDialogueChoice": {
+          "id": "addDialogueChoiceMod",
+          "effectName": "temporaryDialogueChoice",
           "effectJSON": {
             "dialogueChoices": {
               "spearDialogueChoice": {
@@ -56,7 +56,7 @@ window.local.on('onFirstPageGameLoaded', () => {
           "effectedTags": [
             "hero"
           ],
-          "eventName": "onGameStarted",
+          "eventName": "onObjectAwake",
           "eventThreshold": -1,
           "initialTriggerPool": -1,
           "conditionValue": "spearDialogueChoice",
@@ -64,6 +64,66 @@ window.local.on('onFirstPageGameLoaded', () => {
         }
       },
       tags: { rotateable: true, relativeToAngle: true, relativeToDirection: true, pickupable: true, pickupOnHeroInteract: true, equipOnPickup: true, onMapWhenEquipped: true },
+    },
+    evidenceChain1: {
+      width: 10, height: 10,
+      subObjectName: 'evidenceChain1',
+      "triggers": {
+        "addDialogueChoiceMod": {
+          "id": "addDialogueChoiceMod",
+          "effectName": "temporaryDialogueChoice",
+          "effectJSON": {
+            "tags": {
+              "monster": true
+            },
+            "text": "Present Evidence",
+            "heroEffect": "addLibrarySubObject",
+            heroEffectProps: { effectLibrarySubObject: "evidenceChain2"},
+            "heroDialogue": "You presented the evidence 1",
+            triggerPool: 1,
+          },
+          "effectValue": 'Present Evidence 1',
+          "effectedTags": [
+            "hero"
+          ],
+          "eventName": "onObjectAwake",
+          "eventThreshold": -1,
+          "initialTriggerPool": -1,
+          "conditionValue": "evidenceChain1",
+          "conditionType": "isSubObjectInInventory",
+        }
+      },
+      tags: { invisible: true, pickupable: true, pickupOnHeroInteract: true },
+    },
+    evidenceChain2: {
+      width: 10, height: 10,
+      subObjectName: 'evidenceChain2',
+      "triggers": {
+        "addDialogueChoiceMod": {
+          "id": "addDialogueChoiceMod",
+          "effectName": "temporaryDialogueChoice",
+          "effectJSON": {
+            "tags": {
+              "monster": true
+            },
+            "text": "Present Evidence",
+            "heroEffect": "addLibrarySubObject",
+            heroEffectProps: { effectLibrarySubObject: "evidenceChain3"},
+            "heroDialogue": "You presented evidence 2",
+            triggerPool: 1,
+          },
+          "effectValue": 'Present Evidence 2',
+          "effectedTags": [
+            "hero"
+          ],
+          "eventName": "onObjectAwake",
+          "eventThreshold": -1,
+          "initialTriggerPool": -1,
+          "conditionValue": "evidenceChain2",
+          "conditionType": "isSubObjectInInventory",
+        }
+      },
+      tags: { invisible: true, pickupable: true, pickupOnHeroInteract: true },
     },
     gun: {
       x: 0, y: 0, width: 10, height: 10,

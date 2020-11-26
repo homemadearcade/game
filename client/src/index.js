@@ -136,7 +136,6 @@ possibly turn dialogue choices into sub objects?? or no? They can have their own
 
 optimize modding...
 
-//WHAT DO WE DO IF WE WANT TO EDIT A MOD, for example I have the dialogue choice mod here i wanted it do have a triggerPool but that doesnt matter because I cant edit the triggerpool???? I CANT EDIT THE MOD COUNT??? ugh.MODS ARE IMMUTABLE
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
@@ -267,6 +266,7 @@ Area X 3
 Area x 4
 Potential Sub Object
 awareness areas toggleable, interact area toggleable in subobject library??idk
+Shift click on sub object in creator to add it to the map! or other way around?
 
 ////////////////////////////////
 ////////////////////////////////

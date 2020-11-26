@@ -420,12 +420,12 @@ function postPhysics() {
       const interactableObject = OBJECTS.getObjectOrHeroById(hero.interactableObjectId)
       // INTERACT WITH SMALLEST OBJECT
       // window.emitGameEvent('onObjectInteractable', hero.interactableObjectId, hero)
-      if(interactableObject.mod().tags.autoInteractOnInteractable && !hero._cantInteract && !hero.flags.paused && !hero._cantAutoInteract) {
-        // if(interactableObject.mod().tags.autoInteractOnce) {
-          interactableObject.tags.autoInteractOnInteractable = false
-          // interactableObject.tags.autoInteractOnce = false
+      if(interactableObject.mod().tags.autoTalkOnInteractable && !hero._cantInteract && !hero.flags.paused && !hero._cantautoTalk) {
+        // if(interactableObject.mod().tags.autoTalkOnce) {
+          interactableObject.tags.autoTalkOnInteractable = false
+          // interactableObject.tags.autoTalkOnce = false
           window.local.emit('onHeroInteract', hero, interactableObject)
-          onHeroTrigger(hero, interactableObject, {}, {fromInteractButton: true})
+          onHeroTrigger(hero, interactableObject, {}, { skipToInteraction: 'talk'})
           hero._cantInteract = true
         // }
       }

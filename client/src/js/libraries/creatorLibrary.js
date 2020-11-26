@@ -350,6 +350,22 @@ function onFirstPageGameLoaded() {
       libraryId:'seeThroughForegroundPower',
       ...toggleSubObject('seeThroughForegroundPower')
     },
+    evidenceChain1: {
+      label: 'Evidence Chain 1',
+      columnName: 'Equip',
+      toggleId: 'evidenceChain1',
+      libraryName:'subObjectLibrary',
+      libraryId:'evidenceChain1',
+      ...toggleSubObject('evidenceChain1')
+    },
+    evidenceChain2: {
+      label: 'Evidence Chain 2',
+      columnName: 'Equip',
+      toggleId: 'evidenceChain2',
+      libraryName:'subObjectLibrary',
+      libraryId:'evidenceChain2',
+      ...toggleSubObject('evidenceChain2')
+    },
   }
 
   window.homemadearcadeBasicLibrary = {
@@ -413,6 +429,9 @@ function onFirstPageGameLoaded() {
     asteroidsPowerBlock: true,
     ufoPowerBlock: true,
     starViewBlock: true,
+
+    evidenceChain1: true,
+    evidenceChain2: true,
     // marioCap: true,
     // gunPickupable: true,
     // spearPickupable: true,

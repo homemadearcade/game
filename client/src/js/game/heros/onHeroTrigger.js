@@ -10,6 +10,11 @@ import effects from '../effects'
 export function onHeroTrigger(hero, collider, result, options = { fromInteractButton: false }) {
   const isInteraction = options.fromInteractButton
 
+  if(options.skipToInteraction) {
+    triggerInteraction({ interaction: options.skipToInteraction }, hero, collider, result, options)
+    return
+  }
+
   if(isInteraction) {
     const interactions = OBJECTS.getInteractions(hero, collider)
     if(interactions.length > 1) {
@@ -154,14 +159,14 @@ export function triggerInteraction(interaction, hero, collider, result, options)
       effects.processEffect({ effectName: 'dialogue', effectValue: heroDialogue }, hero, collider)
     }
     if(heroEffect) {
-      effects.processEffect({ effectName: heroEffect, effectValue: heroEffectValue }, hero, collider)
+      effects.processEffect({ effectName: heroEffect, ...interaction.dialogueChoice.heroEffectProps }, hero, collider)
     }
     if(guestEffect) {
-      effects.processEffect({ effectName: guestEffect, effectValue: guestEffectValue }, collider, hero)
+      effects.processEffect({ effectName: guestEffect, ...interaction.dialogueChoice.guestEffectProps}, collider, hero)
     }
 
     if(interaction.dialogueChoice.triggerPool) {
-      interaction.dialogueChoice.triggerPool -= 1
+      if(hero.dialogueChoices[interaction.dialogueChoice.id]) hero.dialogueChoices[interaction.dialogueChoice.id].triggerPool -= 1
     }
   }
 

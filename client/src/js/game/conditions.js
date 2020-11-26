@@ -264,7 +264,6 @@ function testIsSubObjectEquipped(name, testObject, options) {
 }
 
 function testIsSubObjectInInventory(name, testObject, options) {
-  console.log(name, testObject)
   if(options.testModdedVersion) testObject = testObject.mod()
   return testObject.subObjects[name] && testObject.subObjects[name].inInventory
 }
