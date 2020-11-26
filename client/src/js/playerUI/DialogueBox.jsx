@@ -110,11 +110,11 @@ export default class DialogueBox extends React.Component{
       if(!usingName) usingName = object.name
     }
 
-    if(dialogue.reverseSpeaker) {
+    if(dialogue && dialogue.reverseSpeaker) {
       object = GAME.heros[HERO.id]
       usingName = GAME.heros[HERO.id].name
     }
-    
+
     return <div className="DialogueBox__avatar">
       {object && this._renderSprite(object)}
       {usingName && <div className="DialogueBox__name-container"><div className="DialogueBox__name">{usingName}</div></div>}
