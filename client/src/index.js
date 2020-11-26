@@ -136,6 +136,7 @@ Bombs need to be able to spawn the explosion onto real objects
 
 possibly turn dialogue choices into sub objects?? or no? They can have their own ACTION prop thing that modifies interactions, IDK, and other subObjects can hook into that
 
+optimize modding...
 
 //WHAT DO WE DO IF WE WANT TO EDIT A MOD, for example I have the dialogue choice mod here i wanted it do have a triggerPool but that doesnt matter because I cant edit the triggerpool???? I CANT EDIT THE MOD COUNT??? ugh.MODS ARE IMMUTABLE
 ////////////////////////////////////////////////////

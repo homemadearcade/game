@@ -111,6 +111,7 @@ export default class ObjectAdvancedMenu extends React.Component{
       <MenuItem key='turn-into-spawn-zone'>Turn into spawn zone</MenuItem>
       <MenuItem key='turn-into-resource-zone'>Turn into resource zone</MenuItem>
       <MenuItem key="edit-all-json">Edit All JSON</MenuItem>
+      <MenuItem key="edit-properties-json">Edit Properties JSON</MenuItem>
     </Menu>
   }
 }

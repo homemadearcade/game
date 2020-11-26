@@ -679,6 +679,8 @@ class Hero{
 
       choiceOptions: hero.choiceOptions,
       sprite: hero.sprite,
+      defaultSprite: hero.defaultSprite,
+      
       directions: hero.directions,
       zoomMultiplier: hero.zoomMultiplier,
       animationZoomMultiplier: hero.animationZoomMultiplier,

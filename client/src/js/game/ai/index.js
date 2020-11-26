@@ -130,7 +130,9 @@ function onUpdate(objects, delta) {
     //////////////////////////////////////////
     //////////////////////////////////////////
 
-    const shouldPursue = !object.pathId && (!object.path || object.path.length === 0) && object._targetPursueId
+    pathfindingAI(object)
+
+    const shouldPursue = (!object.path || object.path.length === 0) && object._targetPursueId
     if(shouldPursue && (object.mod().tags['zombie'] || object.mod().tags['pathfindDumb'])) {
       const target = OBJECTS.getObjectOrHeroById(object._targetPursueId)
       setTarget(object, target, true)
@@ -141,13 +143,13 @@ function onUpdate(objects, delta) {
       setPathTarget(object, target, true)
     }
 
+    if(!object.pathId && object.path && object.path.length && (object.mod().tags.targetResetEveryRound || object.mod().tags.targetBehind)) {
+      object.path.shift()
+    }
+
     let readyForNextTarget = false
     if(object.pathId) {
-      if(object.mod().tags.pathfindDumb) {
-        readyForNextTarget = !object.targetXY || (object.targetXY && object.targetXY.x == null && object.targetXY.y == null)
-      } else {
-        readyForNextTarget = (!object.path || (object.path && object.path.length === 0))
-      }
+      readyForNextTarget = (!object.path || (object.path && object.path.length === 0)) && !object.targetXY || (object.targetXY && object.targetXY.x == null && object.targetXY.y == null)
     }
 
     if(object.pathId && !object._pathWait && readyForNextTarget) {
@@ -216,8 +218,6 @@ function onUpdate(objects, delta) {
     } else if(object.targetXY) {
       moveTowardsTarget(object, object.targetXY, delta)
     }
-
-    pathfindingAI(object)
 
     spawnObject(object)
   })

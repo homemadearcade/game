@@ -85,6 +85,13 @@ function onFirstPageGameLoaded() {
         constructEditorOnSelect.call(this, 'globalConstructStationaryForeground', { foreground: true, notInCollisions: true })
       }
     },
+    welcomer: {
+      label: 'Welcomer',
+      columnName: 'NPCs',
+      libraryName:'objectLibrary',
+      libraryId:'welcomer',
+      JSON: window.objectLibrary.welcomer,
+    },
     standingNPC: {
       label: 'Standing',
       columnName: 'NPCs',
@@ -384,6 +391,7 @@ function onFirstPageGameLoaded() {
     // chest: true,
     standingNPC: true,
     wanderingNPC: true,
+    welcomer: true,
     spin: true,
     mario: true,
     zelda: true,

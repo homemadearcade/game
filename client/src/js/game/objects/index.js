@@ -385,6 +385,8 @@ class Objects{
       color: object.color,
       name: object.name,
       sprite: object.sprite,
+      defaultSprite: object.defaultSprite,
+
       namePos: object.namePos,
       removed: object.removed,
       angle: object.angle,

@@ -23,6 +23,7 @@
 
 #GameContainer {
   position: relative;
+  // position: absolute;
 }
 
 .LiveEditor {
@@ -130,7 +131,7 @@ textarea.swal-modal-input{
 select.swal-modal-input{
   height: 35px;
 }
-
+//, #pixi-canvas
 #game-canvas {
   position: absolute;
   top: 0;

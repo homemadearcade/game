@@ -49,6 +49,10 @@ export default class ObjectContextMenu extends React.Component{
         onStartDrag(objectSelected)
       }
 
+      if(key === 'drag-off-grid') {
+        MAPEDITOR.onStartDrag(objectSelected, { snapToGrid: false })
+      }
+
       if(key === 'delete') {
         deleteObject(objectSelected)
       }
@@ -129,6 +133,7 @@ export default class ObjectContextMenu extends React.Component{
     return <Menu onClick={this._handleObjectMenuClick}>
       <MenuItem key='copy-id' className="bold-menu-item">{objectSelected.subObjectName || objectSelected.name || objectSelected.id}</MenuItem>
       {!subObject && <MenuItem key="drag">Drag</MenuItem>}
+      {!subObject && <MenuItem key="drag-off-grid">Drag Off Grid</MenuItem>}
       {!objectSelected.constructParts && !objectSelected.pathParts && <MenuItem key="resize">Resize</MenuItem>}
       {subObject && <MenuItem key="resize-grid">Resize On Grid</MenuItem>}
       {!subObject && <MenuItem key="copy">Copy</MenuItem>}

@@ -23,6 +23,10 @@ MAP.onPlayerIdentified = function() {
       MAP.canvasMultiplier = gameElementWidth/640;
       MAP.canvas.width = 640 * MAP.canvasMultiplier;
       MAP.canvas.height = 320 * MAP.canvasMultiplier;
+      // const GC = document.getElementById('GameContainer')
+      // GC.style.width = 640 * MAP.canvasMultiplier;
+      // GC.style.height = 320 * MAP.canvasMultiplier;
+      // console.log(GC.style)
       constellation.onResize(MAP.ctx)
     }
     window.addEventListener("resize", onResize);

@@ -167,7 +167,8 @@ class MapEditor {
     document.body.style.cursor = "crosshair";
   }
 
-  onStartDrag(object) {
+  onStartDrag(object, options = { snapToGrid: true }) {
+    MAPEDITOR.snapToGrid = options.snapToGrid
     MAPEDITOR.draggingObject = JSON.parse(JSON.stringify(object))
   }
 
@@ -303,7 +304,12 @@ function handleMouseDown(event) {
     }
   } else if (MAPEDITOR.resizingObject) {
     const { resizingObject } = MAPEDITOR
-    networkEditObject(resizingObject, { id: resizingObject.id, x: resizingObject.x, y: resizingObject.y, width: resizingObject.width, height: resizingObject.height })
+    if(resizingObject.relativeWidth || resizingObject.relativeHeight) {
+      const owner = OBJECTS.getOwner(resizingObject)
+      networkEditObject(resizingObject, { id: resizingObject.id, x: resizingObject.x, y: resizingObject.y, relativeWidth: owner.width - resizingObject.width, relativeHeight: owner.width - resizingObject.height })
+    } else {
+      networkEditObject(resizingObject, { id: resizingObject.id, x: resizingObject.x, y: resizingObject.y, width: resizingObject.width, height: resizingObject.height })
+    }
     MAPEDITOR.resizingObject = null
   } else if (MAPEDITOR.draggingObject) {
     const { draggingObject } = MAPEDITOR

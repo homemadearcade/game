@@ -95,8 +95,67 @@ window.local.on('onFirstPageGameLoaded', () => {
           relativeX: 0,
           relativeY: 0,
           opacity: 0,
-          tags: { obstacle: false, invisible: false, stationary: true, awarenessTriggerArea: true },
+          tags: { obstacle: false, invisible: true, relativeToDirection: true, relativeToAngle: true, rotateable: true, awarenessTriggerArea: true },
         }
+      }
+    },
+    welcomer: {
+    	"objectType": "plainObject",
+    	"tags": {
+    		"obstacle": true,
+    		"talker": true,
+    		"talkOnHeroInteract": true,
+    		"pathfindLoop": true,
+    		"pathfindWait": true,
+    		"moving": true,
+    		"targetHeroOnAware": true,
+    		"homing": true,
+    		"targetResetEveryRound": true,
+    		"autoInteractOnInteractable": true
+    	},
+    	"heroDialogue": [
+        "Hello, welcome"
+    	],
+    	"subObjects": {
+    		"awarenessTriggerArea": {
+    			"objectType": "subObject",
+    			"width": 448,
+    			"height": 384,
+    			"tags": {
+    				"subObject": true,
+    				"awarenessTriggerArea": true,
+    				"objectInteractTriggerArea": false,
+    				"relativeToDirection": true,
+    				"relativeToAngle": true,
+    				"invisible": true,
+    				"rotateable": true
+    			},
+    			"relativeX": 0,
+    			"relativeY": 0,
+    			"count": 1,
+    			"subObjectName": "awarenessTriggerArea"
+    		}
+    	},
+    	"triggers": {
+    		"Switch to path after Dialogue Completed": {
+    			"id": "Switch to path after Dialogue Completed",
+    			"effectName": "mutate",
+    			"effectJSON": {
+    				"pathId": "object-891402034357",
+    				"tags": {
+    					"targetHeroOnAware": false,
+    					"targetResetEveryRound": false
+    				},
+    				"_targetPursueId": null,
+    				"path": null,
+            "velocityX": null,
+            "velocityY": null
+    			},
+    			"effectedOwnerObject": true,
+    			"eventName": "onHeroDialogueComplete",
+    			"eventThreshold": -1,
+    			"initialTriggerPool": -1,
+    		}
       }
     },
     pacmanMonster: {
