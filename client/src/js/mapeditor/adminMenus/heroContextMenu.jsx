@@ -7,6 +7,7 @@ import HookMenu from '../menus/HookMenu.jsx';
 import ModMenu from '../menus/ModMenu.jsx';
 import LiveMenu from '../menus/LiveMenu.jsx';
 import TagMenu from '../menus/tagMenu.jsx';
+import NameMenu from '../menus/NameMenu.jsx';
 import CurrentTagsMenu from '../menus/CurrentTagsMenu.jsx';
 import modals from '../modals.js'
 
@@ -196,6 +197,9 @@ export default class HeroContextMenu extends React.Component {
       <SubMenu title="Color">
         <MenuItem key="select-color" className='dont-close-menu'>Color Picker</MenuItem>
         <MenuItem key="toggle-outline">{ objectSelected.tags.outline ? 'On border only' : "Fill object" }</MenuItem>
+      </SubMenu>
+      <SubMenu title="Name">
+        <NameMenu objectSelected={objectSelected}/>
       </SubMenu>
       <SubMenu title="Quests">
         <MenuItem key="add-quest">Add Quest</MenuItem>

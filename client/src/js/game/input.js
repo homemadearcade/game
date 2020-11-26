@@ -763,20 +763,20 @@ function onUpdate(hero, keysDown, delta) {
 function onKeyDown(key, hero) {
   if('e' === key || 'v' === key || 'enter' === key) {
     if(hero.dialogue && hero.dialogue.length) {
+      if(hero._fireDialogueCompleteWithSpeakerId && hero.dialogueId) {
+        const object = OBJECTS.getObjectOrHeroById(hero.dialogueId)
+        window.emitGameEvent('onHeroDialogueComplete', hero, object)
+      }
+      if(hero.dialogue[0].dialogueId) {
+        window.emitGameEvent('onHeroDialogueComplete', hero, { id: hero.dialogue[0].dialogueId })
+      }
       hero.dialogue.shift()
       if(!hero.dialogue.length) {
         hero.flags.showDialogue = false
         hero.flags.paused = false
         hero.onGround = false
-        if(hero._dialogueFireComplete) {
-          if(hero.dialogueId) {
-            const object = OBJECTS.getObjectOrHeroById(hero.dialogueId)
-            window.emitGameEvent('onHeroDialogueComplete', hero, object)
-          } else {
-            window.emitGameEvent('onHeroDialogueComplete', hero, object)
-          }
-        }
-        hero._dialogueFireComplete = false
+        hero.dialogueId = null
+        hero._fireDialogueCompleteWithSpeakerId = false
       }
       hero._cantInteract = true
       window.emitGameEvent('onUpdatePlayerUI', hero)

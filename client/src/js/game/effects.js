@@ -300,10 +300,11 @@ function processEffect(effect, effected, effector, ownerObject) {
 
   if(effectName === 'dialogue') {
     if(effected.tags.hero) {
+      let newDialogue = _.cloneDeep(effect.effectJSON)
       if(effected.dialogue && effected.dialogue.length) {
-        effected.dialogue.push(...effect.effectJSON)
+        effected.dialogue.push(...newDialogue)
       } else {
-        effected.dialogue = effect.effectJSON
+        effected.dialogue = newDialogue
       }
       effected.flags.showDialogue = true
       effected.flags.paused = true
