@@ -2,7 +2,9 @@ const audioFolder = './client/public/audio/retro';
 const fs = require('fs');
 
 
-const audioJSON = {}
+const audioJSON = {
+  id: 'retro'
+}
 
 const folders = fs.readdirSync(audioFolder, { withFileTypes: true }).filter(dirent => dirent.isDirectory())
 folders.forEach(folder => {
@@ -10,7 +12,8 @@ folders.forEach(folder => {
   audioJSON[folder.name] = {
     name: folder.name,
     diskLocation: audioFolder + '/'+folder.name,
-    files: []
+    files: [],
+    tags: [],
   }
   const fileDirectory = audioFolder + '/'+folder.name
   const files = fs.readdirSync(fileDirectory, { withFileTypes: true })
@@ -20,8 +23,9 @@ folders.forEach(folder => {
     audioJSON[folder.name].files.push({
       folder: folder.name,
       name: file.name,
-      id: folder.name+'/'+file.name,
-      assetURL: 'assets/audio/retro/'+folder.name+'/'+file.name
+      id: 'assets/audio/retro/'+folder.name+'/'+file.name,
+      assetURL: 'assets/audio/retro/'+folder.name+'/'+file.name,
+      tags: []
     })
   })
 });

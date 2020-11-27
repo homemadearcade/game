@@ -17,7 +17,9 @@ export default class ToolbarRow extends React.Component {
 
     const { open } = this.state
 
-    if(!children.map) children = [children]
+    if(children) {
+      if(!children.map) children = [children]
+    }
 
     return (
       <div className="Toolbar__row">

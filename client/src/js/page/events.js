@@ -137,6 +137,10 @@ class EventEmitter {
       if(TRACKING[eventName]) {
         event.push(TRACKING[eventName])
       }
+
+      if(AUDIO[eventName]) {
+        event.push(AUDIO[eventName])
+      }
     }
 
     if( event ) {

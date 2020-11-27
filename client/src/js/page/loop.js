@@ -48,7 +48,9 @@ window.startGameLoop = function() {
       world: GAME.world,
       grid: {...GAME.grid, nodes: null},
       defaultHero: GAME.defaultHero,
-      library: GAME.library
+      library: GAME.library,
+      theme: GAME.theme,
+      assets: GAME.assets
     })
   }, 1000)
 }

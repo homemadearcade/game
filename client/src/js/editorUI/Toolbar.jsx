@@ -422,9 +422,10 @@ export default class Toolbar extends React.Component {
               }
             })
           }}/>
-          <ToolbarButton iconName="fa-icons" onClick={() => {
-              BELOWMANAGER.open({ selectedManager: 'MediaManager', selectedMenu: 'SpriteSheetEditor'})
-          }}/>
+        </ToolbarRow>
+        <ToolbarRow iconName="fa-icons" onClick={() => {
+            BELOWMANAGER.open({ selectedManager: 'MediaManager' })
+        }}>
         </ToolbarRow>
       </div>
     )

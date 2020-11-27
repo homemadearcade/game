@@ -44,8 +44,10 @@ class Game{
     }
 
     this.theme = {}
-    this.assets = {}
-
+    this.assets = {
+      audio: {},
+      ss: {},
+    }
   }
 
   onPlayerIdentified() {
@@ -280,6 +282,10 @@ class Game{
     GAME.id = game.id
     GAME.grid = game.grid
     window.local.emit('onGridLoaded')
+
+    if(game.assets) GAME.assets = game.assets
+
+    if(game.theme) GAME.theme = game.theme
 
     tags.setDefault()
     if(game.library) GAME.library = game.library
@@ -816,6 +822,8 @@ class Game{
       defaultHero: game.defaultHero,
       library: game.library,
       metadata: game.metadata,
+      assets: game.assets,
+      theme: game.theme,
     }))
 
     if(game.heros) {

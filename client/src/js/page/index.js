@@ -205,6 +205,7 @@ class Page{
   playerIdentified(heroSummonType) {
     PAGE.setupRemoteLogging()
     PAGE.establishRoleFromQueryOnly()
+    AUDIO.loadData()
     HERO.getHeroId(heroSummonType === 'resume')
 
     window.onbeforeunload = function (event) {

@@ -94,6 +94,12 @@ function getSpriteSheet(id, cb) {
   return JSON.parse(data)
 }
 
+function getAudioData(id, cb) {
+  const data = fs.readFileSync('./data/audio/' +id+'.json', 'utf8')
+  return JSON.parse(data)
+}
+
+
 app.get('/spriteSheets', (req,res)=>{
   const { spriteSheetIds } =  req.query;
 
@@ -103,6 +109,12 @@ app.get('/spriteSheets', (req,res)=>{
   })
 
   res.send({spriteSheets: sss})
+})
+
+app.get('/audioData', (req,res)=>{
+  const { id } =  req.query;
+
+  res.send(getAudioData(id))
 })
 
 app.use(express.static(__dirname + '/dist'))

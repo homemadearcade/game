@@ -3,6 +3,7 @@ import SpriteSheetEditor from './SpriteSheetEditor.jsx'
 import SpriteSelector from './SpriteSelector.jsx'
 import modals from '../../mapeditor/modals'
 import Collapsible from 'react-collapsible';
+import classnames from 'classnames';
 
 window.spriteSheetTags = {
   scifi: false,
@@ -74,6 +75,8 @@ export default class MediaManager extends React.Component {
           if(ss.id === json.id) return json
           return ss
         })
+      } else if(this.props.selectedMenu === 'AudioEditor'){
+        window.socket.emit('saveAudioDataJSON', json.id, json)
       }
     }
 
@@ -139,7 +142,6 @@ export default class MediaManager extends React.Component {
     const byTag = {}
 
     window.spriteSheets.forEach((ss) => {
-      console.log(GAME.heros[HERO.id].spriteSheets[ss.id])
       if(PAGE.role.isAdmin || (GAME.heros[HERO.id].spriteSheets && GAME.heros[HERO.id].spriteSheets[ss.id])) {
         if(ss.tags) ss.tags.forEach((tag) => {
           if(!byTag[tag]) byTag[tag] = []
@@ -168,9 +170,53 @@ export default class MediaManager extends React.Component {
     })
   }
 
+  _renderAudioData(dataName) {
+    const data = AUDIO.data[dataName]
+    const categoryNames = Object.keys(data)
+
+    return categoryNames.map((name) => {
+      return <Collapsible trigger={name}>
+        {data[name].files.map((audioFile) => {
+          return this._renderAudioFile(dataName, audioFile)
+        })}
+      </Collapsible>
+    })
+  }
+
+  _renderAudioFile(dataName, audioFile) {
+    const gameHasAsset = GAME.assets.audio[audioFile.id]
+    return <div>
+      <div className={classnames("Manager__list-item Manager__list-item--audio", {
+          'Manager__list-item--border': gameHasAsset
+        })} onClick={() => {
+          if(gameHasAsset) {
+            AUDIO.play(audioFile.id)
+          } else {
+            GAME.assets.audio[audioFile.id] = {
+              assetURL: audioFile.assetURL,
+              name: audioFile.name
+            }
+            AUDIO.loadAsset(audioFile.assetURL, (ids) => {
+              AUDIO.play(audioFile.id)
+            })
+            this.forceUpdate()
+          }
+
+          if(this.props.selectedMenu === 'AudioSelector') {
+            if(this.props.objectSelected.id) {
+              MAPEDITOR.networkEditObject(this.props.objectSelected, { id: this.props.objectSelected.id, defaultSprite: sprite.textureId })
+            }
+          }
+        }}>{audioFile.name}</div>
+    </div>
+  }
+
+  //tagList.map((ss) => {
+  //     return <div className="Manager__list-item" onClick={() => this.props.openId(this.props.index, ss.id)}>{ss.name || ss.id}</div>
+  // })
+
   render() {
     const { selectedMenu, selectedId } = this.props
-    console.log(selectedMenu)
 
     if(selectedId && selectedMenu === 'SpriteSheetEditor') {
       return <div className="Manager">
@@ -194,10 +240,57 @@ export default class MediaManager extends React.Component {
       </div>
     }
 
+    if(selectedMenu === 'SpriteSheetEditor') {
+      return <div className="Manager">
+        <div className="Manager__list">
+          <div className="ManagerMenu__right">
+            <div className="Manager__button" onClick={() => this.props.openMenu(this.props.index, null)}>Return</div>
+          </div>
+          <div className="Manager__list-item" onClick={this._newSpriteSheet}>New SpriteSheet</div>
+          {this._renderSpriteSheets()}
+        </div>
+      </div>
+    }
+
+    if(selectedMenu === 'SpriteSelector') {
+      return <div className="Manager">
+        <div className="Manager__list">
+          {this._renderSpriteSheets()}
+        </div>
+      </div>
+    }
+
+    if(selectedMenu === 'AudioEditor') {
+      return <div className="Manager">
+        <div className="ManagerMenu__right">
+          <div className="Manager__button" onClick={() => this.props.openMenu(this.props.index, null)}>Return</div>
+        </div>
+        <div className="Manager__list">
+          {this._renderAudioData('retro')}
+        </div>
+      </div>
+    }
+
+    if(selectedId && selectedMenu === 'AudioSelector') {
+      return <div className="Manager">
+        <div className="Manager__list">
+          {this._renderAudioData('retro')}
+        </div>
+      </div>
+    }
+
+
     return <div className="Manager">
       <div className="Manager__list">
-        {selectedMenu === 'SpriteSheetEditor' && <div className="Manager__list-item" onClick={this._newSpriteSheet}>New SpriteSheet</div>}
-        {this._renderSpriteSheets()}
+        <div className="Manager__list-item" onClick={() => {
+            this.props.openMenu(this.props.index, 'SpriteSheetEditor')
+          }}
+        >SpriteSheet Editor</div>
+        <div className="Manager__list-item"
+          onClick={() => {
+              this.props.openMenu(this.props.index, 'AudioEditor')
+            }}
+        >Audio Editor</div>
       </div>
     </div>
   }

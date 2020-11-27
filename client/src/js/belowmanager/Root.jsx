@@ -68,6 +68,17 @@ export default class Root extends React.Component {
     })
   }
 
+  openMenu = (index, menu) => {
+    this.setState({
+      selectedHistory: this.state.selectedHistory.map((selected, i) => {
+        if(index === i) {
+          selected.selectedMenu = menu
+        }
+        return selected
+      })
+    })
+  }
+
   closeTab = (index) => {
     let tabIndex = this.state.tabIndex
 
@@ -110,15 +121,15 @@ export default class Root extends React.Component {
 
   _renderPanel({ objectSelected, selectedMenu, selectedId, selectedManager }, index) {
     if(selectedManager === 'MediaManager') {
-      return <MediaManager index={index} returnToList={this.clearId} openId={this.openId} selectedMenu={selectedMenu} selectedId={selectedId} objectSelected={objectSelected} closeManager={this.close}/>
+      return <MediaManager index={index} returnToList={this.clearId} openId={this.openId} openMenu={this.openMenu} selectedMenu={selectedMenu} selectedId={selectedId} objectSelected={objectSelected} closeManager={this.close}/>
     }
 
     if(selectedManager === 'GameManager') {
-      return <GameManager index={index} returnToList={this.clearId} openId={this.openId} selectedMenu={selectedMenu} selectedId={selectedId} objectSelected={objectSelected} closeManager={this.close}/>
+      return <GameManager index={index} returnToList={this.clearId} openId={this.openId} openMenu={this.openMenu} selectedMenu={selectedMenu} selectedId={selectedId} objectSelected={objectSelected} closeManager={this.close}/>
     }
 
     if(selectedManager === 'ObjectManager') {
-      return <ObjectManager index={index} returnToList={this.clearId} openId={this.openId} selectedMenu={selectedMenu} selectedId={selectedId} objectSelected={objectSelected} closeManager={this.close}/>
+      return <ObjectManager index={index} returnToList={this.clearId} openId={this.openId} openMenu={this.openMenu} selectedMenu={selectedMenu} selectedId={selectedId} objectSelected={objectSelected} closeManager={this.close}/>
     }
   }
 

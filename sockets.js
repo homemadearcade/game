@@ -73,6 +73,17 @@ function socketEvents(fs, io, socket, options = { arcadeMode: false }){
     saveSpriteSheet(id, json)
   })
 
+  socket.on('saveAudioDataJSON', (id, json) => {
+    saveAudioData(id, json)
+  })
+
+  function saveAudioData(id, json) {
+    fs.writeFile('data/audio/' + id + '.json', JSON.stringify(json), 'utf8', (e) => {
+      if(e) return console.log(e)
+      else console.log('audio data: ' + id + ' saved')
+    });
+  }
+
 
   ///////////////////////////
   ///////////////////////////

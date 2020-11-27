@@ -27,6 +27,16 @@ function SingleEventSelect({sequenceItem, valueProp, onChange, title}) {
   </div>
 }
 
+function MultiThemeEventSelect({currentValue, onChange, title}) {
+  return <div className="ManagerInput__select">{title || 'Theme Event:'}<Select
+    value={{ value: currentValue, label: currentValue}}
+    onChange={onChange}
+    options={Object.keys(window.triggerEvents).map(eventName => { return { value: eventName, label: eventName}})}
+    styles={window.reactSelectStyle}
+    theme={window.reactSelectTheme}/>
+  </div>
+}
+
 function MultiTagSelect({sequenceItem, valueProp, onChange, title}) {
   return <div className="SequenceItem__test">{title || 'Test Tags:'}<Select
     value={sequenceItem[valueProp] && sequenceItem[valueProp].map((tags) => { return { value: tags, label: tags} })}
@@ -138,6 +148,7 @@ function SingleLibraryBranchSelect({sequenceItem, valueProp, onChange, title}) {
 
 export {
   SingleEventSelect,
+  MultiThemeEventSelect,
   SingleTagSelect,
   SingleIdSelect,
   SingleLibrarySubObjectSelect,
