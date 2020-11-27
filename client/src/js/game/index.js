@@ -941,6 +941,33 @@ class Game{
     }
   }
 
+  onUpdateTheme(updatedTheme) {
+    for(let key in updatedTheme) {
+      const value = updatedTheme[key]
+
+      if(value instanceof Object) {
+        GAME.theme[key] = {}
+        window.mergeDeep(GAME.theme[key], value)
+      } else {
+        GAME.theme[key] = value
+      }
+    }
+  }
+
+  onUpdateAssets(updatedAssets) {
+    for(let key in updatedAssets) {
+      const value = updatedAssets[key]
+
+      if(key === 'audio') {
+        Object.keys(value).forEach((file) => {
+          if(!GAME.assets.audio[file]) AUDIO.loadAsset(file)
+        })
+      }
+
+      window.mergeDeep(GAME.assets[key], value)
+    }
+  }
+
   onUpdateWorld(updatedWorld) {
     if(GAME.world) {
       for(let key in updatedWorld) {

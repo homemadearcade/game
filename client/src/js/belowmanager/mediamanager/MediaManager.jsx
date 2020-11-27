@@ -175,6 +175,7 @@ export default class MediaManager extends React.Component {
     const categoryNames = Object.keys(data)
 
     return categoryNames.map((name) => {
+      if(name === 'id' || !data[name].files) return
       return <Collapsible trigger={name}>
         {data[name].files.map((audioFile) => {
           return this._renderAudioFile(dataName, audioFile)
@@ -186,9 +187,22 @@ export default class MediaManager extends React.Component {
   _renderAudioFile(dataName, audioFile) {
     const gameHasAsset = GAME.assets.audio[audioFile.id]
     return <div>
-      <div className={classnames("Manager__list-item Manager__list-item--audio", {
+      <div data-audioFileId={audioFile.id} className={classnames("Manager__list-item Manager__list-item--audio", {
           'Manager__list-item--border': gameHasAsset
-        })} onClick={() => {
+        })} onClick={(e) => {
+          var isRightMB;
+           e = e || window.event;
+
+           if ("which" in e)  // Gecko (Firefox), WebKit (Safari/Chrome) & Opera
+               isRightMB = e.which == 3;
+           else if ("button" in e)  // IE, Opera
+               isRightMB = e.button == 2;
+          if(isRightMB) {
+            GAME.assets.audio[audioFile.id] = null
+            window.socket.emit('updateAssets', { audio: GAME.assets.audio })
+            return
+          }
+
           if(gameHasAsset) {
             AUDIO.play(audioFile.id)
           } else {
@@ -199,6 +213,7 @@ export default class MediaManager extends React.Component {
             AUDIO.loadAsset(audioFile.assetURL, (ids) => {
               AUDIO.play(audioFile.id)
             })
+            window.socket.emit('updateAssets', { audio: GAME.assets.audio })
             this.forceUpdate()
           }
 

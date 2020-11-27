@@ -591,6 +591,19 @@ function socketEvents(fs, io, socket, options = { arcadeMode: false }){
   socket.on('addDialogueChoice', (ownerId, choiceId, choice) => {
     io.emit('onAddDialogueChoice', ownerId, choiceId, choice)
   })
+
+
+  ///AUDIO, ASSETS, THEME
+  socket.on('playSoundAsType', (id, type) => {
+    io.emit('onPlaySoundAsType', id, type)
+  })
+
+  socket.on('updateTheme', (updatedTheme) => {
+    io.emit('onUpdateTheme', updatedTheme)
+  })
+  socket.on('updateAssets', (updatedAssets) => {
+    io.emit('onUpdateAssets', updatedAssets)
+  })
 }
 
 module.exports = socketEvents

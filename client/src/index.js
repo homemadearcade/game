@@ -18,6 +18,8 @@ PUZZLE INTERFACES
 COMBAT + GOALS + QUESTS
 -------
 
+we want it to be onGameIdentified -> on assets loaded
+
 3d sound effects system from papa bear
 
 right click creator service - add to heros guidance? NOT BAD!

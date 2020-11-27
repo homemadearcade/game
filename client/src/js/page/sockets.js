@@ -448,6 +448,17 @@ function init() {
     window.HAGameSession = data
     window.local.emit('onUpdateGameSession')
   })
+
+
+  window.socket.on('onUpdateAssets', (data) => {
+    window.local.emit('onUpdateAssets', data)
+  })
+  window.socket.on('onUpdateTheme', (data) => {
+    window.local.emit('onUpdateTheme', data)
+  })
+  window.socket.on('onPlaySoundAsType', (id, type) => {
+    window.local.emit('onPlaySoundAsType', id, type)
+  })
 }
 
 export default {

@@ -19,6 +19,7 @@ folders.forEach(folder => {
   const files = fs.readdirSync(fileDirectory, { withFileTypes: true })
 
   files.forEach(file => {
+    if(file.name === '.DS_Store') return
 
     audioJSON[folder.name].files.push({
       folder: folder.name,
