@@ -2,6 +2,7 @@ window.defaultDialogueChoice = {
   tags: {},
   heroEffect: '',
   heroEffectValue: '',
+  heroDialogueSet: '',
   heroDialogue: [{...window.defaultDialogue}],
   guestEffect: '',
   guestEffectValue: '',

@@ -11,6 +11,10 @@ FILL OUT SEQUENCE EDITOR, LIBRARY, EFFECTS, TAGS
 PUZZLE INTERFACES
   this https://github.com/alexeyivanov94/combination-lock-react
   and a straight up password input
+  question is how to deal with the EFFFECT of the combinaton easily from UI?
+    tag -- destroyOnPuzzleComplete
+    tag -- spawnAllInHeroInventoryOnPuzzleComplete
+    and then ud need a basic -- combination variable. Puzzle type + puzzle combination...  two variables?
 COMBAT + GOALS + QUESTS
 -------
 
@@ -214,11 +218,16 @@ pixiChild._stillUsed property as well as a PIXIMAP.objectsById system. We scrap 
 
 trigger effects -> sequences
 
+overall something that proved to just be incredibly effective and I should do more often is the dialogueSet variable. Instead of constantly editing this array, we create a bunch of potential arrays that the user can hook into from various places...
+what a large scale change looks like in this engine is mainly changing variables such as dialogueSet. this opens up ALL sorts of possibility and makes it much more seamless... We keep all previous and future states an object has WITHIN that object and we just toggle the stickshift to a different gear to access the various states
+
 ////////////////////////////////
 ////////////////////////////////
 DIALOGUE UPGRADES
 ///////////////////////////////
 optional speakerId on each individual dialogue node so that we can have like a group conversation?
+combine choices and dialogue??? hmmm?, since dialogue is an object now..?
+use othe other propertys on a dialogueSet to automatically decide which dialogueSet to use, perhaps it can be based on tag or all sorts of conditions
 
 ////////////////////////////////
 ////////////////////////////////
