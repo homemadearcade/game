@@ -103,6 +103,11 @@ import pathfinding from '../utils/pathfinding.js'
       JSON: true,
       effectorObject: true,
     },
+    dialogueSet: {
+      heroOnly: true,
+      smallText: true,
+      effectorObject: true,
+    },
     simpleDialogue: {
       heroOnly: true,
       largeText: true,
@@ -300,8 +305,34 @@ function processEffect(effect, effected, effector, ownerObject) {
 
   if(effectName === 'dialogue') {
     if(effected.tags.hero && typeof effect.effectJSON !== 'string') {
-      console.log(effect.effectJSON)
       let newDialogue = _.cloneDeep(effect.effectJSON)
+      if(effected.dialogue && effected.dialogue.length) {
+        effected.dialogue.push(...newDialogue)
+      } else {
+        effected.dialogue = newDialogue
+      }
+      effected.flags.showDialogue = true
+      effected.flags.paused = true
+      if(effector) {
+        effected.dialogueId = effector.id
+        if(effector.name) {
+          effected.dialogueName = effector.mod().name
+        } else {
+          effected.dialogueName = null
+        }
+      }
+
+      window.emitGameEvent('onUpdatePlayerUI', effected)
+    } else {
+      console.log('cannot dialogue effect non hero')
+    }
+  }
+
+  if(effectName === 'dialogueSet') {
+    if(effected.tags.hero && effector.heroDialogueSets) {
+      const dialogueSet = effector.heroDialogueSets[effectValue]
+      if(!dialogueSet) return
+      const newDialogue = dialogueSet.dialogue.slice()
       if(effected.dialogue && effected.dialogue.length) {
         effected.dialogue.push(...newDialogue)
       } else {

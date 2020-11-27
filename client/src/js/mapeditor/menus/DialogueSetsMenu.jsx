@@ -98,11 +98,26 @@ export default class DialogueSetMenu extends React.Component{
         objectSelected.heroDialogueSets[data.setName].dialogue[dialogueIndex].text = dialogue
         networkEditObject(objectSelected, {heroDialogueSets: objectSelected.heroDialogueSets})
       }
+
+      if(data.action === "set-as-current") {
+        networkEditObject(objectSelected, {heroDialogueSet: data.setName })
+        return
+      }
     }
   }
 
   _renderDialogueSet(set, setName) {
-    let render = [<MenuItem key={JSON.stringify({ action:"add-dialogue", setName})}>Add Dialogue</MenuItem>]
+    const { objectSelected } = this.props
+    let render = []
+
+    if(objectSelected.heroDialogueSet === setName) {
+      render.push(<MenuItem key={JSON.stringify({ action:"set-as-current", setName})}>Set as current set<i style={{marginLeft:'6px'}} className="fas fa-check"></i></MenuItem>)
+    } else {
+      render.push(<MenuItem key={JSON.stringify({ action:"set-as-current", setName})}>Set as current set</MenuItem>)
+    }
+
+    render.push(<MenuItem key={JSON.stringify({ action:"add-dialogue", setName})}>Add Dialogue</MenuItem>)
+
     {set.dialogue.map((dialogue, i) => {
       render.push(<MenuItem key={JSON.stringify({ action:"edit-dialogue", index: i, setName})}>{'Edit Dialogue ' + (i+1)}</MenuItem>)
     })}
@@ -120,7 +135,11 @@ export default class DialogueSetMenu extends React.Component{
       <MenuItem key="add-dialogue-set">Add Dialogue Set</MenuItem>
       <MenuItem key="set-dialogue-set">Set Current Dialogue Set</MenuItem>
       {heroDialogueSets && Object.keys(heroDialogueSets).map((setName) => {
-        return <SubMenu title={setName}>{this._renderDialogueSet(heroDialogueSets[setName], setName)}</SubMenu>
+        if(objectSelected.heroDialogueSet === setName) {
+          return <SubMenu key={setName} title={setName} className="bold-menu-item">{this._renderDialogueSet(heroDialogueSets[setName], setName)}</SubMenu>
+        } else {
+          return <SubMenu key={setName} title={setName}>{this._renderDialogueSet(heroDialogueSets[setName], setName)}</SubMenu>
+        }
       })}
     </Menu>
   }

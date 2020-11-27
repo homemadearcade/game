@@ -219,10 +219,6 @@ trigger effects -> sequences
 DIALOGUE UPGRADES
 ///////////////////////////////
 optional speakerId on each individual dialogue node so that we can have like a group conversation?
-you CANNOT mod dialogue or other arrays because of how DIFF works and just simply how they are writtens
-perhaps ill call it heroDialogueSets and it will be an object. "{default: [ ORIGINAL DIALOGUE ARRAY ]}", there will be a variable called heroDialogueSet: STRING
-and this will allow me to have the dialogueOption even ask for a specific dialogue set!"
-//effect -> dialogueSet -> STRING!
 
 ////////////////////////////////
 ////////////////////////////////
@@ -257,6 +253,8 @@ Toggle between drawing types??
 draw absurd path with mouse ( as spencer suggested, just use like drag? but record mouse points. this is LOL but awesome )
 //get better json editor so I dont have to format so fuckin much, use the current json editor?
 //action props, spawn zones, etc would be better editing using this json editor not the ae editor and not context menus
+// add more bold stuff to the right click menu, its a great way of highlighting!, remove uneeded menus?
+// right click -> open advanced menu
 
 ////////////////////////////////
 ////////////////////////////////

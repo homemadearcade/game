@@ -1,7 +1,15 @@
 export default function onTalk(hero, collider, result, options) {
   if(collider.id !== hero.lastDialogueId) {
+
+    const heroDialogueSetName = collider.mod().heroDialogueSet
+    let newDialogue
+    if(heroDialogueSetName && collider.mod().heroDialogueSets && collider.mod().heroDialogueSets[heroDialogueSetName]) {
+      newDialogue = collider.mod().heroDialogueSets[heroDialogueSetName].dialogue.slice()
+    } else {
+      newDialogue = collider.mod().heroDialogue.slice()
+    }
     if(!options.fromInteractButton) hero.lastDialogueId = collider.id
-    hero.dialogue = collider.mod().heroDialogue.slice()
+    hero.dialogue = newDialogue
     hero.flags.showDialogue = true
     hero.flags.paused = true
     hero._fireDialogueCompleteWithSpeakerId = true
