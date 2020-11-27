@@ -34,6 +34,12 @@ window.conditionTypes = {
     smallText: true,
     label: 'Sub Object Name:'
   },
+  inventorySubObjectHasCount: {
+    smallText: true,
+    number: true,
+    label: 'Sub Object Name:',
+    numberLabel: 'How Many:'
+  },
   isSubObjectEquipped: {
     smallText: true,
     label: 'Sub Object Name:'
@@ -52,7 +58,7 @@ window.conditionTypes = {
   },
   onTimerEnd: {
     number: true,
-    label: 'Timer seconds:'
+    numberLabel: 'Timer seconds:'
   },
   onAdminApproval: {
     smallText: true,
@@ -215,6 +221,21 @@ function testCondition(condition, testObjects, options = { allTestedMustPass: fa
     }
   }
 
+  if(condition.conditionType === 'inventorySubObjectHasCount') {
+    const name = condition.conditionValue
+    const count = condition.conditionNumber
+
+    if(allTestedMustPass) {
+      pass = testObjects.every((testObject) => {
+        return testInventorySubObjectHasCount(name, testObject, count, options)
+      })
+    } else {
+      pass = testObjects.some((testObject) => {
+        return testInventorySubObjectHasCount(name, testObject, count, options)
+      })
+    }
+  }
+
   if(testPassReverse) return !pass
 
   return pass
@@ -266,6 +287,11 @@ function testIsSubObjectEquipped(name, testObject, options) {
 function testIsSubObjectInInventory(name, testObject, options) {
   if(options.testModdedVersion) testObject = testObject.mod()
   return testObject.subObjects[name] && testObject.subObjects[name].inInventory
+}
+
+function testInventorySubObjectHasCount(name, testObject, count, options) {
+  if(options.testModdedVersion) testObject = testObject.mod()
+  return testObject.subObjects[name] && testObject.subObjects[name].inInventory && testObject.subObjects[name].count === count
 }
 
 function testHasTag(tag, testObject, options) {

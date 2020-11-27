@@ -46,8 +46,8 @@ export default class Condition extends React.Component {
         </div>)
       }
       if(conditionData.number) {
-        chosenConditionForm.push(<div className="SequenceItem__condition-form"><i className="fa fas fa-edit Manager__button" onClick={() => { this.props._openEditNumberModal('conditionValue') }}/>
-          {conditionData.label} <div className="SequenceItem__summary SequenceItem__summary--json">{sequenceItem.conditionValue}</div>
+        chosenConditionForm.push(<div className="SequenceItem__condition-form"><i className="fa fas fa-edit Manager__button" onClick={() => { this.props._openEditNumberModal('conditionNumber') }}/>
+        {conditionData.numberLabel} <div className="SequenceItem__summary SequenceItem__summary--json">{sequenceItem.conditionNumber}</div>
         </div>)
       }
 

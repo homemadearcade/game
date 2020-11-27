@@ -5,6 +5,7 @@ import CurrentTagsMenu from '../menus/CurrentTagsMenu.jsx';
 import ColorMenu from '../menus/ColorMenu.jsx';
 import GameTagMenu from '../menus/GameTagMenu.jsx';
 import DialogueMenu from '../menus/DialogueMenu.jsx';
+import DialogueSetsMenu from '../menus/DialogueSetsMenu.jsx';
 import QuestMenu from '../menus/QuestMenu.jsx';
 import SpawnZoneMenu from '../menus/SpawnZoneMenu.jsx';
 import ResourceZoneMenu from '../menus/ResourceZoneMenu.jsx';
@@ -141,14 +142,17 @@ export default class ObjectContextMenu extends React.Component{
       {(objectSelected.ownerId || objectSelected.relativeId) && <SubMenu title="Relative">
         <RelativeMenu objectSelected={objectSelected} subObject={subObject}/>
       </SubMenu>}
-      <SubMenu title="Dialogue">
-        <DialogueMenu objectSelected={objectSelected} subObject={subObject}/>
-      </SubMenu>
       <SubMenu title="Color">
         <ColorMenu objectSelected={objectSelected} openColorPicker={this.props.openColorPicker} subObject={subObject}></ColorMenu>
       </SubMenu>
       <SubMenu title="Name">
         <NameMenu objectSelected={objectSelected} subObject={subObject}/>
+      </SubMenu>
+      <SubMenu title="Dialogue">
+        <DialogueMenu objectSelected={objectSelected} subObject={subObject}/>
+      </SubMenu>
+      <SubMenu title="Dialogue Sets">
+        <DialogueSetsMenu objectSelected={objectSelected} subObject={subObject}/>
       </SubMenu>
       {this._renderObjectSpawnZoneMenu()}
       {this._renderObjectResourceZoneMenu()}

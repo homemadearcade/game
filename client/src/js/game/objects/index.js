@@ -204,6 +204,8 @@ class Objects{
       spawnPointX: object.spawnPointX,
       spawnPointY: object.spawnPointY,
       heroDialogue: object.heroDialogue,
+      heroDialogueSet: object.heroDialogueSet,
+      heroDialogueSets: object.heroDialogueSets,
       pathfindingLimit: object.pathfindingLimit,
       relativeX: object.relativeX,
       relativeY: object.relativeY,
@@ -289,7 +291,8 @@ class Objects{
     if(object.triggers) {
       properties.triggers = {}
       Object.keys(object.triggers).forEach((triggerId) => {
-        const { id, testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVersion, conditionValue, conditionType, conditionJSON, conditionEventName, eventName, effectName, eventThreshold, effectValue, effectJSON, mainObjectId, mainObjectTag, guestObjectId, guestObjectTag, initialTriggerPool, effectorObject, effectedMainObject, effectedGuestObject, effectedWorldObject, effectedOwnerObject, effectedIds, effectedTags, effectSequenceId, effectTags,           conditionMainObjectId,
+        const { id,           effectBranchName,
+testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVersion, conditionValue, conditionNumber, conditionType, conditionJSON, conditionEventName, eventName, effectName, eventThreshold, effectValue, effectJSON, mainObjectId, mainObjectTag, guestObjectId, guestObjectTag, initialTriggerPool, effectorObject, effectedMainObject, effectedGuestObject, effectedWorldObject, effectedOwnerObject, effectedIds, effectedTags, effectSequenceId, effectTags,           conditionMainObjectId,
                   conditionMainObjectTag,
                   conditionGuestObjectId,
                   conditionGuestObjectTag,
@@ -327,6 +330,7 @@ class Objects{
           effectSequenceId,
           effectLibraryMod,
           effectLibraryObject,
+          effectBranchName,
           eventName,
           eventThreshold,
           initialTriggerPool,
@@ -348,6 +352,7 @@ class Objects{
           conditionMainObjectTag,
           conditionGuestObjectId,
           conditionGuestObjectTag,
+          conditionNumber,
           modEndOthers,
           modId,
           modPriority,

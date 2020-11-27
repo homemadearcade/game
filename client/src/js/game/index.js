@@ -750,11 +750,15 @@ class Game{
         existingObjectsDiff: diff,
         addedObjects,
       }
+      window.socket.emit('updateLibrary', { branches: GAME.library.branches })
     })
   }
 
   onBranchApply(id) {
+    console.log('HEYYYOH', id)
     const branch = _.cloneDeep(GAME.library.branches[id])
+    console.log(GAME.library.branches[id])
+    if(!branch) return
     window.socket.emit('editObjects', branch.existingObjectsDiff)
     window.socket.emit('addObjects', branch.addedObjects.map((addedObj) => {
       addedObj.id = 'branchadded-'+window.uniqueID()
@@ -1060,7 +1064,7 @@ class Game{
       }
       if(mod.conditionType === 'onTimerEnd') {
         mod._disabled = false
-        GAME.addTimeout(window.uniqueID(), mod.conditionValue || 10, () => {
+        GAME.addTimeout(window.uniqueID(), mod.conditionNumber || 10, () => {
           mod._remove = true
         })
       }
@@ -1326,7 +1330,6 @@ class Game{
   }
 
   onStartMod(mod) {
-    console.log(mod)
     GAME.startMod(mod.ownerId, mod)
   }
   onEndMod(manualRevertId) {
