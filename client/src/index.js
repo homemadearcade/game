@@ -182,7 +182,6 @@ send clones power like that one game I made
   cameraZoomToFit
   speed boost tile
   go down when hit obstacle ( mainly for goombas you feel me? )
-  create bloody corpse when destroyed
   slow down tag ( MOD lowers speed of anything inside of it )
   water tag ( MOD lowers gravity of anything inside of it )
   Non scroller object ( sun )
@@ -195,6 +194,8 @@ send clones power like that one game I made
   one way platform ( can land on but can jump through from below)
   equippable?
   HAve an object twist to the left and the right, its common cheap animation for games it seems
+  // 'increaseInputDirectionVelocity', <<--- better as tags probably
+  // 'increaseMovementDirectionVelocity',
 
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
