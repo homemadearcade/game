@@ -835,9 +835,7 @@ import './js/editorUI/index.js'
 import './js/game/notificationscontrol.js'
 import './js/liveeditor/index.js'
 import './js/creator/index.js'
-import audio from './js/sound/sound.js'
-window.audio = audio
-
+import './js/audio/index.js'
 
 import './styles/index.scss'
 import './styles/jsoneditor.css'

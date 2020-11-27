@@ -42,6 +42,10 @@ class Game{
       tags: {},
       creator: {}
     }
+
+    this.theme = {}
+    this.assets = {}
+
   }
 
   onPlayerIdentified() {
