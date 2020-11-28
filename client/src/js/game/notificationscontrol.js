@@ -27,6 +27,48 @@ class NotificationsControl{
     window.socket.emit('sendNotification', { playerUIHeroId: hero.id, logRecipientId: hero.id, toast: true, log: true, text: message})
   }
 
+  onHeroTouchStart(hero) {
+    // AUDIO.play('')
+  }
+
+  onHeroGroundJump() {
+    AUDIO.play(GAME.theme.audio.onHeroGroundJump)
+  }
+
+  onGameStarted() {
+    AUDIO.play(GAME.theme.audio.onGameStarted)
+  }
+
+  onUpdateHero(hero) {
+    if(hero.id !== HERO.id) return
+    if(hero.mod().tags.gravityY || GAME.world.tags.allMovingObjectsHaveGravityY) {
+      if(hero.onGround && (hero.velocityX || hero._flatVelocityX || hero.velocityY || hero._flatVelocityY) ) {
+        AUDIO.playLoop({
+          id: 'walking',
+          soundIds: [
+            GAME.theme.audio.heroMoving
+          ]
+        })
+      } else {
+        AUDIO.stopLoop('walking')
+      }
+    } else {
+      AUDIO.stopLoop('walking')
+    }
+  }
+
+  onHeroCameraEffect() {
+    //???
+  }
+
+  onObjectDestroyed(object, destroyer) {
+    if(object.mod().width > 100 || object.mod().height > 100) {
+      AUDIO.play(GAME.theme.audio['onObjectDestroyed--big'])
+    } else {
+      AUDIO.play(GAME.theme.audio['onObjectDestroyed--small'])
+    }
+  }
+
   onHeroWithdrawFail(hero, subObject) {
     //. You already have a ' + subObject.subObjectName
     window.socket.emit('sendNotification', { playerUIHeroId: hero.id, logRecipientId: hero.id, toast: true, log: true, text: 'You can\'t withraw'})
@@ -44,6 +86,7 @@ class NotificationsControl{
     }
     window.socket.emit('sendNotification', { playerUIHeroId: hero.id, logRecipientId: hero.id, toast: true, log: true, text: message})
   }
+
   onHeroPickup(hero, subObject) {
     let message = 'You picked up ' + subObject.subObjectName
     if(subObject.count > 1) {

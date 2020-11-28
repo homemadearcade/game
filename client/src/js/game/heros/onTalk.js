@@ -9,6 +9,7 @@ export default function onTalk(hero, collider, result, options) {
       newDialogue = collider.mod().heroDialogue.slice()
     }
     if(!options.fromInteractButton) hero.lastDialogueId = collider.id
+    window.emitGameEvent('onHeroDialogueStart', hero, collider)
     hero.dialogue = newDialogue
     hero.flags.showDialogue = true
     hero.flags.paused = true

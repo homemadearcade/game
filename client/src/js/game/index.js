@@ -7,6 +7,7 @@ import triggers from './triggers.js'
 import gameState from './gameState.js'
 import tags from './tags.js'
 import timeouts from './timeouts'
+import theme from './theme'
 import world from './world.js'
 import grid from './grid.js'
 import tracking from './tracking.js'
@@ -960,6 +961,7 @@ class Game{
 
       if(key === 'audio') {
         Object.keys(value).forEach((file) => {
+          if(value[file] === null) return
           if(!GAME.assets.audio[file]) AUDIO.loadAsset(file)
         })
       }

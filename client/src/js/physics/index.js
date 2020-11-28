@@ -424,14 +424,14 @@ function postPhysics() {
         // if(interactableObject.mod().tags.autoTalkOnce) {
           interactableObject.tags.autoTalkOnInteractable = false
           // interactableObject.tags.autoTalkOnce = false
-          window.local.emit('onHeroInteract', hero, interactableObject)
+          window.emitGameEvent('onHeroInteract', hero, interactableObject)
           onHeroTrigger(hero, interactableObject, {}, { skipToInteraction: 'talk'})
           hero._cantInteract = true
         // }
       }
 
       if(input && (input['e'] === true || input['v'] === true || input['enter'] === true) && !hero._cantInteract && !hero.flags.paused) {
-        window.local.emit('onHeroInteract', hero, interactableObject)
+        window.emitGameEvent('onHeroInteract', hero, interactableObject)
         onHeroTrigger(hero, interactableObject, {}, {fromInteractButton: true})
         hero._cantInteract = true
       }

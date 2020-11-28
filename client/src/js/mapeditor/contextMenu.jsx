@@ -10,6 +10,7 @@ import WorldContextMenu from './adminMenus/worldContextMenu.jsx';
 import GeneratedMenu from './playerMenus/generatedMenu.jsx';
 import InventoryMenu from './playerMenus/InventoryMenu.jsx';
 import LibraryObjectContextMenu from './adminMenus/LibraryObjectContextMenu.jsx';
+import AudioFileContextMenu from './adminMenus/AudioFileContextMenu.jsx';
 
 import '../libraries/playerMenuLibrary.js';
 
@@ -31,6 +32,12 @@ class contextMenuEl extends React.Component{
     super(props)
 
     document.body.addEventListener("contextmenu", e => {
+      if(e.target.dataset.audiofileid) {
+        this._openMenuWithEvent(e)
+        this._setContextMenuSpecialItem('audioFile', e.target.dataset.audiofileid)
+        return false;
+      }
+
       if(e.target.dataset.inventorymenuid) {
         this._openMenuWithEvent(e)
         this._setContextMenuSpecialItem('inventory', OBJECTS.getObjectOrHeroById(e.target.dataset.inventorymenuid))
@@ -156,7 +163,13 @@ class contextMenuEl extends React.Component{
   }
 
   _renderAdminMenus() {
-    const { objectSelected, subObjectSelected, subObjectSelectedName, specialItemType, item, libraryName, libraryId, creatorLibraryId } = this.state;
+    const { objectSelected, subObjectSelected, subObjectSelectedName, specialItemType, item, libraryName, libraryId, creatorLibraryId, audioFileId } = this.state;
+
+    if(specialItemType === 'audioFile') {
+      return <AudioFileContextMenu
+        audioFileId={item}
+      />
+    }
 
     if(specialItemType === 'creatorLibrary') {
       return <LibraryObjectContextMenu

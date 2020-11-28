@@ -574,7 +574,7 @@ function makeSound(source, loadHandler, shouldLoadSound, xhr, failHandler) {
 
   //Optionally Load and decode the sound.
   if (shouldLoadSound) {
-    loadSound(o, source, loadHandler, failHandler);
+    o.xhr = loadSound(o, source, loadHandler, failHandler);
   }
 
   //Optionally, if you've loaded the sound using some other loader, just decode the sound
@@ -601,6 +601,8 @@ function loadSound(o, source, loadHandler, failHandler) {
 
   //Send the request to load the file.
   xhr.send();
+
+  return xhr
 }
 exports.loadSound = loadSound;
 
@@ -610,7 +612,7 @@ function decodeAudio(o, xhr, loadHandler, failHandler) {
 
   //Decode the sound and store a reference to the buffer.
   actx.decodeAudioData(
-    xhr.response,
+    xhr.response.slice(),
     function (buffer) {
       o.buffer = buffer;
       o.hasLoaded = true;

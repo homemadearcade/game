@@ -230,28 +230,34 @@ function handleActionButtonBehavior(hero, action, delta) {
 
   if(subObject && !subObject.actionState) subObject.actionState = {}
 
-  if(action === 'toggle' && subObject) {
-    subObject._toggledOff = !subObject._toggledOff
-  }
-
   if(subObject && subObject.actionState.waiting) {
     console.log('action button waiting')
     return
+  }
+
+  if(action === 'toggle' && subObject) {
+    subObject._toggledOff = !subObject._toggledOff
+    window.emitGameEvent('onHeroPutAwayToggle', hero, subObject)
   }
 
   if(action === 'shoot') {
     if(!GAME.gameState.started) return
     if(subObject) {
       shootBullet({direction: hero.inputDirection, shooter: subObject, actionProps: subObject.actionProps })
+      window.emitGameEvent('onHeroShootBullet', hero, subObject)
     } else {
       shootBullet({direction: hero.inputDirection, shooter: hero, actionProps: {
         tags: { monsterDestroyer: true, moving: true }
       }})
+      window.emitGameEvent('onHeroShootBullet', hero)
     }
   }
 
+  hero._shootingLaser = false
   if(action === 'shrink' || action === 'grow' || action === 'vacuum') {
     if(!GAME.gameState.started) return
+
+    hero._shootingLaser = true
     if(subObject) {
       closestObjectBehavior({
         direction: hero.inputDirection,
@@ -260,6 +266,7 @@ function handleActionButtonBehavior(hero, action, delta) {
         behavior: action,
         delta,
       })
+      // window.emitGameEvent('onHeroShootLaserTool', hero, subObject)
     } else {
       closestObjectBehavior({
         direction: hero.inputDirection,
@@ -270,6 +277,7 @@ function handleActionButtonBehavior(hero, action, delta) {
         behavior: action,
         delta,
       })
+      // window.emitGameEvent('onHeroShootLaserTool', hero)
     }
   }
 
@@ -350,15 +358,20 @@ function handleActionButtonBehavior(hero, action, delta) {
         }
         if(hero.inputDirection === 'up') {
           hero.y -= power * GAME.grid.nodeSize;
+          window.emitGameEvent('onHeroTeleDash', hero)
         } else if(hero.inputDirection === 'down') {
           hero.y += power * GAME.grid.nodeSize;
+          window.emitGameEvent('onHeroTeleDash', hero)
         } else if(hero.inputDirection === 'left') {
           hero.x -= power * GAME.grid.nodeSize;
+          window.emitGameEvent('onHeroTeleDash', hero)
         } else if(hero.inputDirection === 'right') {
           hero.x += power * GAME.grid.nodeSize;
+          window.emitGameEvent('onHeroTeleDash', hero)
         }
       } else {
         let dashVelocity = hero.mod().dashVelocity
+        window.emitGameEvent('onHeroDash', hero)
         if(!dashVelocity) dashVelocity = 300
         if(hero.mod().tags.rotateable && hero.angle) {
           hero.velocityAngle = dashVelocity
@@ -388,6 +401,7 @@ function handleActionButtonBehavior(hero, action, delta) {
 
   if(hero.onGround && action === 'groundJump') {
     hero.velocityY = hero.mod().jumpVelocity
+    window.emitGameEvent('onHeroGroundJump', hero)
     // lastJump = Date.now();
   }
 
@@ -396,15 +410,18 @@ function handleActionButtonBehavior(hero, action, delta) {
 
     if(hero.onGround) {
       hero.velocityY = hero.mod().jumpVelocity
+      window.emitGameEvent('onHeroGroundJump', hero)
     }
     if(hero._canWallJumpLeft) {
       hero.velocityX = -velocity
       hero.velocityY = - velocity
       hero._canWallJumpLeft = false
+      window.emitGameEvent('onHeroWallJump', hero)
     }
     if(hero._canWallJumpRight) {
       hero.velocityX = velocity
       hero.velocityY = - velocity
+      window.emitGameEvent('onHeroWallJump', hero)
       hero._canWallJumpRight = false
     }
   }
@@ -417,6 +434,7 @@ function handleActionButtonBehavior(hero, action, delta) {
 
     if(hero._floatable === true) {
       hero.velocityY = hero.mod().jumpVelocity
+      window.emitGameEvent('onHeroFloatJump', hero)
       GAME.addTimeout(hero.id + '-floatable', hero.mod().floatJumpTimeout || .6, () => {
         hero._floatable = true
       })
@@ -765,10 +783,13 @@ function onKeyDown(key, hero) {
     if(hero.dialogue && hero.dialogue.length) {
       if(hero._fireDialogueCompleteWithSpeakerId && hero.dialogueId) {
         const object = OBJECTS.getObjectOrHeroById(hero.dialogueId)
+        window.emitGameEvent('onHeroDialogueNext', hero, object)
         window.emitGameEvent('onHeroDialogueComplete', hero, object)
-      }
-      if(hero.dialogue[0].dialogueId) {
+      } else if(hero.dialogue[0].dialogueId) {
+        window.emitGameEvent('onHeroDialogueNext', hero, { id: hero.dialogue[0].dialogueId })
         window.emitGameEvent('onHeroDialogueComplete', hero, { id: hero.dialogue[0].dialogueId })
+      } else {
+        window.emitGameEvent('onHeroDialogueNext', hero)
       }
       hero.dialogue.shift()
       if(!hero.dialogue.length) {

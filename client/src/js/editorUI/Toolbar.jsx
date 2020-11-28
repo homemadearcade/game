@@ -119,10 +119,23 @@ export default class Toolbar extends React.Component {
           </ToolbarRow>
         }
         {GAME.gameState.started && <ToolbarRow iconName='fa-stop'
-          onShiftClick={() => {
-            window.socket.emit('processEffect', {
-              effectName: 'stopGamePreserve'
+          onShiftClick={async () => {
+            const { value: confirm } = await Swal.fire({
+              title: "Are you sure you to stop the game while preserving the game state?",
+              showClass: {
+                popup: 'animated fadeInDown faster'
+              },
+              hideClass: {
+                popup: 'animated fadeOutUp faster'
+              },
+              showCancelButton: true,
+              confirmButtonText: 'Yes, preserve this state',
             })
+            if(confirm) {
+              window.socket.emit('processEffect', {
+                effectName: 'stopGamePreserve'
+              })
+            }
           }}
           onClick={() => {
             window.socket.emit('stopGame')
