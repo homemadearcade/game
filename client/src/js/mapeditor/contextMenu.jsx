@@ -64,6 +64,7 @@ class contextMenuEl extends React.Component{
       }
 
       if(!MAPEDITOR.paused) {
+        // AUDIO.play(window.defaultAudioTheme.onPlayerUIMenuOpen, { volume: 0.6 })
         this._openMenuWithEvent(e)
         return false;
       }

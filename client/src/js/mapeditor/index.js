@@ -382,6 +382,13 @@ function updateGridHighlight(location) {
     height: GAME.grid.nodeSize
   }
 
+  let previousHighlightX
+  let previousHighlightY
+  if(MAPEDITOR.objectHighlighted) {
+    previousHighlightX = MAPEDITOR.objectHighlighted.x
+    previousHighlightY = MAPEDITOR.objectHighlighted.y
+  }
+
   MAPEDITOR.objectHighlighted = mouseLocation
 
   if(MAPEDITOR.objectHighlighted.CREATOR) {
@@ -409,6 +416,18 @@ function updateGridHighlight(location) {
       MAPEDITOR.objectHighlightedChildren = children
     }
   }
+
+  if(MAPEDITOR.objectHighlighted.x != previousHighlightX || MAPEDITOR.objectHighlighted.y != previousHighlightY) {
+    AUDIO.playDebounce(
+      {
+        id: 'onMapEditorSwitchNode',
+        soundId: window.defaultAudioTheme.onMapEditorSwitchNode,
+        volume: 0.35,
+        debounceTime: 25
+      }
+    )
+  }
+
 }
 
 function updateResizingObject(object, options = { allowTiny: true }) {

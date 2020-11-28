@@ -264,6 +264,9 @@ function processEffect(effect, effected, effector, ownerObject) {
     if(effectJSON.creator && effected.tags.hero) {
       window.emitGameEvent('onUpdatePlayerUI', effected)
     }
+    if(effected.tags.hero) {
+      window.emitGameEvent('onHeroMutate', effected)
+    }
   }
 
   //
@@ -547,7 +550,7 @@ function processEffect(effect, effected, effector, ownerObject) {
         GAME.heros[hero.id] = HERO.summonFromGameData(hero)
         GAME.heros[hero.id].tags.saveAsDefaultHero = oldTags.saveAsDefaultHero
         GAME.heros[hero.id].id = hero.id
-        HERO.respawn(hero)
+        HERO.spawn(hero)
       })
 
       GAME.heroList = []

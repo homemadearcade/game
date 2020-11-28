@@ -263,7 +263,15 @@ export default class MediaManager extends React.Component {
           <div className="Manager__button" onClick={() => this.props.openMenu(this.props.index, null)}>Return</div>
         </div>
         <div className="Manager__list">
-          {this._renderAudioData('retro')}
+          <Collapsible trigger={'Retro'}>
+            {this._renderAudioData('retro')}
+          </Collapsible>
+          <Collapsible trigger={'UI'}>
+            {this._renderAudioData('UI')}
+          </Collapsible>
+          <Collapsible trigger={'Moving'}>
+            {this._renderAudioData('moving')}
+          </Collapsible>
         </div>
       </div>
     }
@@ -271,7 +279,15 @@ export default class MediaManager extends React.Component {
     if(selectedId && selectedMenu === 'AudioSelector') {
       return <div className="Manager">
         <div className="Manager__list">
-          {this._renderAudioData('retro')}
+          <Collapsible trigger={'Retro'}>
+            {this._renderAudioData('retro')}
+          </Collapsible>
+          <Collapsible trigger={'UI'}>
+            {this._renderAudioData('UI')}
+          </Collapsible>
+          <Collapsible trigger={'Moving'}>
+            {this._renderAudioData('moving')}
+          </Collapsible>
         </div>
       </div>
     }

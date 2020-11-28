@@ -12,6 +12,7 @@
 
 class NotificationsControl{
   onHeroDeposit(hero, newObject) {
+    AUDIO.play(GAME.theme.audio.onHeroDrop)
     let message =  'You deposited ' + newObject.subObjectName
     if(newObject.count > 1) {
       message = 'You deposited ' + newObject.count + ' ' + newObject.subObjectName
@@ -20,6 +21,7 @@ class NotificationsControl{
   }
 
   onHeroWithdraw(hero, newObject) {
+    AUDIO.play(GAME.theme.audio.onHeroPickup)
     let message =  'You withdrew ' + newObject.subObjectName
     if(newObject.count > 1) {
       message = 'You withdrew ' + newObject.count + ' ' + newObject.subObjectName
@@ -35,8 +37,8 @@ class NotificationsControl{
     AUDIO.play(GAME.theme.audio.onHeroGroundJump)
   }
 
-  onGameStarted() {
-    AUDIO.play(GAME.theme.audio.onGameStarted)
+  onStartPregame() {
+    AUDIO.play(GAME.theme.audio.onStartPregame)
   }
 
   onUpdateHero(hero) {
@@ -58,12 +60,12 @@ class NotificationsControl{
   }
 
   onHeroCameraEffect() {
-    //???
+    // AUDIO.playDebounce(GAME.theme.audio['onObjectDestroyed--big'])
   }
 
   onObjectDestroyed(object, destroyer) {
     if(object.mod().width > 100 || object.mod().height > 100) {
-      AUDIO.play(GAME.theme.audio['onObjectDestroyed--big'])
+      AUDIO.playDebounce({id: 'onBigObjectDestroyed', soundId: GAME.theme.audio['onObjectDestroyed--big']})
     } else {
       AUDIO.play(GAME.theme.audio['onObjectDestroyed--small'])
     }
@@ -80,6 +82,7 @@ class NotificationsControl{
   }
 
   onHeroDrop(hero, object) {
+    AUDIO.play(GAME.theme.audio.onHeroDrop)
     let message =  'You dropped ' + object.subObjectName
     if(object.count > 1) {
       message = 'You dropped ' + object.count + ' ' + object.subObjectName
@@ -88,6 +91,7 @@ class NotificationsControl{
   }
 
   onHeroPickup(hero, subObject) {
+    AUDIO.play(GAME.theme.audio.onHeroPickup)
     let message = 'You picked up ' + subObject.subObjectName
     if(subObject.count > 1) {
       message = 'You picked up ' + subObject.count + ' ' + subObject.subObjectName
@@ -110,12 +114,18 @@ class NotificationsControl{
   }
 
   onHeroEquip(hero, subObject) {
+    AUDIO.play(GAME.theme.audio.onHeroEquip)
     if(subObject.actionButtonBehavior) {
       // window.socket.emit('sendNotification', { playerUIHeroId: hero.id, toast: true, text: 'Your controls updated have been updated. Click to see more', viewControlsOnClick: true })
     }
   }
 
+  onHeroRespawn() {
+    AUDIO.play(GAME.theme.audio.onHeroRespawn)
+  }
+
   onModEnabled(mod) {
+    if(mod.ownerId === HERO.id) AUDIO.play(GAME.theme.audio.onModEnabled)
     if(mod.effectJSON.spaceBarBehavior) {
       // window.socket.emit('sendNotification', { playerUIHeroId: mod.ownerId, toast: true, text: 'Press Space Bar', viewControlsOnClick: true })
     }
@@ -128,9 +138,14 @@ class NotificationsControl{
   }
 
   onModDisabled(mod) {
+    if(mod.ownerId === HERO.id) AUDIO.play(GAME.theme.audio.onModDisabled)
     // if(mod.effectJSON.arrowKeysBehavior || mod.effectJSON.spaceBarBehavior || mod.effectJSON.zButtonBehavior || mod.effectJSON.xButtonBehavior || mod.effectJSON.cButtonBehavior) {
     //   window.socket.emit('sendNotification', { playerUIHeroId: mod.ownerId, toast: true, text: 'Your controls updated have been updated. Click to see more', viewControlsOnClick: true })
     // }
+  }
+
+  onHeroMutate(hero) {
+    AUDIO.play(GAME.theme.audio.onModEnabled)
   }
 }
 

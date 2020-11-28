@@ -81,7 +81,7 @@ window.generateAudioThemeData = {
       folderName: 'Kick'
     }
   ],
-  onGameStarted: [
+  onStartPregame: [
     {
       audioCollection: 'retro',
       folderName: 'Game Starting'
@@ -139,7 +139,7 @@ window.generateAudioThemeData = {
       folderName: 'Death Sound'
     }
   ],
-  
+
   onHeroStartQuest: [
     {
       audioCollection: 'retro',
@@ -166,35 +166,54 @@ window.generateAudioThemeData = {
     }
   ],
 
-  onObjectSpawn: [
-    {
-      audioCollection: 'retro',
-      folderName: 'Spawn'
-    }
-  ],
+  // onObjectSpawn: [
+  //   {
+  //     audioCollection: 'retro',
+  //     folderName: 'Spawn'
+  //   }
+  // ],
 
   onHeroDialogueNext: [
     {
       audioCollection: 'retro',
-      folderName: 'UI Keydown'
+      folderName: 'UI_Click_(Down)'
     }
   ],
   onHeroChooseOption: [
     {
       audioCollection: 'retro',
-      folderName: 'UI Keydown'
+      folderName: 'UI_Click_(Down)'
     }
   ],
   onHeroDialogueStart: [
     {
       audioCollection: 'retro',
-      folderName: 'UI Available'
+      folderName: 'UI_Hover_over_button'
     }
   ],
   onObjectInteractable: [
     {
       audioCollection: 'retro',
-      folderName: 'UI Available'
+      folderName: 'UI_Hover_over_button'
+    }
+  ],
+
+  onPlayerUIMouseOverButton: [
+    {
+      audioCollection: 'retro',
+      folderName: 'UI_Hover_over_button'
+    }
+  ],
+  onPlayerUIMenuOpen: [
+    {
+      audioCollection: 'retro',
+      folderName: 'UI_Popup'
+    }
+  ],
+  onPlayerUIToast: [
+    {
+      audioCollection: 'retro',
+      folderName: 'UI_Popup'
     }
   ],
 }
@@ -207,6 +226,7 @@ function getRandomInt(min, max) {
 
 window.generateAudioTheme = function() {
   const newAudioTheme = _.cloneDeep(window.defaultAudioTheme)
+  // const newAudioTheme = {}
   Object.keys(window.generateAudioThemeData).forEach((event) => {
     const eventData = window.generateAudioThemeData[event]
 
@@ -216,6 +236,7 @@ window.generateAudioTheme = function() {
 
     const fileIndex = getRandomInt(0, collection.files.length -1)
 
+    console.log(collection, selectedAssets.audioCollection, selectedAssets.folderName, event)
     const file = collection.files[fileIndex]
 
     newAudioTheme[event] = file.id
@@ -254,7 +275,7 @@ window.defaultAudioTheme = {
   onHeroGameLose: null,
   onHeroGameWin: null,
 
-  onObjectSpawn: null,
+  // onObjectSpawn: null,
 
   onHeroDialogueStart: null,
   onHeroDialogueNext: null,
@@ -262,11 +283,11 @@ window.defaultAudioTheme = {
   onHeroChooseOption: null,
   onHeroOptionStart: null,
 
-  onPlayerUIMouseOverButton: 'hover over button sound 1',
-  onPlayerUIMenuOpen: 'notification sound 5',
-  onPlayerUIMenuClick: 'click sounds 6',
-  onPlayerUIToast: 'notification sound 4',
-  onMapEditorSwitchNode: 'switch sounds 18',
+  onPlayerUIMouseOverButton: 'assets/audio/UI/HA/Hover over button sound 1.wav',
+  onPlayerUIMenuOpen: 'assets/audio/UI/HA/Notification sound 5.wav',
+  // onPlayerUIMenuClick: 'assets/audio/UI/HA/Click sounds 6.wav',
+  onPlayerUIToast: 'assets/audio/UI/HA/Notification sound 4.wav',
+  onMapEditorSwitchNode: 'assets/audio/UI/HA/Switch sounds 18.wav',
 
   // UNKNOWN SOUNDS
   // onPlayerUIMenuClose: '',

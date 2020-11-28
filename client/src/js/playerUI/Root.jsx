@@ -127,6 +127,7 @@ export default class Root extends React.Component {
         // sometimes we edit the controls a lot... so we dont show if theres too many. We need a... id control system for this
         if(!window.readyForControlsToast) return
         toastInfo.onClick = () => {
+          AUDIO.play(GAME.theme.audio.onPlayerUIMenuOpen || window.defaultAudioTheme.onPlayerUIMenuOpen, { volume: 0.6 })
           this.setState({
             showControlsInfoModal: true
           })
@@ -138,6 +139,8 @@ export default class Root extends React.Component {
       }
 
       let toastId = toast(data.text, toastInfo)
+      AUDIO.play(GAME.theme.audio.onPlayerUIToast || window.defaultAudioTheme.onPlayerUIToast, { volume: 1 })
+
       window.currentToasts.push({
         id: toastId,
         text: data.text,
@@ -161,7 +164,7 @@ export default class Root extends React.Component {
   }
 
   showInventoryModal = () => {
-    console.log('?')
+    AUDIO.play(GAME.theme.audio.onPlayerUIMenuOpen || window.defaultAudioTheme.onPlayerUIMenuOpen, { volume: 0.6 })
     this.setState({
       showInventoryModal: true,
       showControlsInfoModal: false,
@@ -202,8 +205,14 @@ export default class Root extends React.Component {
         {showHeroMenuModal && <HeroMenuModal
           hero={hero}
           onClose={() => this.setState({ showHeroMenuModal: false })}
-          onOpenControlsInfoModal={() => this.setState({ showControlsInfoModal: true })}
-          onOpenInventoryModal={() => this.setState({ showInventoryModal: true })}
+          onOpenControlsInfoModal={() => {
+            AUDIO.play(GAME.theme.audio.onPlayerUIMenuOpen || window.defaultAudioTheme.onPlayerUIMenuOpen, { volume: 0.6 })
+            this.setState({ showControlsInfoModal: true })
+          }}
+          onOpenInventoryModal={() => {
+            AUDIO.play(GAME.theme.audio.onPlayerUIMenuOpen || window.defaultAudioTheme.onPlayerUIMenuOpen, { volume: 0.6 })
+            this.setState({ showInventoryModal: true })
+          }}
         />}
         {showControlsInfoModal && <Modal
           size="medium"
@@ -333,8 +342,10 @@ export default class Root extends React.Component {
       if(this.state.showHeroMenuModal) {
         this.setState({ showHeroMenuModal: false })
       } else if(this._isModalOpen()){
+        AUDIO.play(GAME.theme.audio.onPlayerUIMenuOpen || window.defaultAudioTheme.onPlayerUIMenuOpen, { volume: 0.6 })
         this.setState({ showHeroMenuModal: true, showInventoryModal: false, showControlsInfoModal: false })
       } else {
+        AUDIO.play(GAME.theme.audio.onPlayerUIMenuOpen || window.defaultAudioTheme.onPlayerUIMenuOpen, { volume: 0.6 })
         this.setState({ showHeroMenuModal: true })
       }
     }

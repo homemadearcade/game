@@ -182,10 +182,6 @@ class Hero{
   }
 
   respawn(hero) {
-    hero.velocityX = 0
-    hero.velocityY = 0
-    hero.velocityAngle = 0
-
     /// send objects that are possibly camping at their spawn point back to their spawn point
     if(PAGE.role.isHost && GAME && GAME.world && GAME.world.tags.noCamping) {
       GAME.objects.forEach((obj) => {
@@ -209,6 +205,7 @@ class Hero{
       })
     }
 
+    window.emitGameEvent('onHeroRespawn', hero)
     HERO.spawn(hero)
   }
 
@@ -389,7 +386,7 @@ class Hero{
       OBJECTS.forAllSubObjects(newHero.subObjects, (subObject) => {
         subObject.id = 'subObject-'+window.uniqueID()
       })
-      HERO.respawn(newHero)
+      HERO.spawn(newHero)
       return newHero
     } else {
       return HERO.resetToDefault(hero)

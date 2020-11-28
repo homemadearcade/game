@@ -55,6 +55,8 @@ class Audio{
     this.loadedIds = {}
 
     this.playingContinuous = {}
+    this.playingDebounce = {}
+
     this.sounds3d = {}
   }
 
@@ -124,21 +126,60 @@ class Audio{
       }
       assetURLs.push(asset)
     })
+    Object.keys(window.defaultAudioTheme).forEach((event) => {
+      const asset = window.defaultAudioTheme[event]
+      if(!asset) return
+      if(window.audio.sounds[asset]) {
+        return
+      }
+      assetURLs.push(asset)
+    })
 
     AUDIO.loading.ids.push(...assetURLs)
     window.audio.sounds.load(assetURLs)
   }
 
-  play(id) {
+  play(id, options) {
     if(!window.audio.sounds[id]) {
       AUDIO.loading.ids.push(id)
       window.audio.sounds.load([id])
       AUDIO.loading.callback = () => {
-        window.audio.sounds[id].play()
+        if(options) {
+          AUDIO.updateSound(window.audio.sounds[id], options)
+        }
+        window.audio.sounds[id].playFrom(0)
       }
     } else {
-      window.audio.sounds[id].play()
+      if(options) {
+        AUDIO.updateSound(window.audio.sounds[id], options)
+      }
+      window.audio.sounds[id].playFrom(0)
     }
+  }
+
+  playDebounce({id, soundId, volume = 1, debounceTime = 25}) {
+    if(!window.audio.sounds[soundId]) {
+      AUDIO.loading.ids.push(soundId)
+      window.audio.sounds.load([soundId])
+      AUDIO.loading.callback = () => {
+        AUDIO.debounce({id, soundId, volume, debounceTime})
+      }
+    } else {
+      AUDIO.debounce({id, soundId, volume, debounceTime})
+    }
+  }
+
+  debounce({id, soundId, volume, debounceTime}) {
+    if(this.playingDebounce[id]) {
+      this.playingDebounce[id]()
+      return
+    }
+
+    this.playingDebounce[id] = _.debounce(() => {
+      window.audio.sounds[soundId].volume = volume
+      window.audio.sounds[soundId].play()
+    }, debounceTime)
+    this.playingDebounce[id]()
   }
 
   playLoop({
@@ -156,7 +197,11 @@ class Audio{
     }
   }
 
-  cloneAudio(id, cb) {
+  updateSound(soundFile, { volume }) {
+    soundFile.volume = volume
+  }
+
+  cloneSound(id, cb) {
     return window.audio.makeSound(id, cb, false, window.audio.sounds[id].xhr)
   }
 
@@ -170,9 +215,8 @@ class Audio{
       return
     }
 
-    const sound = this.cloneAudio(soundId, () => {
+    const sound = this.cloneSound(soundId, () => {
       sound.loop = true
-      sound.volume = 0.5
       sound.play()
     })
 
