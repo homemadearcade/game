@@ -112,9 +112,11 @@ app.get('/spriteSheets', (req,res)=>{
 })
 
 app.get('/audioData', (req,res)=>{
-  const { id } =  req.query;
-
-  res.send(getAudioData(id))
+  res.send({
+    retro: getAudioData('retro'),
+    UI: getAudioData('UI'),
+    moving: getAudioData('moving'),
+  })
 })
 
 app.use(express.static(__dirname + '/dist'))

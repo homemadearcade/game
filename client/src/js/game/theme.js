@@ -1,5 +1,5 @@
 window.generateAudioThemeData = {
-  heroMoving: [
+  'heroMoving--retro': [
     // {
     //   audioCollection: 'retro',
     //   folderName: 'Footsteps (Player)'
@@ -16,6 +16,16 @@ window.generateAudioThemeData = {
     //   audioCollection: 'retro',
     //   folderName: 'Boss Footsteps'
     // }
+  ],
+  'heroMoving--dirt': [
+    {
+      audioCollection: 'retro',
+      folderName: 'Monster Footsteps'
+    },
+    {
+      audioCollection: 'retro',
+      folderName: 'Small Creature Footsteps'
+    },
   ],
   heroShootingLaser: [
     {
@@ -87,6 +97,10 @@ window.generateAudioThemeData = {
     {
       audioCollection: 'retro',
       folderName: 'Monster Takes Damage'
+    },
+    {
+      audioCollection: 'retro',
+      folderName: 'Explosion (Short)'
     }
   ],
   onHeroDrop: [
@@ -95,7 +109,7 @@ window.generateAudioThemeData = {
       folderName: 'Throwing Item'
     }
   ],
-  onHeroDrop: [
+  onHeroPickup: [
     {
       audioCollection: 'retro',
       folderName: 'Item Pickup'
@@ -119,14 +133,13 @@ window.generateAudioThemeData = {
       folderName: 'Debuff_Power Down'
     }
   ],
-
   onHeroRespawn: [
     {
       audioCollection: 'retro',
       folderName: 'Death Sound'
     }
   ],
-
+  
   onHeroStartQuest: [
     {
       audioCollection: 'retro',
@@ -159,6 +172,31 @@ window.generateAudioThemeData = {
       folderName: 'Spawn'
     }
   ],
+
+  onHeroDialogueNext: [
+    {
+      audioCollection: 'retro',
+      folderName: 'UI Keydown'
+    }
+  ],
+  onHeroChooseOption: [
+    {
+      audioCollection: 'retro',
+      folderName: 'UI Keydown'
+    }
+  ],
+  onHeroDialogueStart: [
+    {
+      audioCollection: 'retro',
+      folderName: 'UI Available'
+    }
+  ],
+  onObjectInteractable: [
+    {
+      audioCollection: 'retro',
+      folderName: 'UI Available'
+    }
+  ],
 }
 
 function getRandomInt(min, max) {
@@ -188,7 +226,9 @@ window.generateAudioTheme = function() {
 
 
 window.defaultAudioTheme = {
-  heroMoving: null,
+  'heroMoving--retro': null,
+  'heroMoving--vehicle': null,
+  'heroMoving--dirt': null,
   heroShootingLaser: null,
   onHeroShootBullet: null,
   onHeroShootLaserTool: null,
@@ -216,18 +256,35 @@ window.defaultAudioTheme = {
 
   onObjectSpawn: null,
 
-  // UNKNOWN SOUNDS
   onHeroDialogueStart: null,
   onHeroDialogueNext: null,
   onHeroDialogueComplete: null,
-
-  onPlayerUIMouseEnterButton: null,
-  onPlayerUIMenuOpen: null,
-  onPlayerUIMenuClouse: null,
-
   onHeroChooseOption: null,
   onHeroOptionStart: null,
 
-  onObjectAware: null,// of hero, exclamation
-  onHeroTouchStart: null, //hits obstacle!
+  onPlayerUIMouseOverButton: 'hover over button sound 1',
+  onPlayerUIMenuOpen: 'notification sound 5',
+  onPlayerUIMenuClick: 'click sounds 6',
+  onPlayerUIToast: 'notification sound 4',
+  onMapEditorSwitchNode: 'switch sounds 18',
+
+  // UNKNOWN SOUNDS
+  // onPlayerUIMenuClose: '',
+  // onHeroDialogueComplete: ,
+  // onObjectTalk: null, //cute or evil short noise... or a book or a sign makes a different noise?
+
+  // 'heroMoving--grass': null,
+  // 'heroMoving--wood': null,
+  // 'heroMoving--swimming': null,
+
+  // onObjectAware: null,// of hero, exclamation
+  // onHeroTouchStart: null, //hits obstacle!
+
+  // onHeroDragObject: null,
+  // onHeroTurnAround: null,
+
+  // heroFalling: null, //if hero hit max velocity via gravity..?
+
+  // onGamePaused: null,
+  // onGameResume: null,
 }

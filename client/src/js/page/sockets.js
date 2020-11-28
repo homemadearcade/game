@@ -449,10 +449,6 @@ function init() {
     window.local.emit('onUpdateGameSession')
   })
 
-
-  window.socket.on('onUpdateAssets', (data) => {
-    window.local.emit('onUpdateAssets', data)
-  })
   window.socket.on('onUpdateTheme', (data) => {
     window.local.emit('onUpdateTheme', data)
   })

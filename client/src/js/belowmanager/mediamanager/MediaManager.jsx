@@ -185,35 +185,17 @@ export default class MediaManager extends React.Component {
   }
 
   _renderAudioFile(dataName, audioFile) {
-    const gameHasAsset = GAME.assets.audio[audioFile.id]
+    const pageHasLoadedAsset = window.audio.sounds[audioFile.id]
     return <div>
       <div data-audioFileId={audioFile.id} className={classnames("Manager__list-item Manager__list-item--audio", {
-          'Manager__list-item--border': gameHasAsset
+          'Manager__list-item--border': pageHasLoadedAsset
         })} onClick={(e) => {
-          var isRightMB;
-           e = e || window.event;
-
-           if ("which" in e)  // Gecko (Firefox), WebKit (Safari/Chrome) & Opera
-               isRightMB = e.which == 3;
-           else if ("button" in e)  // IE, Opera
-               isRightMB = e.button == 2;
-          if(isRightMB) {
-            GAME.assets.audio[audioFile.id] = null
-            window.socket.emit('updateAssets', { audio: GAME.assets.audio })
-            return
-          }
-
-          if(gameHasAsset) {
+          if(pageHasLoadedAsset) {
             AUDIO.play(audioFile.id)
           } else {
-            GAME.assets.audio[audioFile.id] = {
-              assetURL: audioFile.assetURL,
-              name: audioFile.name
-            }
             AUDIO.loadAsset(audioFile.assetURL, (ids) => {
               AUDIO.play(audioFile.id)
             })
-            window.socket.emit('updateAssets', { audio: GAME.assets.audio })
             this.forceUpdate()
           }
 

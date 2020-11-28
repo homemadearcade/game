@@ -46,7 +46,7 @@ class NotificationsControl{
         AUDIO.playLoop({
           id: 'walking',
           soundIds: [
-            GAME.theme.audio.heroMoving
+            GAME.theme.audio['heroMoving--retro']
           ]
         })
       } else {

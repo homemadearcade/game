@@ -44,10 +44,10 @@ class Game{
       creator: {}
     }
 
-    this.theme = {}
-    this.assets = {
+    this.theme = {
       audio: {},
       ss: {},
+      particle: {},
     }
   }
 
@@ -283,8 +283,6 @@ class Game{
     GAME.id = game.id
     GAME.grid = game.grid
     window.local.emit('onGridLoaded')
-
-    if(game.assets) GAME.assets = game.assets
 
     if(game.theme) GAME.theme = game.theme
 
@@ -823,7 +821,6 @@ class Game{
       defaultHero: game.defaultHero,
       library: game.library,
       metadata: game.metadata,
-      assets: game.assets,
       theme: game.theme,
     }))
 
@@ -944,29 +941,16 @@ class Game{
 
   onUpdateTheme(updatedTheme) {
     for(let key in updatedTheme) {
-      const value = updatedTheme[key]
-
-      if(value instanceof Object) {
-        GAME.theme[key] = {}
-        window.mergeDeep(GAME.theme[key], value)
-      } else {
-        GAME.theme[key] = value
-      }
-    }
-  }
-
-  onUpdateAssets(updatedAssets) {
-    for(let key in updatedAssets) {
-      const value = updatedAssets[key]
+      const mediaType= updatedTheme[key]
 
       if(key === 'audio') {
-        Object.keys(value).forEach((file) => {
-          if(value[file] === null) return
-          if(!GAME.assets.audio[file]) AUDIO.loadAsset(file)
+        Object.keys(mediaType).forEach((property) => {
+          if(mediaType[property] === null) return
+          if(!window.audio.sounds[mediaType[property]]) AUDIO.loadAsset(mediaType[property])
         })
       }
 
-      window.mergeDeep(GAME.assets[key], value)
+      window.mergeDeep(GAME.theme[key], mediaType)
     }
   }
 

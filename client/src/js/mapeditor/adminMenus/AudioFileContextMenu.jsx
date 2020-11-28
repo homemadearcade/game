@@ -9,11 +9,11 @@ export default class AudioFileContextMenu extends React.Component{
     this._handleAudioFileMenuClick = async ({ key }) => {
       const { audioFileId } = this.props
 
-      if (key === "remove-from-game-assets") {
-        GAME.assets.audio[audioFileId] = null
-        window.socket.emit('updateAssets', { audio: GAME.assets.audio })
-        BELOWMANAGER.ref.forceUpdate()
-      }
+      // if (key === "remove-from-game-assets") {
+      //   GAME.assets.audio[audioFileId] = null
+      //   window.socket.emit('updateAssets', { audio: GAME.assets.audio })
+      //   BELOWMANAGER.ref.forceUpdate()
+      // }
 
       if (key === "copy-id") {
         PAGE.copyToClipBoard(audioFileId)
@@ -34,12 +34,13 @@ export default class AudioFileContextMenu extends React.Component{
       // }
     }
   }
+  //      {GAME.assets.audio[audioFileId] && <MenuItem key='remove-from-game-assets'>Remove from game assets</MenuItem>}
+
 
   render() {
     const { audioFileId } = this.props
     return <Menu onClick={this._handleAudioFileMenuClick}>
       <MenuItem key='copy-id' className="bold-menu-item">{audioFileId}</MenuItem>
-      {GAME.assets.audio[audioFileId] && <MenuItem key='remove-from-game-assets'>Remove from game assets</MenuItem>}
     </Menu>
   }
 }

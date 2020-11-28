@@ -87,13 +87,11 @@ class Audio{
     }
 
     const options = {
-      params: {
-        id: 'retro'
-      }
+      params: {}
     };
 
     axios.get(window.HAGameServerUrl + '/audioData', options).then(res => {
-      AUDIO.data.retro = res.data
+      AUDIO.data = res.data
     })
 
     //Assign the callback function that should run
@@ -101,15 +99,11 @@ class Audio{
     window.audio.sounds.onProgress = function (progress, res) {
       console.log('%' + progress + ' file(s) loaded.');
       console.log('File ' + res.url + ' just finished loading.');
-      // AUDIO.soundsByName[GAME.assets.audio[res.url].name] = res.url
+      AUDIO.loadedIds[res.url] = true
     };
 
     window.audio.sounds.whenLoaded = () => {
-      if(AUDIO.loading.callback) AUDIO.loading.callback(AUDIO.loading.ids)
-      AUDIO.loading.ids.forEach((id) => {
-        AUDIO.loadedIds[id] = true
-      })
-      AUDIO.loading.ids = []
+      if(AUDIO.loading.callback) AUDIO.loading.callback()
       AUDIO.loading.callback = null
     }
   }
@@ -119,13 +113,16 @@ class Audio{
   }
 
   loadGameAssets(game) {
-    let assets = game.assets.audio
+    let assets = game.theme.audio
 
     const assetURLs =[]
-    Object.keys(assets).forEach((id) => {
-      const asset = assets[id]
-      if(AUDIO.loadedIds[id]) return
-      assetURLs.push(asset.assetURL)
+    Object.keys(assets).forEach((event) => {
+      const asset = assets[event]
+      if(!asset) return
+      if(window.audio.sounds[asset]) {
+        return
+      }
+      assetURLs.push(asset)
     })
 
     AUDIO.loading.ids.push(...assetURLs)
@@ -160,7 +157,6 @@ class Audio{
   }
 
   cloneAudio(id, cb) {
-    console.log()
     return window.audio.makeSound(id, cb, false, window.audio.sounds[id].xhr)
   }
 
@@ -175,7 +171,6 @@ class Audio{
     }
 
     const sound = this.cloneAudio(soundId, () => {
-      console.log('XXXX', sound)
       sound.loop = true
       sound.volume = 0.5
       sound.play()

@@ -50,7 +50,6 @@ window.startGameLoop = function() {
       defaultHero: GAME.defaultHero,
       library: GAME.library,
       theme: GAME.theme,
-      assets: GAME.assets
     })
   }, 1000)
 }
