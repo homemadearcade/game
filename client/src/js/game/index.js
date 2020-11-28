@@ -86,6 +86,8 @@ class Game{
       // remove second part when a player can host a multiplayer game
       if(!GAME.gameState.paused && !GAME.gameState._pausedByHost) {
         //// PREPARE ALL
+        GAME.updateActiveMods()
+
         PHYSICS.prepareObjectsAndHerosForMovementPhase()
 
         if(!GAME.gameState.started) {
@@ -285,6 +287,13 @@ class Game{
     window.local.emit('onGridLoaded')
 
     if(game.theme) GAME.theme = game.theme
+    if(!GAME.theme) {
+      GAME.theme = {
+        audio: {},
+        ss: {},
+        particles: {}
+      }
+    }
 
     tags.setDefault()
     if(game.library) GAME.library = game.library
@@ -1070,6 +1079,8 @@ class Game{
 
     if(mod.conditionType) {
       mod._disabled = true
+    } else {
+      window.emitGameEvent('onModEnabled', mod)
     }
 
     GAME.gameState.activeModList.push(mod)
@@ -1082,6 +1093,7 @@ class Game{
           const eventMatch = testEventMatch(mod.conditionEventName, mainObject, guestObject, mod, ownerObject, { testPassReverse: mod.testPassReverse, testModdedVersion: mod.testModdedVersion })
           if(eventMatch) {
             mod._remove = true
+            mod._disabled = true
             if(mod.removeEventListener) mod.removeEventListener()
             delete mod.removeEventListener
           }
@@ -1091,6 +1103,7 @@ class Game{
         mod._disabled = false
         GAME.addTimeout(window.uniqueID(), mod.conditionNumber || 10, () => {
           mod._remove = true
+          mod._disabled = true
         })
       }
     }
@@ -1145,10 +1158,10 @@ class Game{
         if(mod.temporaryEquip && modOwnerObject.subObject[mod.effectValue]) unequipSubObject(modOwnerObject, modOwnerObject.subObject[mod.effectValue])
         if(mod.temporaryDialogueChoice) window.local.emit('onDeleteDialogueChoice', modOwnerObject.id, mod.effectValue)
         if(mod.temporaryLibrarySubObject) {
-          console.log('X', modOwnerObject)
           window.local.emit('onDeleteSubObject', modOwnerObject, mod.effectLibrarySubObject)
         }
         if(mod.removeEventListener) mod.removeEventListener()
+        window.emitGameEvent('onModDisabled', mod)
         return false
       }
 
@@ -1361,13 +1374,13 @@ class Game{
     GAME.gameState.activeModList = GAME.gameState.activeModList.filter((mod) => {
       if(mod.manualRevertId === manualRevertId) {
         mod._remove = true
+        mod._disabled = true
         if(mod.effectJSON.removed || (mod.effectJSON.tags && mod.effectJSON.tags.obstacle)) window.local.emit('onUpdatePFgrid')
-        return false
       }
       if(mod.modId === manualRevertId) {
         mod._remove = true
+        mod._disabled = true
         if(mod.effectJSON.removed || (mod.effectJSON.tags && mod.effectJSON.tags.obstacle)) window.local.emit('onUpdatePFgrid')
-        return false
       }
       return true
     })

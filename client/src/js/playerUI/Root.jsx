@@ -139,7 +139,7 @@ export default class Root extends React.Component {
       }
 
       let toastId = toast(data.text, toastInfo)
-      AUDIO.play(GAME.theme.audio.onPlayerUIToast || window.defaultAudioTheme.onPlayerUIToast, { volume: 1 })
+      // AUDIO.play(GAME.theme.audio.onPlayerUIToast || window.defaultAudioTheme.onPlayerUIToast, { volume: 1 })
 
       window.currentToasts.push({
         id: toastId,

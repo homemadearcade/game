@@ -289,7 +289,7 @@ function processEffect(effect, effected, effector, ownerObject) {
       } else {
         effected.dialogue = [newDialogue]
       }
-      window.emitGameEvent('onHeroDialogueStart', hero, effector)
+      window.emitGameEvent('onHeroDialogueStart', effected, effector)
 
       effected.flags.showDialogue = true
       effected.flags.paused = true
@@ -316,7 +316,7 @@ function processEffect(effect, effected, effector, ownerObject) {
       } else {
         effected.dialogue = newDialogue
       }
-      window.emitGameEvent('onHeroDialogueStart', hero, effector)
+      window.emitGameEvent('onHeroDialogueStart', effected, effector)
       effected.flags.showDialogue = true
       effected.flags.paused = true
       if(effector) {
@@ -344,7 +344,7 @@ function processEffect(effect, effected, effector, ownerObject) {
       } else {
         effected.dialogue = newDialogue
       }
-      window.emitGameEvent('onHeroDialogueStart', hero, effector)
+      window.emitGameEvent('onHeroDialogueStart', effected, effector)
       effected.flags.showDialogue = true
       effected.flags.paused = true
       if(effector) {

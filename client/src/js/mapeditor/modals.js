@@ -185,7 +185,7 @@ function writeDialogue(object, dialogueIndex, cb) {
     if(result && result.value && result.value[0] && result.value[0].length) {
       object.tags.talker = true
       object.heroDialogue[dialogueIndex].text = result.value[0]
-      if(object.tags.talkOnHeroInteract == false && object.tags.talkOnHeroCollide == false) {
+      if(!object.tags.talkOnHeroCollide) {
         object.tags.talkOnHeroInteract = true
       }
       if(cb) cb(object)

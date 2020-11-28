@@ -354,6 +354,16 @@ function setDefault() {
 
     ...window.cameraTags,
   }
+
+  window.audioQualityTags = {
+    walkRetro: false,
+    walkVehicle: false,
+    walkQuality: false,
+  }
+  window.qualityTags = {
+    inSpace: false,
+    ...window.audioQualityTags,
+  }
 }
 
 function addGameTags(tags) {

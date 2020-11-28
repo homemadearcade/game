@@ -216,6 +216,10 @@ function handleActionEnd(hero, action) {
     window.emitGameEvent('onEndMod', subObject.actionState.manualRevertId)
     subObject.actionState.manualRevertId = null
   }
+
+  if(action === 'shrink') {
+    hero._shootingLaser = false
+  }
 }
 
 function handleActionButtonBehavior(hero, action, delta) {
@@ -253,7 +257,6 @@ function handleActionButtonBehavior(hero, action, delta) {
     }
   }
 
-  hero._shootingLaser = false
   if(action === 'shrink' || action === 'grow' || action === 'vacuum') {
     if(!GAME.gameState.started) return
 

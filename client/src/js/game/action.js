@@ -19,9 +19,11 @@ function closestObjectBehavior({ shooter, actionProps, direction, behavior, delt
       closestObject.height -= power;
       closestObject.x += power/2
       closestObject.y += power/2
-      if(closestObject.width <= 1 && closestObject.height <= 1) closestObject._destroy = true
-      if(closestObject.width <= 1) closestObject.width = 1
-      if(closestObject.height <= 1) closestObject.height = 1
+      if(closestObject.width <= 1 || closestObject.height <= 1) {
+        closestObject._destroy = true
+      }
+      if(closestObject.width < 1) closestObject.width = 1
+      if(closestObject.height < 1) closestObject.height = 1
     }
     if(behavior === 'grow') {
       closestObject.width += power;

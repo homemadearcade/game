@@ -1,3 +1,13 @@
+//particles
+// special explosion tags... for CRAZY particles. Overall having some objects tagged as like special particle explosion1,2,3 or special heroTouchStartParticle1,2,3
+// hero walking on certain objects??
+// i mean what other particles are there besides explosions and the ELEMENTS?
+// POWERUPS...
+
+// audio
+// the ability to give power ups their own NOISES and various objects their own VOICES
+// randomize specific parts of the theme
+
 window.generateAudioThemeData = {
   'heroMoving--retro': [
     // {
@@ -19,12 +29,14 @@ window.generateAudioThemeData = {
   ],
   'heroMoving--dirt': [
     {
-      audioCollection: 'retro',
-      folderName: 'Monster Footsteps'
+      audioCollection: 'moving',
+      folderName: 'Dirt footsteps'
     },
+  ],
+  'heroMoving--vehicle': [
     {
-      audioCollection: 'retro',
-      folderName: 'Small Creature Footsteps'
+      audioCollection: 'moving',
+      folderName: 'Motors'
     },
   ],
   heroShootingLaser: [
@@ -39,12 +51,12 @@ window.generateAudioThemeData = {
       folderName: 'Shooting Gun'
     }
   ],
-  onHeroShootLaserTool: [
-    {
-      audioCollection: 'retro',
-      folderName: 'Shooting Laser Gun'
-    }
-  ],
+  // onHeroShootLaserTool: [
+  //   {
+  //     audioCollection: 'retro',
+  //     folderName: 'Shooting Laser Gun'
+  //   }
+  // ],
   onHeroGroundJump: [
     {
       audioCollection: 'retro',
@@ -69,18 +81,18 @@ window.generateAudioThemeData = {
       folderName: 'Teleport Wrap Effect'
     }
   ],
-  onHeroBounce: [
-    {
-      audioCollection: 'retro',
-      folderName: 'Bounce_Jump'
-    }
-  ],
-  onHeroTouchStart: [
-    {
-      audioCollection: 'retro',
-      folderName: 'Kick'
-    }
-  ],
+  // onHeroBounce: [
+  //   {
+  //     audioCollection: 'retro',
+  //     folderName: 'Bounce_Jump'
+  //   }
+  // ],
+  // onHeroTouchStart: [
+  //   {
+  //     audioCollection: 'retro',
+  //     folderName: 'Kick'
+  //   }
+  // ],
   onStartPregame: [
     {
       audioCollection: 'retro',
@@ -153,18 +165,18 @@ window.generateAudioThemeData = {
     }
   ],
 
-  onHeroGameLose: [
-    {
-      audioCollection: 'retro',
-      folderName: 'Game Over'
-    }
-  ],
-  onHeroGameWin: [
-    {
-      audioCollection: 'retro',
-      folderName: 'Victory'
-    }
-  ],
+  // onHeroGameLose: [
+  //   {
+  //     audioCollection: 'retro',
+  //     folderName: 'Game Over'
+  //   }
+  // ],
+  // onHeroGameWin: [
+  //   {
+  //     audioCollection: 'retro',
+  //     folderName: 'Victory'
+  //   }
+  // ],
 
   // onObjectSpawn: [
   //   {
@@ -179,19 +191,19 @@ window.generateAudioThemeData = {
       folderName: 'UI_Click_(Down)'
     }
   ],
-  onHeroChooseOption: [
+  onHeroOptionComplete: [
     {
       audioCollection: 'retro',
       folderName: 'UI_Click_(Down)'
     }
   ],
-  onHeroDialogueStart: [
+  onHeroDialogueStart: [// also onHeroOptionStart
     {
       audioCollection: 'retro',
       folderName: 'UI_Hover_over_button'
     }
   ],
-  onObjectInteractable: [
+  onHeroCanInteract: [
     {
       audioCollection: 'retro',
       folderName: 'UI_Hover_over_button'
@@ -210,12 +222,12 @@ window.generateAudioThemeData = {
       folderName: 'UI_Popup'
     }
   ],
-  onPlayerUIToast: [
-    {
-      audioCollection: 'retro',
-      folderName: 'UI_Popup'
-    }
-  ],
+  // onPlayerUIToast: [
+  //   {
+  //     audioCollection: 'retro',
+  //     folderName: 'UI_Popup'
+  //   }
+  // ],
 }
 
 function getRandomInt(min, max) {
@@ -257,7 +269,6 @@ window.defaultAudioTheme = {
   onHeroFloatJump: null,
   onHeroDash: null,
   onHeroTeleDash: null,
-  onHeroBounce: null,
   onGameStarted: null,
   'onObjectDestroyed--big': null,
   'onObjectDestroyed--small': null,
@@ -267,27 +278,27 @@ window.defaultAudioTheme = {
   onModEnabled: null,
   onModDisabled: null,
 
-  onHeroRespawn: null,
-
-  onHeroStartQuest: null,
-  onHeroCompleteQuest: null,
-
-  onHeroGameLose: null,
-  onHeroGameWin: null,
-
-  // onObjectSpawn: null,
-
   onHeroDialogueStart: null,
   onHeroDialogueNext: null,
-  onHeroDialogueComplete: null,
-  onHeroChooseOption: null,
+  onHeroOptionComplete: null,
   onHeroOptionStart: null,
+  onHeroCanInteract: null,
+
+  onHeroRespawn: null,
 
   onPlayerUIMouseOverButton: 'assets/audio/UI/HA/Hover over button sound 1.wav',
   onPlayerUIMenuOpen: 'assets/audio/UI/HA/Notification sound 5.wav',
   // onPlayerUIMenuClick: 'assets/audio/UI/HA/Click sounds 6.wav',
   onPlayerUIToast: 'assets/audio/UI/HA/Notification sound 4.wav',
   onMapEditorSwitchNode: 'assets/audio/UI/HA/Switch sounds 18.wav',
+
+  onHeroStartQuest: null,//do
+  onHeroCompleteQuest: null,//do
+
+  onHeroGameLose: null,//do
+  onHeroGameWin: null,//do
+
+  // onObjectSpawn: null,
 
   // UNKNOWN SOUNDS
   // onPlayerUIMenuClose: '',
@@ -301,8 +312,12 @@ window.defaultAudioTheme = {
   // onObjectAware: null,// of hero, exclamation
   // onHeroTouchStart: null, //hits obstacle!
 
+  // onHeroBounce: null,
+
   // onHeroDragObject: null,
   // onHeroTurnAround: null,
+
+  // onHeroHeadHit? so all platformers get that idea?
 
   // heroFalling: null, //if hero hit max velocity via gravity..?
 

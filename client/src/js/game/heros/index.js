@@ -411,6 +411,8 @@ class Hero{
       _floatable: hero._floatable,
       _dashable: hero._dashable,
       _shootingLaser: hero._shootingLaser,
+      _walkingSound: hero._walkingSound,
+      _walkingOnId: hero._walkingOnId,
       // _shootingLaser: hero._shootingLaser,
       _landingObjectId: hero._landingObjectId,
       lastHeroUpdateId: hero.lastHeroUpdateId,
@@ -435,6 +437,7 @@ class Hero{
       _skipNextGravity: hero._skipNextGravity,
       _breakMaxVelocity: object._breakMaxVelocity,
       interactableObjectId: hero.interactableObjectId,
+      _prevInteractableObjectId: hero._prevInteractableObjectId,
       gridHeight: hero.gridHeight,
       gridWidth: hero.gridWidth,
       updateHistory: hero.updateHistory,
@@ -723,6 +726,9 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
       xButtonBehavior: hero.xButtonBehavior,
       cButtonBehavior: hero.cButtonBehavior,
       spaceBarBehavior: hero.spaceBarBehavior,
+
+      _shootingLaser: hero._shootingLaser,
+      _walkingSound: hero._walkingSound,
     }
 
     if(hero.subObjects) {

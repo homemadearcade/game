@@ -25,6 +25,7 @@ export function onHeroTrigger(hero, collider, result, options = { fromInteractBu
           effectValue: interaction.text
         }
       })
+      window.emitGameEvent('onHeroOptionStart', hero)
       hero.flags.showDialogue = true
       hero.flags.paused = true
       if(collider) {
@@ -48,9 +49,8 @@ export function onHeroTrigger(hero, collider, result, options = { fromInteractBu
             hero.dialogueId = null
             hero.choiceOptions = null
             hero._cantInteract = true
-            console.log(interaction, hero, collider, result, options)
             triggerInteraction(interaction, hero, collider, result, options)
-            console.log(hero.flags.showDialogue)
+            window.emitGameEvent('onHeroOptionComplete', hero)
             window.emitGameEvent('onUpdatePlayerUI', hero)
           })
         }

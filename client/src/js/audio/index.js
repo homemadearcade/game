@@ -7,35 +7,12 @@ window.audio = audio
 AUDIO TODO
 
 // PLAY SOUND 3D
-// FIND assets for missing SOUND FX
-// add rest of the logic.. for various sounds??
-// switch hero walk logic to server only, give it a _movingOn == 'space'/'dirt'/'ice'/'metal'/'water'
-// sound quality tags, big, little, useArcadeWalkingSounds tag
-// I might be able to get rid of assets and just use theme? perhaps. It seems the theme knows what to load...
 
-default loading audio!
-
-drop/add?
-
-what are the audio tags??
-cuz THERE GONNA BE A LOT ME DUDE
-bigObject ( changes how it sounds when it explodes )
-walks on ground vs in space vs in water, TOTTALY DIFFERENT SOUND FX GROUPS!!
-//dirt vs metal vs wood vs? <-- stronger sound fx
+// sound quality tags, big, little, useArcadeWalkingSounds tag, and the elements? steel? etc...
 
 are we NOT gonna use retro voice sound fx???
 
-onHeroCanInteract
-
-Mods enabled vs not enables vs equipping a mod vs getting an item??
-
-also a UI sound vs a 3D sound...
-
-sound qualities tags
-
 VOLUME, how to change the volume of these sounds so that the 3D sounds feels right, maybe they are already mixed right?
-
-// set echo or reverb? thats dope
 it looks like this a left/right thing. Ill need to add my own later in that make it 3D
 --
 
@@ -140,20 +117,25 @@ class Audio{
   }
 
   play(id, options) {
-    if(!window.audio.sounds[id]) {
-      AUDIO.loading.ids.push(id)
-      window.audio.sounds.load([id])
-      AUDIO.loading.callback = () => {
+    try{
+      if(!window.audio.sounds[id]) {
+        AUDIO.loading.ids.push(id)
+        window.audio.sounds.load([id])
+        AUDIO.loading.callback = () => {
+          if(options) {
+            AUDIO.updateSound(window.audio.sounds[id], options)
+          }
+          window.audio.sounds[id].playFrom(0)
+        }
+      } else {
         if(options) {
           AUDIO.updateSound(window.audio.sounds[id], options)
         }
         window.audio.sounds[id].playFrom(0)
       }
-    } else {
-      if(options) {
-        AUDIO.updateSound(window.audio.sounds[id], options)
-      }
-      window.audio.sounds[id].playFrom(0)
+
+    } catch(e) {
+      console.error(e)
     }
   }
 

@@ -298,6 +298,10 @@ function objectCollisionEffects(po) {
                 hero.interactableObjectId = collider.id
               }
             }
+            if(hero._prevInteractableObjectId !== hero.interactableObjectId) {
+              window.emitGameEvent('onUpdatePlayerUI', hero)
+              window.emitGameEvent('onHeroCanInteract', hero, collider)
+            }
           }
         }
       }

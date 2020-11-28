@@ -16,9 +16,20 @@ PUZZLE INTERFACES
     tag -- spawnAllInHeroInventoryOnPuzzleComplete
     and then ud need a basic -- combination variable. Puzzle type + puzzle combination...  two variables?
 COMBAT + GOALS + QUESTS
+QUALITIES SYSTEM
+  basically just tags that allow the theme system to change around how an object is interacted with...
+  VIA sound and also will change its sprites through randomization
+  eventually to be the ELEMENTS system which would include a default way these all could interact...
+  in spritesheet editor there should be a right click on sprite -> add property <-- this will match with the properties the user can select
+
 -------
 
-we want it to be onGameIdentified -> on assets loaded
+_beingShrunk, _beingGrown, variables for the laser tools
+
+when you go to Draw -> there should be NEW DRAWING which creates a new one of these bad boys basically....it adds to the creator library
+//this improves the UX so that they segement their ideas into various drawings
+
+we want it to be onGameIdentified -> loads assets -> on assets loaded
 
 3d sound effects system from papa bear
 
@@ -102,7 +113,6 @@ Game Over State
 ////////////////////////////////////////////////////
 
 !!!!!!!! !!!! READY FOR HA BETA !!!! !!!!!!
-THEMES
 PIXEL EDITOR
 DETAIL VIEW
 !!!!!!!! !!!! READY FOR HA RELEASE !!!! !!!!!!
@@ -126,6 +136,9 @@ LEVELS ( sub worlds )
 ###### BUGS
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ////////////////////////////////////////////////////
+
+player was holding TWO guns?
+
 YOU CANNOT MOD DIALOGUE OR ANY ARRAYS
 heroDialogue is an array, what else is?
 
@@ -346,7 +359,6 @@ ANIMATION UPGRADE
 ////////////////////////////////
 Random Particle Designer
 // a system that like randomly generates how particles and things interact and we get to test it out and save it! GREAT WAY TO CUSTOMIZE WITHOUT MUCH EFFORT
-// Needs to be attached to system ( AKA the combat system )
 allow chaining of animations and effects
 onAnimationEnd
 Wait for animation to complete
@@ -381,7 +393,7 @@ THEMES
 randomize soundFX
 pick random song
 randomize particleFX
-randomize sprite theme ( this would require sprite tags )
+randomize sprite theme ( this would require sprite the QUALITIES SYSTEM )
 randomize hero physics
 
    I mean ugh fuck themes. I think maybe we can have a 'mediaControlCenter' similar to NotificationsControl center
@@ -423,35 +435,6 @@ randomize hero physics
     walkGrassAnimation1/2/3
     walkMudAnimation1/2/3
     walkMetalAnimation1/2/3
-
-  SFX
-  ---
-
-    touchStartSFX1
-    touchStartSFX2
-    touchStartSFX3
-    destroySFX1/2/3
-    pickupSFX1/2/3
-    interactSFX1/2/3
-
-    shootSFX1/2/3
-    useSFX1/2/3
-
-    movingSFX1/2/3
-    stopMovingSFX1/2/3 ( spaceship type thing? )
-    jumpSFX1/2/3
-    dashSFX1/2/3
-    teleportSFX1/2/3
-    turnAroundSFX1/2/3
-    landSFX1/2/3
-    bounceSFX1/2/3
-
-    swimSFX1/2/3
-    splashWaterSFX1/2/3
-    walkPathSFX1/2/3
-    walkGrassSFX1/2/3
-    walkMudSFX1/2/3
-    walkMetalSFX1/2/3
 
 --
   AMBIENCE --- these tags would play an ambience in any area

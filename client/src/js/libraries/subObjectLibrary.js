@@ -179,7 +179,7 @@ window.local.on('onFirstPageGameLoaded', () => {
       actionButtonBehavior: 'shrink',
       actionProps: {
         distance: 1000,
-        power: 1,
+        power: 100,
         tagsSeeking: ['obstacle'],
       },
       actionState: {}

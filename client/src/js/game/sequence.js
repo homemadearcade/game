@@ -167,6 +167,7 @@ function processSequence(sequence) {
     const effectedObjects = effects.getEffectedObjects(item, sequence.mainObject, sequence.guestObject, sequence.ownerObject)
     item.waiting = true
     effectedObjects[0].choiceOptions = item.options.slice()
+    window.emitGameEvent('onHeroOptionStart', effectedObjects[0])
     effectedObjects[0].flags.showDialogue = true
     effectedObjects[0].flags.paused = true
     if(defaultEffector) {
@@ -193,6 +194,7 @@ function processSequence(sequence) {
           endSequence(sequence)
         }
         item.waiting = true
+        window.emitGameEvent('onHeroOptionComplete', effectedObjects[0])
         window.emitGameEvent('onUpdatePlayerUI', effectedObjects[0])
       }
     })
