@@ -174,6 +174,11 @@ class NotificationsControl{
     }
   }
 
+  onHeroLand(hero, landingObject) {
+    PIXIMAP.onFakeObjectAnimation('groundDisturbanceRight', { ...hero, y: hero.y + (hero.height/2), color: landingObject.color || GAME.world.defaultObjectColor })
+    PIXIMAP.onFakeObjectAnimation('groundDisturbanceLeft', { ...hero, y: hero.y + (hero.height/2), color: landingObject.color || GAME.world.defaultObjectColor })
+  }
+
   onHeroPickup(hero, subObject) {
     if(hero.id === HERO.id) {
       AUDIO.play(GAME.theme.audio.onHeroPickup)
@@ -209,7 +214,7 @@ class NotificationsControl{
     }
   }
 
-  onHeroRespawn() {
+  onHeroRespawn(hero) {
     if(hero.id === HERO.id) AUDIO.play(GAME.theme.audio.onHeroRespawn)
   }
 

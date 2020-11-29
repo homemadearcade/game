@@ -155,11 +155,9 @@ function heroCorrection(hero) {
         let prevVelocityY = hero.velocityY
         if(result.overlap_y > 0) {
           hero.onGround = true
-          if(landingObject && hero.velocityY > 0) {
-            hero._landingObjectId = landingObject.gameObject.id
+          if(landingObject && hero.velocityY > 200) {
             window.emitGameEvent('onHeroLand', hero, landingObject.gameObject, result)
           }
-
           if(landingObject && landingObject.gameObject.mod().tags['movingPlatform']) {
             hero._parentId = landingObject.gameObject.id
           } else {
@@ -171,7 +169,6 @@ function heroCorrection(hero) {
             hero.velocityY = 0
             if(landingObject) {
               window.emitGameEvent('onHeroHeadHit', hero, landingObject.gameObject, result)
-              hero._landingObjectId = landingObject.gameObject.id
             }
           }
           if(hero.velocityAngle) hero.velocityAngle *= .09

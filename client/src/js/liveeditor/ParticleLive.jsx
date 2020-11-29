@@ -2,37 +2,36 @@ import React from 'react';
 import DatGui, { DatFolder, DatSelect, DatBoolean, DatButton, DatColor, DatNumber, DatString } from 'react-dat-gui';
 import modals from '../mapeditor/modals.js'
 
+function _initObjectForParticleLive(objectSelected) {
+  if(!objectSelected.emitterData) {
+    objectSelected.emitterData = window.particleEmitterLibrary.smallFire
+  }
+  if(!objectSelected.emitterData.spawnWaitTime) {
+    objectSelected.emitterData.spawnWaitTime = 100
+  }
+  if(!objectSelected.emitterData.speedType) {
+    objectSelected.emitterData.speedType = 'very fast'
+  }
+  if(!objectSelected.tags.emitter) {
+    MAPEDITOR.networkEditObject({id: objectSelected.id, tags:{ ...objectSelected.tags, emitter: true }})
+    objectSelected.tags.emitter = true
+  }
+}
 export default class ParticleLive extends React.Component {
   constructor(props) {
     super(props)
     const objectSelected = this.props.objectSelected
 
-    this._initObjectForParticleLive(objectSelected);
+    _initObjectForParticleLive(objectSelected);
     this.state = {
       objectSelected
     }
     this.handleUpdate = _.debounce(this.handleUpdate.bind(this), 5)
   }
 
-  _initObjectForParticleLive(objectSelected) {
-    if(!objectSelected.emitterData) {
-      objectSelected.emitterData = window.particleEmitterLibrary.smallFire
-    }
-    if(!objectSelected.emitterData.spawnWaitTime) {
-      objectSelected.emitterData.spawnWaitTime = 100
-    }
-    if(!objectSelected.emitterData.speedType) {
-      objectSelected.emitterData.speedType = 'very fast'
-    }
-    if(!objectSelected.tags.emitter) {
-      MAPEDITOR.networkEditObject({id: objectSelected.id, tags:{ ...objectSelected.tags, emitter: true }})
-      objectSelected.tags.emitter = true
-    }
-  }
-
   static getDerivedStateFromProps = (nextProps, prevState) => {
     if (nextProps.objectSelected.id !== prevState.objectSelected.id) {
-      this.constructor._initObjectForParticleLive(nextProps.objectSelected)
+      _initObjectForParticleLive(nextProps.objectSelected)
       return { objectSelected: nextProps.objectSelected };
     }
     else return null;
@@ -259,15 +258,15 @@ export default class ParticleLive extends React.Component {
             <DatNumber path='emitterData.speed.start' label="Speed Start" min={0} max={20000} step={10} />
             <DatNumber path='emitterData.speed.end' label="Speed End" min={0} max={20000} step={10} />
             <DatNumber path='emitterData.speed.minimumSpeedMultiplier' label="Minumum Speed Multiplier" min={0} max={5} step={.1} />
-            <DatNumber path='emitterData.acceleration.x' label="Acceleration X" min={0} max={20000} step={10} />
-            <DatNumber path='emitterData.acceleration.y' label="Acceleration Y" min={0} max={20000} step={10} />
+            <DatNumber path='emitterData.acceleration.x' label="Acceleration X" min={0} max={150000} step={10} />
+            <DatNumber path='emitterData.acceleration.y' label="Acceleration Y" min={0} max={150000} step={10} />
             <DatNumber path='emitterData.maxSpeed' label="Max Speed" min={0} max={20000} step={10} />
           </DatFolder>
           <DatFolder title='Rotation'>
             <DatNumber path='emitterData.startRotation.min' label="Rotation Start Min" min={0} max={360} step={1} />
             <DatNumber path='emitterData.startRotation.max' label="Rotation Start Max" min={0} max={360} step={1} />
-            <DatNumber path='emitterData.rotationSpeed.min' label="Rotation Speed Min" min={0} max={360} step={1} />
-            <DatNumber path='emitterData.rotationSpeed.max' label="Rotation Speed Max" min={0} max={360} step={1} />
+            <DatNumber path='emitterData.rotationSpeed.min' label="Rotation Speed Min" min={0} max={10000} step={1} />
+            <DatNumber path='emitterData.rotationSpeed.max' label="Rotation Speed Max" min={0} max={10000} step={1} />
             <DatBoolean path={'emitterData.useUpdateOwnerPos'} label="Don't rotate particles with object" />
           </DatFolder>
 
@@ -281,7 +280,7 @@ export default class ParticleLive extends React.Component {
           <DatFolder title='Frequency'>
             <DatSelect path='emitterData.speedType' label="Class" options={['slow', 'normal', 'fast']}/>
             <DatNumber path='emitterData.spawnWaitTime' label="Frequency" min={0} max={100} step={1} />
-            <DatNumber path='emitterData.maxParticles' label="Max Particles" min={1} max={1000} step={10} />
+            <DatNumber path='emitterData.maxParticles' label="Max Particles" min={1} max={1000} step={1} />
           </DatFolder>
 
           {this._renderEmitterShape()}

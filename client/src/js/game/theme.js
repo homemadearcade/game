@@ -3,6 +3,13 @@
 // hero walking on certain objects??
 // i mean what other particles are there besides explosions and the ELEMENTS?
 // POWERUPS...
+// funny thing with particle landing... LOL even if you land on a LIVE DUDE ASS u skim off some of his particles. Ill need a quality tag for 'earth' vs 'human' or something like. 'scrapeable?'
+
+// if an object falls on the edge of another object, show the scrape!
+
+// object jump squeeze thing, ( with and height anim )
+
+// spaceship trail
 
 // audio
 // the ability to give power ups their own NOISES and various objects their own VOICES
@@ -234,6 +241,10 @@ function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+window.clearAudioTheme = function() {
+  window.socket.emit('updateTheme', { audio: window.defaultAudioTheme })
 }
 
 window.generateAudioTheme = function() {

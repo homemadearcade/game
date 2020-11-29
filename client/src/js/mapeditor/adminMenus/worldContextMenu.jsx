@@ -11,6 +11,10 @@ export default class WorldContextMenu extends React.Component{
     this._handleMapMenuClick = ({ key }) => {
       const { objectSelected, openColorPicker } = this.props
 
+      if(key === 'add-obstacle') {
+        OBJECTS.create({...objectSelected, tags: {obstacle: true}})
+      }
+
       if(key === 'toggle-pause-game') {
         window.socket.emit('editGameState', { paused: !GAME.gameState.paused })
       }
@@ -62,6 +66,7 @@ export default class WorldContextMenu extends React.Component{
       <SubMenu title="Create Object">
         <CreateObjectMenu objectSelected={objectSelected}/>
       </SubMenu>
+      <MenuItem key="add-obstacle">Create Obstacle (Quick)</MenuItem>
       <MenuItem key='set-world-respawn-point'>Set as world respawn point</MenuItem>
       <MenuItem className='dont-close-menu' key='select-world-background-color'>Set world background color</MenuItem>
       <MenuItem className='dont-close-menu' key='select-default-object-color'>Set default object color</MenuItem>

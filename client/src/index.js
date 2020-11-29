@@ -6,7 +6,12 @@ Interesting that bar of dreams and homemade arcade i've wanted to have audio... 
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
 
-SOUND FX w THEME
+QUALITIES SYSTEM
+  basically just tags that allow the theme system to change around how an object is interacted with...
+  VIA sound and also will change its sprites through randomization
+  eventually to be the ELEMENTS system which would include a default way these all could interact...
+  in spritesheet editor there should be a right click on sprite -> add property <-- this will match with the properties the user can select
+
 FILL OUT SEQUENCE EDITOR, LIBRARY, EFFECTS, TAGS
 PUZZLE INTERFACES
   this https://github.com/alexeyivanov94/combination-lock-react
@@ -16,11 +21,6 @@ PUZZLE INTERFACES
     tag -- spawnAllInHeroInventoryOnPuzzleComplete
     and then ud need a basic -- combination variable. Puzzle type + puzzle combination...  two variables?
 COMBAT + GOALS + QUESTS
-QUALITIES SYSTEM
-  basically just tags that allow the theme system to change around how an object is interacted with...
-  VIA sound and also will change its sprites through randomization
-  eventually to be the ELEMENTS system which would include a default way these all could interact...
-  in spritesheet editor there should be a right click on sprite -> add property <-- this will match with the properties the user can select
 
 -------
 
@@ -137,10 +137,11 @@ LEVELS ( sub worlds )
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ////////////////////////////////////////////////////
 
-player was holding TWO guns?
+non host player was shooting x2?
 
 YOU CANNOT MOD DIALOGUE OR ANY ARRAYS
 heroDialogue is an array, what else is?
+tagsSeeking for lasers, is an ARRAY right now...
 
 I think that maybe because dialogue is an array, and there are other arrays in this engine, I think my new diff system will send them as null if they are changed, please test this
 

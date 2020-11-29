@@ -100,7 +100,11 @@ function getSightPolygon(sightX,sightY, segments){
 ///////////////////////////////////////////////////////
 // DRAWING
 
-function draw(ctx, segments, hero){
+function drawShadow(ctx, objects, hero){
+	const segments = []
+	objects.forEach((o) => {
+		getObjectVertices(o, segments)
+	})
 	// Sight Polygons
 	var fuzzyRadius = 5;
 	var polygons = [getSightPolygon(hero.x + hero.width/2,hero.y + hero.height/2, segments)];
@@ -128,17 +132,25 @@ function draw(ctx, segments, hero){
   //   }
 }
 function drawPolygon(polygon,ctx,fillStyle){
-  let cameraVars = camera.get()
 	ctx.fillStyle = fillStyle;
 	ctx.beginPath();
-	ctx.moveTo(polygon[0].x - cameraVars.x,polygon[0].y - cameraVars.y);
+	ctx.moveTo((polygon[0].x * MAP.camera.multiplier)  - MAP.camera.x,(polygon[0].y * MAP.camera.multiplier) - MAP.camera.y);
 	for(var i=1;i<polygon.length;i++){
 		var intersect = polygon[i];
-		ctx.lineTo(intersect.x - cameraVars.x,intersect.y - cameraVars.y);
+		ctx.lineTo((intersect.x * MAP.camera.multiplier) - MAP.camera.x,(intersect.y * MAP.camera.multiplier) - MAP.camera.y);
 	}
 	ctx.fill();
 }
 
-export default {
-  draw
+function getObjectVertices(object, segments) {
+  if(object.removed) return
+
+  segments.push({a:{x:object.x,y:object.y}, b:{x:object.x + object.width,y:object.y}})
+  segments.push({a:{x:object.x + object.width,y:object.y}, b:{x:object.x + object.width,y:object.y + object.height}})
+  segments.push({a:{x:object.x + object.width,y:object.y + object.height}, b:{x:object.x,y:object.y + object.height}})
+  segments.push({a:{x:object.x,y:object.y + object.height}, b:{x:object.x,y:object.y}})
+}
+
+export {
+  drawShadow
 }

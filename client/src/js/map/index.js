@@ -4,6 +4,7 @@ import Shake from './cameraShake.js'
 import popover from './popover.js'
 import constellation from './constellation.js'
 import './pixi/index'
+import { drawShadow } from './shadow.js'
 
 window.MAP = {
   canvas: null,
@@ -93,7 +94,10 @@ MAP.onRender = function(delta) {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   if(PIXIMAP.assetsLoaded && (!GAME.gameState.paused || CONSTRUCTEDITOR.open || PATHEDITOR.open)) {
-    render.update(camera)
+    // render.update(camera)
+    // drawShadow(ctx, GAME.objects.filter((o) => {
+    //   if(o.tags.obstacle) return true
+    // }), GAME.heros[HERO.id])
   } else {
     canvas.style.backgroundColor = '#222'
   }

@@ -253,6 +253,23 @@ window.local.on('onFirstPageGameLoaded', () => {
       },
       actionState: {}
     },
+    engineTrail: {
+      {
+      	"relativeX": -0.06607683749814441,
+      	"relativeY": 12.282242966621993,
+      	"tags": {
+      		"subObject": true,
+      		"relativeToDirection": true,
+      		"relativeToAngle": true,
+      		"rotateable": true,
+      		"emitter": true,
+      		"background": true,
+      		"hasEngineTrail": true
+      	},
+      	"subObjectName": "engineTrail",
+      	"opacity": 0
+      }
+    }
   }
 
   window.subObjectLibrary.addGameLibrary = function() {

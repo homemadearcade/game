@@ -366,6 +366,14 @@ function onFirstPageGameLoaded() {
       libraryId:'evidenceChain2',
       ...toggleSubObject('evidenceChain2')
     },
+    engineTrail: {
+      label: 'Engine Trail',
+      columnName: 'Equip',
+      toggleId: 'engineTrail',
+      libraryName:'subObjectLibrary',
+      libraryId:'engineTrail',
+      ...toggleSubObject('engineTrail')
+    },
   }
 
   window.homemadearcadeBasicLibrary = {
@@ -432,6 +440,8 @@ function onFirstPageGameLoaded() {
 
     evidenceChain1: true,
     evidenceChain2: true,
+
+    engineTrail: true,
     // marioCap: true,
     // gunPickupable: true,
     // spearPickupable: true,

@@ -99,7 +99,7 @@ function updatePixiEmitterData(pixiChild, gameObject, options) {
 
   emitter.startColor.value = tinycolor(data.color.start).toRgb()
   if(emitter.startColor.next) emitter.startColor.next.value = tinycolor(data.color.end).toRgb()
-  else if(PAGE.role.isHost && data.color.start !== data.color.end) {
+  else if(PAGE.role.isHost && !data.matchObjectColor && data.color.start !== data.color.end) {
    window.socket.emit('resetLiveParticle', gameObject.id)
    return
   }

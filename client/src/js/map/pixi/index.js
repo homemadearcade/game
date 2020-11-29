@@ -130,13 +130,13 @@ PIXIMAP.deleteObject = function(object, stage) {
     PIXIMAP.deleteEmitter(pixiChild.emitter)
     delete pixiChild.emitter
   }
-  if(pixiChild.emitter) {
-    PIXIMAP.deleteEmitter(pixiChild.emitter)
-    delete pixiChild.emitter
-  }
   if(pixiChild.trailEmitter) {
     PIXIMAP.deleteEmitter(pixiChild.trailEmitter)
     delete pixiChild.trailEmitter
+  }
+  if(pixiChild.engineTrailEmitter) {
+    PIXIMAP.deleteEmitter(pixiChild.engineTrailEmitter)
+    delete pixiChild.engineTrailEmitter
   }
   stage.removeChild(pixiChild)
 }
@@ -490,6 +490,22 @@ PIXIMAP.updateBlockSprites = function() {
         }
       }
     }
+  }
+}
+
+// PIXIMAP.fakeObjectAnimations = []
+PIXIMAP.onFakeObjectAnimation = function (type, object) {
+  if(type === 'groundDisturbanceRight') {
+    const landEmitter = initEmitter(object, type, { matchObjectColor: true, useUpdateOwnerPos: true }, { hasNoOwner: true })
+    setTimeout(() => {
+      PIXIMAP.deleteEmitter(landEmitter)
+    }, 10000)
+  }
+  if(type === 'groundDisturbanceLeft') {
+    const landEmitter = initEmitter(object, type, { matchObjectColor: true, useUpdateOwnerPos: true }, { hasNoOwner: true })
+    setTimeout(() => {
+      PIXIMAP.deleteEmitter(landEmitter)
+    }, 10000)
   }
 }
 

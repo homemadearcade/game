@@ -270,6 +270,8 @@ function prepareObjectsAndHerosForMovementPhase() {
     object._skipPosUpdate = false
     object._flatVelocityX = null
     object._flatVelocityY = null
+    // object._prevLandingObjectId = object._landingObjectId
+    // object._landingObjectId = null
     object._prevInteractableObjectId = object.interactableObjectId
     object.interactableObjectId = null
 

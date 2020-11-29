@@ -40,6 +40,7 @@ function update() {
     if(objectHighlighted.tags && objectHighlighted.tags.invisible && objectHighlightedChildren.length === 0 && (!resizingObject || objectHighlighted.id !== resizingObject.id)) {
       let color = 'rgba(255,255,255,0.2)'
       drawTools.drawFilledObject(ctx, {...objectHighlighted, color}, camera)
+      drawTools.drawBorder(ctx, {...objectHighlighted, color: 'white'}, camera)
     } else {
       let color = 'white'
       drawTools.drawBorder(ctx, {...objectHighlighted, color}, camera)

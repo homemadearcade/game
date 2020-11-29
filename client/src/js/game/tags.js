@@ -201,6 +201,7 @@ function setDefault() {
   window.particleTags = {
     emitter: false,
     hasTrail: false,
+    hasEngineTrail: false,
     explodeOnDestroy: false,
     spinOffOnDestroy: false,
   }

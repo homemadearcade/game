@@ -87,6 +87,9 @@ const updatePixiObject = (gameObject) => {
   if(pixiChild.trailEmitter && gameObject.tags.hasTrail) {
     updatePixiEmitter(pixiChild.trailEmitter, gameObject)
   }
+  if(pixiChild.engineTrailEmitter && gameObject.tags.hasEngineTrail) {
+    updatePixiEmitter(pixiChild.engineTrailEmitter, gameObject)
+  }
 
   if(pixiChild.emitter && gameObject.tags.emitter) {
     if(gameObject.emitterData) updatePixiEmitterData(pixiChild.emitter, gameObject)
@@ -225,6 +228,14 @@ function updateProperties(pixiChild, gameObject) {
     delete pixiChild.trailEmitter
   }
 
+  if(gameObject.tags.hasEngineTrail && !pixiChild.engineTrailEmitter) {
+    pixiChild.engineTrailEmitter = initEmitter(gameObject, 'engineTrail', { useUpdateOwnerPos: true })
+  }
+  if(!gameObject.tags.hasEngineTrail && pixiChild.engineTrailEmitter) {
+    PIXIMAP.deleteEmitter(pixiChild.engineTrailEmitter)
+    delete pixiChild.engineTrailEmitter
+  }
+
 
   if(gameObject.tags.emitter && !pixiChild.emitter && gameObject.emitterData) {
     pixiChild.emitter = initEmitter(gameObject, 'live', gameObject.emitterData)
@@ -234,7 +245,8 @@ function updateProperties(pixiChild, gameObject) {
     pixiChild.emitter = initEmitter(gameObject, gameObject.emitterType)
   }
 
-  if(!gameObject.tags.emitter && pixiChild.emitter || (pixiChild.emitter && gameObject.emitterType && pixiChild.emitter.emitterType !== gameObject.emitterType)) {
+  const hasWrongEmitter = (pixiChild.emitter && ((pixiChild.emitter.emitterType && !gameObject.emitterType && !gameObject.emitterData) || (gameObject.emitterType && pixiChild.emitter.emitterType !== gameObject.emitterType)) )
+  if(!gameObject.tags.emitter && pixiChild.emitter || hasWrongEmitter) {
     PIXIMAP.deleteEmitter(pixiChild.emitter)
     delete pixiChild.emitter
   }

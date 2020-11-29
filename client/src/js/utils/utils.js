@@ -122,8 +122,10 @@ Object.defineProperty(Object.prototype, 'mod', { value: function() {
   return GAME.mod(this)
 }})
 
-window.isClickingMap = function(className) {
+window.isClickingMap = function(className, id) {
   if(typeof className !== 'string') return false
+
+  if(id && (id == 'game-canvas' || id == 'pixi-canvas')) return true
 
   if(className == "EditorUI" || className.indexOf('Creator__category-container') >= 0 || className === '') return true
   else return false
