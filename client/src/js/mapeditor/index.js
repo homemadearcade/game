@@ -5,6 +5,7 @@ import selectionTools from './selectionTools';
 import keyInput from './keyInput';
 import render from './render';
 import Camera from '../map/camera'
+import drawTools from './drawTools'
 
 class MapEditor {
   constructor() {
@@ -183,6 +184,10 @@ class MapEditor {
   onCopy(object) {
     MAPEDITOR.copiedObject = JSON.parse(JSON.stringify(object))
     delete MAPEDITOR.copiedObject.id
+  }
+
+  onLoadingScreenStart() {
+    drawTools.drawLoadingScreen(MAPEDITOR.ctx, MAPEDITOR.camera)
   }
 
   onRender() {

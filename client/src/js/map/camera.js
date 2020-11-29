@@ -1,6 +1,7 @@
 function camera() {
-  this.x = null
-  this.y = null
+  this.x = 0
+  this.y = 0
+  this.multiplier = 1
   this.targetX = 0
   this.targetY = 0
   this.tweenToTarget = true

@@ -6,11 +6,21 @@ Interesting that bar of dreams and homemade arcade i've wanted to have audio... 
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
 
+PARTICLES TODO
+  Powerups
+  Special Explosions
+  Laser gun
+  Decorative?
+  After TeleDash
+  Find out what I can randomize for particles after?
+
 QUALITIES SYSTEM
   basically just tags that allow the theme system to change around how an object is interacted with...
   VIA sound and also will change its sprites through randomization
   eventually to be the ELEMENTS system which would include a default way these all could interact...
   in spritesheet editor there should be a right click on sprite -> add property <-- this will match with the properties the user can select
+
+Try randomizing sprites with qualities?
 
 FILL OUT SEQUENCE EDITOR, LIBRARY, EFFECTS, TAGS
 PUZZLE INTERFACES

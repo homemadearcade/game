@@ -230,6 +230,7 @@ function updateProperties(pixiChild, gameObject) {
 
   if(gameObject.tags.hasEngineTrail && !pixiChild.engineTrailEmitter) {
     pixiChild.engineTrailEmitter = initEmitter(gameObject, 'engineTrail', { useUpdateOwnerPos: true })
+    console.log(pixiChild.engineTrailEmitter)
   }
   if(!gameObject.tags.hasEngineTrail && pixiChild.engineTrailEmitter) {
     PIXIMAP.deleteEmitter(pixiChild.engineTrailEmitter)
@@ -321,6 +322,8 @@ const addGameObjectToStage = (gameObject, stage) => {
 }
 
 const initPixiObject = (gameObject) => {
+  if(PIXIMAP.childrenById[gameObject.id]) return
+
   const stage = getGameObjectStage(gameObject)
   if(PAGE.role.isHost) gameObject = gameObject.mod()
 

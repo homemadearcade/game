@@ -268,7 +268,7 @@ class Game{
   }
 
   loadAndJoin(game, heroName) {
-    window.local.emit('onStartLoadingScreen')
+    // window.local.emit('onLoadingScreenStart')
 
     GAME.loadGridWorldObjectsCompendiumState(game)
 
@@ -587,10 +587,6 @@ class Game{
     triggers.deleteTrigger(OBJECTS.getObjectOrHeroById(ownerId), triggerId)
   }
 
-  onGameReady() {
-    window.local.emit('onLoadingScreenEnd')
-  }
-
   onProcessEffect(effect, effectedIds, effectorId) {
     if(!effectedIds) {
       effects.processEffect(effect)
@@ -710,6 +706,7 @@ class Game{
         window.local.emit('onZoomChange')
       }
 
+      window.local.emit('onLoadingScreenEnd')
       window.local.emit('onGameStarted')
     }, 100)
   }

@@ -299,7 +299,7 @@ function drawLoadingScreen(ctx, camera) {
   const gameEligibleForLoading = true || (GAME.grid.width > 80 || GAME.objects.length > 300)
   const loadingState = (PAGE.loadingGame)
   PAGE.loadingScreen = !PAGE.isGameReady || (gameEligibleForLoading && loadingState)
-
+  
   const hero = GAME.heros[HERO.id]
   if(hero && hero.animationZoomMultiplier) PAGE.loadingScreen = false
 

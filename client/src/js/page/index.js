@@ -227,11 +227,29 @@ class Page{
     window.local.emit('onPlayerIdentified')
 
     PAGE.askCurrentGame((game) => {
-      ARCADE.changeGame(game.id)
-      GAME.loadAndJoin(game, heroSummonType)
+      window.local.emit('onStartLoadingScreen')
+
+      window.local.emit('onGameIdentified', game)
+      const rm1 = window.local.on('onPixiMapReady', () => {
+        PAGE.pixiMapReady = true
+        if(PAGE.audioReady) {
+          ARCADE.changeGame(game.id)
+          GAME.loadAndJoin(game, heroSummonType)
+          rm1()
+          rm2()
+        }
+      })
+      const rm2 = window.local.on('onAudioReady', () => {
+        PAGE.audioReady = true
+        if(PAGE.pixiMapReady) {
+          ARCADE.changeGame(game.id)
+          GAME.loadAndJoin(game, heroSummonType)
+          rm1()
+          rm2()
+        }
+      })
     })
   }
-
 
   loadGameSave(gameSaveId, cb) {
     function handleResponse(response) {
@@ -379,11 +397,12 @@ class Page{
 
   onGameReady() {
     PAGE.isGameReady = true
-
-    PAGE.initializeGameDragAndDrop()
+    window.local.emit('onLoadingScreenEnd')
   }
 
   onGameLoaded() {
+    PAGE.initializeGameDragAndDrop()
+
     if(!PAGE.loopStarted) {
       window.startGameLoop()
       window.local.emit('onGameLoopStarted')
@@ -406,6 +425,7 @@ class Page{
       PAGE.openLog()
     }
 
+    window.local.emit('cleanUpMapAndAskPixiToSendGameReady')
   }
 
   resetStorage() {

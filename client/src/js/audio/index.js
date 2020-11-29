@@ -87,7 +87,7 @@ class Audio{
     }
   }
 
-  onGameLoaded() {
+  onGameIdentified() {
     AUDIO.loadGameAssets(GAME)
   }
 
@@ -112,6 +112,9 @@ class Audio{
       assetURLs.push(asset)
     })
 
+    AUDIO.loading.callback = () => {
+      window.local.emit('onAudioReady')
+    }
     AUDIO.loading.ids.push(...assetURLs)
     window.audio.sounds.load(assetURLs)
   }
@@ -197,7 +200,7 @@ class Audio{
 
   startLoop(id, soundId) {
     if(!id) return
-    
+
     if(this.playingContinuous[id]) {
       if(!this.playingContinuous[id].playing) {
         this.playingContinuous[id].sound.playFrom(0)

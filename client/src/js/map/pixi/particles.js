@@ -117,6 +117,7 @@ function createDefaultEmitter(stage, gameObject, emitterDataName, options) {
     particleData = {..._.cloneDeep(options), pos: startPos}
   } if(window.particleEmitterLibrary[emitterDataName]){
     particleData = {..._.cloneDeep(window.particleEmitterLibrary[emitterDataName]), pos: startPos}
+    console.log(particleData)
   }
   if(GAME.library.animations[emitterDataName]){
     particleData = {..._.cloneDeep(GAME.library.animations[emitterDataName]), pos: startPos}

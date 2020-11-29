@@ -56,25 +56,13 @@ PIXIMAP.initializePixiObjectsFromGame = function() {
   PIXIMAP.initialized = true
 }
 
-PIXIMAP.onAssetsLoaded = function() {
-  PIXIMAP.initializeDarknessSprites()
-  PIXIMAP.initializePixiObjectsFromGame()
-}
-
-PIXIMAP.onGameLoaded = function() {
+PIXIMAP.onGameIdentified = function(game) {
   // GAME.world.tags.usePixiMap = true
-  PIXIMAP.grid = _.cloneDeep(GAME.grid)
 
   if(!PIXIMAP.assetsLoaded) {
     // setInterval(PIXIMAP.updateBlockSprites, 300)
     initPixiApp(MAP.canvas, (app, textures) => {
-      window.local.emit('onAssetsLoaded')
-      window.local.emit('onGameReady')
-      setInterval(() => {
-        PIXIMAP.initializeDarknessSprites()
-        PIXIMAP.resetDarkness()
-        PIXIMAP.updateDarknessSprites()
-      }, 200)
+      window.local.emit('onPixiMapReady')
     })
   } else if(PIXIMAP.assetsLoaded) {
     PIXIMAP.shadowStage.removeChildren()
@@ -85,14 +73,24 @@ PIXIMAP.onGameLoaded = function() {
     PIXIMAP.emitterForegroundStage.removeChildren()
     PIXIMAP.initializeDarknessSprites()
     PIXIMAP.initializePixiObjectsFromGame()
-    window.local.emit('onGameReady')
   }
+}
+
+PIXIMAP.onGameLoaded = function() {
+  PIXIMAP.grid = _.cloneDeep(GAME.grid)
+}
+
+PIXIMAP.onFirstPageGameLoaded = function() {
+  setInterval(() => {
+    PIXIMAP.initializeDarknessSprites()
+    PIXIMAP.resetDarkness()
+    PIXIMAP.updateDarknessSprites()
+  }, 200)
 }
 
 PIXIMAP.onGameStarted = function() {
   PIXIMAP.initializeDarknessSprites()
   PIXIMAP.resetDarkness()
-  window.local.emit('onGameReady')
 }
 
 PIXIMAP.onDeletedHero = function(hero) {
@@ -605,9 +603,16 @@ PIXIMAP.onPathEditorStart = function() {
   MAP.closeAllPopovers()
   resetConstructParts()
 }
-PIXIMAP.onGameReady = function() {
-  resetConstructParts()
 
+PIXIMAP.cleanUpMapAndAskPixiToSendGameReady = function() {
+  setTimeout(() => {
+    MAP.camera.set(GAME.heros[HERO.id])
+    PIXIMAP.initializeDarknessSprites()
+    PIXIMAP.initializePixiObjectsFromGame()
+    PIXIMAP.onRender()
+    resetConstructParts()
+    window.local.emit('onGameReady')
+  }, 50)
 }
 
 function resetConstructParts() {

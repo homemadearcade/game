@@ -428,7 +428,6 @@ export default class Toolbar extends React.Component {
           <ToolbarButton iconName="fa-upload" onClick={() => {
             modals.openEditCodeModal('Paste JSON code here', {}, (result) => {
               if(result && result.value) {
-                window.local.emit('onLoadingScreenStart')
                 GAME.unload()
                 const game = JSON.parse(result.value)
                 GAME.loadAndJoin(game)

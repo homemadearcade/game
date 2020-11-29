@@ -9,8 +9,6 @@
 
 // object jump squeeze thing, ( with and height anim )
 
-// spaceship trail
-
 // audio
 // the ability to give power ups their own NOISES and various objects their own VOICES
 // randomize specific parts of the theme
