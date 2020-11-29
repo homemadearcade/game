@@ -351,7 +351,7 @@ function prepareObjectsAndHerosForCollisionsPhase() {
 
       if(object.mod().tags.rotateable) {
         if(object.angle === 0 || physicsObject._angle !== object.angle) {
-          physicsObject.setPoints([ [ -object.mod().height/2, -object.mod().height/2], [object.mod().width/2, -object.mod().height/2], [object.mod().width/2, object.mod().height/2] , [-object.mod().width/2, object.mod().height/2]])
+          physicsObject.setPoints([ [ -object.mod().width/2, -object.mod().height/2], [object.mod().width/2, -object.mod().height/2], [object.mod().width/2, object.mod().height/2] , [-object.mod().width/2, object.mod().height/2]])
         }
         physicsObject.angle = object.mod().angle
         physicsObject.x = object.mod().x + object.mod().width/2

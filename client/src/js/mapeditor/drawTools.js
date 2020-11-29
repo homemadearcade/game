@@ -248,10 +248,14 @@ function drawSprite(ctx, camera, textureId, object) {
   const texture = window.textureMap[textureId]
   const pixiImage = PIXIMAP.textures[textureId].baseTexture.resource.source
 
-  if(object.color && object.color !== window.defaultObjectColor && object.color !== GAME.world.defaultObjectColor && object.color !== '#ffffff') {
+  if(object.color && object.color !== window.defaultObjectColor && object.color !== GAME.world.defaultObjectColor && object.color !== '#ffffff' && object.color !== '#FFFFFF' && object.color !== 'white' && object.color !== '#FFF' && object.color !== '#fff') {
     const buffer = document.createElement('canvas');
     buffer.width = (object.width * camera.multiplier);
     buffer.height = (object.height * camera.multiplier);
+    if(buffer.width == 0 || buffer.height == 0) {
+      return
+    }
+
     const bx = buffer.getContext('2d');
 
     // fill offscreen buffer with the tint color
