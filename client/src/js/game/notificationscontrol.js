@@ -87,8 +87,8 @@ class NotificationsControl{
     if(hero.id === HERO.id) AUDIO.play(GAME.theme.audio.onHeroGroundJump)
   }
 
-  onStartPregame() {
-    AUDIO.play(GAME.theme.audio.onStartPregame)
+  onGameStarted() {
+    AUDIO.play(GAME.theme.audio.onGameStarted)
   }
 
   onUpdateHero(hero) {

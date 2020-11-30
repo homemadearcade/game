@@ -6,6 +6,10 @@ Interesting that bar of dreams and homemade arcade i've wanted to have audio... 
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
 
+MORE THEME STUFF
+https://tobiasahlin.com/moving-letters/ + fonts?
+SO COOL
+
 PARTICLES TODO
   Powerups
   Special Explosions

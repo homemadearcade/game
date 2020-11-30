@@ -56,8 +56,6 @@ function onPlayerIdentified() {
 
 function deleteTrigger(object, triggerId) {
   if(object.triggers[triggerId] && object.triggers[triggerId].removeEventListener && typeof object.triggers[triggerId].removeEventListener === 'function') object.triggers[triggerId].removeEventListener()
-
-  console.log(triggerId)
   delete object.triggers[triggerId]
   delete object.triggers.undefined
 }

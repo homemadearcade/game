@@ -48,6 +48,7 @@ class Game{
       audio: {},
       ss: {},
       particle: {},
+      title: 'sunny mornings'
     }
   }
 
@@ -951,16 +952,21 @@ class Game{
 
   onUpdateTheme(updatedTheme) {
     for(let key in updatedTheme) {
-      const mediaType= updatedTheme[key]
+      const value= updatedTheme[key]
 
       if(key === 'audio') {
-        Object.keys(mediaType).forEach((property) => {
-          if(mediaType[property] === null) return
-          if(!window.audio.sounds[mediaType[property]]) AUDIO.loadAsset(mediaType[property])
+        Object.keys(value).forEach((property) => {
+          if(value[property] === null) return
+          if(!window.audio.sounds[value[property]]) AUDIO.loadAsset(value[property])
         })
       }
 
-      window.mergeDeep(GAME.theme[key], mediaType)
+      if(value instanceof Object) {
+        GAME.theme[key] = {}
+        window.mergeDeep(GAME.theme[key], value)
+      } else {
+        GAME.theme[key] = value
+      }
     }
   }
 

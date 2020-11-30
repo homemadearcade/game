@@ -98,7 +98,13 @@ window.generateAudioThemeData = {
   //     folderName: 'Kick'
   //   }
   // ],
-  onStartPregame: [
+  onGameTitleAppears: [
+    {
+      audioCollection: 'retro',
+      folderName: 'Game Starting'
+    }
+  ],
+  onGameStarted: [
     {
       audioCollection: 'retro',
       folderName: 'Game Starting'
@@ -257,13 +263,20 @@ window.generateAudioTheme = function() {
 
     const fileIndex = getRandomInt(0, collection.files.length -1)
 
-    console.log(collection, selectedAssets.audioCollection, selectedAssets.folderName, event)
+    // console.log(collection, selectedAssets.audioCollection, selectedAssets.folderName, event)
     const file = collection.files[fileIndex]
 
     newAudioTheme[event] = file.id
   })
 
   window.socket.emit('updateTheme', { audio: newAudioTheme })
+}
+
+window.generateTitleTheme = function() {
+  const index = getRandomInt(0, window.titleAnimationStyles.length -1)
+  console.log(window.titleAnimationStyles[index])
+
+  window.socket.emit('updateTheme', { title: window.titleAnimationStyles[index] })
 }
 
 

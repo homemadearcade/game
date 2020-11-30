@@ -37,7 +37,7 @@ export default class Goals extends React.Component{
             <feOffset dx="0" dy="20" result="stroke3-blur"/>
             <feBlend in="stroke3-blur" mode="screen" result="stroke3-blur-blend"></feBlend>
 
-            <feFlood result="floodFill" flood-color="rgba(0,0,0,0.7)" flood-opacity="1"/>
+            <feFlood result="floodFill" floodColor="rgba(0,0,0,0.7)" floodOpacity="1"/>
             <feComposite in="floodFill" in2="erode2" operator="in" result="black"/>
             <feBlend in="black" mode="screen" result="letterInside"></feBlend>
             <feMerge>

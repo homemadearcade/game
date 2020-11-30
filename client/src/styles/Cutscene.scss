@@ -1,6 +1,11 @@
 @keyframes fadeIn {
-0% {opacity:0;}
-100% {opacity:1;}
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
+@keyframes fadeInLate {
+  60% {opacity:0;}
+  61% {opacity:1;}
 }
 
 .PlayerUI {
@@ -29,11 +34,12 @@
 
 
     &__game-start-screen {
-      display: flex;
+      // display: flex;
       height: 100%;
-      align-items: center;
-      flex-direction: column;
-      justify-content: center;
+      // align-items: center;
+      // flex-direction: column;
+      // justify-content: center;
+      padding-top: 150px;
     }
 
     &__game-title {
@@ -41,26 +47,31 @@
       font-size:90px;
     }
     &__game-start {
-      animation: fadeIn ease 10s;
       display: flex;
-      margin-top: 200px;
+      animation: fadeInLate ease 1s;
       font-size: 30px;
-      transition: opacity;
-      // animation: blink-easy 5s step-start infinite;
+      width: 200px;
+      position: absolute;
+      left: calc(50% - 90px);
+      bottom: 100px;
+      animation: blinker 1s step-start infinite;
     }
     &__game-presents {
-      animation: fadeIn ease 2s;
+      position: relative;
+      top: 38px;
+      animation: fadeIn ease 1s;
       font-size:20px;
       font-weight: 100;
     }
     &__game-author {
-      animation: fadeIn ease 8s;
+      position: relative;
+      bottom: 35px;
+      animation: fadeIn ease 1s;
       font-size:20px;
       font-weight: 100;
     }
 
     &__key {
-      animation: fadeIn ease 10s;
       width: 120px;
       position: relative;
       top: 16px;
