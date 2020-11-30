@@ -1,6 +1,6 @@
 function setDefault() {
 
-  window.generalDescriptors  = {
+  window.generalDescriptors = {
     Scifi: {
       aliases: []
     },
@@ -52,17 +52,17 @@ function setDefault() {
     Mud: {
       aliases: []
     },
-    Fire: {
-      aliases: []
-    },
     Gem: {
-      aliases: ['ore', 'jewelry']
-    },
-    Electricity: {
       aliases: []
     },
     Ore: {
-      aliases: ['ore']
+      aliases: []
+    },
+    Fire: {
+      aliases: []
+    },
+    Electricity: {
+      aliases: []
     },
   }
 
@@ -104,7 +104,7 @@ function setDefault() {
     //   aliases: []
     // },
     'Magic Floor Tile': {
-      // aliases: ['Special Floor Tile']
+      aliases: []//'Special Floor Tile'
     },
     'Spaceship Wall': {
       aliases: []
@@ -132,11 +132,21 @@ function setDefault() {
     },
   }
 
-  window.outsideBuildingElementDescriptors = {
+  window.outsideBuildingDescriptors = {
     Fence: {
       aliases: []
     },
     Plant: {
+      playerFacing: true,
+      aliases: ['Crop', 'Bush', 'Flower']
+    },
+    Bush: {
+      aliases: []
+    },
+    Flower: {
+      aliases: []
+    },
+    Crop: {
       aliases: []
     },
     Sign: {
@@ -148,28 +158,28 @@ function setDefault() {
     Flag: {
       aliases: []
     },
-    Box: {
+    Barrel: {
+      aliases: []
+    },
+    Crate: {
       aliases: []
     },
     Pot: {
       aliases: []
+    },
+    Box: {
+      aliases: ['Pot', 'Barrel', 'Crate']
     },
   }
 
 
 
-  window.insideBuildingElementDescriptors = {
+  window.insideBuildingDescriptors = {
     'Musical Instrument': {
       aliases: []
     },
     Candle: {
-      aliases: ['Fire', 'Torch']
-    },
-    Pot: {
-      aliases: ['Box']
-    },
-    Box: {
-      aliases: ['Pot']
+      aliases: ['Torch']
     },
     Chest: {
       aliases: []
@@ -181,15 +191,21 @@ function setDefault() {
       aliases: ['Computer']
     },
     Computer: {
-      aliases: ['Machine']
+      aliases: []
     },
     Furniture: {
-      aliases: ['Chair', 'Table']
+      aliases: ['Chair', 'Table', 'Fireplace', 'Couch']
+    },
+    Couch: {
+      aliases: []
     },
     Chair: {
       aliases: []
     },
     Table: {
+      aliases: []
+    },
+    Jewelry: {
       aliases: []
     },
     'Kitchen Utensil': {
@@ -199,6 +215,9 @@ function setDefault() {
       aliases: []
     },
     Device: {
+      aliases: ['Clock']
+    },
+    Clock: {
       aliases: []
     },
     Key: {
@@ -222,13 +241,7 @@ function setDefault() {
     'Lily Pad': {
       aliases: []
     },
-    Grave: {
-      aliases: []
-    },
     'Spider Web': {
-      aliases: []
-    },
-    Crop: {
       aliases: []
     },
     Candy: {
@@ -246,7 +259,13 @@ function setDefault() {
     Mirror: {
       aliases: []
     },
+    'Bathroom Item': {
+      aliases: ['Toilet', 'Sink']
+    },
     Toilet: {
+      aliases: []
+    },
+    Sink: {
       aliases: []
     },
     Statue: {
@@ -255,25 +274,37 @@ function setDefault() {
     'Church Item': {
       aliases: ['Candle']
     },
-    'Public Items': {
+    'Public Item': {
       aliases: ['Trash', 'Mailbox', 'Fire Hydrant']
     },
-    // Trash: {
-    //   aliases: []
-    // },
-    // Mailbox: {
-    //   aliases: []
-    // },
-    // Fire Hydrant: {
-    //   aliases: []
-    // },
-    'User Interface': {
+    Trash: {
       aliases: []
+    },
+    Mailbox: {
+      aliases: []
+    },
+    'Fire Hydrant': {
+      aliases: []
+    },
+    'User Interface': {
+      aliases: ['Heart']
     },
   }
 
 
   window.toolDescriptors = {
+    Weapon: {
+      playerFacing: true,
+      aliases: ['Axe', 'Staff', 'Mace', 'Gun', 'Sword','Bow', 'Laser', 'Spear', 'Bomb']
+    },
+    'Melee Weapon': {
+      playerFacing: true,
+      aliases: ['Axe', 'Staff', 'Mace', 'Sword','Spear']
+    },
+    'Projectile Weapon': {
+      playerFacing: true,
+      aliases: ['Gun','Bow', 'Laser']
+    },
     Axe: {
       aliases: []
     },
@@ -292,9 +323,7 @@ function setDefault() {
     Sword: {
       aliases: []
     },
-    Device: {
-      aliases: []
-    },
+    Device: window.insideBuildingDescriptors.Device,
     Bow: {
       aliases: []
     },
@@ -307,8 +336,9 @@ function setDefault() {
     Bomb: {
       aliases: []
     },
-    Projectiles: {
-      aliases: []
+    Projectile: {
+      playerFacing: true,
+      aliases: ['Magic', 'Bullet', 'Arrow', 'Spear']
     },
     Magic: {
       aliases: []
@@ -320,7 +350,8 @@ function setDefault() {
       aliases: []
     },
     Wearables: {
-      aliases: []
+      playerFacing: true,
+      aliases: ['Armor', 'Clothes', 'Robes', 'Hat']
     },
     Armor: {
       aliases: []
@@ -328,12 +359,18 @@ function setDefault() {
     Clothes: {
       aliases: []
     },
+    Robes: {
+      aliases: []
+    },
+    Hat: {
+      aliases: []
+    },
   }
 
 
   window.itemDescriptors = {
     Key: {
-      aliases: []
+      aliases: window.insideBuildingDescriptors.Key
     },
     Bottle: {
       aliases: []
@@ -341,26 +378,21 @@ function setDefault() {
     Heart: {
       aliases: []
     },
-    Food: {
-      aliases: []
-    },
-    Bullet: {
-      aliases: []
-    },
-    Valuable: {
-      aliases: []
+    Food: window.insideBuildingDescriptors.Food,
+    Bullet: window.toolDescriptors.Bullet,
+    'Expensive Item': {
+      playerFacing: true,
+      aliases: ['Gold', 'Jewelry', 'Coin']
     },
     Gold: {
-      aliases: []
-    },
-    Jewelry: {
       aliases: []
     },
     Coin: {
       aliases: []
     },
     Literature: {
-      aliases: []
+      playerFacing: true,
+      aliases: ['Book', 'Page', 'Scroll', 'Disk']
     },
     Book: {
       aliases: []
@@ -376,51 +408,53 @@ function setDefault() {
     }
   }
 
-  window.gameItemDescriptors = {
-    Door: {
-      aliases: []
-    },
-    Ladder: {
-      aliases: []
-    },
-    Stairs: {
-      aliases: []
-    },
-    Key: {
-      aliases: []
-    },
-    Keyhole: {
-      aliases: []
-    },
-    Chest: {
-      aliases: []
-    },
-    Block: {
-      aliases: []
-    },
-    'Magic Floor Tile': window.insideBuildingElementDescriptors['Magic Floor Tile']
-  }
+  // window.dungeonItemDescriptors = {
+  //   Door: window.insideBuildingDescriptors.Door,
+  //   Ladder: window.insideBuildingDescriptors.Ladder,
+  //   Stairs: window.insideBuildingDescriptors.Stairs,
+  //   Key: window.insideBuildingDescriptors.Stairs
+  //   Keyhole: {
+  //     aliases: []
+  //   },
+  //   Chest: {
+  //     aliases: []
+  //   },
+  //   Block: {
+  //     aliases: []
+  //   },
+  //   'Magic Floor Tile': window.insideBuildingDescriptors['Magic Floor Tile']
+  // }
 
   window.transportDescriptors = {
+    Vehicle: {
+      playerFacing: true,
+      aliases: ['Car', 'Boat', 'Spaceship', 'Rail Car']
+    },
     Boat: {
       aliases: []
     },
     Car: {
       aliases: []
     },
-    Tank: {
-      aliases: []
-    },
+    // Tank: {
+    //   aliases: []
+    // },
     Spaceship: {
       aliases: []
     },
-    Plane: {
-      aliases: []
-    },
+    // Plane: {
+    //   aliases: []
+    // },
     Rail: {
       aliases: []
     },
+    'Rail Car': {
+      aliases: []
+    },
     Street: {
+      aliases: []
+    },
+    'Traffic Item': {
       aliases: []
     },
     'Spaceship Wall': {
@@ -447,7 +481,7 @@ function setDefault() {
     Thief: {
       aliases: []
     },
-    Sporty: {
+    Athlete: {
       aliases: []
     },
     Priest: {
@@ -482,7 +516,7 @@ function setDefault() {
       aliases: []
     },
     Mouse: {
-      aliases: []
+      aliases: ['Rat']
     },
     Chicken: {
       aliases: []
@@ -508,7 +542,7 @@ function setDefault() {
     },
   }
 
-  window.monsterDescriptors ={
+  window.monsterDescriptors = {
     Bug: {
       aliases: []
     },
@@ -532,43 +566,66 @@ function setDefault() {
     },
     Machine: {
       aliases: []
-    },
-    Other: {
-      aliases: []
-    },
+    }
   }
 
   window.creatureDetailDescriptors = {
     Human: {
-      aliases: []
-    },
-    Animal: {
-      aliases: []
+      playerFacing: true,
+      aliases: ['Spaceman', 'Wizard', 'King', 'Archer', 'Thief', 'Athlete', 'Priest', 'Cop']
     },
     Monster: {
-      aliases: []
+      playerFacing: true,
+      aliases: ['Bug', 'Ghost', 'Goblin', 'Undead', 'Zombie', 'Alien', 'Mythical', 'Machine']
+    },
+    Animal: {
+      playerFacing: true,
+      aliases: ['Cat', 'Bird', 'Dog', 'Mouse', 'Chicken', 'Bug', 'Fish', 'Reptile', 'Bat', 'Deer', 'Bear']
     },
     Small: {
+      audioOnly: true,
       aliases: []
     },
     Large: {
+      audioOnly: true,
       aliases: []
     },
     Cute: {
+      audioOnly: true,
       aliases: []
     },
     Mean: {
+      audioOnly: true,
       aliases: []
     },
     Evil: {
+      audioOnly: true,
       aliases: []
     },
     Mad: {
+      audioOnly: true,
       aliases: []
     },
     Happy: {
+      audioOnly: true,
       aliases: []
     },
+  }
+
+  window.allDescriptors = {
+    ...window.generalDescriptors,
+    ...window.elementDesciptors,
+    ...window.overworldMapDesciptors,
+    ...window.buildingPartDescriptors,
+    ...window.outsideBuildingDescriptors,
+    ...window.insideBuildingDescriptors,
+    ...window.otherDescriptors,
+    ...window.toolDescriptors,
+    ...window.itemDescriptors,
+    ...window.transportDescriptors,
+    ...window.humanDescriptors,
+    ...window.monsterDescriptors,
+    ...window.creatureDetailDescriptors,
   }
 
 }
