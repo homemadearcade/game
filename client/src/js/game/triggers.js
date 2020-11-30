@@ -41,7 +41,7 @@ function onPlayerIdentified() {
     onHeroTouchEnd: { mainObject: 'hero', guestObject: 'anything' },
     onTagDepleted: { mainObject: 'tag' },
     onAnticipateCompleted: {},
-    onSequenceEnded: {},
+    onSequenceComplete: {},
     // 'onUpdate':{} //-> for sequences with conditions
   }
   // 'onHeroExamine' <-- only for notifications/logs

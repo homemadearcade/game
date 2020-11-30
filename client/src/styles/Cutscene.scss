@@ -1,0 +1,143 @@
+@keyframes fadeIn {
+0% {opacity:0;}
+100% {opacity:1;}
+}
+
+.PlayerUI {
+  .Cutscene {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    // height: 100%;
+    background-color: black;
+
+    overflow-y: scroll;
+    background-size: contain;
+    z-index: 6;
+
+    .ControlsInfo {
+      width: 30%;
+      margin: 0 auto;
+    }
+
+    &__corner-key {
+      position: absolute;
+      right: 50px;
+      bottom: 50px;
+    }
+
+
+    &__game-start-screen {
+      display: flex;
+      height: 100%;
+      align-items: center;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    &__game-title {
+      animation: fadeIn ease 5s;
+      font-size:90px;
+    }
+    &__game-start {
+      animation: fadeIn ease 10s;
+      display: flex;
+      margin-top: 200px;
+      font-size: 30px;
+      transition: opacity;
+      // animation: blink-easy 5s step-start infinite;
+    }
+    &__game-presents {
+      animation: fadeIn ease 2s;
+      font-size:20px;
+      font-weight: 100;
+    }
+    &__game-author {
+      animation: fadeIn ease 8s;
+      font-size:20px;
+      font-weight: 100;
+    }
+
+    &__key {
+      animation: fadeIn ease 10s;
+      width: 120px;
+      position: relative;
+      top: 16px;
+      left: 0;
+    }
+
+    $stroke-color: rgba(255,255,255,0.5);
+    $thickness-color: rgb(180, 180, 180);
+    $shadow-color: rgba(0,0,0,0.4);
+
+    .TextThreeD {
+      // font-family: Lobster;
+      // font-size: 7rem;
+      // color: #444;
+
+      text-shadow:
+      /*
+      * Faking a stroke wth text-shadows is helpful on fonts
+      * with overlapping letters since the text-stroke property
+      * will overlap the strokes.
+      */
+      -1px -1px 0 $stroke-color,
+      0 -2px 0 $stroke-color,
+      1px -1px 0 $stroke-color,
+      2px 0 0 $stroke-color,
+      1px 1px 0 $stroke-color,
+      0 2px 0 $stroke-color,
+      -1px 1px 0 $stroke-color,
+      -1px 0 0 $stroke-color,
+
+      // Extrusion
+      .00rem 1px 0px $thickness-color,
+      .01rem 2px 0px $thickness-color,
+      .02rem 3px 0px $thickness-color,
+      .03rem 4px 0px $thickness-color,
+      .04rem 5px 0px $thickness-color,
+      .05rem 6px 0px $thickness-color,
+
+
+      // Actual shadow
+      2px 13px 2px darken($shadow-color, 100%),
+      4px 12px 4px $shadow-color,
+      10px 12px 6px $shadow-color;
+
+
+      // perspective: 50em;
+      // -webkit-transform: scaleY(-1.6);
+      // -webkit-transform: skewX(-10deg);
+    }
+  }
+
+  &__open-log, &__close-log {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    i {
+      position: relative;
+      color: #777;
+      padding: 10px 5px;
+      background: #0f0f0f;
+      cursor: pointer;
+      &:hover {
+        color: #fff;
+      }
+      // &:after {
+      //   content: " ";
+      //   position: absolute;
+      //   left: -15px;
+      //   top: 3px;
+      //   border-top: 15px solid transparent;
+      //   border-right: 15px solid black;
+      //   border-left: none;
+      //   border-bottom: 15px solid transparent;
+      // }
+    }
+  }
+}

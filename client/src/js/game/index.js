@@ -630,16 +630,17 @@ class Game{
   }
 
   onStartPregame(options) {
-    GAME.onGameStart(options)
+    GAME.onGameStart({...options, silent: true})
 
     if(GAME.library.sequences.pregame) {
       GAME.gameState.pregame = true
       GAME.gameState.paused = true
 
       startSequence('pregame', {})
-      const removeEventListener = window.local.on('onSequenceEnded', (id) => {
+      const removeEventListener = window.local.on('onSequenceComplete', (id) => {
         if(id === 'pregame') {
           removeEventListener()
+          window.local.emit('onGameStarted')
           GAME.gameState.pregame = false
           GAME.gameState.paused = false
         }
@@ -710,7 +711,7 @@ class Game{
       }
 
       window.local.emit('onLoadingScreenEnd')
-      window.local.emit('onGameStarted')
+      if(!options.silent) window.local.emit('onGameStarted')
     }, 100)
   }
 

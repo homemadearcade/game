@@ -375,24 +375,29 @@ function processEffect(effect, effected, effector, ownerObject) {
   }
 
   if(effectName === 'addLibrarySubObject') {
-    console.log(effect)
-    OBJECTS.addSubObject(effected, window.subObjectLibrary.addGameLibrary()[effect.effectLibrarySubObject], effect.effectLibrarySubObject)
+    const libraryObject = window.subObjectLibrary.addGameLibrary()[effect.effectLibrarySubObject]
+    if(!libraryObject) return console.log('no library sub object', effect.effectLibrarySubObject)
+    OBJECTS.addSubObject(effected, libraryObject, effect.effectLibrarySubObject)
   }
 
   if(effectName === 'equipSubObject') {
+    if(!effected.subObjects[effectValue]) return console.log('no sub object, equip')
     equipSubObject(effected, effected.subObjects[effectValue])
   }
 
   if(effectName === 'unequipSubObject') {
+    if(!effected.subObjects[effectValue]) return console.log('no sub object, unequip')
     unequipSubObject(effected, effected.subObjects[effectValue])
   }
 
   if(effectName === 'dropSubObject') {
+    if(!effected.subObjects[effectValue]) return console.log('no sub object, drop')
     dropObject(effected, effected.subObjects[effectValue])
   }
 
   if(effectName === 'equipLibrarySubObject') {
     const subObject = _.cloneDeep(window.subObjectLibrary.addGameLibrary()[effect.effectLibrarySubObject])
+    if(!subObject) return console.log('no sub object, equp library')
     subObject.tags.startsEquipped = true
     OBJECTS.addSubObject(effected, subObject, effect.effectLibrarySubObject)
   }
@@ -468,19 +473,19 @@ function processEffect(effect, effected, effector, ownerObject) {
       guestObject: effector,
       ownerObject,
     }
-    startSequence(effect.effectSequenceId, context)
+    startSequence(effect.effectSequenceId || effectValue, context)
   }
 
   if(effectName === 'branchApply') {
-    GAME.onBranchApply(effect.effectBranchName)
+    GAME.onBranchApply(effect.effectBranchName || effectValue)
   }
 
   if(effectName === 'branchModApply') {
-    GAME.onBranchModApply(effect.effectBranchName)
+    GAME.onBranchModApply(effect.effectBranchName || effectValue)
   }
 
   if(effectName === 'branchModRevert') {
-    GAME.onBranchModRevert(effect.effectBranchName)
+    GAME.onBranchModRevert(effect.effectBranchName || effectValue)
   }
 
   if(effectName === 'mod') {

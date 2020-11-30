@@ -10,7 +10,7 @@
 // notificationAllHeros,
 // notificationAllHerosInvolved,
 
-function setHerowalkingSound (hero) {
+function setHeroWalkingSound (hero) {
   if(hero.tags.walkRetro) {
     hero._walkingSound = 'retro'
   }
@@ -97,10 +97,10 @@ class NotificationsControl{
 
       if(!hero.mod().tags.inSpace && (hero.mod().tags.gravityY || GAME.world.tags.allMovingObjectsHaveGravityY)) {
         if(hero.onGround && (hero.velocityX || hero._flatVelocityX || hero.velocityY || hero._flatVelocityY) ) {
-          setHerowalkingSound(hero)
+          setHeroWalkingSound(hero)
         }
       } else if(hero.mod().tags.inSpace) {
-        setHerowalkingSound(hero)
+        setHeroWalkingSound(hero)
       }
     }
 

@@ -45,8 +45,6 @@ right click creator service - add to heros guidance? NOT BAD!
 
 right click - follow, pathfindTo
 
-Add GAME title menu (press enter or v to start)
-
 dialogueSets, popoverText in the hero context menu
 
 unequip action

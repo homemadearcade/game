@@ -9,7 +9,7 @@ function endSequence(sequence) {
     GAME.gameState.paused = false
   }
 
-  window.local.emit('onSequenceEnded', sequence.id)
+  window.local.emit('onSequenceComplete', sequence.id)
 
   GAME.gameState.sequenceQueue = GAME.gameState.sequenceQueue.filter((s) => {
     if(s.id === sequence.id) return false
@@ -255,7 +255,6 @@ function processSequence(sequence) {
         if(sequence.currentItemId === 'end') {
           endSequence(sequence)
         }
-        removeEventListener()
       }
 
       const previousItem = sequence.itemMap[sequence.previousItemId]
@@ -265,6 +264,7 @@ function processSequence(sequence) {
         } else {
           const removeEventListener = window.local.on('onAnticipateCompleted', (mainObject) => {
             resolveWaiting()
+            removeEventListener()
           })
           sequence.eventListeners.push(removeEventListener)
         }
@@ -278,6 +278,7 @@ function processSequence(sequence) {
           }
           if(previousItem.effectedIds.length === 0) {
             resolveWaiting()
+            removeEventListener()
           }
         })
         sequence.eventListeners.push(removeEventListener)

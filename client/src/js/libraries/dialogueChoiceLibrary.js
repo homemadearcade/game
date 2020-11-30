@@ -1,11 +1,21 @@
+/*
+effectSequenceId,
+effectLibraryMod,
+effectLibraryObject,
+effectLibrarySubObject,
+*/
 window.defaultDialogueChoice = {
   tags: {},
   heroEffect: '',
-  heroEffectValue: '',
+  heroEffectProps: {
+    effectValue: '',
+  },
   heroDialogueSet: '',
   heroDialogue: [{...window.defaultDialogue}],
   guestEffect: '',
-  guestEffectValue: '',
+  guestEffectProps: {
+    effectValue: '',
+  },
   choiceText: 'Choice',
   triggerPool: -1
 }

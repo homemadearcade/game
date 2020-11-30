@@ -156,7 +156,7 @@ export function triggerInteraction(interaction, hero, collider, result, options)
   let triggered = false
 
   if(interaction.dialogueChoice) {
-    const { heroEffect, heroEffectValue, guestEffectValue, guestEffect, heroDialogue, heroDialogueSet } = interaction.dialogueChoice
+    const { heroEffect, heroEffectProps, guestEffectProps, guestEffect, heroDialogue, heroDialogueSet } = interaction.dialogueChoice
 
     if(heroDialogue) {
       effects.processEffect({ effectName: 'dialogue', effectJSON: heroDialogue }, hero, collider)
