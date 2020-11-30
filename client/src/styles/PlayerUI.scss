@@ -104,6 +104,7 @@
 .PlayerUI {
   text-align: center;
   font-family: Courier;
+  color: white;
 
   .Cutscene {
     position: absolute;
@@ -126,6 +127,37 @@
       position: absolute;
       right: 50px;
       bottom: 50px;
+    }
+
+
+    &__game-start-screen {
+      display: flex;
+      height: 100%;
+      align-items: center;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    &__game-title {
+      font-size:90px;
+    }
+    &__game-start {
+      display: flex;
+      margin-top: 200px;
+      font-size: 40px;
+    }
+    &__game-presents {
+      font-size:30px;
+    }
+    &__game-author {
+      font-size:40px;
+    }
+
+    &__key {
+      width: 120px;
+      position: relative;
+      top: 18px;
+      left: 0;
     }
   }
 

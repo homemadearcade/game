@@ -39,8 +39,6 @@ _beingShrunk, _beingGrown, variables for the laser tools
 when you go to Draw -> there should be NEW DRAWING which creates a new one of these bad boys basically....it adds to the creator library
 //this improves the UX so that they segement their ideas into various drawings
 
-we want it to be onGameIdentified -> loads assets -> on assets loaded
-
 3d sound effects system from papa bear
 
 right click creator service - add to heros guidance? NOT BAD!
@@ -48,6 +46,8 @@ right click creator service - add to heros guidance? NOT BAD!
 right click - follow, pathfindTo
 
 Add GAME title menu (press enter or v to start)
+
+dialogueSets, popoverText in the hero context menu
 
 unequip action
 one time use inventory objects, such as potions, speed boosters.  Keep as action props so we can equip it too, FLEXIBLE nice!

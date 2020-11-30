@@ -9,13 +9,19 @@ const KeySpriteSheetData = [{"name":"esc","x":1,"y":1,"width":17,"height":11},{"
 
 export default class KeySprite extends React.Component {
   render() {
-    const { keySprite } = this.props
+    const { keySprite, span } = this.props
     let key = keySprite
 
     const hero = GAME.heros[HERO.id]
 
     if(hero.keysDown[key]) {
       key+= '--pressed'
+    }
+
+    if(span) {
+      return <span className={classnames("ReactSpriteSheet", this.props.className)}>
+        <SpriteSheet filename="assets/images/KeyUI.png" data={KeySpriteSheetData} sprite={key}/>
+      </span>
     }
 
     return <div className={classnames("ReactSpriteSheet", this.props.className)}>

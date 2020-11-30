@@ -54,6 +54,11 @@ class EditorUI {
       EDITORUI.ref.forceUpdate()
     }, 100)
   }
+  onStartPregame() {
+    setTimeout(() => {
+      EDITORUI.ref.forceUpdate()
+    }, 100)
+  }
 
   onBranchStart() {
       EDITORUI.ref.forceUpdate()

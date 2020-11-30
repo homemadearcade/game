@@ -177,6 +177,10 @@ function setPathTarget(object, target, pursue) {
   }
 
   object.path = pathfinding.findPath(pathTo, pathFrom, pfOptions)
+  if(!object.path.length) {
+    object.velocityY = 0
+    object.velocityX = 0
+  }
   if(pursue) object._targetPursueId = target.id
 }
 

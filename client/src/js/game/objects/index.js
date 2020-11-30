@@ -483,7 +483,6 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
           if(added) return
           if(object.mod().tags[tag]) {
             added = true
-            console.log(choice.choiceText)
             interactions.push({text: choice.choiceText, dialogueChoice: choice})
           }
         })

@@ -48,7 +48,13 @@ export default class Cutscene extends React.Component{
         <div key={sequenceItem.id + '-' + index} className="SequenceItem__option" >
           <div className="SequenceItem__effect-input"><input onChange={() => {
               scene.cutsceneControls = !scene.cutsceneControls
+              this.forceUpdate()
           }} checked={scene.cutsceneControls} type="checkbox"></input>Show controls</div>
+          <div className="SequenceItem__effect-input"><input onChange={() => {
+              scene.startScreen = !scene.startScreen
+              this.forceUpdate()
+          }} checked={scene.startScreen} type="checkbox"></input>Is Game Start Screen</div>
+
           <h4>{'Scene ' + (index + 1)}</h4>
           Text:
           <i className="fa fas fa-edit Manager__button" onClick={() => this.props._editScene('text', index)}/>
