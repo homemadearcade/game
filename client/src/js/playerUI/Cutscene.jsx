@@ -31,7 +31,7 @@ export default class Cutscene extends React.Component{
       return <div style={{height}} className="Cutscene Cutscene--stars"><Hastartscreen>
           <div className="Cutscene__game-start-screen" style={{backgroundImage }}>
             <div className="Cutscene__game-presents">{"Homemade Arcade Presents"}</div>
-            <TitleAnimation style={GAME.theme.title} title={GAME.id}
+            <TitleAnimation className="Cutscene__game-title" style={GAME.theme.title.animation} font={GAME.theme.title.font} title={GAME.id}
               onComplete={() => {
                 this.setState({
                   showAuthorDetails: true

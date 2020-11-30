@@ -40,6 +40,22 @@
       // flex-direction: column;
       // justify-content: center;
       padding-top: 150px;
+
+      @media only screen and (max-width: 1350px) {
+        padding-top: 100px;
+      }
+
+      @media only screen and (max-width: 1000px) {
+        padding-top: 80px;
+      }
+
+      @media only screen and (max-width: 800px) {
+        padding-top: 45px;
+      }
+
+      @media only screen and (max-width: 600px) {
+        padding-top: 10px;
+      }
     }
 
     &__game-title {
@@ -55,6 +71,18 @@
       left: calc(50% - 90px);
       bottom: 100px;
       animation: blinker 1s step-start infinite;
+
+      @media only screen and (max-width: 1000px) {
+        bottom: 60px;
+      }
+
+      @media only screen and (max-width: 800px) {
+        bottom: 30px;
+      }
+
+      @media only screen and (max-width: 600px) {
+        bottom: 10px;
+      }
     }
     &__game-presents {
       position: relative;

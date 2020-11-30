@@ -172,6 +172,14 @@ export default class Root extends React.Component {
     })
   }
 
+  _renderFontPreLoad() {
+    return <div style={{position: 'fixed', opacity: .1}}>
+      {window.titleFontStyles.map((font) => {
+        return <div style={{fontFamily: font}}>.</div>
+      })}
+    </div>
+  }
+
   render() {
     const { showInventoryModal, showControlsInfoModal, showHeroMenuModal, hero } = this.state;
 
@@ -194,6 +202,7 @@ export default class Root extends React.Component {
 
     return (
       <div className="PlayerUI">
+        {this._renderFontPreLoad()}
         {hero.flags && hero.flags.showDialogue && hero.dialogue && hero.dialogue.length > 0 && <DialogueBox verticleMiddle dialogue={hero.dialogue} name={hero.dialogueName} id={hero.dialogueId} />}
         {hero.flags && hero.flags.showDialogue && hero.choiceOptions && <DialogueBox verticleMiddle options={hero.choiceOptions} name={hero.dialogueName} id={hero.dialogueId}/>}
         {hero.flags && hero.flags.showCutscene && hero.cutscenes && <Cutscene scenes={hero.cutscenes} />}

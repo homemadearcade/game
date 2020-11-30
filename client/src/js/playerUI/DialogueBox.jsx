@@ -129,7 +129,7 @@ export default class DialogueBox extends React.Component{
     if(dialogue) {
       return <div className={classnames("DialogueBox", { "DialogueBox--vertical-middle": dialogue[0].style === 'modal' })}>
         {this._renderAvatar(dialogue[0])}
-        <Textfit className="DialogueBox__content" id='fitty' max={22}>
+        <Textfit className="DialogueBox__content" id='fitty' min={14} max={20}>
           {dialogue[0].text}
         </Textfit>
         {!hideV && <KeySprite className="DialogueBox__key blink" keySprite={'v'}></KeySprite>}

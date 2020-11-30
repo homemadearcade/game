@@ -1,5 +1,9 @@
 .Popover {
-  font-family: Courier;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 14px;
+  letter-spacing: 1px;
+  line-height: 160%;
+
   text-align: center;
   &__progress {
     width: 60px;

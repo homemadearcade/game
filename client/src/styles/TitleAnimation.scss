@@ -1,6 +1,29 @@
+.TitleAnimation {
+  font-size: 80px;
+  min-height: 80px;
+
+  @media only screen and (max-width: 1000px) {
+    font-size: 60px;
+  }
+
+  @media only screen and (max-width: 800px) {
+    // font-size: 40px;
+    // &.ml1, &.ml2  {
+      font-size: 60px
+    // }
+  }
+
+  @media only screen and (max-width: 600px) {
+    // font-size: 20px;
+    // &.ml1, &.ml2 {
+      font-size: 60px
+    // }
+  }
+}
+
 .ml1 {
   font-weight: 900;
-  font-size: 3.5em;
+  // font-size: 3.5em;
 }
 
 .ml1 .letter {
@@ -31,7 +54,7 @@
 
 .ml2 {
   font-weight: 900;
-  font-size: 3.5em;
+  // font-size: 3.5em;
 }
 
 .ml2 .letter {
@@ -41,14 +64,14 @@
 
 .ml3 {
   font-weight: 900;
-  font-size: 3.5em;
+  // font-size: 3.5em;
 }
 
 
 .ml5 {
   position: relative;
   font-weight: 300;
-  font-size: 4.5em;
+  // font-size: 4.5em;
   // color: #402d2d;
 }
 
@@ -90,7 +113,7 @@
 .ml6 {
   position: relative;
   font-weight: 900;
-  font-size: 3.3em;
+  // font-size: 3.3em;
 }
 
 .ml6 .text-wrapper {
@@ -110,7 +133,7 @@
 
 .ml11 {
   font-weight: 700;
-  font-size: 3.5em;
+  // font-size: 3.5em;
 }
 
 .ml11 .text-wrapper {
@@ -144,11 +167,12 @@
 
 .ml12 {
   font-weight: 200;
-  font-size: 1.8em;
+  // font-size: 1.8em;
+  font-size: 60px;
   text-transform: uppercase;
   letter-spacing: 0.5em;
-  margin-top: 1.5em;
-  margin-bottom: 1.5em;
+  margin-top: 1em;
+  margin-bottom: .8em;
 }
 
 .ml12 .letter {
@@ -165,7 +189,7 @@
   // color: #402d2d;
   padding: 40px 0;
   font-weight: 800;
-  font-size: 2em;
+  // font-size: 2em;
   text-transform: uppercase;
   letter-spacing: 0.5em;
   overflow: hidden;

@@ -10,9 +10,10 @@ import axios from 'axios';
 //https://pixijs.io/examples/#/masks/filter.js
 //https://codepen.io/xno/pen/YOQZzw
 
-
 const textures = {};
 let stage
+
+window.maxCanvasMultiplier = 3.5
 
 const applyFilters = () => {
   /*
@@ -269,6 +270,7 @@ const initPixiApp = (canvasRef, onLoad) => {
       let gameElementWidth = window.innerWidth
       if(PAGE.isLogOpen) gameElementWidth = gameElementWidth * .8
       MAP.canvasMultiplier = gameElementWidth/640;
+      if(MAP.canvasMultiplier > window.maxCanvasMultiplier) MAP.canvasMultiplier = MAP.canvasMultiplier > 3.5
       const width = (640 * MAP.canvasMultiplier);
       const height = (320 * MAP.canvasMultiplier);
       app.resize(width, height);

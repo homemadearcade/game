@@ -273,10 +273,15 @@ window.generateAudioTheme = function() {
 }
 
 window.generateTitleTheme = function() {
-  const index = getRandomInt(0, window.titleAnimationStyles.length -1)
-  console.log(window.titleAnimationStyles[index])
+  const newTitleTheme = {}
 
-  window.socket.emit('updateTheme', { title: window.titleAnimationStyles[index] })
+  const indexAnimation = getRandomInt(0, window.titleAnimationStyles.length -1)
+  newTitleTheme.animation = window.titleAnimationStyles[indexAnimation]
+
+  const indexFont = getRandomInt(0, window.titleFontStyles.length -1)
+  newTitleTheme.font = window.titleFontStyles[indexFont]
+
+  window.socket.emit('updateTheme', { title: newTitleTheme })
 }
 
 

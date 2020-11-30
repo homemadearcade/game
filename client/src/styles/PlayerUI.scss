@@ -128,7 +128,6 @@
 
 .DialogueBox {
   background-color: #19191a;
-  font-family: Courier;
   font-size: 22px;
   color: white;
   width: 500px;
@@ -142,6 +141,7 @@
   bottom: 43px;
   height: 140px;
   z-index: 2;
+  font-family: 'Press Start 2P', cursive;
 
   &--vertical-middle {
     top: 0;
@@ -176,7 +176,10 @@
   }
 
   &__content {
+    font-size: 14px;
     padding: 10px;
+    letter-spacing: 1px;
+    line-height: 160%;
   }
 
   &__name-container {

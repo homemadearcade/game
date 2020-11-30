@@ -22,6 +22,7 @@ MAP.onPlayerIdentified = function() {
       let gameElementWidth = window.innerWidth
       if(PAGE.isLogOpen) gameElementWidth = gameElementWidth * .8
       MAP.canvasMultiplier = gameElementWidth/640;
+      if(MAP.canvasMultiplier > window.maxCanvasMultiplier) MAP.canvasMultiplier = window.maxCanvasMultiplier
       MAP.canvas.width = 640 * MAP.canvasMultiplier;
       MAP.canvas.height = 320 * MAP.canvasMultiplier;
       // const GC = document.getElementById('GameContainer')
