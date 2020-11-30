@@ -592,6 +592,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
                   conditionGuestObjectTag,
                 effectLibraryMod,
               effectLibraryObject,
+              effectLibrarySubObject,
               notificationLog,
               notificationChat,
               notificationToast,
@@ -624,6 +625,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
           effectSequenceId,
           effectLibraryMod,
           effectLibraryObject,
+          effectLibrarySubObject,
           eventName,
           eventThreshold,
           mainObjectId,
@@ -706,6 +708,8 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
       goals: hero.goals,
 
       keysDown: hero.keysDown,
+
+      popoverText: hero.popoverText,
 
       navigationTargetId: hero.navigationTargetId,
 

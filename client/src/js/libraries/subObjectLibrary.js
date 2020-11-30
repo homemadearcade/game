@@ -67,7 +67,7 @@ window.local.on('onFirstPageGameLoaded', () => {
     },
     evidenceChain1: {
       width: 10, height: 10,
-      subObjectName: 'evidenceChain1',
+      // subObjectName: 'evidenceChain1',
       "triggers": {
         "addDialogueChoiceMod": {
           "id": "addDialogueChoiceMod",
@@ -76,8 +76,10 @@ window.local.on('onFirstPageGameLoaded', () => {
             "tags": {
               "monster": true
             },
-            "text": "Present Evidence",
+            // lets call this choiceText
+            "choiceText": "Present Evidence",
             "heroEffect": "addLibrarySubObject",
+            "heroDialogueSet": 'Present Evidence',
             heroEffectProps: { effectLibrarySubObject: "evidenceChain2"},
             heroDialogue: [{
               ..._.cloneDeep(window.defaultDialogue),
@@ -85,7 +87,7 @@ window.local.on('onFirstPageGameLoaded', () => {
             }],
             triggerPool: 1,
           },
-          "effectValue": 'Present Evidence 1',
+          "effectValue": 'evidenceChain1',
           "effectedTags": [
             "hero"
           ],
@@ -100,7 +102,7 @@ window.local.on('onFirstPageGameLoaded', () => {
     },
     evidenceChain2: {
       width: 10, height: 10,
-      subObjectName: 'evidenceChain2',
+      // subObjectName: 'evidenceChain2',
       "triggers": {
         "addDialogueChoiceMod": {
           "id": "addDialogueChoiceMod",
@@ -145,11 +147,13 @@ window.local.on('onFirstPageGameLoaded', () => {
         shootVelocity: 600,
         // shootRadius: window.radianCircle,
         shootBulletsPerRound: 1,
-        shootTags: {
-          monsterDestroyer: true,
-          destroyOnCollideWithObstacle: true,
-          moving: true,
-          destroySoon: true,
+        bulletJSON: {
+          tags: {
+            monsterDestroyer: true,
+            destroyOnCollideWithObstacle: true,
+            moving: true,
+            destroySoon: true,
+          }
         }
       },
       actionState: {}
@@ -265,7 +269,7 @@ window.local.on('onFirstPageGameLoaded', () => {
     		"background": true,
     		"hasEngineTrail": true
     	},
-    	"subObjectName": "engineTrail",
+    	// "subObjectName": "engineTrail",
     	"opacity": 0
     }
   }

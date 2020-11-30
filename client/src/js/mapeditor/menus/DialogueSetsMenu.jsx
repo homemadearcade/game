@@ -60,7 +60,7 @@ export default class DialogueSetMenu extends React.Component{
         }
         const { value: dialogue } = await Swal.fire({
           title: 'Edit Dialogue',
-          text: "What does this object say?",
+          text: "What is the dialogue?",
           input: 'text',
           inputAttributes: {
             autocapitalize: 'off'
@@ -85,7 +85,7 @@ export default class DialogueSetMenu extends React.Component{
         let dialogueIndex = data.index
         const { value: dialogue } = await Swal.fire({
           title: 'Edit Dialogue',
-          text: "What does this object say?",
+          text: "What is the dialogue?",
           input: 'text',
           inputAttributes: {
             autocapitalize: 'off'
@@ -102,6 +102,30 @@ export default class DialogueSetMenu extends React.Component{
       if(data.action === "set-as-current") {
         networkEditObject(objectSelected, {heroDialogueSet: data.setName })
         return
+      }
+
+      if(data.action === "rename-set") {
+        const { value: name } = await Swal.fire({
+          title: 'Rename Dialogue Set',
+          text: "What is the new name?",
+          input: 'text',
+          inputAttributes: {
+            autocapitalize: 'off'
+          },
+          showCancelButton: true,
+          confirmButtonText: 'Ok',
+        })
+
+        const oldSet = objectSelected.heroDialogueSets[data.setName]
+        objectSelected.heroDialogueSets[data.setName] = null
+        objectSelected.heroDialogueSets[name] = oldSet
+        networkEditObject(objectSelected, {heroDialogueSets: objectSelected.heroDialogueSets })
+        return
+      }
+
+      if(data.action === "remove-set") {
+        objectSelected.heroDialogueSets[data.setName] = null
+        networkEditObject(objectSelected, {heroDialogueSets: objectSelected.heroDialogueSets })
       }
     }
   }
@@ -124,6 +148,10 @@ export default class DialogueSetMenu extends React.Component{
     {set.dialogue.map((dialogue, i) => {
       render.push(<MenuItem key={JSON.stringify({ action:"remove-dialogue", index: i, setName})}>{'Remove Dialogue ' + (i+1)}</MenuItem>)
     })}
+
+    render.push(<MenuItem key={JSON.stringify({ action:"rename-set", setName})}>Rename Set</MenuItem>)
+    render.push(<MenuItem key={JSON.stringify({ action:"remove-set", setName})}>Remove Set</MenuItem>)
+
     return render
   }
 
@@ -133,8 +161,9 @@ export default class DialogueSetMenu extends React.Component{
     let heroDialogueSets = objectSelected.heroDialogueSets
     return <Menu onClick={this._handleDialogueSetMenuClick}>
       <MenuItem key="add-dialogue-set">Add Dialogue Set</MenuItem>
-      <MenuItem key="set-dialogue-set">Set Current Dialogue Set</MenuItem>
+      {objectSelected.heroDialogueSet && <MenuItem key="add-dialogue-set">Clear Dialogue Set</MenuItem>}
       {heroDialogueSets && Object.keys(heroDialogueSets).map((setName) => {
+        if(!heroDialogueSets[setName]) return
         if(objectSelected.heroDialogueSet === setName) {
           return <SubMenu key={setName} title={setName} className="bold-menu-item">{this._renderDialogueSet(heroDialogueSets[setName], setName)}</SubMenu>
         } else {

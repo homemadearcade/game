@@ -57,7 +57,7 @@ export default class LibraryObjectContextMenu extends React.Component{
 
       if (key === "copy-to-creator-library") {
         const { value: name } = await Swal.fire({
-          title: 'Copy creator library',
+          title: 'Copy to creator library',
           text: "What is the name of this object?",
           input: 'text',
           inputAttributes: {
@@ -77,27 +77,32 @@ export default class LibraryObjectContextMenu extends React.Component{
           confirmButtonText: 'Add to library',
         })
 
+        const copy = Object.replaceAll(objectSelected, libraryId, name, true , true)
         if(objectSelected.tags.hero) {
 
         } else if(subObject) {
-          window.socket.emit('updateLibrary', { subObject: {...GAME.library.subObject, [name]: OBJECTS.getProperties(objectSelected)} })
+          window.socket.emit('updateLibrary', { subObject: {...GAME.library.subObject, [name]: OBJECTS.getProperties(copy)} })
           window.socket.emit('updateLibrary', { creator: {...GAME.library.creator, [name]: {
             label: name,
             columnName,
             libraryName: 'subObjectLibrary',
             libraryId: name,
-            JSON: OBJECTS.getProperties(objectSelected)
+            JSON: OBJECTS.getProperties(copy)
           } } })
         } else {
-          window.socket.emit('updateLibrary', { object: {...GAME.library.object, [name]: OBJECTS.getProperties(objectSelected)} })
+          window.socket.emit('updateLibrary', { object: {...GAME.library.object, [name]: OBJECTS.getProperties(copy)} })
           window.socket.emit('updateLibrary', { creator: {...GAME.library.creator, [name]: {
             label: name,
             columnName,
             libraryName: 'objectLibrary',
             libraryId: name,
-            JSON: OBJECTS.getProperties(objectSelected)
+            JSON: OBJECTS.getProperties(copy)
           } } })
         }
+      }
+
+      if(key === 'view-library-object-json') {
+        modals.openEditCodeModal('VIEW ONLY - Library Object - ' + creatorLibraryId, objectSelected, () =>{})
       }
 
       if( key === 'edit-library-object-json') {
@@ -230,6 +235,7 @@ export default class LibraryObjectContextMenu extends React.Component{
       {libraryName && <MenuItem className="bold-menu-item">{libraryName}</MenuItem>}
       {libraryId && <MenuItem className="bold-menu-item">{libraryId}</MenuItem>}
       <MenuItem key='copy-to-creator-library'>Copy</MenuItem>
+      {!GAME.library.creator[creatorLibraryId] && <MenuItem key='view-library-object-json'>View JSON</MenuItem>}
       {GAME.library.creator[creatorLibraryId] && <MenuItem key='edit-library-object-json'>Edit JSON</MenuItem>}
       {GAME.library.creator[creatorLibraryId] && <MenuItem key='rename'>Rename</MenuItem>}
       {GAME.library.creator[creatorLibraryId] && <MenuItem key='remove-from-library'>Remove</MenuItem>}

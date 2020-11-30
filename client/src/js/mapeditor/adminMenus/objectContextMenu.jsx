@@ -10,6 +10,7 @@ import QuestMenu from '../menus/QuestMenu.jsx';
 import SpawnZoneMenu from '../menus/SpawnZoneMenu.jsx';
 import ResourceZoneMenu from '../menus/ResourceZoneMenu.jsx';
 import NameMenu from '../menus/NameMenu.jsx';
+import PopoverMenu from '../menus/PopoverMenu.jsx';
 import EmitterMenu from '../menus/EmitterMenu.jsx';
 import ObjectAdvancedMenu from '../menus/ObjectAdvancedMenu.jsx';
 import SelectSubObjectMenu from '../menus/SelectSubObjectMenu.jsx';
@@ -137,7 +138,7 @@ export default class ObjectContextMenu extends React.Component{
       {!subObject && <MenuItem key="drag-off-grid">Drag Off Grid</MenuItem>}
       {!objectSelected.constructParts && !objectSelected.pathParts && <MenuItem key="resize">Resize</MenuItem>}
       {subObject && <MenuItem key="resize-grid">Resize On Grid</MenuItem>}
-      {!subObject && <MenuItem key="copy">Copy</MenuItem>}
+      {!subObject && <MenuItem key="copy">Duplicate</MenuItem>}
       <SubMenu title='Sprite'><SpriteMenu objectSelected={objectSelected} subObject={subObject}/></SubMenu>
       {(objectSelected.ownerId || objectSelected.relativeId) && <SubMenu title="Relative">
         <RelativeMenu objectSelected={objectSelected} subObject={subObject}/>
@@ -150,6 +151,9 @@ export default class ObjectContextMenu extends React.Component{
       </SubMenu>
       <SubMenu title="Dialogue">
         <DialogueMenu objectSelected={objectSelected} subObject={subObject}/>
+      </SubMenu>
+      <SubMenu title="Popover">
+        <PopoverMenu objectSelected={objectSelected} subObject={subObject}/>
       </SubMenu>
       <SubMenu title="Dialogue Sets">
         <DialogueSetsMenu objectSelected={objectSelected} subObject={subObject}/>

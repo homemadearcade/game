@@ -261,6 +261,8 @@ const initPixiApp = (canvasRef, onLoad) => {
       }
       loadingTimeout = setTimeout(() => {
         PAGE.resizingMap = false
+        if(GAME.gameState) MAP.camera.set(GAME.heros[HERO.id])
+        PIXIMAP.onRender(true)
         window.local.emit('onLoadingScreenEnd')
         loadingTimeout = null
       }, 200)

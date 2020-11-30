@@ -57,7 +57,7 @@ function createBullet({ shooter, actionProps, direction }) {
     id: 'bullet-' + window.uniqueID(),
     width: 4,
     height: 4,
-    tags: actionProps.shootTags,
+    ...actionProps.bulletJSON
   }
 
   shot.tags.rotateable = true

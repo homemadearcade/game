@@ -105,10 +105,10 @@ window.local.on('onFirstPageGameLoaded', () => {
       "addAtBack": true,
       "spawnType": "rect",
     	"spawnRect": {
-    		"x": -20,
-    		"y": -20,
-    		"w": 40,
-    		"h": 40
+    		"x": -10,
+    		"y": -10,
+    		"w": 20,
+    		"h": 20
     	},
       useUpdateOwnerPos: true
     },

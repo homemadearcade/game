@@ -298,6 +298,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
                   conditionGuestObjectTag,
                   effectLibraryMod,
                   effectLibraryObject,
+                  effectLibrarySubObject,
                   notificationLog,
                   notificationChat,
                   notificationToast,
@@ -330,6 +331,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
           effectSequenceId,
           effectLibraryMod,
           effectLibraryObject,
+          effectLibrarySubObject,
           effectBranchName,
           eventName,
           eventThreshold,
@@ -392,6 +394,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
       sprite: object.sprite,
       defaultSprite: object.defaultSprite,
 
+      popoverText: object.popoverText,
       namePos: object.namePos,
       removed: object.removed,
       angle: object.angle,
@@ -418,6 +421,8 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
 
       actionState: object.actionState,
       actionButtonBehaviorLabel: object.actionButtonBehaviorLabel,
+
+      subObjectName: object.subObjectName
     }
 
     if(object.subObjects) {
@@ -468,7 +473,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
       interactions.push({text: 'Deposit', tag: 'resourceDepositOnInteract', interaction: 'resourceDeposit'})
     }
 
-    if(Object.keys(hero.mod().dialogueChoices).length) {
+    if(hero.mod().dialogueChoices && Object.keys(hero.mod().dialogueChoices).length) {
       Object.keys(hero.mod().dialogueChoices).forEach((id) => {
         let choice = hero.mod().dialogueChoices[id]
         if(!choice || choice.triggerPool === 0) return
@@ -478,7 +483,8 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
           if(added) return
           if(object.mod().tags[tag]) {
             added = true
-            interactions.push({text: choice.text, dialogueChoice: choice})
+            console.log(choice.choiceText)
+            interactions.push({text: choice.choiceText, dialogueChoice: choice})
           }
         })
       })

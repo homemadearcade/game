@@ -34,21 +34,21 @@ PIXIMAP.initializePixiObjectsFromGame = function() {
   GAME.objects.forEach((object) => {
     initPixiObject(object)
   })
-
-  if(GAME.objectsById['globalConstructStationaryObstacle']) {
-    PIXIMAP.deleteObject(GAME.objectsById['globalConstructStationaryObstacle'])
-    initPixiObject(GAME.objectsById['globalConstructStationaryObstacle'])
-  }
-
-  if(GAME.objectsById['globalConstructStationaryForeground']) {
-    PIXIMAP.deleteObject(GAME.objectsById['globalConstructStationaryForeground'])
-    initPixiObject(GAME.objectsById['globalConstructStationaryForeground'])
-  }
-
-  if(GAME.objectsById['globalConstructStationaryBackground']) {
-    PIXIMAP.deleteObject(GAME.objectsById['globalConstructStationaryBackground'])
-    initPixiObject(GAME.objectsById['globalConstructStationaryBackground'])
-  }
+  //
+  // if(GAME.objectsById['globalConstructStationaryObstacle']) {
+  //   PIXIMAP.deleteObject(GAME.objectsById['globalConstructStationaryObstacle'])
+  //   initPixiObject(GAME.objectsById['globalConstructStationaryObstacle'])
+  // }
+  //
+  // if(GAME.objectsById['globalConstructStationaryForeground']) {
+  //   PIXIMAP.deleteObject(GAME.objectsById['globalConstructStationaryForeground'])
+  //   initPixiObject(GAME.objectsById['globalConstructStationaryForeground'])
+  // }
+  //
+  // if(GAME.objectsById['globalConstructStationaryBackground']) {
+  //   PIXIMAP.deleteObject(GAME.objectsById['globalConstructStationaryBackground'])
+  //   initPixiObject(GAME.objectsById['globalConstructStationaryBackground'])
+  // }
 
   // const refFilter = new ShockwaveFilter()
   // PIXIMAP.hero.filters = [refFilter]
@@ -162,14 +162,14 @@ PIXIMAP.onResetObjects = function() {
   PIXIMAP.objectStage._reInitialize = true
 }
 
-PIXIMAP.onRender = function() {
+PIXIMAP.onRender = function(force) {
 
   if(!MAP._isOutOfDate) {
     // console.log('prevented extra render')
     return
   }
 
-  if(PAGE.loadingGame) return
+  if(PAGE.loadingGame && !force) return
 
   let camera = MAP.camera
   if(CONSTRUCTEDITOR.open) {
@@ -609,10 +609,10 @@ PIXIMAP.cleanUpMapAndAskPixiToSendGameReady = function() {
     MAP.camera.set(GAME.heros[HERO.id])
     PIXIMAP.initializeDarknessSprites()
     PIXIMAP.initializePixiObjectsFromGame()
-    PIXIMAP.onRender()
     resetConstructParts()
+    PIXIMAP.onRender(true)
     window.local.emit('onGameReady')
-  }, 50)
+  }, 100)
 }
 
 function resetConstructParts() {

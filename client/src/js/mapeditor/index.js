@@ -228,7 +228,7 @@ class MapEditor {
   }
 
   deleteObject(object) {
-    if (object.tags.subObject && object.subObjectName && object.ownerId) {
+    if (object.tags.subObject && object.subObjectName) {
       const owner = OBJECTS.getOwner(object)
       window.socket.emit('deleteSubObject', owner, object.subObjectName)
     } else if(object.tags.hero) {

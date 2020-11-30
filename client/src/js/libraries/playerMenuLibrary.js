@@ -10,7 +10,7 @@ window.local.on('onGameReady', () => {
     },
     copy: {
       action: 'copy',
-      title: 'Copy',
+      title: 'Duplicate',
     },
     delete: {
       action: 'delete',

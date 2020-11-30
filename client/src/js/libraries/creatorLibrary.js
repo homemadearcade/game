@@ -351,7 +351,7 @@ function onFirstPageGameLoaded() {
       ...toggleSubObject('seeThroughForegroundPower')
     },
     evidenceChain1: {
-      label: 'Evidence Chain 1',
+      label: 'Evidence Chain',
       columnName: 'Equip',
       toggleId: 'evidenceChain1',
       libraryName:'subObjectLibrary',
@@ -439,7 +439,7 @@ function onFirstPageGameLoaded() {
     starViewBlock: true,
 
     evidenceChain1: true,
-    evidenceChain2: true,
+    // evidenceChain2: true,
 
     engineTrail: true,
     // marioCap: true,

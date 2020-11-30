@@ -14,10 +14,7 @@ const updatePixiObject = (gameObject) => {
   } else if(PATHEDITOR.open) {
     camera = PATHEDITOR.camera
   }
-  const child = PIXIMAP.childrenById[gameObject.id]
-  if(child) {
-    child._lastRenderId = PIXIMAP.renderId
-  }
+
 
   /////////////////////
   /////////////////////
@@ -52,7 +49,7 @@ const updatePixiObject = (gameObject) => {
   // SUB OBJECTS
   if(gameObject.subObjects) {
     OBJECTS.forAllSubObjects(gameObject.subObjects, (subObject) => {
-      // if(subObject.tags.potential) return
+      if(subObject.tags.potential) return
       const subObjectPixiChild = updatePixiObject(subObject)
       subObjectPixiChild.ownerName = gameObject.id
     })
@@ -63,7 +60,7 @@ const updatePixiObject = (gameObject) => {
   /////////////////////
   // GET CHILD
   const stage = getGameObjectStage(gameObject)
-  let pixiChild = stage.getChildByName(gameObject.id)
+  let pixiChild = PIXIMAP.childrenById[gameObject.id]
   if(!pixiChild) {
     return initPixiObject(gameObject)
   }
@@ -230,7 +227,6 @@ function updateProperties(pixiChild, gameObject) {
 
   if(gameObject.tags.hasEngineTrail && !pixiChild.engineTrailEmitter) {
     pixiChild.engineTrailEmitter = initEmitter(gameObject, 'engineTrail', { useUpdateOwnerPos: true })
-    console.log(pixiChild.engineTrailEmitter)
   }
   if(!gameObject.tags.hasEngineTrail && pixiChild.engineTrailEmitter) {
     PIXIMAP.deleteEmitter(pixiChild.engineTrailEmitter)
@@ -264,6 +260,8 @@ function updateProperties(pixiChild, gameObject) {
 }
 
 const addGameObjectToStage = (gameObject, stage) => {
+  if(PIXIMAP.childrenById[gameObject.id]) return PIXIMAP.childrenById[gameObject.id]
+
   /////////////////////
   /////////////////////
   // SELECT CAMERA
@@ -322,14 +320,11 @@ const addGameObjectToStage = (gameObject, stage) => {
 }
 
 const initPixiObject = (gameObject) => {
-  if(PIXIMAP.childrenById[gameObject.id]) return
-
   const stage = getGameObjectStage(gameObject)
   if(PAGE.role.isHost) gameObject = gameObject.mod()
 
   if(gameObject.constructParts) {
     gameObject.constructParts.forEach((part) => {
-      if(PIXIMAP.childrenById[part.id]) return
       const partObject = PIXIMAP.convertToPartObject(gameObject, part)
       const pixiChild = addGameObjectToStage(partObject, stage)
       pixiChild.ownerName = gameObject.id
@@ -340,7 +335,6 @@ const initPixiObject = (gameObject) => {
   if(gameObject.subObjects) {
     OBJECTS.forAllSubObjects(gameObject.subObjects, (subObject) => {
       if(subObject.tags.potential) return
-      if(PIXIMAP.childrenById[subObject.id]) return
       const pixiChild = addGameObjectToStage(subObject, stage)
       pixiChild.ownerName = gameObject.id
     })

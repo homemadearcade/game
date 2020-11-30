@@ -6,7 +6,7 @@ window.defaultDialogueChoice = {
   heroDialogue: [{...window.defaultDialogue}],
   guestEffect: '',
   guestEffectValue: '',
-  text: 'Choice',
+  choiceText: 'Choice',
   triggerPool: -1
 }
 

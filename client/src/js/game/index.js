@@ -294,6 +294,9 @@ class Game{
         particles: {}
       }
     }
+    if(!GAME.theme.audio) GAME.theme.audio = {}
+    if(!GAME.theme.ss) GAME.theme.ss = {}
+    if(!GAME.theme.particles) GAME.theme.particles = {}
 
     tags.setDefault()
     if(game.library) GAME.library = game.library

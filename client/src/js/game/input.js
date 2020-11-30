@@ -787,10 +787,10 @@ function onKeyDown(key, hero) {
       if(hero._fireDialogueCompleteWithSpeakerId && hero.dialogueId) {
         const object = OBJECTS.getObjectOrHeroById(hero.dialogueId)
         window.emitGameEvent('onHeroDialogueNext', hero, object)
-        window.emitGameEvent('onHeroDialogueComplete', hero, object)
+        if(hero.dialogue.length === 1) window.emitGameEvent('onHeroDialogueComplete', hero, object)
       } else if(hero.dialogue[0].dialogueId) {
         window.emitGameEvent('onHeroDialogueNext', hero, { id: hero.dialogue[0].dialogueId })
-        window.emitGameEvent('onHeroDialogueComplete', hero, { id: hero.dialogue[0].dialogueId })
+        if(hero.dialogue.length === 1) window.emitGameEvent('onHeroDialogueComplete', hero, { id: hero.dialogue[0].dialogueId })
       } else {
         window.emitGameEvent('onHeroDialogueNext', hero)
       }
