@@ -6,25 +6,13 @@ Interesting that bar of dreams and homemade arcade i've wanted to have audio... 
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
 
-MORE THEME STUFF
-https://tobiasahlin.com/moving-letters/ + fonts?
-SO COOL
-
-PARTICLES TODO
-  Powerups
-  Special Explosions
-  Laser gun
-  Decorative?
-  After TeleDash
-  Find out what I can randomize for particles after?
-
 QUALITIES SYSTEM
   basically just tags that allow the theme system to change around how an object is interacted with...
   VIA sound and also will change its sprites through randomization
   eventually to be the ELEMENTS system which would include a default way these all could interact...
   in spritesheet editor there should be a right click on sprite -> add property <-- this will match with the properties the user can select
 
-Try randomizing sprites with qualities?
+Try randomizing sprites with descriptors?
 
 FILL OUT SEQUENCE EDITOR, LIBRARY, EFFECTS, TAGS
 PUZZLE INTERFACES
@@ -37,32 +25,27 @@ PUZZLE INTERFACES
 COMBAT + GOALS + QUESTS
 
 -------
-
-_beingShrunk, _beingGrown, variables for the laser tools
+experience password for ha-live. Use month+day - 100
 
 when you go to Draw -> there should be NEW DRAWING which creates a new one of these bad boys basically....it adds to the creator library
 //this improves the UX so that they segement their ideas into various drawings
 
-3d sound effects system from papa bear
-
-right click creator service - add to heros guidance? NOT BAD!
-
-right click - follow, pathfindTo
-
-dialogueSets, popoverText in the hero context menu
-
-unequip action
-one time use inventory objects, such as potions, speed boosters.  Keep as action props so we can equip it too, FLEXIBLE nice!
-
-experience password for ha-live. Use month+day - 100
+THEME UI -randomize specific parts of the theme
 
 Change on collide to on touch start for certain tags
 
-Key? If you have a key u can open ____
-
 bring back Auto generate maze Functionality
 
-// suggested tags
+////////////////////////////////
+////////////////////////////////
+UX UPGRADE
+////////////////////////////////
+// suggested tags, in the tags library, make tags objects, and add suggested as a property
+descriptors -> brings us suggested SPRITES in sprite selection tool
+ADVANCED TAG MENU which is like a real ass menu, with that then I can slim down the current tags menu the normal tag menu
+Right click and get sprite ID
+
+right click creator service - add to heros guidance? NOT BAD!
 
 ////////////////////////////////
 ////////////////////////////////
@@ -185,6 +168,32 @@ LIBRARY IDEAS
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ////////////////////////////////////////////////////
 
+//PARTICLES
+  Powerups
+  Special Explosions... for CRAZY particles. Overall having some objects tagged as like special particle explosion1,2,3 or special heroTouchStartParticle1,2,3
+  Shooting special bullets! MAGIC SPELLS
+  Laser gun
+  Decorative?
+  After TeleDash
+  Find out what I can randomize for particles after?
+  // hero walking on certain objects??
+  // funny thing with particle landing... LOL even if you land on a LIVE DUDE ASS u skim off some of his particles. Ill need a quality tag for 'earth' vs 'human' or something like. 'scrapeable?'
+  // if an object falls on the edge of another object, show the scrape!
+  // object jump squeeze thing, ( with and height anim )
+  _beingShrunk, _beingGrown, variables for the laser tools, PARTICLE EMITTER for when this is happening
+
+//ITEMS
+Key? If you have a key u can open ____
+one time use inventory objects,
+such as potions, speed boosters.
+Keep as action props so we can equip it too, FLEXIBLE nice!
+
+//ACTIONS
+unequip action
+throw item?
+// gun that swaps places with what it hits! so cool..
+send clones power like that one game I made
+
 //MODS
 Metal mario! How did I not think of this. Sink and don't drown
 Vanish cap ( lets you walk through walls? )
@@ -202,8 +211,6 @@ Sword options..
   time quota - Time that the collision boxes are active
 bullets that ping around!
 Maybe dual stick shooter potential?
-// gun that swaps places with what it hits! so cool..
-send clones power like that one game I made
 
 //TAGS
   destoryOnHeroLand
@@ -224,6 +231,7 @@ send clones power like that one game I made
   HAve an object twist to the left and the right, its common cheap animation for games it seems
   // 'increaseInputDirectionVelocity', <<--- better as tags probably
   // 'increaseMovementDirectionVelocity',
+  Show grave when dead
 
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
@@ -249,6 +257,21 @@ trigger effects -> sequences
 
 overall something that proved to just be incredibly effective and I should do more often is the dialogueSet variable. Instead of constantly editing this array, we create a bunch of potential arrays that the user can hook into from various places...
 what a large scale change looks like in this engine is mainly changing variables such as dialogueSet. this opens up ALL sorts of possibility and makes it much more seamless... We keep all previous and future states an object has WITHIN that object and we just toggle the stickshift to a different gear to access the various states
+
+
+////////////////////////////////
+////////////////////////////////
+AUDIO UPGRADE
+////////////////////////////////
+// PLAY SOUND 3D - 3d sound effects system from papa bear
+// sound quality tags, big, little, useArcadeWalkingSounds tag, and the elements? steel? etc...
+are we NOT gonna use retro voice sound fx???
+VOLUME, how to change the volume of these sounds so that the 3D sounds feels right, maybe they are already mixed right?
+it looks like this a left/right thing. Ill need to add my own later in that make it 3D
+
+// the ability to give power ups their own NOISES and various objects their own VOICES
+
+// ambience spaces
 
 ////////////////////////////////
 ////////////////////////////////
@@ -292,7 +315,8 @@ draw absurd path with mouse ( as spencer suggested, just use like drag? but reco
 //get better json editor so I dont have to format so fuckin much, use the current json editor?
 //action props, spawn zones, etc would be better editing using this json editor not the ae editor and not context menus
 // add more bold stuff to the right click menu, its a great way of highlighting!, remove uneeded menus?
-// right click -> open advanced menu
+// right click -> open advanced menu which switches to a new context menu
+right click - follow, pathfindTo
 
 ////////////////////////////////
 ////////////////////////////////
@@ -327,7 +351,6 @@ local mods? ( client only mods for specific players/situations ) --- essentially
 global mods -- all heros, or ANY object
 optimize modding...
 MODDING BROKE some crazy thing happened when I replaced a sub object? the modding just really broke, it was using an old version of the mod?? yeah idk maybe cuz the values were so nested. I hated it
-
 
 ////////////////////////////////
 ////////////////////////////////

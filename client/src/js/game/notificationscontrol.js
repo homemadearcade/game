@@ -95,12 +95,14 @@ class NotificationsControl{
     if(PAGE.role.isHost) {
       hero._walkingSound = null
 
-      if(!hero.mod().tags.inSpace && (hero.mod().tags.gravityY || GAME.world.tags.allMovingObjectsHaveGravityY)) {
+      if(!hero.mod().tags.walkOverhead && (hero.mod().tags.gravityY || GAME.world.tags.allMovingObjectsHaveGravityY)) {
         if(hero.onGround && (hero.velocityX || hero._flatVelocityX || hero.velocityY || hero._flatVelocityY) ) {
           setHeroWalkingSound(hero)
         }
-      } else if(hero.mod().tags.inSpace) {
-        setHeroWalkingSound(hero)
+      } else if(hero.mod().tags.walkOverhead) {
+        if(hero.velocityX || hero._flatVelocityX || hero.velocityY || hero._flatVelocityY) {
+          setHeroWalkingSound(hero)
+        }
       }
     }
 

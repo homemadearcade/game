@@ -1,18 +1,3 @@
-//particles
-// special explosion tags... for CRAZY particles. Overall having some objects tagged as like special particle explosion1,2,3 or special heroTouchStartParticle1,2,3
-// hero walking on certain objects??
-// i mean what other particles are there besides explosions and the ELEMENTS?
-// POWERUPS...
-// funny thing with particle landing... LOL even if you land on a LIVE DUDE ASS u skim off some of his particles. Ill need a quality tag for 'earth' vs 'human' or something like. 'scrapeable?'
-
-// if an object falls on the edge of another object, show the scrape!
-
-// object jump squeeze thing, ( with and height anim )
-
-// audio
-// the ability to give power ups their own NOISES and various objects their own VOICES
-// randomize specific parts of the theme
-
 window.generateAudioThemeData = {
   'heroMoving--retro': [
     // {

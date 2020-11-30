@@ -5,6 +5,12 @@ import TagMenu from '../menus/tagMenu.jsx';
 import ColorMenu from '../menus/ColorMenu.jsx';
 import GameTagMenu from '../menus/GameTagMenu.jsx';
 import DialogueMenu from '../menus/DialogueMenu.jsx';
+import PopoverMenu from '../menus/PopoverMenu.jsx';
+import DialogueSetsMenu from '../menus/DialogueSetsMenu.jsx';
+import PlayerCreateObjectMenu from '../menus/PlayerCreateObjectMenu.jsx';
+
+// import DescriptorsMenu from '../menus/DescriptorsMenu.jsx';
+
 import QuestMenu from '../menus/QuestMenu.jsx';
 import SpawnZoneMenu from '../menus/SpawnZoneMenu.jsx';
 import ResourceZoneMenu from '../menus/ResourceZoneMenu.jsx';
@@ -186,9 +192,21 @@ export default class GeneratedMenu extends React.Component {
       case 'Sprite':
         return (<SpriteMenu key={key} objectSelected={objectSelected} ></SpriteMenu>
         )
-        case 'Properties':
-          return (<PropertiesMenu key={key} objectSelected={objectSelected} ></PropertiesMenu>
-          )
+      case 'Properties':
+        return (<PropertiesMenu key={key} objectSelected={objectSelected} ></PropertiesMenu>
+        )
+      case 'Descriptors':
+        return (<DescriptorsMenu key={key} objectSelected={objectSelected} ></DescriptorsMenu>
+        )
+      case 'DialogueSets':
+        return (<DialogueSetsMenu key={key} objectSelected={objectSelected} ></DialogueSetsMenu>
+        )
+      case 'Popover':
+        return (<PopoverMenu key={key} objectSelected={objectSelected} ></PopoverMenu>
+        )
+      case 'PlayerCreateObject':
+        return (<PlayerCreateObjectMenu key={key} objectSelected={objectSelected} ></PlayerCreateObjectMenu>
+        )
       default:
         return (<MenuItem className={classnames({'dont-close-menu': menuData.dontCloseMenu})} key={menuData.action}>{menuData.title}</MenuItem>)
     }

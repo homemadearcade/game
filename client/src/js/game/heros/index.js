@@ -492,6 +492,7 @@ class Hero{
       width: hero.width,
       height: hero.height,
       tags: hero.tags,
+      descriptors: hero.descriptors,
 
       heroSummonType: hero.heroSummonType,
 

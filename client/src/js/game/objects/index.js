@@ -195,6 +195,7 @@ class Objects{
       width: object.width,
       height: object.height,
       tags: object.tags,
+      descriptors: object.descriptors,
       color: object.color,
       defaultSprite: object.defaultSprite,
       upSprite: object.upSprite,
@@ -487,7 +488,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
           }
         })
       })
-      interactions.push({text: 'Cancel'})
+      if(added) interactions.push({text: 'Cancel'})
     }
 
     if(object.triggers) {

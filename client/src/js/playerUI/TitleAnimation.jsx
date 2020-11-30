@@ -2,8 +2,12 @@ import anime from 'animejs/lib/anime.es.js';
 import React from 'react'
 import classnames from 'classnames';
 
+//https://www.cdnfonts.com/
 // FONT STEPS
 // load font in index.scss
+// add font family to this list
+
+//https://tobiasahlin.com/moving-letters/
 
 // ANIM STEPS
 // replace placeholder title with {title} prop
@@ -21,23 +25,30 @@ window.titleAnimationStyles = [
 ]
 
 
-//https://www.cdnfonts.com/
 window.titleFontStyles = [
-  "'Black Empire', sans-serif",
-  "'Alien Mine', sans-serif",
-  // "'Some Weatz Swashes', sans-serif",
-  // "'Some Weatz Symbols', sans-serif",
-  "'Daydream Daily', sans-serif",
-  "'Umber SSi', sans-serif",
-  "'wuwu perspectiva', sans-serif",
-  "'Equine', sans-serif",
-  // "Comic Sans",
-  "'American Lemon', sans-serif",
-  "Courier",
-  "'Press Start 2P', sans-serif",
-  "'Magic School One', sans-serif",
-  "'Magic School Two', sans-serif",
-  "'Medieval Sharp', sans-serif'",
+  { fontFamily: "'Alien Mine', sans-serif", style: 'sci-fi'},
+  { fontFamily: "'Planet N Compact Condensed', sans-serif", style: 'sci-fi' },
+  { fontFamily: "'Daydream Daily', sans-serif", style: 'sci-fi' },
+
+  { fontFamily: "'wuwu perspectiva', sans-serif", style: 'fun' },
+  { fontFamily: "'American Lemon', sans-serif", style: 'fun'},
+  { fontFamily: "'Lake', sans-serif", style: 'fun'},
+  { fontFamily: "'Street Fighter', sans-serif", style: 'fun'},
+
+  { fontFamily:"'Equine', sans-serif", style: 'basic' },
+  { fontFamily: "'Viafont', sans-serif", style: 'basic'},
+
+  { fontFamily: "Courier", style: 'arcade' },
+  { fontFamily: "'NARPASSWORD00000', sans-serif", style: 'arcade' },
+  { fontFamily: "'Press Start 2P', sans-serif", style: 'arcade' },
+
+  { fontFamily: "'Umber SSi', sans-serif", style: 'fantasy' },
+  { fontFamily: "'Magic School One', sans-serif",  style: 'fantasy' },
+  // { fontFamily: "'Magic School Two', sans-serif", style: 'fantasy' },
+  { fontFamily: "'Medieval Sharp', sans-serif'", style: 'fantasy' },
+
+  { fontFamily: "'Black Empire', sans-serif", style: 'horror' },
+  { fontFamily: "'Arafura', sans-serif;", style: 'horror' },
 ]
 
 export default class TitleAnimation extends React.Component{
@@ -45,34 +56,34 @@ export default class TitleAnimation extends React.Component{
     const { style, title, font } = this.props
 
     if(!style || style === 'sunny mornings') {
-      return <h1 className="TitleAnimation ml2" style={{fontFamily: font}}>{title}</h1>
+      return <h1 className="TitleAnimation ml2" style={{fontFamily: font.fontFamily}}>{title}</h1>
     }
 
     if(style === 'great thinkers') {
-      return <h1 className="TitleAnimation ml3" style={{fontFamily: font}}>{title}</h1>
+      return <h1 className="TitleAnimation ml3" style={{fontFamily: font.fontFamily}}>{title}</h1>
     }
 
     if(style === 'beautiful questions') {
       return <h1 class="TitleAnimation ml6">
         <span class="text-wrapper">
-          <span class="letters" style={{fontFamily: font}}>{title}</span>
+          <span class="letters" style={{fontFamily: font.fontFamily}}>{title}</span>
         </span>
       </h1>
     }
 
     if(style === 'made with love') {
-      return <h1 class="TitleAnimation ml16" style={{fontFamily: font}}>{title}</h1>
+      return <h1 class="TitleAnimation ml16" style={{fontFamily: font.fontFamily}}>{title}</h1>
     }
 
     if(style === 'a new production') {
-      return <h1 class="TitleAnimation ml12" style={{fontFamily: font}}>{title}</h1>
+      return <h1 class="TitleAnimation ml12" style={{fontFamily: font.fontFamily}}>{title}</h1>
     }
 
     if(style === 'hello goodbye') {
       return <h1 class="TitleAnimation ml11">
         <span class="text-wrapper">
           <span class="line line1"></span>
-          <span class="letters" style={{fontFamily: font}}>{title}</span>
+          <span class="letters" style={{fontFamily: font.fontFamily}}>{title}</span>
         </span>
       </h1>
     }
@@ -81,7 +92,7 @@ export default class TitleAnimation extends React.Component{
       return <h1 class="TitleAnimation ml1">
         <span class="text-wrapper">
           <span class="line line1"></span>
-          <span style={{fontFamily: font}} class="letters">{title}</span>
+          <span style={{fontFamily: font.fontFamily}} class="letters">{title}</span>
           <span class="line line2"></span>
         </span>
       </h1>
@@ -96,7 +107,7 @@ export default class TitleAnimation extends React.Component{
       return <h1 class="TitleAnimation ml5">
         <span class="text-wrapper">
           <span class="line line1"></span>
-          <span style={{fontFamily: font}} class="letters ampersand">{title}</span>
+          <span style={{fontFamily: font.fontFamily}} class="letters ampersand">{title}</span>
           <span class="line line2"></span>
         </span>
       </h1>

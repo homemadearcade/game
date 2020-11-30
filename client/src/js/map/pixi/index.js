@@ -71,6 +71,7 @@ PIXIMAP.onGameIdentified = function(game) {
     PIXIMAP.emitterObjectStage.removeChildren()
     PIXIMAP.foregroundStage.removeChildren()
     PIXIMAP.emitterForegroundStage.removeChildren()
+    PIXIMAP.objectsById = {}
     PIXIMAP.initializeDarknessSprites()
     PIXIMAP.initializePixiObjectsFromGame()
   }
@@ -116,6 +117,8 @@ PIXIMAP.deleteObject = function(object, stage) {
     })
   }
 
+  PIXIMAP.childrenById[object.id] = null
+
   const pixiChild = stage.getChildByName(object.id)
   if(!pixiChild) return
   if(pixiChild.children && pixiChild.children.length) {
@@ -159,6 +162,7 @@ PIXIMAP.onResetObjects = function() {
   PIXIMAP.emitterObjectStage.removeChildren()
   PIXIMAP.foregroundStage.removeChildren()
   PIXIMAP.emitterForegroundStage.removeChildren()
+  PIXIMAP.objectsById = {}
   PIXIMAP.objectStage._reInitialize = true
 }
 

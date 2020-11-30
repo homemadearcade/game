@@ -48,8 +48,6 @@ const applyFilters = () => {
   Zoom blur filter — Perhaps when you are like low on health??
   */
 
-
-
   // const  grFilter = new GodrayFilter({
   //   angle: 30,
   //   gain: 0.5,

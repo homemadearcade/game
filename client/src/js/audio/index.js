@@ -3,21 +3,6 @@ import axios from 'axios'
 
 window.audio = audio
 
-/*
-AUDIO TODO
-
-// PLAY SOUND 3D
-
-// sound quality tags, big, little, useArcadeWalkingSounds tag, and the elements? steel? etc...
-
-are we NOT gonna use retro voice sound fx???
-
-VOLUME, how to change the volume of these sounds so that the 3D sounds feels right, maybe they are already mixed right?
-it looks like this a left/right thing. Ill need to add my own later in that make it 3D
---
-
-*/
-
 class Audio{
   constructor() {
     this.data = {

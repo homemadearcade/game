@@ -270,6 +270,13 @@ function setDefault() {
     ...window.popoverTags,
   }
 
+
+  window.audioQualityTags = {
+    walkRetro: false,
+    walkVehicle: false,
+    walkQuality: false,
+    walkOverhead: false,
+  }
   window.heroTags = {
     hero: true,
     respawn: true,
@@ -290,6 +297,8 @@ function setDefault() {
     seeThroughForegrounds: false,
     seeHiddenObjects: false,
     autoUpdateMaxVelocity: true,
+
+    ...window.audioQualityTags,
   }
 
   window.subObjectTags = {
@@ -356,15 +365,6 @@ function setDefault() {
     ...window.cameraTags,
   }
 
-  window.audioQualityTags = {
-    walkRetro: false,
-    walkVehicle: false,
-    walkQuality: false,
-  }
-  window.qualityTags = {
-    inSpace: false,
-    ...window.audioQualityTags,
-  }
 }
 
 function addGameTags(tags) {

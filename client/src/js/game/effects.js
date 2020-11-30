@@ -230,6 +230,8 @@ import pathfinding from '../utils/pathfinding.js'
     //
     // Withdraw object
 
+    // open URL
+
     // THESE ARE MAYBE JUST MUTATE? EXCEPT FOR TOGGLE, MAYBE ADD THAT TO SPECIAL SYNTAX
     // skipHeroGravity
     // skipHeroPosUpdate

@@ -326,7 +326,17 @@ export default class Toolbar extends React.Component {
             <ToolbarButton iconName="fa-book-dead"/>
 
              */}
-
+           <ToolbarButton iconName="fa-icons" onClick={() => {
+             PAGE.typingMode = true
+             modals.openEditCodeModal('Edit Theme JSON', GAME.theme, (result) => {
+               if(result && result.value) {
+                 const editedCode = JSON.parse(result.value)
+                 window.socket.emit('updateTheme', editedCode)
+               }
+               PAGE.typingMode = false
+             })
+            }}>
+           </ToolbarButton>
         </ToolbarRow>
         <br/>
 
@@ -434,15 +444,22 @@ export default class Toolbar extends React.Component {
               }
             })
           }}/>
+          <ToolbarButton iconName="fa-icons" onClick={() => {
+                BELOWMANAGER.open({ selectedManager: 'MediaManager' })
+            }}>
+          </ToolbarButton>
         </ToolbarRow>
-        <ToolbarRow iconName="fa-icons" onClick={() => {
-            BELOWMANAGER.open({ selectedManager: 'MediaManager' })
-        }}>
-        </ToolbarRow>
+
       </div>
     )
   }
 }
+//
+// <ToolbarRow iconName="fa-icons" onClick={() => {
+//     BELOWMANAGER.open({ selectedManager: 'MediaManager' })
+// }}>
+// </ToolbarRow>
+
 
 // world transform
 // set to mario ( hold shift to also change objects, hero )

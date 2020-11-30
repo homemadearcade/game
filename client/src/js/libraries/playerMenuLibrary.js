@@ -1,5 +1,9 @@
 window.local.on('onGameReady', () => {
   window.playerMenuLibrary = {
+    create: {
+      useExistingMenu: 'PlayerCreateObject',
+      title: 'Create'
+    },
     move: {
       action: 'drag', // set key={action} and see how keys are used ---- see key === drag in the objectContextMenu. Basically _handleMenuClick should have a million little actions you can choose from. It would be good to grab these actions from the various menus already existing
       title: 'Move' // The text that you see on the right click menu
@@ -32,9 +36,21 @@ window.local.on('onGameReady', () => {
       useExistingMenu: 'Dialogue',
       title: 'Dialogue'
     },
+    dialogueSets: {
+      useExistingMenu: 'DialogueSets',
+      title: 'Dialogue Sets'
+    },
+    popover: {
+      useExistingMenu: 'Popover',
+      title: 'Popover'
+    },
     properties: {
       useExistingMenu: 'Properties',
       title: 'Properties'
+    },
+    descriptors: {
+      useExistingMenu: 'Descriptors',
+      title: 'Descriptors'
     },
     spriteChooser: {
       useExistingMenu: 'Sprite',
@@ -84,11 +100,16 @@ window.local.on('onGameReady', () => {
 
   window.heroMenuLibrary = {
     move: false,
+    resize: false,
     color: false,
+    name: false,
     respawn: false,
     // properties: false,
+    // descriptors: false,
     spriteChooser: false,
     physicsLive: false,
+    dialogue: false,
+    dialogueName: false,
   }
 
   window.objectMenuLibrary = {
@@ -97,17 +118,22 @@ window.local.on('onGameReady', () => {
     copy: false,
     color: false,
     name: false,
+    popover: false,
     dialogue: false,
-    // group: false,
+    dialogueName: false,
+    group: false,
+    // descriptors: false,
     // properties: false,
     spriteChooser: false,
     physicsLive: false,
+
     // pathEditor: false,
     constructEditor: false,
     delete: false,
   }
 
   window.worldMenuLibrary = {
+    create: false,
     backgroundColor: false,
   }
 
