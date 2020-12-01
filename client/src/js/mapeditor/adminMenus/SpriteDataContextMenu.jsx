@@ -19,6 +19,8 @@ export default class SpriteDataContextMenu extends React.Component{
         return
       }
 
+      if(!key) return
+
       const data = JSON.parse(key)
 
       if(data.action == 'add') {

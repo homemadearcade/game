@@ -32,6 +32,17 @@ class contextMenuEl extends React.Component{
   constructor(props) {
     super(props)
 
+    document.body.addEventListener("click", e => {
+      if(e.target.dataset.textureids) {
+        setTimeout(() => {
+          this._openMenuWithEvent(e, false)
+          this._setContextMenuSpecialItem('sprite', null, { textureIds: e.target.dataset.textureids})
+        }, 10)
+        e.stopPropagation()
+        return false;
+      }
+    })
+
     document.body.addEventListener("contextmenu", e => {
       if(e.target.dataset.textureids) {
         this._openMenuWithEvent(e, false)

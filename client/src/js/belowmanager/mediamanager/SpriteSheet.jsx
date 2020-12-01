@@ -62,7 +62,7 @@ export default class SpriteSheet extends React.Component {
     const { spriteSheet, selectMultiple } = this.props;
 
     return <div className="SpriteSheet">
-      {selectMultiple && <div className="SpriteSheet__edit-selected fa fa-edit" data-textureids={JSON.stringify(this.state.textureIdsSelected)}>Right click to edit selected</div>}
+      {selectMultiple && <div className="SpriteSheet__edit-selected fa fa-edit" data-textureids={JSON.stringify(this.state.textureIdsSelected)}>Click to edit selected</div>}
       {spriteSheet.sprites.map((sprite, index) => {
         return this._renderSprite(sprite, index)
       })}

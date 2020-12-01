@@ -169,6 +169,7 @@ function setDefault() {
     hidden: false,
     showXWhenRemoved: false,
     showX: false,
+    stopGlowingOnTrigger: false,
     // invisibleOnHeroCollide: false
 
     // randomColor: false,

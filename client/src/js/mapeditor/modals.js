@@ -5,6 +5,7 @@ import SequenceItem from '../sequenceeditor/SequenceItem.jsx'
 import ConditionList from '../sequenceeditor/ConditionList.jsx'
 import SubObjectModal from './SubObjectModal.jsx'
 import DescriptorSelect from '../components/DescriptorSelect.jsx';
+import TagSelect from '../components/TagSelect.jsx';
 
 function editTrigger(owner, trigger, cb) {
   PAGE.typingMode = true
@@ -665,6 +666,29 @@ function openEditDescriptorsModal(initialDescriptors, cb) {
   )
 }
 
+function openEditTagsModal(initialTags, cb) {
+  Swal.fire({
+    title: 'Edit Tags',
+    showClass: {
+      popup: 'animated fadeInDown faster'
+    },
+    hideClass: {
+      popup: 'animated fadeOutUp faster'
+    },
+    html:`<div id='edit-tags-container'></div>`,
+    preConfirm: (result) => {
+      return ref.current.getTagsObject()
+    }
+  }).then(cb)
+
+  // Mount React App
+  const ref = React.createRef()
+  ReactDOM.render(
+    React.createElement(TagSelect, { ref, initialTags }),
+    document.getElementById('edit-tags-container')
+  )
+}
+
 function openEditMod(mod, cb) {
   Swal.fire({
     title: 'Edit Mod',
@@ -767,6 +791,8 @@ export default {
   writeDialogue,
   nameObject,
   openEditDescriptorsModal,
+  openEditTagsModal,
+
   openNameSubObjectModal,
   openEditCodeModal,
   openEditNumberModal,

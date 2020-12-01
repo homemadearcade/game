@@ -1,5 +1,6 @@
 import React from 'react'
 import Menu, { SubMenu, MenuItem } from 'rc-menu';
+import modals from '../modals.js'
 
 export default class TagMenu extends React.Component{
   constructor(props) {
@@ -8,6 +9,15 @@ export default class TagMenu extends React.Component{
     this._handleTagMenuClick = ({ key }) => {
       const { objectSelected } = this.props;
       const { networkEditObject } = MAPEDITOR
+
+      if(key === 'open-search-modal') {
+        modals.openEditTagsModal(objectSelected.tags || {}, ({value}) => {
+          if(value) {
+            networkEditObject(objectSelected, {tags: value})
+          }
+        })
+        return
+      }
 
       const newValue = !this.state.localTags[key]
       this.setState({ localTags: {
@@ -45,6 +55,7 @@ export default class TagMenu extends React.Component{
     // </SubMenu>
 
     return <Menu onClick={this._handleTagMenuClick}>
+      <MenuItem key='open-search-modal'>Open Search Modal</MenuItem>
       <SubMenu title="Physics">
         {this._renderTagMenuItems(window.physicsTags)}
       </SubMenu>

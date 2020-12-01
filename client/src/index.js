@@ -6,7 +6,15 @@ Interesting that bar of dreams and homemade arcade i've wanted to have audio... 
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
 
+CASUAL TODO
+Make a particle effect - see list
+Add a sprite sheet
+Organize Audio files ( on Mac )
 relatedTags:[],
+tagDescriptions
+descriptor specificity
+
+IMPLEMENT -> ADVANCED TAG MENU which is like a real ass menu, with that then I can slim down the current tags menu the normal tag menu
 
 FILL OUT SEQUENCE EDITOR, LIBRARY, EFFECTS, TAGS
 PUZZLE INTERFACES
@@ -31,7 +39,6 @@ UX UPGRADE
 ////////////////////////////////
 // suggested tags, in the tags library, make tags objects, and add suggested as a property
 descriptors -> brings us suggested SPRITES in sprite selection tool
-IMPLEMENT -> ADVANCED TAG MENU which is like a real ass menu, with that then I can slim down the current tags menu the normal tag menu
 right click creator service - add to heros guidance? NOT BAD!
 
 ////////////////////////////////

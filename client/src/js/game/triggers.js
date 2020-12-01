@@ -148,6 +148,10 @@ function triggerEffectSmart(trigger, ownerObject, mainObject, guestObject) {
     }
   }
 
+  if(effector.mod().tags.stopGlowingOnTrigger) {
+    effector.tags.glowing = false
+  }
+
   // inside of ObjectId is currently the only id selector that can also select main Object, guest Object, etc
   // this converts the condition value to an id if its not already an id essentially
   // this also exists when a sequence item is processed
@@ -168,6 +172,10 @@ function triggerEffectSmart(trigger, ownerObject, mainObject, guestObject) {
         window.socket.emit('sendNotification', { playerUIHeroId: effected.id, chatId: effected.id, logRecipientId: effected.id, toast: trigger.notificationToast, log: trigger.notificationLog, chat: trigger.notificationChat, modal: trigger.notificationModal, text: trigger.notificationText, modalHeader: trigger.notificationModalHeader, duration: trigger.notificationDuration })
         herosNotified.push(effected.id)
       } else window.socket.emit('sendNotification', { chatId: effected.id, log: trigger.notificationLog, chat: trigger.notificationChat, text: trigger.notificationText, duration: trigger.notificationDuration })
+    }
+
+    if(effected.mod().tags.stopGlowingOnTrigger) {
+      effected.tags.glowing = false
     }
 
     effects.processEffect(trigger, effected, effector, ownerObject)
