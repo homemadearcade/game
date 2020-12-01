@@ -165,12 +165,7 @@ class ConstructEditor {
     this.selectColor(color)
 
     this.nodesHistory = []
-
     window.local.emit('onConstructEditorStart', object)
-
-    // if(object.tags.background) {
-    //   PIXIMAP.app.view.style.zIndex = '1'
-    // }
   }
 
   handleMouseUp() {

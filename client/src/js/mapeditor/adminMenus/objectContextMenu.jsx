@@ -136,7 +136,7 @@ export default class ObjectContextMenu extends React.Component{
       <MenuItem key='copy-id' className="bold-menu-item">{objectSelected.subObjectName || objectSelected.name || objectSelected.id}</MenuItem>
       {!subObject && <MenuItem key="drag">Drag</MenuItem>}
       {!subObject && <MenuItem key="drag-off-grid">Drag Off Grid</MenuItem>}
-      {!objectSelected.constructParts && !objectSelected.pathParts && <MenuItem key="resize">Resize</MenuItem>}
+      {(!objectSelected.constructParts || objectSelected.tags.maze) && !objectSelected.pathParts && <MenuItem key="resize">Resize</MenuItem>}
       {subObject && <MenuItem key="resize-grid">Resize On Grid</MenuItem>}
       {!subObject && <MenuItem key="copy">Duplicate</MenuItem>}
       <SubMenu title='Sprite'><SpriteMenu objectSelected={objectSelected} subObject={subObject}/></SubMenu>

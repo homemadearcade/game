@@ -292,9 +292,9 @@ function getVisibility(pixiChild, gameObject) {
     if(!gameObject.tags.background && !gameObject.tags.foreground && !gameObject.tags.hero && CONSTRUCTEDITOR.mapVisible.objects === false) invisible = true
   }
 
-  // if(PAGE.role.isAdmin) {
-  //   if(!window.isObjectSelectable(gameObject)) invisible = true
-  // }
+  if(PAGE.role.isAdmin) {
+    if(!window.isObjectSelectable(gameObject)) invisible = true
+  }
   // if(invisible) console.log(gameObject.id, gameObject.tags.outline,gameObject.tags.invisible,gameObject.removed,gameObject.tags.potential,gameObject.constructParts)
   return invisible
 }

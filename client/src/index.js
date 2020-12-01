@@ -6,31 +6,25 @@ Interesting that bar of dreams and homemade arcade i've wanted to have audio... 
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
 
-QUALITIES SYSTEM
-  basically just tags that allow the theme system to change around how an object is interacted with...
-  VIA sound and also will change its sprites through randomization
-  eventually to be the ELEMENTS system which would include a default way these all could interact...
-  in spritesheet editor there should be a right click on sprite -> add property <-- this will match with the properties the user can select
-
-Try randomizing sprites with descriptors?
+Sprite GROUP right click add to descriptor group
+relatedTags:[],
 
 FILL OUT SEQUENCE EDITOR, LIBRARY, EFFECTS, TAGS
 PUZZLE INTERFACES
-  this https://github.com/alexeyivanov94/combination-lock-react
-  and a straight up password input
-  question is how to deal with the EFFFECT of the combinaton easily from UI?
-    tag -- destroyOnPuzzleComplete
-    tag -- spawnAllInHeroInventoryOnPuzzleComplete
-    and then ud need a basic -- combination variable. Puzzle type + puzzle combination...  two variables?
+  this https://github.com/alexeyivanov94/combination-lock-react FOR NUMBERS
+  and a straight up password input for ALPHANUMERIC
+  tag -- destroyOnPuzzleComplete
+  tag -- spawnAllInHeroInventoryOnPuzzleComplete
+  and then ud need a basic -- combination variable. Puzzle type + puzzle combination...  two variables?
 COMBAT + GOALS + QUESTS
 
 -------
 experience password for ha-live. Use month+day - 100
 
-when you go to Draw -> there should be NEW DRAWING which creates a new one of these bad boys basically....it adds to the creator library
-//this improves the UX so that they segement their ideas into various drawings
+Change layers selection to also be visual!
 
-THEME UI -randomize specific parts of the theme
+THEME UI -randomize specific parts of theme and select value of the theme properties
+  audio right click -> set as ___ sound
 
 Change on collide to on touch start for certain tags
 

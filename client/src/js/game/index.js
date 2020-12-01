@@ -14,7 +14,8 @@ import grid from './grid.js'
 import tracking from './tracking.js'
 import dayNightCycle from './daynightcycle.js'
 import metadata from './metadata.js'
-import effects from './effects'
+import effects from './effects.js'
+
 import { dropObject, equipSubObject, unequipSubObject } from './heros/inventory.js'
 
 import onTalk from './heros/onTalk'

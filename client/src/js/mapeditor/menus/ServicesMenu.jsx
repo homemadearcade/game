@@ -1,6 +1,8 @@
 import React from 'react'
 import Menu, { SubMenu, MenuItem } from 'rc-menu'
 import modals from '../modals.js'
+import { genMaze } from '../../procedural/maze.js'
+
 import Swal from 'sweetalert2/src/sweetalert2.js';
 
 export default class ServicesMenu extends React.Component{
@@ -99,6 +101,38 @@ export default class ServicesMenu extends React.Component{
         })
         window.socket.emit('updateLibrary', { subObject: {...GAME.library.subObject, [name]: OBJECTS.getProperties(objectSelected)} })
       }
+
+      if(key === 'generate-maze') {
+        let { width, height } = objectSelected
+        width = width/GAME.grid.nodeSize
+        height = height/GAME.grid.nodeSize
+
+        const { value: mazeWidthMultiplier } = await Swal.fire({
+          title: 'What is the width of the maze hallways? ( 1,2,3,4 * gridNodeSize )',
+          input: 'number',
+          showCancelButton: true,
+          inputValue: 1,
+          confirmButtonText: 'Ok',
+        })
+
+        if(width % 2 == 1) width -= 1
+        if(height % 2 == 1) height -= 1
+
+        // console.log(width, height, objectSelected.x, objectSelected.y, Number(mazeWidthMultiplier))
+
+        const parts = genMaze(width, height, objectSelected.x, objectSelected.y, Number(mazeWidthMultiplier))
+
+        // width: (width + 1) * GAME.grid.nodeSize, height: (height + 1) * GAME.grid.nodeSize,
+
+        networkEditObject(objectSelected, {
+          tags: { maze: true},
+          constructParts: parts.map((p) => {
+            p.ownerId = objectSelected.id
+            p.color = null
+            return p
+          })
+        })
+      }
     }
   }
 
@@ -118,6 +152,7 @@ export default class ServicesMenu extends React.Component{
       <MenuItem key='open-path-editor'>Open path editor</MenuItem>
       <MenuItem key='open-physics-live-editor'>Live Edit Physics</MenuItem>
       <MenuItem key='open-live-particle'>Live Edit Particle</MenuItem>
+      <MenuItem key='generate-maze'>Turn into maze</MenuItem>
     </Menu>
   }
 }

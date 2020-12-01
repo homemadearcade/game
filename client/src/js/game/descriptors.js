@@ -215,7 +215,7 @@ function setDefault() {
       aliases: []
     },
     Device: {
-      aliases: ['Clock']
+      aliases: ['Clock', 'Computer']
     },
     Clock: {
       aliases: []
@@ -289,6 +289,9 @@ function setDefault() {
     'User Interface': {
       aliases: ['Heart']
     },
+    'Undescribed': {
+      aliases: ['Heart']
+    },
   }
 
 
@@ -349,7 +352,7 @@ function setDefault() {
     Arrow: {
       aliases: []
     },
-    Wearables: {
+    Wearable: {
       playerFacing: true,
       aliases: ['Armor', 'Clothes', 'Robes', 'Hat']
     },

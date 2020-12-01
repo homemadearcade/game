@@ -153,8 +153,8 @@ class Audio{
 
     this.playingDebounce[id] = _.debounce(() => {
       window.audio.sounds[soundId].volume = volume
-      if(window.audio.sounds[soundId]) window.audio.sounds[soundId].play()
-    }, debounceTime)
+      if(window.audio.sounds[soundId]) window.audio.sounds[soundId].playFrom(0)
+    }, debounceTime, { leading: true, trailing: true, maxWait: 10})
     this.playingDebounce[id]()
   }
 
@@ -199,7 +199,7 @@ class Audio{
     if(window.audio.sounds[soundId] && id) {
       const sound = this.cloneSound(soundId, () => {
         sound.loop = true
-        sound.play()
+        sound.playFrom(0)
       })
 
       this.playingContinuous[id] = {

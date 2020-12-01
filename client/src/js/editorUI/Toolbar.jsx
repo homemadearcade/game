@@ -340,7 +340,11 @@ export default class Toolbar extends React.Component {
         </ToolbarRow>
         <br/>
 
-        <ToolbarRow open iconName='fa-hand-pointer'>
+{/*          <ToolbarButton text="Structure" active={EDITOR.preferences.selectable.structure} onClick={() => {
+            EDITOR.preferences.selectable.structure = !EDITOR.preferences.selectable.structure
+            this.forceUpdate()
+          }}/>*/}
+        <ToolbarRow open iconName='fa-layer-group'>
           <ToolbarButton text="Invisible" active={EDITOR.preferences.selectable.invisible} onClick={() => {
             EDITOR.preferences.selectable.invisible = !EDITOR.preferences.selectable.invisible
             this.forceUpdate()
@@ -353,18 +357,14 @@ export default class Toolbar extends React.Component {
             EDITOR.preferences.selectable.background = !EDITOR.preferences.selectable.background
             this.forceUpdate()
           }}/>
-          <ToolbarButton text="Structure" active={EDITOR.preferences.selectable.structure} onClick={() => {
-            EDITOR.preferences.selectable.structure = !EDITOR.preferences.selectable.structure
-            this.forceUpdate()
-          }}/>
           <ToolbarButton text="Constructs" active={EDITOR.preferences.selectable.constructParts} onClick={() => {
             EDITOR.preferences.selectable.constructParts = !EDITOR.preferences.selectable.constructParts
             this.forceUpdate()
           }}/>
-        <ToolbarButton text="SubObjects" active={EDITOR.preferences.selectable.constructParts} onClick={() => {
-            EDITOR.preferences.selectable.subObjects = !EDITOR.preferences.selectable.subObjects
-            this.forceUpdate()
-          }}/>
+          <ToolbarButton text="SubObjects" active={EDITOR.preferences.selectable.subObjects} onClick={() => {
+              EDITOR.preferences.selectable.subObjects = !EDITOR.preferences.selectable.subObjects
+              this.forceUpdate()
+            }}/>
         </ToolbarRow>
 
         {/* Grid -> Menu

@@ -900,7 +900,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
         PIXIMAP.deleteObject(objectById)
       }
       OBJECTS.editObject(objectById, obj)
-      if(obj.constructParts || objectById.constructParts) {
+      if(!CONSTRUCTEDITOR.open && (obj.constructParts || objectById.constructParts)) {
         PIXIMAP.addObject(objectById)
       }
     })

@@ -9,13 +9,13 @@ class Editor {
       creatorColorSelected: null,
       selectable: {
         invisible: false,
-        darkness: false,
-        background: false,
-        foreground: false,
-        hero: false,
-        structure: false,
+        // darkness: false,
+        background: true,
+        foreground: true,
+        // hero: false,
+        // structure: false,
         constructParts: true,
-        subObjects: false,
+        subObjects: true,
       }
     }
     this.zoomDelta = .1250

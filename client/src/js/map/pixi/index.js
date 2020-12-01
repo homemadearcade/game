@@ -77,6 +77,11 @@ PIXIMAP.onGameIdentified = function(game) {
   }
 }
 
+
+PIXIMAP.onGameUnload = function() {
+  PIXIMAP.onResetObjects()
+}
+
 PIXIMAP.onGameLoaded = function() {
   PIXIMAP.grid = _.cloneDeep(GAME.grid)
 }
@@ -596,6 +601,7 @@ PIXIMAP.onConstructEditorClose = function() {
 PIXIMAP.onConstructEditorStart = function() {
   MAP.closeAllPopovers()
   resetConstructParts()
+  PIXIMAP.deleteObject(OBJECTS.getObjectOrHeroById(CONSTRUCTEDITOR.objectId))
 }
 PIXIMAP.onPathEditorClose = function() {
   setTimeout(() => {

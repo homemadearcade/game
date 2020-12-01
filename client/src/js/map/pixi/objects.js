@@ -21,16 +21,16 @@ const updatePixiObject = (gameObject) => {
   // CONSTRUCT PARTS
   if(gameObject.constructParts) {
 
-    //just for these dumbass non updating SOBs
-    // if(!window.isObjectSelectable(gameObject)) {
-    //   gameObject.constructParts.forEach((part) => {
-    //     PIXIMAP.childrenById[part.id].visible = false
-    //   })
-    // } else {
-    //   gameObject.constructParts.forEach((part) => {
-    //     PIXIMAP.childrenById[part.id].visible = true
-    //   })
-    // }
+//    just for these dumbass non updating SOBs
+    if(!window.isObjectSelectable(gameObject)) {
+      gameObject.constructParts.forEach((part) => {
+        if(PIXIMAP.childrenById[part.id]) PIXIMAP.childrenById[part.id].visible = false
+      })
+    } else {
+      gameObject.constructParts.forEach((part) => {
+        if(PIXIMAP.childrenById[part.id]) PIXIMAP.childrenById[part.id].visible = true
+      })
+    }
 
 
     if((PAGE.resizingMap && !PAGE.loadingScreen) || (gameObject.tags.moving || gameObject.tags.seperateParts)) {

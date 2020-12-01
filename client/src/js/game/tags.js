@@ -223,9 +223,10 @@ function setDefault() {
     hero: false,
     fresh: false,
     spawned: false,
-    npc: false,
-    alive: false,
-    removed: false,
+    // npc: false,
+    // alive: false,
+    // removed: false,
+    maze: false,
   }
 
   window.proceduralTags = {
