@@ -11,6 +11,7 @@ import GeneratedMenu from './playerMenus/generatedMenu.jsx';
 import InventoryMenu from './playerMenus/InventoryMenu.jsx';
 import LibraryObjectContextMenu from './adminMenus/LibraryObjectContextMenu.jsx';
 import AudioFileContextMenu from './adminMenus/AudioFileContextMenu.jsx';
+import SpriteDataContextMenu from './adminMenus/SpriteDataContextMenu.jsx';
 
 import '../libraries/playerMenuLibrary.js';
 
@@ -32,8 +33,20 @@ class contextMenuEl extends React.Component{
     super(props)
 
     document.body.addEventListener("contextmenu", e => {
+      if(e.target.dataset.textureids) {
+        this._openMenuWithEvent(e, false)
+        this._setContextMenuSpecialItem('sprite', null, { textureIds: e.target.dataset.textureids})
+        return false;
+      }
+
+      if(e.target.dataset.textureid) {
+        this._openMenuWithEvent(e, false)
+        this._setContextMenuSpecialItem('sprite', null, { textureId: e.target.dataset.textureid })
+        return false;
+      }
+
       if(e.target.dataset.audiofileid) {
-        this._openMenuWithEvent(e)
+        this._openMenuWithEvent(e, false)
         this._setContextMenuSpecialItem('audioFile', e.target.dataset.audiofileid)
         return false;
       }
@@ -102,18 +115,18 @@ class contextMenuEl extends React.Component{
     if(command === "show") {
       this.setState({ hide: false, objectSelected: MAPEDITOR.objectHighlighted })
     } else {
-      this.setState({ hide: true, subObjectSelected: {}, subObjectSelectedName: null, objectSelected: null, coloringObject: null, specialItemType: null, item: null, libraryName: null, libraryId: null })
+      this.setState({ hide: true, subObjectSelected: {}, subObjectSelectedName: null, objectSelected: null, coloringObject: null, specialItemType: null, item: null, libraryName: null, libraryId: null, textureId: null, textureIds: null })
     }
   }
 
-  _openMenuWithEvent(e) {
+  _openMenuWithEvent(e, adjust = true) {
     e.preventDefault();
     const { x, y } = window.convertToGameXY(e)
     const origin = {
       left: x,
       top: y
     };
-    this._setContextMenuPosition(origin);
+    this._setContextMenuPosition(origin, adjust);
   }
   _setContextMenuSpecialItem(type, item, other) {
     this.setState({
@@ -123,9 +136,10 @@ class contextMenuEl extends React.Component{
     })
   }
 
-  _setContextMenuPosition = ({ top, left }) => {
+  _setContextMenuPosition = ({ top, left }, adjust = true) => {
     // THIS ADJUSTS THE SIZE OF THE CONTEXT MENU IF ITS TOO CLOSE TO THE EDGES
-    if(MAPEDITOR.objectHighlighted.id) {
+    if(adjust && MAPEDITOR.objectHighlighted.id) {
+      console.log('???')
       const heightDesired = 350
       const widthDesired = 450
 
@@ -164,7 +178,15 @@ class contextMenuEl extends React.Component{
   }
 
   _renderAdminMenus() {
-    const { objectSelected, subObjectSelected, subObjectSelectedName, specialItemType, item, libraryName, libraryId, creatorLibraryId, audioFileId } = this.state;
+    const { objectSelected, subObjectSelected, subObjectSelectedName, specialItemType, item, libraryName, libraryId, creatorLibraryId, audioFileId, textureId, textureIds } = this.state;
+
+
+    if(specialItemType === 'sprite') {
+      return <SpriteDataContextMenu
+        textureId={textureId}
+        textureIds={textureIds ? JSON.parse(textureIds) : null}
+        ></SpriteDataContextMenu>
+    }
 
     if(specialItemType === 'audioFile') {
       return <AudioFileContextMenu

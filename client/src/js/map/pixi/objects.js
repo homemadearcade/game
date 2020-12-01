@@ -38,6 +38,7 @@ const updatePixiObject = (gameObject) => {
         const partObject = PIXIMAP.convertToPartObject(gameObject, part)
         const partPixiChild = updatePixiObject(partObject)
         partPixiChild.ownerName = gameObject.id
+        partPixiChild.name = part.id
       })
     }
 
@@ -51,7 +52,8 @@ const updatePixiObject = (gameObject) => {
     OBJECTS.forAllSubObjects(gameObject.subObjects, (subObject) => {
       if(subObject.tags.potential) return
       const subObjectPixiChild = updatePixiObject(subObject)
-      subObjectPixiChild.ownerName = gameObject.id
+      subObjectPixiChild.name = subObject.id
+      subObjectPixiChild.owerName = gameObject.id
     })
   }
 
@@ -328,6 +330,7 @@ const initPixiObject = (gameObject) => {
       const partObject = PIXIMAP.convertToPartObject(gameObject, part)
       const pixiChild = addGameObjectToStage(partObject, stage)
       pixiChild.ownerName = gameObject.id
+      pixiChild.name = part.id
     })
     return
   }
@@ -337,6 +340,7 @@ const initPixiObject = (gameObject) => {
       if(subObject.tags.potential) return
       const pixiChild = addGameObjectToStage(subObject, stage)
       pixiChild.ownerName = gameObject.id
+      pixiChild.name = subObject.id
     })
   }
 

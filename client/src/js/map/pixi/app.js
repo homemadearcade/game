@@ -142,10 +142,20 @@ const initPixiApp = (canvasRef, onLoad) => {
       }
 
       let object
+      let ownerObject
       if(sprite.ownerName) {
-        object = OBJECTS.getObjectOrHeroById(sprite.ownerName)
+        ownerObject = OBJECTS.getObjectOrHeroById(sprite.ownerName)
+        object = OBJECTS.getObjectOrHeroById(sprite.name)
+        if(!object) {
+          object = ownerObject
+        } else if(!object.tags) object = ownerObject
       } else if(sprite.name) {
         object = OBJECTS.getObjectOrHeroById(sprite.name)
+      }
+
+      if(object && object.tags.background) {
+        sprite.zOrder = 1
+        return
       }
 
       if(object && object.tags.background) {

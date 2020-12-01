@@ -8,18 +8,49 @@ export default class SpriteSheet extends React.Component {
 
     this.state = {
       textureIdSelected:props.selectedTextureId || null,
-      textureIndexSelected:null
+      textureIndexSelected:null,
+      textureIdsSelected: {}
     }
   }
 
+  componentDidMount() {
+    this._removeListener1 = window.local.on('clearTextureIdsSelection', () => {
+      this._clearTextureIdsSelection()
+    })
+  }
+
+  componentWillUnmount() {
+    this._removeListener1()
+  }
+
+  _clearTextureIdsSelection = () => {
+    this.setState({
+      textureIdsSelected: {}
+    })
+  }
+
   _renderSprite(sprite, index) {
+    const { selectMultiple } = this.props
     const { textureId } = sprite
-    return <div className={classnames("SpriteContainer", {"SpriteContainer--selected": this.state.textureIdSelected === textureId})}
+    return <div
+      className={classnames("SpriteContainer", {"SpriteContainer--selected": this.state.textureIdSelected === textureId || this.state.textureIdsSelected[textureId] })}
       onClick={() => {
-        this.setState({
-          textureIdSelected: textureId,
-          textureIndexSelected: index
-        })
+        if(selectMultiple) {
+          const newTextureIdsSelected = this.state.textureIdsSelected
+          newTextureIdsSelected[textureId] = !this.state.textureIdsSelected[textureId]
+          this.setState({
+            textureIdsSelected: newTextureIdsSelected
+          })
+        } else {
+          this.setState({
+            textureIdSelected: textureId,
+            textureIndexSelected: index,
+            textureIdsSelected: {
+              [textureId]: true
+            }
+          })
+        }
+
         if(this.props.onClick) this.props.onClick(sprite, index)
       }}
       style={{backgroundColor: GAME.world.backgroundColor || 'black'}}>
@@ -28,9 +59,10 @@ export default class SpriteSheet extends React.Component {
   }
 
   render() {
-    const { spriteSheet } = this.props;
+    const { spriteSheet, selectMultiple } = this.props;
 
     return <React.Fragment>
+      {selectMultiple && <div className="SpriteSheet__edit-selected fa fa-edit" data-textureids={JSON.stringify(this.state.textureIdsSelected)}>Right click to edit selected</div>}
       {spriteSheet.sprites.map((sprite, index) => {
         return this._renderSprite(sprite, index)
       })}

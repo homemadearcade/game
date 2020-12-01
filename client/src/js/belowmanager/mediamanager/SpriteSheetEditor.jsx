@@ -16,6 +16,10 @@ export default class SpriteSheetEditor extends React.Component {
         sprites: []
       }
     }
+
+    window.local.on('onEditSprites', (ids, update) => {
+
+    })
   }
 
   componentDidMount() {
@@ -63,7 +67,7 @@ export default class SpriteSheetEditor extends React.Component {
           this.setState({spriteSheet})
         }}/>
       </div>
-      <SpriteSheet spriteSheet={spriteSheet} onClick={(sprite) => {
+      <SpriteSheet selectMultiple spriteSheet={spriteSheet} onClick={(sprite) => {
 
       }}/>
     </div>

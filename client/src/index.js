@@ -21,14 +21,10 @@ COMBAT + GOALS + QUESTS
 -------
 experience password for ha-live. Use month+day - 100
 
-Change layers selection to also be visual!
-
 THEME UI -randomize specific parts of theme and select value of the theme properties
   audio right click -> set as ___ sound
 
 Change on collide to on touch start for certain tags
-
-bring back Auto generate maze Functionality
 
 ////////////////////////////////
 ////////////////////////////////
@@ -132,22 +128,17 @@ YOU CANNOT MOD DIALOGUE OR ANY ARRAYS
 heroDialogue is an array, what else is?
 tagsSeeking for lasers, is an ARRAY right now...
 
-I think that maybe because dialogue is an array, and there are other arrays in this engine, I think my new diff system will send them as null if they are changed, please test this
-
-sub object top vs bottom... I HAVE SAME PROBLEM WITH CONSTRUCT PARTS
-
 If object is outside of its custom grid to start off, It will not be able to find the correct grid
 Theres needs to be a flag, perhaps the _fresh flag that allows it to use the other pathfinding grid to make its away to the new path
 
 Try uploading game JSON on non host
+
 Construct Editor on ha-demo bug?
   bug - it seems if a world is too wide or something??
   theres a problem with the construct editor camera not being able
   to go far enough right or down
 
 Bombs need to be able to spawn the explosion onto real objects
-
-possibly turn dialogue choices into sub objects?? or no? They can have their own ACTION prop thing that modifies interactions, IDK, and other subObjects can hook into that
 
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////

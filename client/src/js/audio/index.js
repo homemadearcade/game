@@ -105,7 +105,7 @@ class Audio{
   }
 
   play(id, options) {
-    if(!id) return
+    if(!id || !PAGE.gameLoaded) return
 
     try{
       if(!window.audio.sounds[id]) {
@@ -130,7 +130,7 @@ class Audio{
   }
 
   playDebounce({id, soundId, volume = 1, debounceTime = 25}) {
-    if(!id || !soundId) return
+    if(!id || !soundId || !PAGE.gameLoaded) return
 
     if(!window.audio.sounds[soundId]) {
       AUDIO.loading.ids.push(soundId)
@@ -144,7 +144,7 @@ class Audio{
   }
 
   debounce({id, soundId, volume, debounceTime}) {
-    if(!id || !soundId) return
+    if(!id || !soundId || !PAGE.gameLoaded) return
 
     if(this.playingDebounce[id]) {
       this.playingDebounce[id]()
@@ -163,7 +163,7 @@ class Audio{
     soundIds
   }) {
 
-    if(!soundIds[0]) return
+    if(!soundIds[0] || !PAGE.gameLoaded) return
 
     if(!window.audio.sounds[soundIds[0]]) {
       AUDIO.loading.ids.push(soundIds[0])
@@ -185,7 +185,7 @@ class Audio{
   }
 
   startLoop(id, soundId) {
-    if(!id || !soundId) return
+    if(!id || !soundId || !PAGE.gameLoaded) return
 
     if(this.playingContinuous[id]) {
       if(!this.playingContinuous[id].playing) {

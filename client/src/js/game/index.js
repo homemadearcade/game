@@ -1313,7 +1313,7 @@ class Game{
   }
 
   getObjectsByTag() {
-    const previousObjectsByTag = GAME.objectsByTag
+    const previousObjectsByTag = GAME.objectsByTag || {}
 
     GAME.objectsByTag = GAME.objects.reduce((map, object) => {
       if(object.mod().removed) return map

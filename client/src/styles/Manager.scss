@@ -182,6 +182,18 @@
 
   }
 
+  &__edit-selected {
+    // width: 60px;
+    // height: 60px;
+    font-size: 20px;
+    padding: 10px;
+    background: #222;
+    cursor: pointer;
+    &:hover {
+      background: #333;
+    }
+  }
+
 
   .SpriteContainer {
     width: 40px;
