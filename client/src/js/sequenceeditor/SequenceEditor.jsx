@@ -11,10 +11,10 @@ window.defaultSequence = {
   id: 'sequence-' + window.uniqueID(),
 }
 
-window.reactSelectStyle = {control: styles => ({ ...styles, backgroundColor: '#19191a', color: 'white' }),
-option: styles => ({ ...styles, backgroundColor: '#19191a', color: 'white' }),
-input: styles => ({ ...styles, backgroundColor: '#19191a', color: 'white', borderColor: 'black' }),
-singleValue: styles => ({ ...styles, backgroundColor: '#19191a', color: 'white' })
+window.reactSelectStyle = {control: styles => ({ ...styles, backgroundColor: '#19191a', color: 'white', zIndex: 10 }),
+option: styles => ({ ...styles, backgroundColor: '#19191a', color: 'white', zIndex: 10 }),
+input: styles => ({ ...styles, backgroundColor: '#19191a', color: 'white', borderColor: 'black', zIndex: 10 }),
+singleValue: styles => ({ ...styles, backgroundColor: '#19191a', color: 'white', zIndex: 10 })
 }
 
 window.defaultSequenceCondition =  {
@@ -74,6 +74,7 @@ window.defaultSequenceTrigger = {
 window.reactSelectTheme = theme => ({
       ...theme,
       borderRadius: 0,
+      zIndex: 10,
       colors: {
         ...theme.colors,
       },

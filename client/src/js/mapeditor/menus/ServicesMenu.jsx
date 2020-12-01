@@ -13,6 +13,14 @@ export default class ServicesMenu extends React.Component{
       const { objectSelected, subObject } = this.props
       const { onStartSetPathfindingLimit, networkEditObject, openConstructEditor } = MAPEDITOR
 
+      if(key === 'edit-descriptors') {
+        modals.openEditDescriptorsModal(objectSelected.descriptors || {}, ({value}) => {
+          if(value) {
+            networkEditObject(objectSelected, {descriptors: value})
+          }
+        })
+      }
+
       if(key === 'open-live-particle') {
         LIVEEDITOR.open(objectSelected, 'particle')
       }
@@ -152,7 +160,8 @@ export default class ServicesMenu extends React.Component{
       <MenuItem key='open-path-editor'>Open path editor</MenuItem>
       <MenuItem key='open-physics-live-editor'>Live Edit Physics</MenuItem>
       <MenuItem key='open-live-particle'>Live Edit Particle</MenuItem>
-      <MenuItem key='generate-maze'>Turn into maze</MenuItem>
+      <MenuItem key='generate-maze'>Generate maze</MenuItem>
+      <MenuItem key='edit-descriptors'>Edit Descriptors</MenuItem>
     </Menu>
   }
 }

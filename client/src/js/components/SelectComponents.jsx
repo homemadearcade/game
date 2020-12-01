@@ -33,6 +33,7 @@ function MultiThemeEventSelect({currentValue, onChange, title}) {
     onChange={onChange}
     options={Object.keys(window.triggerEvents).map(eventName => { return { value: eventName, label: eventName}})}
     styles={window.reactSelectStyle}
+    isMulti
     theme={window.reactSelectTheme}/>
   </div>
 }

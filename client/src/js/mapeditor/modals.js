@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom'
 import SequenceItem from '../sequenceeditor/SequenceItem.jsx'
 import ConditionList from '../sequenceeditor/ConditionList.jsx'
 import SubObjectModal from './SubObjectModal.jsx'
+import DescriptorSelect from '../components/DescriptorSelect.jsx';
 
 function editTrigger(owner, trigger, cb) {
   PAGE.typingMode = true
@@ -641,6 +642,29 @@ function openEditTriggerModal(effect, cb) {
 
 }
 
+function openEditDescriptorsModal(initialDescriptors, cb) {
+  Swal.fire({
+    title: 'Edit Descriptors',
+    showClass: {
+      popup: 'animated fadeInDown faster'
+    },
+    hideClass: {
+      popup: 'animated fadeOutUp faster'
+    },
+    html:`<div id='edit-descriptors-container'></div>`,
+    preConfirm: (result) => {
+      return ref.current.getDescriptorsObject()
+    }
+  }).then(cb)
+
+  // Mount React App
+  const ref = React.createRef()
+  ReactDOM.render(
+    React.createElement(DescriptorSelect, { ref, initialDescriptors }),
+    document.getElementById('edit-descriptors-container')
+  )
+}
+
 function openEditMod(mod, cb) {
   Swal.fire({
     title: 'Edit Mod',
@@ -742,6 +766,7 @@ export default {
   editEffectJSON,
   writeDialogue,
   nameObject,
+  openEditDescriptorsModal,
   openNameSubObjectModal,
   openEditCodeModal,
   openEditNumberModal,

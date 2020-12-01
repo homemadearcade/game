@@ -71,13 +71,25 @@ function setDefault() {
       aliases: []
     },
     Tree : {
+      aliases: ['Dead Tree', 'Colored Tree', 'Forest']
+    },
+    'Dead Tree' : {
       aliases: []
+    },
+    'Colored Tree' : {
+      aliases: []
+    },
+    Forest : {
+      aliases: ['Tree']
     },
     Planet : {
       aliases: []
     },
     House : {
-      aliases: []
+      aliases: ['Village']
+    },
+    Village: {
+      aliases: ['House']
     },
     Castle : {
       aliases: []
@@ -86,6 +98,12 @@ function setDefault() {
       aliases: []
     },
     Building : {
+      aliases: ['Castle', 'House', 'Church', 'Store', 'Village']
+    },
+    Church : {
+      aliases: []
+    },
+    Store : {
       aliases: []
     },
     'Fortified Wall' : {

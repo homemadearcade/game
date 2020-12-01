@@ -155,12 +155,25 @@ body {
   }
 }
 
+.ModalMultiSelect {
+  font-size: 30px;
+  font-family: Courier;
+  padding: 40px;
+}
+
 .swal-wide{
   width:850px !important;
 }
 
 .swal2-title {
   font-family: Courier;
+}
+
+.swal-actions {
+  z-index: 0;
+}
+.swal2-actions {
+  z-index: 0;
 }
 
 .swal-modal-input-label {

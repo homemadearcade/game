@@ -6,7 +6,6 @@ Interesting that bar of dreams and homemade arcade i've wanted to have audio... 
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
 
-Sprite GROUP right click add to descriptor group
 relatedTags:[],
 
 FILL OUT SEQUENCE EDITOR, LIBRARY, EFFECTS, TAGS
@@ -32,9 +31,7 @@ UX UPGRADE
 ////////////////////////////////
 // suggested tags, in the tags library, make tags objects, and add suggested as a property
 descriptors -> brings us suggested SPRITES in sprite selection tool
-ADVANCED TAG MENU which is like a real ass menu, with that then I can slim down the current tags menu the normal tag menu
-Right click and get sprite ID
-
+IMPLEMENT -> ADVANCED TAG MENU which is like a real ass menu, with that then I can slim down the current tags menu the normal tag menu
 right click creator service - add to heros guidance? NOT BAD!
 
 ////////////////////////////////
@@ -121,6 +118,8 @@ LEVELS ( sub worlds )
 ###### BUGS
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ////////////////////////////////////////////////////
+
+when generating construct parts sprites it can mess up because if combines all those squares into rectangles ...
 
 non host player was shooting x2?
 

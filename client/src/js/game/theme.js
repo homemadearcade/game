@@ -232,6 +232,116 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+function getAliases(descriptors) {
+  let descriptorList = Object.keys(descriptors)
+
+  const aliases = []
+  descriptorList.forEach((desc) => {
+    aliases.push(...window.allDescriptors[desc].aliases)
+  })
+
+  return aliases
+}
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////
+///TEXTURES
+//////////
+window.textureIdsByDescriptor = {}
+
+window.generateTextureIdsByDescriptors = function() {
+  window.textureIdsByDescriptor = {}
+
+  window.spriteSheets.forEach((ss) => {
+    ss.sprites.forEach((s, i) => {
+      if(s.descriptors) {
+        Object.keys(s.descriptors).forEach((desc) => {
+          if(!window.textureIdsByDescriptor[desc]) {
+            window.textureIdsByDescriptor[desc] = []
+          }
+          window.textureIdsByDescriptor[desc].push(s.textureId)
+        })
+      }
+    });
+
+  })
+}
+
+window.findTextureIdForDescriptors = function(descriptors) {
+  let descriptorList = Object.keys(descriptors)
+
+  let possibleTextures = []
+  descriptorList.forEach((desc) => {
+    possibleTextures.push(...window.textureIdsByDescriptor[desc])
+  })
+
+  if(!possibleTextures.length) {
+    const aliases = getAliases(descriptors)
+    aliasesList.forEach((desc) => {
+      possibleTextures.push(...window.textureIdsByDescriptor[desc])
+    })
+  }
+
+  if(!possibleTextures.length) {
+    console.log('NO AVAILABLE TEXTURE IDS FOR DESCRIPTORS', descriptors)
+    return null
+  }
+
+  const textureIndex = getRandomInt(0, possibleTextures.length -1)
+
+  return possibleTextures[textureIndex]
+}
+
+window.breakDownConstructPartIntoEqualNodes = function(constructParts) {
+
+  return parts
+}
+
+window.findSpritesForDescribedObjects = function(objects = GAME.objects, options) {
+  if(!options) options = {}
+
+  window.generateTextureIdsByDescriptors()
+
+  let editedObjects = []
+  objects.forEach((object) => {
+    if(object.defaultSprite && options.dontOverrideCurrentSprites) return
+    if(object.descriptors) {
+      if(object.constructParts) {
+        editedObjects.push({
+          id: object.id,
+          constructParts: object.constructParts.map((part) => {
+            if(part.defaultSprite && options.dontOverrideCurrentSprites) return part
+            let textureId = window.findTextureIdForDescriptors(object.descriptors)
+            if(textureId) {
+              part.defaultSprite = textureId
+            }
+            return part
+          })
+        })
+      } else {
+        let textureId = window.findTextureIdForDescriptors(object.descriptors)
+        if(textureId) {
+          editedObjects.push({
+            id: object.id,
+            defaultSprite: textureId
+          })
+        }
+      }
+
+    }
+  })
+
+  console.log('UPDATED SPRITES FOR', editedObjects)
+
+  if(editedObjects.length) {
+    window.socket.emit('editObjects', editedObjects)
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////
+///AUDIO
+//////////
 window.clearAudioTheme = function() {
   window.socket.emit('updateTheme', { audio: window.defaultAudioTheme })
 }
@@ -257,6 +367,10 @@ window.generateAudioTheme = function() {
   window.socket.emit('updateTheme', { audio: newAudioTheme })
 }
 
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////
+///TITLE
+//////////
 window.generateTitleTheme = function() {
   const newTitleTheme = {}
 

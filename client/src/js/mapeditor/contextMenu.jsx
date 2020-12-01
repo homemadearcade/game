@@ -139,7 +139,6 @@ class contextMenuEl extends React.Component{
   _setContextMenuPosition = ({ top, left }, adjust = true) => {
     // THIS ADJUSTS THE SIZE OF THE CONTEXT MENU IF ITS TOO CLOSE TO THE EDGES
     if(adjust && MAPEDITOR.objectHighlighted.id) {
-      console.log('???')
       const heightDesired = 350
       const widthDesired = 450
 
