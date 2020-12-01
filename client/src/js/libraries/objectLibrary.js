@@ -4,6 +4,14 @@ window.local.on('onFirstPageGameLoaded', () => {
       objectType: 'plainObject',
       tags: { obstacle: true },
     },
+    foreground: {
+      objectType: 'plainObject',
+      tags: { foreground: true },
+    },
+    background: {
+      objectType: 'plainObject',
+      tags: { background: true },
+    },
     standingNPC: {
       objectType: 'plainObject',
       heroDialogue: [{...window.defaultDialogue}],

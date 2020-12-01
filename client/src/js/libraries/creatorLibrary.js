@@ -85,6 +85,27 @@ function onFirstPageGameLoaded() {
         constructEditorOnSelect.call(this, 'globalConstructStationaryForeground', { foreground: true, notInCollisions: true })
       }
     },
+    background: {
+      label: 'Background',
+      columnName: 'Objects',
+      libraryName:'objectLibrary',
+      libraryId:'background',
+      JSON: window.objectLibrary.background,
+    },
+    obstacle: {
+      label: 'Obstacle',
+      columnName: 'Objects',
+      libraryName:'objectLibrary',
+      libraryId:'obstacle',
+      JSON: window.objectLibrary.default,
+    },
+    foreground: {
+      label: 'Foreground',
+      columnName: 'Objects',
+      libraryName:'objectLibrary',
+      libraryId:'foreground',
+      JSON: window.objectLibrary.foreground,
+    },
     welcomer: {
       label: 'Welcomer',
       columnName: 'NPCs',
@@ -382,6 +403,9 @@ function onFirstPageGameLoaded() {
     // drawStructure: false,
     // drawBackground: false,
     // drawForeground: false,
+    background: false,
+    obstacle: false,
+    foreground: false,
     // obstacle: false,
     // roof: true,
     standingNPC: false,

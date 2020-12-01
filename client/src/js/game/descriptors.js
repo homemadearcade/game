@@ -1,192 +1,288 @@
+// i might be missing school theme?
+// Locker, Chalkboard, School Chair, Desk, Etc
+
 function setDefault() {
 
   window.generalDescriptors = {
-    Scifi: {
-      aliases: []
+    'Scifi Theme': {
+      aliases: [],
+      inSprites: true,
     },
-    Fantasy: {
-      aliases: []
+    'Fantasy Theme': {
+      aliases: [],
+      inSprites: true,
     },
-    Platformer: {
-      aliases: []
+    'Platformer Useable': {
+      aliases: [],
+      inSprites: true,
     },
   }
 
   window.elementDescriptors = {
     Grass: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Dirt: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Snow: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Ice: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Sand: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Water: {
-      aliases: []
+      aliases: ['Waters Edge', 'Deep Water', 'Swamp Water'],
+      inSprites: true,
     },
     Stone: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Metal: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Wood: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Glass: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Gravel: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Concrete: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Mud: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Gem: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Ore: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Fire: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Electricity: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
+    },
+  }
+
+  window.waterElementDescriptors = {
+    'Water Element': {
+      dontShowAdminsInSpriteSheetEditor: true,
+      aliases: ['Bubbles', 'Waterfall', 'Whirlpool', 'Lily Pad'],
+      inSprites: true,
+    },
+    'Lily Pad': {
+      aliases: [],
+      inSprites: true,
+    },
+    'Deep Water': {
+      aliases: [],
+      inSprites: true,
+    },
+    'Swamp Water': {
+      aliases: [],
+      inSprites: true,
+    },
+    'Waters Edge': {
+      aliases: [],
+      inSprites: true,
+    },
+    'Bubbles': {
+      aliases: [],
+      inSprites: true,
+    },
+    'Waterfall': {
+      aliases: [],
+      inSprites: true,
+    },
+    'Whirlpool': {
+      aliases: [],
+      inSprites: true,
     },
   }
 
   window.overworldMapDescriptors = {
     Mountain : {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Tree : {
-      aliases: ['Dead Tree', 'Colored Tree', 'Forest']
+      aliases: ['Dead Tree', 'Colored Tree', 'Forest'],
+      inSprites: true,
     },
     'Dead Tree' : {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     'Colored Tree' : {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Forest : {
-      aliases: ['Tree']
+      aliases: ['Tree'],
+      inSprites: true,
     },
     Planet : {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     House : {
-      aliases: ['Village']
+      aliases: ['Village'],
+      inSprites: true,
     },
     Village: {
-      aliases: ['House']
+      aliases: ['House'],
+      inSprites: true,
     },
     Castle : {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Cave : {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Building : {
-      aliases: ['Castle', 'House', 'Church', 'Store', 'Village']
+      aliases: ['Castle', 'House', 'Church', 'Store', 'Village'],
+      inSprites: true,
     },
     Church : {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Store : {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     'Fortified Wall' : {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
   }
 
   window.buildingPartDescriptors = {
     'Building Wall': {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     'Building Floor Tile': {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     // 'Special Floor Tile': {
     //   aliases: []
     // },
     'Magic Floor Tile': {
-      aliases: []//'Special Floor Tile'
+      aliases: [],//'Special Floor Tile',
+      inSprites: true,
     },
     'Spaceship Wall': {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Block: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Door: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Ladder: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Stairs: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Window: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Pipe: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Chimney: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
   }
 
   window.outsideBuildingDescriptors = {
     Fence: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Plant: {
-      playerFacing: true,
-      aliases: ['Crop', 'Bush', 'Flower']
+      dontShowAdminsInSpriteSheetEditor: true,
+      aliases: ['Crop', 'Bush', 'Flower'],
+      inSprites: true,
     },
     Bush: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Flower: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Crop: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Sign: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Grave: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Flag: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Barrel: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Crate: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Pot: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Box: {
-      aliases: ['Pot', 'Barrel', 'Crate']
+      aliases: ['Pot', 'Barrel', 'Crate'],
+      inSprites: true,
     },
   }
 
@@ -194,235 +290,346 @@ function setDefault() {
 
   window.insideBuildingDescriptors = {
     'Musical Instrument': {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Candle: {
-      aliases: ['Torch']
+      aliases: ['Torch'],
+      inSprites: true,
     },
     Chest: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Appliance: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Machine: {
-      aliases: ['Computer']
+      aliases: ['Computer'],
+      inSprites: true,
     },
     Computer: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Furniture: {
-      aliases: ['Chair', 'Table', 'Fireplace', 'Couch']
+      aliases: ['Chair', 'Table', 'Fireplace', 'Couch'],
+      inSprites: true,
     },
     Couch: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Chair: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Table: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Jewelry: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     'Kitchen Utensil': {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Food: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Device: {
-      aliases: ['Clock', 'Computer']
+      aliases: ['Clock', 'Computer', 'Phone'],
+      inSprites: true,
+    },
+    Phone: {
+      aliases: [],
+      inSprites: true,
     },
     Clock: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Key: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
-    Keyhole: {
-      aliases: []
+    KeyHole: {
+      aliases: [],
+      inSprites: true,
     },
     Fireplace: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Bed: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
   }
 
   window.otherDescriptors = {
     Stalagmite: {
-      aliases: []
-    },
-    'Lily Pad': {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     'Spider Web': {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Candy: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     'Sports Equipment': {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     'Christmas Item': {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Manican: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Mirror: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     'Bathroom Item': {
-      aliases: ['Toilet', 'Sink']
+      aliases: ['Toilet', 'Sink'],
+      inSprites: true,
     },
     Toilet: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Sink: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Statue: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     'Church Item': {
-      aliases: ['Candle']
+      aliases: ['Candle'],
+      inSprites: true,
     },
     'Public Item': {
-      aliases: ['Trash', 'Mailbox', 'Fire Hydrant']
+      aliases: ['Trash', 'Mailbox', 'Fire Hydrant'],
+      inSprites: true,
     },
     Trash: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Mailbox: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     'Fire Hydrant': {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     'User Interface': {
-      aliases: ['Heart']
+      aliases: ['Heart'],
+      inSprites: true,
     },
     'Undescribed': {
-      aliases: ['Heart']
+      aliases: [],
+      inSprites: true,
     },
   }
 
 
   window.toolDescriptors = {
-    Weapon: {
-      playerFacing: true,
-      aliases: ['Axe', 'Staff', 'Mace', 'Gun', 'Sword','Bow', 'Laser', 'Spear', 'Bomb']
-    },
-    'Melee Weapon': {
-      playerFacing: true,
-      aliases: ['Axe', 'Staff', 'Mace', 'Sword','Spear']
-    },
-    'Projectile Weapon': {
-      playerFacing: true,
-      aliases: ['Gun','Bow', 'Laser']
-    },
-    Axe: {
-      aliases: []
-    },
-    Pickaxe: {
-      aliases: []
-    },
-    Staff: {
-      aliases: []
-    },
-    Mace: {
-      aliases: []
-    },
-    Gun: {
-      aliases: []
-    },
-    Sword: {
-      aliases: []
+    Tool:  {
+      dontShowAdminsInSpriteSheetEditor: true,
+      aliases: ['Pickaxe', 'Torch', 'Device'],
+      inSprites: true,
     },
     Device: window.insideBuildingDescriptors.Device,
+    Pickaxe: {
+      aliases: [],
+      inSprites: true,
+    },
+    Torch: {
+      aliases: [],
+      inSprites: true,
+    },
+    Weapon: {
+      dontShowAdminsInSpriteSheetEditor: true,
+      aliases: ['Axe', 'Staff', 'Mace', 'Gun', 'Sword','Bow', 'Laser', 'Spear', 'Bomb'],
+      inSprites: true,
+    },
+    'Melee Weapon': {
+      dontShowAdminsInSpriteSheetEditor: true,
+      aliases: ['Axe','Mace', 'Sword','Spear'],
+      inSprites: true,
+    },
+    'Ranged Weapon': {
+      dontShowAdminsInSpriteSheetEditor: true,
+      aliases: ['Staff','Gun','Bow','Laser','Spear'],
+      inSprites: true,
+    },
+    Axe: {
+      aliases: [],
+      inSprites: true,
+    },
+    Staff: {
+      aliases: [],
+      inSprites: true,
+    },
+    Mace: {
+      aliases: [],
+      inSprites: true,
+    },
+    Gun: {
+      dontShowAdminsInSpriteSheetEditor: true,
+      aliases: ['Cannon', 'Shotgun', 'Pistol', 'Rocket Launcher', 'Rifle', 'Machine Gun'],
+      inSprites: true,
+    },
+    Cannon: {
+      aliases: [],
+      inSprites: true,
+    },
+    Shotgun: {
+      aliases: [],
+      inSprites: true,
+    },
+    Pistol: {
+      aliases: [],
+      inSprites: true,
+    },
+    'Rocket Launcher': {
+      aliases: [],
+      inSprites: true,
+    },
+    'Rifle': {
+      aliases: [],
+      inSprites: true,
+    },
+    'Machine Gun':{
+      aliases: [],
+      inSprites: true,
+    },
+    Sword: {
+      aliases: [],
+      inSprites: true,
+    },
     Bow: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Laser: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Spear: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Bomb: {
-      aliases: []
+      aliases: ['Dynamite'],
+      inSprites: true,
+    },
+    'Dynamite': {
+      aliases: [],
+      inSprites: true,
     },
     Projectile: {
-      playerFacing: true,
-      aliases: ['Magic', 'Bullet', 'Arrow', 'Spear']
+      dontShowAdminsInSpriteSheetEditor: true,
+      aliases: ['Magic', 'Bullet', 'Arrow', 'Spear', 'Cannonball'],
+      inSprites: true,
     },
     Magic: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Bullet: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
+    },
+    Cannonball: {
+      aliases: [],
+      inSprites: true,
     },
     Arrow: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Wearable: {
-      playerFacing: true,
-      aliases: ['Armor', 'Clothes', 'Robes', 'Hat']
+      dontShowAdminsInSpriteSheetEditor: true,
+      aliases: ['Armor', 'Clothes', 'Robes', 'Hat'],
+      inSprites: true,
     },
     Armor: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Clothes: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Robes: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Hat: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
   }
 
-
   window.itemDescriptors = {
     Key: {
-      aliases: window.insideBuildingDescriptors.Key
+      aliases: window.insideBuildingDescriptors.Key,
+      inSprites: true,
     },
     Bottle: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Heart: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Food: window.insideBuildingDescriptors.Food,
     Bullet: window.toolDescriptors.Bullet,
     'Expensive Item': {
-      playerFacing: true,
-      aliases: ['Gold', 'Jewelry', 'Coin']
+      dontShowAdminsInSpriteSheetEditor: true,
+      aliases: ['Gold', 'Jewelry', 'Coin'],
+      inSprites: true,
     },
     Gold: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Coin: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Literature: {
-      playerFacing: true,
-      aliases: ['Book', 'Page', 'Scroll', 'Disk']
+      dontShowAdminsInSpriteSheetEditor: true,
+      aliases: ['Book', 'Page', 'Scroll', 'Disk'],
+      inSprites: true,
     },
     Book: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Page: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Scroll: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Disk: {
       aliases: []
@@ -448,188 +655,234 @@ function setDefault() {
 
   window.transportDescriptors = {
     Vehicle: {
-      playerFacing: true,
-      aliases: ['Car', 'Boat', 'Spaceship', 'Rail Car']
+      dontShowAdminsInSpriteSheetEditor: true,
+      aliases: ['Car', 'Boat', 'Spaceship', 'Rail Car'],
+      inSprites: true,
     },
     Boat: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Car: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     // Tank: {
     //   aliases: []
     // },
     Spaceship: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     // Plane: {
     //   aliases: []
     // },
     Rail: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     'Rail Car': {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Street: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     'Traffic Item': {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     'Spaceship Wall': {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
   }
 
   window.humanDescriptors = {
+    Human: {
+      dontShowAdminsInSpriteSheetEditor: true,
+      aliases: ['Spaceman', 'Wizard', 'King', 'Archer', 'Thief', 'Athlete', 'Priest', 'Cop'],
+      inSprites: true,
+    },
     Spaceman: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Wizard: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     King: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Archer: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Warrior: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Thief: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Athlete: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Priest: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Cop: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
   }
 
   window.animalDescriptors = {
+    Animal: {
+      dontShowAdminsInSpriteSheetEditor: true,
+      aliases: ['Cat', 'Bird', 'Dog', 'Mouse', 'Chicken', 'Bug', 'Fish', 'Reptile', 'Bat', 'Deer', 'Bear'],
+      inSprites: true,
+    },
     /// sound oriented
     Cat: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Bird: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Dog: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Horse: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Lion: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Wolf: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Sheep: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Mouse: {
-      aliases: ['Rat']
+      aliases: ['Rat'],
+      inSprites: true,
     },
     Chicken: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     /// non sound oriented
     Bug: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Fish: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Reptile: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Bat: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Deer: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Bear: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
+    },
+    'Mythical Beast': {
+      aliases: [],
+      inSprites: true,
     },
   }
 
   window.monsterDescriptors = {
-    Bug: {
-      aliases: []
+    Monster: {
+      dontShowAdminsInSpriteSheetEditor: true,
+      aliases: ['Bug', 'Ghost', 'Goblin', 'Undead', 'Zombie', 'Alien', 'Mythical', 'Machine'],
+      inSprites: true,
     },
+    Bug: window.animalDescriptors.Bug,
     Ghost: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Goblin: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Undead: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Zombie: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
     Alien: {
-      aliases: []
+      aliases: [],
+      inSprites: true,
     },
-    Mythical: {
-      aliases: []
+    Robot: {
+      aliases: [],
+      inSprites: true,
     },
-    Machine: {
-      aliases: []
-    }
+    'Mythical Beast': window.animalDescriptors['Mythical Beast']
   }
 
-  window.creatureDetailDescriptors = {
-    Human: {
-      playerFacing: true,
-      aliases: ['Spaceman', 'Wizard', 'King', 'Archer', 'Thief', 'Athlete', 'Priest', 'Cop']
-    },
-    Monster: {
-      playerFacing: true,
-      aliases: ['Bug', 'Ghost', 'Goblin', 'Undead', 'Zombie', 'Alien', 'Mythical', 'Machine']
-    },
-    Animal: {
-      playerFacing: true,
-      aliases: ['Cat', 'Bird', 'Dog', 'Mouse', 'Chicken', 'Bug', 'Fish', 'Reptile', 'Bat', 'Deer', 'Bear']
+  window.modifierDescriptors = {
+    'Broken': {
+      aliases: [],
+      inSprites: true,
     },
     Small: {
       audioOnly: true,
-      aliases: []
+      aliases: [],
     },
     Large: {
       audioOnly: true,
-      aliases: []
+      aliases: [],
     },
     Cute: {
       audioOnly: true,
-      aliases: []
+      aliases: [],
     },
     Mean: {
       audioOnly: true,
-      aliases: []
+      aliases: [],
     },
     Evil: {
       audioOnly: true,
-      aliases: []
+      aliases: [],
     },
     Mad: {
       audioOnly: true,
-      aliases: []
+      aliases: [],
     },
     Happy: {
       audioOnly: true,
-      aliases: []
+      aliases: [],
     },
   }
 
@@ -647,7 +900,7 @@ function setDefault() {
     ...window.humanDescriptors,
     ...window.monsterDescriptors,
     ...window.animalDescriptors,
-    ...window.creatureDetailDescriptors,
+    ...window.modifierDescriptors,
   }
 
 }

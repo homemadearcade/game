@@ -6,15 +6,22 @@ Interesting that bar of dreams and homemade arcade i've wanted to have audio... 
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
 
+GOAL - Get demo for spencer of the theme generation service
+I need 1 random particle bullet, 1 random special explosion
+a little bit more descriptors in the sprite sheet service
+
 CASUAL TODO
 Make a particle effect - see list
 Add a sprite sheet
 Organize Audio files ( on Mac )
 relatedTags:[],
+suggestedContextMenus: [] <--- omfg.. this is how I get the generator menu in there..
 tagDescriptions
 descriptor specificity
 
-IMPLEMENT -> ADVANCED TAG MENU which is like a real ass menu, with that then I can slim down the current tags menu the normal tag menu
+-----
+
+TODO
 
 FILL OUT SEQUENCE EDITOR, LIBRARY, EFFECTS, TAGS
 PUZZLE INTERFACES
@@ -26,20 +33,50 @@ PUZZLE INTERFACES
 COMBAT + GOALS + QUESTS
 
 -------
+update prologue to incorporate new flow. Draw -> Describe -> Dialogue -> Decide Themes
+
 experience password for ha-live. Use month+day - 100
+
+Change on collide to on touch start for certain tags
+
+////////////////////////////////
+////////////////////////////////
+SOUND AND PIXEL GENERATOR UPGRADE
+////////////////////////////////
+DONT LET ADMINS SELECT THE BROAD CATEGORIES, the more specific the admins can select things as, the better
+BASICALLY im saying that these generic Descriptors with a lot of aliases are just so that the player stumbles upon them while searching
+
+Alt Foosteps sounds
 
 THEME UI -randomize specific parts of theme and select value of the theme properties
   audio right click -> set as ___ sound
 
-Change on collide to on touch start for certain tags
+Only only the use of ONE descriptor for construct parts? Pre select a single descriptor before selecting
+
+//FOR SPECIFIC OBJECTS ON MAP
+dialogueNoise: 'XX'
+
+//FOR LIBRARY OBJECTS
+modStartNoise: ''?
+mutateNoise: ''?
+pickupNoise?
+
+Generally how should I deal with library objects? Should I have a 'theme sprite on spawn' tag?
+I could easily go through the creator service and give everything a default sprite, too!
+
+What are the descriptors for audio?
+Big, small, other characteristics,
+Motor HUMS! Laser Type? Gun vs Laser vs bow and arrow
+Bomb explosions...
+Shotgun vs Pistol vs Rocket Launcher vs Rifle vs Machine Gun
 
 ////////////////////////////////
 ////////////////////////////////
 UX UPGRADE
 ////////////////////////////////
 // suggested tags, in the tags library, make tags objects, and add suggested as a property
-descriptors -> brings us suggested SPRITES in sprite selection tool
 right click creator service - add to heros guidance? NOT BAD!
+Simple Context Menu for items with certain descriptors, cuz right now this shit is off the hook w too many options
 
 ////////////////////////////////
 ////////////////////////////////

@@ -18,6 +18,14 @@ export function handleExtraMenuClicks(key, objectSelected, openColorPicker, subO
         return
     }
 
+    if(key === 'edit-descriptors') {
+      modals.openEditDescriptorsModal(objectSelected.descriptors || {}, ({value}) => {
+        if(value) {
+          networkEditObject(objectSelected, {descriptors: value})
+        }
+      })
+    }
+
     if (key === 'open-path-editor') {
       MAPEDITOR.openPathEditor(objectSelected)
       return
@@ -202,7 +210,7 @@ export function handleExtraMenuClicks(key, objectSelected, openColorPicker, subO
       const resourceTags = objectSelected.resourceTags[tagToRemove] = false
       networkEditObject(objectSelected, { resourceTags })
     }
-    
+
     if (key === 'add-new-subobject') {
         modals.addNewSubObjectTemplate(objectSelected)
         return

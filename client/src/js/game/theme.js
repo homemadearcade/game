@@ -267,7 +267,7 @@ window.generateTextureIdsByDescriptors = function() {
   })
 }
 
-//searchAliases
+//alwaysSearchAliases
 window.findTexturesForDescriptors = function(descriptors, options) {
   if(!options) options = {}
 
@@ -280,7 +280,7 @@ window.findTexturesForDescriptors = function(descriptors, options) {
     }
   })
 
-  if(!possibleTextures.length || options.searchAliases) {
+  if(!possibleTextures.length || options.alwaysSearchAliases) {
     const aliasesList = getAliases(descriptors)
     aliasesList.forEach((desc) => {
       if(desc && window.textureIdsByDescriptor[desc]) {
@@ -297,8 +297,8 @@ window.findTexturesForDescriptors = function(descriptors, options) {
   return possibleTextures
 }
 
-window.findRandomAuthorsTextureIdForDescriptors = function(descriptors, author, strict) {
-  const possibleTextures = window.findTexturesForDescriptors(descriptors)
+window.findRandomAuthorsTextureIdForDescriptors = function(descriptors, author, options) {
+  const possibleTextures = window.findTexturesForDescriptors(descriptors, options)
 
   const authorsTextures = possibleTextures.filter((s) => {
     if(s.name !== author) return false
@@ -308,7 +308,7 @@ window.findRandomAuthorsTextureIdForDescriptors = function(descriptors, author, 
   if(authorsTextures.length) {
     const textureIndex = getRandomInt(0, authorsTextures.length -1)
     return authorsTextures[textureIndex].textureId
-  } else if(strict) return null
+  } else if(options.strictAuthor) return null
 
   const textureIndex = getRandomInt(0, possibleTextures.length -1)
 
@@ -316,8 +316,8 @@ window.findRandomAuthorsTextureIdForDescriptors = function(descriptors, author, 
 }
 
 
-window.findRandomTextureIdForDescriptors = function(descriptors) {
-  const possibleTextures = window.findTexturesForDescriptors(descriptors)
+window.findRandomTextureIdForDescriptors = function(descriptors, options) {
+  const possibleTextures = window.findTexturesForDescriptors(descriptors, options)
 
   const textureIndex = getRandomInt(0, possibleTextures.length -1)
 
@@ -342,12 +342,10 @@ window.getRandomSSAuthor = function() {
 // strictAuthor
 // mixAuthor
 // dontOverrideCurrentSprites
-
+// alwaysSearchAliases
 window.findSpritesForDescribedObjects = function(objects, options) {
   if(!objects) objects = [...GAME.objects, ...GAME.heroList]
   if(!options) options = {}
-
-  window.generateTextureIdsByDescriptors()
 
   let editedObjects = []
   let currentAuthor = options.authorName
@@ -358,9 +356,9 @@ window.findSpritesForDescribedObjects = function(objects, options) {
 
     let textureId
     if(currentAuthor && !options.mixAuthor) {
-      textureId = window.findRandomAuthorsTextureIdForDescriptors(object.descriptors, currentAuthor, options.strictAuthor)
+      textureId = window.findRandomAuthorsTextureIdForDescriptors(object.descriptors, currentAuthor, options)
     } else {
-      textureId = window.findRandomTextureIdForDescriptors(object.descriptors)
+      textureId = window.findRandomTextureIdForDescriptors(object.descriptors, options)
     }
 
     return textureId
