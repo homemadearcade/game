@@ -259,7 +259,7 @@ window.generateTextureIdsByDescriptors = function() {
           if(!window.textureIdsByDescriptor[desc]) {
             window.textureIdsByDescriptor[desc] = []
           }
-          window.textureIdsByDescriptor[desc].push(s.textureId)
+          window.textureIdsByDescriptor[desc].push({...s, author: ss.author})
         })
       }
     });
@@ -267,7 +267,7 @@ window.generateTextureIdsByDescriptors = function() {
   })
 }
 
-window.findTextureIdForDescriptors = function(descriptors) {
+window.findTexturesForDescriptors = function(descriptors) {
   let descriptorList = Object.keys(descriptors)
 
   let possibleTextures = []
@@ -287,9 +287,34 @@ window.findTextureIdForDescriptors = function(descriptors) {
     return null
   }
 
+  return possibleTextures
+}
+
+window.findRandomAuthorsTextureIdForDescriptors = function(descriptors, author, strict) {
+  const possibleTextures = window.findTexturesForDescriptors(descriptors)
+
+  const authorsTextures = possibleTextures.filter((s) => {
+    if(s.name !== author) return false
+    return true
+  })
+
+  if(authorsTextures.length) {
+    const textureIndex = getRandomInt(0, authorsTextures.length -1)
+    return authorsTextures[textureIndex].textureId
+  } else if(strict) return null
+
   const textureIndex = getRandomInt(0, possibleTextures.length -1)
 
-  return possibleTextures[textureIndex]
+  return possibleTextures[textureIndex].textureId
+}
+
+
+window.findRandomTextureIdForDescriptors = function(descriptors) {
+  const possibleTextures = window.findTexturesForDescriptors(descriptors)
+
+  const textureIndex = getRandomInt(0, possibleTextures.length -1)
+
+  return possibleTextures[textureIndex].textureId
 }
 
 window.breakDownConstructPartIntoEqualNodes = function(constructParts) {
@@ -297,29 +322,73 @@ window.breakDownConstructPartIntoEqualNodes = function(constructParts) {
   return parts
 }
 
-window.findSpritesForDescribedObjects = function(objects = GAME.objects, options) {
+window.getRandomSSAuthor = function() {
+  const authorList = Object.keys(window.spriteSheetAuthors).filter((author) => {
+    if(window.spriteSheetAuthors[author]) return true
+    else return false
+  })
+  const authorIndex = getRandomInt(0, authorList.length -1)
+  return authorList[authorIndex].textureId
+}
+
+// authorName
+// strictAuthor
+// mixAuthor
+// dontOverrideCurrentSprites
+
+window.findSpritesForDescribedObjects = function(objects, options) {
+  if(!objects) objects = [...GAME.objects, ...GAME.heroList]
   if(!options) options = {}
 
   window.generateTextureIdsByDescriptors()
 
   let editedObjects = []
+  let currentAuthor = options.authorName
+  if(!currentAuthor) currentAuthor = window.getRandomSSAuthor()
+
+  function getTextureId(object) {
+    if(object.defaultSprite && options.dontOverrideCurrentSprites) return null
+
+    let textureId
+    if(currentAuthor && !options.mixAuthor) {
+      textureId = window.findRandomAuthorsTextureIdForDescriptors(object.descriptors, currentAuthor, options.strictAuthor)
+    } else {
+      textureId = window.findRandomTextureIdForDescriptors(object.descriptors)
+    }
+
+    return textureId
+  }
+
   objects.forEach((object) => {
     if(object.defaultSprite && options.dontOverrideCurrentSprites) return
+
+    if(object.subObjects) {
+      OBJECTS.forAllSubObjects(object.subObjects, (so) => {
+        if(so && !so.descriptors) return
+        const textureId = getTextureId(so)
+        if(textureId) {
+          window.socket.emit('editSubObject', object.id, so.subObjectName, { defaultSprite: textureId })
+        }
+      })
+    }
+
     if(object.descriptors) {
       if(object.constructParts) {
         editedObjects.push({
           id: object.id,
           constructParts: object.constructParts.map((part) => {
             if(part.defaultSprite && options.dontOverrideCurrentSprites) return part
-            let textureId = window.findTextureIdForDescriptors(object.descriptors)
+
+            const textureId = getTextureId({...part, descriptors: object.descriptors})
             if(textureId) {
               part.defaultSprite = textureId
             }
             return part
+
           })
         })
       } else {
-        let textureId = window.findTextureIdForDescriptors(object.descriptors)
+        const textureId = getTextureId(object)
         if(textureId) {
           editedObjects.push({
             id: object.id,
