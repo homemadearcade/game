@@ -70,11 +70,22 @@ export default class MediaManager extends React.Component {
     if(this.selectedRef.current) {
       const json = this.selectedRef.current.getJSON()
       if(this.props.selectedMenu === 'SpriteSheetEditor') {
-        window.socket.emit('saveSpriteSheetJSON', json.id, json)
-        window.spriteSheets = window.spriteSheets.map((ss) => {
-          if(ss.id === json.id) return json
-          return ss
-        })
+        if(window.location.href.indexOf('localhost') >= 0) {
+          window.socket.emit('saveSpriteSheetJSON', json.id, json)
+          window.spriteSheets = window.spriteSheets.map((ss) => {
+            if(ss.id === json.id) return json
+            return ss
+          })
+        } else {
+          window.spriteSheets = window.spriteSheets.map((ss) => {
+            if(ss.id === json.id) {
+              PAGE.downloadObjectAsJson(json, json.id)
+              return json
+            }
+            return ss
+          })
+        }
+
       } else if(this.props.selectedMenu === 'AudioEditor'){
         window.socket.emit('saveAudioDataJSON', json.id, json)
       }
