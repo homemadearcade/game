@@ -21,8 +21,9 @@ export default class PixiMapSprite extends React.Component {
     const transform = `scale(${scale})`;
 
     const transformContainer = `translateX(${translate}) translateY(${translate})`
-    return <div data-textureid={this.props.textureId} className={'PixiMapSpriteContainer ' + this.props.className} onClick={this.props.onClick} style={{transform: transformContainer, width: desiredWidth, height: desiredHeight, ...this.props.style}}>
-      <div data-textureid={this.props.textureId} className="Sprite" style = {{
+    const spriteData = (this.props.spriteData && JSON.stringify(this.props.spriteData))
+    return <div data-spritedata={spriteData} className={'PixiMapSpriteContainer ' + this.props.className} onClick={this.props.onClick} style={{transform: transformContainer, width: desiredWidth, height: desiredHeight, ...this.props.style}}>
+      <div data-spritedata={spriteData} className="Sprite" style = {{
           backgroundImage,
           backgroundPositionY,
           backgroundPositionX,

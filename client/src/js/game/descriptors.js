@@ -12,7 +12,7 @@ function setDefault() {
     },
   }
 
-  window.elementDesciptors = {
+  window.elementDescriptors = {
     Grass: {
       aliases: []
     },
@@ -66,7 +66,7 @@ function setDefault() {
     },
   }
 
-  window.overworldMapDesciptors = {
+  window.overworldMapDescriptors = {
     Mountain : {
       aliases: []
     },
@@ -617,8 +617,8 @@ function setDefault() {
 
   window.allDescriptors = {
     ...window.generalDescriptors,
-    ...window.elementDesciptors,
-    ...window.overworldMapDesciptors,
+    ...window.elementDescriptors,
+    ...window.overworldMapDescriptors,
     ...window.buildingPartDescriptors,
     ...window.outsideBuildingDescriptors,
     ...window.insideBuildingDescriptors,
@@ -628,7 +628,12 @@ function setDefault() {
     ...window.transportDescriptors,
     ...window.humanDescriptors,
     ...window.monsterDescriptors,
+    ...window.animalDescriptors,
     ...window.creatureDetailDescriptors,
   }
 
+}
+
+export default {
+  setDefault
 }

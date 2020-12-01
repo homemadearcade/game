@@ -16,13 +16,33 @@ export default class SpriteSheetEditor extends React.Component {
         sprites: []
       }
     }
+  }
 
-    window.local.on('onEditSprites', (ids, update) => {
-
-    })
+  componentWillUnmount() {
+    this._removeListener1()
   }
 
   componentDidMount() {
+    this._removeListener1 = window.local.on('onEditSpriteData', (names, update) => {
+      const ss = this.state.spriteSheet
+
+      this.setState({
+        spriteSheet: {
+          ...this.state.spriteSheet,
+          sprites: ss.sprites.map((s) => {
+            if(names[s.textureId]) {
+              if(update.descriptors) {
+                if(!s.descriptors) s.descriptors = {}
+                Object.assign(s.descriptors, update.descriptors)
+              }
+            }
+            return s
+          })
+        }
+      })
+      this.forceUpdate()
+    })
+
     const ss = window.spriteSheets.find(({id}) => id == this.props.id)
     if(!ss.tags) ss.tags= []
     this.setState({

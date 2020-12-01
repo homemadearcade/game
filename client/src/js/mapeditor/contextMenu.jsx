@@ -39,9 +39,9 @@ class contextMenuEl extends React.Component{
         return false;
       }
 
-      if(e.target.dataset.textureid) {
+      if(e.target.dataset.spritedata) {
         this._openMenuWithEvent(e, false)
-        this._setContextMenuSpecialItem('sprite', null, { textureId: e.target.dataset.textureid })
+        this._setContextMenuSpecialItem('sprite', null, { spriteData: e.target.dataset.spritedata })
         return false;
       }
 
@@ -115,7 +115,7 @@ class contextMenuEl extends React.Component{
     if(command === "show") {
       this.setState({ hide: false, objectSelected: MAPEDITOR.objectHighlighted })
     } else {
-      this.setState({ hide: true, subObjectSelected: {}, subObjectSelectedName: null, objectSelected: null, coloringObject: null, specialItemType: null, item: null, libraryName: null, libraryId: null, textureId: null, textureIds: null })
+      this.setState({ hide: true, subObjectSelected: {}, subObjectSelectedName: null, objectSelected: null, coloringObject: null, specialItemType: null, item: null, libraryName: null, libraryId: null, spriteData: null, textureIds: null })
     }
   }
 
@@ -178,12 +178,11 @@ class contextMenuEl extends React.Component{
   }
 
   _renderAdminMenus() {
-    const { objectSelected, subObjectSelected, subObjectSelectedName, specialItemType, item, libraryName, libraryId, creatorLibraryId, audioFileId, textureId, textureIds } = this.state;
-
+    const { objectSelected, subObjectSelected, subObjectSelectedName, specialItemType, item, libraryName, libraryId, creatorLibraryId, audioFileId, spriteData, textureIds } = this.state;
 
     if(specialItemType === 'sprite') {
       return <SpriteDataContextMenu
-        textureId={textureId}
+        spriteData={spriteData ? JSON.parse(spriteData) : null}
         textureIds={textureIds ? JSON.parse(textureIds) : null}
         ></SpriteDataContextMenu>
     }

@@ -60,6 +60,7 @@ class Game{
     gameState.setDefault()
     grid.setDefault()
     tags.setDefault()
+    descriptors.setDefault()
     input.setDefault()
     timeouts.setDefault()
     dayNightCycle.setDefault()

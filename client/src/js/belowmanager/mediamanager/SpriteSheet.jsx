@@ -14,7 +14,7 @@ export default class SpriteSheet extends React.Component {
   }
 
   componentDidMount() {
-    this._removeListener1 = window.local.on('clearTextureIdsSelection', () => {
+    this._removeListener1 = window.local.on('onClearTextureIdsSelection', () => {
       this._clearTextureIdsSelection()
     })
   }
@@ -54,7 +54,7 @@ export default class SpriteSheet extends React.Component {
         if(this.props.onClick) this.props.onClick(sprite, index)
       }}
       style={{backgroundColor: GAME.world.backgroundColor || 'black'}}>
-        <PixiMapSprite width="40" height="40" textureId={textureId}/>
+        <PixiMapSprite width="40" height="40" textureId={textureId} spriteData={sprite}/>
     </div>
   }
 
