@@ -67,7 +67,7 @@ export default class SpriteSheetEditor extends React.Component {
   render() {
     const { spriteSheet } = this.state;
 
-    return <div className="SpriteSheetEditor SpriteSheet">
+    return <div className="SpriteSheetEditor">
       <div className="ManagerForm">
         <div className="ManagerInput__text"><i className="fa fas fa-edit Manager__button" onClick={() => this._openEditTextModal('Edit Name', 'name')}/>
           Name: <div className="ManagerInput__value">{spriteSheet.name}</div>

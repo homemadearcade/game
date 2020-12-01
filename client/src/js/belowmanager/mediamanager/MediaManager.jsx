@@ -1,4 +1,5 @@
 import React from 'react'
+import SpriteSheet from './SpriteSheet.jsx'
 import SpriteSheetEditor from './SpriteSheetEditor.jsx'
 import SpriteSelector from './SpriteSelector.jsx'
 import modals from '../../mapeditor/modals'
@@ -219,6 +220,16 @@ export default class MediaManager extends React.Component {
     </div>
   }
 
+
+  _onSelectSprite = (sprite) => {
+    if(this.props.objectSelected === 'creator') {
+      window.local.emit('onSelectTextureId', sprite.textureId, 'creator')
+    } else if(this.props.objectSelected === 'constructEditor') {
+      window.local.emit('onSelectTextureId', sprite.textureId, 'constructEditor')
+    } else if(this.props.objectSelected.id) {
+      MAPEDITOR.networkEditObject(this.props.objectSelected, { id: this.props.objectSelected.id, defaultSprite: sprite.textureId })
+    }
+  }
   //tagList.map((ss) => {
   //     return <div className="Manager__list-item" onClick={() => this.props.openId(this.props.index, ss.id)}>{ss.name || ss.id}</div>
   // })
@@ -244,7 +255,7 @@ export default class MediaManager extends React.Component {
         <div className="ManagerMenu">
           <i className="fas fa-arrow-left Manager__button Manager__button--large " onClick={() => this.props.returnToList(this.props.index)}></i>
         </div>
-        <SpriteSelector objectSelected={this.props.objectSelected} ref={this.selectedRef} id={selectedId}/>
+        <SpriteSelector onSelectSprite={this._onSelectSprite} objectSelected={this.props.objectSelected} ref={this.selectedRef} id={selectedId}/>
       </div>
     }
 
@@ -261,8 +272,17 @@ export default class MediaManager extends React.Component {
     }
 
     if(selectedMenu === 'SpriteSelector') {
+
+      let recommendedTextures
+      if(this.props.objectSelected.descriptors) {
+        recommendedTextures = window.findTexturesForDescriptors(this.props.objectSelected.descriptors, { alwaysSearchAliases: true })
+      }
       return <div className="Manager">
         <div className="Manager__list">
+          {recommendedTextures && <div className="Manager__recommended">
+            Recommended:
+            <SpriteSheet onClick={this._onSelectSprite} spriteSheet={{sprites: recommendedTextures}}></SpriteSheet>
+          </div>}
           {this._renderSpriteSheets()}
         </div>
       </div>

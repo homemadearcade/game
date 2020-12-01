@@ -61,11 +61,11 @@ export default class SpriteSheet extends React.Component {
   render() {
     const { spriteSheet, selectMultiple } = this.props;
 
-    return <React.Fragment>
+    return <div className="SpriteSheet">
       {selectMultiple && <div className="SpriteSheet__edit-selected fa fa-edit" data-textureids={JSON.stringify(this.state.textureIdsSelected)}>Right click to edit selected</div>}
       {spriteSheet.sprites.map((sprite, index) => {
         return this._renderSprite(sprite, index)
       })}
-    </React.Fragment>
+    </div>
   }
 }

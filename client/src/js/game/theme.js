@@ -267,18 +267,25 @@ window.generateTextureIdsByDescriptors = function() {
   })
 }
 
-window.findTexturesForDescriptors = function(descriptors) {
+//searchAliases
+window.findTexturesForDescriptors = function(descriptors, options) {
+  if(!options) options = {}
+
   let descriptorList = Object.keys(descriptors)
 
   let possibleTextures = []
   descriptorList.forEach((desc) => {
-    possibleTextures.push(...window.textureIdsByDescriptor[desc])
+    if(desc && window.textureIdsByDescriptor[desc]) {
+      possibleTextures.push(...window.textureIdsByDescriptor[desc])
+    }
   })
 
-  if(!possibleTextures.length) {
-    const aliases = getAliases(descriptors)
+  if(!possibleTextures.length || options.searchAliases) {
+    const aliasesList = getAliases(descriptors)
     aliasesList.forEach((desc) => {
-      possibleTextures.push(...window.textureIdsByDescriptor[desc])
+      if(desc && window.textureIdsByDescriptor[desc]) {
+        possibleTextures.push(...window.textureIdsByDescriptor[desc])
+      }
     })
   }
 

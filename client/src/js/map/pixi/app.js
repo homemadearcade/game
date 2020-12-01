@@ -331,6 +331,7 @@ const initPixiApp = (canvasRef, onLoad) => {
   axios.get(window.HAGameServerUrl + '/spriteSheets', options).then(res => {
     const spriteSheets = res.data.spriteSheets
     window.spriteSheets = spriteSheets
+    window.generateTextureIdsByDescriptors()
     startLoadingAssets(spriteSheets.map((ss) => {
       ss.serverImageUrl = window.HomemadeArcadeImageAssetURL + ss.imageUrl
       return ss

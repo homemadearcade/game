@@ -29,16 +29,8 @@ export default class SpriteSelector extends React.Component {
   render() {
     const { spriteSheet } = this.state;
 
-    return <div className="SpriteSelector SpriteSheet">
-      <SpriteSheet spriteSheet={spriteSheet} selectedTextureId={this.props.objectSelected.sprite} onClick={(sprite) => {
-          if(this.props.objectSelected === 'creator') {
-            window.local.emit('onSelectTextureId', sprite.textureId, 'creator')
-          } else if(this.props.objectSelected === 'constructEditor') {
-            window.local.emit('onSelectTextureId', sprite.textureId, 'constructEditor')
-          } else if(this.props.objectSelected.id) {
-            MAPEDITOR.networkEditObject(this.props.objectSelected, { id: this.props.objectSelected.id, defaultSprite: sprite.textureId })
-          }
-      }}/>
+    return <div className="SpriteSelector">
+      <SpriteSheet spriteSheet={spriteSheet} selectedTextureId={this.props.objectSelected.sprite} onClick={this.props.onSelectSprite}/>
     </div>
   }
 }
