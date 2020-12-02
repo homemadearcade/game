@@ -9,6 +9,8 @@ Interesting that bar of dreams and homemade arcade i've wanted to have audio... 
 GOAL - Get demo for spencer of the theme generation service
 I need 1 random particle bullet, 1 random special explosion
 a little bit more descriptors in the sprite sheet service
+random game feel
+random night/day?
 
 CASUAL TODO
 Make a particle effect - see list
@@ -77,6 +79,7 @@ UX UPGRADE
 // suggested tags, in the tags library, make tags objects, and add suggested as a property
 right click creator service - add to heros guidance? NOT BAD!
 Simple Context Menu for items with certain descriptors, cuz right now this shit is off the hook w too many options
+suggestedContextMenu items is the key...
 
 ////////////////////////////////
 ////////////////////////////////
@@ -812,9 +815,6 @@ https://github.com/spite/rstats
 https://github.com/geckosio/snapshot-interpolation
 https://github.com/rgcl/jsonpack
 
-SOUND
-https://github.com/kittykatattack/sound.js
-
 IMAGE MANIPULATION
 http://camanjs.com/examples/
 // aparently also FABRIC.js is good for that, I MEAN IDK MAN
@@ -963,59 +963,11 @@ MOD is temporary with a condition
 */
 
 // ENGINE -> Events, Conditions, Effects
-// UI -> Tags, Triggers, Hooks, Sequences
+// UI -> Tags, Triggers, Hooks, Sequences, Descriptors
 // GAME DATA -> Objects, Heros, World, Grid
 // SCENARIOS..?
 
-// BIG PAPA BEAR INSIGHTS
-// COMMON FOLKS, UPPER CLASS, GODS
-
-// THE ART EXPANSION
- // HUMAN ART -> MUSIC, SCULPTURE, PAINTING, CRAFTING, GREAT CITIES, GREAT WONDERS
- // GOD ART -> ALLOW GODS TO CRAFT NATURAL WONDERS -> CANYONS, MOUNTAIN RANGES, SEAS, RIVERS, LAKES, FORESTS, ANIMALS? OTHER LIFE?
- // ( MAPS )
-// THE LIFE EXPANSION
-  // CHARACTERS HAVE LONG HISTORIES. FAMILY TREES
-  // THEY HAVE DESCRIPTIONS
-
-// IT GOES BY AGES
-// BY SCENARIOS
-// SOME ARE LARGE SCALE AGES PLAYED OUT
-
-// BASICALLY IT GOES LIKE this
 /*
-they play the first papa bear until someone unlocks papa bear AKA eating the apple
-They unleash evil into the world
-Much devestation is done, this is the first apacalypse ( there are many )
-The story is told. This is like a good first game tutorial pack
-We SAVE the world and the ruins and EVERYTHING for the next game
-perhaps theres like an 'aging' features that adds vines and stuff and forests grow and stuff
-
-// EPILOGUES happen after the game and the stats. Everyone reflects on what happens and then we let the survivors record this moment into history
-// we get a short peacetime where meaning is basically consolidated into history or art. Graves are made perhaps?
-
-// SO i think basically papa bear is always optional to add to the equation but papa bear is always the most powerful narrative device
-// other than that there is THE SCENARIO OF THE GAME. Think about various apocalpyse games ( moon coming down, winter coming, meteor coming, zombie army coming, tournament is being held, dragons being revived, new technolog released, etc )
-// also maybe think about other premises such as murder mystery, secret hidden item, new king problem
-// but destroying papa bear, the ultimate original evil of man is the most epic story. Papa bear is the SAURON, the NARAKU, the VOLDEMORT
-
-// Youll need to have a good gauge as to the narrative power that items in the game have and that papa bear has and that each of these events have
-// also theres a question as to if it will be beneficial for me to be there or not? I think to start off im going to have to watch every game and make sure it ends right, but eventually ill learn the systems involved to make it work
-
-
-// I was thinking and if you want to make this extremely high quality. Youll want to add a dungeon master to each game. This dungeon master also needs to be be able to deal with the software
-// What reigns could I REALLY give to the users. Is there a scope that works? I would need to define the world rules completely and the scope of it essentially completely. The scope wouldnt be able to change right?
-The queestion is.. can the game be REALLY meaingful if the way the user interacts with it ISNT meaningful
-What makes a game item meaningful is its POWER either horizontal or vertical POWER. Most games only deal with vertical power
-other way to make an item meaningful is through history and narrative..
-
-IM GOING TO START OFF WITH HAVING A GAME MASTER PRESENT AND THEN EVENTUALLY ILL LEARN WHAT THE PARTS I CAN SACRIFICE ARE
-
-
---------
-********
---------
-
 HOMEMADE ARCADE TOOL MAP
 
 CLASS 1 - Basic

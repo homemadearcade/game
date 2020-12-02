@@ -151,7 +151,7 @@ function drawObject(ctx, object, camera, options = {showInvisible: false, stroke
   }
 
 
-  if(object.tags && object.tags.invisible) {
+  if(object.tags && (object.tags.invisible)) {
    if(options.showInvisible) {
      ctx.globalAlpha = 0.2;
      drawFilledObject(ctx, object, camera, options);
@@ -299,7 +299,7 @@ function drawLoadingScreen(ctx, camera) {
   const gameEligibleForLoading = true || (GAME.grid.width > 80 || GAME.objects.length > 300)
   const loadingState = (PAGE.loadingGame)
   PAGE.loadingScreen = !PAGE.isGameReady || (gameEligibleForLoading && loadingState)
-  
+
   const hero = GAME.heros[HERO.id]
   if(hero && hero.animationZoomMultiplier) PAGE.loadingScreen = false
 

@@ -127,9 +127,9 @@ function updatePosition(pixiChild, gameObject) {
     pixiChild.y = (gameObject.y + gameObject.height/2) * camera.multiplier
   } else {
     if(typeof pixiChild.rotation === 'number') {
-      if(isContainer) {
+      if(pixiChild.pivot) {
         pixiChild.pivot.set(0, 0)
-      } else {
+      } else if(pixiChild.anchor){
         pixiChild.anchor.set(0, 0)
       }
       pixiChild.rotation = null
@@ -303,6 +303,43 @@ function isColliding(hero, gameObject) {
   return collisionsUtil.checkObject(hero, gameObject)
 }
 
+function updateLight(pixiChild, gameObject) {
+  // const isInvisible = getVisibility(pixiChild, gameObject)
+  // remove if its invisible now
+
+  // if (isInvisible) {
+  //   pixiChild.visible = false
+  //   return
+  // } else {
+  //   pixiChild.visible = true
+  // }
+  let camera = MAP.camera
+  if(CONSTRUCTEDITOR.open) {
+    camera = CONSTRUCTEDITOR.camera
+  } else if(PATHEDITOR.open) {
+    camera = PATHEDITOR.camera
+  }
+
+  if(!pixiChild.isAnimatingScale) {
+    pixiChild.transform.scale.x = (gameObject.width * gameObject.lightPower) * camera.multiplier
+    pixiChild.transform.scale.y = (gameObject.height * gameObject.lightPower) * camera.multiplier
+  }
+
+  if(gameObject.lightOpacity >= 0) {
+    pixiChild.alpha = gameObject.lightOpacity
+  } else pixiChild.alpha = 1
+
+  pixiChild.tint = getHexColor(gameObject.lightColor)
+
+  updatePosition(pixiChild, gameObject)
+  pixiChild.x += gameObject.width/2
+  pixiChild.y += gameObject.height/2
+
+  // if(!indoors && !GAME.world.tags.blockLighting && GAME.gameState.ambientLight >=0) {
+  //   pixiChild.mask = PIXIMAP.outdoorShadow
+  // }
+}
+
 function getGameObjectStage(gameObject) {
   let object = gameObject
   // if(gameObject.part) {
@@ -310,6 +347,7 @@ function getGameObjectStage(gameObject) {
   // }
   // if(!object) console.log(gameObject, object)
 
+  // if(gameObject.tags.darkArea) return PIXIMAP.darkAreaStage
   if((gameObject.tags.emitter) && gameObject.tags.background) return PIXIMAP.emitterBackgroundStage
   if((gameObject.tags.emitter) && gameObject.tags.foreground) return PIXIMAP.emitterForegroundStage
   if(gameObject.tags.emitter) return PIXIMAP.emitterObjectStage
@@ -418,6 +456,7 @@ export {
   updateColor,
   updateScale,
   updateSprite,
+  updateLight,
   getGameObjectStage,
   isColliding,
   updateChatBox,

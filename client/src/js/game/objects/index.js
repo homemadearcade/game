@@ -188,6 +188,11 @@ class Objects{
       gravityVelocityY: object.gravityVelocityY,
       bouncyness: object.bouncyness,
 
+      ambientLight: object.ambientLight,
+      lightPower: object.lightPower,
+      lightColor: object.lightColor,
+      lightOpacity: object.lightOpacity,
+
       velocityInitial: object.velocityInitial,
       velocityDelta: object.velocityDelta,
       // velocityInitialXExtra: object.velocityInitialXExtra,

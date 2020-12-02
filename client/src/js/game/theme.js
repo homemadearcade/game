@@ -348,7 +348,7 @@ window.findSpritesForDescribedObjects = function(objects, options) {
   if(!options) options = {}
 
   let editedObjects = []
-  let currentAuthor = options.authorName
+  let currentAuthor = options.authorName || GAME.theme.spriteSheetAuthor
   if(!currentAuthor) currentAuthor = window.getRandomSSAuthor()
 
   function getTextureId(object) {
@@ -523,4 +523,9 @@ window.defaultAudioTheme = {
 
   // onGamePaused: null,
   // onGameResume: null,
+
+  // going upstairs
+  // going downstars
+  // opening door, closing door
+  // ladder
 }

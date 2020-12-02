@@ -163,6 +163,7 @@ function setDefault() {
     tilingSprite: false, //cant change
     inputDirectionSprites: false,
     light: false,
+    darkArea: false,
     background: false,
     foreground: false,
     seeThroughOnHeroCollide: false,

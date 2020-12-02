@@ -49,6 +49,7 @@ class Game{
     this.theme = {
       audio: {},
       ss: {},
+      spriteSheetAuthor: '',
       particle: {},
       title: 'sunny mornings'
     }

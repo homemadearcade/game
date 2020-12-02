@@ -422,7 +422,7 @@ function updateGridHighlight(location) {
     }
   }
 
-  if(MAPEDITOR.objectHighlighted.x != previousHighlightX || MAPEDITOR.objectHighlighted.y != previousHighlightY) {
+  if((PAGE.role.isAdmin || GAME.heros[HERO.id].flags.showMapHighlight) && (MAPEDITOR.objectHighlighted.x != previousHighlightX || MAPEDITOR.objectHighlighted.y != previousHighlightY)) {
     AUDIO.playDebounce(
       {
         id: 'onMapEditorSwitchNode',

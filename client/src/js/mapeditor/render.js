@@ -27,7 +27,7 @@ function update() {
     ctx.setLineDash([5, 15]);
     GAME.objects.forEach((object) => {
       if(object.tags.removed) return
-      if(object.tags.invisible || object.tags.hidden || object.opacity == 0) {
+      if(object.defaultSprite == 'invisible' || object.tags.invisible || object.tags.hidden || object.opacity == 0) {
         drawTools.drawObject(ctx, {...object, tags: {invisible: false, outline: true }, color: 'rgba(255,255,255,1)'}, camera)
       }
     })
@@ -37,7 +37,7 @@ function update() {
   const { draggingObject, copiedObject, objectHighlighted, objectHighlightedChildren, resizingObject, pathfindingLimit, draggingRelativeObject } = MAPEDITOR
 
   if((PAGE.role.isAdmin || (GAME.heros[HERO.id].flags.showMapHighlight && (!GAME.gameState.started || GAME.heros[HERO.id].flags.editAllowedWhenGameStarted) )) && objectHighlighted && !objectHighlighted.CREATOR) {
-    if(objectHighlighted.tags && objectHighlighted.tags.invisible && objectHighlightedChildren.length === 0 && (!resizingObject || objectHighlighted.id !== resizingObject.id)) {
+    if(objectHighlighted.tags && (objectHighlighted.defaultSprite === 'invisible' || objectHighlighted.tags.invisible) && objectHighlightedChildren.length === 0 && (!resizingObject || objectHighlighted.id !== resizingObject.id)) {
       let color = 'rgba(255,255,255,0.2)'
       drawTools.drawFilledObject(ctx, {...objectHighlighted, color}, camera)
       drawTools.drawBorder(ctx, {...objectHighlighted, color: 'white'}, camera)
@@ -106,7 +106,7 @@ function update() {
     if(objectHighlightedChildren) {
       let color = 'rgba(255,255,255,0.1)'
       objectHighlightedChildren.forEach((object) => {
-        if(object.tags && object.tags.invisible) {
+        if(object.tags && (object.tags.invisible || objectHighlighted.defaultSprite === 'invisible')) {
           color = 'rgba(255,255,255,0.1)'
         }
         drawTools.drawFilledObject(ctx, {...object, color}, camera)
@@ -129,7 +129,7 @@ function update() {
     currentObject = objectHighlighted
   }
   if(currentObject) {
-    if(currentObject.tags && currentObject.tags.invisible || currentObject.tags.hidden || currentObject.opacity == 0) {
+    if(currentObject.tags && currentObject.defaultSprite === 'invisible' || currentObject.tags.invisible || currentObject.tags.hidden || currentObject.opacity == 0) {
       ctx.setLineDash([5, 15]);
       drawTools.drawObject(ctx, {...currentObject, tags: { invisible: false, outline: true }, color: 'rgba(255,255,255,1)'}, camera)
       ctx.setLineDash([]);

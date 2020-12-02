@@ -91,7 +91,7 @@ export default class DialogueBox extends React.Component{
   }
 
   _renderSprite(item) {
-    if(item.tags.invisible || item.tags.outline) {
+    if(item.tags.invisible || item.tags.outline || item.defaultSprite === 'invisible') {
       return <div className="DialogueBox__sprite DialogueBox__sprite--box"/>
     } else if(item.defaultSprite == 'solidcolorsprite'){
       return <div className="DialogueBox__sprite" style={{background: item.color || GAME.world.defaultObjectColor || window.defaultObjectColor}}/>

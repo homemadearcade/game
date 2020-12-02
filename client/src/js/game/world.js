@@ -11,6 +11,7 @@ function setDefault() {
     worldSpawnPointY: null,
     defaultObjectColor: '#525252',
     tags: {
+      blockLighting: false,
       hasGameLog: false,
       allowHeroChat: false,
       preventHeroGridBypass: false,

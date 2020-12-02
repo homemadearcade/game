@@ -4,6 +4,7 @@ import './pixi-layers'
 import { GlowFilter, ColorMatrixFilter } from 'pixi-filters'
 import tinycolor from 'tinycolor2'
 import axios from 'axios';
+import {isColliding} from './utils.js'
 
 //https://pixijs.io/examples/#/masks/filter.js
 //https://pixijs.io/examples/#/masks/filter.js
@@ -193,6 +194,9 @@ const initPixiApp = (canvasRef, onLoad) => {
   PIXIMAP.emitterObjectStage = new PIXI.display.Layer()
   world.addChild(PIXIMAP.emitterObjectStage);
 
+  PIXIMAP.darkAreaStage = new PIXI.display.Layer()
+  world.addChild(PIXIMAP.darkAreaStage);
+
   PIXIMAP.foregroundStage = new PIXI.display.Layer()
   world.addChild(PIXIMAP.foregroundStage);
 
@@ -369,47 +373,59 @@ const initPixiApp = (canvasRef, onLoad) => {
       PIXIMAP.textures = textures
       PIXIMAP.assetsLoaded = true
       onLoad(app, textures)
-
-      // app.loader.add(['assets/images/firepit-1.png', 'assets/images/entarkia-1.png']).load((loaded) => {
-      //   // let texture = PIXI.Texture.from('assets/images/firepit-1.png');
-      //   // texture.id = 'firepit-1'
-      //   // textures['firepit-1'] = texture
-      //   //
-      //   // texture = PIXI.Texture.from('assets/images/entarkia-1.png');
-      //   // texture.id = 'entarkia-1'
-      //   // textures['entarkia-1'] = texture
-      //   // texture = PIXI.Texture.from('assets/images/spencer-1.png');
-      //   // texture.id = 'spencer-1'
-      //   // textures['spencer-1'] = texture
-
-      // })
     })
   }
 
-    // Create a light that casts shadows
-  // var light = PIXIMAP.createLight('point', 700, 4, 0x000000);
-  // light.position.set(300, 300);
-  // world.addChild(light);
+  const lighting = new PIXI.display.Layer();
+  lighting.on('display', (element) => {
+      element.blendMode = PIXI.BLEND_MODES.ADD;
+  });
+  lighting.useRenderTexture = true;
+  lighting.clearColor = [0.1, 0.1, 0.1, 1]; // ambient gray
 
-  // Create a light point on click
-  // world.on("pointerdown", function(event) {
-  //     var light = PIXIMAP.createLight(450, 2, 0xffffff);
-  //     light.position.copy(event.data.global);
-  //     world.addChild(light);
-  // });
+  PIXIMAP.globalLighting = lighting
+  PIXIMAP.stage.addChild(lighting);
 
-  // if(GAME.world.tags.shadow && PAGE.role.isAdmin) {
-  //   // Create a light that casts shadows
-  //   var shadow = new PIXI.shadows.Shadow(700, 1);
-  //   shadow.position.set(450, 150);
-  //   world.addChild(shadow);
-  //
-  //   // Make the light track your mouse
-  //   world.interactive = true;
-  //   world.on("mousemove", function(event) {
-  //       shadow.position.copy(event.data.global);
-  //   });
-  // }
+  const lightingSprite = new PIXI.Sprite(lighting.getRenderTexture());
+  lightingSprite.blendMode = PIXI.BLEND_MODES.MULTIPLY;
+
+  PIXIMAP.stage.addChild(lightingSprite);
+
+
+  const darkAreaLighting = new PIXI.display.Layer();
+  darkAreaLighting.on('display', (element) => {
+      element.blendMode = PIXI.BLEND_MODES.ADD;
+  });
+  darkAreaLighting.useRenderTexture = true;
+  darkAreaLighting.clearColor = [0.1, 0.1, 0.1, 1]; // ambient gray
+
+  PIXIMAP.darkAreaLighting = darkAreaLighting
+  PIXIMAP.stage.addChild(darkAreaLighting);
+
+  const darkAreaLightingSprite = new PIXI.Sprite(darkAreaLighting.getRenderTexture());
+  darkAreaLightingSprite.blendMode = PIXI.BLEND_MODES.MULTIPLY;
+
+  PIXIMAP.darkAreaStage.addChild(darkAreaLightingSprite);
+
+  window.local.on('onRender', () => {
+    if(!GAME.objectsByTag) return
+
+    let indoors
+    const darkAreas = GAME.objectsByTag['darkArea']
+    if(darkAreas) {
+      const area = darkAreas.filter((r) => {
+         return isColliding(GAME.heros[HERO.id], r)
+       })[0]
+      if(area) {
+        PIXIMAP.darkAreaStage.alpha = 1
+        darkAreaLighting.clearColor = [area.ambientLight || 0, area.ambientLight || 0, area.ambientLight || 0, 1]
+      } else {
+        PIXIMAP.darkAreaStage.alpha = 0
+      }
+    }
+
+    lighting.clearColor = [GAME.gameState.ambientLight, GAME.gameState.ambientLight, GAME.gameState.ambientLight, 1]
+  })
 }
 
 export {

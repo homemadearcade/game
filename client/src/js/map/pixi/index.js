@@ -27,6 +27,14 @@ PIXIMAP.onResetLiveParticle = function(objectId) {
 }
 
 PIXIMAP.initializePixiObjectsFromGame = function() {
+  PIXIMAP.shadowStage.removeChildren()
+  PIXIMAP.emitterBackgroundStage.removeChildren()
+  PIXIMAP.objectStage.removeChildren()
+  PIXIMAP.emitterObjectStage.removeChildren()
+  PIXIMAP.foregroundStage.removeChildren()
+  PIXIMAP.emitterForegroundStage.removeChildren()
+
+  PIXIMAP.childrenById = {}
   GAME.heroList.forEach((hero) => {
     initPixiObject(hero)
   })
@@ -65,13 +73,6 @@ PIXIMAP.onGameIdentified = function(game) {
       window.local.emit('onPixiMapReady')
     })
   } else if(PIXIMAP.assetsLoaded) {
-    PIXIMAP.shadowStage.removeChildren()
-    PIXIMAP.emitterBackgroundStage.removeChildren()
-    PIXIMAP.objectStage.removeChildren()
-    PIXIMAP.emitterObjectStage.removeChildren()
-    PIXIMAP.foregroundStage.removeChildren()
-    PIXIMAP.emitterForegroundStage.removeChildren()
-    PIXIMAP.objectsById = {}
     PIXIMAP.initializeDarknessSprites()
     PIXIMAP.initializePixiObjectsFromGame()
   }
@@ -144,6 +145,17 @@ PIXIMAP.deleteObject = function(object, stage) {
     PIXIMAP.deleteEmitter(pixiChild.engineTrailEmitter)
     delete pixiChild.engineTrailEmitter
   }
+
+  if(pixiChild.light) {
+    stage.removeChild(pixiChild.light)
+    delete pixiChild.light
+  }
+
+  if(pixiChild.darkArealight) {
+    stage.removeChild(pixiChild.darkArealight)
+    delete pixiChild.darkArealight
+  }
+
   stage.removeChild(pixiChild)
 }
 
@@ -298,7 +310,7 @@ PIXIMAP.resetDarkness = function() {
 }
 
 PIXIMAP.updateDarknessSprites = function() {
-  if(!PIXIMAP.grid) return
+  if(!PIXIMAP.grid || !GAME.world.tags.blockLighting) return
 
   const nodes = PIXIMAP.grid.nodes
   // if(!GAME.gameState.started) return
@@ -384,6 +396,8 @@ PIXIMAP.updateDarknessSprites = function() {
 }
 
 PIXIMAP.initializeDarknessSprites = function() {
+  if(!GAME.world.tags.blockLighting) return
+
   PIXIMAP.shadowStage.removeChildren()
   // PIXIMAP.gridStage.removeChildren()
   const nodes = PIXIMAP.grid.nodes
@@ -430,7 +444,7 @@ PIXIMAP.onUpdateGrid = function() {
   PIXIMAP.grid = _.cloneDeep(GAME.grid)
 
 
-  if(!window.resettingDarkness) {
+  if(GAME.world.tags.blockLighting && !window.resettingDarkness) {
     setTimeout(() => {
       if(PIXIMAP.initialized) {
         PIXIMAP.initializeDarknessSprites()

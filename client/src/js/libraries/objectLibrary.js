@@ -26,8 +26,11 @@ window.local.on('onFirstPageGameLoaded', () => {
       objectType: 'plainObject',
       tags: {
         light: true,
-        invisible: true,
-      }
+      },
+      defaultSprite: 'invisible',
+      lightPower: .1,
+      lightColor: 'green',
+      lightOpacity: .5,
     },
     fire: {
       objectType: 'plainObject',

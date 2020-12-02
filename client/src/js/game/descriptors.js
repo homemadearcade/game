@@ -2,7 +2,6 @@
 // Locker, Chalkboard, School Chair, Desk, Etc
 
 function setDefault() {
-
   window.generalDescriptors = {
     'Scifi Theme': {
       aliases: [],
@@ -857,31 +856,42 @@ function setDefault() {
       inSprites: true,
     },
     Small: {
-      audioOnly: true,
+      audioRelated: true,
+      dontShowAdminsInSpriteSheetEditor: true,
       aliases: [],
     },
     Large: {
-      audioOnly: true,
+      audioRelated: true,
+      dontShowAdminsInSpriteSheetEditor: true,
       aliases: [],
     },
     Cute: {
-      audioOnly: true,
+      audioRelated: true,
+      dontShowAdminsInSpriteSheetEditor: true,
       aliases: [],
     },
     Mean: {
-      audioOnly: true,
+      audioRelated: true,
+      dontShowAdminsInSpriteSheetEditor: true,
       aliases: [],
     },
     Evil: {
-      audioOnly: true,
+      audioRelated: true,
+      dontShowAdminsInSpriteSheetEditor: true,
       aliases: [],
     },
     Mad: {
-      audioOnly: true,
+      audioRelated: true,
+      dontShowAdminsInSpriteSheetEditor: true,
       aliases: [],
     },
     Happy: {
-      audioOnly: true,
+      audioRelated: true,
+      dontShowAdminsInSpriteSheetEditor: true,
+      aliases: [],
+    },
+    Random: {
+      dontShowAdminsInSpriteSheetEditor: true,
       aliases: [],
     },
   }
