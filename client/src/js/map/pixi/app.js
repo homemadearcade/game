@@ -422,6 +422,8 @@ const initPixiApp = (canvasRef, onLoad) => {
       } else {
         PIXIMAP.darkAreaStage.alpha = 0
       }
+    } else {
+      PIXIMAP.darkAreaStage.alpha = 0
     }
 
     lighting.clearColor = [GAME.gameState.ambientLight, GAME.gameState.ambientLight, GAME.gameState.ambientLight, 1]

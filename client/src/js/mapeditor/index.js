@@ -426,7 +426,7 @@ function updateGridHighlight(location) {
     AUDIO.playDebounce(
       {
         id: 'onMapEditorSwitchNode',
-        soundId: window.defaultAudioTheme.onMapEditorSwitchNode,
+        soundId: GAME.theme.audio.onMapEditorSwitchNode,
         volume: 0.35,
         debounceTime: 25
       }

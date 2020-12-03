@@ -10,7 +10,9 @@ GOAL - Get demo for spencer of the theme generation service
 I need 1 random particle bullet, 1 random special explosion
 a little bit more descriptors in the sprite sheet service
 random game feel
-random night/day?
+random night/day? ( add some lights in there )
+Add some lights to the hero object
+Set up basic ambience with lights using randomization?
 
 CASUAL TODO
 Make a particle effect - see list
@@ -35,11 +37,17 @@ PUZZLE INTERFACES
 COMBAT + GOALS + QUESTS
 
 -------
+
+Create new descriptor tag in sprite editor, it just adds the descriptor to the sprite but
+
 update prologue to incorporate new flow. Draw -> Describe -> Dialogue -> Decide Themes
 
 experience password for ha-live. Use month+day - 100
 
 Change on collide to on touch start for certain tags
+
+Swords can just be the SLASHES you dont actually have to show the sword!! Omg genius…
+HITBOXES with duration. Use my own collision system
 
 ////////////////////////////////
 ////////////////////////////////
@@ -80,6 +88,7 @@ UX UPGRADE
 right click creator service - add to heros guidance? NOT BAD!
 Simple Context Menu for items with certain descriptors, cuz right now this shit is off the hook w too many options
 suggestedContextMenu items is the key...
+If two objects are highlighted on top of each other, select which one
 
 ////////////////////////////////
 ////////////////////////////////
@@ -212,6 +221,21 @@ LIBRARY IDEAS
   // if an object falls on the edge of another object, show the scrape!
   // object jump squeeze thing, ( with and height anim )
   _beingShrunk, _beingGrown, variables for the laser tools, PARTICLE EMITTER for when this is happening
+
+  Jump sparks.. just like that show motion?
+  pixiMap.animation vs pixMap.quickSprite
+
+  Hero standing animation
+
+  General glow around hero
+
+  Use copy of heros sprite for DASHES?
+  useOwnersSprite property for emitters
+  useColorPallete from sprite
+  Randomize particles uses…? ( cuz its not all blocks. UGH
+
+  Shorter contained destruction within the same area it occupied previously…
+  gameTheme: ’scifi vs fantasy vs retro vs fun vs horror’. This effects title selection randomization, sprite sheet selection?? and audio generation
 
 //ITEMS
 Key? If you have a key u can open ____
