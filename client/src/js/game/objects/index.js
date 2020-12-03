@@ -479,11 +479,11 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
       interactions.push({text: 'Deposit', tag: 'resourceDepositOnInteract', interaction: 'resourceDeposit'})
     }
 
+    let added
     if(hero.mod().dialogueChoices && Object.keys(hero.mod().dialogueChoices).length) {
       Object.keys(hero.mod().dialogueChoices).forEach((id) => {
         let choice = hero.mod().dialogueChoices[id]
         if(!choice || choice.triggerPool === 0) return
-        let added
         choice.id = id
         Object.keys(choice.tags).forEach((tag) => {
           if(added) return
