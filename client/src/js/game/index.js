@@ -440,7 +440,7 @@ class Game{
       }
     })
     GAME.gameState.activeModList.forEach((mod) => {
-      if(mod.removeEventListener) mod.removeEventListener()
+      if(mod && mod.removeEventListener) mod.removeEventListener()
     })
   }
 

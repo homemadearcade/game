@@ -19,6 +19,7 @@ export default class Goals extends React.Component{
     const subObjects = Object.keys(hero.subObjects).map((soName) => {
       return hero.subObjects[soName]
     }).filter((so) => {
+      if(!so.tags) return
       return so.mod().tags.showCountInHUD
     })
 
