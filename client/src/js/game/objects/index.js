@@ -26,6 +26,7 @@ class Objects{
       subObjects: {},
       objectType: 'plainObject',
       defaultSprite: 'solidcolorsprite',
+      heroDialogueSet: 'default',
     }
   }
 

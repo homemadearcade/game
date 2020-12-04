@@ -321,15 +321,17 @@ function updateLight(pixiChild, gameObject) {
   }
 
   if(!pixiChild.isAnimatingScale) {
-    pixiChild.transform.scale.x = (gameObject.width * gameObject.lightPower) * camera.multiplier
-    pixiChild.transform.scale.y = (gameObject.height * gameObject.lightPower) * camera.multiplier
+    let lightPower = gameObject.lightPower
+    if(typeof lightPower !== 'number') lightPower = .1
+    pixiChild.transform.scale.x = (gameObject.width * lightPower) * camera.multiplier
+    pixiChild.transform.scale.y = (gameObject.height * lightPower) * camera.multiplier
   }
 
-  if(gameObject.lightOpacity >= 0) {
+  if(gameObject.lightOpacity >= 0 && typeof gameObject.lightOpacity === 'number') {
     pixiChild.alpha = gameObject.lightOpacity
   } else pixiChild.alpha = 1
 
-  pixiChild.tint = getHexColor(gameObject.lightColor)
+  pixiChild.tint = getHexColor(gameObject.lightColor || 'white')
 
   updatePosition(pixiChild, gameObject)
   pixiChild.x += gameObject.width/2

@@ -192,7 +192,7 @@ function update(camera) {
     })
   }
 
-  if(clientHero && clientHero.interactableObjectId && !clientHero.flags.showDialogue) {
+  if(clientHero && clientHero.interactableObjectId && !clientHero.flags.showDialogue && !clientHero.flags.showChoices) {
     const interactableObject = OBJECTS.getObjectOrHeroById(clientHero.interactableObjectId)
     // if(interactableObject.tags.invisible) {
       // ctx.fillStyle = "rgb(255, 255, 255)";

@@ -5,6 +5,7 @@ import CurrentTagsMenu from '../menus/CurrentTagsMenu.jsx';
 import ColorMenu from '../menus/ColorMenu.jsx';
 import GameTagMenu from '../menus/GameTagMenu.jsx';
 import DialogueMenu from '../menus/DialogueMenu.jsx';
+import GreetingMenu from '../menus/GreetingMenu.jsx';
 import DialogueSetsMenu from '../menus/DialogueSetsMenu.jsx';
 import SequencesMenu from '../menus/SequencesMenu.jsx';
 import QuestMenu from '../menus/QuestMenu.jsx';
@@ -153,8 +154,8 @@ export default class ObjectContextMenu extends React.Component{
       <SubMenu title="Popover">
         <PopoverMenu objectSelected={objectSelected} subObject={subObject}/>
       </SubMenu>
-      <SubMenu title="Dialogue">
-        <DialogueMenu objectSelected={objectSelected} subObject={subObject}/>
+      <SubMenu title="Greeting">
+        <GreetingMenu objectSelected={objectSelected} subObject={subObject}/>
       </SubMenu>
       <SubMenu title="Dialogue Sets">
         <DialogueSetsMenu objectSelected={objectSelected} subObject={subObject}/>

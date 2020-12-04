@@ -310,7 +310,9 @@ const addGameObjectToStage = (gameObject, stage) => {
   if(gameObject.tags.light) {
     const lightbulb = new PIXI.Graphics();
     const rad = 30
-    lightbulb.beginFill(getHexColor(gameObject.lightColor));
+    let color = gameObject.lightColor
+    if(!color) color = 'white'
+    lightbulb.beginFill(getHexColor(color));
     lightbulb.drawCircle(0, 0, rad);
     lightbulb.endFill();
     lightbulb.parentLayer = PIXIMAP.globalLighting;// <-- try comment it
@@ -320,13 +322,15 @@ const addGameObjectToStage = (gameObject, stage) => {
 
     const lightbulb2 = new PIXI.Graphics();
     // const rad = 200
-    lightbulb2.beginFill(getHexColor(gameObject.lightColor));
+    lightbulb2.beginFill(getHexColor(color));
     lightbulb2.drawCircle(0, 0, rad);
     lightbulb2.endFill();
     lightbulb2.parentLayer = PIXIMAP.darkAreaLighting;// <-- try comment it
     lightbulb2.filters = [new PIXI.filters.BlurFilter(120)];
     sprite.darkArealight = stage.addChild(lightbulb2)
     lightbulb2._scaleMode = PIXI.SCALE_MODES.NEAREST
+
+    console.log(sprite)
   }
 
 

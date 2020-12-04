@@ -785,36 +785,46 @@ function onUpdate(hero, keysDown, delta) {
 function onKeyDown(key, hero) {
   if('e' === key || 'v' === key || 'enter' === key) {
     if(hero.dialogue && hero.dialogue.length) {
-      if(hero._fireDialogueCompleteWithSpeakerId && hero.dialogueId) {
-        const object = OBJECTS.getObjectOrHeroById(hero.dialogueId)
-        window.emitGameEvent('onHeroDialogueNext', hero, object)
-        if(hero.dialogue.length === 1) window.emitGameEvent('onHeroDialogueComplete', hero, object)
-      } else if(hero.dialogue[0].dialogueId) {
-        window.emitGameEvent('onHeroDialogueNext', hero, { id: hero.dialogue[0].dialogueId })
-        if(hero.dialogue.length === 1) window.emitGameEvent('onHeroDialogueComplete', hero, { id: hero.dialogue[0].dialogueId })
-      } else {
-        window.emitGameEvent('onHeroDialogueNext', hero)
-      }
+      let talkerId = hero.dialogueId
+      let dialogueId = hero.dialogueId
+      let _fireDialogueCompleteWithSpeakerId = hero._fireDialogueCompleteWithSpeakerId
+      if(!_fireDialogueCompleteWithSpeakerId && hero.dialogue[0].dialogueId) dialogueId = hero.dialogue[0].dialogueId
+
+      /// clear dialogue
       hero.dialogue.shift()
       if(!hero.dialogue.length) {
-        let dialogueId = hero.dialogueId
         hero.flags.showDialogue = false
         hero.flags.paused = false
         hero.onGround = false
         hero.dialogueId = null
         hero._fireDialogueCompleteWithSpeakerId = false
+      }
 
-        if(hero._loopDialogue && dialogueId) {
-          const talker = OBJECTS.getObjectOrHeroById(dialogueId)
+      /// event
+      if(_fireDialogueCompleteWithSpeakerId && dialogueId) {
+        const object = OBJECTS.getObjectOrHeroById(dialogueId)
+        window.emitGameEvent('onHeroDialogueNext', hero, object)
+        if(!hero.dialogue.length) window.emitGameEvent('onHeroDialogueComplete', hero, object)
+      } else if(dialogueId) {
+        window.emitGameEvent('onHeroDialogueNext', hero, { id: dialogueId })
+        if(!hero.dialogue.length) window.emitGameEvent('onHeroDialogueComplete', hero, { id: dialogueId })
+      } else {
+        window.emitGameEvent('onHeroDialogueNext', hero)
+        if(!hero.dialogue.length) window.emitGameEvent('onHeroDialogueComplete', hero, { id: null })
+      }
+
+      // loop
+      if(!hero.dialogue.length) {
+        if(hero._loopDialogue && talkerId) {
+          const talker = OBJECTS.getObjectOrHeroById(talkerId)
           if(talker) {
             window.emitGameEvent('onHeroInteract', hero, talker)
             onHeroTrigger(hero, talker, {}, {fromInteractButton: true})
             hero._loopDialogue = false
           }
         }
-
-        hero._fireDialogueCompleteWithSpeakerId
       }
+
       hero._cantInteract = true
 
       window.emitGameEvent('onUpdatePlayerUI', hero)

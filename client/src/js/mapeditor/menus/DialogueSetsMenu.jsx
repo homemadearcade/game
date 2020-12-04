@@ -127,6 +127,40 @@ export default class DialogueSetMenu extends React.Component{
         objectSelected.heroDialogueSets[data.setName] = null
         networkEditObject(objectSelected, {heroDialogueSets: objectSelected.heroDialogueSets })
       }
+
+      if(data.action === "turn-into-sequence") {
+        const { value: id } = await Swal.fire({
+          title: 'Turn dialogue into a sequence',
+          text: "What will the id of the sequence be?",
+          input: 'text',
+          inputAttributes: {
+            autocapitalize: 'off'
+          },
+          showCancelButton: true,
+          confirmButtonText: 'Ok',
+        })
+
+        const oldSet = objectSelected.heroDialogueSets[data.setName]
+        objectSelected.heroDialogueSets[data.setName] = null
+        objectSelected.sequences[data.setName] = id
+
+        GAME.library.sequences[id] = {
+          id,
+          items: oldSet.dialogue.map((dialogueJSON, i) => {
+            return {
+              id: window.alphaarray[i],
+              effectValue: 'dialogue',
+              sequenceType: 'sequenceDialogue',
+              effectJSON: [dialogueJSON],
+              next: 'sequential'
+            }
+          })
+        }
+        window.socket.emit('updateLibrary', { sequences: GAME.library.sequences })
+
+        networkEditObject(objectSelected, {heroDialogueSets: objectSelected.heroDialogueSets, sequences: objectSelected.sequences })
+        return
+      }
     }
   }
 
@@ -151,6 +185,7 @@ export default class DialogueSetMenu extends React.Component{
 
     render.push(<MenuItem key={JSON.stringify({ action:"rename-set", setName})}>Rename Set</MenuItem>)
     render.push(<MenuItem key={JSON.stringify({ action:"remove-set", setName})}>Remove Set</MenuItem>)
+    if(PAGE.role.isAdmin) render.push(<MenuItem key={JSON.stringify({ action:"turn-into-sequence", setName})}>Turn into sequence</MenuItem>)
 
     return render
   }

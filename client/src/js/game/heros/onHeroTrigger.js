@@ -16,6 +16,17 @@ export function onHeroTrigger(hero, collider, result, options = { fromInteractBu
   }
 
   if(isInteraction) {
+    if(!options.skipGreeting && collider.heroDialogueSets && collider.heroDialogueSets.greeting && collider.heroDialogueSets.greeting.dialogue && collider.heroDialogueSets.greeting.dialogue.length) {
+      effects.processEffect({ effectName: 'dialogue', effectJSON: collider.heroDialogueSets.greeting.dialogue }, hero, collider)
+      const removeEL = window.local.on('onHeroDialogueComplete', (heroDialoguing) => {
+        if(heroDialoguing.id === hero.id) {
+          onHeroTrigger(hero, collider, result, {...options, skipGreeting: true})
+          removeEL()
+        }
+      })
+      return
+    }
+
     const interactions = OBJECTS.getInteractions(hero, collider)
     if(interactions.length > 1) {
       hero.choiceOptions = interactions.slice().map((interaction) => {
@@ -26,7 +37,7 @@ export function onHeroTrigger(hero, collider, result, options = { fromInteractBu
         }
       })
       window.emitGameEvent('onHeroOptionStart', hero)
-      hero.flags.showDialogue = true
+      hero.flags.showChoices = true
       hero.flags.paused = true
       if(collider) {
         hero.dialogueId = collider.id

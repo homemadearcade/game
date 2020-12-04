@@ -497,6 +497,7 @@ function processEffect(effect, effected, effector, ownerObject) {
   }
 
   if(effectName === 'startLocalSequence') {
+    if(!effected.sequences) return
     const sequenceId = effected.sequences[effectValue]
     if(!sequenceId) return
     const context = {

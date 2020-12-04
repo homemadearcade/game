@@ -17,6 +17,7 @@ window.defaultDialogueChoice = {
   guestEffectProps: {
     effectValue: '',
   },
+  guestSequenceId: '',
   choiceText: 'Choice',
   triggerPool: -1
 }

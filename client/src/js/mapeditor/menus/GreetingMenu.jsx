@@ -2,20 +2,20 @@ import React from 'react'
 import Menu, { SubMenu, MenuItem } from 'rc-menu'
 import modals from '../modals.js'
 
-export default class DialogueMenu extends React.Component{
+export default class GreetingMenu extends React.Component{
   constructor(props) {
     super(props)
 
-    this._handleDialogueMenuClick = async ({ key }) => {
+    this._handleGreetingMenuClick = async ({ key }) => {
       const { objectSelected } = this.props
       const { networkEditObject } = MAPEDITOR
 
       if(key === "add-dialogue") {
-        if(!objectSelected.heroDialogueSets['default']) {
-          objectSelected.heroDialogueSets['default'] = {}
+        if(!objectSelected.heroDialogueSets['greeting']) {
+          objectSelected.heroDialogueSets['greeting'] = {}
         }
-        if(!objectSelected.heroDialogueSets['default'].dialogue) {
-          objectSelected.heroDialogueSets['default'].dialogue = []
+        if(!objectSelected.heroDialogueSets['greeting'].dialogue) {
+          objectSelected.heroDialogueSets['greeting'].dialogue = []
         }
         const { value: dialogue } = await Swal.fire({
           title: 'Edit Dialogue',
@@ -29,7 +29,7 @@ export default class DialogueMenu extends React.Component{
         })
         if(!dialogue) return
 
-        objectSelected.heroDialogueSets['default'].dialogue.push({...window.defaultDialogue, text: dialogue})
+        objectSelected.heroDialogueSets['greeting'].dialogue.push({...window.greetingDialogue, text: dialogue})
         networkEditObject(objectSelected, {heroDialogueSets: objectSelected.heroDialogueSets })
         return
       }
@@ -38,7 +38,7 @@ export default class DialogueMenu extends React.Component{
 
       if(data.action == "remove-dialogue") {
         let dialogueIndex = data.index
-        objectSelected.heroDialogueSets['default'].dialogue.splice(dialogueIndex, 1)
+        objectSelected.heroDialogueSets['greeting'].dialogue.splice(dialogueIndex, 1)
         networkEditObject(objectSelected, {heroDialogueSets: objectSelected.heroDialogueSets})
       }
 
@@ -51,12 +51,12 @@ export default class DialogueMenu extends React.Component{
           inputAttributes: {
             autocapitalize: 'off'
           },
-          inputValue: objectSelected.heroDialogueSets['default'].dialogue[dialogueIndex].text,
+          inputValue: objectSelected.heroDialogueSets['greeting'].dialogue[dialogueIndex].text,
           showCancelButton: true,
           confirmButtonText: 'Next',
         })
         if(!dialogue) return
-        objectSelected.heroDialogueSets['default'].dialogue[dialogueIndex].text = dialogue
+        objectSelected.heroDialogueSets['greeting'].dialogue[dialogueIndex].text = dialogue
         networkEditObject(objectSelected, {heroDialogueSets: objectSelected.heroDialogueSets})
       }
     }
@@ -65,12 +65,12 @@ export default class DialogueMenu extends React.Component{
   render() {
     const { objectSelected } = this.props
 
-    return <Menu onClick={this._handleDialogueMenuClick}>
+    return <Menu onClick={this._handleGreetingMenuClick}>
       <MenuItem key="add-dialogue">Add Dialogue</MenuItem>
-      {objectSelected.heroDialogueSets && objectSelected.heroDialogueSets.default && objectSelected.heroDialogueSets.default.dialogue && objectSelected.heroDialogueSets.default.dialogue.map((dialogue, i) => {
+      {objectSelected.heroDialogueSets && objectSelected.heroDialogueSets.greeting && objectSelected.heroDialogueSets.greeting.dialogue && objectSelected.heroDialogueSets.greeting.dialogue.map((dialogue, i) => {
         return <MenuItem key={JSON.stringify({ action:"edit-dialogue", index: i})}>{'Edit Dialogue ' + (i+1)}</MenuItem>
       })}
-      {objectSelected.heroDialogueSets && objectSelected.heroDialogueSets.default && objectSelected.heroDialogueSets.default.dialogue && objectSelected.heroDialogueSets.default.dialogue.map((dialogue, i) => {
+      {objectSelected.heroDialogueSets && objectSelected.heroDialogueSets.greeting && objectSelected.heroDialogueSets.greeting.dialogue && objectSelected.heroDialogueSets.greeting.dialogue.map((dialogue, i) => {
         return <MenuItem key={JSON.stringify({ action:"remove-dialogue", index: i})}>{'Remove Dialogue ' + (i+1)}</MenuItem>
       })}
     </Menu>
