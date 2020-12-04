@@ -1,4 +1,5 @@
 import keycode from 'keycode'
+import { onHeroTrigger } from './heros/onHeroTrigger'
 import { shootBullet, dropAndModify, closestObjectBehavior } from './action.js';
 
 window.defaultWASD =  {
@@ -796,13 +797,26 @@ function onKeyDown(key, hero) {
       }
       hero.dialogue.shift()
       if(!hero.dialogue.length) {
+        let dialogueId = hero.dialogueId
         hero.flags.showDialogue = false
         hero.flags.paused = false
         hero.onGround = false
         hero.dialogueId = null
         hero._fireDialogueCompleteWithSpeakerId = false
+
+        if(hero._loopDialogue && dialogueId) {
+          const talker = OBJECTS.getObjectOrHeroById(dialogueId)
+          if(talker) {
+            window.emitGameEvent('onHeroInteract', hero, talker)
+            onHeroTrigger(hero, talker, {}, {fromInteractButton: true})
+            hero._loopDialogue = false
+          }
+        }
+
+        hero._fireDialogueCompleteWithSpeakerId
       }
       hero._cantInteract = true
+
       window.emitGameEvent('onUpdatePlayerUI', hero)
     }
 

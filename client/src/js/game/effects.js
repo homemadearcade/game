@@ -297,6 +297,9 @@ function processEffect(effect, effected, effector, ownerObject) {
       effected.flags.paused = true
       if(effector) {
         effected.dialogueId = effector.id
+        // if(effector.tags.loopInteractionOnDialogueComplete) {
+        //   effected._loopDialogue = true
+        // }
         if(effector.name) {
           effected.dialogueName = effector.mod().name
         } else {
@@ -323,6 +326,9 @@ function processEffect(effect, effected, effector, ownerObject) {
       effected.flags.paused = true
       if(effector) {
         effected.dialogueId = effector.id
+        // if(effector.tags.loopInteractionOnDialogueComplete) {
+        //   effected._loopDialogue = true
+        // }
         if(effector.name) {
           effected.dialogueName = effector.mod().name
         } else {
@@ -351,6 +357,9 @@ function processEffect(effect, effected, effector, ownerObject) {
       effected.flags.paused = true
       if(effector) {
         effected.dialogueId = effector.id
+        // if(effector.tags.loopInteractionOnDialogueComplete) {
+        //   effected._loopDialogue = true
+        // }
         if(effector.name) {
           effected.dialogueName = effector.mod().name
         } else {

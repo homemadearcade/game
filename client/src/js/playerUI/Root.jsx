@@ -200,11 +200,12 @@ export default class Root extends React.Component {
     //   <i className="ShortcutPanel__main-menu fa fas fa-bars"></i>
     // </div>
 
+    const hasDialogue = hero.dialogue && hero.dialogue.length > 0
     return (
       <div className="PlayerUI">
         {this._renderFontPreLoad()}
-        {hero.flags && hero.flags.showDialogue && hero.dialogue && hero.dialogue.length > 0 && <DialogueBox verticleMiddle dialogue={hero.dialogue} name={hero.dialogueName} id={hero.dialogueId} />}
-        {hero.flags && hero.flags.showDialogue && hero.choiceOptions && <DialogueBox verticleMiddle options={hero.choiceOptions} name={hero.dialogueName} id={hero.dialogueId}/>}
+        {hero.flags && hero.flags.showDialogue && hasDialogue && <DialogueBox verticleMiddle dialogue={hero.dialogue} name={hero.dialogueName} id={hero.dialogueId} />}
+        {hero.flags && hero.flags.showDialogue && !hasDialogue && hero.choiceOptions && <DialogueBox verticleMiddle options={hero.choiceOptions} name={hero.dialogueName} id={hero.dialogueId}/>}
         {hero.flags && hero.flags.showCutscene && hero.cutscenes && <Cutscene scenes={hero.cutscenes} />}
         <div className="RightHUD" style={{ right: PAGE.isLogOpen ? '22%' : '20px'}}>
           <InventoryHUD/>

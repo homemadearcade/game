@@ -1,4 +1,5 @@
 export default function onTalk(hero, collider, result, options) {
+  console.log('X')
   if(collider.id !== hero.lastDialogueId) {
 
     const heroDialogueSetName = collider.mod().heroDialogueSet
@@ -16,6 +17,10 @@ export default function onTalk(hero, collider, result, options) {
     hero._fireDialogueCompleteWithSpeakerId = true
     if(collider) {
       hero.dialogueId = collider.id
+      console.log(options.fromInteractButton, collider.tags.loopInteractionOnDialogueComplete)
+      if(options.fromInteractButton && collider.tags.loopInteractionOnDialogueComplete) {
+        hero._loopDialogue = true
+      }
       if(collider.name) {
         hero.dialogueName = collider.mod().name
       } else {

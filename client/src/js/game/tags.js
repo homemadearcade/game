@@ -131,6 +131,7 @@ function setDefault() {
     talkOnHeroInteract: false,
     // talkOnDestroy: false,
     oneTimeTalker: false,
+    loopInteractionOnDialogueComplete: false,
     autoTalkOnInteractable: false,
   }
 

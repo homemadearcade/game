@@ -241,6 +241,8 @@ class Objects{
       // inventory
       count: object.count,
 
+      sequences: object.sequences,
+
       constructParts: object.constructParts && object.constructParts.map((part) => {
         return {
           id: part.id,
@@ -479,21 +481,42 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
       interactions.push({text: 'Deposit', tag: 'resourceDepositOnInteract', interaction: 'resourceDeposit'})
     }
 
-    let added
+    let addedLeave
     if(hero.mod().dialogueChoices && Object.keys(hero.mod().dialogueChoices).length) {
+      let addedDialogueChoice
       Object.keys(hero.mod().dialogueChoices).forEach((id) => {
         let choice = hero.mod().dialogueChoices[id]
         if(!choice || choice.triggerPool === 0) return
         choice.id = id
         Object.keys(choice.tags).forEach((tag) => {
-          if(added) return
+          if(addedDialogueChoice) return
           if(object.mod().tags[tag]) {
-            added = true
+            addedDialogueChoice = true
             interactions.push({text: choice.choiceText, dialogueChoice: choice})
           }
         })
+
+        if(addedDialogueChoice) return
+
+        let heroDialogueSet = choice.heroDialogueSet
+        if(heroDialogueSet && object.mod().dialogueSets[heroDialogueSet]) {
+          addedDialogueChoice = true
+          interactions.push({text: choice.choiceText, dialogueChoice: choice})
+        }
+
+        if(addedDialogueChoice) return
+
+        let sequenceId = choice.sequenceId
+        if(sequenceId && object.mod().sequences[sequenceId]) {
+          addedDialogueChoice = true
+          interactions.push({text: choice.choiceText, dialogueChoice: choice})
+        }
       })
-      if(added) interactions.push({text: 'Cancel'})
+
+      if(addedDialogueChoice) {
+        addedLeave = true
+        interactions.push({text: 'Leave'})
+      }
     }
 
     if(object.triggers) {
@@ -508,6 +531,10 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
           }
         }
       })
+    }
+
+    if((interactions.length > 1 || object.tags.loopInteractionOnDialogueComplete) && !addedLeave) {
+      interactions.push({text: 'Leave'})
     }
 
     return interactions
