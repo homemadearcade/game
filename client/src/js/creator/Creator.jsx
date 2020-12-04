@@ -3,6 +3,7 @@ import classnames from 'classnames'
 import { SketchPicker, SwatchesPicker } from 'react-color';
 import gridUtil from '../utils/grid.js'
 import PixiMapSprite from '../components/PixiMapSprite.jsx';
+import { Textfit } from 'react-textfit';
 
 export default class Creator extends React.Component {
   constructor(props) {
@@ -261,7 +262,7 @@ export default class Creator extends React.Component {
       }}
       >
       <div className="Creator__category-top">
-        {!open && !selected && name}
+        {!open && !selected && <Textfit min={14} max={26} mode="single" id="fitty">{name}</Textfit>}
         {open && !selected && <i className="Creator__category-close fa fas fa-chevron-down"></i>}
         {selected &&
           <i className="Creator__category-close fa fas fa-times"
@@ -279,15 +280,16 @@ export default class Creator extends React.Component {
           const hasShiftClick = object.onShiftClick && EDITOR.shiftPressed
           const selected = object.label === creatorObjectSelected.label
           const toggledOn = creatorObjectsToggled[object.toggleId]
-          return <div
+          return <Textfit className={classnames("Creator__category-item", { "Creator__category-item--selected": selected, "Creator__category-item--shift": hasShiftClick })} id='fitty' mode="single" min={14} max={26}>
+            <div
               data-creatorlibraryid={object.creatorLibraryId}
-              className={classnames("Creator__category-item", { "Creator__category-item--selected": selected, "Creator__category-item--shift": hasShiftClick })}
               onClick={() => {
                 this._selectCreatorObject(object)
             }}>
-            {object.label}
-            {toggledOn && <i className="fa fas fa-check"/>}
-          </div>
+              {object.label}
+              {toggledOn && <i className="fa fas fa-check"/>}
+            </div>
+          </Textfit>
         })
       }
     </div></div>
