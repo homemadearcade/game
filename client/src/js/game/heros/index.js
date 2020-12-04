@@ -531,6 +531,8 @@ class Hero{
       spriteSheets: hero.spriteSheets,
       creator: hero.creator,
 
+      sequences: hero.sequences,
+      
       zoomMultiplier: hero.zoomMultiplier,
       cameraTweenToTargetX: hero.cameraTweenToTargetX,
       cameraTweenToTargetY: hero.cameraTweenToTargetY,

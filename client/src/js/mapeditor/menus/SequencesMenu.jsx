@@ -14,17 +14,39 @@ export default class Sequence extends React.Component{
         if(!objectSelected.sequences) {
           objectSelected.sequences = {}
         }
-        const { value: name } = await Swal.fire({
-          title: 'Add Dialogue Set',
-          text: "What is the name of this sequence?",
-          input: 'text',
-          inputAttributes: {
-            autocapitalize: 'off'
+
+        const list = window.getListOfAllSetsAndSequences()
+
+        list.unshift('New')
+
+        let { value: name } = await Swal.fire({
+          title: 'What is the name of this new local sequence?',
+          showClass: {
+            popup: 'animated fadeInDown faster'
           },
-          showCancelButton: true,
-          confirmButtonText: 'Next',
+          hideClass: {
+            popup: 'animated fadeOutUp faster'
+          },
+          input: 'select',
+          inputOptions: list,
+          preConfirm: (result) => {
+            return list[result]
+          }
         })
-        if(!name) return
+
+        if(name === 'New') {
+          let { value: newName } = await Swal.fire({
+            title: 'Add Dialogue Set',
+            text: "What is the name of this new local sequence?",
+            input: 'text',
+            inputAttributes: {
+              autocapitalize: 'off'
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Next',
+          })
+          name = newName
+        }
 
         modals.openEditSequenceModal(null, (id) => {
           if(id.value && id.value != true) {

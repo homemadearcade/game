@@ -284,6 +284,24 @@ function openSelectTag(cb) {
   }).then(cb)
 }
 
+function openSelectFromList(title, list, cb) {
+  Swal.fire({
+    title: title,
+    showClass: {
+      popup: 'animated fadeInDown faster'
+    },
+    hideClass: {
+      popup: 'animated fadeOutUp faster'
+    },
+    input: 'select',
+    inputOptions: list,
+    preConfirm: (result) => {
+      console.log('RE', result)
+      return list[result]
+    }
+  }).then(cb)
+}
+
 function openSelectParticleAnimation(cb) {
 
   const inputOptions = Object.keys({...GAME.library.animations, ...window.particleEmitterLibrary}).filter((name) => {
@@ -829,6 +847,7 @@ export default {
   openEditCodeModal,
   openEditNumberModal,
   openSelectTag,
+  openSelectFromList,
   openSelectEaseAnimation,
   openEditSequenceModal,
   openSelectParticleAnimation,

@@ -2,6 +2,7 @@ import React from 'react'
 import Menu, { SubMenu, MenuItem } from 'rc-menu';
 import SelectSubObjectMenu from '../menus/SelectSubObjectMenu.jsx';
 import TriggerMenu from '../menus/TriggerMenu.jsx';
+import SequencesMenu from '../menus/SequencesMenu.jsx';
 import SpriteMenu from '../menus/SpriteMenu.jsx';
 import HookMenu from '../menus/HookMenu.jsx';
 import ModMenu from '../menus/ModMenu.jsx';
@@ -191,34 +192,29 @@ export default class HeroContextMenu extends React.Component {
 
     return <Menu onClick={this._handleHeroMenuClick}>
       <MenuItem key='copy-id' className="bold-menu-item">{objectSelected.name || objectSelected.id}</MenuItem>
-      <MenuItem key='drag'>Drag</MenuItem>
-      <MenuItem key='resize'>Resize</MenuItem>
-      <MenuItem key='respawn'>Respawn</MenuItem>
-      <SubMenu title="Color">
-        <MenuItem key="select-color" className='dont-close-menu'>Color Picker</MenuItem>
-        <MenuItem key="toggle-outline">{ objectSelected.tags.outline ? 'On border only' : "Fill object" }</MenuItem>
+      <SubMenu title='Map Operations'>
+        <MenuItem key='drag'>Drag</MenuItem>
+        <MenuItem key='resize'>Resize</MenuItem>
+        <MenuItem key='respawn'>Respawn</MenuItem>
       </SubMenu>
-      <SubMenu title="Name">
-        <NameMenu objectSelected={objectSelected}/>
+      <SubMenu title='Infographical'>
+        <SubMenu title='Sprite'><SpriteMenu objectSelected={objectSelected}/></SubMenu>
+        <SubMenu title="Color">
+          <MenuItem key="select-color" className='dont-close-menu'>Color Picker</MenuItem>
+          <MenuItem key="toggle-outline">{ objectSelected.tags.outline ? 'On border only' : "Fill object" }</MenuItem>
+        </SubMenu>
+        <SubMenu title="Name">
+          <NameMenu objectSelected={objectSelected}/>
+        </SubMenu>
       </SubMenu>
       <SubMenu title="Quests">
         <MenuItem key="add-quest">Add Quest</MenuItem>
         {this._renderEditQuestList(objectSelected.quests)}
         {this._renderDeleteQuestList(objectSelected.quests)}
       </SubMenu>
-      <SubMenu title="Current Tags">
-        <CurrentTagsMenu objectSelected={objectSelected} currentTags={objectSelected.tags}></CurrentTagsMenu>
-      </SubMenu>
-      <SubMenu title="All Tags">
-        <TagMenu objectSelected={objectSelected}></TagMenu>
-      </SubMenu>
       {GAME.gameState.activeMods[objectSelected.id] && <SubMenu title="Mods">
         <ModMenu objectSelected={objectSelected}/>
       </SubMenu>}
-      <SubMenu title="Triggers">
-        <TriggerMenu objectSelected={objectSelected}/>
-      </SubMenu>
-      <SubMenu title='Sprite'><SpriteMenu objectSelected={objectSelected}/></SubMenu>
       <SubMenu title="Controls">
         <SubMenu title="Arrow Keys">
           {this._renderInputBehaviorMenu('arrowKeysBehavior', Object.keys(window.arrowKeysBehavior))}
@@ -241,17 +237,29 @@ export default class HeroContextMenu extends React.Component {
           </Menu>
         </SubMenu>
       </SubMenu>
-      {Object.keys(objectSelected.subObjects || {}).length && <SubMenu title="Sub Objects">
-        <SelectSubObjectMenu objectSelected={objectSelected} selectSubObject={this.props.selectSubObject} />
-      </SubMenu>}
-      {GAME.gameState.started ? <MenuItem key="remove">Remove</MenuItem> : <MenuItem key="delete">Delete</MenuItem>}
-      <SubMenu title="Advanced">
+      <SubMenu title="Triggers">
+        <TriggerMenu objectSelected={objectSelected}/>
+      </SubMenu>
+      <SubMenu title="Sequences">
+        <SequencesMenu objectSelected={objectSelected}/>
+      </SubMenu>
+      <SubMenu title="Current Tags">
+        <CurrentTagsMenu objectSelected={objectSelected} currentTags={objectSelected.tags}></CurrentTagsMenu>
+      </SubMenu>
+      <SubMenu title="All Tags">
+        <TagMenu objectSelected={objectSelected}></TagMenu>
+      </SubMenu>
+      <SubMenu title="Data/Services">
         <MenuItem key="reset-to-game-default">Reset To Game Default</MenuItem>
         <MenuItem key="reset-to-core-default">Reset To Core Default</MenuItem>
         <MenuItem key='add-new-subobject'>Add new sub object</MenuItem>
         <MenuItem key="edit-all-json">Edit All JSON</MenuItem>
         <MenuItem key="open-hero-live-edit">Live Hero Edit</MenuItem>
       </SubMenu>
+      {Object.keys(objectSelected.subObjects || {}).length && <SubMenu title="Sub Objects">
+        <SelectSubObjectMenu objectSelected={objectSelected} selectSubObject={this.props.selectSubObject} />
+      </SubMenu>}
+      {GAME.gameState.started ? <MenuItem key="remove">Remove</MenuItem> : <MenuItem key="delete">Delete</MenuItem>}
     </Menu>
   }
 }

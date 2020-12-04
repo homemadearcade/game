@@ -235,14 +235,14 @@ export default class SequenceEditor extends React.Component {
   }
 
   getCurrentId() {
-    console.log(this.state)
-    if(!this.state.sequence) return
+    if(!this.state.sequence) return this.state.lastSequenceId
     return this.state.sequence.id
   }
 
   openSequence(id) {
     this.setState({
-      sequence: JSON.parse(JSON.stringify(GAME.library.sequences[id]))
+      sequence: JSON.parse(JSON.stringify(GAME.library.sequences[id])),
+      lastSequenceId: id,
     })
     this._generateRefs(GAME.library.sequences[id].items)
   }

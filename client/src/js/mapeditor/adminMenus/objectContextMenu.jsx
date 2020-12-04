@@ -136,47 +136,54 @@ export default class ObjectContextMenu extends React.Component{
 
     return <Menu onClick={this._handleObjectMenuClick}>
       <MenuItem key='copy-id' className="bold-menu-item">{objectSelected.subObjectName || objectSelected.name || objectSelected.id}</MenuItem>
-      {!subObject && <MenuItem key="drag">Drag</MenuItem>}
-      {!subObject && <MenuItem key="drag-off-grid">Drag Off Grid</MenuItem>}
-      {(!objectSelected.constructParts || objectSelected.tags.maze) && !objectSelected.pathParts && <MenuItem key="resize">Resize</MenuItem>}
-      {subObject && <MenuItem key="resize-grid">Resize On Grid</MenuItem>}
-      {!subObject && <MenuItem key="copy">Duplicate</MenuItem>}
-      <SubMenu title='Sprite'><SpriteMenu objectSelected={objectSelected} subObject={subObject}/></SubMenu>
-      {(objectSelected.ownerId || objectSelected.relativeId) && <SubMenu title="Relative">
-        <RelativeMenu objectSelected={objectSelected} subObject={subObject}/>
-      </SubMenu>}
-      <SubMenu title="Color">
-        <ColorMenu objectSelected={objectSelected} openColorPicker={this.props.openColorPicker} subObject={subObject}></ColorMenu>
+      <SubMenu title='Map Operations'>
+        {!subObject && <MenuItem key="drag">Drag</MenuItem>}
+        {!subObject && <MenuItem key="drag-off-grid">Drag Off Grid</MenuItem>}
+        {(!objectSelected.constructParts || objectSelected.tags.maze) && !objectSelected.pathParts && <MenuItem key="resize">Resize</MenuItem>}
+        {subObject && <MenuItem key="resize-grid">Resize On Grid</MenuItem>}
+        {!subObject && <MenuItem key="copy">Duplicate</MenuItem>}
       </SubMenu>
-      <SubMenu title="Name">
-        <NameMenu objectSelected={objectSelected} subObject={subObject}/>
-      </SubMenu>
-      <SubMenu title="Popover">
-        <PopoverMenu objectSelected={objectSelected} subObject={subObject}/>
-      </SubMenu>
-      <SubMenu title="Greeting">
-        <GreetingMenu objectSelected={objectSelected} subObject={subObject}/>
+      <SubMenu title='Infographical'>
+        <SubMenu title='Sprite'><SpriteMenu objectSelected={objectSelected} subObject={subObject}/></SubMenu>
+        {(objectSelected.ownerId || objectSelected.relativeId) && <SubMenu title="Relative">
+          <RelativeMenu objectSelected={objectSelected} subObject={subObject}/>
+        </SubMenu>}
+        <SubMenu title="Color">
+          <ColorMenu objectSelected={objectSelected} openColorPicker={this.props.openColorPicker} subObject={subObject}></ColorMenu>
+        </SubMenu>
+        <SubMenu title="Name">
+          <NameMenu objectSelected={objectSelected} subObject={subObject}/>
+        </SubMenu>
+        <SubMenu title="Popover">
+          <PopoverMenu objectSelected={objectSelected} subObject={subObject}/>
+        </SubMenu>
       </SubMenu>
       <SubMenu title="Dialogue Sets">
         <DialogueSetsMenu objectSelected={objectSelected} subObject={subObject}/>
       </SubMenu>
-      <SubMenu title="Sequences">
-        <SequencesMenu objectSelected={objectSelected} subObject={subObject}/>
-      </SubMenu>
       {this._renderObjectSpawnZoneMenu()}
       {this._renderObjectResourceZoneMenu()}
       {this._renderObjectEmitterMenu()}
-      <SubMenu title="Group">
-        <GameTagMenu objectSelected={objectSelected} subObject={subObject}/>
-      </SubMenu>
       <SubMenu title="Triggers">
         <TriggerMenu objectSelected={objectSelected}/>
+      </SubMenu>
+      <SubMenu title="Sequences">
+        <SequencesMenu objectSelected={objectSelected} subObject={subObject}/>
+      </SubMenu>
+      <SubMenu title="Group">
+        <GameTagMenu objectSelected={objectSelected} subObject={subObject}/>
       </SubMenu>
       <SubMenu title="Current Tags">
         <CurrentTagsMenu objectSelected={objectSelected} currentTags={objectSelected.tags}></CurrentTagsMenu>
       </SubMenu>
       <SubMenu title="All Tags">
         <TagMenu objectSelected={objectSelected} subObject={subObject}></TagMenu>
+      </SubMenu>
+      <SubMenu title="Services">
+        <ServicesMenu objectSelected={objectSelected} subObject={subObject}/>
+      </SubMenu>
+      <SubMenu title="Data">
+        <ObjectAdvancedMenu objectSelected={objectSelected} subObject={subObject}/>
       </SubMenu>
       {!subObject && Object.keys(objectSelected.subObjects || {}).length && <SubMenu title="Sub Objects">
         <SelectSubObjectMenu objectSelected={objectSelected} selectSubObject={this.props.selectSubObject}/>
@@ -185,12 +192,6 @@ export default class ObjectContextMenu extends React.Component{
       { subObject && objectSelected.isEquipped && <MenuItem key="unequip">Unequip</MenuItem> }
       { subObject && objectSelected.tags.pickupable && <MenuItem key="drop">Drop</MenuItem> }
       { (GAME.gameState.started || GAME.gameState.branch) ? <MenuItem key="remove">Remove</MenuItem> : <MenuItem key="delete">Delete</MenuItem> }
-      <SubMenu title="Services">
-        <ServicesMenu objectSelected={objectSelected} subObject={subObject}/>
-      </SubMenu>
-      <SubMenu title="Data">
-        <ObjectAdvancedMenu objectSelected={objectSelected} subObject={subObject}/>
-      </SubMenu>
     </Menu>
   }
 }

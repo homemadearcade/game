@@ -2,6 +2,25 @@ import React from 'react'
 import Menu, { SubMenu, MenuItem } from 'rc-menu'
 import modals from '../modals.js'
 
+window.getListOfAllSetsAndSequences = function() {
+  const map = {}
+  return [...GAME.objects, ...GAME.heroList].reduce((prev, next) => {
+    if(next.heroDialogueSets) {
+      prev.push(...Object.keys(next.heroDialogueSets))
+    }
+    if(next.sequences) {
+      prev.push(...Object.keys(next.sequences))
+    }
+    return prev
+  }, []).filter((name) => {
+    if(map[name]) return false
+    else {
+      map[name] = true
+      return true
+    }
+  })
+}
+
 export default class DialogueSetMenu extends React.Component{
   constructor(props) {
     super(props)
@@ -15,22 +34,45 @@ export default class DialogueSetMenu extends React.Component{
         if(!objectSelected.heroDialogueSets) {
           objectSelected.heroDialogueSets = {}
         }
-        const { value: name } = await Swal.fire({
-          title: 'Add Dialogue Set',
-          text: "What is the name of this dialogue set?",
-          input: 'text',
-          inputAttributes: {
-            autocapitalize: 'off'
+
+        const list = window.getListOfAllSetsAndSequences()
+
+        list.unshift('New')
+
+        let { value: name } = await Swal.fire({
+          title: 'What is the name of this new dialogue set',
+          showClass: {
+            popup: 'animated fadeInDown faster'
           },
-          showCancelButton: true,
-          confirmButtonText: 'Next',
+          hideClass: {
+            popup: 'animated fadeOutUp faster'
+          },
+          input: 'select',
+          inputOptions: list,
+          preConfirm: (result) => {
+            return list[result]
+          }
         })
+
+        if(name === 'New') {
+          let { value: newName } = await Swal.fire({
+            title: 'Add Dialogue Set',
+            text: "What is the name of this dialogue set?",
+            input: 'text',
+            inputAttributes: {
+              autocapitalize: 'off'
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Next',
+          })
+          name = newName
+        }
+
         if(!name) return
 
         objectSelected.heroDialogueSets[name] = {}
         objectSelected.heroDialogueSets[name].dialogue = [_.cloneDeep(window.defaultDialogue)]
         networkEditObject(objectSelected, {heroDialogueSets: objectSelected.heroDialogueSets })
-        return
       }
 
       if(key === "set-dialogue-set") {
