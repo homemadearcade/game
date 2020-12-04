@@ -113,10 +113,6 @@ import pathfinding from '../utils/pathfinding.js'
       largeText: true,
       effectorObject: true,
     },
-    startSequence: {
-      sequenceId: true,
-      effectorObject: true,
-    },
     tagAdd: {
       tag: true,
     },
@@ -193,6 +189,16 @@ import pathfinding from '../utils/pathfinding.js'
       libraryObject: true,
       label: 'How many nodes on top'
     },
+
+    startSequence: {
+      sequenceId: true,
+      effectorObject: true,
+    },
+    startLocalSequence: {
+      smallText: true,
+      label: 'Local SequenceName',
+      effectorObject: true,
+    }
 
     // 'animation',
     // notification -> chat, private chat, log, toast, modal
@@ -373,6 +379,9 @@ function processEffect(effect, effected, effector, ownerObject) {
     }
   }
 
+
+
+
   if(effectName === 'destroy') {
     effected._destroyedById = effector.id ? effector.id : effector
     effected._destroy = true
@@ -486,6 +495,18 @@ function processEffect(effect, effected, effector, ownerObject) {
     }
     startSequence(effect.effectSequenceId || effectValue, context)
   }
+
+  if(effectName === 'startLocalSequence') {
+    const sequenceId = effected.sequences[effectValue]
+    if(!sequenceId) return
+    const context = {
+      mainObject: effected,
+      guestObject: effector,
+      ownerObject: effected,
+    }
+    startSequence(sequenceId, context)
+  }
+
 
   if(effectName === 'branchApply') {
     GAME.onBranchApply(effect.effectBranchName || effectValue)

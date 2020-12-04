@@ -120,7 +120,11 @@ function processSequence(sequence) {
 
   if(item.sequenceType === 'sequenceDialogue') {
     item.effectName = 'dialogue'
-    effects.processEffect(item, defaultEffected, defaultEffector, sequence.ownerObject)
+    if(defaultEffector.tags.hero && !defaultEffected.tags.hero) {
+      effects.processEffect(item, defaultEffector, defaultEffected, sequence.ownerObject)
+    } else {
+      effects.processEffect(item, defaultEffected, defaultEffector, sequence.ownerObject)
+    }
   }
 
   if(item.sequenceType === 'sequenceEffect') {

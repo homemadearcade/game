@@ -156,7 +156,7 @@ export function triggerInteraction(interaction, hero, collider, result, options)
   let triggered = false
 
   if(interaction.dialogueChoice) {
-    const { heroEffect, heroEffectProps, guestEffectProps, guestEffect, heroDialogue, heroDialogueSet } = interaction.dialogueChoice
+    const { heroEffect, heroEffectProps, guestEffectProps, guestEffect, heroDialogue, heroDialogueSet, guestSequenceId } = interaction.dialogueChoice
 
     if(heroDialogue) {
       effects.processEffect({ effectName: 'dialogue', effectJSON: heroDialogue }, hero, collider)
@@ -169,6 +169,9 @@ export function triggerInteraction(interaction, hero, collider, result, options)
     }
     if(guestEffect) {
       effects.processEffect({ effectName: guestEffect, ...interaction.dialogueChoice.guestEffectProps}, collider, hero)
+    }
+    if(guestSequenceId) {
+      effects.processEffect({ effectName: 'startLocalSequence', effectValue: guestSequenceId }, collider, hero)
     }
 
     if(interaction.dialogueChoice.triggerPool) {

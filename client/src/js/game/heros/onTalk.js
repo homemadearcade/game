@@ -1,7 +1,5 @@
 export default function onTalk(hero, collider, result, options) {
-  console.log('X')
   if(collider.id !== hero.lastDialogueId) {
-
     const heroDialogueSetName = collider.mod().heroDialogueSet
     let newDialogue
     if(heroDialogueSetName && collider.mod().heroDialogueSets && collider.mod().heroDialogueSets[heroDialogueSetName]) {
@@ -11,7 +9,11 @@ export default function onTalk(hero, collider, result, options) {
     }
     if(!options.fromInteractButton) hero.lastDialogueId = collider.id
     window.emitGameEvent('onHeroDialogueStart', hero, collider)
-    hero.dialogue = newDialogue
+    if(hero.dialogue && hero.dialogue.length) {
+      hero.dialogue.push(...newDialogue)
+    } else {
+      hero.dialogue = newDialogue
+    }
     hero.flags.showDialogue = true
     hero.flags.paused = true
     hero._fireDialogueCompleteWithSpeakerId = true

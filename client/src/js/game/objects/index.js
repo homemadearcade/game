@@ -499,7 +499,8 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
         if(addedDialogueChoice) return
 
         let heroDialogueSet = choice.heroDialogueSet
-        if(heroDialogueSet && object.mod().dialogueSets[heroDialogueSet]) {
+        let dialogueSets = object.mod().dialogueSets
+        if(heroDialogueSet && dialogueSets && dialogueSets[heroDialogueSet]) {
           addedDialogueChoice = true
           interactions.push({text: choice.choiceText, dialogueChoice: choice})
         }
