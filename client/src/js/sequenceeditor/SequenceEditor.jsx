@@ -233,6 +233,12 @@ export default class SequenceEditor extends React.Component {
     })
   }
 
+  getCurrentId() {
+    console.log(this.state)
+    if(!this.state.sequence) return
+    return this.state.sequence.id
+  }
+
   openSequence(id) {
     this.setState({
       sequence: JSON.parse(JSON.stringify(GAME.library.sequences[id]))

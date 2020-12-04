@@ -2,6 +2,7 @@ import Swal from 'sweetalert2/src/sweetalert2.js';
 import React from 'react'
 import ReactDOM from 'react-dom'
 import SequenceItem from '../sequenceeditor/SequenceItem.jsx'
+import SequenceEditor from '../sequenceeditor/SequenceEditor.jsx'
 import ConditionList from '../sequenceeditor/ConditionList.jsx'
 import SubObjectModal from './SubObjectModal.jsx'
 import DescriptorSelect from '../components/DescriptorSelect.jsx';
@@ -643,6 +644,37 @@ function openEditTriggerModal(effect, cb) {
 
 }
 
+
+function openEditSequenceModal(id, cb) {
+  Swal.fire({
+    title: 'Edit Sequence',
+    showClass: {
+      popup: 'animated fadeInDown faster'
+    },
+    hideClass: {
+      popup: 'animated fadeOutUp faster'
+    },
+    html:`<div id='edit-sequence-container'></div>`,
+    preConfirm: (result) => {
+      console.log(ref.current)
+      return ref.current.getCurrentId()
+    }
+  }).then(cb)
+
+  // Mount React App
+  const ref = React.createRef()
+  ReactDOM.render(
+    React.createElement(SequenceEditor, { ref }),
+    document.getElementById('edit-sequence-container')
+  )
+
+  if(id) {
+    setTimeout(() => {
+      ref.current.openSequence(id)
+    })
+  }
+}
+
 function openEditDescriptorsModal(initialDescriptors, cb) {
   Swal.fire({
     title: 'Edit Descriptors',
@@ -798,6 +830,7 @@ export default {
   openEditNumberModal,
   openSelectTag,
   openSelectEaseAnimation,
+  openEditSequenceModal,
   openSelectParticleAnimation,
   // editTriggerEvent,
   openEditMod,

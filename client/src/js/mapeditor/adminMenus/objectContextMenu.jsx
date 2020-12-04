@@ -6,6 +6,7 @@ import ColorMenu from '../menus/ColorMenu.jsx';
 import GameTagMenu from '../menus/GameTagMenu.jsx';
 import DialogueMenu from '../menus/DialogueMenu.jsx';
 import DialogueSetsMenu from '../menus/DialogueSetsMenu.jsx';
+import SequencesMenu from '../menus/SequencesMenu.jsx';
 import QuestMenu from '../menus/QuestMenu.jsx';
 import SpawnZoneMenu from '../menus/SpawnZoneMenu.jsx';
 import ResourceZoneMenu from '../menus/ResourceZoneMenu.jsx';
@@ -149,14 +150,17 @@ export default class ObjectContextMenu extends React.Component{
       <SubMenu title="Name">
         <NameMenu objectSelected={objectSelected} subObject={subObject}/>
       </SubMenu>
-      <SubMenu title="Dialogue">
-        <DialogueMenu objectSelected={objectSelected} subObject={subObject}/>
-      </SubMenu>
       <SubMenu title="Popover">
         <PopoverMenu objectSelected={objectSelected} subObject={subObject}/>
       </SubMenu>
+      <SubMenu title="Dialogue">
+        <DialogueMenu objectSelected={objectSelected} subObject={subObject}/>
+      </SubMenu>
       <SubMenu title="Dialogue Sets">
         <DialogueSetsMenu objectSelected={objectSelected} subObject={subObject}/>
+      </SubMenu>
+      <SubMenu title="Sequences">
+        <SequencesMenu objectSelected={objectSelected} subObject={subObject}/>
       </SubMenu>
       {this._renderObjectSpawnZoneMenu()}
       {this._renderObjectResourceZoneMenu()}
