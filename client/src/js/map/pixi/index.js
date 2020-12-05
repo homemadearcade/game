@@ -557,11 +557,15 @@ PIXIMAP.onObjectAnimation = function(type, objectId, options = {}) {
   }
 
   if(type === 'explode') {
-    pixiChild.explodeEmitter = initEmitter(object, 'explode', { persistAfterRemoved: true, matchObjectColor: true, useUpdateOwnerPos: true }, { hasNoOwner: true })
+    let options = { persistAfterRemoved: true, matchObjectColor: true, useUpdateOwnerPos: true }
+    if(object.emitterTypeExplosion) {
+      options = window.particleEmitterLibrary.addGameLibrary()[object.emitterTypeExplosion]
+    }
+    pixiChild.explodeEmitter = initEmitter(object, object.emitterTypeExplosion || 'explode', options, { hasNoOwner: true })
     setTimeout(() => {
       PIXIMAP.deleteEmitter(pixiChild.explodeEmitter)
       delete pixiChild.explodeEmitter
-    }, 1000)
+    }, 10000)
   }
 
   if(type === 'spinOff') {

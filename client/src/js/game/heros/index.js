@@ -532,7 +532,7 @@ class Hero{
       creator: hero.creator,
 
       sequences: hero.sequences,
-      
+
       zoomMultiplier: hero.zoomMultiplier,
       cameraTweenToTargetX: hero.cameraTweenToTargetX,
       cameraTweenToTargetY: hero.cameraTweenToTargetY,
@@ -546,7 +546,11 @@ class Hero{
       resourceLimit: hero.resourceLimit,
 
       emitterData: hero.emitterData,
-
+      emitterType: hero.emitterType,
+      emitterTypeExplosion: hero.emitterTypeExplosion,
+      emitterTypePoweredUp: hero.emitterTypePoweredUp,
+      emitterTypeJump: hero.emitterTypeJump,
+      emitterTypeDash: hero.emitterTypeDash,
 
       velocityMax: hero.velocityMax,
       velocityMaxXExtra: hero.velocityMaxXExtra,

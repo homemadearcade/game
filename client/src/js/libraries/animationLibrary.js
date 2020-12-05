@@ -379,8 +379,8 @@ window.local.on('onFirstPageGameLoaded', () => {
     		"end": 0.1
     	},
     	"scale": {
-    		"start": 1,
-    		"end": 0.3,
+    		"start": .5,
+    		"end": 0.15,
     		"minimumScaleMultiplier": 1
     	},
     	"color": {
@@ -407,12 +407,12 @@ window.local.on('onFirstPageGameLoaded', () => {
     		"max": 0
     	},
     	"lifetime": {
-    		"min": 0.5,
-    		"max": 0.5
+    		"min": 0.05,
+    		"max": 0.05
     	},
     	"blendMode": "normal",
-    	"frequency": 0.008,
-    	"emitterLifetime": 0.31,
+    	"frequency": 0.0008,
+    	"emitterLifetime": 0.031,
     	"maxParticles": 1000,
     	"pos": {
     		"x": 0,
@@ -922,6 +922,17 @@ window.local.on('onFirstPageGameLoaded', () => {
     	},
     	"addAtBack": false,
     	"spawnType": "point"
+    }
+  }
+
+  window.particleEmitterLibrary.addGameLibrary = function() {
+    if(GAME.library.animations) {
+      return {
+        ...GAME.library.animations,
+        ...window.particleEmitterLibrary,
+      }
+    } else {
+      return window.particleEmitterLibrary
     }
   }
 })

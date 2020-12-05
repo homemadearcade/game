@@ -7,7 +7,7 @@ Interesting that bar of dreams and homemade arcade i've wanted to have audio... 
 ////////////////////////////////////////////////////
 
 GOAL - Get demo for spencer of the theme generation service
-I need 1 random particle bullet, 1 random special explosion
+1 random special explosion
 a little bit more descriptors in the sprite sheet service
 random game feel
 random night/day? ( add some lights in there )
@@ -209,11 +209,13 @@ LIBRARY IDEAS
 ////////////////////////////////////////////////////
 
 //PARTICLES
+  Laser gun
   Powerups
+
   Special Explosions... for CRAZY particles. Overall having some objects tagged as like special particle explosion1,2,3 or special heroTouchStartParticle1,2,3
   Shooting special bullets! MAGIC SPELLS
-  Laser gun
   Decorative?
+
   After TeleDash
   Find out what I can randomize for particles after?
   // hero walking on certain objects??
@@ -222,20 +224,19 @@ LIBRARY IDEAS
   // object jump squeeze thing, ( with and height anim )
   _beingShrunk, _beingGrown, variables for the laser tools, PARTICLE EMITTER for when this is happening
 
-  Jump sparks.. just like that show motion?
-  pixiMap.animation vs pixMap.quickSprite
-
-  Hero standing animation
+  Jump sparks.. to show motion?
 
   General glow around hero
 
   Use copy of heros sprite for DASHES?
-  useOwnersSprite property for emitters
   useColorPallete from sprite
-  Randomize particles uses…? ( cuz its not all blocks. UGH
+  Randomize particles sprites…? ( cuz its not all blocks. UGH
 
   Shorter contained destruction within the same area it occupied previously…
-  gameTheme: ’scifi vs fantasy vs retro vs fun vs horror’. This effects title selection randomization, sprite sheet selection?? and audio generation
+
+// ANIMATIONS
+pixiMap.animation vs pixMap.quickSprite
+Hero standing animation
 
 //ITEMS
 Key? If you have a key u can open ____
@@ -486,6 +487,7 @@ pick random song
 randomize particleFX
 randomize sprite theme ( this would require sprite the QUALITIES SYSTEM )
 randomize hero physics
+gameTheme: ’scifi vs fantasy vs retro vs fun vs horror’. This effects title selection randomization, sprite sheet selection?? and audio generation
 
    I mean ugh fuck themes. I think maybe we can have a 'mediaControlCenter' similar to NotificationsControl center
    With this I can randomize the effects the world has

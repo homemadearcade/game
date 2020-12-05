@@ -20,13 +20,49 @@ export default class EmitterMenu extends React.Component{
         networkEditObject(objectSelected, { emitterType: null })
       }
 
+      if(key === 'select-particle-type-explosion') {
+        modals.openSelectParticleAnimation((particle) => {
+          networkEditObject(objectSelected, { emitterTypeExplosion: particle.value.type })
+        })
+      }
+      //
+      // if(key === 'clear-emitter-type-explosion') {
+      //   networkEditObject(objectSelected, { emitterTypeExplosion: null })
+      // }
+
+
+      if(key === 'select-particle-type-poweredup') {
+        modals.openSelectParticleAnimation((particle) => {
+          networkEditObject(objectSelected, { emitterTypePoweredUp: particle.value.type })
+        })
+      }
+
+      // if(key === 'clear-emitter-type-poweredup') {
+      //   networkEditObject(objectSelected, { emitterTypePoweredUp: null })
+      // }
+
+      if(key === 'select-particle-type-jump') {
+        modals.openSelectParticleAnimation((particle) => {
+          networkEditObject(objectSelected, { emitterTypeJump: particle.value.type })
+        })
+      }
+
+      if(key === 'select-particle-type-dash') {
+        modals.openSelectParticleAnimation((particle) => {
+          networkEditObject(objectSelected, { emitterTypeDash: particle.value.type })
+        })
+      }
     }
   }
 
   render() {
+    const { objectSelected } = this.props
+
     return <Menu onClick={this._handleEmitterMenuClick}>
-      <MenuItem key="select-particle-type">Select Type</MenuItem>
-      <MenuItem key="clear-emitter-type">Clear Type</MenuItem>
+      <MenuItem key="select-particle-type">Select Default Type</MenuItem>
+      <MenuItem key="clear-emitter-type">Clear Default Type</MenuItem>
+      {objectSelected.tags.explodeOnDestroy && <MenuItem key="select-particle-type-explosion">Select Explosion Type</MenuItem>}
+      <MenuItem key="select-particle-type-poweredup">Select Powered Up Type</MenuItem>
     </Menu>
   }
 }

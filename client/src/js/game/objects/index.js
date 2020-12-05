@@ -230,7 +230,11 @@ class Objects{
 
       emitterData: object.emitterData,
       emitterType: object.emitterType,
-
+      emitterTypeExplosion: object.emitterTypeExplosion,
+      emitterTypePoweredUp: object.emitterTypePoweredUp,
+      emitterTypeJump: object.emitterTypeJump,
+      emitterTypeDash: object.emitterTypeDash,
+      
       // equipment
       actionButtonBehavior: object.actionButtonBehavior,
       actionProps: object.actionProps,

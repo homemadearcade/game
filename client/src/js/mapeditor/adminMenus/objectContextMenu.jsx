@@ -116,12 +116,11 @@ export default class ObjectContextMenu extends React.Component{
 
   _renderObjectEmitterMenu() {
     const { objectSelected, subObject } = this.props
-    if(objectSelected.tags.emitter) {
-      return <SubMenu title="Emitter">
-        <EmitterMenu objectSelected={objectSelected} subObject={subObject}></EmitterMenu>}
+    // if(objectSelected.tags.emitter) {
+      return <SubMenu title="Emitters">
+        <EmitterMenu objectSelected={objectSelected} subObject={subObject}></EmitterMenu>
       </SubMenu>
-    }
-
+    // }
   }
 
   render() {
