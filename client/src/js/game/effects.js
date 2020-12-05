@@ -423,6 +423,7 @@ function processEffect(effect, effected, effector, ownerObject) {
   }
 
   if(effectName === 'removeSubObject') {
+    if(!effected.subObjects[effectValue]) return
     OBJECTS.removeSubObject(effected.subObjects[effectValue])
   }
 

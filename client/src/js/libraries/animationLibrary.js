@@ -15,8 +15,8 @@ window.local.on('onFirstPageGameLoaded', () => {
     		"end": "#d8ff4a"
     	},
     	"speed": {
-    		"start": 10,
-    		"end": 10,
+    		"start": 1,
+    		"end": 1,
     		"minimumSpeedMultiplier": 1
     	},
     	"acceleration": {
@@ -34,11 +34,11 @@ window.local.on('onFirstPageGameLoaded', () => {
     		"max": 0
     	},
     	"lifetime": {
-    		"min": 2,
-    		"max": 1.8
+    		"min": .18,
+    		"max": .2
     	},
     	"blendMode": "screen",
-    	"frequency": 0.01,
+    	"frequency": 0.001,
     	"emitterLifetime": -1,
     	"maxParticles": 1000,
     	"pos": {
@@ -55,10 +55,37 @@ window.local.on('onFirstPageGameLoaded', () => {
     },
     groundDisturbanceRight: {"alpha":{"start":1,"end":1},"scale":{"start":0.35,"end":0.35,"minimumScaleMultiplier":0},"color":{"start":"#fff191","end":"#ff622c"},"speed":{"start":2000,"end":2000,"minimumSpeedMultiplier":2.2},"acceleration":{"x":0,"y":140000},"maxSpeed":8050,"startRotation":{"min":265,"max":275},"noRotation":false,"rotationSpeed":{"min":100,"max":10000},"lifetime":{"min":1.81,"max":1.56},"blendMode":"normal","frequency":0.091,"emitterLifetime":6,"maxParticles":3,"pos":{"x":0,"y":0},"addAtBack":false,"spawnType":"burst","spawnCircle":{"x":0,"y":0,"r":2,"minR":156},"particles":["https://pixijs.io/pixi-particles-editor/assets/images/particle.png","https://pixijs.io/pixi-particles-editor/assets/images/Fire.png"],"spawnWaitTime":10,"speedType":"normal","matchObjectColor":true,"scaleToGameObject":false,"particlesPerWave":3,"particleSpacing":26,"angleStart":323,"animationType":"particle"},
     groundDisturbanceLeft: {"alpha":{"start":1,"end":1},"scale":{"start":0.35,"end":0.35,"minimumScaleMultiplier":0},"color":{"start":"#fff191","end":"#ff622c"},"speed":{"start":2000,"end":2000,"minimumSpeedMultiplier":2.2},"acceleration":{"x":0,"y":140000},"maxSpeed":8050,"startRotation":{"min":265,"max":275},"noRotation":false,"rotationSpeed":{"min":100,"max":10000},"lifetime":{"min":1.81,"max":1.56},"blendMode":"normal","frequency":0.091,"emitterLifetime":6,"maxParticles":3,"pos":{"x":0,"y":0},"addAtBack":false,"spawnType":"burst","spawnCircle":{"x":0,"y":0,"r":2,"minR":156},"particles":["https://pixijs.io/pixi-particles-editor/assets/images/particle.png","https://pixijs.io/pixi-particles-editor/assets/images/Fire.png"],"spawnWaitTime":10,"speedType":"normal","matchObjectColor":true,"scaleToGameObject":false,"particlesPerWave":3,"particleSpacing":26,"angleStart":206,"animationType":"particle"},
+
+    fireBall: {
+      acceleration: {x: 0, y: 0},
+      addAtBack: false,
+      alpha: {start: 0.5, end: 0.2},
+      animationType: "particle",
+      blendMode: "normal",
+      color: {start: "#fce400", end: "#ff4e00"},
+      emitterLifetime: -1,
+      frequency: 0.001,
+      lifetime: {min: 0.01, max: 0.01},
+      maxParticles: 1000,
+      maxSpeed: 0,
+      noRotation: false,
+      pos: {x: 0, y: 0},
+      rotationSpeed: {min: 0, max: 20},
+      scale: {start: 0.4, end: 0.7, minimumScaleMultiplier: 1},
+      spawnCircle: {r: 24, minR: 0},
+      spawnRect: { w: 200, h: 200, x: -100, y: -100},
+      spawnType: "point",
+      spawnWaitTime: 100,
+      speed: {start: 1000, end: 200, minimumSpeedMultiplier: 1},
+      speedType: "very fast",
+      startRotation: {min: 0, max: 360},
+      useUpdateOwnerPos: true,
+    },
     smallFire: {
+      images: {},
       "alpha": {
-        "start": 0.62,
-        "end": 0
+        "start": 1,
+        "end": 1
       },
       "scale": {
         "start": 0.3,
@@ -107,7 +134,8 @@ window.local.on('onFirstPageGameLoaded', () => {
         "y": 0,
         "r": 2,
       },
-      scaleToGameObject: true, matchObjectColor: true, useUpdateOwnerPos: true,
+      "speedType":"normal",
+      useUpdateOwnerPos: true,
       particles: ['https://pixijs.io/pixi-particles-editor/assets/images/particle.png', 'https://pixijs.io/pixi-particles-editor/assets/images/Fire.png']
     },
     engineTrail: {
@@ -277,7 +305,7 @@ window.local.on('onFirstPageGameLoaded', () => {
     	},
     	"addAtBack": true,
     	"spawnType": "point",
-      useUpdateOwnerPos: true, persistAfterRemoved: true, scaleToGameObject: true, matchObjectColor: true
+      useOwnerSprite: true, useUpdateOwnerPos: true, persistAfterRemoved: true, scaleToGameObject: true, matchObjectColor: true
     },
     explode: {
     	"alpha": {
@@ -396,7 +424,8 @@ window.local.on('onFirstPageGameLoaded', () => {
     		"x": 0,
     		"y": 0,
     		"r": 10
-    	}
+    	},
+      useUpdateOwnerPos: true, persistAfterRemoved: true, matchObjectColor: true,
     },
     explosionCloud: {
     	"alpha": {
@@ -461,7 +490,8 @@ window.local.on('onFirstPageGameLoaded', () => {
     		"y": 0
     	},
     	"addAtBack": true,
-    	"spawnType": "point"
+    	"spawnType": "point",
+      useUpdateOwnerPos: true, persistAfterRemoved: true
     },
     raySplash: {
     	"alpha": {
@@ -732,7 +762,8 @@ window.local.on('onFirstPageGameLoaded', () => {
     		"y": -300,
     		"w": 900,
     		"h": 20
-    	}
+    	},
+      useUpdateOwnerPos: true
     },
     rainScreen: {
     	"alpha": {
@@ -786,7 +817,8 @@ window.local.on('onFirstPageGameLoaded', () => {
     		"y": -460,
     		"w": 900,
     		"h": 20
-    	}
+    	},
+      useUpdateOwnerPos: true
     },
     bubbleScreen: {
     	"alpha": {
@@ -840,7 +872,8 @@ window.local.on('onFirstPageGameLoaded', () => {
     		"y": 200,
     		"w": 900,
     		"h": 0
-    	}
+    	},
+      useUpdateOwnerPos: true
     },
     sparks: {
     	"alpha": {

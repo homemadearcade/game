@@ -402,6 +402,7 @@ function removeFilter(pixiChild, filterClass) {
 }
 
 export {
+  updatePixiEmitter,
   initPixiObject,
   updatePixiObject,
   initEmitter,

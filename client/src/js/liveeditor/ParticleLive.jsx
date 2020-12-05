@@ -2,6 +2,79 @@ import React from 'react';
 import DatGui, { DatFolder, DatSelect, DatBoolean, DatButton, DatColor, DatNumber, DatString } from 'react-dat-gui';
 import modals from '../mapeditor/modals.js'
 
+window.particles = [
+  'Bubbles50px',
+  // 'Bubbles99px',
+  'CartoonSmoke',
+  'Fire',
+  'HardCircle',
+  'HardRain',
+  // 'Pixel25px',
+  'Pixel50px',
+  // 'Pixel100px',
+  'smokeparticle',
+  'Sparks',
+  'Snow50px',
+  // 'Snow100px',
+  'burst',
+  // 'cloud_calc_dust0',
+  // 'crystal_spear0',
+  'particleCartoonStar',
+  'particleSmallStar',
+  // 'particleStar',
+  // 'particleWhite_1',
+  // 'particleWhite_2',
+  // 'particleWhite_3',
+  // 'particleWhite_4',
+  // 'particleWhite_5',
+  // 'particleWhite_7',
+]
+
+window.randomParticles = [
+  'Fire',
+  'HardCircle',
+  'HardRain',
+  'Pixel25px',
+  'Pixel50px',
+  'Pixel100px',
+  'smokeparticle',
+  'Sparks',
+  'burst',
+  'particleCartoonStar',
+  'particleStar',
+]
+
+window.giveEmitterDataSpawnCircleOrRect = function(emitterData) {
+  if(emitterData.spawnType == 'rect') {
+    if(!emitterData.spawnRect) {
+      emitterData.spawnRect = {}
+    }
+    if(!emitterData.spawnRect.w) {
+      emitterData.spawnRect.w = 200
+    }
+    if(!emitterData.spawnRect.h) {
+      emitterData.spawnRect.h = 200
+    }
+    if(emitterData.spawnRect) {
+      if(emitterData.spawnRect.w) {
+        emitterData.spawnRect.x = -(emitterData.spawnRect.w/2)
+      }
+      if(emitterData.spawnRect.h) {
+        emitterData.spawnRect.y = -(emitterData.spawnRect.h/2)
+      }
+    }
+  }
+
+  if(emitterData.spawnType == 'circle' || emitterData.spawnType == 'ring') {
+    if(!emitterData.spawnCircle) {
+      emitterData.spawnCircle = {
+        r: 10,
+        minR: 10
+      }
+    }
+  }
+}
+
 function _initObjectForParticleLive(objectSelected) {
   if(!objectSelected.emitterData) {
     objectSelected.emitterData = window.particleEmitterLibrary.smallFire
@@ -13,7 +86,7 @@ function _initObjectForParticleLive(objectSelected) {
     objectSelected.emitterData.speedType = 'very fast'
   }
   if(!objectSelected.tags.emitter) {
-    MAPEDITOR.networkEditObject({id: objectSelected.id, tags:{ ...objectSelected.tags, emitter: true }})
+    MAPEDITOR.networkEditObject({id: objectSelected.id, tags:{ ...objectSelected.tags, emitter: true, defaultSprite: 'invisible' }})
     objectSelected.tags.emitter = true
   }
 }
@@ -65,6 +138,15 @@ export default class ParticleLive extends React.Component {
         }
         if(emitterData.spawnRect.h) {
           emitterData.spawnRect.y = -(emitterData.spawnRect.h/2)
+        }
+      }
+    }
+
+    if(emitterData.spawnType == 'circle' || emitterData.spawnType == 'ring' && !fromLoad) {
+      if(!emitterData.spawnRect) {
+        emitterData.spawnRect = {
+          r: 10,
+          minR: 10
         }
       }
     }
@@ -255,8 +337,8 @@ export default class ParticleLive extends React.Component {
             <DatBoolean path={'emitterData.scaleToGameObject'} label="Match object size" />
           </DatFolder>
           <DatFolder title='Speed'>
-            <DatNumber path='emitterData.speed.start' label="Speed Start" min={0} max={20000} step={10} />
-            <DatNumber path='emitterData.speed.end' label="Speed End" min={0} max={20000} step={10} />
+            <DatNumber path='emitterData.speed.start' label="Speed Start" min={0} max={20000} step={1} />
+            <DatNumber path='emitterData.speed.end' label="Speed End" min={0} max={20000} step={1} />
             <DatNumber path='emitterData.speed.minimumSpeedMultiplier' label="Minumum Speed Multiplier" min={0} max={5} step={.1} />
             <DatNumber path='emitterData.acceleration.x' label="Acceleration X" min={0} max={150000} step={10} />
             <DatNumber path='emitterData.acceleration.y' label="Acceleration Y" min={0} max={150000} step={10} />
@@ -284,6 +366,13 @@ export default class ParticleLive extends React.Component {
           </DatFolder>
 
           {this._renderEmitterShape()}
+
+          <DatFolder title='Images'>
+            <DatBoolean path='emitterData.useOwnerSprite' label="Use Owners Sprite" />
+            {window.particles.map((name) => {
+              return <DatBoolean path={'emitterData.images.'+name} label={name}/>
+            })}
+          </DatFolder>
         </DatGui>
       </div>
     )

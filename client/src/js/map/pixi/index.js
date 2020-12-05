@@ -1,5 +1,5 @@
 import tinycolor from 'tinycolor2'
-import { updatePixiObject, initPixiObject, initEmitter } from './objects'
+import { updatePixiObject, initPixiObject, initEmitter, updatePixiEmitter } from './objects'
 import { initPixiApp } from './app'
 import gridUtil from '../../utils/grid'
 import collisionsUtil from '../../utils/collisions'
@@ -126,7 +126,10 @@ PIXIMAP.deleteObject = function(object, stage) {
   PIXIMAP.childrenById[object.id] = null
 
   const pixiChild = stage.getChildByName(object.id)
+  console.log('X')
   if(!pixiChild) return
+  console.log('XX')
+
   if(pixiChild.children && pixiChild.children.length) {
     pixiChild.children.forEach((child) => {
       if(child.children) child.removeChildren()
@@ -134,6 +137,8 @@ PIXIMAP.deleteObject = function(object, stage) {
     pixiChild.removeChildren()
   }
   if(pixiChild.emitter) {
+    console.log('XXX')
+
     PIXIMAP.deleteEmitter(pixiChild.emitter)
     delete pixiChild.emitter
   }
@@ -768,6 +773,9 @@ PIXIMAP.makeInvisibleIfRemoved = function(object) {
         const so = object.subObjects[subObjectName]
         if(PIXIMAP.childrenById[so.id]) PIXIMAP.childrenById[so.id].visible = false
       })
+    }
+    if(PIXIMAP.childrenById[object.id].emitter) {
+      updatePixiEmitter(PIXIMAP.childrenById[object.id].emitter, object)
     }
     return false
   }

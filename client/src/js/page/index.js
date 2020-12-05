@@ -553,6 +553,8 @@ class Page{
 
     let dragSrcEl
     function handleDragStart(e) {
+      console.log(e.target.className, e.target.id)
+      if(e.target.id !== 'drag') return e.preventDefault()
       if(CONSTRUCTEDITOR.open || PATHEDITOR.open || !PAGE.role.isAdmin) return
       dragSrcEl = this;
 

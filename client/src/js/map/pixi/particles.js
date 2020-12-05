@@ -51,8 +51,8 @@ function updatePixiEmitterData(pixiChild, gameObject, options) {
 
   const usesCircle = (emitter.spawnType === 'ring' || emitter.spawnType === 'circle')
   if(emitter.spawnCircle && usesCircle) {
-    emitter.spawnCircle.radius = data.spawnCircle.r * MAP.camera.multiplier
-    emitter.spawnCircle.minRadius = data.spawnCircle.minR * MAP.camera.multiplier
+    if(data.spawnCircle && data.spawnCircle.r) emitter.spawnCircle.radius = data.spawnCircle.r * MAP.camera.multiplier
+    if(data.spawnCircle && data.spawnCircle.minR) emitter.spawnCircle.minRadius = data.spawnCircle.minR * MAP.camera.multiplier
   } else if(PAGE.role.isHost && usesCircle) {
     window.socket.emit('resetLiveParticle', gameObject.id)
     return
@@ -60,10 +60,10 @@ function updatePixiEmitterData(pixiChild, gameObject, options) {
 
   const usesRect = emitter.spawnType === 'rect'
   if(emitter.spawnRect && usesRect) {
-    emitter.spawnRect.width = (data.spawnRect.w * MAP.camera.multiplier)
-    emitter.spawnRect.height = (data.spawnRect.h * MAP.camera.multiplier)
-    emitter.spawnRect.x = (data.spawnRect.x * MAP.camera.multiplier)
-    emitter.spawnRect.y = (data.spawnRect.y * MAP.camera.multiplier)
+    if(data.spawnRect && data.spawnRect.width) emitter.spawnRect.width = (data.spawnRect.w * MAP.camera.multiplier)
+    if(data.spawnRect && data.spawnRect.height) emitter.spawnRect.height = (data.spawnRect.h * MAP.camera.multiplier)
+    if(data.spawnRect && data.spawnRect.x) emitter.spawnRect.x = (data.spawnRect.x * MAP.camera.multiplier)
+    if(data.spawnRect && data.spawnRect.y) emitter.spawnRect.y = (data.spawnRect.y * MAP.camera.multiplier)
   } else if(PAGE.role.isHost && usesRect) {
     window.socket.emit('resetLiveParticle', gameObject.id)
     return
@@ -132,14 +132,20 @@ function createDefaultEmitter(stage, gameObject, emitterDataName, options) {
     // }
   }
 
-  let particles = [PIXIMAP.textures.solidcolorsprite]
-  // if(particleData.particles) {
-  //   particles = particleData.particles
-  //   particles = particles.map(p => PIXI.Texture.from(p))
+  // if(options.useParticlesImageColor) {
+  //   particleData.color.start = null
+  //   particleData.color.end = null
   // }
 
-
-  particleData.particle = particles
+  let particles = []
+  if(options.useOwnerSprite) {
+    particles = [PIXIMAP.textures[gameObject.defaultSprite]]
+  } else if(particleData.images) {
+    let images = Object.keys(particleData.images).filter((n) => !!particleData.images[n])
+    if(images.length) {
+      particles = images.map(p => PIXI.Texture.from('assets/images/particles/'+p+'.png'))
+    } else particles = [PIXIMAP.textures.solidcolorsprite]
+  } else particles = [PIXIMAP.textures.solidcolorsprite]
 
   if(options.scaleToGameObject) {
     const modifyScaleX = (gameObject.width/particles[0]._frame.width * MAP.camera.multiplier)
@@ -153,6 +159,8 @@ function createDefaultEmitter(stage, gameObject, emitterDataName, options) {
     particleData.scale.end = MAP.camera.multiplier * particleData.scale.end
     // particleData.scale.minimumScaleMultiplier = particleData.scale.minimumScaleMultiplier * MAP.camera.multiplier
   }
+
+  window.giveEmitterDataSpawnCircleOrRect(particleData)
 
   var emitter = new pixiParticles.Emitter(
     stage,
