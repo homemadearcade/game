@@ -234,6 +234,8 @@ function handleActionButtonBehavior(hero, action, delta) {
     }
   })
 
+  let actionFired = false
+
   if(subObject && !subObject.actionState) subObject.actionState = {}
 
   if(subObject && subObject.actionState.waiting) {
@@ -241,13 +243,15 @@ function handleActionButtonBehavior(hero, action, delta) {
     return
   }
 
-  if(action === 'toggle' && subObject) {
+  if(action === 'toggle' && subObject && !delta) {
+    actionFired = true
     subObject._toggledOff = !subObject._toggledOff
     window.emitGameEvent('onHeroPutAwayToggle', hero, subObject)
   }
 
-  if(action === 'shoot') {
+  if(action === 'shoot' && !delta) {
     if(!GAME.gameState.started) return
+    actionFired = true
     if(subObject) {
       shootBullet({direction: hero.inputDirection, shooter: subObject, actionProps: subObject.actionProps })
       window.emitGameEvent('onHeroShootBullet', hero, subObject)
@@ -259,8 +263,9 @@ function handleActionButtonBehavior(hero, action, delta) {
     }
   }
 
-  if(action === 'shrink' || action === 'grow' || action === 'vacuum') {
+  if((action === 'shrink' || action === 'grow' || action === 'vacuum') && delta) {
     if(!GAME.gameState.started) return
+    actionFired = true
 
     hero._shootingLaser = true
     subObject._shootingLaser = true
@@ -287,8 +292,10 @@ function handleActionButtonBehavior(hero, action, delta) {
     }
   }
 
-  if(action === 'dropAndModify') {
+  if(action === 'dropAndModify' && !delta) {
     if(!GAME.gameState.started) return
+    actionFired = true
+
     if(subObject) {
       dropAndModify({
         direction: hero.inputDirection,
@@ -299,7 +306,8 @@ function handleActionButtonBehavior(hero, action, delta) {
     }
   }
 
-  if(action === 'mod') {
+  if(action === 'mod' && !delta) {
+    actionFired = true
     if(subObject && !subObject.actionState.manualRevertId) {
       const manualRevertId = 'modrevert-' + window.uniqueID()
       window.emitGameEvent('onStartMod', {
@@ -311,26 +319,32 @@ function handleActionButtonBehavior(hero, action, delta) {
     }
   }
 
-  if(action === 'accelerate') {
+  if(action === 'accelerate' && delta) {
+    actionFired = true
+
     hero.velocityAngle += (hero.mod().velocityDelta || 400) * delta
   }
-  if(action === 'deccelerateToZero') {
+  if(action === 'deccelerateToZero' && delta) {
+    actionFired = true
+
     if((hero.velocityAngle < .1 && hero.velocityAngle > 0) ||  (hero.velocityAngle > -.1 && hero.velocityAngle < 0)) {
       hero.velocityAngle = 0
       hero.velocityX = 0
       hero.velocityY = 0
       return
     }
-    if(hero.velocityAngle > 0) {
+    if(hero.velocityAngle > 0 && delta) {
       hero.velocityAngle -= (hero.mod().velocityDelta || 400)  * delta
       return
     }
-    if(hero.velocityAngle < 0) {
+    if(hero.velocityAngle < 0 && delta) {
       hero.velocityAngle += (hero.mod().velocityDelta || 400)  * delta
       return
     }
   }
-  if(action === 'brakeToZero') {
+  if(action === 'brakeToZero' && delta) {
+    actionFired = true
+
     if((hero.velocityAngle < 20 && hero.velocityAngle > 0) ||  (hero.velocityAngle > -20 && hero.velocityAngle < 0)) {
       hero.velocityAngle = 0
       hero.velocityX = 0
@@ -346,17 +360,21 @@ function handleActionButtonBehavior(hero, action, delta) {
       return
     }
   }
-  if(action === 'accelerateBackwards') {
+  if(action === 'accelerateBackwards' && delta) {
+    actionFired = true
+
     hero.velocityAngle -= (hero.mod().velocityDelta || 400)  * delta
   }
 
-  if(action === 'dash' || action === 'teleportDash') {
+  if((action === 'dash' || action === 'teleportDash') && !delta) {
     if(hero._dashable === false && hero.onGround) {
       if(GAME.gameState.timeoutsById[hero.id + '-dashable']) GAME.clearTimeout(hero.id + '-dashable')
       hero._dashable = true
     }
 
     if(hero._dashable === true) {
+      actionFired = true
+
       if(action === 'teleportDash') {
         let power = 5
         if(subObject && subObject.actionProps.power) {
@@ -405,13 +423,15 @@ function handleActionButtonBehavior(hero, action, delta) {
     }
   }
 
-  if(hero.onGround && action === 'groundJump') {
+  if(hero.onGround && action === 'groundJump' && !delta) {
+    actionFired = true
+
     hero.velocityY = hero.mod().jumpVelocity
     window.emitGameEvent('onHeroGroundJump', hero)
     // lastJump = Date.now();
   }
 
-  if(action === 'wallJump') {
+  if(action === 'wallJump' && !delta) {
     const velocity = hero.mod().wallJumpVelocity || 400
 
     if(hero.onGround) {
@@ -419,12 +439,14 @@ function handleActionButtonBehavior(hero, action, delta) {
       window.emitGameEvent('onHeroGroundJump', hero)
     }
     if(hero._canWallJumpLeft) {
+      actionFired = true
       hero.velocityX = -velocity
       hero.velocityY = - velocity
       hero._canWallJumpLeft = false
       window.emitGameEvent('onHeroWallJump', hero)
     }
     if(hero._canWallJumpRight) {
+      actionFired = true
       hero.velocityX = velocity
       hero.velocityY = - velocity
       window.emitGameEvent('onHeroWallJump', hero)
@@ -432,13 +454,14 @@ function handleActionButtonBehavior(hero, action, delta) {
     }
   }
 
-  if(action === 'floatJump') {
+  if(action === 'floatJump' && !delta) {
     if(hero._floatable === false && hero.onGround) {
       if(GAME.gameState.timeoutsById[hero.id + '-floatable']) GAME.clearTimeout(hero.id + '-floatable')
       hero._floatable = true
     }
 
     if(hero._floatable === true) {
+      actionFired = true
       hero.velocityY = hero.mod().jumpVelocity
       window.emitGameEvent('onHeroFloatJump', hero)
       GAME.addTimeout(hero.id + '-floatable', hero.mod().floatJumpTimeout || .6, () => {
@@ -453,7 +476,7 @@ function handleActionButtonBehavior(hero, action, delta) {
     }
   }
 
-  if(subObject && subObject.actionProps && subObject.actionProps.debounceTime) {
+  if(subObject && subObject.actionProps && subObject.actionProps.debounceTime && actionFired) {
     const timeoutId = 'debounce-action-' + subObject.id + subObject.actionButtonBehavior
     subObject.actionState.waiting = true
     subObject.actionState.timeoutId = timeoutId
@@ -770,13 +793,13 @@ function onUpdate(hero, keysDown, delta) {
   //   }
   // }
 
-  if(keysDown['z'] && hero.mod().tags.zButtonHoldable == true && hero.mod().zButtonBehavior) {
+  if(keysDown['z'] && hero.mod().zButtonBehavior) {
     handleActionButtonBehavior(hero, hero.mod().zButtonBehavior, delta)
   }
-  if(keysDown['x'] && hero.mod().tags.xButtonHoldable == true && hero.mod().xButtonBehavior) {
+  if(keysDown['x'] && hero.mod().xButtonBehavior) {
     handleActionButtonBehavior(hero, hero.mod().xButtonBehavior, delta)
   }
-  if(keysDown['c'] && hero.mod().tags.cButtonHoldable == true && hero.mod().cButtonBehavior) {
+  if(keysDown['c'] && hero.mod().cButtonBehavior) {
     handleActionButtonBehavior(hero, hero.mod().cButtonBehavior, delta)
   }
   if(keysDown['space'] && hero.mod().tags.spaceBarHoldable == true && hero.mod().spaceBarBehavior) {
@@ -850,17 +873,18 @@ function onKeyDown(key, hero) {
     return
   }
 
-  if('z' === key && hero.mod().tags.zButtonHoldable != true && hero.mod().zButtonBehavior) {
-    handleActionButtonBehavior(hero, hero.mod().zButtonBehavior, .018)
+  //delta = , .018
+  if('z' === key && hero.mod().zButtonBehavior) {
+    handleActionButtonBehavior(hero, hero.mod().zButtonBehavior)
   }
-  if('x' === key && hero.mod().tags.xButtonHoldable != true && hero.mod().xButtonBehavior) {
-    handleActionButtonBehavior(hero, hero.mod().xButtonBehavior, .018)
+  if('x' === key && hero.mod().xButtonBehavior) {
+    handleActionButtonBehavior(hero, hero.mod().xButtonBehavior)
   }
-  if('c' === key && hero.mod().tags.cButtonHoldable != true && hero.mod().cButtonBehavior) {
-    handleActionButtonBehavior(hero, hero.mod().cButtonBehavior, .018)
+  if('c' === key && hero.mod().cButtonBehavior) {
+    handleActionButtonBehavior(hero, hero.mod().cButtonBehavior)
   }
   if('space' === key && hero.mod().tags.spaceBarHoldable != true && hero.mod().spaceBarBehavior) {
-    handleActionButtonBehavior(hero, hero.mod().spaceBarBehavior, .018)
+    handleActionButtonBehavior(hero, hero.mod().spaceBarBehavior)
   }
 
   const upPressed = 'w' === key || 'up' === key

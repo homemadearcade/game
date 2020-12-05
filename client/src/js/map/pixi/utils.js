@@ -97,7 +97,7 @@ function startPulse(pixiChild, gameObject, type) {
   }
 
   if(type === 'shake') {
-    pixiChild.shakeEase = ease.add(pixiChild, { shake: 5 }, { repeat: true, ease: 'linear' })
+    pixiChild.shakeEase = ease.add(pixiChild, { shake: gameObject._shakePower || 5 }, { repeat: true, ease: 'linear' })
     pixiChild.isAnimatingPosition = true
   }
   //
@@ -145,11 +145,13 @@ function updatePosition(pixiChild, gameObject) {
       pixiChild.y = (gameObject.y) * camera.multiplier
     }
 
-    if(gameObject.tags.shake && !pixiChild.shakeEase) {
+    if((gameObject._shakePower || gameObject.tags.shake) && !pixiChild.shakeEase) {
       startPulse(pixiChild, gameObject, 'shake')
     }
 
-    if(!gameObject.tags.shake && pixiChild.shakeEase) {
+    if(gameObject._shakePower) console.log(gameObject._shakePower, pixiChild.shakeEase)
+    if(!gameObject._shakePower && !gameObject.tags.shake && pixiChild.shakeEase) {
+      console.log('???')
       stopPulse(pixiChild, 'shake')
     }
   }

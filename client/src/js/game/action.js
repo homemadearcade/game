@@ -19,17 +19,21 @@ function closestObjectBehavior({ shooter, actionProps, direction, behavior, delt
       closestObject.height -= power;
       closestObject.x += power/2
       closestObject.y += power/2
-      if(closestObject.width <= 1 || closestObject.height <= 1) {
+      if(closestObject.width <= 5 || closestObject.height <= 5) {
         closestObject._destroy = true
       }
-      if(closestObject.width < 1) closestObject.width = 1
-      if(closestObject.height < 1) closestObject.height = 1
+
+      closestObject._shakePower = 3
+      // if(closestObject.width < 1) closestObject.width = 1
+      // if(closestObject.height < 1) closestObject.height = 1
     }
     if(behavior === 'grow') {
       closestObject.width += power;
       closestObject.height += power;
       closestObject.x -= power/2
       closestObject.y -= power/2
+
+      closestObject._shakePower = 3
     }
     if(behavior === 'vacuum') {
       const x = closestObject.x + (closestObject.width/2)
@@ -45,6 +49,8 @@ function closestObjectBehavior({ shooter, actionProps, direction, behavior, delt
       } else if(y < shooter.y){
         closestObject.y += power
       }
+
+      // closestObject._shakePower = 1
     }
     if(behavior === 'grapplingHook') {
       // grapple and allow climbing with this hook

@@ -265,6 +265,8 @@ function prepareObjectsAndHerosForMovementPhase() {
     object._initialX = object.x
     object._initialY = object.y
 
+    object._shakePower = null
+
     object._flipY = false
 
     object._skipPosUpdate = false
@@ -279,6 +281,7 @@ function prepareObjectsAndHerosForMovementPhase() {
       object.constructParts.forEach((part) => {
         part._initialX = part.x
         part._initialY = part.y
+        part._shakePower = null
       })
     }
 
@@ -294,6 +297,7 @@ function prepareObjectsAndHerosForMovementPhase() {
         if(subObject.mod().tags.potential || subObject.mod().tags.notInCollisions) return
         subObject._objectsWithinNext = []
         subObject._objectsTouchingNext = []
+        subObject._shakePower = null
       })
     }
   })

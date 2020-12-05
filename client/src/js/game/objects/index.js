@@ -137,6 +137,8 @@ class Objects{
       //^^ older
       // targetFollowId:  object.targetFollowId,
 
+      _shakePower: object._shakePower,
+
       _pathIdIndex: object._pathIdIndex,
       _pathWait: object._pathWait,
       _pathOnWayBack:  object._pathOnWayBack,
@@ -234,7 +236,7 @@ class Objects{
       emitterTypePoweredUp: object.emitterTypePoweredUp,
       emitterTypeJump: object.emitterTypeJump,
       emitterTypeDash: object.emitterTypeDash,
-      
+
       // equipment
       actionButtonBehavior: object.actionButtonBehavior,
       actionProps: object.actionProps,

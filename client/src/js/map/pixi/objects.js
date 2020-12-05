@@ -167,19 +167,27 @@ const updatePixiEmitter = (pixiChild, gameObject) => {
     //   // emitter.updateOwnerPos((gameObject.x + gameObject.width/2) * camera.multiplier, (gameObject.y + gameObject.height/2) * camera.multiplier)
     //   // emitter.updateOwnerPos(gameObject.x * camera.multiplier, gameObject.y * camera.multiplier)
     // } else {
-      emitter.updateOwnerPos(gameObject.x * camera.multiplier, gameObject.y * camera.multiplier)
+    // if(gameObject.tags.rotateable) {
+    //   console.log('???')
+    //   pixiChild.pivot.set(gameObject.width/2, gameObject.height/2)
+    //   pixiChild.rotation = gameObject.angle || 0
+    // } else {
+    //   if(typeof pixiChild.rotation === 'number') {
+    //     pixiChild.pivot.set(0, 0)
+    //     pixiChild.rotation= null
+    //   }
     // }
+    emitter.updateOwnerPos(gameObject.x * camera.multiplier, gameObject.y * camera.multiplier)
+    // }
+    console.log('?')
   } else {
     if(gameObject.tags.rotateable) {
+      console.log('?', gameObject.angle)
       pixiChild.pivot.set(gameObject.width/2, gameObject.height/2)
       pixiChild.rotation = gameObject.angle || 0
       pixiChild.x = (gameObject.x + gameObject.width/2) * camera.multiplier
       pixiChild.y = (gameObject.y + gameObject.height/2) * camera.multiplier
     } else {
-      if(typeof pixiChild.rotation === 'number') {
-        pixiChild.pivot.set(0, 0)
-        pixiChild.rotation= null
-      }
       pixiChild.x = (gameObject.x) * camera.multiplier
       pixiChild.y = (gameObject.y) * camera.multiplier
     }
@@ -211,10 +219,6 @@ const updatePixiEmitter = (pixiChild, gameObject) => {
     if(data.spawnRect && data.spawnRect.h) emitter.spawnRect.height = (data.spawnRect.h * MAP.camera.multiplier)
     if(data.spawnRect && data.spawnRect.x) emitter.spawnRect.x = (data.spawnRect.x * MAP.camera.multiplier)
     if(data.spawnRect && data.spawnRect.y) emitter.spawnRect.y = (data.spawnRect.y * MAP.camera.multiplier)
-  }
-
-  if(emitter.type === 'laser') {
-    updatePixiEmitterData(pixiChild, {...gameObject, emitterData: data})
   }
 }
 
@@ -259,9 +263,8 @@ function updateProperties(pixiChild, gameObject) {
   updateColor(pixiChild, gameObject)
   updateAlpha(pixiChild, gameObject)
 
-  // if(gameObject.subObjectName === 'shrinkRay') console.log(gameObject._shootingLaser, gameObject.ownerId, pixiChild.laserEmitter)
   if(!pixiChild.laserEmitter && gameObject._shootingLaser && gameObject.ownerId) {
-    pixiChild.laserEmitter = initEmitter(gameObject, gameObject.emitterTypeLaser || 'laser', { useUpdateOwnerPos: true })
+    pixiChild.laserEmitter = initEmitter(gameObject, gameObject.emitterTypeLaser || 'laser', {})
   } else if(pixiChild.laserEmitter && !gameObject._shootingLaser) {
     PIXIMAP.deleteEmitter(pixiChild.laserEmitter)
     delete pixiChild.laserEmitter

@@ -86,8 +86,8 @@ function getClosestObjectInDirection(start, distance, tag, direction) {
     x: start.x,
     y: start.y,
     angle: direction ? radians : start.angle,
-    width: start.width,
-    height: start.height,
+    width: start.width * 2,
+    height: start.height * 2,
     velocityAngle: GAME.grid.nodeSize,
     tags: {
       rotateable: true,
