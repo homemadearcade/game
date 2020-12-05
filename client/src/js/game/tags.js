@@ -207,6 +207,7 @@ function setDefault() {
     hasEngineTrail: false,
     explodeOnDestroy: false,
     spinOffOnDestroy: false,
+    poweredUp: false,
   }
 
   window.animationTags = {
@@ -278,7 +279,7 @@ function setDefault() {
   window.audioQualityTags = {
     walkRetro: false,
     walkVehicle: false,
-    walkQuality: false,
+    walkDescriptor: false,
     walkOverhead: false,
   }
   window.heroTags = {

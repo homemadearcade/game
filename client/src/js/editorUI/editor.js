@@ -7,6 +7,7 @@ class Editor {
     this.preferences = {
       zoomMultiplier: 0,
       creatorColorSelected: null,
+      showAdminGrid: true,
       selectable: {
         invisible: false,
         // darkness: false,

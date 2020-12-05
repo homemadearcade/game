@@ -2,6 +2,7 @@ import React from 'react'
 import Menu, { SubMenu, MenuItem } from 'rc-menu';
 import SelectSubObjectMenu from '../menus/SelectSubObjectMenu.jsx';
 import TriggerMenu from '../menus/TriggerMenu.jsx';
+import EmitterMenu from '../menus/EmitterMenu.jsx';
 import SequencesMenu from '../menus/SequencesMenu.jsx';
 import SpriteMenu from '../menus/SpriteMenu.jsx';
 import HookMenu from '../menus/HookMenu.jsx';
@@ -236,6 +237,9 @@ export default class HeroContextMenu extends React.Component {
             {this._renderTagMenuItems(window.keyInputTags)}
           </Menu>
         </SubMenu>
+      </SubMenu>
+      <SubMenu title="Emitters">
+        <EmitterMenu objectSelected={objectSelected}></EmitterMenu>
       </SubMenu>
       <SubMenu title="Triggers">
         <TriggerMenu objectSelected={objectSelected}/>

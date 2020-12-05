@@ -11,6 +11,9 @@ export default class TagMenu extends React.Component{
       const { networkEditObject } = MAPEDITOR
 
       if(key === 'open-search-modal') {
+        Object.keys(objectSelected.tags).forEach((tag) => {
+          if(!objectSelected.tags[tag]) delete objectSelected.tags[tag]
+        })
         modals.openEditTagsModal(objectSelected.tags || {}, ({value}) => {
           if(value) {
             networkEditObject(objectSelected, {tags: value})

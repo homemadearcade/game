@@ -173,6 +173,10 @@ export default class ParticleLive extends React.Component {
       }
     }
 
+    if(!emitterData.speedType) {
+      emitterData.speedType = 'fast'
+    }
+
     let updatedProps = {}
     if(fromLoad) {
       updatedProps = { emitterData: emitterData, tags: { ...objectSelected.tags}, }

@@ -91,6 +91,13 @@ const updatePixiObject = (gameObject) => {
   /////////////////////
   /////////////////////
   // UPDATE EMITTER
+  if(pixiChild.laserEmitter) {
+    updatePixiEmitter(pixiChild.laserEmitter, gameObject)
+  }
+
+  if(pixiChild.poweredUpEmitter && gameObject.tags.poweredUp) {
+    updatePixiEmitter(pixiChild.poweredUpEmitter, gameObject)
+  }
   if(pixiChild.trailEmitter && gameObject.tags.hasTrail) {
     updatePixiEmitter(pixiChild.trailEmitter, gameObject)
   }
@@ -185,6 +192,30 @@ const updatePixiEmitter = (pixiChild, gameObject) => {
     emitter.startScale.value = emitter.data.scale.start * camera.multiplier
     if(emitter.startScale.next) emitter.startScale.next.value = emitter.data.scale.end * camera.multiplier
   }
+
+  const data = emitter.data
+
+  if(!data) return
+
+  const usesCircle = (data.spawnType === 'ring' || data.spawnType === 'circle')
+  if(emitter.spawnCircle && usesCircle) {
+    if(data.spawnCircle && data.spawnCircle.r) {
+      emitter.spawnCircle.radius = data.spawnCircle.r * MAP.camera.multiplier
+    }
+    if(data.spawnCircle && data.spawnCircle.minR) emitter.spawnCircle.minRadius = data.spawnCircle.minR * MAP.camera.multiplier
+  }
+
+  const usesRect = data.spawnType === 'rect'
+  if(emitter.spawnRect && usesRect) {
+    if(data.spawnRect && data.spawnRect.w) emitter.spawnRect.width = (data.spawnRect.w * MAP.camera.multiplier)
+    if(data.spawnRect && data.spawnRect.h) emitter.spawnRect.height = (data.spawnRect.h * MAP.camera.multiplier)
+    if(data.spawnRect && data.spawnRect.x) emitter.spawnRect.x = (data.spawnRect.x * MAP.camera.multiplier)
+    if(data.spawnRect && data.spawnRect.y) emitter.spawnRect.y = (data.spawnRect.y * MAP.camera.multiplier)
+  }
+
+  if(emitter.type === 'laser') {
+    updatePixiEmitterData(pixiChild, {...gameObject, emitterData: data})
+  }
 }
 
 function initEmitter(gameObject, emitterType = 'smallFire', options = {}, metaOptions = {}) {
@@ -227,6 +258,22 @@ function updateProperties(pixiChild, gameObject) {
   updateScale(pixiChild, gameObject)
   updateColor(pixiChild, gameObject)
   updateAlpha(pixiChild, gameObject)
+
+  // if(gameObject.subObjectName === 'shrinkRay') console.log(gameObject._shootingLaser, gameObject.ownerId, pixiChild.laserEmitter)
+  if(!pixiChild.laserEmitter && gameObject._shootingLaser && gameObject.ownerId) {
+    pixiChild.laserEmitter = initEmitter(gameObject, gameObject.emitterTypeLaser || 'laser', { useUpdateOwnerPos: true })
+  } else if(pixiChild.laserEmitter && !gameObject._shootingLaser) {
+    PIXIMAP.deleteEmitter(pixiChild.laserEmitter)
+    delete pixiChild.laserEmitter
+  }
+
+  if(gameObject.tags.poweredUp && !pixiChild.poweredUpEmitter) {
+    pixiChild.poweredUpEmitter = initEmitter(gameObject, gameObject.emitterTypePoweredUp || 'powerRing', { matchObjectColor: true, useUpdateOwnerPos: true })
+  }
+  if(!gameObject.tags.poweredUp && pixiChild.poweredUpEmitter) {
+    PIXIMAP.deleteEmitter(pixiChild.poweredUpEmitter)
+    delete pixiChild.poweredUpEmitter
+  }
 
   if(gameObject.tags.hasTrail && !pixiChild.trailEmitter) {
     pixiChild.trailEmitter = initEmitter(gameObject, 'trail', { scaleToGameObject: true, matchObjectColor: true, useUpdateOwnerPos: true })
@@ -329,8 +376,6 @@ const addGameObjectToStage = (gameObject, stage) => {
     lightbulb2.filters = [new PIXI.filters.BlurFilter(120)];
     sprite.darkArealight = stage.addChild(lightbulb2)
     lightbulb2._scaleMode = PIXI.SCALE_MODES.NEAREST
-
-    console.log(sprite)
   }
 
 

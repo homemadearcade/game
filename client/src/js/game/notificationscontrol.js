@@ -19,7 +19,7 @@ function setHeroWalkingSound (hero) {
     hero._walkingSound = 'vehicle'
   }
 
-  if(hero.tags.walkQuality) {
+  if(hero.tags.walkDescriptor && hero._walkingOnId) {
     const object = OBJECTS.getObjectOrHeroById(hero._walkingOnId)
     if(object.tags.sand) {
       hero._walkingSound = 'sand'

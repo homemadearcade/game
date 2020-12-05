@@ -126,9 +126,7 @@ PIXIMAP.deleteObject = function(object, stage) {
   PIXIMAP.childrenById[object.id] = null
 
   const pixiChild = stage.getChildByName(object.id)
-  console.log('X')
   if(!pixiChild) return
-  console.log('XX')
 
   if(pixiChild.children && pixiChild.children.length) {
     pixiChild.children.forEach((child) => {
@@ -137,14 +135,16 @@ PIXIMAP.deleteObject = function(object, stage) {
     pixiChild.removeChildren()
   }
   if(pixiChild.emitter) {
-    console.log('XXX')
-
     PIXIMAP.deleteEmitter(pixiChild.emitter)
     delete pixiChild.emitter
   }
   if(pixiChild.trailEmitter) {
     PIXIMAP.deleteEmitter(pixiChild.trailEmitter)
     delete pixiChild.trailEmitter
+  }
+  if(pixiChild.poweredUpEmitter) {
+    PIXIMAP.deleteEmitter(pixiChild.poweredUpEmitter)
+    delete pixiChild.poweredUpEmitter
   }
   if(pixiChild.engineTrailEmitter) {
     PIXIMAP.deleteEmitter(pixiChild.engineTrailEmitter)

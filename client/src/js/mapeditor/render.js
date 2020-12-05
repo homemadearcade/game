@@ -19,11 +19,11 @@ function update() {
   let camera = MAPEDITOR.camera
   if(!ctx) return
 
-  if(PAGE.role.isAdmin) {
+  if(PAGE.role.isAdmin && EDITOR.preferences.showAdminGrid) {
     drawTools.drawGrid(ctx, {...GAME.grid, gridWidth: GAME.grid.width, gridHeight: GAME.grid.height, color: '#999' }, camera)
   }
 
-  if(PAGE.role.isAdmin || !GAME.gameState.started) {
+  if((PAGE.role.isAdmin && EDITOR.preferences.showAdminGrid ) || (!PAGE.role.isAdmin && !GAME.gameState.started)) {
     ctx.setLineDash([5, 15]);
     GAME.objects.forEach((object) => {
       if(object.tags.removed) return
@@ -148,87 +148,88 @@ function update() {
     drawTools.drawLine(ctx, { x: owner.x + owner.width/2, y: owner.y + owner.height/2 }, { x: draggingRelativeObject.x + draggingRelativeObject.width/2, y: draggingRelativeObject.y + draggingRelativeObject.height/2 }, {color: 'white', thickness: 5 }, camera)
   }
 
-  if(PAGE.role.isAdmin && (MAP.camera.limitX === 0 || MAP.camera.limitX)) {
-    drawTools.drawBorder(ctx, { color: '#0A0', x: (MAP.camera.centerX - MAP.camera.limitX), y: (MAP.camera.centerY - MAP.camera.limitY), width: MAP.camera.limitX * 2, height: MAP.camera.limitY * 2}, camera, { thickness: 2} );
-  }
-
-  if(PAGE.role.isAdmin && GAME.pfgrid) drawTools.drawPFGrid(ctx, camera, GAME.pfgrid, { nodeWidth: GAME.grid.nodeSize, nodeHeight: GAME.grid.nodeSize, startX: GAME.grid.startX, startY: GAME.grid.startY})
-
   if(OBJECTS.editingId) {
     const editingObject = OBJECTS.getObjectOrHeroById(OBJECTS.editingId)
     drawTools.drawBorder(ctx, {...editingObject, color: '#0A0'}, camera, {thickness: 5})
   }
 
-  if(GAME.world && GAME.world.gameBoundaries) {
-    if(GAME.world.gameBoundaries.behavior == 'purgatory') {
-      if(PAGE.role.isAdmin) {
-        ctx.strokeStyle='red';
-        let valueRed = {
+  if(EDITOR.preferences.showAdminGrid) {
+    if(PAGE.role.isAdmin && (MAP.camera.limitX === 0 || MAP.camera.limitX)) {
+      drawTools.drawBorder(ctx, { color: '#0A0', x: (MAP.camera.centerX - MAP.camera.limitX), y: (MAP.camera.centerY - MAP.camera.limitY), width: MAP.camera.limitX * 2, height: MAP.camera.limitY * 2}, camera, { thickness: 2} );
+    }
+
+    if(PAGE.role.isAdmin && GAME.pfgrid) drawTools.drawPFGrid(ctx, camera, GAME.pfgrid, { nodeWidth: GAME.grid.nodeSize, nodeHeight: GAME.grid.nodeSize, startX: GAME.grid.startX, startY: GAME.grid.startY})
+
+    if(GAME.world && GAME.world.gameBoundaries) {
+      if(GAME.world.gameBoundaries.behavior == 'purgatory') {
+        if(PAGE.role.isAdmin) {
+          ctx.strokeStyle='red';
+          let valueRed = {
+            x: GAME.world.gameBoundaries.x-1,
+            y: GAME.world.gameBoundaries.y-1,
+            width: GAME.world.gameBoundaries.width+1,
+            height: GAME.world.gameBoundaries.height+1,
+            color: 'red'
+          }
+          drawTools.drawBorder(ctx, valueRed, camera);
+          ctx.strokeStyle='white';
+          let hero = GAME.heroList.filter((hero) => {
+            return hero.tags.centerOfAttention
+          })[0]
+          if(!hero) {
+            hero = GAME.heros[HERO.id]
+            // single player only feature
+          }
+          let valueWhite = {
+            x: GAME.world.gameBoundaries.x + ((HERO.cameraWidth * hero.zoomMultiplier)/2),
+            y: GAME.world.gameBoundaries.y + ((HERO.cameraHeight * hero.zoomMultiplier)/2),
+            width: GAME.world.gameBoundaries.width - ((HERO.cameraWidth * hero.zoomMultiplier)),
+            height: GAME.world.gameBoundaries.height - ((HERO.cameraHeight * hero.zoomMultiplier)),
+            color: 'white'
+          }
+          drawTools.drawBorder(ctx, valueWhite, camera);
+        }
+      } else {
+        if(PAGE.role.isAdmin) {
+        ctx.strokeStyle='white';
+        let value = {
           x: GAME.world.gameBoundaries.x-1,
           y: GAME.world.gameBoundaries.y-1,
           width: GAME.world.gameBoundaries.width+1,
           height: GAME.world.gameBoundaries.height+1,
-          color: 'red'
-        }
-        drawTools.drawBorder(ctx, valueRed, camera);
-        ctx.strokeStyle='white';
-        let hero = GAME.heroList.filter((hero) => {
-          return hero.tags.centerOfAttention
-        })[0]
-        if(!hero) {
-          hero = GAME.heros[HERO.id]
-          // single player only feature
-        }
-        let valueWhite = {
-          x: GAME.world.gameBoundaries.x + ((HERO.cameraWidth * hero.zoomMultiplier)/2),
-          y: GAME.world.gameBoundaries.y + ((HERO.cameraHeight * hero.zoomMultiplier)/2),
-          width: GAME.world.gameBoundaries.width - ((HERO.cameraWidth * hero.zoomMultiplier)),
-          height: GAME.world.gameBoundaries.height - ((HERO.cameraHeight * hero.zoomMultiplier)),
           color: 'white'
         }
-        drawTools.drawBorder(ctx, valueWhite, camera);
-      }
-    } else {
-      if(PAGE.role.isAdmin) {
-      ctx.strokeStyle='white';
-      let value = {
-        x: GAME.world.gameBoundaries.x-1,
-        y: GAME.world.gameBoundaries.y-1,
-        width: GAME.world.gameBoundaries.width+1,
-        height: GAME.world.gameBoundaries.height+1,
-        color: 'white'
-      }
-      drawTools.drawBorder(ctx, value, camera);
+        drawTools.drawBorder(ctx, value, camera);
+        }
       }
     }
-  }
 
+    if(PAGE.role.isAdmin) {
+      GAME.heroList.forEach((hero) => {
+        if(!GAME.world.lockCamera || !GAME.world.lockCamera.x || ((HERO.cameraWidth * hero.zoomMultiplier)) < GAME.world.lockCamera.width) {
+          drawTools.drawBorder(ctx, {color: '#0A0', x: hero.x - (HERO.cameraWidth * hero.zoomMultiplier)/2 + hero.width/2, y: hero.y - (HERO.cameraHeight * hero.zoomMultiplier)/2 + hero.height/2, width: (HERO.cameraWidth * hero.zoomMultiplier), height: (HERO.cameraHeight * hero.zoomMultiplier)}, camera)
+        }
 
-  if(PAGE.role.isAdmin) {
-    GAME.heroList.forEach((hero) => {
-      if(!GAME.world.lockCamera || !GAME.world.lockCamera.x || ((HERO.cameraWidth * hero.zoomMultiplier)) < GAME.world.lockCamera.width) {
-        drawTools.drawBorder(ctx, {color: '#0A0', x: hero.x - (HERO.cameraWidth * hero.zoomMultiplier)/2 + hero.width/2, y: hero.y - (HERO.cameraHeight * hero.zoomMultiplier)/2 + hero.height/2, width: (HERO.cameraWidth * hero.zoomMultiplier), height: (HERO.cameraHeight * hero.zoomMultiplier)}, camera)
-      }
+        if(hero.reachablePlatformHeight && (hero.tags.gravityY || GAME.world.allMovingObjectsHaveGravityY)) {
+          let y = (hero.y + hero.height)
+          let x = hero.x - hero.reachablePlatformWidth
+          let width = (hero.reachablePlatformWidth * 2) + (hero.width)
+          let height = hero.reachablePlatformHeight
+          let color = 'rgba(0, 150, 0, 0.3)'
+          drawTools.drawObject(ctx, {x, y, width, height, color}, camera)
+        }
 
-      if(hero.reachablePlatformHeight && (hero.tags.gravityY || GAME.world.allMovingObjectsHaveGravityY)) {
-        let y = (hero.y + hero.height)
-        let x = hero.x - hero.reachablePlatformWidth
-        let width = (hero.reachablePlatformWidth * 2) + (hero.width)
-        let height = hero.reachablePlatformHeight
-        let color = 'rgba(0, 150, 0, 0.3)'
-        drawTools.drawObject(ctx, {x, y, width, height, color}, camera)
-      }
+        //hero.keysDown && (hero.keysDown['shift'] !== true && hero.keysDown['caps lock'] !== true)
+        if(hero.flags.isAdmin) {
+          drawTextCenter(ctx, hero, '#0A0', 'admin', camera)
+        } else {
+          drawTextCenter(ctx, hero, '#0A0', 'player', camera)
+        }
+      });
 
-      //hero.keysDown && (hero.keysDown['shift'] !== true && hero.keysDown['caps lock'] !== true)
-      if(hero.flags.isAdmin) {
-        drawTextCenter(ctx, hero, '#0A0', 'admin', camera)
-      } else {
-        drawTextCenter(ctx, hero, '#0A0', 'player', camera)
-      }
-    });
-
-    const editingHero = GAME.heros[HERO.editingId]
-    drawTools.drawBorder(ctx, {...editingHero, color: '#0A0'}, camera, {thickness: 5})
+      const editingHero = GAME.heros[HERO.editingId]
+      drawTools.drawBorder(ctx, {...editingHero, color: '#0A0'}, camera, {thickness: 5})
+    }
   }
 
   drawTools.drawLoadingScreen(ctx, camera)

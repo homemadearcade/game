@@ -345,6 +345,10 @@ export default class Toolbar extends React.Component {
             this.forceUpdate()
           }}/>*/}
         <ToolbarRow open iconName='fa-layer-group'>
+          <ToolbarButton iconName='fa-th' active={EDITOR.preferences.showAdminGrid} onClick={() => {
+            EDITOR.preferences.showAdminGrid = !EDITOR.preferences.showAdminGrid
+            this.forceUpdate()
+          }}/>
           <ToolbarButton text="Invisible" active={EDITOR.preferences.selectable.invisible} onClick={() => {
             EDITOR.preferences.selectable.invisible = !EDITOR.preferences.selectable.invisible
             this.forceUpdate()

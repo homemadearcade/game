@@ -51,7 +51,9 @@ function updatePixiEmitterData(pixiChild, gameObject, options) {
 
   const usesCircle = (emitter.spawnType === 'ring' || emitter.spawnType === 'circle')
   if(emitter.spawnCircle && usesCircle) {
-    if(data.spawnCircle && data.spawnCircle.r) emitter.spawnCircle.radius = data.spawnCircle.r * MAP.camera.multiplier
+    if(data.spawnCircle && data.spawnCircle.r) {
+      emitter.spawnCircle.radius = data.spawnCircle.r * MAP.camera.multiplier
+    }
     if(data.spawnCircle && data.spawnCircle.minR) emitter.spawnCircle.minRadius = data.spawnCircle.minR * MAP.camera.multiplier
   } else if(PAGE.role.isHost && usesCircle) {
     window.socket.emit('resetLiveParticle', gameObject.id)
@@ -60,8 +62,8 @@ function updatePixiEmitterData(pixiChild, gameObject, options) {
 
   const usesRect = emitter.spawnType === 'rect'
   if(emitter.spawnRect && usesRect) {
-    if(data.spawnRect && data.spawnRect.width) emitter.spawnRect.width = (data.spawnRect.w * MAP.camera.multiplier)
-    if(data.spawnRect && data.spawnRect.height) emitter.spawnRect.height = (data.spawnRect.h * MAP.camera.multiplier)
+    if(data.spawnRect && data.spawnRect.w) emitter.spawnRect.width = (data.spawnRect.w * MAP.camera.multiplier)
+    if(data.spawnRect && data.spawnRect.h) emitter.spawnRect.height = (data.spawnRect.h * MAP.camera.multiplier)
     if(data.spawnRect && data.spawnRect.x) emitter.spawnRect.x = (data.spawnRect.x * MAP.camera.multiplier)
     if(data.spawnRect && data.spawnRect.y) emitter.spawnRect.y = (data.spawnRect.y * MAP.camera.multiplier)
   } else if(PAGE.role.isHost && usesRect) {

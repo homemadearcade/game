@@ -14,6 +14,9 @@ export default class ServicesMenu extends React.Component{
       const { onStartSetPathfindingLimit, networkEditObject, openConstructEditor } = MAPEDITOR
 
       if(key === 'edit-descriptors') {
+        Object.keys(objectSelected.descriptors).forEach((tag) => {
+          if(!objectSelected.descriptors[tag]) delete objectSelected.descriptors[tag]
+        })
         modals.openEditDescriptorsModal(objectSelected.descriptors || {}, ({value}) => {
           if(value) {
             networkEditObject(objectSelected, {descriptors: value})

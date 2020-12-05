@@ -220,6 +220,7 @@ function handleActionEnd(hero, action) {
 
   if(action === 'shrink') {
     hero._shootingLaser = false
+    subObject._shootingLaser = false
   }
 }
 
@@ -262,6 +263,7 @@ function handleActionButtonBehavior(hero, action, delta) {
     if(!GAME.gameState.started) return
 
     hero._shootingLaser = true
+    subObject._shootingLaser = true
     if(subObject) {
       closestObjectBehavior({
         direction: hero.inputDirection,
