@@ -323,7 +323,7 @@ function updateLight(pixiChild, gameObject) {
   }
 
   if(!pixiChild.isAnimatingScale) {
-    let lightPower = gameObject.lightPower
+    let lightPower = gameObject.lightPower/50
     if(typeof lightPower !== 'number') lightPower = .1
     pixiChild.transform.scale.x = (gameObject.width * lightPower) * camera.multiplier
     pixiChild.transform.scale.y = (gameObject.height * lightPower) * camera.multiplier

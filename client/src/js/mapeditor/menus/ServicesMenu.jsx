@@ -28,6 +28,10 @@ export default class ServicesMenu extends React.Component{
         LIVEEDITOR.open(objectSelected, 'particle')
       }
 
+      if(key === 'open-live-light') {
+        LIVEEDITOR.open(objectSelected, 'light')
+      }
+
       if(key === 'open-construct-editor') {
         openConstructEditor(objectSelected)
       }
@@ -163,6 +167,7 @@ export default class ServicesMenu extends React.Component{
       <MenuItem key='open-path-editor'>Open path editor</MenuItem>
       <MenuItem key='open-physics-live-editor'>Live Edit Physics</MenuItem>
       <MenuItem key='open-live-particle'>Live Edit Particle</MenuItem>
+      <MenuItem key='open-live-light'>Live Edit Light</MenuItem>
       <MenuItem key='generate-maze'>Generate maze</MenuItem>
       <MenuItem key='edit-descriptors'>Edit Descriptors</MenuItem>
     </Menu>

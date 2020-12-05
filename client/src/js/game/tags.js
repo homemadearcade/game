@@ -344,8 +344,8 @@ function setDefault() {
     ...window.descriptiveTags,
     ...window.generatedTags,
     ...window.targetTags,
+    ...window.allDescriptors,
   }
-
 
   window.propertyTags = {
     ...window.combatTags,

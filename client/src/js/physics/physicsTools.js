@@ -155,7 +155,10 @@ function heroCorrection(hero) {
         let prevVelocityY = hero.velocityY
         if(result.overlap_y > 0) {
           hero.onGround = true
-          if(landingObject && hero.velocityY > 200) {
+          if(landingObject && hero.velocityY > 500) {
+            window.emitGameEvent('onHeroPowerLand', hero, landingObject.gameObject, result)
+          }
+          if(landingObject && hero.velocityY > 100) {
             window.emitGameEvent('onHeroLand', hero, landingObject.gameObject, result)
           }
           if(landingObject && landingObject.gameObject.mod().tags['movingPlatform']) {

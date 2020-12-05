@@ -390,7 +390,7 @@ const initPixiApp = (canvasRef, onLoad) => {
   lightingSprite.blendMode = PIXI.BLEND_MODES.MULTIPLY;
 
   PIXIMAP.stage.addChild(lightingSprite);
-
+  PIXIMAP.worldLightingChild = lightingSprite
 
   const darkAreaLighting = new PIXI.display.Layer();
   darkAreaLighting.on('display', (element) => {
@@ -417,12 +417,16 @@ const initPixiApp = (canvasRef, onLoad) => {
          return isColliding(GAME.heros[HERO.id], r)
        })[0]
       if(area) {
+        indoors = true
         PIXIMAP.darkAreaStage.alpha = 1
+        PIXIMAP.worldLightingChild.alpha = 0
         darkAreaLighting.clearColor = [area.ambientLight || 0, area.ambientLight || 0, area.ambientLight || 0, 1]
       } else {
+        PIXIMAP.worldLightingChild.alpha = 1
         PIXIMAP.darkAreaStage.alpha = 0
       }
     } else {
+      PIXIMAP.worldLightingChild.alpha = 1
       PIXIMAP.darkAreaStage.alpha = 0
     }
 

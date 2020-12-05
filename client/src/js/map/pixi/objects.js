@@ -123,6 +123,31 @@ const updatePixiObject = (gameObject) => {
   return pixiChild
 }
 
+function initPixiLight(sprite, gameObject, stage) {
+  const lightbulb = new PIXI.Graphics();
+  const rad = 30
+  let color = gameObject.lightColor
+  if(!color) color = 'white'
+  lightbulb.beginFill(getHexColor(color));
+  lightbulb.drawCircle(0, 0, rad);
+  lightbulb.endFill();
+  lightbulb.parentLayer = PIXIMAP.globalLighting;// <-- try comment it
+  lightbulb.filters = [new PIXI.filters.BlurFilter(120)];
+  sprite.light = stage.addChild(lightbulb)
+  lightbulb._scaleMode = PIXI.SCALE_MODES.NEAREST
+
+  const lightbulb2 = new PIXI.Graphics();
+  // const rad = 200
+  lightbulb2.beginFill(getHexColor(color));
+  lightbulb2.drawCircle(0, 0, rad);
+  lightbulb2.endFill();
+  lightbulb2.parentLayer = PIXIMAP.darkAreaLighting;// <-- try comment it
+  lightbulb2.filters = [new PIXI.filters.BlurFilter(120)];
+  sprite.darkArealight = stage.addChild(lightbulb2)
+  lightbulb2._scaleMode = PIXI.SCALE_MODES.NEAREST
+}
+
+
 const updatePixiEmitter = (pixiChild, gameObject) => {
   /////////////////////
   /////////////////////
@@ -263,6 +288,18 @@ function updateProperties(pixiChild, gameObject) {
   updateColor(pixiChild, gameObject)
   updateAlpha(pixiChild, gameObject)
 
+  if(!pixiChild.light && gameObject.tags.light) {
+    initPixiLight(pixiChild, gameObject, getGameObjectStage(gameObject))
+  }
+
+  if(pixiChild.light && !gameObject.tags.light) {
+    const stage = getGameObjectStage(gameObject)
+    stage.removeChild(pixiChild.light)
+    delete pixiChild.light
+    stage.removeChild(pixiChild.darkArealight)
+    delete pixiChild.darkArealight
+  }
+
   if(!pixiChild.laserEmitter && gameObject._shootingLaser && gameObject.ownerId) {
     pixiChild.laserEmitter = initEmitter(gameObject, gameObject.emitterTypeLaser || 'laser', {})
   } else if(pixiChild.laserEmitter && !gameObject._shootingLaser) {
@@ -358,29 +395,8 @@ const addGameObjectToStage = (gameObject, stage) => {
   if(stage === PIXIMAP.objectStage) sprite.parentGroup = PIXIMAP.sortGroup
 
   if(gameObject.tags.light) {
-    const lightbulb = new PIXI.Graphics();
-    const rad = 30
-    let color = gameObject.lightColor
-    if(!color) color = 'white'
-    lightbulb.beginFill(getHexColor(color));
-    lightbulb.drawCircle(0, 0, rad);
-    lightbulb.endFill();
-    lightbulb.parentLayer = PIXIMAP.globalLighting;// <-- try comment it
-    lightbulb.filters = [new PIXI.filters.BlurFilter(120)];
-    sprite.light = stage.addChild(lightbulb)
-    lightbulb._scaleMode = PIXI.SCALE_MODES.NEAREST
-
-    const lightbulb2 = new PIXI.Graphics();
-    // const rad = 200
-    lightbulb2.beginFill(getHexColor(color));
-    lightbulb2.drawCircle(0, 0, rad);
-    lightbulb2.endFill();
-    lightbulb2.parentLayer = PIXIMAP.darkAreaLighting;// <-- try comment it
-    lightbulb2.filters = [new PIXI.filters.BlurFilter(120)];
-    sprite.darkArealight = stage.addChild(lightbulb2)
-    lightbulb2._scaleMode = PIXI.SCALE_MODES.NEAREST
+    initPixiLight(sprite, gameObject, stage)
   }
-
 
   /////////////////////
   /////////////////////

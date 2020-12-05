@@ -176,7 +176,7 @@ class NotificationsControl{
     }
   }
 
-  onHeroLand(hero, landingObject) {
+  onHeroPowerLand(hero, landingObject) {
     PIXIMAP.onFakeObjectAnimation('groundDisturbanceRight', { ...hero, y: hero.y + (hero.height/2), color: landingObject.color || GAME.world.defaultObjectColor })
     PIXIMAP.onFakeObjectAnimation('groundDisturbanceLeft', { ...hero, y: hero.y + (hero.height/2), color: landingObject.color || GAME.world.defaultObjectColor })
   }

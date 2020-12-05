@@ -6,6 +6,7 @@ function onPlayerIdentified() {
   window.triggerEvents = {
     onHeroCollide: { mainObject: 'hero', guestObject: 'anything' },
     onHeroLand: { mainObject: 'hero', guestObject: 'anything' },
+    onHeroPowerLand: { mainObject: 'hero', guestObject: 'anything' },
     onHeroHeadHit: { mainObject: 'hero', guestObject: 'anything' },
     onHeroInteract: { mainObject: 'hero', guestObject: 'anything' },
     'onHeroInteract--integrated': { mainObject: 'hero', guestObject: 'anything' },

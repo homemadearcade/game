@@ -126,6 +126,8 @@ Win/Lose States that can connect to the meta of the engine ( picking new game or
 ////////////////////////////////
 COMBAT UPGRADE
 ////////////////////////////////
+WHAT DID I LEARN FROM DIALOGUE SETS THAT I CAN APPLY TO HIS, like DestroysTags, DestroyedByTags, WeakTo, ResistantTo
+
 Main questions for this upgrade is
   -- How to detect the destroyer! Thats key... how does _destroyedById work -- by weapon, by bullet, by player?
   -- How much damage does it do?
@@ -175,7 +177,7 @@ LEVELS ( sub worlds )
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ////////////////////////////////////////////////////
 
-when generating construct parts sprites it can mess up because if combines all those squares into rectangles ...
+when generating construct parts sprites it can mess up because it combines all those squares into rectangles ...
 
 non host player was shooting x2?
 
@@ -209,9 +211,7 @@ LIBRARY IDEAS
 ////////////////////////////////////////////////////
 
 //PARTICLES
-  Laser gun
   Powerups
-
   Special Explosions... for CRAZY particles. Overall having some objects tagged as like special particle explosion1,2,3 or special heroTouchStartParticle1,2,3
   Shooting special bullets! MAGIC SPELLS
   Decorative?
@@ -275,8 +275,9 @@ Maybe dual stick shooter potential?
   go down when hit obstacle ( mainly for goombas you feel me? )
   slow down tag ( MOD lowers speed of anything inside of it )
   water tag ( MOD lowers gravity of anything inside of it )
+    _tempMods Array! Perfect
+    -- temp mods !! so these would be tags that use the mod system essentially... the mod only lasts one loop, but it will keep getting reset
   Non scroller object ( sun )
-  -- temp mods !! so these would be tags that use the mod system essentially... the mod only lasts one loop, but it will keep getting reset
   Parallax scroller slower
   Parallax scroller faster
     special camera relation, 0, .5, 2, 10, etc. might wanna encapsulale the camera changing logic into a function?
@@ -288,6 +289,7 @@ Maybe dual stick shooter potential?
   // 'increaseInputDirectionVelocity', <<--- better as tags probably
   // 'increaseMovementDirectionVelocity',
   Show grave when dead
+  shrink down and shake until destroyed ( shrink other directions maybe too?)
 
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
@@ -911,6 +913,8 @@ import './js/game/notificationscontrol.js'
 import './js/liveeditor/index.js'
 import './js/creator/index.js'
 import './js/audio/index.js'
+
+import './js/procedural/theme.js'
 
 import './styles/index.scss'
 import './styles/jsoneditor.css'
