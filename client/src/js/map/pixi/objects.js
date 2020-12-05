@@ -204,10 +204,8 @@ const updatePixiEmitter = (pixiChild, gameObject) => {
     // }
     emitter.updateOwnerPos(gameObject.x * camera.multiplier, gameObject.y * camera.multiplier)
     // }
-    console.log('?')
   } else {
     if(gameObject.tags.rotateable) {
-      console.log('?', gameObject.angle)
       pixiChild.pivot.set(gameObject.width/2, gameObject.height/2)
       pixiChild.rotation = gameObject.angle || 0
       pixiChild.x = (gameObject.x + gameObject.width/2) * camera.multiplier

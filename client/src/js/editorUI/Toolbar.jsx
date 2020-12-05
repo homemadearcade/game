@@ -337,6 +337,11 @@ export default class Toolbar extends React.Component {
              })
             }}>
            </ToolbarButton>
+
+           <ToolbarButton iconName="fa-dice" onClick={() => {
+               LIVEEDITOR.open({}, 'gameRandomizer')
+            }}>
+           </ToolbarButton>
         </ToolbarRow>
         <br/>
 

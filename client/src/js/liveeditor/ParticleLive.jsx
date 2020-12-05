@@ -3,6 +3,7 @@ import DatGui, { DatFolder, DatSelect, DatBoolean, DatButton, DatColor, DatNumbe
 import modals from '../mapeditor/modals.js'
 
 window.particles = [
+  'default',
   'Bubbles50px',
   // 'Bubbles99px',
   'CartoonSmoke',
@@ -30,19 +31,20 @@ window.particles = [
   // 'particleWhite_7',
 ]
 
-window.randomParticles = [
-  'Fire',
-  'HardCircle',
-  'HardRain',
-  'Pixel25px',
-  'Pixel50px',
-  'Pixel100px',
-  'smokeparticle',
-  'Sparks',
-  'burst',
-  'particleCartoonStar',
-  'particleStar',
-]
+// window.randomParticles = [
+//
+//   'Fire',
+//   'HardCircle',
+//   'HardRain',
+//   'Pixel25px',
+//   'Pixel50px',
+//   'Pixel100px',
+//   'smokeparticle',
+//   'Sparks',
+//   'burst',
+//   'particleCartoonStar',
+//   'particleStar',
+// ]
 
 window.giveEmitterDataSpawnCircleOrRect = function(emitterData) {
   if(emitterData.spawnType == 'rect') {
@@ -151,19 +153,24 @@ export default class ParticleLive extends React.Component {
       }
     }
 
+
+    if(!emitterData.speedType) {
+      emitterData.speedType = 'fast'
+    }
+
     let frequency = emitterData.frequency
     let frequencyDivider = 1000
-    if(!fromLoad) {
-      if(emitterData.speedType == 'slow') {
-        frequencyDivider = 100
-      }
-      if(emitterData.speedType == 'normal') {
-        frequencyDivider = 1000
-      }
-      if(emitterData.speedType == 'fast') {
-        frequencyDivider = 10000
-      }
+    if(emitterData.speedType == 'slow') {
+      frequencyDivider = 100
+    }
+    if(emitterData.speedType == 'normal') {
+      frequencyDivider = 1000
+    }
+    if(emitterData.speedType == 'fast') {
+      frequencyDivider = 10000
+    }
 
+    if(!fromLoad) {
       frequency = (101 - emitterData.spawnWaitTime)/frequencyDivider
 
       if(emitterData.spawnType !== 'burst') {
@@ -173,8 +180,8 @@ export default class ParticleLive extends React.Component {
       }
     }
 
-    if(!emitterData.speedType) {
-      emitterData.speedType = 'fast'
+    if(!emitterData.spawnWaitTime && frequency) {
+      emitterData.spawnWaitTime = frequency * frequencyDivider
     }
 
     let updatedProps = {}

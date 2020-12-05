@@ -6,14 +6,6 @@ Interesting that bar of dreams and homemade arcade i've wanted to have audio... 
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
 
-GOAL - Get demo for spencer of the theme generation service
-1 random special explosion
-a little bit more descriptors in the sprite sheet service
-random game feel
-random night/day? ( add some lights in there )
-Add some lights to the hero object
-Set up basic ambience with lights using randomization?
-
 CASUAL TODO
 Make a particle effect - see list
 Add a sprite sheet
@@ -58,10 +50,9 @@ BASICALLY im saying that these generic Descriptors with a lot of aliases are jus
 
 Alt Foosteps sounds
 
-THEME UI -randomize specific parts of theme and select value of the theme properties
-  audio right click -> set as ___ sound
+audio right click -> set as ___ sound
 
-Only only the use of ONE descriptor for construct parts? Pre select a single descriptor before selecting
+Only allow the use of ONE descriptor for construct parts? Pre select a single descriptor before generating?
 
 //FOR SPECIFIC OBJECTS ON MAP
 dialogueNoise: 'XX'
@@ -222,7 +213,6 @@ LIBRARY IDEAS
   // funny thing with particle landing... LOL even if you land on a LIVE DUDE ASS u skim off some of his particles. Ill need a quality tag for 'earth' vs 'human' or something like. 'scrapeable?'
   // if an object falls on the edge of another object, show the scrape!
   // object jump squeeze thing, ( with and height anim )
-  _beingShrunk, _beingGrown, variables for the laser tools, PARTICLE EMITTER for when this is happening
 
   Jump sparks.. to show motion?
 
@@ -491,46 +481,7 @@ randomize sprite theme ( this would require sprite the QUALITIES SYSTEM )
 randomize hero physics
 gameTheme: ’scifi vs fantasy vs retro vs fun vs horror’. This effects title selection randomization, sprite sheet selection?? and audio generation
 
-   I mean ugh fuck themes. I think maybe we can have a 'mediaControlCenter' similar to NotificationsControl center
-   With this I can randomize the effects the world has
-   dont forget to randomize physics too!
-   and randomize perhaps the camera filter!! <--- yes on camera filter and also dont forget about camera shakes too, those are good animations, or EASE! remember ease..
-   I Think you have tags like
-
-   MODS
-   --
-
-   whileModdedAnimation
-   whileModdedMusic
-   mods Should just have an animation they can choose from
-
-   ANIMATIONS
-   --
-    touchStartAnimation1
-    touchStartAnimation2
-    touchStartAnimation3
-    destroyAnimation/1/2/3
-
-    pickupAnimation1/2/3
-    interactAnimation1/2/3
-
-    shootAnimation1/2/3
-    useAnimation1/2/3
-
-    jumpAnimation1/2/3
-    dashAnimation1/2/3
-    teleportAnimation1/2/3
-    turnAroundAnimation1/2/3
-    landAnimation1/2/3
-    bounceAnimation1/2/3
-
-    splashWaterAnimation1/2/3
-    swimAnimation1/2/3
-    walkPathAnimation1/2/3
-    walkGrassAnimation1/2/3
-    walkMudAnimation1/2/3
-    walkMetalAnimation1/2/3
-
+and randomize perhaps the camera filter!! <--- yes on camera filter and also dont forget about camera shakes too, those are good animations, or EASE! remember ease..
 --
   AMBIENCE --- these tags would play an ambience in any area
     caveAmbience
@@ -915,6 +866,7 @@ import './js/creator/index.js'
 import './js/audio/index.js'
 
 import './js/procedural/theme.js'
+import './js/procedural/particle.js'
 
 import './styles/index.scss'
 import './styles/jsoneditor.css'

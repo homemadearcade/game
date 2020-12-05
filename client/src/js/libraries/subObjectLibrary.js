@@ -187,6 +187,34 @@ window.local.on('onFirstPageGameLoaded', () => {
       },
       actionState: {}
     },
+    randomGun: {
+      x: 0, y: 0, width: 10, height: 10,
+      relativeX: GAME.grid.nodeSize/5,
+      relativeY: -GAME.grid.nodeSize,
+      // relativeWidth: -GAME.grid.nodeSize * .75,
+      // relativeHeight: -GAME.grid.nodeSize * .75,
+      // subObjectName: 'gun',
+      tags: { rotateable: true, relativeToAngle: true, relativeToDirection: true, pickupable: true, pickupOnHeroInteract: true, equipOnPickup: true, onMapWhenEquipped: true },
+      actionButtonBehavior: 'shoot',
+      actionProps: {
+        debounceTime: 1.2,
+        shootVelocity: 600,
+        // shootRadius: window.radianCircle,
+        shootBulletsPerRound: 1,
+        bulletJSON: {
+          tags: {
+            monsterDestroyer: true,
+            destroyOnCollideWithObstacle: true,
+            moving: true,
+            destroySoon: true,
+            emitter: true,
+          },
+          opacity: 0,
+          emitterType: 'random-projectile'
+        }
+      },
+      actionState: {}
+    },
     marioCap: {
       x: 0, y: 0, width: 10, height: 10,
       color: 'red',

@@ -6,6 +6,7 @@ import GuidanceLive from './GuidanceLive.jsx'
 import ParticleLive from './ParticleLive.jsx'
 import DayNightLive from './DayNightLive.jsx'
 import LightLive from './LightLive.jsx'
+import RandomizeLive from './RandomizeLive.jsx'
 import 'react-dat-gui/dist/index.css';
 
 export default class Root extends React.Component {
@@ -45,6 +46,7 @@ export default class Root extends React.Component {
         {openEditorName === 'hero' && <HeroLive objectSelected={objectSelected} />}
         {openEditorName === 'light' && <LightLive objectSelected={objectSelected} />}
         {openEditorName === 'world' && <WorldLive />}
+        {openEditorName === 'gameRandomizer' && <RandomizeLive />}
         {openEditorName === 'guidance' && <GuidanceLive objectSelected={objectSelected}/>}
         {openEditorName === 'particle' && <ParticleLive objectSelected={objectSelected}/>}
       </div>

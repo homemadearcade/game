@@ -290,6 +290,14 @@ function onFirstPageGameLoaded() {
       libraryId:'fireballGun',
       ...toggleSubObject('fireballGun')
     },
+    randomGun: {
+      label: 'Random Gun',
+      columnName: 'Equip',
+      toggleId: 'randomGun',
+      libraryName:'subObjectLibrary',
+      libraryId:'randomGun',
+      ...toggleSubObject('randomGun')
+    },
     shrinkRay: {
       label: 'Shrink Ray',
       columnName: 'Equip',
@@ -461,6 +469,7 @@ function onFirstPageGameLoaded() {
     spearDialogueChoice: true,
     gun: true,
     fireballGun: true,
+    randomGun: true,
     shrinkRay: true,
     bombs: true,
     seeThroughForegroundPower: true,

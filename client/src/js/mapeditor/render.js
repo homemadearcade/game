@@ -23,12 +23,18 @@ function update() {
     drawTools.drawGrid(ctx, {...GAME.grid, gridWidth: GAME.grid.width, gridHeight: GAME.grid.height, color: '#999' }, camera)
   }
 
-  if((PAGE.role.isAdmin && EDITOR.preferences.showAdminGrid ) || (!PAGE.role.isAdmin && !GAME.gameState.started)) {
+  if((PAGE.role.isAdmin && EDITOR.preferences.selectable.invisible ) || (!PAGE.role.isAdmin && !GAME.gameState.started)) {
     ctx.setLineDash([5, 15]);
-    GAME.objects.forEach((object) => {
+    [...GAME.heroList, ...GAME.objects].forEach((object) => {
       if(object.tags.removed) return
       if(object.defaultSprite == 'invisible' || object.tags.invisible || object.tags.hidden || object.opacity == 0) {
         drawTools.drawObject(ctx, {...object, tags: {invisible: false, outline: true }, color: 'rgba(255,255,255,1)'}, camera)
+      }
+      if(PAGE.role.isAdmin && object.subObjects && EDITOR.preferences.selectable.subObjects) {
+        Object.keys(object.subObjects).forEach((soName) => {
+          const so = object.subObjects[soName]
+          drawTools.drawObject(ctx, {...so, tags: {invisible: false, outline: true }, color: 'rgba(255,255,255,1)'}, camera)
+        })
       }
     })
     ctx.setLineDash([]);

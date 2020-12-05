@@ -423,14 +423,14 @@ function updateGridHighlight(location) {
   }
 
   if((PAGE.role.isAdmin || (GAME.heros[HERO.id] && GAME.heros[HERO.id].flags.showMapHighlight)) && (MAPEDITOR.objectHighlighted.x != previousHighlightX || MAPEDITOR.objectHighlighted.y != previousHighlightY)) {
-    AUDIO.playDebounce(
-      {
-        id: 'onMapEditorSwitchNode',
-        soundId: GAME.theme.audio.onMapEditorSwitchNode,
-        volume: 0.35,
-        debounceTime: 25
-      }
-    )
+    // AUDIO.playDebounce(
+    //   {
+    //     id: 'onMapEditorSwitchNode',
+    //     soundId: GAME.theme.audio.onMapEditorSwitchNode,
+    //     volume: 0.35,
+    //     debounceTime: 25
+    //   }
+    // )
   }
 
 }
