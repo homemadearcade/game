@@ -336,7 +336,7 @@ class ConstructEditor {
 
     this.grid.forEachNode((node) => {
       if(node.data.filled) {
-        if(node.data.defaultSprite || CONSTRUCTEDITOR.tags.seperateParts) {
+        if(node.data.defaultSprite || true || CONSTRUCTEDITOR.tags.seperateParts) {
           rectangles.push({ x: node.x, y: node.y, width: this.grid.nodeSize, height: this.grid.nodeSize, color: node.data.color, defaultSprite: node.data.defaultSprite })
           this.unfillNode(node.gridX, node.gridY)
           return
@@ -356,7 +356,7 @@ class ConstructEditor {
 
     rectangles.forEach((rect1) => {
       rectangles.forEach((rect2) => {
-        if(!rect1.claimed && !rect2.claimed && rect1.x === rect2.x && rect1.width === rect2.width && !rect1.defaultSprite && !rect2.defaultSprite && !CONSTRUCTEDITOR.tags.seperateParts) {
+        if(!rect1.claimed && !rect2.claimed && rect1.x === rect2.x && rect1.width === rect2.width && !rect1.defaultSprite && !rect2.defaultSprite && !CONSTRUCTEDITOR.tags.seperateParts && false) {
           if(rect1.y + rect1.height === rect2.y && rect1.color === rect2.color) {
             let higherRect = rect1
             let lowerRect = rect2

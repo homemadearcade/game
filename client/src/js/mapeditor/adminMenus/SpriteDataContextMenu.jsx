@@ -44,6 +44,7 @@ export default class SpriteDataContextMenu extends React.Component{
   _renderCurrentDescriptors(sprite) {
     if(sprite.descriptors) {
       return Object.keys(sprite.descriptors).map((descriptor) => {
+        if(!sprite.descriptors[descriptor]) return
         return this._renderDescriptorMenuItems(descriptor, true)
       })
     } else {
@@ -56,98 +57,114 @@ export default class SpriteDataContextMenu extends React.Component{
 
     render.push(<SubMenu title="Elements">
       {Object.keys(window.elementDescriptors).map((descriptor) => {
-        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
+        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor || window.allDescriptors[descriptor].withDescriptors) return
         return this._renderDescriptorMenuItems(descriptor, remove)
       })}
     </SubMenu>)
 
     render.push(<SubMenu title="Water">
       {Object.keys(window.elementDescriptors).map((descriptor) => {
-        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
+        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor || window.allDescriptors[descriptor].withDescriptors) return
         return this._renderDescriptorMenuItems(descriptor, remove)
       })}
     </SubMenu>)
 
     render.push(<SubMenu title="Overworld">
       {Object.keys(window.overworldMapDescriptors).map((descriptor) => {
-        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
+        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor || window.allDescriptors[descriptor].withDescriptors) return
         return this._renderDescriptorMenuItems(descriptor, remove)
       })}
     </SubMenu>)
 
     render.push(<SubMenu title="Building Parts">
       {Object.keys(window.buildingPartDescriptors).map((descriptor) => {
-        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
+        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor || window.allDescriptors[descriptor].withDescriptors) return
         return this._renderDescriptorMenuItems(descriptor, remove)
       })}
     </SubMenu>)
 
     render.push(<SubMenu title="Inside Building">
       {Object.keys(window.insideBuildingDescriptors).map((descriptor) => {
-        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
+        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor || window.allDescriptors[descriptor].withDescriptors) return
         return this._renderDescriptorMenuItems(descriptor, remove)
       })}
     </SubMenu>)
 
     render.push(<SubMenu title="Outside Building">
       {Object.keys(window.outsideBuildingDescriptors).map((descriptor) => {
-        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
+        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor || window.allDescriptors[descriptor].withDescriptors) return
         return this._renderDescriptorMenuItems(descriptor, remove)
       })}
     </SubMenu>)
 
     render.push(<SubMenu title="Tools">
       {Object.keys(window.toolDescriptors).map((descriptor) => {
-        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
+        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor || window.allDescriptors[descriptor].withDescriptors) return
         return this._renderDescriptorMenuItems(descriptor, remove)
       })}
     </SubMenu>)
 
     render.push(<SubMenu title="Item">
       {Object.keys(window.itemDescriptors).map((descriptor) => {
-        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
+        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor || window.allDescriptors[descriptor].withDescriptors) return
         return this._renderDescriptorMenuItems(descriptor, remove)
       })}
     </SubMenu>)
 
     render.push(<SubMenu title="Other">
       {Object.keys(window.otherDescriptors).map((descriptor) => {
-        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
+        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor || window.allDescriptors[descriptor].withDescriptors) return
         return this._renderDescriptorMenuItems(descriptor, remove)
       })}
     </SubMenu>)
 
     render.push(<SubMenu title="Transport">
       {Object.keys(window.transportDescriptors).map((descriptor) => {
-        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
+        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor || window.allDescriptors[descriptor].withDescriptors) return
         return this._renderDescriptorMenuItems(descriptor, remove)
       })}
     </SubMenu>)
 
     render.push(<SubMenu title="Human">
       {Object.keys(window.humanDescriptors).map((descriptor) => {
-        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
+        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor || window.allDescriptors[descriptor].withDescriptors) return
         return this._renderDescriptorMenuItems(descriptor, remove)
       })}
     </SubMenu>)
 
     render.push(<SubMenu title="Animal">
       {Object.keys(window.animalDescriptors).map((descriptor) => {
-        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
+        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor || window.allDescriptors[descriptor].withDescriptors) return
         return this._renderDescriptorMenuItems(descriptor, remove)
       })}
     </SubMenu>)
 
     render.push(<SubMenu title="Monster">
       {Object.keys(window.monsterDescriptors).map((descriptor) => {
-        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
+        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor || window.allDescriptors[descriptor].withDescriptors) return
         return this._renderDescriptorMenuItems(descriptor, remove)
       })}
     </SubMenu>)
 
-    render.push(<SubMenu title="Modifiers">
-      {Object.keys(window.modifierDescriptors).map((descriptor) => {
-        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
+    render.push(<SubMenu title="Modifiers ( Graphical )">
+      {Object.keys(window.graphicalModifierDescriptors).map((descriptor) => {
+        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor || window.allDescriptors[descriptor].withDescriptors) return
+        return this._renderDescriptorMenuItems(descriptor, remove)
+      })}
+    </SubMenu>)
+
+    if(false) {
+      render.push(<SubMenu title="Modifiers ( Audio )">
+        {Object.keys(window.audioModifierDescriptors).map((descriptor) => {
+          if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor || window.allDescriptors[descriptor].withDescriptors) return
+          return this._renderDescriptorMenuItems(descriptor, remove)
+        })}
+      </SubMenu>)
+    }
+
+    render.push(<SubMenu title="Edge">
+      {Object.keys(window.edgeDescriptors).map((descriptor) => {
+        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor || window.allDescriptors[descriptor].withDescriptors) return
         return this._renderDescriptorMenuItems(descriptor, remove)
       })}
     </SubMenu>)

@@ -4,7 +4,6 @@ import DatGui, { DatSelect, DatFolder, DatBoolean, DatButton, DatColor, DatNumbe
 
 // TOMMOROW TODO
 // add more descriptors to sprites, add a little more flavor to the map..
-// lighting?
 
 //------
 // how does the genre of the game fit into all this? Changes the sprites used and the sounds used?
@@ -89,6 +88,7 @@ export default class RandomizeLive extends React.Component {
             {this._renderAudioSelected('audioSelected', window.generateAudioThemeData)}
           </DatFolder>
           <DatFolder title='Lighting'>
+            <DatButton label='Light Power' onClick={this._generateRandomLighting}></DatButton>
             <DatButton label='Light Power' onClick={window._randomizeLightPower}></DatButton>
             <DatButton label='Light Color' onClick={window._randomizeLightColor}></DatButton>
             <DatButton label='Light Opacity' onClick={window._randomizeLightOpacity}></DatButton>
@@ -98,11 +98,12 @@ export default class RandomizeLive extends React.Component {
           <DatFolder title='Emitters'>
             {this._renderEmitters('emitterSelected', window.generateEmitterData)}
           </DatFolder>
-          <DatFolder title='Generate'>
+          <DatFolder title='Group'>
             <DatButton label='Sound FX' onClick={window.generateAudioTheme}></DatButton>
             <DatButton label='Title Animation' onClick={this._generateTitleAnimation}></DatButton>
             <DatButton label='Title Font' onClick={this._generateTitleFont}></DatButton>
             <DatButton label='Descriptor Sprites' onClick={this._findSpritesForDescribedObjects}></DatButton>
+            <DatButton label='Light Power' onClick={window._randomizeLightPower}></DatButton>
             <DatButton label='All Emitters' onClick={this._generateRandomEmitters}></DatButton>
             <DatButton label='All of the above' onClick={this._generateAll}></DatButton>
           </DatFolder>
@@ -112,8 +113,6 @@ export default class RandomizeLive extends React.Component {
   }
 
   //<DatSelect path='genre' label="Theme Genre" options={['any', 'block', 'fun?', 'scifi', 'fantasy', 'horror', 'retro']}/>
-
-// <DatButton label='Lighting' onClick={this._generateRandomLighting}></DatButton>
 // <DatFolder title="Hero">
 //   <DatButton label='Physics' onClick={this._generateRandomHeroPhysics}></DatButton>
 //   <DatButton label='Controls' onClick={this._generateRandomHeroControls}></DatButton>
@@ -124,6 +123,7 @@ export default class RandomizeLive extends React.Component {
     this._generateRandomEmitters()
     window.generateTitleTheme()
     window.generateAudioTheme()
+    window._randomizeLightPower()
     window.findSpritesForDescribedObjects()
   }
 
@@ -148,7 +148,11 @@ export default class RandomizeLive extends React.Component {
   }
 
   _generateRandomLighting() {
-
+    window._randomizeLightPower()
+    window._randomizeLightColor()
+    window._randomizeLightOpacity()
+    window._randomizeWorldAmbientLight()
+    window._randomizeDarkAreaAmbientLight()
   }
 
   /// HERO

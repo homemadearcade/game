@@ -109,6 +109,17 @@ export default class HeroContextMenu extends React.Component {
       if (key === "open-hero-live-edit") {
         LIVEEDITOR.open(objectSelected, 'hero')
       }
+
+      if(key === 'edit-descriptors') {
+        Object.keys(objectSelected.descriptors || {}).forEach((tag) => {
+          if(!objectSelected.descriptors[tag]) delete objectSelected.descriptors[tag]
+        })
+        modals.openEditDescriptorsModal(objectSelected.descriptors || {}, ({value}) => {
+          if(value) {
+            MAPEDITOR.networkEditObject(objectSelected, {descriptors: value})
+          }
+        })
+      }
     }
 
     this._handleTagMenuClick = ({ key }) => {
@@ -259,6 +270,7 @@ export default class HeroContextMenu extends React.Component {
         <MenuItem key='add-new-subobject'>Add new sub object</MenuItem>
         <MenuItem key="edit-all-json">Edit All JSON</MenuItem>
         <MenuItem key="open-hero-live-edit">Live Hero Edit</MenuItem>
+        <MenuItem key="edit-descriptors">Edit Descriptors</MenuItem>
       </SubMenu>
       {Object.keys(objectSelected.subObjects || {}).length && <SubMenu title="Sub Objects">
         <SelectSubObjectMenu objectSelected={objectSelected} selectSubObject={this.props.selectSubObject} />

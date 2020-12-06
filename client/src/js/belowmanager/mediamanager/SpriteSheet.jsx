@@ -37,7 +37,8 @@ export default class SpriteSheet extends React.Component {
       onClick={() => {
         if(selectMultiple) {
           const newTextureIdsSelected = this.state.textureIdsSelected
-          newTextureIdsSelected[textureId] = !this.state.textureIdsSelected[textureId]
+          if(this.state.textureIdsSelected[textureId]) delete newTextureIdsSelected[textureId]
+          else newTextureIdsSelected[textureId] = true
           this.setState({
             textureIdsSelected: newTextureIdsSelected
           })

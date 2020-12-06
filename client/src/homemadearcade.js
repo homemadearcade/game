@@ -6,6 +6,13 @@ Interesting that bar of dreams and homemade arcade i've wanted to have audio... 
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
 
+Basically sprites should be able to be OVER TAGGED
+and object should be able to be UNDER TAGGED
+
+children is broken
+if you have a child descriptor, you can remove the parent descriptor
+If you have a descriptor on an object that has a withDescriptors property, do a strict look for a sprite that matches that
+
 CASUAL TODO
 Make a particle effect - see list
 Add a sprite sheet
@@ -13,7 +20,6 @@ Organize Audio files ( on Mac )
 relatedTags:[],
 suggestedContextMenus: [] <--- omfg.. this is how I get the generator menu in there..
 tagDescriptions
-descriptor specificity
 
 -----
 

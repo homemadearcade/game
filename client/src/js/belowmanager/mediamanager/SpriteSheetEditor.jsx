@@ -34,6 +34,7 @@ export default class SpriteSheetEditor extends React.Component {
               if(update.descriptors) {
                 if(!s.descriptors) s.descriptors = {}
                 Object.assign(s.descriptors, update.descriptors)
+                console.log(s.descriptors)
               }
             }
             return s

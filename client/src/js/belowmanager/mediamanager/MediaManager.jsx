@@ -275,7 +275,7 @@ export default class MediaManager extends React.Component {
 
       let recommendedTextures
       if(this.props.objectSelected.descriptors) {
-        recommendedTextures = window.findTexturesForDescriptors(this.props.objectSelected.descriptors, { alwaysSearchAliases: true })
+        recommendedTextures = window.findTexturesForDescriptors(this.props.objectSelected.descriptors, { alwaysSearchchildren: true })
       }
       return <div className="Manager">
         <div className="Manager__list">

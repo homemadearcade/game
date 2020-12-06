@@ -165,10 +165,6 @@ function setDefault() {
     inputDirectionSprites: false,
     light: false,
     darkArea: false,
-    background: false,
-    foreground: false,
-    seeThroughOnHeroCollide: false,
-    hidden: false,
     showXWhenRemoved: false,
     showX: false,
     stopGlowingOnTrigger: false,
@@ -184,6 +180,10 @@ function setDefault() {
     cameraShakeOnCollide_short: false,
     cameraShakeOnCollide_long: false,
     cameraLock: false,
+    hidden: false,
+    seeThroughOnHeroCollide: false,
+    background: false,
+    foreground: false,
   }
 
   window.inventoryTags = {

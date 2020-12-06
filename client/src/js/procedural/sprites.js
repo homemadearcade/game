@@ -3,7 +3,7 @@ function getAliases(descriptors) {
 
   const aliases = []
   descriptorList.forEach((desc) => {
-    aliases.push(...window.allDescriptors[desc].aliases)
+    if(window.allDescriptors[desc].children) aliases.push(...window.allDescriptors[desc].children)
   })
 
   return aliases
@@ -22,6 +22,7 @@ window.generateTextureIdsByDescriptors = function() {
     ss.sprites.forEach((s, i) => {
       if(s.descriptors) {
         Object.keys(s.descriptors).forEach((desc) => {
+          if(!s.descriptors[desc]) return
           if(!window.textureIdsByDescriptor[desc]) {
             window.textureIdsByDescriptor[desc] = []
           }
@@ -33,7 +34,7 @@ window.generateTextureIdsByDescriptors = function() {
   })
 }
 
-//alwaysSearchAliases
+//dontSearchAliases
 window.findTexturesForDescriptors = function(descriptors, options) {
   if(!options) options = {}
 
@@ -46,14 +47,14 @@ window.findTexturesForDescriptors = function(descriptors, options) {
     }
   })
 
-  if(!possibleTextures.length || options.alwaysSearchAliases) {
-    const aliasesList = getAliases(descriptors)
-    aliasesList.forEach((desc) => {
-      if(desc && window.textureIdsByDescriptor[desc]) {
-        possibleTextures.push(...window.textureIdsByDescriptor[desc])
-      }
-    })
-  }
+  // if(!possibleTextures.length && !options.dontSearchAliases) {
+  //   const aliasesList = getAliases(descriptors)
+  //   aliasesList.forEach((desc) => {
+  //     if(desc && window.textureIdsByDescriptor[desc]) {
+  //       possibleTextures.push(...window.textureIdsByDescriptor[desc])
+  //     }
+  //   })
+  // }
 
   if(!possibleTextures.length) {
     console.log('NO AVAILABLE TEXTURE IDS FOR DESCRIPTORS', descriptors)
@@ -67,7 +68,8 @@ window.findRandomAuthorsTextureIdForDescriptors = function(descriptors, author, 
   const possibleTextures = window.findTexturesForDescriptors(descriptors, options)
 
   const authorsTextures = possibleTextures.filter((s) => {
-    if(s.name !== author) return false
+    console.log(s.author)
+    if(s.author !== author) return false
     return true
   })
 
@@ -105,14 +107,14 @@ window.getRandomSSAuthor = function() {
     else return false
   })
   const authorIndex = getRandomInt(0, authorList.length -1)
-  return authorList[authorIndex].textureId
+  return authorList[authorIndex]
 }
 
 // authorName
 // strictAuthor
 // mixAuthor
 // dontOverrideCurrentSprites
-// alwaysSearchAliases
+// dontSearchAliases
 window.findSpritesForDescribedObjects = function(objects, options) {
   if(!objects) objects = [...GAME.objects, ...GAME.heroList]
   if(!options) options = {}
@@ -125,6 +127,7 @@ window.findSpritesForDescribedObjects = function(objects, options) {
     if(object.defaultSprite && options.dontOverrideCurrentSprites) return null
 
     let textureId
+    console.log(currentAuthor)
     if(currentAuthor && !options.mixAuthor) {
       textureId = window.findRandomAuthorsTextureIdForDescriptors(object.descriptors, currentAuthor, options)
     } else {
