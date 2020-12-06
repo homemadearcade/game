@@ -926,6 +926,7 @@ window.local.on('onFirstPageGameLoaded', () => {
     	"addAtBack": false,
     	"spawnType": "point"
     },
+    areaGlow: {"images":{"particleSmallStar":false,"particleCartoonStar":true},"alpha":{"start":0.3,"end":0.1},"scale":{"start":4.1,"end":3.9,"minimumScaleMultiplier":0.05},"color":{"start":"#ffffff","end":"#a7d0ee"},"speed":{"start":67,"end":50,"minimumSpeedMultiplier":1},"acceleration":{"x":0,"y":0},"maxSpeed":0,"startRotation":{"min":265,"max":275},"noRotation":false,"rotationSpeed":{"min":0,"max":1992},"lifetime":{"min":0.46,"max":0.71},"blendMode":"normal","frequency":0.001,"emitterLifetime":-1,"maxParticles":1000,"pos":{"x":0,"y":0},"addAtBack":false,"spawnType":"rect","spawnCircle":{"x":0,"y":0,"r":2},"speedType":"normal","useUpdateOwnerPos":true,"spawnWaitTime":53,"spawnRect":{"w":216,"h":1000,"x":-108,"y":-500},"setSpawnRectToOwnerSize":true,"animationType":"particle"},
     laser:{"alpha":{"start":0.3,"end":1},"scale":{"start":0.6,"end":0.3,"minimumScaleMultiplier":0.5},"color":{"start":"#ffffff","end":"#001cff"},"speed":{"start":13543,"end":14394,"minimumSpeedMultiplier":1},"acceleration":{"x":0,"y":0},"maxSpeed":0,"startRotation":{"min":270,"max":270},"noRotation":false,"rotationSpeed":{"min":0,"max":0},"lifetime":{"min":0.05,"max":0.1},"blendMode":"normal","frequency":0.0001,"emitterLifetime":-1,"maxParticles":1000,"pos":{"x":0,"y":0},"addAtBack":false,"spawnType":"point","speedType":"fast","spawnWaitTime":93,"images":{"HardRain":true},"animationType":"particle",},
   }
 

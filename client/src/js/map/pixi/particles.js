@@ -62,10 +62,18 @@ function updatePixiEmitterData(pixiChild, gameObject, options) {
 
   const usesRect = emitter.spawnType === 'rect'
   if(emitter.spawnRect && usesRect) {
-    if(data.spawnRect && data.spawnRect.w) emitter.spawnRect.width = (data.spawnRect.w * MAP.camera.multiplier)
-    if(data.spawnRect && data.spawnRect.h) emitter.spawnRect.height = (data.spawnRect.h * MAP.camera.multiplier)
-    if(data.spawnRect && data.spawnRect.x) emitter.spawnRect.x = (data.spawnRect.x * MAP.camera.multiplier)
-    if(data.spawnRect && data.spawnRect.y) emitter.spawnRect.y = (data.spawnRect.y * MAP.camera.multiplier)
+    if(data.setSpawnRectToOwnerSize) {
+      emitter.spawnRect.width = gameObject.width * MAP.camera.multiplier
+      emitter.spawnRect.height = gameObject.height * MAP.camera.multiplier
+      emitter.spawnRect.x = -(gameObject.width/2) * MAP.camera.multiplier
+      emitter.spawnRect.y = -(gameObject.height/2) * MAP.camera.multiplier
+
+    } else {
+      if(data.spawnRect && data.spawnRect.w) emitter.spawnRect.width = (data.spawnRect.w * MAP.camera.multiplier)
+      if(data.spawnRect && data.spawnRect.h) emitter.spawnRect.height = (data.spawnRect.h * MAP.camera.multiplier)
+      if(data.spawnRect && data.spawnRect.x) emitter.spawnRect.x = (data.spawnRect.x * MAP.camera.multiplier)
+      if(data.spawnRect && data.spawnRect.y) emitter.spawnRect.y = (data.spawnRect.y * MAP.camera.multiplier)
+    }
   } else if(PAGE.role.isHost && usesRect) {
     window.socket.emit('resetLiveParticle', gameObject.id)
     return

@@ -245,6 +245,7 @@ export default class ParticleLive extends React.Component {
       // <DatNumber path='emitterData.spawnRect.y' label="y" min={-100} max={100} step={1} />
       //
       return <DatFolder title='Emitter Shape'>
+        <DatBoolean path='emitterData.setSpawnRectToOwnerSize' label="Set to Owner Width/Height" />
         <DatSelect path='emitterData.spawnType' label="Emitter Shape" options={['point', 'circle', 'rect', 'ring', 'burst']}/>
         <DatNumber path='emitterData.spawnRect.w' label="Width" min={0} max={1000} step={1} />
         <DatNumber path='emitterData.spawnRect.h' label="Height" min={0} max={1000} step={1} />

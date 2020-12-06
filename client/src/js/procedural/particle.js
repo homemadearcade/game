@@ -142,6 +142,12 @@ window.generateRandomEmitter = function(name) {
 }
 
 window.generateEmitterData = {
+  'explosion': {
+
+  },
+  areaGlow: {
+
+  },
   'projectile': {
     colorStart: true,
     colorEnd: true,
@@ -163,9 +169,6 @@ window.generateEmitterData = {
     },
     images: ['particle', 'smokeparticle']
     // 'smokeparticle'
-  },
-  'explosion': {
-
   },
   'powerup': {
     alphaStart: {
