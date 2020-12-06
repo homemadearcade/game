@@ -77,14 +77,29 @@ window.generateRandomEmitter = function(name) {
       if(randomizeName === 'alphaEnd') emitterData.alpha.end = window.getRandomFloat(value.min, value.max)
     }
 
+    if(randomizeName === 'speedStart' || randomizeName === 'speedEnd') {
+      if(!emitterData.speed) emitterData.speed = {}
+      if(randomizeName === 'speedStart') emitterData.speed.start = window.getRandomFloat(value.min, value.max)
+      if(randomizeName === 'speedEnd') emitterData.speed.end = window.getRandomFloat(value.min, value.max)
+    }
+
     if(randomizeName === 'images') {
-      const index = window.getRandomInt(0, value.length-1)
-      emitterData.images = { [value[index]]: true }
+      if(GAME.theme.genre === 'block') {
+        emitterData.images = { Pixel: true }
+      } else {
+        const index = window.getRandomInt(0, value.length-1)
+        emitterData.images = { [value[index]]: true }
+      }
     }
 
   })
 
-  return window.mergeDeep(_.clone(window.particleEmitterLibrary.fireBall), emitterData)
+  if(name == 'projectile') {
+    return window.mergeDeep(_.clone(window.particleEmitterLibrary.fireBall), emitterData)
+  }
+  if(name == 'laser') {
+    return window.mergeDeep(_.clone(window.particleEmitterLibrary.laser), emitterData)
+  }
 }
 
 window.generateEmitterData = {
@@ -117,6 +132,23 @@ window.generateEmitterData = {
 
   },
   'laser': {
-
+    colorStart: true,
+    colorEnd: true,
+    scaleStart: {
+      min: .6,
+      max: 1.2
+    },
+    scaleEnd: {
+      min: 1,
+      max: 2
+    },
+    speedStart: {
+      min: 100000,
+      max: 200000
+    },
+    speedEnd: {
+      min: 100000,
+      max: 200000
+    }
   }
 }

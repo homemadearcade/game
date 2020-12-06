@@ -147,7 +147,7 @@ function createDefaultEmitter(stage, gameObject, emitterDataName, options) {
     if(images.length) {
       particles = images.map(p => {
         if(p === 'default') return PIXIMAP.textures.solidcolorsprite
-        return PIXI.Texture.from('assets/images/particles/'+p+'.png')
+        return PIXI.Texture.from('assets/images/particles/20x20/'+p+'.png')
       })
     } else particles = [PIXIMAP.textures.solidcolorsprite]
   } else particles = [PIXIMAP.textures.solidcolorsprite]

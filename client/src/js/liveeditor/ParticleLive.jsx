@@ -4,18 +4,18 @@ import modals from '../mapeditor/modals.js'
 
 window.particles = [
   'default',
-  'Bubbles50px',
+  'Bubbles',
   // 'Bubbles99px',
   'CartoonSmoke',
   'Fire',
   'HardCircle',
   'HardRain',
   // 'Pixel25px',
-  'Pixel50px',
+  'Pixel',
   // 'Pixel100px',
   'smokeparticle',
   'Sparks',
-  'Snow50px',
+  'Snow',
   // 'Snow100px',
   'burst',
   // 'cloud_calc_dust0',
@@ -181,6 +181,10 @@ export default class ParticleLive extends React.Component {
     }
 
     if(!emitterData.spawnWaitTime && frequency) {
+      emitterData.spawnWaitTime = frequency * frequencyDivider
+    }
+
+    if(!emitterData.spawnWaitTime && !frequency) {
       emitterData.spawnWaitTime = frequency * frequencyDivider
     }
 

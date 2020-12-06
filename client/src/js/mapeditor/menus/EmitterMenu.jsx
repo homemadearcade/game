@@ -71,7 +71,7 @@ export default class EmitterMenu extends React.Component{
       <MenuItem key="open-live-editor">Open Live Editor</MenuItem>
       <MenuItem key="select-particle-type">Select Default Type</MenuItem>
       <MenuItem key="clear-emitter-type">Clear Default Type</MenuItem>
-      {objectSelected.actionProps && <MenuItem key="select-particle-type-action">Select Action Type</MenuItem>}
+      {objectSelected.actionButtonBehavior && <MenuItem key="select-particle-type-action">Select Action Type</MenuItem>}
       {objectSelected.tags.explodeOnDestroy && <MenuItem key="select-particle-type-explosion">Select Explosion Type</MenuItem>}
       <MenuItem key="select-particle-type-poweredup">Select Powered Up Type</MenuItem>
     </Menu>

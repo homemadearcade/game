@@ -299,7 +299,7 @@ function updateProperties(pixiChild, gameObject) {
   }
 
   if(!pixiChild.laserEmitter && gameObject._shootingLaser && gameObject.ownerId) {
-    pixiChild.laserEmitter = initEmitter(gameObject, gameObject.emitterTypeLaser || 'laser', {})
+    pixiChild.laserEmitter = initEmitter(gameObject, gameObject.emitterTypeAction || 'laser', {})
   } else if(pixiChild.laserEmitter && !gameObject._shootingLaser) {
     PIXIMAP.deleteEmitter(pixiChild.laserEmitter)
     delete pixiChild.laserEmitter

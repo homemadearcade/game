@@ -245,6 +245,21 @@ window.local.on('onFirstPageGameLoaded', () => {
       },
       actionState: {}
     },
+    randomLaser: {
+      x: 0, y: 0, width: 10, height: 10,
+      relativeX: GAME.grid.nodeSize/5,
+      relativeY: -GAME.grid.nodeSize,
+      subObjectName: 'Shrink Ray',
+      tags: { rotateable: true, relativeToAngle: true, relativeToDirection: true, pickupable: true, pickupOnHeroInteract: true, equipOnPickup: true, onMapWhenEquipped: true },
+      actionButtonBehavior: 'shrink',
+      emitterTypeAction: 'random-laser',
+      actionProps: {
+        distance: 1000,
+        power: 100,
+        tagsSeeking: ['obstacle'],
+      },
+      actionState: {}
+    },
     bombs: {
       x: 0, y: 0, width: 32, height: 32,
       relativeX: 0,

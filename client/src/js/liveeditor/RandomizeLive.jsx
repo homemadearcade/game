@@ -10,9 +10,9 @@ import DatGui, { DatFolder, DatBoolean, DatButton, DatColor, DatNumber, DatStrin
 // theme live menu... SOUND FX, TITLE, GENRE? Needed? or just impove the media manager w animations and fonts
 // add genre tags to sprites via the spritesheet?
 // random music
-// random light color vs random non-sprites color vs random everything color
 // library objects...., :0
 // is BLOCK a theme? helps with basically just decorating blocks and using retro sound FX and particle emitter randomness?
+// random light color vs random non-sprites color vs random everything color ^^
 
 
 // add more descriptors to sprites
@@ -112,8 +112,7 @@ export default class RandomizeLive extends React.Component {
     const emitterData = window.generateRandomEmitter(name)
 
     GAME.library.animations['random-'+name] = emitterData
-
-    console.log(emitterData)
+    GAME.library.animations['random-'+name+'-'+window.getRandomInt(0, 99)] = emitterData
 
     window.socket.emit('updateLibrary', {animations: GAME.library.animations})
   }

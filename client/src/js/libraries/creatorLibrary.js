@@ -298,6 +298,14 @@ function onFirstPageGameLoaded() {
       libraryId:'randomGun',
       ...toggleSubObject('randomGun')
     },
+    randomLaser: {
+      label: 'Random Laser',
+      columnName: 'Equip',
+      toggleId: 'randomLaser',
+      libraryName:'subObjectLibrary',
+      libraryId:'randomLaser',
+      ...toggleSubObject('randomLaser')
+    },
     shrinkRay: {
       label: 'Shrink Ray',
       columnName: 'Equip',
@@ -470,6 +478,7 @@ function onFirstPageGameLoaded() {
     gun: true,
     fireballGun: true,
     randomGun: true,
+    randomLaser: true,
     shrinkRay: true,
     bombs: true,
     seeThroughForegroundPower: true,
