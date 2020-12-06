@@ -83,6 +83,37 @@ window.generateRandomEmitter = function(name) {
       if(randomizeName === 'speedEnd') emitterData.speed.end = window.getRandomFloat(value.min, value.max)
     }
 
+    if(randomizeName === 'rotationSpeedMin' || randomizeName === 'rotationSpeedMax') {
+      if(!emitterData.rotationSpeed) emitterData.rotationSpeed = {}
+      if(randomizeName === 'rotationSpeedMin') emitterData.rotationSpeed.min = window.getRandomFloat(value.min, value.max)
+      if(randomizeName === 'rotationSpeedMax') emitterData.rotationSpeed.max = window.getRandomFloat(value.min, value.max)
+    }
+
+    if(randomizeName === 'rotationSpeed') {
+      if(!emitterData.rotationSpeed) emitterData.rotationSpeed = {}
+      const val = window.getRandomFloat(value.min, value.max)
+      emitterData.rotationSpeed.min = val
+      emitterData.rotationSpeed.max = val
+    }
+
+    if(randomizeName === 'spawnCircleRadiusMax' || randomizeName === 'spawnCircleRadiusMax') {
+      if(!emitterData.spawnCircle) emitterData.spawnCircle = {}
+      if(randomizeName === 'spawnCircleRadiusMin') emitterData.spawnCircle.minR = window.getRandomFloat(value.min, value.max)
+      if(randomizeName === 'spawnCircleRadiusMax') emitterData.spawnCircle.r = window.getRandomFloat(value.min, value.max)
+    }
+
+    if(randomizeName === 'spawnCircleRadius') {
+      if(!emitterData.spawnCircle) emitterData.spawnCircle = {}
+      const val = window.getRandomFloat(value.min, value.max)
+      emitterData.spawnCircle.minR = val
+      emitterData.spawnCircle.r = val
+    }
+
+    if(randomizeName === 'frequency') {
+      const val = window.getRandomFloat(value.min, value.max)
+      emitterData.frequency = val
+    }
+
     if(randomizeName === 'images') {
       if(GAME.theme.genre === 'block') {
         emitterData.images = { Pixel: true }
@@ -91,14 +122,22 @@ window.generateRandomEmitter = function(name) {
         emitterData.images = { [value[index]]: true }
       }
     }
-
   })
 
   if(name == 'projectile') {
-    return window.mergeDeep(_.clone(window.particleEmitterLibrary.fireBall), emitterData)
+    const clone = _.clone(window.particleEmitterLibrary.fireBall)
+    if(emitterData.images) delete clone.images
+    return window.mergeDeep(clone, emitterData)
   }
   if(name == 'laser') {
-    return window.mergeDeep(_.clone(window.particleEmitterLibrary.laser), emitterData)
+    const clone = _.clone(window.particleEmitterLibrary.laser)
+    if(emitterData.images) delete clone.images
+    return window.mergeDeep(clone, emitterData)
+  }
+  if(name == 'powerup') {
+    const clone = _.clone(window.particleEmitterLibrary.powerRingSubtle)
+    if(emitterData.images) delete clone.images
+    return window.mergeDeep(clone, emitterData)
   }
 }
 
@@ -122,14 +161,53 @@ window.generateEmitterData = {
       min: 0,
       max: .7
     },
-    images: ['default', 'particle']
+    images: ['particle', 'smokeparticle']
     // 'smokeparticle'
   },
   'explosion': {
 
   },
   'powerup': {
-
+    alphaStart: {
+      min: 0,
+      max: .7
+    },
+    alphaEnd: {
+      min: 0,
+      max: .7
+    },
+    colorStart: true,
+    colorEnd: true,
+    scaleStart: {
+      min: .6,
+      max: 1.2
+    },
+    scaleEnd: {
+      min: .2,
+      max: 1
+    },
+    spawnCircleRadius: {
+      min: 13,
+      max: 30,
+    },
+    rotationSpeed: {
+      min: 4000,
+      max: 12000
+    },
+    frequency: {
+      //slower
+      max: 0.01,
+      //faster
+      min: 0.0008,
+    },
+    // lifetimeMin: {
+    //
+    // },
+    // lifetimeMax: {
+    //
+    // },
+    // spawnRect vs ring
+    images: ['smokeparticle', 'particle', 'particleSmallStar', 'particleStar', 'particleCartoonStar', 'HardCircle', 'burst']
   },
   'laser': {
     colorStart: true,

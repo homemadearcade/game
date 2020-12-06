@@ -173,9 +173,9 @@ export default class Root extends React.Component {
   }
 
   _renderFontPreLoad() {
-    return <div style={{position: 'fixed', opacity: .1}}>
+    return <div style={{position: 'fixed', opacity: 0}}>
       {window.titleFontStyles.map((font) => {
-        return <div style={{fontFamily: font}}>.</div>
+        return <div style={{fontFamily: font.fontFamily}}>ABCDEFGHIJKL</div>
       })}
     </div>
   }

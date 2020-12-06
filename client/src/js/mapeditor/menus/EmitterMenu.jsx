@@ -62,6 +62,10 @@ export default class EmitterMenu extends React.Component{
       if (key === "open-live-editor") {
         LIVEEDITOR.open(objectSelected, 'particle')
       }
+
+      if(key === 'reset-emitters') {
+        window.socket.emit('resetLiveParticle', objectSelected.id)
+      }
     }
   }
 
@@ -74,6 +78,7 @@ export default class EmitterMenu extends React.Component{
       {objectSelected.actionButtonBehavior && <MenuItem key="select-particle-type-action">Select Action Type</MenuItem>}
       {objectSelected.tags.explodeOnDestroy && <MenuItem key="select-particle-type-explosion">Select Explosion Type</MenuItem>}
       <MenuItem key="select-particle-type-poweredup">Select Powered Up Type</MenuItem>
+      <MenuItem key="reset-emitters">Reset Emitters</MenuItem>
     </Menu>
   }
 }

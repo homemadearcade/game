@@ -306,7 +306,7 @@ function updateProperties(pixiChild, gameObject) {
   }
 
   if(gameObject.tags.poweredUp && !pixiChild.poweredUpEmitter) {
-    pixiChild.poweredUpEmitter = initEmitter(gameObject, gameObject.emitterTypePoweredUp || 'powerRing', { matchObjectColor: true, useUpdateOwnerPos: true })
+    pixiChild.poweredUpEmitter = initEmitter(gameObject, gameObject.emitterTypePoweredUp || 'powerRing', { useUpdateOwnerPos: true })
   }
   if(!gameObject.tags.poweredUp && pixiChild.poweredUpEmitter) {
     PIXIMAP.deleteEmitter(pixiChild.poweredUpEmitter)

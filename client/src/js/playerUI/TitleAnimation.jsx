@@ -38,9 +38,9 @@ window.titleFontStyles = [
   { fontFamily:"'Equine', sans-serif", style: 'basic' },
   { fontFamily: "'Viafont', sans-serif", style: 'basic'},
 
-  { fontFamily: "Courier", style: 'arcade' },
-  { fontFamily: "'NARPASSWORD00000', sans-serif", style: 'arcade' },
-  { fontFamily: "'Press Start 2P', sans-serif", style: 'arcade' },
+  { fontFamily: "Courier", style: 'retro' },
+  { fontFamily: "'NARPASSWORD00000', sans-serif", style: 'retro' },
+  { fontFamily: "'Press Start 2P', sans-serif", style: 'retro' },
 
   { fontFamily: "'Umber SSi', sans-serif", style: 'fantasy' },
   { fontFamily: "'Magic School One', sans-serif",  style: 'fantasy' },

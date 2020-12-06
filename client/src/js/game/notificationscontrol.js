@@ -21,12 +21,32 @@ function setHeroWalkingSound (hero) {
 
   if(hero.tags.walkDescriptor && hero._walkingOnId) {
     const object = OBJECTS.getObjectOrHeroById(hero._walkingOnId)
-    if(object.tags.sand) {
+    if(object.tags.snow) {
+      hero._walkingSound = 'snow'
+    } else if(object.tags.sand) {
       hero._walkingSound = 'sand'
     } else if(object.tags.ice) {
       hero._walkingSound = 'ice'
-    } else {
+    } else if(object.tags.water) {
+      hero._walkingSound = 'water'
+    } else if(object.tags.metal) {
+      hero._walkingSound = 'metal'
+    } else if(object.tags.wood) {
+      hero._walkingSound = 'wood'
+    } else if(object.tags.gravel) {
+      hero._walkingSound = 'gravel'
+    } else if(object.tags.dirt) {
       hero._walkingSound = 'dirt'
+    } else if(object.tags.stone) {
+      hero._walkingSound = 'stone'
+    } else if(object.tags.grass) {
+      hero._walkingSound = 'grass'
+    } else if(object.tags.glass) {
+      hero._walkingSound = 'glass'
+    } else if(object.tags.concrete) {
+      hero._walkingSound = 'concrete'
+    } else {
+      hero._walkingSound = 'gravel'
     }
   }
 
@@ -141,7 +161,148 @@ class NotificationsControl{
     } else {
       AUDIO.stopLoop('walking--vehicle')
     }
+
+    if(hero._walkingSound == 'concrete') {
+      AUDIO.playLoop({
+        id: 'walking--concrete',
+        soundIds: [
+          GAME.theme.audio['heroMoving--concrete']
+        ]
+      })
+    } else {
+      AUDIO.stopLoop('walking--concrete')
+    }
+
+    if(hero._walkingSound == 'dirt') {
+      AUDIO.playLoop({
+        id: 'walking--dirt',
+        soundIds: [
+          GAME.theme.audio['heroMoving--dirt']
+        ]
+      })
+    } else {
+      AUDIO.stopLoop('walking--dirt')
+    }
+
+    if(hero._walkingSound == 'glass') {
+      AUDIO.playLoop({
+        id: 'walking--glass',
+        soundIds: [
+          GAME.theme.audio['heroMoving--glass']
+        ]
+      })
+    } else {
+      AUDIO.stopLoop('walking--glass')
+    }
+
+    if(hero._walkingSound == 'grass') {
+      AUDIO.playLoop({
+        id: 'walking--grass',
+        soundIds: [
+          GAME.theme.audio['heroMoving--grass']
+        ]
+      })
+    } else {
+      AUDIO.stopLoop('walking--grass')
+    }
+    if(hero._walkingSound == 'gravel') {
+      AUDIO.playLoop({
+        id: 'walking--gravel',
+        soundIds: [
+          GAME.theme.audio['heroMoving--gravel']
+        ]
+      })
+    } else {
+      AUDIO.stopLoop('walking--gravel')
+    }
+    if(hero._walkingSound == 'ice') {
+      AUDIO.playLoop({
+        id: 'walking--ice',
+        soundIds: [
+          GAME.theme.audio['heroMoving--ice']
+        ]
+      })
+    } else {
+      AUDIO.stopLoop('walking--ice')
+    }
+    if(hero._walkingSound == 'metal') {
+      AUDIO.playLoop({
+        id: 'walking--metal',
+        soundIds: [
+          GAME.theme.audio['heroMoving--metal']
+        ]
+      })
+    } else {
+      AUDIO.stopLoop('walking--metal')
+    }
+    if(hero._walkingSound == 'mud') {
+      AUDIO.playLoop({
+        id: 'walking--mud',
+        soundIds: [
+          GAME.theme.audio['heroMoving--mud']
+        ]
+      })
+    } else {
+      AUDIO.stopLoop('walking--mud')
+    }
+
+    if(hero._walkingSound == 'sand') {
+      AUDIO.playLoop({
+        id: 'walking--sand',
+        soundIds: [
+          GAME.theme.audio['heroMoving--sand']
+        ]
+      })
+    } else {
+      AUDIO.stopLoop('walking--sand')
+    }
+
+    if(hero._walkingSound == 'snow') {
+      AUDIO.playLoop({
+        id: 'walking--snow',
+        soundIds: [
+          GAME.theme.audio['heroMoving--snow']
+        ]
+      })
+    } else {
+      AUDIO.stopLoop('walking--snow')
+    }
+
+    if(hero._walkingSound == 'water') {
+      AUDIO.playLoop({
+        id: 'walking--water',
+        soundIds: [
+          GAME.theme.audio['heroMoving--water']
+        ]
+      })
+    } else {
+      AUDIO.stopLoop('walking--water')
+    }
+
+    if(hero._walkingSound == 'stone') {
+      AUDIO.playLoop({
+        id: 'walking--stone',
+        soundIds: [
+          GAME.theme.audio['heroMoving--stone']
+        ]
+      })
+    } else {
+      AUDIO.stopLoop('walking--stone')
+    }
+
+    if(hero._walkingSound == 'water') {
+      AUDIO.playLoop({
+        id: 'walking--water',
+        soundIds: [
+          GAME.theme.audio['heroMoving--water']
+        ]
+      })
+    } else {
+      AUDIO.stopLoop('walking--water')
+    }
   }
+
+
 
   onHeroCameraEffect() {
     // AUDIO.playDebounce(GAME.theme.audio['onObjectDestroyed--big'])

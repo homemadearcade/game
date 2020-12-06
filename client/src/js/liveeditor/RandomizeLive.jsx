@@ -1,9 +1,12 @@
 import React from 'react';
-import DatGui, { DatFolder, DatBoolean, DatButton, DatColor, DatNumber, DatString } from 'react-dat-gui';
+import DatGui, { DatSelect, DatFolder, DatBoolean, DatButton, DatColor, DatNumber, DatString } from 'react-dat-gui';
 
 
-// add more descriptors to sprites
+// TOMMOROW TODO
+// add more descriptors to sprites, add a little more flavor to the map..
+// lighting?
 
+//------
 // how does the genre of the game fit into all this? Changes the sprites used and the sounds used?
 // theme live menu... SOUND FX, TITLE, GENRE? Needed? or just impove the media manager w animations and fonts
 
@@ -20,42 +23,50 @@ import DatGui, { DatFolder, DatBoolean, DatButton, DatColor, DatNumber, DatStrin
 export default class RandomizeLive extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      genre: GAME.theme.genre
+    }
     this.handleUpdate = _.debounce(this.handleUpdate.bind(this), 100)
   }
 
   // Update current state with changes from controls
   handleUpdate(newData) {
-    this.setState(...newData)
-
-    const updatedProps = {
-      lightPower: newData.lightPower,
-      lightColor: newData.lightColor,
-      lightOpacity: newData.lightOpacity,
-      ambientLight: newData.ambientLight
+    this.setState(newData)
+    if(newData.genre !== GAME.theme.genre) {
+      window.socket.emit('updateTheme', { genre: newData.genre })
     }
-
-    // window.socket.emit('updateTheme', { id, ...updatedProps })
   }
 
   _renderAudioSelected(libraryProp, libraryObjectNames) {
     const array = Object.keys(libraryObjectNames)
 
-
     const render = []
 
     const heroMovementSounds = array.slice()
-    heroMovementSounds.length = 3
+    heroMovementSounds.length = 14
 
     render.push(<DatFolder title="Hero Movement">{heroMovementSounds.map((name) => {
       const path = libraryProp+'.'+name
       return <DatBoolean path={path} label={name} />
     })}</DatFolder>)
 
-    array.slice(heroMovementSounds.length).forEach((name) => {
+    const heroActionSounds = array.slice(heroMovementSounds.length)
+    heroActionSounds.length = 12
+    render.push(<DatFolder title="Hero Actions">{heroActionSounds.map((name) => {
       const path = libraryProp+'.'+name
-      render.push(<DatBoolean path={path} label={name} />)
-    })
+      return <DatBoolean path={path} label={name} />
+    })}</DatFolder>)
+
+
+    render.push(<DatFolder title="Other">{array.slice(heroActionSounds.length + heroMovementSounds.length, array.length-10).map((name) => {
+      const path = libraryProp+'.'+name
+      return <DatBoolean path={path} label={name} />
+    })}</DatFolder>)
+
+    render.push(<DatFolder title="UI">{array.slice(array.length-10).map((name) => {
+      const path = libraryProp+'.'+name
+      return <DatBoolean path={path} label={name} />
+    })}</DatFolder>)
 
     return render
   }
@@ -84,28 +95,35 @@ export default class RandomizeLive extends React.Component {
             <DatButton label='Sound FX' onClick={window.generateAudioTheme}></DatButton>
             <DatButton label='Title Animation' onClick={this._generateTitleAnimation}></DatButton>
             <DatButton label='Title Font' onClick={this._generateTitleFont}></DatButton>
-            <DatButton label='Descriptor Sprites' onClick={window.findSpritesForDescribedObjects}></DatButton>
-            <DatButton label='Lighting' onClick={this._generateRandomLighting}></DatButton>
-            <DatFolder title="Hero">
-              <DatButton label='Physics' onClick={this._generateRandomHeroPhysics}></DatButton>
-              <DatButton label='Controls' onClick={this._generateRandomHeroControls}></DatButton>
-              <DatButton label='Equipment' onClick={this._generateRandomHeroEquipment}></DatButton>
-              <DatButton label='Emitters' onClick={this._generateRandomHeroEmitters}></DatButton>
-            </DatFolder>
+            <DatButton label='Descriptor Sprites' onClick={this._findSpritesForDescribedObjects}></DatButton>
             <DatButton label='All Emitters' onClick={this._generateRandomEmitters}></DatButton>
-            <DatButton label='All of the above' onClick={window._generateAll}></DatButton>
+            <DatButton label='All of the above' onClick={this._generateAll}></DatButton>
           </DatFolder>
         </DatGui>
       </div>
     )
   }
 
-  _generateAll() {
+  //<DatSelect path='genre' label="Theme Genre" options={['any', 'block', 'fun?', 'scifi', 'fantasy', 'horror', 'retro']}/>
 
+// <DatButton label='Lighting' onClick={this._generateRandomLighting}></DatButton>
+// <DatFolder title="Hero">
+//   <DatButton label='Physics' onClick={this._generateRandomHeroPhysics}></DatButton>
+//   <DatButton label='Controls' onClick={this._generateRandomHeroControls}></DatButton>
+//   <DatButton label='Equipment' onClick={this._generateRandomHeroEquipment}></DatButton>
+// </DatFolder>
+
+  _generateAll = () => {
+    this._generateRandomEmitters()
+    window.generateTitleTheme()
+    window.generateAudioTheme()
+    window.findSpritesForDescribedObjects()
   }
 
-  _generateRandomEmitters() {
-
+  _generateRandomEmitters = () => {
+    ['powerup', 'projectile', 'laser'].forEach((name) => {
+      this._generateRandomEmitter(name)
+    })
   }
 
   _generateRandomEmitter(name) {
@@ -115,6 +133,11 @@ export default class RandomizeLive extends React.Component {
     GAME.library.animations['random-'+name+'-'+window.getRandomInt(0, 99)] = emitterData
 
     window.socket.emit('updateLibrary', {animations: GAME.library.animations})
+
+    if(name == 'powerup') {
+      window.socket.emit('resetLiveParticle', HERO.id)
+      if(HERO.editingId) window.socket.emit('resetLiveParticle', HERO.editingId)
+    }
   }
 
   _generateRandomLighting() {
@@ -135,14 +158,23 @@ export default class RandomizeLive extends React.Component {
 
   }
 
+
   /// THEME
-  _generateAudioSelected() {
-
+  _generateAudioSelected = () => {
+    const audioSelected = this.state.audioSelected
+    window.generateAudioTheme(audioSelected)
   }
-  _generateTitleFont() {
 
+  _generateTitleFont() {
+    window.generateTitleFont()
   }
   _generateTitleAnimation() {
+    window.generateTitleAnimation()
+  }
 
+
+  // SPRITES
+  _findSpritesForDescribedObjects() {
+    window.findSpritesForDescribedObjects()
   }
 }

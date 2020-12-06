@@ -76,6 +76,8 @@ window.findRandomAuthorsTextureIdForDescriptors = function(descriptors, author, 
     return authorsTextures[textureIndex].textureId
   } else if(options.strictAuthor) return null
 
+  if(!possibleTextures || !possibleTextures.length) return null
+
   const textureIndex = getRandomInt(0, possibleTextures.length -1)
 
   return possibleTextures[textureIndex].textureId
@@ -84,6 +86,8 @@ window.findRandomAuthorsTextureIdForDescriptors = function(descriptors, author, 
 
 window.findRandomTextureIdForDescriptors = function(descriptors, options) {
   const possibleTextures = window.findTexturesForDescriptors(descriptors, options)
+
+  if(!possibleTextures || !possibleTextures.length) return null
 
   const textureIndex = getRandomInt(0, possibleTextures.length -1)
 

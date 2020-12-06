@@ -19,7 +19,7 @@ export function handleExtraMenuClicks(key, objectSelected, openColorPicker, subO
     }
 
     if(key === 'edit-descriptors') {
-      Object.keys(objectSelected.descriptors).forEach((tag) => {
+      Object.keys(objectSelected.descriptors || {}).forEach((tag) => {
         if(!objectSelected.descriptors[tag]) delete objectSelected.descriptors[tag]
       })
       modals.openEditDescriptorsModal(objectSelected.descriptors || {}, ({value}) => {

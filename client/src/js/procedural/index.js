@@ -12,5 +12,5 @@ function getRandomInt(min, max) {
 window.getRandomInt = getRandomInt
 
 window.getRandomFloat = function(min, max) {
-  return (Math.random() * (max - min + 1)) + min;
+  return (Math.random() * (max - min)) + min;
 }

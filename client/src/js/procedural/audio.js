@@ -6,14 +6,16 @@ window.clearAudioTheme = function() {
   window.socket.emit('updateTheme', { audio: window.defaultAudioTheme })
 }
 
-window.generateAudioTheme = function() {
-  const newAudioTheme = _.cloneDeep(window.defaultAudioTheme)
+window.generateAudioTheme = function(keys) {
+  const newAudioTheme = {}
   // const newAudioTheme = {}
   Object.keys(window.generateAudioThemeData).forEach((event) => {
+    if(keys && !keys[event]) return
     const eventData = window.generateAudioThemeData[event]
 
     const index = getRandomInt(0, eventData.length-1)
     const selectedAssets = eventData[index]
+    console.log(collection, selectedAssets.audioCollection, selectedAssets.folderName)
     const collection = AUDIO.data[selectedAssets.audioCollection][selectedAssets.folderName]
 
     const fileIndex = getRandomInt(0, collection.files.length -1)
@@ -24,7 +26,7 @@ window.generateAudioTheme = function() {
     newAudioTheme[event] = file.id
   })
 
-  window.socket.emit('updateTheme', { audio: newAudioTheme })
+  window.socket.emit('updateTheme', { audio: { ...GAME.theme.audio, ...newAudioTheme} })
 }
 
 window.generateAudioThemeData = {
@@ -52,12 +54,83 @@ window.generateAudioThemeData = {
       folderName: 'Dirt footsteps'
     },
   ],
+  'heroMoving--concrete': [
+    {
+      audioCollection: 'moving',
+      folderName: 'Concrete footsteps'
+    },
+  ],
+  'heroMoving--glass': [
+    {
+      audioCollection: 'moving',
+      folderName: 'Glass footsteps'
+    },
+  ],
+  'heroMoving--grass': [
+    {
+      audioCollection: 'moving',
+      folderName: 'Grass footsteps'
+    },
+  ],
+  'heroMoving--gravel': [
+    {
+      audioCollection: 'moving',
+      folderName: 'Gravel footsteps'
+    },
+  ],
+  'heroMoving--ice': [
+    {
+      audioCollection: 'moving',
+      folderName: 'Ice footsteps'
+    },
+  ],
+  'heroMoving--metal': [
+    {
+      audioCollection: 'moving',
+      folderName: 'Metal footsteps'
+    },
+  ],
+  'heroMoving--mud': [
+    {
+      audioCollection: 'moving',
+      folderName: 'Mud footsteps'
+    },
+  ],
+  'heroMoving--sand': [
+    {
+      audioCollection: 'moving',
+      folderName: 'Sand footsteps'
+    },
+  ],
+  'heroMoving--snow': [
+    {
+      audioCollection: 'moving',
+      folderName: 'Snow footsteps'
+    },
+  ],
+  'heroMoving--stone': [
+    {
+      audioCollection: 'moving',
+      folderName: 'Stone footsteps'
+    },
+  ],
+  'heroMoving--water': [
+    {
+      audioCollection: 'moving',
+      folderName: 'Wood footsteps'
+    },
+  ],
   'heroMoving--vehicle': [
     {
       audioCollection: 'moving',
       folderName: 'Motors'
     },
   ],
+
+  /////////////////////////////////////////
+  /////////////////////////////////////////
+  /////////////////////////////////////////
+    // HERO ACTION
   heroShootingLaser: [
     {
       audioCollection: 'retro',
@@ -70,12 +143,24 @@ window.generateAudioThemeData = {
       folderName: 'Shooting Gun'
     }
   ],
-  // onHeroShootLaserTool: [
-  //   {
-  //     audioCollection: 'retro',
-  //     folderName: 'Shooting Laser Gun'
-  //   }
-  // ],
+  onHeroShootLaserTool: [
+    {
+      audioCollection: 'retro',
+      folderName: 'Shooting Laser Gun'
+    }
+  ],
+  onHeroCastSpell: [
+    {
+      audioCollection: 'retro',
+      folderName: 'Cast Spell'
+    }
+  ],
+  onHeroMeleeAttack: [
+    {
+      audioCollection: 'retro',
+      folderName: 'Attack'
+    }
+  ],
   onHeroGroundJump: [
     {
       audioCollection: 'retro',
@@ -91,53 +176,13 @@ window.generateAudioThemeData = {
   onHeroDash: [
     {
       audioCollection: 'retro',
-      folderName: 'Bounce_Jump'
+      folderName: 'Dash'
     }
   ],
   onHeroTeleDash: [
     {
       audioCollection: 'retro',
       folderName: 'Teleport Wrap Effect'
-    }
-  ],
-  // onHeroBounce: [
-  //   {
-  //     audioCollection: 'retro',
-  //     folderName: 'Bounce_Jump'
-  //   }
-  // ],
-  // onHeroTouchStart: [
-  //   {
-  //     audioCollection: 'retro',
-  //     folderName: 'Kick'
-  //   }
-  // ],
-  onGameTitleAppears: [
-    {
-      audioCollection: 'retro',
-      folderName: 'Game Starting'
-    }
-  ],
-  onGameStarted: [
-    {
-      audioCollection: 'retro',
-      folderName: 'Game Starting'
-    }
-  ],
-  'onObjectDestroyed--big': [
-    {
-      audioCollection: 'retro',
-      folderName: 'Explosion'
-    }
-  ],
-  'onObjectDestroyed--small': [
-    {
-      audioCollection: 'retro',
-      folderName: 'Monster Takes Damage'
-    },
-    {
-      audioCollection: 'retro',
-      folderName: 'Explosion (Short)'
     }
   ],
   onHeroDrop: [
@@ -158,6 +203,47 @@ window.generateAudioThemeData = {
       folderName: 'Item Pickup'
     }
   ],
+
+
+  /////////////////////////////////////////
+  /////////////////////////////////////////
+  /////////////////////////////////////////
+  /////////////////////////////////////////
+
+/////////////////////////////////////////
+  // OTHER HERO
+  onHeroFall: [
+    {
+      audioCollection: 'retro',
+      folderName: 'Fall'
+    }
+  ],
+  onHeroUnlock: [
+    {
+      audioCollection: 'retro',
+      folderName: 'Unlock'
+    }
+  ],
+  onHeroEnterWater: [
+    {
+      audioCollection: 'retro',
+      folderName: 'Water'
+    }
+  ],
+
+  // onHeroBounce: [
+  //   {
+  //     audioCollection: 'retro',
+  //     folderName: 'Bounce_Jump'
+  //   }
+  // ],
+  'onHeroTouchStart--structure': [
+    {
+      audioCollection: 'retro',
+      folderName: 'Impact'
+    }
+  ],
+
   onModEnabled: [
     {
       audioCollection: 'retro',
@@ -177,6 +263,51 @@ window.generateAudioThemeData = {
     }
   ],
 
+  'onObjectDestroyed--big': [
+    {
+      audioCollection: 'retro',
+      folderName: 'Explosion'
+    }
+  ],
+  'onObjectDestroyed--small': [
+    {
+      audioCollection: 'retro',
+      folderName: 'Monster Takes Damage'
+    },
+    {
+      audioCollection: 'retro',
+      folderName: 'Explosion (Short)'
+    }
+  ],
+
+  // onObjectSpawn: [
+  //   {
+  //     audioCollection: 'retro',
+  //     folderName: 'Spawn'
+  //   }
+  // ],
+
+  onStatusEffect: [
+    {
+      audioCollection: 'retro',
+      folderName: 'Status Effect'
+    }
+  ],
+  onDoorOpen: [
+    {
+      audioCollection: 'retro',
+      folderName: 'Door Open'
+    }
+  ],
+  onDoorClose: [
+    {
+      audioCollection: 'retro',
+      folderName: 'Door Close'
+    }
+  ],
+
+  ///// UI
+
   onHeroStartQuest: [
     {
       audioCollection: 'retro',
@@ -189,27 +320,6 @@ window.generateAudioThemeData = {
       folderName: 'Quest Completed'
     }
   ],
-
-  // onHeroGameLose: [
-  //   {
-  //     audioCollection: 'retro',
-  //     folderName: 'Game Over'
-  //   }
-  // ],
-  // onHeroGameWin: [
-  //   {
-  //     audioCollection: 'retro',
-  //     folderName: 'Victory'
-  //   }
-  // ],
-
-  // onObjectSpawn: [
-  //   {
-  //     audioCollection: 'retro',
-  //     folderName: 'Spawn'
-  //   }
-  // ],
-
   onHeroDialogueNext: [
     {
       audioCollection: 'retro',
@@ -232,6 +342,31 @@ window.generateAudioThemeData = {
     {
       audioCollection: 'retro',
       folderName: 'UI_Hover_over_button'
+    }
+  ],
+
+      // onHeroGameLose: [
+      //   {
+      //     audioCollection: 'retro',
+      //     folderName: 'Game Over'
+      //   }
+      // ],
+      // onHeroGameWin: [
+      //   {
+      //     audioCollection: 'retro',
+      //     folderName: 'Victory'
+      //   }
+      // ],
+  onGameTitleAppears: [
+    {
+      audioCollection: 'retro',
+      folderName: 'Game Starting'
+    }
+  ],
+  onGameStarted: [
+    {
+      audioCollection: 'retro',
+      folderName: 'Game Starting'
     }
   ],
 
@@ -259,13 +394,32 @@ window.defaultAudioTheme = {
   'heroMoving--retro': null,
   'heroMoving--vehicle': null,
   'heroMoving--dirt': null,
+  'heroMoving--concrete': null,
+  'heroMoving--glass': null,
+  'heroMoving--grass': null,
+  'heroMoving--gravel': null,
+  'heroMoving--ice': null,
+  'heroMoving--metal': null,
+  'heroMoving--mud': null,
+  'heroMoving--sand': null,
+  'heroMoving--snow': null,
+  'heroMoving--stone': null,
+  'heroMoving--water': null,
   heroShootingLaser: null,
   onHeroShootBullet: null,
-  onHeroShootLaserTool: null,
   onHeroGroundJump: null,
   onHeroFloatJump: null,
   onHeroDash: null,
   onHeroTeleDash: null,
+  onHeroShootLaserTool: null,
+  onHeroCastSpell: null,
+  onHeroMeleeAttack: null,
+  onHeroFall: null,
+  onStatusEffect: null,
+  onHeroUnlock: null,
+  onHeroEnterWater: null,
+  onDoorOpen: null,
+  onDoorClose: null,
   onGameStarted: null,
   'onObjectDestroyed--big': null,
   'onObjectDestroyed--small': null,
@@ -294,20 +448,15 @@ window.defaultAudioTheme = {
 
   onHeroGameLose: null,//do
   onHeroGameWin: null,//do
-
-  // onObjectSpawn: null,
+  'onHeroTouchStart--structure':null,
+  // onObjectSpawn: '',
 
   // UNKNOWN SOUNDS
   // onPlayerUIMenuClose: '',
   // onHeroDialogueComplete: ,
   // onObjectTalk: null, //cute or evil short noise... or a book or a sign makes a different noise?
 
-  // 'heroMoving--grass': null,
-  // 'heroMoving--wood': null,
-  // 'heroMoving--swimming': null,
-
   // onObjectAware: null,// of hero, exclamation
-  // onHeroTouchStart: null, //hits obstacle!
 
   // onHeroBounce: null,
 
@@ -316,13 +465,10 @@ window.defaultAudioTheme = {
 
   // onHeroHeadHit? so all platformers get that idea?
 
-  // heroFalling: null, //if hero hit max velocity via gravity..?
-
   // onGamePaused: null,
   // onGameResume: null,
 
   // going upstairs
   // going downstars
-  // opening door, closing door
   // ladder
 }
