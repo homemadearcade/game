@@ -1,15 +1,3 @@
-function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-window.getRandomInt = getRandomInt
-
-window.getRandomFloat = function(min, max) {
-  return (Math.random() * (max - min + 1)) + min;
-}
-
 function getAliases(descriptors) {
   let descriptorList = Object.keys(descriptors)
 
@@ -188,49 +176,4 @@ window.findSpritesForDescribedObjects = function(objects, options) {
   if(editedObjects.length) {
     window.socket.emit('editObjects', editedObjects)
   }
-}
-
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////
-///AUDIO
-//////////
-window.clearAudioTheme = function() {
-  window.socket.emit('updateTheme', { audio: window.defaultAudioTheme })
-}
-
-window.generateAudioTheme = function() {
-  const newAudioTheme = _.cloneDeep(window.defaultAudioTheme)
-  // const newAudioTheme = {}
-  Object.keys(window.generateAudioThemeData).forEach((event) => {
-    const eventData = window.generateAudioThemeData[event]
-
-    const index = getRandomInt(0, eventData.length-1)
-    const selectedAssets = eventData[index]
-    const collection = AUDIO.data[selectedAssets.audioCollection][selectedAssets.folderName]
-
-    const fileIndex = getRandomInt(0, collection.files.length -1)
-
-    // console.log(collection, selectedAssets.audioCollection, selectedAssets.folderName, event)
-    const file = collection.files[fileIndex]
-
-    newAudioTheme[event] = file.id
-  })
-
-  window.socket.emit('updateTheme', { audio: newAudioTheme })
-}
-
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////
-///TITLE
-//////////
-window.generateTitleTheme = function() {
-  const newTitleTheme = {}
-
-  const indexAnimation = getRandomInt(0, window.titleAnimationStyles.length -1)
-  newTitleTheme.animation = window.titleAnimationStyles[indexAnimation]
-
-  const indexFont = getRandomInt(0, window.titleFontStyles.length -1)
-  newTitleTheme.font = window.titleFontStyles[indexFont]
-
-  window.socket.emit('updateTheme', { title: newTitleTheme })
 }

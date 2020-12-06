@@ -46,13 +46,7 @@ class Game{
       creator: {}
     }
 
-    this.theme = {
-      audio: {},
-      ss: {},
-      spriteSheetAuthor: '',
-      particle: {},
-      title: 'sunny mornings'
-    }
+    this.theme = _.clone(window.defaultTheme)
   }
 
   onPlayerIdentified() {
@@ -429,6 +423,7 @@ class Game{
 
     GAME.removeListeners()
     GAME.gameState = JSON.parse(JSON.stringify(window.defaultGameState))
+    GAME.theme = _.clone(window.defaultTheme)
   }
 
   removeListeners() {
