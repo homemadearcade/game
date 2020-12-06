@@ -11,7 +11,7 @@ function setDefault() {
     goals: {},
     activeMods: {},
     activeModList: [],
-    ambientLight: .2,
+    ambientLight: 1,
     dayNightCycle: {},
     logs: [],
     branch: false,

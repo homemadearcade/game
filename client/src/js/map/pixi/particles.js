@@ -67,7 +67,6 @@ function updatePixiEmitterData(pixiChild, gameObject, options) {
       emitter.spawnRect.height = gameObject.height * MAP.camera.multiplier
       emitter.spawnRect.x = -(gameObject.width/2) * MAP.camera.multiplier
       emitter.spawnRect.y = -(gameObject.height/2) * MAP.camera.multiplier
-
     } else {
       if(data.spawnRect && data.spawnRect.w) emitter.spawnRect.width = (data.spawnRect.w * MAP.camera.multiplier)
       if(data.spawnRect && data.spawnRect.h) emitter.spawnRect.height = (data.spawnRect.h * MAP.camera.multiplier)

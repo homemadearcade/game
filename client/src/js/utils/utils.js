@@ -237,7 +237,7 @@ window.isObjectSelectable = function(gameObject) {
 
   if(gameObject.tags.subObject && (EDITOR.preferences.selectable.subObjects === false)) return false
   if(gameObject.constructParts && (EDITOR.preferences.selectable.constructParts === false)) return false
-  if((gameObject.tags.invisible || gameObject.defaultSprite === 'invisible') && (!PAGE.role.isAdmin || EDITOR.preferences.selectable.invisible === false)) return false
+  if((gameObject.tags.invisible || gameObject.defaultSprite === 'invisible' || gameObject.opacity === 0) && (!PAGE.role.isAdmin || EDITOR.preferences.selectable.invisible === false)) return false
   // if(gameObject.id !== 'globalConstructStationaryBackground' && gameObject.tags.background && (!PAGE.role.isAdmin || EDITOR.preferences.selectable.background === false)) return false
   // if(gameObject.id !== 'globalConstructStationaryForeground' && gameObject.tags.foreground && (!PAGE.role.isAdmin || EDITOR.preferences.selectable.foreground === false)) return false
   // if(gameObject.id === 'globalConstructStationaryObstacle' && (!PAGE.role.isAdmin || EDITOR.preferences.selectable.structure === false)) return false

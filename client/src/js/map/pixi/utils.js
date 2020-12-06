@@ -295,7 +295,9 @@ function getVisibility(pixiChild, gameObject) {
   }
 
   if(PAGE.role.isAdmin) {
-    if(!window.isObjectSelectable(gameObject)) invisible = true
+    if(!gameObject.tags.emitter) {
+      if(!window.isObjectSelectable(gameObject)) invisible = true
+    }
   }
   // if(invisible) console.log(gameObject.id, gameObject.tags.outline,gameObject.tags.invisible,gameObject.removed,gameObject.tags.potential,gameObject.constructParts)
   return invisible
@@ -324,7 +326,9 @@ function updateLight(pixiChild, gameObject) {
 
   if(!pixiChild.isAnimatingScale) {
     let lightPower = gameObject.lightPower/50
-    if(typeof lightPower !== 'number') lightPower = .1
+    if(typeof lightPower !== 'number' || isNaN(lightPower)) lightPower = .1
+    lightPower -= GAME.gameState.ambientLight/5
+    if(lightPower < .05) lightPower = .05
     pixiChild.transform.scale.x = (gameObject.width * lightPower) * camera.multiplier
     pixiChild.transform.scale.y = (gameObject.height * lightPower) * camera.multiplier
   }

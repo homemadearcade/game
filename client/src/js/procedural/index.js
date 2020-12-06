@@ -2,6 +2,7 @@ import './particle.js'
 import './audio.js'
 import './sprites.js'
 import './title.js'
+import './lighting.js'
 
 function getRandomInt(min, max) {
     min = Math.ceil(min);

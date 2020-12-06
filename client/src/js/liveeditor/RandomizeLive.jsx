@@ -88,6 +88,13 @@ export default class RandomizeLive extends React.Component {
             <DatButton label='Generate Selected Audio' onClick={this._generateAudioSelected}></DatButton>
             {this._renderAudioSelected('audioSelected', window.generateAudioThemeData)}
           </DatFolder>
+          <DatFolder title='Lighting'>
+            <DatButton label='Light Power' onClick={window._randomizeLightPower}></DatButton>
+            <DatButton label='Light Color' onClick={window._randomizeLightColor}></DatButton>
+            <DatButton label='Light Opacity' onClick={window._randomizeLightOpacity}></DatButton>
+            <DatButton label='World Ambient Light' onClick={window._randomizeWorldAmbientLight}></DatButton>
+            <DatButton label='Dark Area Ambient Light' onClick={window._randomizeDarkAreaAmbientLight}></DatButton>
+          </DatFolder>
           <DatFolder title='Emitters'>
             {this._renderEmitters('emitterSelected', window.generateEmitterData)}
           </DatFolder>
