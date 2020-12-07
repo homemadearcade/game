@@ -4,7 +4,7 @@
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
 
-CASUAL TODO
+CASUAL WORK
 Make a particle effect - see list
 Add a sprite sheet
 Organize Audio files ( on Mac )
@@ -14,7 +14,7 @@ tagDescriptions
 
 -----
 
-TODO
+FINISH LINE
 
 FILL OUT SEQUENCE EDITOR, LIBRARY, EFFECTS, TAGS
 PUZZLE INTERFACES
@@ -30,8 +30,15 @@ COMBAT + GOALS + QUESTS
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+TODO RIGHT NOW
+
 Basically sprites should be able to be OVER TAGGED
 and object should be able to be UNDER TAGGED
+
+ACTION PROP THAT ACCES A SEQUENCE NAME ON THE OBJECT! Perfect. This will allow for transformation instead of destruction
+
+Turn Rat into Princess when destroyed! ->
+Change default dialogue, change dialogue tag, change sprite.
 
 children is broken
 if you have a child descriptor, you can remove the parent descriptor

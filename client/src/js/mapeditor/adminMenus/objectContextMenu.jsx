@@ -143,7 +143,6 @@ export default class ObjectContextMenu extends React.Component{
         {!subObject && <MenuItem key="copy">Duplicate</MenuItem>}
       </SubMenu>
       <SubMenu title='Infographical'>
-        <SubMenu title='Sprite'><SpriteMenu objectSelected={objectSelected} subObject={subObject}/></SubMenu>
         {(objectSelected.ownerId || objectSelected.relativeId) && <SubMenu title="Relative">
           <RelativeMenu objectSelected={objectSelected} subObject={subObject}/>
         </SubMenu>}
@@ -157,6 +156,7 @@ export default class ObjectContextMenu extends React.Component{
           <PopoverMenu objectSelected={objectSelected} subObject={subObject}/>
         </SubMenu>
       </SubMenu>
+      <SubMenu title='Sprites'><SpriteMenu objectSelected={objectSelected} subObject={subObject}/></SubMenu>
       <SubMenu title="Dialogue Sets">
         <DialogueSetsMenu objectSelected={objectSelected} subObject={subObject}/>
       </SubMenu>

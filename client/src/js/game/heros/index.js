@@ -500,6 +500,8 @@ class Hero{
 
       user: hero.user,
 
+      sprites: hero.sprites,
+
       zButtonBehavior: hero.zButtonBehavior,
       xButtonBehavior: hero.xButtonBehavior,
       cButtonBehavior: hero.cButtonBehavior,

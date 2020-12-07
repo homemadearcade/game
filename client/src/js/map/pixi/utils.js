@@ -256,7 +256,9 @@ function updateSprite(pixiChild, gameObject) {
   if(gameObject.tags.solidColor) {
     pixiChild.texture = PIXIMAP.textures['solidcolorsprite']
   } else {
-    if(gameObject.tags.inputDirectionSprites) {
+    if(gameObject.isEquipped && gameObject.sprites && gameObject.sprites.equipped) {
+      gameObject.sprite = gameObject.sprites.equipped
+    } else if(gameObject.tags.inputDirectionSprites) {
       if(gameObject.inputDirection === 'right') {
         if(gameObject.rightSprite) {
           gameObject.sprite = gameObject.rightSprite

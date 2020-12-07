@@ -1,6 +1,7 @@
 export default function onTalk(hero, collider, result, options) {
   if(collider.id !== hero.lastDialogueId) {
-    const heroDialogueSetName = collider.mod().heroDialogueSet
+    let heroDialogueSetName = collider.mod().heroDialogueSet
+    if(options.setName) heroDialogueSetName = options.setName
     let newDialogue
     if(heroDialogueSetName && collider.mod().heroDialogueSets && collider.mod().heroDialogueSets[heroDialogueSetName]) {
       newDialogue = collider.mod().heroDialogueSets[heroDialogueSetName].dialogue.slice()

@@ -5,6 +5,7 @@ import SpriteSelector from './SpriteSelector.jsx'
 import modals from '../../mapeditor/modals'
 import Collapsible from 'react-collapsible';
 import classnames from 'classnames';
+import PixiMapSprite from '../../components/PixiMapSprite.jsx'
 
 window.spriteSheetTags = {
   scifi: false,
@@ -227,7 +228,11 @@ export default class MediaManager extends React.Component {
     } else if(this.props.objectSelected === 'constructEditor') {
       window.local.emit('onSelectTextureId', sprite.textureId, 'constructEditor')
     } else if(this.props.objectSelected.id) {
-      MAPEDITOR.networkEditObject(this.props.objectSelected, { id: this.props.objectSelected.id, defaultSprite: sprite.textureId })
+      if(this.props.spriteValue === 'default') {
+        MAPEDITOR.networkEditObject(this.props.objectSelected, { id: this.props.objectSelected.id, defaultSprite: sprite.textureId })
+      } else {
+        window.local.emit('onSelectTextureId', sprite.textureId, this.props.objectSelected.id, this.props.spriteValue )
+      }
     }
   }
   //tagList.map((ss) => {
@@ -279,6 +284,7 @@ export default class MediaManager extends React.Component {
       }
       return <div className="Manager">
         <div className="Manager__list">
+          <div className="Manager__button">Select Default Sprite</div>
           {recommendedTextures && <div className="Manager__recommended">
             Recommended:
             <SpriteSheet onClick={this._onSelectSprite} spriteSheet={{sprites: recommendedTextures}}></SpriteSheet>

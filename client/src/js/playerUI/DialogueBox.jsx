@@ -91,7 +91,9 @@ export default class DialogueBox extends React.Component{
   }
 
   _renderSprite(item) {
-    if(item.tags.invisible || item.tags.outline || item.defaultSprite === 'invisible') {
+    if(item.sprites && item.sprites.UI) {
+      return <div className="DialogueBox__sprite"><PixiMapSprite width="50" height="50" textureId={item.sprites.UI}/></div>
+    } else if(item.tags.invisible || item.tags.outline || item.defaultSprite === 'invisible') {
       return <div className="DialogueBox__sprite DialogueBox__sprite--box"/>
     } else if(item.defaultSprite == 'solidcolorsprite'){
       return <div className="DialogueBox__sprite" style={{background: item.color || GAME.world.defaultObjectColor || window.defaultObjectColor}}/>
@@ -107,7 +109,7 @@ export default class DialogueBox extends React.Component{
     let usingName = name
     if(id) {
       object = OBJECTS.getObjectOrHeroById(id)
-      if(!usingName) usingName = object.name
+      if(object && !usingName) usingName = object.name
     }
 
     if(dialogue && dialogue.reverseSpeaker) {

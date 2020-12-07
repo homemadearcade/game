@@ -197,6 +197,8 @@ class Objects{
       lightColor: object.lightColor,
       lightOpacity: object.lightOpacity,
 
+      sprites: object.sprites,
+      
       velocityInitial: object.velocityInitial,
       velocityDelta: object.velocityDelta,
       // velocityInitialXExtra: object.velocityInitialXExtra,
@@ -441,7 +443,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
 
       _shakePower: object._shakePower,
       _flashWhite: object._flashWhite,
-      
+
       actionState: object.actionState,
       actionButtonBehaviorLabel: object.actionButtonBehaviorLabel,
 

@@ -26,10 +26,10 @@ export default class Root extends React.Component {
     this.selectedRef = React.createRef();
   }
 
-  open({ objectSelected, selectedMenu, selectedId, selectedManager }) {
+  open({ objectSelected, selectedMenu, selectedId, selectedManager, spriteValue }) {
 
     const selectedHistory = this.state.selectedHistory.slice()
-    selectedHistory.push({ objectSelected, selectedMenu, selectedId, selectedManager })
+    selectedHistory.push({ objectSelected, selectedMenu, selectedId, selectedManager, spriteValue })
     this.setState({
       open: true,
       selectedHistory,
@@ -119,9 +119,9 @@ export default class Root extends React.Component {
     </TabList>
   }
 
-  _renderPanel({ objectSelected, selectedMenu, selectedId, selectedManager }, index) {
+  _renderPanel({ objectSelected, selectedMenu, selectedId, selectedManager, spriteValue }, index) {
     if(selectedManager === 'MediaManager') {
-      return <MediaManager index={index} returnToList={this.clearId} openId={this.openId} openMenu={this.openMenu} selectedMenu={selectedMenu} selectedId={selectedId} objectSelected={objectSelected} closeManager={this.close}/>
+      return <MediaManager index={index} returnToList={this.clearId} openId={this.openId} openMenu={this.openMenu} selectedMenu={selectedMenu} selectedId={selectedId} objectSelected={objectSelected} spriteValue={spriteValue} closeManager={this.close}/>
     }
 
     if(selectedManager === 'GameManager') {

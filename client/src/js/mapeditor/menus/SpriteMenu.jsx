@@ -12,7 +12,7 @@ export default class SpriteMenu extends React.Component{
       const { networkEditObject } = MAPEDITOR
 
       if(key === 'open-media-manager-sprite-selector') {
-        BELOWMANAGER.open({ selectedManager: 'MediaManager', selectedMenu: 'SpriteSelector', objectSelected})
+        BELOWMANAGER.open({ selectedManager: 'MediaManager', selectedMenu: 'SpriteSelector', objectSelected, spriteValue: 'default'})
         return
       }
 
@@ -28,6 +28,28 @@ export default class SpriteMenu extends React.Component{
         return
       }
 
+      if(key === 'select-sprite-equipped') {
+        BELOWMANAGER.open({ selectedManager: 'MediaManager', selectedMenu: 'SpriteSelector', objectSelected, spriteValue: 'equipped'})
+        this._removeEventListenerInventory = window.local.on('onSelectTextureId', (textureId, objectId, spriteValue) => {
+          if(objectSelected.id !== objectId || spriteValue != 'equipped') return
+          if(!objectSelected.sprites) objectSelected.sprites = {}
+          objectSelected.sprites.equipped = textureId
+          networkEditObject(objectSelected, { sprites: objectSelected.sprites })
+          this._removeEventListenerInventory()
+        })
+      }
+
+      if(key === 'select-sprite-UI') {
+        BELOWMANAGER.open({ selectedManager: 'MediaManager', selectedMenu: 'SpriteSelector', objectSelected, spriteValue: 'UI'})
+        this._removeEventListenerUI = window.local.on('onSelectTextureId', (textureId, objectId, spriteValue) => {
+          if(objectSelected.id !== objectId || spriteValue != 'UI') return
+          if(!objectSelected.sprites) objectSelected.sprites = {}
+          objectSelected.sprites.UI = textureId
+          networkEditObject(objectSelected, { sprites: objectSelected.sprites })
+          this._removeEventListenerUI()
+        })
+      }
+
       const data = JSON.parse(key)
 
       if(data.action === 'chooseSprite') {
@@ -40,7 +62,9 @@ export default class SpriteMenu extends React.Component{
     const { objectSelected } = this.props
 
     return <Menu onClick={this._handleSpriteMenuClick}>
-      <MenuItem key='open-media-manager-sprite-selector'>Open Sprite Selector</MenuItem>
+      <MenuItem key='open-media-manager-sprite-selector'>Select Map Sprite</MenuItem>
+      <MenuItem key='select-sprite-equipped'>Select Equipped Sprite</MenuItem>
+      <MenuItem key='select-sprite-UI'>Select UI Sprite</MenuItem>
       {objectSelected.sprite && <MenuItem key='apply-sprite-to-all-of-color'>Apply to sprite to all with same color</MenuItem>}
       {objectSelected.tags.inputDirectionSprites && <MenuItem key={JSON.stringify({action: 'chooseSprite', spriteName: 'leftSprite'})}>Select Left Sprite</MenuItem>}
       {objectSelected.tags.inputDirectionSprites &&<MenuItem key={JSON.stringify({action: 'chooseSprite', spriteName: 'rightSprite'})}>Select Right Sprite</MenuItem>}
