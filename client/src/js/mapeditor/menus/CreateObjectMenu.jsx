@@ -39,6 +39,9 @@ export default class CreateObject extends React.Component {
       if(key === 'create-roof') {
         OBJECTS.create({...objectSelected, ...window.objectLibrary.roof})
       }
+      if(key === 'create-tiling-sprite') {
+        OBJECTS.create({...objectSelected, tags: { tilingSprite: true } })
+      }
       if(key === 'create-light') {
         OBJECTS.create({...objectSelected, ...window.objectLibrary.light})
       }
@@ -65,6 +68,7 @@ export default class CreateObject extends React.Component {
       <MenuItem key={'create-emitter'}>Emitter</MenuItem>
       <MenuItem key={'create-background'}>Background</MenuItem>
       <MenuItem key={'create-foreground'}>Foreground</MenuItem>
+      <MenuItem key={'create-tiling-sprite'}>Tiling Sprite</MenuItem>
       <MenuItem key={'create-resourceZone'}>Resource Zone</MenuItem>
       <MenuItem key={'create-spawnZone'}>Spawn Zone</MenuItem>
       <MenuItem key={'create-resource'}>Resource</MenuItem>

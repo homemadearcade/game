@@ -219,6 +219,8 @@ function setDefault() {
     pulseLighten: false,
     fadeInOnInit: false,
     flipYAtMaxVelocity: false,
+    shakeOnTrigger: false,
+    flashOnTrigger: false,
     // realHover: false,
   }
 

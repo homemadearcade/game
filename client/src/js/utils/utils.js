@@ -286,3 +286,20 @@ Object.replaceAll = function (entity, needle, replacement, affectsKeys, affectsV
 
     return newEntity;
 };
+
+
+window.seperateRectangleIntoSquares = function(object) {
+  const squares = []
+  for(let x = object.x; x < object.x + object.mod().width; x += GAME.grid.nodeSize) {
+    for(let y = object.y; y < object.y + object.mod().height; y += GAME.grid.nodeSize) {
+      squares.push({
+        x, y,
+        width: GAME.grid.nodeSize,
+        height: GAME.grid.nodeSize,
+        color: object.color,
+        defaultSprite: object.defaultSprite,
+      })
+    }
+  }
+  return squares
+}

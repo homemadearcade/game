@@ -138,6 +138,7 @@ class Objects{
       // targetFollowId:  object.targetFollowId,
 
       _shakePower: object._shakePower,
+      _flashWhite: object._flashWhite,
 
       _pathIdIndex: object._pathIdIndex,
       _pathWait: object._pathWait,
@@ -438,6 +439,9 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
       path: object.path,
       targetXY: object.targetXY,
 
+      _shakePower: object._shakePower,
+      _flashWhite: object._flashWhite,
+      
       actionState: object.actionState,
       actionButtonBehaviorLabel: object.actionButtonBehaviorLabel,
 
@@ -1583,6 +1587,13 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
   hasRandomPathAI(object) {
     object = object.mod()
     if(object.tags.wander || object.tags.spelunker || object.tags.lemmings || object.tags.pacer || object.tags.homing) return true
+  }
+
+  turnIntoConstruct(object) {
+    window.socket.emit('editObjects', [{
+      id:object.id,
+      parts: window.seperateRectangleIntoSquares(object)
+    }])
   }
 }
 

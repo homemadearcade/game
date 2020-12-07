@@ -149,9 +149,7 @@ function triggerEffectSmart(trigger, ownerObject, mainObject, guestObject) {
     }
   }
 
-  if(effector && effector.mod().tags && effector.mod().tags.stopGlowingOnTrigger) {
-    effector.tags.glowing = false
-  }
+  processTriggerTags(effector)
 
   // inside of ObjectId is currently the only id selector that can also select main Object, guest Object, etc
   // this converts the condition value to an id if its not already an id essentially
@@ -175,9 +173,7 @@ function triggerEffectSmart(trigger, ownerObject, mainObject, guestObject) {
       } else window.socket.emit('sendNotification', { chatId: effected.id, log: trigger.notificationLog, chat: trigger.notificationChat, text: trigger.notificationText, duration: trigger.notificationDuration })
     }
 
-    if(effected.mod().tags.stopGlowingOnTrigger) {
-      effected.tags.glowing = false
-    }
+    processTriggerTags(effected)
 
     effects.processEffect(trigger, effected, effector, ownerObject)
   })
@@ -205,6 +201,26 @@ function triggerEffectSmart(trigger, ownerObject, mainObject, guestObject) {
 
   if(trigger.triggerDestroyAfter) {
     if(ownerObject) ownerObject._destroy = true
+  }
+}
+
+function processTriggerTags(object) {
+  if(!object || !object.mod().tags) return
+  if(object.mod().tags.stopGlowingOnTrigger) {
+    object.tags.glowing = false
+  }
+  if(object.mod().tags.shakeOnTrigger) {
+    object.tags.shake = true
+    setTimeout(() => {
+      object.tags.shake = false
+    }, 100)
+  }
+  if(object.mod().tags.flashOnTrigger) {
+    let prevColor = object.color
+    object.color = 'white'
+    setTimeout(() => {
+      object.color = prevColor
+    }, 100)
   }
 }
 

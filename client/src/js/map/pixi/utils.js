@@ -61,6 +61,12 @@ function stopPulse(pixiChild, type) {
     delete pixiChild.pulseDarknessEase
   }
 
+  if(type === 'flash') {
+    ease.removeEase(pixiChild, 'tint')
+    pixiChild.isAnimatingColor = false
+    delete pixiChild.flashEase
+  }
+
 
   if(type === 'alpha') {
     ease.removeEase(pixiChild, 'alpha')
@@ -76,6 +82,12 @@ function stopPulse(pixiChild, type) {
 
 
 function startPulse(pixiChild, gameObject, type) {
+  if(type === 'flash') {
+    const color = 'white'
+    pixiChild.flashEase = ease.add(pixiChild, { tint: 0xFFFFFF }, { duration: 200, repeat: true })
+    pixiChild.isAnimatingColor = true
+  }
+
   if(type === 'darken') {
     const color = gameObject.color || GAME.world.defaultObjectColor
     pixiChild.pulseDarknessEase = ease.add(pixiChild, { blend: getHexColor(darken(color)) }, { repeat: true, duration: 1000, ease: 'linear' })
@@ -148,11 +160,15 @@ function updatePosition(pixiChild, gameObject) {
     if((gameObject._shakePower || gameObject.tags.shake) && !pixiChild.shakeEase) {
       startPulse(pixiChild, gameObject, 'shake')
     }
-
-    if(gameObject._shakePower) console.log(gameObject._shakePower, pixiChild.shakeEase)
     if(!gameObject._shakePower && !gameObject.tags.shake && pixiChild.shakeEase) {
-      console.log('???')
       stopPulse(pixiChild, 'shake')
+    }
+
+    if((gameObject._flashWhite) && !pixiChild.flashEase) {
+      startPulse(pixiChild, gameObject, 'flash')
+    }
+    if(!gameObject._flashWhite && pixiChild.flashEase) {
+      stopPulse(pixiChild, 'flash')
     }
   }
 }
@@ -221,9 +237,11 @@ function updateScale(pixiChild, gameObject) {
   }
 
   if(!pixiChild.isAnimatingScale) {
-    if(gameObject.tags.tilingSprite) {
-      pixiChild.transform.scale.x = camera.multiplier
-      pixiChild.transform.scale.y = camera.multiplier
+    if(gameObject.tags.tilingSprite && pixiChild.tileScale) {
+      pixiChild.tileScale.x = (GAME.grid.nodeSize/pixiChild.texture._frame.width) * camera.multiplier
+      pixiChild.tileScale.y = (GAME.grid.nodeSize/pixiChild.texture._frame.height) * camera.multiplier
+      pixiChild.width = gameObject.width * camera.multiplier
+      pixiChild.height = gameObject.height * camera.multiplier
     } else if(pixiChild.texture){
       pixiChild.transform.scale.x = (gameObject.width/pixiChild.texture._frame.width) * camera.multiplier
       pixiChild.transform.scale.y = (gameObject.height/pixiChild.texture._frame.height) * camera.multiplier

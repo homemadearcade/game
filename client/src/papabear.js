@@ -1,6 +1,73 @@
 /*
 
+
+//// PLANS FOR MULTIPLAYER LOBBIES
+Scenarios/BeginEnd
+  TEAMS -> modify RESOURCES WITH STEALING? ADD FRIENDLY FIRE. ADD SCORE TO SCENARIOS FROM TEAMS
+
+  SCREENS
+  Score Screens
+  Playable Lobby
+  Lobby -> Team Select, Characters Select, Map Select
+  Loading screen
+  Controls
+  Quests
+
+  LOBBY OPTIONS
+  ( multiplayer game )
+  Hero select or hero random
+  ( show all NPCS as heros )
+  Team Select or team random
+  new Heros allowed
+  allow Bios
+
+  SCREEN OPTIONS
+  onGameStart is called after all heros reach the end
+  centerText: "", bottomText: "" }
+
+  SCORE SCREEN TYPE
+  Teams
+  ResourceZones
+  Hero
+    Kill Counts
+    Score
+
+//////////////////////////////////////////////////////
+//////////////////////////////////////////////////////
+//////////////////////////////////////////////////////
+PLANS FOR ULTIMATE MINECRAFT SCALE
+
+// moving grid based on hero ( chunks ) and only run simulation on those objects in the grid\
+  // the problem is te pathfinding grid, hard to update that, too
+
+Basically the grid will be a moving grid
+the x and y of each grid node will get a getter based off the startX and startY and gridX
+the grid will move its startX and startY with each hero with as its CHUNK
+
+chunk padding is only used to calculate shadows as of now
+CHUNK padding is the difference between the players view and the grid
+
+It seems that theres VIEW padding and game padding. VIEW Padding seems to be for camera shakes and for moving very fast
+game padding seems to be for smash brothers style deaths and managing object updates ( like mine craft )
+
+A game boundary would likely dissapear, same with a camera lock
+and then you would just have a grid that moves with you, the server would know each heros grid size and location
+and update things accordingly
+
+UPDATE ON THIS
+If we seperate custom grid props from a path object and turn custom grids into their own objects, we can give the hero its own custom grid as a sub object and have monsters hook into it when they are in the area!
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////
+//////////////////////////////////////////////////////
+//////////////////////////////////////////////////////
+//////////////////////////////////////////////////////
 PB IDEAS
+//////////////////////////////////////////////////////
+//////////////////////////////////////////////////////
+//////////////////////////////////////////////////////
+//////////////////////////////////////////////////////
 
 HERO SWITCHING…
 Need to know who is controlling what heros
@@ -87,7 +154,8 @@ It’s easy to summon papa bear and someone gets to start with summoning in the 
 	You have to sacrifice yourself in front of the altar to summon him
 	Where is the altar is the question ?!!
 
-
+  //////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////
 OLDER NOTES
 
 // BIG PAPA BEAR INSIGHTS
@@ -134,4 +202,15 @@ other way to make an item meaningful is through history and narrative..
 
 IM GOING TO START OFF WITH HAVING A GAME MASTER PRESENT AND THEN EVENTUALLY ILL LEARN WHAT THE PARTS I CAN SACRIFICE ARE
 
+
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+###### LINKS FOR INSPIRATION
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+////////////////////////////////////////////////////
+
+ACTUALLY THE ENGINE IVE BEEN WANTING...
+https://github.com/timetocode/nengi-2d-csp
 */

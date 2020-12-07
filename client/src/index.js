@@ -7,10 +7,8 @@
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ////////////////////////////////////////////////////
 
-!!!!!!!! !!!! READY FOR HA BETA !!!! !!!!!!
 PIXEL EDITOR
 DETAIL VIEW
-!!!!!!!! !!!! READY FOR HA RELEASE !!!! !!!!!!
 
 SIMPLE SEQUENCE
 (ELEMENTAL SYSTEM) Lava, water, tree (?), fire, mountain, sand, ice, ROCK ( FIRST WEAPONS )-> Trees. ( ROBOT PARTS TOO)
@@ -31,14 +29,6 @@ LEVELS ( sub worlds )
 ###### SMALL FEATURES
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ////////////////////////////////////////////////////
-
-Team mods?
-
-Low bandwidth mode
-
-STORY - Fade in/out to game
-
-in-game checkpoints, set as spawn point when collided
 
 KING MODE ( where its like you make various yes/no choices and that changes whats happening on the world map )
 
@@ -79,7 +69,6 @@ PHYSICS UPGRADES
 ///////////////////////////////
 Allow circles and triangles?
 ELEVATION IS POSSIBLE THROUGH A VISUAL ILLUSION ( see littlewood game )
-allow invisible obstacle creation on like a...background rpg or dnd map
 Friction variable? increases the velocity decay
 ..also combine bounciness between two objects?
 
@@ -90,42 +79,16 @@ EDITOR UPGRADES
 action props editor
 timer editor
 quest editor ( inside of default hero editor )
-never close right click menu if shift is pressed
 GENRE libraries ( creator, generatedMenu )
-global compendium service that I can add to remove without copying and pasting JSON
 Toggle between drawing types?? Double object in construct editor to open drawing for that
+
 draw absurd path with mouse ( as spencer suggested, just use like drag? but record mouse points. this is LOL but awesome )
+
 get better json editor so I dont have to format so fuckin much, use the current json editor?
+
 action props, spawn zones, etc would be better editing using this json editor not the ae editor and not context menus
-add more bold stuff to the right click menu, its a great way of highlighting!, remove uneeded menus?
-right click -> open advanced menu which switches to a new context menu
+
 right click - follow, pathfindTo
-
-
-////////////////////////////////
-////////////////////////////////
-LIGHT UPGRADE
-Random opacity as a tag
-Because its COOL
-Random color as a tag
-backgroundLighting stage
-////////////////////////////////
-
-////////////////////////////////
-////////////////////////////////
-ADD SUBOBJECT UPGRADES
-////////////////////////////////
-Similar to right click create object. I need a right click - create subobject
-  // and it should have similar options as the object one
-Spear
-Gun
-Inventory Item
-Area x 2
-Area X 3
-Area x 4
-Potential Sub Object
-awareness areas toggleable, interact area toggleable in subobject library??idk
-Shift click on sub object in creator to add it to the map! or other way around?
 
 ////////////////////////////////
 ////////////////////////////////
@@ -133,8 +96,6 @@ LIBRARY UPGRADE
 ////////////////////////////////
 WORLDLIBRARY - Turn the editor world switching into something pulled out of a library, you feel me?..
 The real thing is going from object/subobject -> creator
-need to create interface for the entire library/compendium!
-have CREATOR service always look up the JSON from the library, it should not store its own JSON
 
 ////////////////////////////////
 ////////////////////////////////
@@ -145,6 +106,7 @@ global mods -- all heros, or ANY object
 optimize modding...
 MODDING BROKE some crazy thing happened when I replaced a sub object? the modding just really broke, it was using an old version of the mod?? yeah idk maybe cuz the values were so nested. I hated it
 // ^^ I think thishad to do with shift+stop
+Team mods
 
 ////////////////////////////////
 ////////////////////////////////
@@ -163,6 +125,7 @@ Hero removed -> respawn UI
 HOOK UP RESPAWNS TO A SPAWN ZONE
 spawn on interact ( spawn effect )
 Combine spawning with anticipatedAdd. create like spawnType variable which defaults to, hatchFromParent
+in-game checkpoints, set as spawn point when collided
 
 ////////////////////////////////
 ////////////////////////////////
@@ -189,7 +152,6 @@ ANIMATION UPGRADE
 allow chaining of animations and effects
 onAnimationEnd
 Wait for animation to complete
-Randomize animations and physics together?
 ADMIN to reselect sprites, remove sprites, combine sprites into animations
 
 ////////////////////////////////
@@ -216,31 +178,19 @@ NOTES
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ////////////////////////////////////////////////////
 
-THEMES
-randomize soundFX
-pick random song
-randomize particleFX
-randomize sprite theme ( this would require sprite the QUALITIES SYSTEM )
-randomize hero physics
-gameTheme: ’scifi vs fantasy vs retro vs fun vs horror’. This effects title selection randomization, sprite sheet selection?? and audio generation
-
-and randomize perhaps the camera filter!! <--- yes on camera filter and also dont forget about camera shakes too, those are good animations, or EASE! remember ease..
---
-  AMBIENCE --- these tags would play an ambience in any area
-    caveAmbience
-    waterAmbience
-    jungleAmbience
-    farmAmbience
-    marketAmbience
-    fireAmbience
-    machineAmbience
-    stopOtherAmbience
-
-    and then you can say like. add SFX1 tag to all monsters or all pickupable or all resources, etc
-
-    I THINK THATS IT!
-
+AMBIENCE --- these tags would play an ambience in any area
+  caveAmbience
+  waterAmbience
+  jungleAmbience
+  farmAmbience
+  marketAmbience
+  fireAmbience
+  machineAmbience
+  stopOtherAmbience
+  I THINK THATS IT!
 ---
+FOR SIMPLE SEQUENCE ( BRANCHING NARRATIVE )
+https://www.npmjs.com/package/react-arrows
 Story/cutscenes SIMPLE EDITOR
   STORY SCREENSHOTS
   in Manager
@@ -254,60 +204,6 @@ Story/cutscenes SIMPLE EDITOR
   Effect
   Collapsed -> Preview
   DELETE
-
-//// PLANS FOR MULTIPLAYER LOBBIES
-Scenarios/BeginEnd
-  TEAMS -> modify RESOURCES WITH STEALING? ADD FRIENDLY FIRE. ADD SCORE TO SCENARIOS FROM TEAMS
-
-  SCREENS
-  Score Screens
-  Playable Lobby
-  Lobby -> Team Select, Characters Select, Map Select
-  Loading screen
-  Controls
-  Quests
-
-  LOBBY OPTIONS
-  ( multiplayer game )
-  Hero select or hero random
-  ( show all NPCS as heros )
-  Team Select or team random
-  new Heros allowed
-  allow Bios
-
-  SCREEN OPTIONS
-  onGameStart is called after all heros reach the end
-  centerText: "", bottomText: "" }
-
-  SCORE SCREEN TYPE
-  Teams
-  ResourceZones
-  Hero
-    Kill Counts
-    Score
-
-/////
-PLANS FOR ULTIMATE MINECRAFT SCALE
-
-// moving grid based on hero ( chunks ) and only run simulation on those objects in the grid\
-  // the problem is te pathfinding grid, hard to update that, too
-
-Basically the grid will be a moving grid
-the x and y of each grid node will get a getter based off the startX and startY and gridX
-the grid will move its startX and startY with each hero with as its CHUNK
-
-chunk padding is only used to calculate shadows as of now
-CHUNK padding is the difference between the players view and the grid
-
-It seems that theres VIEW padding and game padding. VIEW Padding seems to be for camera shakes and for moving very fast
-game padding seems to be for smash brothers style deaths and managing object updates ( like mine craft )
-
-A game boundary would likely dissapear, same with a camera lock
-and then you would just have a grid that moves with you, the server would know each heros grid size and location
-and update things accordingly
-
-UPDATE ON THIS
-If we seperate custom grid props from a path object and turn custom grids into their own objects, we can give the hero its own custom grid as a sub object and have monsters hook into it when they are in the area!
 
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
@@ -450,7 +346,6 @@ I need to feel like I have CONTROL over effects and causes, right now I feel lik
 
 // admin vs player code much better seperated
 
-
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
@@ -460,22 +355,9 @@ I need to feel like I have CONTROL over effects and causes, right now I feel lik
 ////////////////////////////////////////////////////
 
 // HONESTLY USING BOX 2D PHYSICS WOULD BE INCREDIBLE
-// https://zimjs.com/bits/physics.html
-// https://opengameart.org/content/colored-16x16-fantasy-tileset
-// http://timefantasy.net/
 // https://www.codeandweb.com/texturepacker/tutorials/how-to-create-sprite-sheets-and-animations-with-pixijs5
-// https://github.com/YarnSpinnerTool/YarnEditor
 
 /*
-FOR SIMPLE SEQUENCE ( BRANCHING NARRATIVE )
-https://www.npmjs.com/package/react-arrows
-
-ACTUALLY THE ENGINE IVE BEEN WANTING...
-https://github.com/timetocode/nengi-2d-csp
-
-BETTER LOCAL STORAGE
-https://github.com/brianleroux/lawnchair
-
 MOUSE WHEEL
 http://monospaced.github.io/hamster.js/
 
@@ -484,12 +366,7 @@ https://namuol.github.io/cheet.js/
 
 GETTING SERIOUS ABOUT OPTIMIZATION
 https://github.com/spite/rstats
-https://github.com/geckosio/snapshot-interpolation
 https://github.com/rgcl/jsonpack
-
-IMAGE MANIPULATION
-http://camanjs.com/examples/
-// aparently also FABRIC.js is good for that, I MEAN IDK MAN
 
 P COOL IDK
 https://game-icons.net/
@@ -501,15 +378,9 @@ GAVE ME GREAT IDEA FOR LIKE EDGES OF THE GRID NODES
 https://www.mipui.net/
 IdK ANOTHER ONLINE https://hextml.playest.net/
 
-THIS IS FOR GENERATING SPRITESHEET JSON
-https://www.leshylabs.com/apps/sstool/
-
 SpriteSheet
 https://pixanna.nl/products/ancient-dungeons-base-pack/
 https://craftpix.net/
-
-IMPROVE AESTHETIC AND GAME AESHTIC CUSTOMIZATION
-https://www.transparenttextures.com/
 
 THINGS COULD GET FUCKIN NUTS WITH THIS HERE
 https://www.iwm-tuebingen.de/iwmbrowser/lib/pixi/flippable.html
@@ -679,10 +550,4 @@ Sprite Selector
 Path Editor
 Construct Editor
 Live Menu ( Physics, Day/Night, Particles )
-
-
-TODO
-----------
-Pixel Editor
-Branching Game
 */

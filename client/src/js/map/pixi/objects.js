@@ -351,6 +351,16 @@ function updateProperties(pixiChild, gameObject) {
     delete pixiChild.emitter
   }
 
+  if(!pixiChild.tileScale && gameObject.tags.tilingSprite) {
+    PIXIMAP.deleteObject(gameObject)
+    return
+  }
+
+  if(pixiChild.tileScale && !gameObject.tags.tilingSprite) {
+    PIXIMAP.deleteObject(gameObject)
+    return
+  }
+
 
   /////////////////////
   /////////////////////
@@ -393,7 +403,7 @@ const addGameObjectToStage = (gameObject, stage) => {
   const texture = PIXIMAP.textures[gameObject.sprite]
   let sprite
   if(gameObject.tags.tilingSprite) {
-    sprite = new PIXI.TilingSprite(texture, gameObject.width, gameObject.height)
+    sprite = new PIXI.TilingSprite(texture, gameObject.width * camera.multiplier, gameObject.height * camera.multiplier)
   } else {
     sprite = new PIXI.Sprite(texture)
   }

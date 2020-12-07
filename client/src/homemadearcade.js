@@ -1,19 +1,8 @@
 /*
 // THE BEST FEATURES ARE THE ONES THAT THE PLAYER THINKS EXISTS BUT ACTUALLY DOESNT
 // U CAN HAVE COOL GRAPHICS BUT IF THEY DONT MEAN ANYTHING MEANINGFUL TO THE GAMEPLAY IT DOESNT MATTER
-
-Interesting that bar of dreams and homemade arcade i've wanted to have audio... props, everything possible available!! In both scenarios I've wanted them to feel like anything could happen. Anything is possible. Is is my lack of decision making and vision or is it part of my style?
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
-
-Home made arcade music
-
-Basically sprites should be able to be OVER TAGGED
-and object should be able to be UNDER TAGGED
-
-children is broken
-if you have a child descriptor, you can remove the parent descriptor
-If you have a descriptor on an object that has a withDescriptors property, do a strict look for a sprite that matches that
 
 CASUAL TODO
 Make a particle effect - see list
@@ -36,7 +25,24 @@ PUZZLE INTERFACES
   and then ud need a basic -- combination variable. Puzzle type + puzzle combination...  two variables?
 COMBAT + GOALS + QUESTS
 
--------
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Basically sprites should be able to be OVER TAGGED
+and object should be able to be UNDER TAGGED
+
+children is broken
+if you have a child descriptor, you can remove the parent descriptor
+If you have a descriptor on an object that has a withDescriptors property, do a strict look for a sprite that matches that
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Home made arcade music
+
+right click -> open advanced menu which switches to a new context menu
 
 If an array changes we need to send the whole thing in the DIFF
 
@@ -51,26 +57,33 @@ Change on collide to on touch start for certain tags
 Swords can just be the SLASHES you dont actually have to show the sword!! Omg genius…
 HITBOXES with duration. Use my own collision system
 
+STORY - Fade in/out to game (we will probably use this in HA opening animations..)
+//^^ take a loot at animate.css which i think is already installed..
+
+--
 ////////////////////////////////
 ////////////////////////////////
-SOUND AND PIXEL GENERATOR UPGRADE
+COMPENDIUM SERVICE UPGRADEs
 ////////////////////////////////
-Alt Foosteps sounds
+global compendium service that I can add to remove without copying and pasting JSON
+need to create interface for the entire library/compendium!
+have CREATOR service always look up the JSON from the library, it should not store its own JSON
 
-audio right click -> set as ___ sound
-
-Only allow the use of ONE descriptor for construct parts? Pre select a single descriptor before generating?
-
-//FOR SPECIFIC OBJECTS ON MAP
-dialogueNoise: 'XX'
-
-//FOR LIBRARY OBJECTS
-modStartNoise: ''?
-mutateNoise: ''?
-pickupNoise?
-
-Generally how should I deal with library objects? Should I have a 'theme sprite on spawn' tag?
-I could easily go through the creator service and give everything a default sprite, too!
+////////////////////////////////
+////////////////////////////////
+ADD SUBOBJECT UPGRADES
+////////////////////////////////
+Similar to right click create object. I need a right click - create subobject
+  // and it should have similar options as the object one
+Spear
+Gun
+Inventory Item
+Area x 2
+Area X 3
+Area x 4
+Potential Sub Object
+awareness areas toggleable, interact area toggleable in subobject library??idk
+Shift click on sub object in creator to add it to the map! or other way around?
 
 ////////////////////////////////
 ////////////////////////////////
@@ -114,7 +127,6 @@ Chances -> fail on death
 a Score parameter on heros and objects? ( score holding vs score giving )
 Win/Lose States that can connect to the meta of the engine ( picking new game or replaying current game )
 
-
 ////////////////////////////////
 ////////////////////////////////
 COMBAT UPGRADE
@@ -137,6 +149,32 @@ level system, ranged attacks, etc
 Game Over State
 	specifically allow a hero to be destoyed and have the game run still?
 
+////////////////////////////////
+////////////////////////////////
+SOUND AND PIXEL GENERATOR UPGRADE
+////////////////////////////////
+
+IN DATA -> add genre descriptors to sprites via the spritesheet tags?
+
+audio right click -> set as ___ sound
+
+Only allow the use of ONE descriptor for construct parts? Pre select a single descriptor before generating?
+
+//FOR LIBRARY OBJECTS + OBJECTS ON MAP
+speak SFX, destroy SFX, pickup SFX, dropSFX
+
+FOR MODS
+start SFX, endSFX, poweredUpParticle
+
+ACTIONS
+actionSFX
+
+pick random song
+randomize hero physics
+gameTheme: ’scifi vs fantasy vs retro vs fun vs horror’. This effects title selection randomization, sprite sheet selection?? and audio generation
+
+and randomize perhaps the camera filter!! <--- yes on camera filter and also dont forget about camera shakes too, those are good animations, or EASE! remember ease..
+
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
@@ -145,10 +183,7 @@ Game Over State
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ////////////////////////////////////////////////////
 
-
 Sub objects not visible sometimes to non-host in ha-random?
-
-when generating construct parts sprites it can mess up because it combines all those squares into rectangles ...
 
 non host player was shooting x2?
 
@@ -263,5 +298,30 @@ Maybe dual stick shooter potential?
   // 'increaseMovementDirectionVelocity',
   Show grave when dead
   shrink down and shake until destroyed ( shrink other directions maybe too?)
+  randomLightColorChange
+  randomLightPowerChange
+  randomLightOpacityChange
+  randomColorChanges
+
+  ////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////
+  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+  ###### LINKS FOR INSPIRATION
+  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+  ////////////////////////////////////////////////////
+
+  THIS IS FOR GENERATING SPRITESHEET JSON
+  https://www.leshylabs.com/apps/sstool/
+
+  BETTER LOCAL STORAGE
+  https://github.com/brianleroux/lawnchair
+
+  IMAGE MANIPULATION
+  http://camanjs.com/examples/
+  // aparently also FABRIC.js is good for that, I MEAN IDK MAN
+
+  IMPROVE AESTHETIC AND GAME AESHTIC CUSTOMIZATION
+  https://www.transparenttextures.com/
 
   */

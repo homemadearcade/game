@@ -1,24 +1,6 @@
 import React from 'react';
 import DatGui, { DatSelect, DatFolder, DatBoolean, DatButton, DatColor, DatNumber, DatString } from 'react-dat-gui';
 
-
-// TOMMOROW TODO
-// add more descriptors to sprites, add a little more flavor to the map..
-
-//------
-// how does the genre of the game fit into all this? Changes the sprites used and the sounds used?
-// theme live menu... SOUND FX, TITLE, GENRE? Needed? or just impove the media manager w animations and fonts
-
-// is BLOCK a theme? helps with basically just decorating blocks and using retro sound FX and particle emitter randomness?
-// random light color vs random non-sprites color vs random everything color ^^
-
-// library objects...., :0
-// add generate SFX from Descriptor data, speak SFX, destroy SFX, walk SFX, etc
-// add genre descriptors to sprites via the spritesheet tags?
-// random music
-// add realistic audio SFX I have in folder/create quality audio stuff for footsteps and touch start?
-
-
 export default class RandomizeLive extends React.Component {
   constructor(props) {
     super(props)
