@@ -36,6 +36,10 @@ COMBAT + GOALS + QUESTS
 
 -------
 
+If an array changes we need to send the whole thing man in the DIFF
+
+Sequences needs un upgrade that shit is confusing..
+
 backgroundLighting stage
 
 Create new descriptor tag in sprite editor, it just adds the descriptor to the sprite but
@@ -152,6 +156,9 @@ Game Over State
 ###### BUGS
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ////////////////////////////////////////////////////
+
+
+Sub objects not visible sometimes to non-host in ha-random?
 
 when generating construct parts sprites it can mess up because it combines all those squares into rectangles ...
 

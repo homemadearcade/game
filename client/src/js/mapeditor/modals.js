@@ -674,7 +674,7 @@ function openEditSequenceModal(id, cb) {
     },
     html:`<div id='edit-sequence-container'></div>`,
     preConfirm: (result) => {
-      console.log(ref.current)
+      ref.current.saveSequence()
       return ref.current.getCurrentId()
     }
   }).then(cb)
@@ -686,10 +686,14 @@ function openEditSequenceModal(id, cb) {
     document.getElementById('edit-sequence-container')
   )
 
-  if(id) {
+  if(id && GAME.library.sequences[id]) {
     setTimeout(() => {
       ref.current.openSequence(id)
-    })
+    }, 10)
+  } else {
+    setTimeout(() => {
+      ref.current.newSequence(id)
+    }, 10)
   }
 }
 

@@ -48,7 +48,7 @@ export default class Sequence extends React.Component{
           name = newName
         }
 
-        modals.openEditSequenceModal(null, (id) => {
+        modals.openEditSequenceModal(name+'-'+objectSelected.id, (id) => {
           if(id.value && id.value != true) {
             objectSelected.sequences[name] = id.value
             networkEditObject(objectSelected, {sequences: objectSelected.sequences })

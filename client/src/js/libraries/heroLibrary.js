@@ -11,12 +11,20 @@ window.local.on('onUserIdentified', () => {
         }
       }
     },
-    singlePlayer: {
+    homemadeArcade: {
       useGameDefault: true,
       JSON: {
         tags: {
           saveAsDefaultHero: true,
           centerOfAttention: true,
+        }
+      }
+    },
+    singlePlayer: {
+      useGameDefault: true,
+      JSON: {
+        tags: {
+          saveAsDefaultHero: true,
         }
       }
     },

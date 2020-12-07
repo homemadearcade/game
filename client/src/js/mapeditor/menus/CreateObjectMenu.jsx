@@ -31,7 +31,7 @@ export default class CreateObject extends React.Component {
         OBJECTS.create({...objectSelected, opacity: 0, tags: { emitter: true}})
       }
       if(key === 'create-pickupable') {
-        OBJECTS.create({...objectSelected, tags: { obstacle: true, pickupable: true, pickupOnHeroInteract: true }})
+        OBJECTS.create({...objectSelected, tags: { pickupable: true, pickupOnHeroInteract: true }})
       }
       if(key === 'create-infopop') {
         OBJECTS.create({...objectSelected, popoverText: 'Information', tags: {invisible: true}})

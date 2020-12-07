@@ -498,15 +498,16 @@ function processEffect(effect, effected, effector, ownerObject) {
   }
 
   if(effectName === 'startLocalSequence') {
+    console.log(effected.sequences)
     if(!effected.sequences) return
-    const sequenceId = effected.sequences[effectValue]
-    if(!sequenceId) return
+    const sequence = effected.sequences[effectValue]
+    if(!sequence) return
     const context = {
       mainObject: effected,
       guestObject: effector,
       ownerObject: effected,
     }
-    startSequence(sequenceId, context)
+    startSequence(sequence, context)
   }
 
 

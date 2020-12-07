@@ -149,7 +149,7 @@ function triggerEffectSmart(trigger, ownerObject, mainObject, guestObject) {
     }
   }
 
-  if(effector && effector.mod().tags.stopGlowingOnTrigger) {
+  if(effector && effector.mod().tags && effector.mod().tags.stopGlowingOnTrigger) {
     effector.tags.glowing = false
   }
 

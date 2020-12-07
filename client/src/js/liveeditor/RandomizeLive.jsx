@@ -99,7 +99,7 @@ export default class RandomizeLive extends React.Component {
             {this._renderEmitters('emitterSelected', window.generateEmitterData)}
           </DatFolder>
           <DatFolder title='Group'>
-            <DatButton label='Sound FX' onClick={window.generateAudioTheme}></DatButton>
+            <DatButton label='Sound FX' onClick={() => window.generateAudioTheme()}></DatButton>
             <DatButton label='Title Animation' onClick={this._generateTitleAnimation}></DatButton>
             <DatButton label='Title Font' onClick={this._generateTitleFont}></DatButton>
             <DatButton label='Descriptor Sprites' onClick={this._findSpritesForDescribedObjects}></DatButton>

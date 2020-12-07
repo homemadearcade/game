@@ -431,6 +431,10 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
         }
       }),
 
+      // ? needed?
+      // emitterTypeExplosion: object.emitterTypeExplosion,
+      // emitterTypeAction: object.emitterTypeAction,
+
       path: object.path,
       targetXY: object.targetXY,
 

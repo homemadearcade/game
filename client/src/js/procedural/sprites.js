@@ -42,6 +42,7 @@ window.findTexturesForDescriptors = function(descriptors, options) {
 
   let possibleTextures = []
   descriptorList.forEach((desc) => {
+    if(!descriptors[desc]) return
     if(desc && window.textureIdsByDescriptor[desc]) {
       possibleTextures.push(...window.textureIdsByDescriptor[desc])
     }

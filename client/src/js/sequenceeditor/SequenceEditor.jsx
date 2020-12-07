@@ -247,10 +247,17 @@ export default class SequenceEditor extends React.Component {
     this._generateRefs(GAME.library.sequences[id].items)
   }
 
-  newSequence() {
-    this.setState({
-      sequence: JSON.parse(JSON.stringify(window.defaultSequence))
-    })
+  newSequence(id) {
+    if(typeof id == 'string') {
+      this.setState({
+        sequence: {...JSON.parse(JSON.stringify(window.defaultSequence)), id}
+      })
+    } else {
+      this.setState({
+        sequence: JSON.parse(JSON.stringify(window.defaultSequence))
+      })
+    }
+
     this._generateRefs([])
   }
 

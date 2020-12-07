@@ -173,15 +173,19 @@ export function triggerInteraction(interaction, hero, collider, result, options)
       effects.processEffect({ effectName: 'dialogue', effectJSON: heroDialogue }, hero, collider)
     }
     if(heroDialogueSet) {
+      console.log('?')
       effects.processEffect({ effectName: 'dialogueSet', effectValue: heroDialogueSet }, hero, collider)
     }
     if(heroEffect) {
+      console.log('??')
       effects.processEffect({ effectName: heroEffect, ...interaction.dialogueChoice.heroEffectProps }, hero, collider)
     }
     if(guestEffect) {
+      console.log('???')
       effects.processEffect({ effectName: guestEffect, ...interaction.dialogueChoice.guestEffectProps}, collider, hero)
     }
     if(guestSequenceId) {
+      console.log('????')
       effects.processEffect({ effectName: 'startLocalSequence', effectValue: guestSequenceId }, collider, hero)
     }
 
