@@ -73,6 +73,9 @@ MAP.onRender = function(delta) {
   const { ctx, canvas } = MAP
   const hero = GAME.heros[HERO.id]
 
+  if(hero.zoomMultiplierTarget || hero.animationZoomTarget) PAGE.resizingMap = true
+  else PAGE.resizingMap = false
+  
   let camera = MAP.camera
   //set camera so we render everything in the right place
   if(CONSTRUCTEDITOR.open) {

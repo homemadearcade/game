@@ -456,6 +456,8 @@ class Hero{
       _pathWait: hero._pathWait,
       _pathOnWayBack:  hero._pathOnWayBack,
 
+      zoomMultiplierTarget: hero.zoomMultiplierTarget,
+
       _fireDialogueCompleteWithSpeakerId: hero._fireDialogueCompleteWithSpeakerId,
     }
 
@@ -740,6 +742,8 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
 
       _shootingLaser: hero._shootingLaser,
       _walkingSound: hero._walkingSound,
+
+      zoomMultiplierTarget: hero.zoomMultiplierTarget,
     }
 
     if(hero.subObjects) {
@@ -872,6 +876,25 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
   }
 
   onUpdateHero(hero, keysDown, delta) {
+    const zoomTarget = hero.mod().zoomMultiplierTarget
+    if(zoomTarget) {
+      if(zoomTarget > hero.zoomMultiplier) {
+        hero.zoomMultiplier = hero.zoomMultiplier/.97
+        if(zoomTarget < hero.zoomMultiplier) {
+          hero.zoomMultiplier = zoomTarget
+          hero.zoomMultiplierTarget = null
+        }
+      }
+
+      if(zoomTarget < hero.zoomMultiplier) {
+        hero.zoomMultiplier = hero.zoomMultiplier/1.03
+        if(zoomTarget > hero.zoomMultiplier) {
+          hero.zoomMultiplier = zoomTarget
+          hero.zoomMultiplierTarget = null
+        }
+      }
+    }
+
     if(hero.mod().tags.realRotate) {
       if(typeof hero.angle != 'number') hero.angle = 0
       hero.angle += 1 * delta

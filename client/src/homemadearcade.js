@@ -6,6 +6,8 @@ Interesting that bar of dreams and homemade arcade i've wanted to have audio... 
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
 
+Home made arcade music
+
 Basically sprites should be able to be OVER TAGGED
 and object should be able to be UNDER TAGGED
 
@@ -36,11 +38,7 @@ COMBAT + GOALS + QUESTS
 
 -------
 
-If an array changes we need to send the whole thing man in the DIFF
-
-Sequences needs un upgrade that shit is confusing..
-
-backgroundLighting stage
+If an array changes we need to send the whole thing in the DIFF
 
 Create new descriptor tag in sprite editor, it just adds the descriptor to the sprite but
 
@@ -57,9 +55,6 @@ HITBOXES with duration. Use my own collision system
 ////////////////////////////////
 SOUND AND PIXEL GENERATOR UPGRADE
 ////////////////////////////////
-DONT LET ADMINS SELECT THE BROAD CATEGORIES, the more specific the admins can select things as, the better
-BASICALLY im saying that these generic Descriptors with a lot of aliases are just so that the player stumbles upon them while searching
-
 Alt Foosteps sounds
 
 audio right click -> set as ___ sound
@@ -76,12 +71,6 @@ pickupNoise?
 
 Generally how should I deal with library objects? Should I have a 'theme sprite on spawn' tag?
 I could easily go through the creator service and give everything a default sprite, too!
-
-What are the descriptors for audio?
-Big, small, other characteristics,
-Motor HUMS! Laser Type? Gun vs Laser vs bow and arrow
-Bomb explosions...
-Shotgun vs Pistol vs Rocket Launcher vs Rifle vs Machine Gun
 
 ////////////////////////////////
 ////////////////////////////////
@@ -147,7 +136,6 @@ AGGRESIVE
 level system, ranged attacks, etc
 Game Over State
 	specifically allow a hero to be destoyed and have the game run still?
-
 
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////

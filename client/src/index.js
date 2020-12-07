@@ -38,16 +38,9 @@ Low bandwidth mode
 
 STORY - Fade in/out to game
 
-in-game checkpoints
+in-game checkpoints, set as spawn point when collided
 
 KING MODE ( where its like you make various yes/no choices and that changes whats happening on the world map )
-
-pixiChild._stillUsed property as well as a PIXIMAP.objectsById system. We scrap app PIXICHILDs that arent in use every like 10s
-
-trigger effects -> sequences
-
-overall something that proved to just be incredibly effective and I should do more often is the dialogueSet variable. Instead of constantly editing this array, we create a bunch of potential arrays that the user can hook into from various places...
-what a large scale change looks like in this engine is mainly changing variables such as dialogueSet. this opens up ALL sorts of possibility and makes it much more seamless... We keep all previous and future states an object has WITHIN that object and we just toggle the stickshift to a different gear to access the various states
 
 ////////////////////////////////
 ////////////////////////////////
@@ -87,8 +80,8 @@ PHYSICS UPGRADES
 Allow circles and triangles?
 ELEVATION IS POSSIBLE THROUGH A VISUAL ILLUSION ( see littlewood game )
 allow invisible obstacle creation on like a...background rpg or dnd map
-Friction variable?
-increases the velocity decay..also combine bounciness?
+Friction variable? increases the velocity decay
+..also combine bounciness between two objects?
 
 ////////////////////////////////
 ////////////////////////////////
@@ -107,6 +100,16 @@ action props, spawn zones, etc would be better editing using this json editor no
 add more bold stuff to the right click menu, its a great way of highlighting!, remove uneeded menus?
 right click -> open advanced menu which switches to a new context menu
 right click - follow, pathfindTo
+
+
+////////////////////////////////
+////////////////////////////////
+LIGHT UPGRADE
+Random opacity as a tag
+Because its COOL
+Random color as a tag
+backgroundLighting stage
+////////////////////////////////
 
 ////////////////////////////////
 ////////////////////////////////
