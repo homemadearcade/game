@@ -405,10 +405,13 @@ function updateGridHighlight(location) {
 
   collisionsUtil.check(mouseLocation, GAME.heroList, (hero) => {
     if (hero.mod().removed) return
-    smallestObject = JSON.parse(JSON.stringify(hero))
+    smallestObject = [JSON.parse(JSON.stringify(hero))]
   })
 
-  if (smallestObject) MAPEDITOR.objectHighlighted = JSON.parse(JSON.stringify(smallestObject))
+  if(smallestObject.length > 1) MAPEDITOR.objectLayers = smallestObject
+  else MAPEDITOR.objectLayers = null
+
+  if(smallestObject.length) MAPEDITOR.objectHighlighted = JSON.parse(JSON.stringify(smallestObject[0]))
 
   MAPEDITOR.objectHighlightedChildren = []
   if (MAPEDITOR.objectHighlighted.id || MAPEDITOR.objectHighlighted.ownerId) {

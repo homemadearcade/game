@@ -35,11 +35,6 @@ TODO RIGHT NOW
 Basically sprites should be able to be OVER TAGGED
 and object should be able to be UNDER TAGGED
 
-ACTION PROP THAT ACCES A SEQUENCE NAME ON THE OBJECT! Perfect. This will allow for transformation instead of destruction
-
-Turn Rat into Princess when destroyed! ->
-Change default dialogue, change dialogue tag, change sprite.
-
 children is broken
 if you have a child descriptor, you can remove the parent descriptor
 If you have a descriptor on an object that has a withDescriptors property, do a strict look for a sprite that matches that

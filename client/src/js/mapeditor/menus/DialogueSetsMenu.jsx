@@ -4,7 +4,58 @@ import modals from '../modals.js'
 
 window.getListOfAllSetsAndSequences = function() {
   const map = {}
-  return [...GAME.objects, ...GAME.heroList].reduce((prev, next) => {
+  const items = [...GAME.objects, ...GAME.heroList, ...Object.keys(window.objectLibrary.addGameLibrary()).map((libraryName) => {
+    return window.objectLibrary.addGameLibrary()[libraryName]
+  }), Object.keys(window.subObjectLibrary.addGameLibrary()).map((libraryName) => {
+    return window.subObjectLibrary.addGameLibrary()[libraryName]
+  })]
+
+  items.forEach((item) => {
+    if(item.subObjects) {
+      Object.keys(item.subObjects).forEach((name) => {
+        items.push(item.subObjects[name])
+      })
+    }
+    if(item.dialogueChoices) {
+      Object.keys(item.dialogueChoices).forEach((name) => {
+        items.push(item.dialogueChoices[name])
+      })
+    }
+  })
+
+  return items.reduce((prev, next) => {
+
+    if(next.actionProps && next.actionProps.bulletJSON && next.actionProps.bulletJSON.monsterEffectValue) {
+      prev.push(next.actionProps.bulletJSON.monsterEffectValue)
+    }
+
+    if(next.heroEffect === 'dialogueSet' && next.heroEffectProps) {
+      prev.push(next.heroEffectProps.effectValue)
+    }
+
+    if(next.heroEffect === 'startLocalSequence' && next.heroEffectProps) {
+      prev.push(next.heroEffectProps.effectValue)
+    }
+
+    if(next.guestEffect === 'startLocalSequence' && next.guestEffectProps) {
+      prev.push(next.guestEffectProps.effectValue)
+    }
+
+    if(next.guestEffect === 'dialogueSet' && next.guestEffectProps) {
+      prev.push(next.guestEffectProps.effectValue)
+    }
+
+    if(next.monsterEffect === 'dialogueSet' && next.monsterEffectValue) {
+      prev.push(next.monsterEffectValue)
+    }
+
+    if(next.monsterEffect === 'startLocalSequence' && next.monsterEffectValue) {
+      prev.push(next.monsterEffectValue)
+    }
+
+    if(next.heroDialogueSet) {
+      prev.push(next.heroDialogueSet)
+    }
     if(next.heroDialogueSets) {
       prev.push(...Object.keys(next.heroDialogueSets))
     }

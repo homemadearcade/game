@@ -304,6 +304,7 @@ export default class SequenceEditor extends React.Component {
   saveSequence = () => {
     const { sequence } = this.state
 
+    if(!sequence.id) return
     GAME.library.sequences[sequence.id] = this._getSequenceJSON()
     this.onAddedSequence(GAME.library.sequences[sequence.id])
   }

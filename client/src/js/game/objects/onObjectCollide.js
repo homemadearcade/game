@@ -1,10 +1,17 @@
+import effects from '../effects'
+
 export default function onObjectCollide(agent, collider, result) {
   if(agent.mod().tags['monsterDestroyer'] && collider.mod().tags['monster']) {
-    if(typeof collider.mod().spawnPointX == 'number' && collider.mod().tags['respawn']) {
-      collider._respawn = true
+    if(agent.monsterEffect) {
+      console.log(agent.monsterEffectValue, agent.monsterEffect)
+      effects.processEffect({ effectName: agent.monsterEffect, effectValue: agent.monsterEffectValue }, collider, agent, null)
     } else {
-      collider._destroy= true
-      collider._destroyedById = agent.id
+      if(typeof collider.mod().spawnPointX == 'number' && collider.mod().tags['respawn']) {
+        collider._respawn = true
+      } else {
+        collider._destroy= true
+        collider._destroyedById = agent.id
+      }
     }
   }
 

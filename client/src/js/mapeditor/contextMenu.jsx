@@ -88,9 +88,17 @@ class contextMenuEl extends React.Component{
       }
 
       if(!MAPEDITOR.paused) {
-        // AUDIO.play(window.defaultAudioTheme.onPlayerUIMenuOpen, { volume: 0.6 })
-        this._openMenuWithEvent(e)
-        return false;
+        if(MAPEDITOR.objectLayers) {
+          // AUDIO.play(window.defaultAudioTheme.onPlayerUIMenuOpen, { volume: 0.6 })
+          this._setContextMenuSpecialItem('selectLayer', MAPEDITOR.objectLayers)
+          this._openMenuWithEvent(e)
+          return false;
+        } else {
+          // AUDIO.play(window.defaultAudioTheme.onPlayerUIMenuOpen, { volume: 0.6 })
+          this._openMenuWithEvent(e)
+          return false;
+        }
+
       }
     });
 
@@ -171,6 +179,16 @@ class contextMenuEl extends React.Component{
     this._toggleContextMenu('show')
   }
 
+  _handleSelectLayerClick = ({key}) => {
+    const data = JSON.parse(key)
+
+    this.setState({
+      objectSelected: OBJECTS.getObjectOrHeroById(data.id),
+      item: null,
+      specialItemType: null,
+    })
+  }
+
   _renderPlayerMenus() {
     const { objectSelected, subObjectSelected, subObjectSelectedName } = this.state;
 
@@ -189,6 +207,15 @@ class contextMenuEl extends React.Component{
 
   _renderAdminMenus() {
     const { objectSelected, subObjectSelected, subObjectSelectedName, specialItemType, item, libraryName, libraryId, creatorLibraryId, audioFileId, spriteData, textureIds } = this.state;
+
+    if(specialItemType === 'selectLayer') {
+      return <Menu onClick={this._handleSelectLayerClick}>
+        <MenuItem className="bold-menu-item dont-close-menu">Select Which</MenuItem>
+        {item.map((layer) => {
+          return <MenuItem key={JSON.stringify({action: 'select-layer', id: layer.id})}>{layer.name || layer.subObjectName || layer.id}</MenuItem>
+        })
+      }</Menu>
+    }
 
     if(specialItemType === 'sprite') {
       return <SpriteDataContextMenu

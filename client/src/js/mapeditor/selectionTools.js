@@ -56,18 +56,20 @@ function findSmallestObjectInArea(area, objects) {
     }
   })
 
-  let smallestObject
+  let smallestObject = []
   for(let i = 0; i < objectsToSearch.length; i++) {
-    let object = objectsToSearch[i]
+    let object = objectsToSearch[i].mod()
     if(object.tags && !window.isObjectSelectable(object)) continue
     if(object.constructParts) {
       objectsToSearch.push(...object.constructParts)
       continue
     }
     collisions.checkObject(area, object, () => {
-      if(!smallestObject) smallestObject = object
-      else if(object.mod().width < smallestObject.mod().width) {
-        smallestObject = object
+      if(!smallestObject.length) smallestObject = [object]
+      else if(object.width < smallestObject[0].width && object.height < smallestObject[0].height) {
+        smallestObject = [object]
+      } else if(object.width === smallestObject[0].width || object.height === smallestObject[0].height) {
+        smallestObject.push(object)
       }
     })
   }

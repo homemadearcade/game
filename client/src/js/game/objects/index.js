@@ -198,7 +198,9 @@ class Objects{
       lightOpacity: object.lightOpacity,
 
       sprites: object.sprites,
-      
+
+      _tempModOnMap: object._tempModOnMap,
+
       velocityInitial: object.velocityInitial,
       velocityDelta: object.velocityDelta,
       // velocityInitialXExtra: object.velocityInitialXExtra,
@@ -297,6 +299,10 @@ class Objects{
       fromCompendiumId: object.compendiumId,
 
       customProps: object.customProps,
+
+      monsterEffect: object.monsterEffect,
+      monsterEffectValue: object.monsterEffectValue,
+
     }
 
     if(object.subObjects) {

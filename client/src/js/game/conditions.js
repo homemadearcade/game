@@ -5,6 +5,7 @@ window.conditionTypes = {
   matchJSON: {
     JSON: true,
   },
+  //isOnMap?
   insideOfObjectTag: {
     tag: true,
     label: 'Tag:'
@@ -44,12 +45,6 @@ window.conditionTypes = {
     smallText: true,
     label: 'Sub Object Name:'
   },
-
-  // GIVE ID
-  // occursXTimes: {
-  //   number: true,
-  //   label: 'X amount'
-  // },
 
   onEvent: {
     // number: true,

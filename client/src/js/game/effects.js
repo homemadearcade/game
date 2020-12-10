@@ -266,6 +266,7 @@ import pathfinding from '../utils/pathfinding.js'
 
 // owner object is just for sequences
 function processEffect(effect, effected, effector, ownerObject) {
+  console.log(effect)
   const { effectName, effectValue, effectJSON } = effect
   if(effectName === 'mutate' && effectJSON) {
     OBJECTS.mergeWithJSON(effected, effectJSON)
@@ -497,6 +498,7 @@ function processEffect(effect, effected, effector, ownerObject) {
     startSequence(effect.effectSequenceId || effectValue, context)
   }
 
+  console.log(effect)
   if(effectName === 'startLocalSequence') {
     console.log(effected.sequences)
     if(!effected.sequences) return

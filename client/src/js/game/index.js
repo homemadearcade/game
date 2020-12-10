@@ -1254,11 +1254,16 @@ class Game{
       cached.y = object.y
     }
 
-    const activeMods = GAME.gameState.activeMods[object.id]
+    let activeMods = GAME.gameState.activeMods[object.id]
+    if(!activeMods) activeMods = []
 
-    if(!activeMods) {
+    if(object._tempModOnMap && !object.tags.subObject && !object.inInventory && !object.tags.potential && !object.isEquipped) {
+      activeMods.push({ effectJSON: object._tempModOnMap})
+    }
+
+    if(!activeMods.length) {
       return object
-    } else if(activeMods) {
+    } else if(activeMods.length) {
       const objectCopy = _.cloneDeep(object)
         //moddable propertys
         // tags: JSON.parse(JSON.stringify(object.tags)),

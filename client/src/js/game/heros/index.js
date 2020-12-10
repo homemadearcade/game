@@ -583,6 +583,9 @@ class Hero{
       pathfindingGridId: hero.pathfindingGridId,
 
       dialogueChoices: hero.dialogueChoices,
+
+      monsterEffect: hero.monsterEffect,
+      monsterEffectValue: hero.monsterEffectValue,
     }
 
     if(hero.subObjects) {

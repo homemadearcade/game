@@ -11,7 +11,7 @@ PIXEL EDITOR
 DETAIL VIEW
 
 SIMPLE SEQUENCE
-(ELEMENTAL SYSTEM) Lava, water, tree (?), fire, mountain, sand, ice, ROCK ( FIRST WEAPONS )-> Trees. ( ROBOT PARTS TOO)
+(ELEMENTAL SYSTEM and BIOMES) Lava, water, tree (?), fire, mountain, sand, ice, ROCK ( FIRST WEAPONS )-> Trees. ( ROBOT PARTS TOO)
 LEVEL UP SYSTEM
 
 LOBBY - HERO SELECTION + CUSTOMIZATION.
@@ -293,8 +293,6 @@ I need to feel like I have CONTROL over effects and causes, right now I feel lik
 // HOST GAME VS CLIENT GAME and their physics system, etc. right now non-hosts dont add subobjects for what reaason?? Its because adding aa sub object is quite complicated logic
 
 // event system main problem is the different between onDeleteObject and 'onDeletedObject', very important, causing many issues :(
-
-// allow pixi child sub object to go underneath their owner instead of always above, use tags please the whole time
 
 // event system for physics, game logic, rendering, network update, ui, seperating helps!
 

@@ -353,17 +353,20 @@ function prepareObjectsAndHerosForCollisionsPhase() {
       physicsObject.id = object.id
       physicsObject.gameObject = object
 
+      let width = object.mod().width
+      let height = object.mod().height
+
       if(object.mod().tags.rotateable) {
         if(object.angle === 0 || physicsObject._angle !== object.angle) {
-          physicsObject.setPoints([ [ -object.mod().width/2, -object.mod().height/2], [object.mod().width/2, -object.mod().height/2], [object.mod().width/2, object.mod().height/2] , [-object.mod().width/2, object.mod().height/2]])
+          physicsObject.setPoints([ [ -width/2, -height/2], [width/2, -height/2], [width/2, height/2] , [-width/2, height/2]])
         }
         physicsObject.angle = object.mod().angle
-        physicsObject.x = object.mod().x + object.mod().width/2
-        physicsObject.y = object.mod().y + object.mod().height/2
+        physicsObject.x = object.mod().x + width/2
+        physicsObject.y = object.mod().y + height/2
       } else {
         if(physicsObject.angle) physicsObject.angle = null
-        if(Math.floor(Math.abs(object.mod().width)) !== Math.floor(Math.abs(physicsObject._max_x - physicsObject._min_x)) || Math.floor(Math.abs(object.mod().height)) !== Math.floor(Math.abs(physicsObject._max_y - physicsObject._min_y))) {
-          physicsObject.setPoints([ [ 0, 0], [object.mod().width, 0], [object.mod().width, object.mod().height] , [0, object.mod().height]])
+        if(Math.floor(Math.abs(width)) !== Math.floor(Math.abs(physicsObject._max_x - physicsObject._min_x)) || Math.floor(Math.abs(height)) !== Math.floor(Math.abs(physicsObject._max_y - physicsObject._min_y))) {
+          physicsObject.setPoints([ [ 0, 0], [width, 0], [width, height] , [0, height]])
         }
       }
     }
