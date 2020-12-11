@@ -42,7 +42,7 @@ window.getGlobalName = async function() {
 window.getListOfAllSetsAndSequences = function() {
   const map = {}
   const sequenceItems = Object.keys(GAME.library.sequences).map((name) => GAME.library.sequences[name]).reduce((prev, next) => {
-    if(next.items)prev.push(...next.items)
+    if(next.items) prev.push(...next.items)
     return prev
   }, [])
   const items = [...GAME.objects, ...GAME.heroList, ...Object.keys(window.objectLibrary.addGameLibrary()).map((libraryName) => {
@@ -134,7 +134,7 @@ export default class DialogueSetMenu extends React.Component{
           objectSelected.heroDialogueSets = {}
         }
 
-        const name = window.getGlobalName()
+        const name = await window.getGlobalName()
 
         if(!name) return
 
@@ -215,7 +215,7 @@ export default class DialogueSetMenu extends React.Component{
       }
 
       if(data.action === "rename-set") {
-        const name = window.getGlobalName()
+        const name = await window.getGlobalName()
 
         const oldSet = objectSelected.heroDialogueSets[data.setName]
         objectSelected.heroDialogueSets[data.setName] = null

@@ -20,7 +20,6 @@ export default function onTalk(hero, collider, result, options) {
     hero._fireDialogueCompleteWithSpeakerId = true
     if(collider) {
       hero.dialogueId = collider.id
-      console.log(options.fromInteractButton, collider.tags.loopInteractionOnDialogueComplete)
       if(options.fromInteractButton && collider.tags.loopInteractionOnDialogueComplete) {
         hero._loopDialogue = true
       }
@@ -35,6 +34,7 @@ export default function onTalk(hero, collider, result, options) {
     GAME.addOrResetTimeout(hero.id+'.lastDialogueId', 3, () => {
       hero.lastDialogueId = null
     })
+
     window.emitGameEvent('onUpdatePlayerUI', hero)
   }
 }

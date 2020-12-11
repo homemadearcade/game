@@ -15,7 +15,7 @@ export default class Sequence extends React.Component{
           objectSelected.sequences = {}
         }
 
-        const name = window.getGlobalName()
+        const name = await window.getGlobalName()
 
         modals.openEditSequenceModal(name+'-'+objectSelected.id, (id) => {
           if(id.value && id.value != true) {
@@ -38,8 +38,8 @@ export default class Sequence extends React.Component{
       }
 
       if(data.action === "rename-set") {
-        const name = window.getGlobalName()
-        
+        const name = await window.getGlobalName()
+
         const oldSet = objectSelected.sequences[data.name]
         objectSelected.sequences[data.name] = null
         objectSelected.sequences[name] = oldSet

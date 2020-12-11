@@ -32,6 +32,8 @@ COMBAT + GOALS + QUESTS
 
 TODO RIGHT NOW
 
+Send the bullet out of the END of the wand
+
 Basically sprites should be able to be OVER TAGGED
 and object should be able to be UNDER TAGGED
 

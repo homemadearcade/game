@@ -274,7 +274,7 @@ window.local.on('onFirstPageGameLoaded', () => {
         pickupOnHeroInteract: true,
         equipOnPickup: true,
         stackable: true,
-        startsInInventory: true,
+        startsPickedUp: true,
         showCountInHUD: true,
         // popCount: true,
         // bomb: true,

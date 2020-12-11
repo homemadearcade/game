@@ -571,7 +571,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
 
     if((object.mod().tags['giveQuestOnHeroInteract'] && object.mod().tags['questGiver'])) return true
 
-    if(object.mod().tags['spawnOnHeroInteract'] && object.mod().tags.spawnZone) return true
+    if(object.mod().tags['spawnOnHeroInteract'] && object.mod().tags.spawnZone && object.spawnPool !== 0) return true
 
     if(object.mod().tags['updateHeroOnHeroInteract'] && object.mod().tags.heroUpdate) return true
 
@@ -579,7 +579,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
 
     if(object.mod().tags['pickupOnHeroInteract'] && object.mod().tags.pickupable) return true
 
-    if(object.mod().tags['spawnAllInHeroInventoryOnHeroInteract'] && object.mod().tags.spawnZone) return true
+    if(object.mod().tags['spawnAllInHeroInventoryOnHeroInteract'] && object.mod().tags.spawnZone && object.spawnPool !== 0) return true
 
     if(object.mod().tags['resourceWithdrawOnInteract'] && object.mod().tags.resourceZone) return true
 
@@ -1085,9 +1085,10 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
       }
     }
 
+    const isPotential = subObject.tags.potential
     if(!subObjectAlreadyExisted){
       owner.subObjects[subObjectName] = subObject
-      if(!subObject.tags.potential) PHYSICS.addObject(subObject)
+      if(!isPotential) PHYSICS.addObject(subObject)
 
       if(subObject.triggers) {
         Object.keys(subObject.triggers).forEach((triggerId) => {
@@ -1096,14 +1097,15 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
         })
       }
       if(GAME.gameState.started) window.emitGameEvent('onObjectAwake', subObject)
+
+      if(!subObject.inInventory && !isPotential && (subObject.tags.startsPickedUp || subObject.tags.startsEquipped || subObject.actionProps || subObject.tags.pickupable)) {
+        window.emitGameEvent('onHeroPickup', owner, subObject)
+        subObject.inInventory = true
+      }
     }
 
-    if(subObject.tags.startsEquipped) {
+    if(!isPotential && subObject.tags.startsEquipped) {
       equipSubObject(OBJECTS.getObjectOrHeroById(owner.id), subObject)
-    }
-
-    if(subObject.tags.startsInInventory || subObject.tags.startsEquipped || subObject.actionProps || subObject.tags.pickupable) {
-      subObject.inInventory = true
     }
   }
 

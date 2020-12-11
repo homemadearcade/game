@@ -28,10 +28,31 @@ export default class ObjectContextMenu extends React.Component{
   constructor(props) {
     super(props)
 
-    this._handleObjectMenuClick = ({ key }) => {
+    this._handleObjectMenuClick = async ({ key }) => {
       const { startResize, onStartDrag, deleteObject, onCopy } = MAPEDITOR
       const { selectSubObject, objectSelected, subObject } = this.props;
       const { removeObject } = MAPEDITOR
+
+      if(key === 'rename-sub-object') {
+        const owner = OBJECTS.getObjectOrHeroById(objectSelected.ownerId)
+        const { value: name } = await Swal.fire({
+          title: 'Rename sub object',
+          text: "What is the new name of this sub object?",
+          input: 'text',
+          inputAttributes: {
+            autocapitalize: 'off'
+          },
+          showCancelButton: true,
+          confirmButtonText: 'Next',
+        })
+
+        const oldName =  objectSelected.subObjectName
+        const copy = Object.replaceAll(owner, objectSelected.subObjectName, name, true , true)
+        if(copy.subObjects[oldName]) copy.subObjects[oldName] = null
+        if(copy.subObjectChances[oldName]) copy.subObjectChances[oldName] = null
+
+        MAPEDITOR.networkEditObject(owner, copy)
+      }
 
       if(key === 'copy-id') {
         PAGE.copyToClipBoard(objectSelected.id)
@@ -152,6 +173,7 @@ export default class ObjectContextMenu extends React.Component{
         <SubMenu title="Name">
           <NameMenu objectSelected={objectSelected} subObject={subObject}/>
         </SubMenu>
+        {subObject && <MenuItem key="rename-sub-object">Rename Sub Object</MenuItem>}
         <SubMenu title="Popover">
           <PopoverMenu objectSelected={objectSelected} subObject={subObject}/>
         </SubMenu>

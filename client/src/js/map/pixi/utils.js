@@ -256,7 +256,9 @@ function updateSprite(pixiChild, gameObject) {
   if(gameObject.tags.solidColor) {
     pixiChild.texture = PIXIMAP.textures['solidcolorsprite']
   } else {
-    if(gameObject.isEquipped && gameObject.sprites && gameObject.sprites.equipped) {
+    if(gameObject.sprites && gameObject.sprites.spawnPoolEmpty && gameObject.spawnPool == 0) {
+      gameObject.sprite = gameObject.sprites.spawnPoolEmpty
+    } else if(gameObject.isEquipped && gameObject.sprites && gameObject.sprites.equipped) {
       gameObject.sprite = gameObject.sprites.equipped
     } else if(gameObject.tags.inputDirectionSprites) {
       if(gameObject.inputDirection === 'right') {

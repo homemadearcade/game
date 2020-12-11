@@ -196,7 +196,7 @@ function setDefault() {
     // potential: false,
     stackable: false,
     // dropOnOwnerDestroyed: false,
-    startsInInventory: false,
+    startsPickedUp: false,
     startsEquipped: false,
     showCountInHUD: false,
   }

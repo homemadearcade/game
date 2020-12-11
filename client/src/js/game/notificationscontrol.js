@@ -9,6 +9,7 @@
 
 // notificationAllHeros,
 // notificationAllHerosInvolved,
+import onTalk from './heros/onTalk'
 
 function setHeroWalkingSound (hero) {
   if(hero.tags.walkRetro) {
@@ -343,6 +344,12 @@ class NotificationsControl{
   }
 
   onHeroPickup(hero, subObject) {
+    if(PAGE.role.isHost) {
+      if(subObject.heroDialogueSets && subObject.heroDialogueSets.pickup) {
+        // for game events you need to relookup the object because theres some sort of copy somewhere?
+        onTalk(OBJECTS.getObjectOrHeroById(hero.id), subObject, {}, { setName: 'pickup' })
+      }
+    }
     if(hero.id === HERO.id) {
       AUDIO.play(GAME.theme.audio.onHeroPickup)
     }

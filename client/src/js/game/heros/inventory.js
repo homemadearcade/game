@@ -1,5 +1,4 @@
 import gridUtil from '../../utils/grid.js'
-import onTalk from './onTalk'
 // import collisionsUtil from '../../utils/collisionsUtil.js'
 
 function getInventoryName(object) {
@@ -50,9 +49,6 @@ function pickupObject(hero, collider) {
   // window.local.emit('onHeroPickup', hero, subObject)
   delete subObject.subObjects
 
-  if(subObject.heroDialogueSets && subObject.heroDialogueSets.pickup) {
-    onTalk(hero, subObject, {}, { setName: 'pickup' })
-  }
   window.emitGameEvent('onHeroPickup', hero, subObject)
   window.local.emit('onAddSubObject', hero, subObject, subObject.subObjectName )
 }
@@ -189,7 +185,6 @@ function equipSubObject(hero, subObject, keyBinding = 'available') {
   // }
 
   subObject.isEquipped = true
-
   window.emitGameEvent('onHeroEquip', hero, subObject)
 }
 

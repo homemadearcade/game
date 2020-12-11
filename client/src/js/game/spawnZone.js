@@ -210,9 +210,8 @@ function spawnAllNow(spawningObject, spawnInto) {
   if(spawnInto) {
     spawnSubObjects.forEach((sso) => {
       sso = _.cloneDeep(sso.mod())
-      sso.inInventory = true
       sso.id = 'spawned-' + window.uniqueID()
-      sso.tags.potential = true
+      sso.tags.potential = false
       sso.tags.subObject = true
       window.local.emit('onAddSubObject', spawnInto, sso, sso.subObjectName)
     })
