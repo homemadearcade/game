@@ -2,8 +2,49 @@ import React from 'react'
 import Menu, { SubMenu, MenuItem } from 'rc-menu'
 import modals from '../modals.js'
 
+window.getGlobalName = async function() {
+  const list = window.getListOfAllSetsAndSequences()
+
+  list.unshift('New')
+
+  let { value: name } = await Swal.fire({
+    title: 'What is the name of this new dialogue set',
+    showClass: {
+      popup: 'animated fadeInDown faster'
+    },
+    hideClass: {
+      popup: 'animated fadeOutUp faster'
+    },
+    input: 'select',
+    inputOptions: list,
+    preConfirm: (result) => {
+      return list[result]
+    }
+  })
+
+  if(name === 'New') {
+    let { value: newName } = await Swal.fire({
+      title: 'Add Dialogue Set',
+      text: "What is the name of this dialogue set?",
+      input: 'text',
+      inputAttributes: {
+        autocapitalize: 'off'
+      },
+      showCancelButton: true,
+      confirmButtonText: 'Next',
+    })
+
+    return newName
+  }
+
+  return name
+}
 window.getListOfAllSetsAndSequences = function() {
   const map = {}
+  const sequenceItems = Object.keys(GAME.library.sequences).map((name) => GAME.library.sequences[name]).reduce((prev, next) => {
+    if(next.items)prev.push(...next.items)
+    return prev
+  }, [])
   const items = [...GAME.objects, ...GAME.heroList, ...Object.keys(window.objectLibrary.addGameLibrary()).map((libraryName) => {
     return window.objectLibrary.addGameLibrary()[libraryName]
   }), Object.keys(window.subObjectLibrary.addGameLibrary()).map((libraryName) => {
@@ -53,6 +94,14 @@ window.getListOfAllSetsAndSequences = function() {
       prev.push(next.monsterEffectValue)
     }
 
+    if(next.effectName === 'startLocalSequence' && next.effectValue) {
+      prev.push(next.effectSequenceId || next.effectValue)
+    }
+
+    if(next.effectName === 'dialogueSet' && next.effectValue) {
+      prev.push(next.effectValue)
+    }
+
     if(next.heroDialogueSet) {
       prev.push(next.heroDialogueSet)
     }
@@ -80,44 +129,12 @@ export default class DialogueSetMenu extends React.Component{
       const { objectSelected } = this.props
       const { networkEditObject } = MAPEDITOR
 
-
       if(key === "add-dialogue-set") {
         if(!objectSelected.heroDialogueSets) {
           objectSelected.heroDialogueSets = {}
         }
 
-        const list = window.getListOfAllSetsAndSequences()
-
-        list.unshift('New')
-
-        let { value: name } = await Swal.fire({
-          title: 'What is the name of this new dialogue set',
-          showClass: {
-            popup: 'animated fadeInDown faster'
-          },
-          hideClass: {
-            popup: 'animated fadeOutUp faster'
-          },
-          input: 'select',
-          inputOptions: list,
-          preConfirm: (result) => {
-            return list[result]
-          }
-        })
-
-        if(name === 'New') {
-          let { value: newName } = await Swal.fire({
-            title: 'Add Dialogue Set',
-            text: "What is the name of this dialogue set?",
-            input: 'text',
-            inputAttributes: {
-              autocapitalize: 'off'
-            },
-            showCancelButton: true,
-            confirmButtonText: 'Next',
-          })
-          name = newName
-        }
+        const name = window.getGlobalName()
 
         if(!name) return
 
@@ -198,16 +215,7 @@ export default class DialogueSetMenu extends React.Component{
       }
 
       if(data.action === "rename-set") {
-        const { value: name } = await Swal.fire({
-          title: 'Rename Dialogue Set',
-          text: "What is the new name?",
-          input: 'text',
-          inputAttributes: {
-            autocapitalize: 'off'
-          },
-          showCancelButton: true,
-          confirmButtonText: 'Ok',
-        })
+        const name = window.getGlobalName()
 
         const oldSet = objectSelected.heroDialogueSets[data.setName]
         objectSelected.heroDialogueSets[data.setName] = null
@@ -235,6 +243,7 @@ export default class DialogueSetMenu extends React.Component{
 
         const oldSet = objectSelected.heroDialogueSets[data.setName]
         objectSelected.heroDialogueSets[data.setName] = null
+        if(!objectSelected.sequences) objectSelected.sequences = {}
         objectSelected.sequences[data.setName] = id
 
         GAME.library.sequences[id] = {
@@ -289,7 +298,6 @@ export default class DialogueSetMenu extends React.Component{
     let heroDialogueSets = objectSelected.heroDialogueSets
     return <Menu onClick={this._handleDialogueSetMenuClick}>
       <MenuItem key="add-dialogue-set">Add Dialogue Set</MenuItem>
-      {objectSelected.heroDialogueSet && <MenuItem key="add-dialogue-set">Clear Dialogue Set</MenuItem>}
       {heroDialogueSets && Object.keys(heroDialogueSets).map((setName) => {
         if(!heroDialogueSets[setName]) return
         if(objectSelected.heroDialogueSet === setName) {

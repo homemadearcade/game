@@ -215,6 +215,8 @@ import pathfinding from '../utils/pathfinding.js'
     // 'questStart',
     // 'questComplete',
 
+    // 'mutateOwner'
+
     // 'increaseInputDirectionVelocity', <<--- better as tags probably
     // 'increaseMovementDirectionVelocity',
 
@@ -266,7 +268,6 @@ import pathfinding from '../utils/pathfinding.js'
 
 // owner object is just for sequences
 function processEffect(effect, effected, effector, ownerObject) {
-  console.log(effect)
   const { effectName, effectValue, effectJSON } = effect
   if(effectName === 'mutate' && effectJSON) {
     OBJECTS.mergeWithJSON(effected, effectJSON)
@@ -288,6 +289,10 @@ function processEffect(effect, effected, effector, ownerObject) {
   // }
 
   if(effectName === 'simpleDialogue') {
+    if(effected.ownerId) {
+      const owner = OBJECTS.getObjectOrHeroById(effected.ownerId)
+      effected = owner
+    }
     if(effected.tags.hero) {
       let newDialogue = {
         ...window.defaultDialogue,
@@ -321,6 +326,10 @@ function processEffect(effect, effected, effector, ownerObject) {
   }
 
   if(effectName === 'dialogue') {
+    if(effected.ownerId) {
+      const owner = OBJECTS.getObjectOrHeroById(effected.ownerId)
+      effected = owner
+    }
     if(effected.tags.hero && typeof effect.effectJSON !== 'string') {
       let newDialogue = _.cloneDeep(effect.effectJSON)
       if(effected.dialogue && effected.dialogue.length) {
@@ -350,6 +359,11 @@ function processEffect(effect, effected, effector, ownerObject) {
   }
 
   if(effectName === 'dialogueSet') {
+    console.log(effected, effector)
+    if(effected.ownerId) {
+      const owner = OBJECTS.getObjectOrHeroById(effected.ownerId)
+      effected = owner
+    }
     if(effected.tags.hero && effector.heroDialogueSets) {
       const dialogueSet = effector.heroDialogueSets[effectValue]
       if(!dialogueSet) return
@@ -498,9 +512,7 @@ function processEffect(effect, effected, effector, ownerObject) {
     startSequence(effect.effectSequenceId || effectValue, context)
   }
 
-  console.log(effect)
   if(effectName === 'startLocalSequence') {
-    console.log(effected.sequences)
     if(!effected.sequences) return
     const sequence = effected.sequences[effectValue]
     if(!sequence) return

@@ -15,38 +15,7 @@ export default class Sequence extends React.Component{
           objectSelected.sequences = {}
         }
 
-        const list = window.getListOfAllSetsAndSequences()
-
-        list.unshift('New')
-
-        let { value: name } = await Swal.fire({
-          title: 'What is the name of this new local sequence?',
-          showClass: {
-            popup: 'animated fadeInDown faster'
-          },
-          hideClass: {
-            popup: 'animated fadeOutUp faster'
-          },
-          input: 'select',
-          inputOptions: list,
-          preConfirm: (result) => {
-            return list[result]
-          }
-        })
-
-        if(name === 'New') {
-          let { value: newName } = await Swal.fire({
-            title: 'Add Dialogue Set',
-            text: "What is the name of this new local sequence?",
-            input: 'text',
-            inputAttributes: {
-              autocapitalize: 'off'
-            },
-            showCancelButton: true,
-            confirmButtonText: 'Next',
-          })
-          name = newName
-        }
+        const name = window.getGlobalName()
 
         modals.openEditSequenceModal(name+'-'+objectSelected.id, (id) => {
           if(id.value && id.value != true) {
@@ -69,17 +38,8 @@ export default class Sequence extends React.Component{
       }
 
       if(data.action === "rename-set") {
-        const { value: name } = await Swal.fire({
-          title: 'Rename Sequence',
-          text: "What is the new name?",
-          input: 'text',
-          inputAttributes: {
-            autocapitalize: 'off'
-          },
-          showCancelButton: true,
-          confirmButtonText: 'Ok',
-        })
-
+        const name = window.getGlobalName()
+        
         const oldSet = objectSelected.sequences[data.name]
         objectSelected.sequences[data.name] = null
         objectSelected.sequences[name] = oldSet

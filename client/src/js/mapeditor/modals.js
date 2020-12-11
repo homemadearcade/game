@@ -675,7 +675,7 @@ function openEditSequenceModal(id, cb) {
     html:`<div id='edit-sequence-container'></div>`,
     preConfirm: (result) => {
       ref.current.saveSequence()
-      return ref.current.getCurrentId()
+      return id
     }
   }).then(cb)
 

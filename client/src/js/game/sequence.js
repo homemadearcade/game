@@ -137,6 +137,9 @@ function processSequence(sequence) {
         effector = sequence.ownerObject
       } else if(item.effectorObject === 'mainObject') {
         effector = sequence.mainObject
+      // } else if(item.effectorObject === 'mainObjectOwner') {
+      //   effector = sequence.mainObject
+      //   const MOOwner = OBJECTS.getObjectOrHeroById()
       } else if(item.effectorObject === 'guestObject') {
         effector = sequence.guestObject
       } else if(item.effectorObject !== 'default') {
@@ -208,7 +211,7 @@ function processSequence(sequence) {
   if(item.sequenceType === 'sequenceWait') {
     item.waiting = true
     if(item.conditionType === 'onTimerEnd') {
-      sequence.currentTimerId = GAME.addTimeout(window.uniqueID(), item.conditionValue || 10, () => {
+      sequence.currentTimerId = GAME.addTimeout(window.uniqueID(), item.conditionNumber || 10, () => {
         item.waiting = false
         sequence.currentItemId = item.next
         sequence.currentTimerId = null

@@ -39,6 +39,8 @@ export default class LibraryObjectContextMenu extends React.Component{
           confirmButtonText: 'Next',
         })
 
+        if(!name) return
+
         GAME.library.creator[name] = {
           label: name,
           columnName: GAME.library.creator[libraryId].columnName,

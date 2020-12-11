@@ -453,7 +453,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
       actionState: object.actionState,
       actionButtonBehaviorLabel: object.actionButtonBehaviorLabel,
 
-      subObjectName: object.subObjectName
+      subObjectName: object.subObjectName,
     }
 
     if(object.subObjects) {
@@ -511,7 +511,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
         let choice = hero.mod().dialogueChoices[id]
         if(!choice || choice.triggerPool === 0) return
         choice.id = id
-        Object.keys(choice.tags).forEach((tag) => {
+        if(choice.tags) Object.keys(choice.tags).forEach((tag) => {
           if(addedDialogueChoice) return
           if(object.mod().tags[tag]) {
             addedDialogueChoice = true
@@ -530,7 +530,8 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
 
         if(addedDialogueChoice) return
 
-        let sequenceId = choice.sequenceId
+        let sequenceId = choice.guestSequenceId
+        console.log('??', choice, sequenceId, object.mod().sequences)
         if(sequenceId && object.mod().sequences[sequenceId]) {
           addedDialogueChoice = true
           interactions.push({text: choice.choiceText, dialogueChoice: choice})
@@ -550,7 +551,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
 
         // check if this trigger would fire..
         if(triggers.fireTrigger(trigger, object, hero, object, false)) {
-          if(trigger.eventName === 'onHeroInteract--integrated') {
+          if(trigger.eventName === 'onHeroInteract--integrated' && (trigger.triggerPool >= 0 || trigger.triggerPool == -1)) {
             interactions.push({text: id, interaction: 'integratedInteractEvent'})
           }
         }
@@ -565,7 +566,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
   }
 
 
-  isInteractable(object) {
+  isInteractable(hero, object) {
     if((object.mod().tags['completeQuestOnHeroInteract'] && object.mod().tags['questCompleter'])) return true
 
     if((object.mod().tags['giveQuestOnHeroInteract'] && object.mod().tags['questGiver'])) return true
@@ -585,6 +586,21 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
     if(object.mod().tags['resourceDepositOnInteract'] && object.mod().tags.resourceZone) return true
 
     if(object.mod().tags['interactable']) return true
+
+    if(object.triggers) {
+      let triggerFires
+      Object.keys(object.triggers).forEach((id) => {
+        let trigger = object.triggers[id]
+        if(!trigger) return
+        if(trigger.eventName === 'onHeroInteract--integrated' && (trigger.triggerPool >= 0 || trigger.triggerPool == -1)) {
+          // check if this trigger would fire..
+          if(triggers.fireTrigger(trigger, object, hero, object, false)) {
+            triggerFires = true
+          }
+        }
+      })
+      if(triggerFires) return true
+    }
 
     return false
   }

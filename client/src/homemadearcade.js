@@ -95,7 +95,7 @@ UX UPGRADE
 right click creator service - add to heros guidance? NOT BAD!
 Simple Context Menu for items with certain descriptors, cuz right now this shit is off the hook w too many options
 suggestedContextMenu items is the key...
-If two objects are highlighted on top of each other, select which one
+Pinch hitter - Transform To…
 
 ////////////////////////////////
 ////////////////////////////////
@@ -185,9 +185,13 @@ and randomize perhaps the camera filter!! <--- yes on camera filter and also don
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ////////////////////////////////////////////////////
 
-Sub objects not visible sometimes to non-host in ha-random?
+NON host
+Popover text remove after NOT destroyed for yellow
+White flash did not reset
+Added/removed sub Objects?? DO not change via map state?
+--
 
-non host player was shooting x2?
+Trigger pool not getting reset?
 
 YOU CANNOT MOD DIALOGUE OR ANY ARRAYS
 heroDialogue is an array, what else is?
