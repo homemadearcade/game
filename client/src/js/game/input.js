@@ -265,6 +265,7 @@ function handleActionButtonBehavior(hero, action, delta) {
   }
 
   if(action === 'swing' && !delta) {
+    if(!GAME.gameState.started) return
     actionFired = true
     if(subObject) {
       swingBlade({direction: hero.inputDirection, swinger: subObject, actionProps: subObject.actionProps })

@@ -97,7 +97,7 @@ const updatePixiObject = (gameObject) => {
 
   if(PIXIMAP.followingAnimations[gameObject.id]) {
     PIXIMAP.followingAnimations[gameObject.id].forEach((sprite) => {
-      updatePixiSpriteAnimation(sprite, gameObject)
+      PIXIMAP.updatePixiSpriteAnimation(sprite, gameObject)
     })
   }
 
@@ -151,23 +151,6 @@ function initPixiLight(sprite, gameObject, stage) {
   lightbulb2.filters = [new PIXI.filters.BlurFilter(120)];
   sprite.darkArealight = stage.addChild(lightbulb2)
   lightbulb2._scaleMode = PIXI.SCALE_MODES.NEAREST
-}
-
-
-function updatePixiSpriteAnimation(sprite, gameObject) {
-  const animationData = window.spriteAnimationLibrary.addGameLibrary()[sprite.animationName]
-
-  if(animationData.correctiveAngle) {
-    updatePosition(sprite, {...gameObject, angle: gameObject.angle += animationData.correctiveAngle})
-  } else {
-    updatePosition(sprite, gameObject)
-  }
-
-  if(animationData.scale) {
-    updateScale(sprite, {...gameObject, width: gameObject.width * animationData.scale, height: gameObject.height * animationData.scale})
-  } else {
-    updateScale(sprite, gameObject)
-  }
 }
 
 const updatePixiEmitter = (pixiChild, gameObject) => {
@@ -506,5 +489,5 @@ export {
   updatePixiEmitter,
   initPixiObject,
   updatePixiObject,
-  initEmitter,
+  initEmitter
 }

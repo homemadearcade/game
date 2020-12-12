@@ -3,7 +3,6 @@ import effects from '../effects'
 export default function onObjectCollide(agent, collider, result) {
   if(agent.mod().tags['monsterDestroyer'] && collider.mod().tags['monster']) {
     if(agent.monsterEffect) {
-      console.log(agent.monsterEffectValue, agent.monsterEffect)
       effects.processEffect({ effectName: agent.monsterEffect, effectValue: agent.monsterEffectValue }, collider, agent, null)
     } else {
       if(typeof collider.mod().spawnPointX == 'number' && collider.mod().tags['respawn']) {

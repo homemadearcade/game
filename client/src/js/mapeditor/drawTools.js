@@ -150,7 +150,6 @@ function drawObject(ctx, object, camera, options = {showInvisible: false, stroke
     camera = {...camera, x: 0, y: 0}
   }
 
-
   if(object.tags && (object.tags.invisible)) {
    if(options.showInvisible) {
      ctx.globalAlpha = 0.2;

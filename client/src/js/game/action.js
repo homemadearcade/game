@@ -1,10 +1,11 @@
 import collisionsUtil from '../utils/collisions.js'
 import { dropObject } from './heros/inventory.js'
+import onObjectCollide from './objects/onObjectCollide';
 
 function swingBlade({ swinger, animationArea, hitBoxes, direction }) {
   let baseHitBox
 
-  if(swinger.angle) {
+  if(typeof swinger.angle === 'number') {
 
     const heightRotated = (swinger.height/2) * -1
     const widthRotated = (swinger.width/2) * -1
@@ -52,7 +53,16 @@ function swingBlade({ swinger, animationArea, hitBoxes, direction }) {
     obstacle: true,
     moving: false,
     rotateable: true,
+    monsterDestroyer: true,
   }
+
+  setTimeout(() => {
+    if(GAME.objectsByTag['monster']) {
+      collisionsUtil.check(baseHitBox, GAME.objectsByTag['monster'], (object) => {
+        onObjectCollide(baseHitBox, object)
+      })
+    }
+  }, 100)
 
   window.emitGameEvent('onSpriteAnimation', baseHitBox, 'sword1', { followObject: true })
 }

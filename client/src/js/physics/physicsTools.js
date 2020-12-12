@@ -605,46 +605,50 @@ function rotatePoint(point, center, radian){
     return {rotatedX, rotatedY}
 }
 
-function attachSubObjects(owner, subObjects) {
-  OBJECTS.forAllSubObjects(subObjects, (subObject) => {
-    if(subObject.relativeWidth) subObject.width = owner.mod().width + (subObject.relativeWidth)
-    if(subObject.relativeHeight) subObject.height = owner.mod().height + (subObject.relativeHeight)
+function relativePositioning(owner, subObject) {
+  if(subObject.relativeWidth) subObject.width = owner.mod().width + (subObject.relativeWidth)
+  if(subObject.relativeHeight) subObject.height = owner.mod().height + (subObject.relativeHeight)
 
-    if(subObject.mod().tags.rotateable && (subObject.mod().tags.relativeToDirection || subObject.mod().tags.relativeToAngle)) {
-      const direction = owner.inputDirection || owner._movementDirection
+  if(subObject.mod().tags.rotateable && (subObject.mod().tags.relativeToDirection || subObject.mod().tags.relativeToAngle)) {
+    const direction = owner.inputDirection || owner._movementDirection
 
-      let radians = 0
+    let radians = 0
 
-      if(subObject.mod().tags.relativeToAngle && owner.mod().tags.rotateable) {
-        radians = owner.angle
-      } else if(subObject.mod().tags.relativeToDirection) {
-        if(direction === 'right') {
-          radians = degreesToRadians(90)
-        }
-
-        // down
-        if(direction === 'down') {
-          radians = degreesToRadians(180)
-        }
-
-        // left
-        if(direction === 'left') {
-          radians = degreesToRadians(270)
-        }
+    if(subObject.mod().tags.relativeToAngle && owner.mod().tags.rotateable) {
+      radians = owner.angle
+    } else if(subObject.mod().tags.relativeToDirection) {
+      if(direction === 'right') {
+        radians = degreesToRadians(90)
       }
 
+      // down
+      if(direction === 'down') {
+        radians = degreesToRadians(180)
+      }
 
-      var rotatedRelativeX = Math.cos(radians) * (subObject.mod().relativeX) - Math.sin(radians) * (subObject.mod().relativeY);
-      var rotatedRelativeY = Math.sin(radians) * (subObject.mod().relativeX) + Math.cos(radians) * (subObject.mod().relativeY);
-
-      subObject.x = owner.x + owner.mod().width/2 + rotatedRelativeX - subObject.mod().width/2
-      subObject.y = owner.y + owner.mod().height/2 + rotatedRelativeY - subObject.mod().height/2
-
-      subObject.angle = radians
-    } else {
-      if(typeof subObject.mod().relativeX === 'number') subObject.x = owner.x + owner.mod().width/2 + subObject.mod().relativeX - subObject.mod().width/2
-      if(typeof subObject.mod().relativeY === 'number') subObject.y = owner.y + owner.mod().height/2 + subObject.mod().relativeY - subObject.mod().height/2
+      // left
+      if(direction === 'left') {
+        radians = degreesToRadians(270)
+      }
     }
+
+
+    var rotatedRelativeX = Math.cos(radians) * (subObject.mod().relativeX) - Math.sin(radians) * (subObject.mod().relativeY);
+    var rotatedRelativeY = Math.sin(radians) * (subObject.mod().relativeX) + Math.cos(radians) * (subObject.mod().relativeY);
+
+    subObject.x = owner.x + owner.mod().width/2 + rotatedRelativeX - subObject.mod().width/2
+    subObject.y = owner.y + owner.mod().height/2 + rotatedRelativeY - subObject.mod().height/2
+
+    subObject.angle = radians
+  } else {
+    if(typeof subObject.mod().relativeX === 'number') subObject.x = owner.x + owner.mod().width/2 + subObject.mod().relativeX - subObject.mod().width/2
+    if(typeof subObject.mod().relativeY === 'number') subObject.y = owner.y + owner.mod().height/2 + subObject.mod().relativeY - subObject.mod().height/2
+  }
+}
+
+function attachSubObjects(owner, subObjects) {
+  OBJECTS.forAllSubObjects(subObjects, (subObject) => {
+    relativePositioning(owner, subObject)
   })
 }
 
@@ -751,4 +755,5 @@ export {
   objectCollisionEffects,
   containObjectWithinGridBoundaries,
   shouldCheckConstructPart,
+  relativePositioning,
 }

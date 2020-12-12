@@ -59,7 +59,7 @@ export default class ObjectContextMenu extends React.Component{
       }
 
       if(key === 'resize') {
-        if(subObject) {
+        if(subObject || objectSelected.tags.subObject) {
           startResize(objectSelected, { snapToGrid: false })
         } else {
           startResize(objectSelected)
@@ -162,11 +162,11 @@ export default class ObjectContextMenu extends React.Component{
         {(!objectSelected.constructParts || objectSelected.tags.maze) && !objectSelected.pathParts && <MenuItem key="resize">Resize</MenuItem>}
         {subObject && <MenuItem key="resize-grid">Resize On Grid</MenuItem>}
         {!subObject && <MenuItem key="copy">Duplicate</MenuItem>}
-      </SubMenu>
-      <SubMenu title='Infographical'>
         {(objectSelected.ownerId || objectSelected.relativeId) && <SubMenu title="Relative">
           <RelativeMenu objectSelected={objectSelected} subObject={subObject}/>
         </SubMenu>}
+      </SubMenu>
+      <SubMenu title='Infographical'>
         <SubMenu title="Color">
           <ColorMenu objectSelected={objectSelected} openColorPicker={this.props.openColorPicker} subObject={subObject}></ColorMenu>
         </SubMenu>

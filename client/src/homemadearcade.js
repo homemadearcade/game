@@ -249,7 +249,6 @@ LIBRARY IDEAS
   Particles being sucked into the player ( POWER!!! )
 
 // ANIMATIONS
-pixiMap.animation vs pixMap.quickSprite
 Hero standing animation
 Pulsing size and rotating
 Glow Mod ( using Lights)

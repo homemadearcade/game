@@ -21,6 +21,7 @@ import {
   containObjectWithinGridBoundaries,
   shouldCheckConstructPart,
   applyCorrection,
+  relativePositioning
 } from './physicsTools.js'
 
 const objects = {}
@@ -38,7 +39,8 @@ window.PHYSICS = {
   prepareObjectsAndHerosForCollisionsPhase,
   updatePosition,
   postPhysics,
-  draw: drawSystem
+  draw: drawSystem,
+  relativePositioning,
 }
 
 let cameraSet = false
@@ -706,6 +708,8 @@ function processObjectRemoval(object) {
       if(part._destroy) {
         part._remove = true
         part._destroy = null
+        part._destroyedById = null
+        window.emitGameEvent('onObjectDestroyed', part, OBJECTS.getObjectOrHeroById(part._destroyedById))
       }
 
       if(part._remove) {

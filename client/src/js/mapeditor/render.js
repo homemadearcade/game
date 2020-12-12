@@ -28,12 +28,12 @@ function update() {
     [...GAME.heroList, ...GAME.objects].forEach((object) => {
       if(object.tags.removed) return
       if(object.defaultSprite == 'invisible' || object.tags.invisible || object.tags.hidden || object.opacity == 0) {
-        drawTools.drawObject(ctx, {...object, tags: {invisible: false, outline: true }, color: 'rgba(255,255,255,1)'}, camera)
+        drawTools.drawObject(ctx, {...object, tags: {  ...object.tags, invisible: false, outline: true }, color: 'rgba(255,255,255,1)'}, camera)
       }
       if(PAGE.role.isAdmin && object.subObjects && EDITOR.preferences.selectable.subObjects) {
         Object.keys(object.subObjects).forEach((soName) => {
           const so = object.subObjects[soName]
-          drawTools.drawObject(ctx, {...so, tags: {invisible: false, outline: true }, color: 'rgba(255,255,255,1)'}, camera)
+          drawTools.drawObject(ctx, {...so, tags: { ...object.tags, invisible: false, outline: true }, color: 'rgba(255,255,255,1)'}, camera)
         })
       }
     })

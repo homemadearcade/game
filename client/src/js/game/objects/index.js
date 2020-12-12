@@ -1513,6 +1513,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
   }
 
   onObjectDestroyed(object) {
+    if(!object.mod().tags) return console.log('yeah it didnt have tags for a construct part')
     if(object.mod().tags.explodeOnDestroy) {
       window.local.emit('onObjectAnimation', 'explode', object.id)
     }

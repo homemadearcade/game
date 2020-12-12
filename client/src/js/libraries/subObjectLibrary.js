@@ -2,11 +2,15 @@ window.radianCircle = 6.28319
 
 window.local.on('onFirstPageGameLoaded', () => {
   window.subObjectLibrary = {
-    sword: {
+    smallSword: {
+      "relativeX": -0.5714285714286689,
+      "relativeY": -30.28571646554127,
+      "width": 31.42857142857156,
+      "height": 16.571428571428555,
       x: 0, y: 0, width: 32, height: 32,
         // x: 0, y: 0, width: 40, height: 40,
-        relativeX: 0,
-        relativeY: 0,
+        "relativeX": 0,
+      	"relativeY": -17,
         relativeWidth: 0,
         relativeHeight: 0,
       // opacity: 1,
@@ -14,7 +18,21 @@ window.local.on('onFirstPageGameLoaded', () => {
       subObjectName: 'sword',
       actionButtonBehavior: 'swing',
       actionProps: {
-
+        debounceTime: 1,
+      },
+      tags: { rotateable: true, relativeToAngle: true, relativeToDirection: true, pickupable: true, pickupOnHeroInteract: true, equipOnPickup: true, onMapWhenEquipped: false, invisible: true },
+    },
+    sword: {
+      "relativeX": 0.5714285714284415,
+      "relativeY": -32.368877602421435,
+      "width": 83.42857142857179,
+      "height": 29.14285714285711,
+      // opacity: 1,
+      name: 'Sword',
+      subObjectName: 'sword',
+      actionButtonBehavior: 'swing',
+      actionProps: {
+        debounceTime: 1,
       },
       tags: { rotateable: true, relativeToAngle: true, relativeToDirection: true, pickupable: true, pickupOnHeroInteract: true, equipOnPickup: true, onMapWhenEquipped: false, invisible: true },
     },
