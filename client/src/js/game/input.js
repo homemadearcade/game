@@ -1,6 +1,6 @@
 import keycode from 'keycode'
 import { onHeroTrigger } from './heros/onHeroTrigger'
-import { shootBullet, dropAndModify, closestObjectBehavior } from './action.js';
+import { shootBullet, swingBlade, dropAndModify, closestObjectBehavior } from './action.js';
 
 window.defaultWASD =  {
   w: 'Move Up',
@@ -92,6 +92,7 @@ function setDefault() {
   window.actionButtonBehavior = {
     'dropWall': 'Drop Wall',
     'shoot': 'Shoot Bullet',
+    'swing': 'Swing Weapon',
     'accelerate': 'Accelerate',
     'accelerateBackwards': 'Go Backwards',
     'deccelerateToZero': 'Slow Down',
@@ -260,6 +261,19 @@ function handleActionButtonBehavior(hero, action, delta) {
         tags: { monsterDestroyer: true, moving: true }
       }})
       window.emitGameEvent('onHeroShootBullet', hero)
+    }
+  }
+
+  if(action === 'swing' && !delta) {
+    actionFired = true
+    if(subObject) {
+      swingBlade({direction: hero.inputDirection, swinger: subObject, actionProps: subObject.actionProps })
+      window.emitGameEvent('onHeroSwingBlade', hero, subObject)
+    } else {
+      swingBlade({direction: hero.inputDirection, swinger: hero, actionProps: {
+        tags: { monsterDestroyer: true, moving: true }
+      }})
+      window.emitGameEvent('onHeroSwingBlade', hero)
     }
   }
 

@@ -601,6 +601,10 @@ function socketEvents(fs, io, socket, options = { arcadeMode: false }){
   socket.on('updateTheme', (updatedTheme) => {
     io.emit('onUpdateTheme', updatedTheme)
   })
+
+  socket.on('spriteAnimation', (object, animationName, options) => {
+    io.emit('onSpriteAnimation', object, animationName, options)
+  })
 }
 
 module.exports = socketEvents

@@ -3,6 +3,7 @@ import { updatePixiObject, initPixiObject, initEmitter, updatePixiEmitter } from
 import { initPixiApp } from './app'
 import gridUtil from '../../utils/grid'
 import collisionsUtil from '../../utils/collisions'
+import './animations.js';
 
 import * as PIXI from 'pixi.js'
 import { GlowFilter, OutlineFilter, GodrayFilter, EmbossFilter, ReflectionFilter, ShockwaveFilter } from 'pixi-filters'
@@ -16,7 +17,11 @@ window.PIXIMAP = {
   app: null,
   stage: null,
   childrenById: {},
+  animations: [],
+  emitters: [],
+  followingAnimations: {}
 }
+
 
 PIXIMAP.onResetLiveParticle = function(objectId) {
   let object = OBJECTS.getObjectOrHeroById(objectId)

@@ -40,6 +40,7 @@ class Game{
     this.library = {
       branches: {},
       animations: {},
+      spriteAnimations: {},
       tags: {},
       images: {},
       tags: {},

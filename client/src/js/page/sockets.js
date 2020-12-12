@@ -455,6 +455,10 @@ function init() {
   window.socket.on('onPlaySoundAsType', (id, type) => {
     window.local.emit('onPlaySoundAsType', id, type)
   })
+
+  window.socket.on('onSpriteAnimation', (object, animationName, options) => {
+    window.local.emit('onSpriteAnimation', object, animationName, options)
+  })
 }
 
 export default {

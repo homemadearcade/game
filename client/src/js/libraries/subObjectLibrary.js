@@ -2,6 +2,22 @@ window.radianCircle = 6.28319
 
 window.local.on('onFirstPageGameLoaded', () => {
   window.subObjectLibrary = {
+    sword: {
+      x: 0, y: 0, width: 32, height: 32,
+        // x: 0, y: 0, width: 40, height: 40,
+        relativeX: 0,
+        relativeY: 0,
+        relativeWidth: 0,
+        relativeHeight: 0,
+      // opacity: 1,
+      name: 'Sword',
+      subObjectName: 'sword',
+      actionButtonBehavior: 'swing',
+      actionProps: {
+
+      },
+      tags: { rotateable: true, relativeToAngle: true, relativeToDirection: true, pickupable: true, pickupOnHeroInteract: true, equipOnPickup: true, onMapWhenEquipped: false, invisible: true },
+    },
     spear: {
       x: 0, y: 0, width: 6, height: 30,
         // x: 0, y: 0, width: 40, height: 40,

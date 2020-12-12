@@ -17,6 +17,8 @@
     // 'kenney-racing-stadium': true,
     'lordofthebling-1-16px': true,
 
+    'timefantasy-animations': true,
+
     // 'oryx-24px-scifi-environment': true,
     // 'oryx-24px-scifi-transports': true,
     // 'oryx-24px-scifi-characters': true,

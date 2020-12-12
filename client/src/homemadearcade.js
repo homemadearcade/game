@@ -32,8 +32,6 @@ COMBAT + GOALS + QUESTS
 
 TODO RIGHT NOW
 
-Send the bullet out of the END of the wand
-
 Basically sprites should be able to be OVER TAGGED
 and object should be able to be UNDER TAGGED
 
@@ -187,6 +185,8 @@ and randomize perhaps the camera filter!! <--- yes on camera filter and also don
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ////////////////////////////////////////////////////
 
+remove emitter /1000 thing.. in pixi map app
+
 NON host
 Popover text remove after NOT destroyed for yellow
 White flash did not reset
@@ -321,6 +321,9 @@ Maybe dual stick shooter potential?
 
   THIS IS FOR GENERATING SPRITESHEET JSON
   https://www.leshylabs.com/apps/sstool/
+
+  EXTRA SPRITES REMOVE BG
+  ImageMagick + http://www.imagemagick.org/discourse-server/viewtopic.php?t=29224
 
   BETTER LOCAL STORAGE
   https://github.com/brianleroux/lawnchair

@@ -250,6 +250,14 @@ function onFirstPageGameLoaded() {
       libraryId:'snake',
       ...toggleMod('snake')
     },
+    sword: {
+      label: 'Sword',
+      columnName: 'Equip',
+      toggleId: 'sword',
+      libraryName:'subObjectLibrary',
+      libraryId:'sword',
+      ...toggleSubObject('sword')
+    },
     spear: {
       label: 'Spear',
       columnName: 'Equip',
@@ -472,6 +480,7 @@ function onFirstPageGameLoaded() {
     ufo: true,
     kirby: true,
     snake: true,
+    sword: true,
     spear: true,
     spearToggleable: true,
     spearDialogueChoice: true,

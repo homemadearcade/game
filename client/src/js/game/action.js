@@ -1,6 +1,62 @@
 import collisionsUtil from '../utils/collisions.js'
 import { dropObject } from './heros/inventory.js'
 
+function swingBlade({ swinger, animationArea, hitBoxes, direction }) {
+  let baseHitBox
+
+  if(swinger.angle) {
+
+    const heightRotated = (swinger.height/2) * -1
+    const widthRotated = (swinger.width/2) * -1
+
+    // I dont know why I add the width in here again * 2
+    //I used to add this to the width when it wasnt following... + swinger.width/2
+    var rotatedRelativeX = Math.cos(swinger.angle) * ((widthRotated)) - Math.sin(swinger.angle) * (heightRotated);
+    var rotatedRelativeY = Math.sin(swinger.angle) * ((widthRotated)) + Math.cos(swinger.angle) * (heightRotated);
+
+    baseHitBox = {
+      x: swinger.x + rotatedRelativeX,
+      y: swinger.y + rotatedRelativeY,
+      angle: swinger.angle
+    }
+  } else if(direction === 'up') {
+    baseHitBox = {
+      x: swinger.x + (swinger.width/2),
+      y: swinger.y,
+      angle: 0,
+    }
+  } else if(direction === 'down') {
+    baseHitBox = {
+      x: swinger.x + (swinger.width/2),
+      y: swinger.y + swinger.height,
+      angle: 1.5708 * 2,
+    }
+  } else if(direction === 'right') {
+    baseHitBox = {
+      x: swinger.x + swinger.width,
+      y: swinger.y + (swinger.height/2),
+      angle: 1.5708 * 1,
+    }
+  } else if(direction === 'left') {
+    baseHitBox = {
+      x: swinger.x,
+      y: swinger.y + (swinger.height/2),
+      angle: 1.5708 * 3,
+    }
+  }
+
+  baseHitBox.id = swinger.id
+  baseHitBox.width = swinger.width;
+  baseHitBox.height = swinger.height;
+  baseHitBox.tags = {
+    obstacle: true,
+    moving: false,
+    rotateable: true,
+  }
+
+  window.emitGameEvent('onSpriteAnimation', baseHitBox, 'sword1', { followObject: true })
+}
+
 function closestObjectBehavior({ shooter, actionProps, direction, behavior, delta }) {
   const closestObject = collisionsUtil.getClosestObjectInDirection(
     shooter,
@@ -235,5 +291,6 @@ function dropAndModify({ dropper, dropping, actionProps, direction }) {
 export {
   shootBullet,
   dropAndModify,
-  closestObjectBehavior
+  closestObjectBehavior,
+  swingBlade,
 }

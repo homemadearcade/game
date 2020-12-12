@@ -438,6 +438,7 @@ import './js/libraries/objectLibrary.js'
 import './js/libraries/heroLibrary.js'
 import './js/libraries/spriteSheetLibrary.js'
 import './js/libraries/dialogueChoiceLibrary.js'
+import './js/libraries/spriteAnimationLibrary.js'
 
 // Broadcast that you're opening a page.
 let otherPageOpen = false

@@ -95,6 +95,12 @@ const updatePixiObject = (gameObject) => {
     updatePixiEmitter(pixiChild.laserEmitter, gameObject)
   }
 
+  if(PIXIMAP.followingAnimations[gameObject.id]) {
+    PIXIMAP.followingAnimations[gameObject.id].forEach((sprite) => {
+      updatePixiSpriteAnimation(sprite, gameObject)
+    })
+  }
+
   if(pixiChild.poweredUpEmitter && gameObject.tags.poweredUp) {
     updatePixiEmitter(pixiChild.poweredUpEmitter, gameObject)
   }
@@ -147,6 +153,22 @@ function initPixiLight(sprite, gameObject, stage) {
   lightbulb2._scaleMode = PIXI.SCALE_MODES.NEAREST
 }
 
+
+function updatePixiSpriteAnimation(sprite, gameObject) {
+  const animationData = window.spriteAnimationLibrary.addGameLibrary()[sprite.animationName]
+
+  if(animationData.correctiveAngle) {
+    updatePosition(sprite, {...gameObject, angle: gameObject.angle += animationData.correctiveAngle})
+  } else {
+    updatePosition(sprite, gameObject)
+  }
+
+  if(animationData.scale) {
+    updateScale(sprite, {...gameObject, width: gameObject.width * animationData.scale, height: gameObject.height * animationData.scale})
+  } else {
+    updateScale(sprite, gameObject)
+  }
+}
 
 const updatePixiEmitter = (pixiChild, gameObject) => {
   /////////////////////
@@ -258,7 +280,7 @@ function initEmitter(gameObject, emitterType = 'smallFire', options = {}, metaOp
   stage.addChild(container)
 
   let emitter = createDefaultEmitter(container, gameObject, emitterType, options)
-  PIXIMAP.objectStage.emitters.push(emitter)
+  PIXIMAP.emitters.push(emitter)
   // container.parentGroup = PixiLights.diffuseGroup
 
   if(metaOptions.hasNoOwner) container.name = gameObject.id
