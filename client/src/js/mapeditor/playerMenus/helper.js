@@ -29,6 +29,18 @@ export async function handleExtraMenuClicks(key, objectSelected, openColorPicker
       })
     }
 
+    if(key === 'open-tag-search-modal') {
+      Object.keys(objectSelected.tags).forEach((tag) => {
+        if(!objectSelected.tags[tag]) delete objectSelected.tags[tag]
+      })
+      modals.openEditTagsModal(objectSelected.tags || {}, ({value}) => {
+        if(value) {
+          networkEditObject(objectSelected, {tags: value})
+        }
+      })
+      return
+    }
+
     if(key === 'open-live-particle') {
       LIVEEDITOR.open(objectSelected, 'particle')
     }

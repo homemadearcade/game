@@ -262,22 +262,24 @@ export default class GeneratedMenu extends React.Component {
           <SubMenu title="Current Tags">
           <CurrentTagsMenu objectSelected={objectSelected} currentTags={objectSelected.tags}></CurrentTagsMenu>
         </SubMenu>
-        <MenuItem key="edit-descriptors">Edit Descriptors</MenuItem>
         {objectSelected.tags.talker && <SubMenu title="Dialogue Sets">
           <DialogueSetsMenu objectSelected={objectSelected} subObject={subObject}/>
         </SubMenu>}
         {this._renderObjectSpawnZoneMenu()}
         {this._renderObjectResourceZoneMenu()}
+        {<MenuItem key="edit-all-json">Edit JSON</MenuItem>}
+        <MenuItem key="edit-descriptors">Edit Descriptors</MenuItem>
+        <MenuItem key="open-tag-search-modal">Edit Tags</MenuItem>
         {objectSelected.tags.emitter && <MenuItem key="open-live-particle">Edit Emitter</MenuItem>}
         {objectSelected.tags.moving && <MenuItem key="open-live-physics">Edit Physics</MenuItem>}
         {objectSelected.tags.light && <MenuItem key="open-live-light">Edit Light</MenuItem>}
         {objectSelected.tags.path && <MenuItem key="open-path-editor">Open Path Editor</MenuItem>}
         {!isInvisible && <MenuItem key="open-construct-editor">Open Construct Editor</MenuItem>}
+        <MenuItem className='dont-close-menu' key="open-advanced-menu">Open Advanced Menu</MenuItem>
         { subObject && !objectSelected.isEquipped && objectSelected.actionButtonBehavior && <MenuItem key="equip">Equip</MenuItem> }
         { subObject && objectSelected.isEquipped && <MenuItem key="unequip">Unequip</MenuItem> }
         { subObject && objectSelected.tags.pickupable && <MenuItem key="drop">Drop</MenuItem> }
         { (GAME.gameState.started || GAME.gameState.branch) ? <MenuItem key="remove">Remove</MenuItem> : <MenuItem key="delete">Delete</MenuItem> }
-        <MenuItem className='dont-close-menu' key="open-advanced-menu">Open Advanced Menu</MenuItem>
       </Menu>
     }
   }
