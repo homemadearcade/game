@@ -114,7 +114,7 @@ export default class EditorActionMenu extends React.Component{
         })
         if(!name) return
 
-        window.socket.emit('updateLibrary', { object: {...GAME.library.objects, [name]: OBJECTS.getProperties(objectSelected)} })
+        window.socket.emit('updateLibrary', { object: {...GAME.library.object, [name]: OBJECTS.getProperties(objectSelected)} })
       }
 
       if (key === "add-to-subobject-library") {

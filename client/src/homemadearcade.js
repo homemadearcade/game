@@ -8,8 +8,7 @@ CASUAL WORK
 Make a particle effect - see list
 Add a sprite sheet
 Organize Audio files ( on Mac )
-relatedTags:[],
-suggestedContextMenus: [] <--- omfg.. this is how I get the generator menu in there..
+relatedTags in descriptors
 tagDescriptions
 
 -----
@@ -46,7 +45,7 @@ Home made arcade music
 
 If an array changes we need to send the whole thing in the DIFF
 
-Create new descriptor tag in sprite editor, it just adds the descriptor to the sprite but
+Create new descriptor tag in sprite editor, it just adds the descriptor to the sprite
 
 update prologue to incorporate new flow. Draw -> Describe -> Dialogue -> Decide Themes
 
@@ -61,15 +60,12 @@ STORY - Fade in/out to game (we will probably use this in HA opening animations.
 COMPENDIUM SERVICE UPGRADEs
 ////////////////////////////////
 global compendium service that I can add to remove without copying and pasting JSON
-need to create interface for the entire library/compendium!
 
 ////////////////////////////////
 ////////////////////////////////
 UX UPGRADE
 ////////////////////////////////
-// suggested tags, in the tags library, make tags objects, and add suggested as a property
 right click creator service - add to heros guidance? NOT BAD!
-suggestedContextMenu items is the key...
 Pinch hitter - Transform To…
 
 ////////////////////////////////
@@ -271,7 +267,6 @@ Maybe dual stick shooter potential?
   VISIBLE TO - select tags its visible to, ( visible to is an object with tags: true )
   Background animation tag ( perhaps background stage and everything…)
   one way platform ( can land on but can jump through from below)
-  equippable?
   HAve an object twist to the left and the right, its common cheap animation for games it seems
   // 'increaseInputDirectionVelocity', <<--- better as tags probably
   // 'increaseMovementDirectionVelocity',

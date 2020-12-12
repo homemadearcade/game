@@ -57,6 +57,10 @@ export async function handleExtraMenuClicks(key, objectSelected, openColorPicker
       LIVEEDITOR.open(objectSelected, 'physics')
     }
 
+    if (key === "open-hero-live-edit") {
+      LIVEEDITOR.open(objectSelected, 'hero')
+    }
+
     if(key === 'drop') {
       window.socket.emit('dropObject', objectSelected.ownerId, objectSelected.subObjectName)
     }
@@ -165,6 +169,10 @@ export async function handleExtraMenuClicks(key, objectSelected, openColorPicker
     if (key === 'add-new-subobject') {
         modals.addNewSubObjectTemplate(objectSelected)
         return
+    }
+
+    if(key === 'respawn') {
+      window.socket.emit('respawnHero', objectSelected)
     }
 
     if (key === 'set-world-respawn-point') {
@@ -405,10 +413,6 @@ export async function handleExtraMenuClicks(key, objectSelected, openColorPicker
       } else {
         window.socket.emit('startGame')
       }
-    }
-
-    if(key === 'set-world-respawn-point') {
-      window.socket.emit('updateWorld', {worldSpawnPointX: objectSelected.x, worldSpawnPointY:  objectSelected.y})
     }
 
     if(key === 'select-world-background-color') {

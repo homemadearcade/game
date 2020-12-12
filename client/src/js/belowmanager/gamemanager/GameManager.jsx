@@ -1,6 +1,7 @@
 import React from 'react'
 import SequenceEditor from '../../sequenceeditor/SequenceEditor.jsx'
 import Metadata from './Metadata.jsx'
+import Library from './Library.jsx'
 
 export default class GameManager extends React.Component {
   constructor(props) {
@@ -18,6 +19,11 @@ export default class GameManager extends React.Component {
     if(selectedMenu === 'metadata') {
       return <div className="GameManager Manager">
           <Metadata/>
+      </div>
+    }
+    if(selectedMenu === 'library') {
+      return <div className="GameManager Manager">
+          <Library/>
       </div>
     }
   }

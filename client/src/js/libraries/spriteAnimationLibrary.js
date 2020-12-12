@@ -16,6 +16,7 @@ window.local.on('onFirstPageGameLoaded', () => {
       return {
         ...GAME.library.spriteAnimations,
         ...window.spriteAnimationLibrary,
+        addGameLibrary: null
       }
     } else {
       return window.spriteAnimationLibrary

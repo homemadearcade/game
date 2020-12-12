@@ -935,6 +935,7 @@ window.local.on('onFirstPageGameLoaded', () => {
       return {
         ...GAME.library.animations,
         ...window.particleEmitterLibrary,
+        addGameLibrary: null
       }
     } else {
       return window.particleEmitterLibrary

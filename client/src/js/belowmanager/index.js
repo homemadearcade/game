@@ -24,6 +24,10 @@ class BelowManager {
     if(this.ref) this.ref.forceUpdate()
   }
 
+  onUpdateLibrary = () => {
+    if(this.ref) this.ref.forceUpdate()
+  }
+
   onFirstPageGameLoaded() {
     const initialProps = {
       ref: ref => BELOWMANAGER.ref = ref

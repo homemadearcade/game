@@ -73,12 +73,17 @@ class contextMenuEl extends React.Component{
         this._openMenuWithEvent(e)
 
         const creatorLibraryObject = window.creatorLibrary.addGameLibrary()[e.target.dataset.creatorlibraryid]
-        if(creatorLibraryObject.libraryName && creatorLibraryObject.libraryId) {
-          const libraryObject = window[creatorLibraryObject.libraryName].addGameLibrary()[creatorLibraryObject.libraryId]
-          this._setContextMenuSpecialItem(creatorLibraryObject.libraryName, libraryObject, {creatorLibraryId: e.target.dataset.creatorlibraryid, libraryName: creatorLibraryObject.libraryName, libraryId: creatorLibraryObject.libraryId})
-        } else if(creatorLibraryObject.JSON) {
-          this._setContextMenuSpecialItem('creatorLibrary', creatorLibraryObject.JSON, {creatorLibraryId: e.target.dataset.creatorlibraryid, libraryName: 'creatorLibrary', libraryId: e.target.dataset.creatorlibraryid})
-        }
+        const libraryObject = window[creatorLibraryObject.libraryName].addGameLibrary()[creatorLibraryObject.libraryId]
+        this._setContextMenuSpecialItem(creatorLibraryObject.libraryName, libraryObject, {creatorLibraryId: e.target.dataset.creatorlibraryid, libraryName: creatorLibraryObject.libraryName, libraryId: creatorLibraryObject.libraryId})
+        return false;
+      }
+
+      if(e.target.dataset.libraryid && e.target.dataset.libraryname) {
+        this._openMenuWithEvent(e)
+        const id = e.target.dataset.libraryid
+        const name =  e.target.dataset.libraryname
+        const libraryObject = window[name].addGameLibrary()[id]
+        this._setContextMenuSpecialItem(name, libraryObject, {libraryName: name, libraryId: id})
         return false;
       }
 

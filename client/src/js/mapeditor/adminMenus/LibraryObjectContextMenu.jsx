@@ -56,6 +56,37 @@ export default class LibraryObjectContextMenu extends React.Component{
         window.socket.emit('updateLibrary', { creator: GAME.library.creator })
       }
 
+      if (key === "add-to-creator-library") {
+        const { value: columnName } = await Swal.fire({
+          title: 'Add to creator library',
+          text: "What column? (enter name case sensitive)",
+          input: 'text',
+          inputAttributes: {
+            autocapitalize: 'off'
+          },
+          showCancelButton: true,
+          confirmButtonText: 'Add to library',
+        })
+
+        if(!columnName) return
+
+        if(subObject) {
+          window.socket.emit('updateLibrary', { creator: {...GAME.library.creator, [name]: {
+            label: libraryId,
+            columnName,
+            libraryName: 'subObjectLibrary',
+            libraryId: libraryId,
+          } } })
+        } else {
+          window.socket.emit('updateLibrary', { creator: {...GAME.library.creator, [name]: {
+            label: libraryId,
+            columnName,
+            libraryName: 'objectLibrary',
+            libraryId: libraryId,
+          } } })
+        }
+      }
+
       if (key === "copy-to-creator-library") {
         const { value: name } = await Swal.fire({
           title: 'Copy to creator library',
@@ -67,6 +98,7 @@ export default class LibraryObjectContextMenu extends React.Component{
           showCancelButton: true,
           confirmButtonText: 'Next',
         })
+        if(!name) return
         const { value: columnName } = await Swal.fire({
           title: 'Add to creator library',
           text: "What column? (enter name case sensitive)",
@@ -77,6 +109,8 @@ export default class LibraryObjectContextMenu extends React.Component{
           showCancelButton: true,
           confirmButtonText: 'Add to library',
         })
+
+        if(!columnName) return
 
         const copy = Object.replaceAll(objectSelected, libraryId, name, true , true)
         if(objectSelected.tags.hero) {
@@ -101,11 +135,11 @@ export default class LibraryObjectContextMenu extends React.Component{
       }
 
       if(key === 'view-library-object-json') {
-        modals.openEditCodeModal('VIEW ONLY - Library Object - ' + creatorLibraryId, objectSelected, () =>{})
+        modals.openEditCodeModal('VIEW ONLY - Library Object - ' + (creatorLibraryId || libraryId), objectSelected, () =>{})
       }
 
       if( key === 'edit-library-object-json') {
-        modals.openEditCodeModal('Edit Library Object - ' + creatorLibraryId, objectSelected, (result) => {
+        modals.openEditCodeModal('Edit Library Object - ' + (creatorLibraryId  || libraryId), objectSelected, (result) => {
           if(result && result.value) {
             const editedCode = JSON.parse(result.value)
 
@@ -124,7 +158,7 @@ export default class LibraryObjectContextMenu extends React.Component{
         })
       }
 
-      if (key === "add-to-object-library") {
+      if (key === "copy-to-object-library") {
         const { value: name } = await Swal.fire({
           title: 'Add to object library',
           text: "What will be the library id of this object?",
@@ -135,11 +169,11 @@ export default class LibraryObjectContextMenu extends React.Component{
           showCancelButton: true,
           confirmButtonText: 'Next',
         })
-
+        if(!name) return
         window.socket.emit('updateLibrary', { object: {...GAME.library.objects, [name]: OBJECTS.getProperties(objectSelected)} })
       }
 
-      if (key === "add-to-subobject-library") {
+      if (key === "copy-to-subobject-library") {
         const { value: name } = await Swal.fire({
           title: 'Add to sub object library',
           text: "What will be the library id of this object?",
@@ -150,6 +184,7 @@ export default class LibraryObjectContextMenu extends React.Component{
           showCancelButton: true,
           confirmButtonText: 'Next',
         })
+        if(!name) return
         window.socket.emit('updateLibrary', { subObject: {...GAME.library.subObject, [name]: OBJECTS.getProperties(objectSelected)} })
       }
     }
@@ -226,14 +261,20 @@ export default class LibraryObjectContextMenu extends React.Component{
     // {!subObject && Object.keys(objectSelected.subObjects || {}).length && <SubMenu title="Sub Objects">
     //   <SelectSubObjectMenu objectSelected={objectSelected} selectSubObject={this.props.selectSubObject}/>
     // </SubMenu>}
+
+    const isCore = window[libraryName][libraryId]
+
     return <Menu onClick={this._handleLibraryObjectMenuClick}>
       {libraryName && <MenuItem className="bold-menu-item">{libraryName}</MenuItem>}
       {libraryId && <MenuItem className="bold-menu-item">{libraryId}</MenuItem>}
-      <MenuItem key='copy-to-creator-library'>Copy</MenuItem>
-      {!GAME.library.creator[creatorLibraryId] && <MenuItem key='view-library-object-json'>View JSON</MenuItem>}
-      {GAME.library.creator[creatorLibraryId] && <MenuItem key='edit-library-object-json'>Edit JSON</MenuItem>}
-      {GAME.library.creator[creatorLibraryId] && <MenuItem key='rename'>Rename</MenuItem>}
-      {GAME.library.creator[creatorLibraryId] && <MenuItem key='remove-from-library'>Remove</MenuItem>}
+      {!window.creatorLibrary.addGameLibrary()[libraryId] && <MenuItem key='add-to-creator-library'>Add to Creator Library</MenuItem>}
+      <MenuItem key='copy-to-creator-library'>Copy to Creator Library</MenuItem>
+      <MenuItem key='copy-to-object-library'>Copy to Object Library</MenuItem>
+      <MenuItem key='copy-to-subobject-library'>Copy to Sub Object Library</MenuItem>
+      {isCore && <MenuItem key='view-library-object-json'>View JSON</MenuItem>}
+      {!isCore && <MenuItem key='edit-library-object-json'>Edit JSON</MenuItem>}
+      {!isCore && creatorLibraryId && <MenuItem key='rename'>Rename</MenuItem>}
+      {!isCore && creatorLibraryId && <MenuItem key='remove-from-library'>Remove</MenuItem>}
     </Menu>
   }
 }

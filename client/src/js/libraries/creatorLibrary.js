@@ -490,6 +490,7 @@ function onFirstPageGameLoaded() {
       return {
         ...GAME.library.creator,
         ...window.creatorLibrary,
+        addGameLibrary: null
       }
     } else {
       return window.creatorLibrary

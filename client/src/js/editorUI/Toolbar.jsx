@@ -307,6 +307,9 @@ export default class Toolbar extends React.Component {
           <ToolbarButton iconName="fa-tags" onClick={() => {
             BELOWMANAGER.open({ selectedManager: 'GameManager', selectedMenu: 'metadata'})
           }}/>
+          <ToolbarButton iconName="fa-book-dead" onClick={() => {
+            BELOWMANAGER.open({ selectedManager: 'GameManager', selectedMenu: 'library'})
+           }}/>
           {/* Default Heros -> Menu */}
           <ToolbarButton iconName="fa-theater-masks" onClick={() => {
             PAGE.typingMode = true
@@ -322,10 +325,6 @@ export default class Toolbar extends React.Component {
             window.socket.emit('editGameHeroJSON', 'default', window.defaultHero)
           }}
           />
-          {/* Compendium -> Menu
-            <ToolbarButton iconName="fa-book-dead"/>
-
-             */}
            <ToolbarButton iconName="fa-icons" onClick={() => {
              PAGE.typingMode = true
              modals.openEditCodeModal('Edit Theme JSON', GAME.theme, (result) => {

@@ -342,6 +342,7 @@ window.local.on('onFirstPageGameLoaded', () => {
       return {
         ...GAME.library.object,
         ...window.objectLibrary,
+        addGameLibrary: null
       }
     } else {
       return window.objectLibrary
