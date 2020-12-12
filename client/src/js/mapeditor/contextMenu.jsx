@@ -7,6 +7,7 @@ import ObjectContextMenu from './adminMenus/objectContextMenu.jsx';
 import EditingObjectContextMenu from './adminMenus/EditingObjectContextMenu.jsx';
 import EditingSequenceContextMenu from './adminMenus/EditingSequenceContextMenu.jsx';
 import WorldContextMenu from './adminMenus/worldContextMenu.jsx';
+import SmartMenu from './adminMenus/smartMenu.jsx';
 import GeneratedMenu from './playerMenus/generatedMenu.jsx';
 import InventoryMenu from './playerMenus/InventoryMenu.jsx';
 import LibraryObjectContextMenu from './adminMenus/LibraryObjectContextMenu.jsx';
@@ -134,8 +135,12 @@ class contextMenuEl extends React.Component{
     if(command === "show") {
       this.setState({ hide: false, objectSelected: MAPEDITOR.objectHighlighted })
     } else {
-      this.setState({ hide: true, subObjectSelected: {}, subObjectSelectedName: null, objectSelected: null, coloringObject: null, specialItemType: null, item: null, libraryName: null, libraryId: null, spriteData: null, textureIds: null })
+      this.setState({ hide: true, subObjectSelected: {}, subObjectSelectedName: null, objectSelected: null, coloringObject: null, specialMenuType: null, item: null, libraryName: null, libraryId: null, spriteData: null, textureIds: null })
     }
+  }
+
+  _openAdvancedMenu = () => {
+    this.setState({ specialMenuType: 'advanced' })
   }
 
   _openMenuWithEvent(e, adjust = true) {
@@ -149,7 +154,7 @@ class contextMenuEl extends React.Component{
   }
   _setContextMenuSpecialItem(type, item, other) {
     this.setState({
-      specialItemType: type,
+      specialMenuType: type,
       item,
       ...other
     })
@@ -185,7 +190,7 @@ class contextMenuEl extends React.Component{
     this.setState({
       objectSelected: OBJECTS.getObjectOrHeroById(data.id),
       item: null,
-      specialItemType: null,
+      specialMenuType: null,
     })
   }
 
@@ -206,9 +211,9 @@ class contextMenuEl extends React.Component{
   }
 
   _renderAdminMenus() {
-    const { objectSelected, subObjectSelected, subObjectSelectedName, specialItemType, item, libraryName, libraryId, creatorLibraryId, audioFileId, spriteData, textureIds } = this.state;
+    const { objectSelected, subObjectSelected, subObjectSelectedName, specialMenuType, item, libraryName, libraryId, creatorLibraryId, audioFileId, spriteData, textureIds } = this.state;
 
-    if(specialItemType === 'selectLayer') {
+    if(specialMenuType === 'selectLayer') {
       return <Menu onClick={this._handleSelectLayerClick}>
         <MenuItem className="bold-menu-item dont-close-menu">Select Which</MenuItem>
         {item.map((layer) => {
@@ -217,20 +222,29 @@ class contextMenuEl extends React.Component{
       }</Menu>
     }
 
-    if(specialItemType === 'sprite') {
+    if(specialMenuType === 'selectLayer') {
+      return <Menu onClick={this._handleSelectLayerClick}>
+        <MenuItem className="bold-menu-item dont-close-menu">Select Which</MenuItem>
+        {item.map((layer) => {
+          return <MenuItem key={JSON.stringify({action: 'select-layer', id: layer.id})}>{layer.name || layer.subObjectName || layer.id}</MenuItem>
+        })
+      }</Menu>
+    }
+
+    if(specialMenuType === 'sprite') {
       return <SpriteDataContextMenu
         spriteData={spriteData ? JSON.parse(spriteData) : null}
         textureIds={textureIds ? JSON.parse(textureIds) : null}
         ></SpriteDataContextMenu>
     }
 
-    if(specialItemType === 'audioFile') {
+    if(specialMenuType === 'audioFile') {
       return <AudioFileContextMenu
         audioFileId={item}
       />
     }
 
-    if(specialItemType === 'creatorLibrary') {
+    if(specialMenuType === 'creatorLibrary') {
       return <LibraryObjectContextMenu
         objectSelected={item}
         creatorLibraryId={creatorLibraryId}
@@ -239,7 +253,7 @@ class contextMenuEl extends React.Component{
       />
     }
 
-    if(specialItemType === 'objectLibrary') {
+    if(specialMenuType === 'objectLibrary') {
       return <LibraryObjectContextMenu
         objectSelected={item}
         creatorLibraryId={creatorLibraryId}
@@ -248,7 +262,7 @@ class contextMenuEl extends React.Component{
       />
     }
 
-    if(specialItemType === 'subObjectLibrary') {
+    if(specialMenuType === 'subObjectLibrary') {
       return <LibraryObjectContextMenu
         libraryName={libraryName}
         libraryId={libraryId}
@@ -258,7 +272,7 @@ class contextMenuEl extends React.Component{
       />
     }
 
-    if(specialItemType === 'inventory') {
+    if(specialMenuType === 'inventory') {
       return <InventoryMenu
         item={item}
       />
@@ -288,7 +302,15 @@ class contextMenuEl extends React.Component{
       }
     }
 
-    if(subObjectSelected && subObjectSelectedName) {
+    if(!objectSelected.id) {
+      return <WorldContextMenu
+        objectSelected={objectSelected}
+        openColorPicker={this.openColorPicker}
+        selectSubObject={this._selectSubObject}
+      />
+    }
+
+    if(subObjectSelected && subObjectSelectedName && specialMenuType === 'advanced') {
       if(showEditingObjectMenu) {
         const objectEditing = OBJECTS.getObjectOrHeroById(OBJECTS.editingId)
         if(objectEditing) {
@@ -310,7 +332,7 @@ class contextMenuEl extends React.Component{
         />
     }
 
-    if(objectSelected.tags && objectSelected.tags.hero) {
+    if(objectSelected.tags && objectSelected.tags.hero && specialMenuType === 'advanced') {
       return <HeroContextMenu
         objectSelected={objectSelected}
         openColorPicker={this.openColorPicker}
@@ -318,19 +340,30 @@ class contextMenuEl extends React.Component{
       />
     }
 
-    if(!objectSelected.id) {
-      return <WorldContextMenu
+    if(specialMenuType === 'advanced') {
+      return <ObjectContextMenu
         objectSelected={objectSelected}
         openColorPicker={this.openColorPicker}
         selectSubObject={this._selectSubObject}
       />
     }
 
-    return <ObjectContextMenu
-      objectSelected={objectSelected}
-      openColorPicker={this.openColorPicker}
-      selectSubObject={this._selectSubObject}
-    />
+    if(subObjectSelected && subObjectSelectedName) {
+      return <SmartMenu
+        objectSelected={subObjectSelected}
+        openAdvancedMenu={this._openAdvancedMenu}
+        openColorPicker={this.openColorPicker}
+        selectSubObject={this._selectSubObject}
+      />
+    } else {
+      return <SmartMenu
+        objectSelected={objectSelected}
+        openAdvancedMenu={this._openAdvancedMenu}
+        openColorPicker={this.openColorPicker}
+        selectSubObject={this._selectSubObject}
+      />
+    }
+
   }
 
   render() {

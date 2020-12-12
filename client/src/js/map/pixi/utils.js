@@ -128,7 +128,7 @@ function updatePosition(pixiChild, gameObject) {
 
   const isContainer = pixiChild.children && pixiChild.children.length
 
-  if(gameObject.tags.rotateable) {
+  if(!gameObject.tags.light && gameObject.tags.rotateable) {
     if(isContainer) {
       pixiChild.pivot.set(gameObject.width/2, gameObject.height/2)
     } else {

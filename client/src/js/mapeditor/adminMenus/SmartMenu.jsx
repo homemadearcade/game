@@ -8,9 +8,11 @@ import DialogueMenu from '../menus/DialogueMenu.jsx';
 import PopoverMenu from '../menus/PopoverMenu.jsx';
 import DialogueSetsMenu from '../menus/DialogueSetsMenu.jsx';
 import PlayerCreateObjectMenu from '../menus/PlayerCreateObjectMenu.jsx';
+import SequencesMenu from '../menus/SequencesMenu.jsx';
+import CurrentTagsMenu from '../menus/CurrentTagsMenu.jsx';
+import EmitterMenu from '../menus/EmitterMenu.jsx';
 
-// import DescriptorsMenu from '../menus/DescriptorsMenu.jsx';
-
+// import DescriptorsMenu from '../menus/DescriptorMenu.jsx';
 import QuestMenu from '../menus/QuestMenu.jsx';
 import SpawnZoneMenu from '../menus/SpawnZoneMenu.jsx';
 import ResourceZoneMenu from '../menus/ResourceZoneMenu.jsx';
@@ -24,7 +26,7 @@ import LiveMenu from '../menus/LiveMenu.jsx';
 import SpriteMenu from '../menus/SpriteMenu.jsx';
 import PropertiesMenu from '../menus/PropertiesMenu.jsx';
 import modals from '../modals.js'
-import { handleExtraMenuClicks } from './helper.js'
+import { handleExtraMenuClicks } from '../playerMenus/helper.js'
 
 export default class GeneratedMenu extends React.Component {
   constructor(props) {
@@ -33,48 +35,13 @@ export default class GeneratedMenu extends React.Component {
     this._handleMenuClick = ({ key }) => {
       if(!key) return
       const { startResize, onStartDrag, deleteObject, onCopy, removeObject } = MAPEDITOR
-      const { objectSelected, subObject } = this.props;
+      const { objectSelected, openAdvancedMenu } = this.props;
 
-      if (key === 'resize') {
-        if (subObject) {
-          startResize(objectSelected, { snapToGrid: false })
-        } else {
-          startResize(objectSelected)
-        }
-        return
+      if(key === 'open-advanced-menu') {
+        openAdvancedMenu()
       }
 
-      if (key === 'resize-grid') {
-        startResize(objectSelected, { snapToGrid: true })
-        return
-      }
-
-      if (key === 'drag') {
-        onStartDrag(objectSelected)
-        return
-      }
-
-      if (key === 'delete') {
-        deleteObject(objectSelected)
-        return
-      }
-
-      if (key === 'remove') {
-        removeObject(objectSelected)
-        return
-      }
-
-      if (key === 'copy') {
-        onCopy(objectSelected)
-        return
-      }
-
-      if (key === 'drop') {
-        window.socket.emit('dropObject', objectSelected.ownerId, objectSelected.subObjectName)
-        return
-      }
-
-      handleExtraMenuClicks(key, objectSelected, this.props.openColorPicker, subObject)
+      handleExtraMenuClicks(key, objectSelected, this.props.openColorPicker, objectSelected.tags.subObject)
     }
   }
 
@@ -228,27 +195,90 @@ export default class GeneratedMenu extends React.Component {
     })
   }
 
+  _renderObjectSpawnZoneMenu() {
+    const { objectSelected, subObject } = this.props
+    const { spawnZone } = objectSelected.tags
+
+    if(spawnZone) {
+      return <SubMenu title="Spawn Zone">
+      <SpawnZoneMenu objectSelected={objectSelected} subObject={subObject}/>
+      </SubMenu>
+    }
+  }
+
+  _renderObjectResourceZoneMenu() {
+    const { objectSelected, subObject } = this.props
+    const { resourceZone } = objectSelected.tags
+
+    if(resourceZone) {
+      return <SubMenu title="Resource Zone">
+        <ResourceZoneMenu objectSelected={objectSelected} subObject={subObject}/>
+      </SubMenu>
+    }
+  }
+
+  _renderObjectEmitterMenu() {
+    const { objectSelected, subObject } = this.props
+    // if(objectSelected.tags.emitter) {
+      return <SubMenu title="Emitters">
+        <EmitterMenu objectSelected={objectSelected} subObject={subObject}></EmitterMenu>
+      </SubMenu>
+    // }
+  }
 
   render() {
-    const { objectSelected, subObject, heroMenuItems, objectMenuItems, worldMenuItems } = this.props
-    const { objectMenuObj, heroMenuObj, worldMenuObj } = this._generateContextMenuItems(objectMenuItems, heroMenuItems, worldMenuItems)
+    const { objectSelected, openAdvancedMenu, selectSubObject } = this.props
 
-    if (objectSelected.tags && objectSelected.tags.hero) {
+    const subObject = objectSelected.tags.subObject
+    const isInvisible = objectSelected.tags.invisible || objectSelected.defaultSprite == 'invisible' || objectSelected.opacity == 0
+
+    if(objectSelected.tags.hero) {
       return <Menu onClick={this._handleMenuClick}>
-        {this._renderGeneratedMenu(heroMenuObj)}
+        <MenuItem key='copy-id' className="bold-menu-item">{objectSelected.subObjectName || objectSelected.name || objectSelected.id}</MenuItem>
+        {<MenuItem key="drag">Drag</MenuItem>}
+        {<MenuItem key="respawn">Respawn</MenuItem>}
+        {<MenuItem key="edit-all-json">Edit JSON</MenuItem>}
+        <MenuItem key="open-hero-live-edit">Live Edit</MenuItem>
+        <SubMenu title="Current Tags">
+          <CurrentTagsMenu objectSelected={objectSelected} currentTags={objectSelected.tags}></CurrentTagsMenu>
+        </SubMenu>
+        {Object.keys(objectSelected.subObjects || {}).length && <SubMenu title="Sub Objects">
+          <SelectSubObjectMenu objectSelected={objectSelected} selectSubObject={selectSubObject} />
+        </SubMenu>}
+        <MenuItem className='dont-close-menu' key="open-advanced-menu">Open Advanced Menu</MenuItem>
+      </Menu>
+    } else {
+      return <Menu onClick={this._handleMenuClick}>
+        <MenuItem key='copy-id' className="bold-menu-item">{objectSelected.subObjectName || objectSelected.name || objectSelected.id}</MenuItem>
+        {!subObject && <MenuItem key="drag">Drag</MenuItem>}
+        {(!objectSelected.constructParts || objectSelected.tags.maze) && !objectSelected.pathParts && <MenuItem key="resize">Resize</MenuItem>}
+        {subObject && <MenuItem key="resize-grid">Resize On Grid</MenuItem>}
+        {!subObject && <MenuItem key="copy">Duplicate</MenuItem>}
+        {(objectSelected.ownerId || objectSelected.relativeId) && <SubMenu title="Relative">
+          <RelativeMenu objectSelected={objectSelected} subObject={subObject}/>
+        </SubMenu>}
+        {!isInvisible && !objectSelected.contructParts && <MenuItem key="select-color" className='dont-close-menu'>Color</MenuItem>}
+        {!isInvisible && !objectSelected.contructParts && <MenuItem key="open-media-manager-sprite-selector">Sprite</MenuItem>}
+          <SubMenu title="Current Tags">
+          <CurrentTagsMenu objectSelected={objectSelected} currentTags={objectSelected.tags}></CurrentTagsMenu>
+        </SubMenu>
+        <MenuItem key="edit-descriptors">Edit Descriptors</MenuItem>
+        {objectSelected.tags.talker && <SubMenu title="Dialogue Sets">
+          <DialogueSetsMenu objectSelected={objectSelected} subObject={subObject}/>
+        </SubMenu>}
+        {this._renderObjectSpawnZoneMenu()}
+        {this._renderObjectResourceZoneMenu()}
+        {objectSelected.tags.emitter && <MenuItem key="open-live-particle">Edit Emitter</MenuItem>}
+        {objectSelected.tags.moving && <MenuItem key="open-live-physics">Edit Physics</MenuItem>}
+        {objectSelected.tags.light && <MenuItem key="open-live-light">Edit Light</MenuItem>}
+        {objectSelected.tags.path && <MenuItem key="open-path-editor">Open Path Editor</MenuItem>}
+        {!isInvisible && <MenuItem key="open-construct-editor">Open Construct Editor</MenuItem>}
+        { subObject && !objectSelected.isEquipped && objectSelected.actionButtonBehavior && <MenuItem key="equip">Equip</MenuItem> }
+        { subObject && objectSelected.isEquipped && <MenuItem key="unequip">Unequip</MenuItem> }
+        { subObject && objectSelected.tags.pickupable && <MenuItem key="drop">Drop</MenuItem> }
+        { (GAME.gameState.started || GAME.gameState.branch) ? <MenuItem key="remove">Remove</MenuItem> : <MenuItem key="delete">Delete</MenuItem> }
+        <MenuItem className='dont-close-menu' key="open-advanced-menu">Open Advanced Menu</MenuItem>
       </Menu>
     }
-
-    if (objectSelected.id) {
-      return <Menu onClick={this._handleMenuClick}>
-        {this._renderGeneratedMenu(objectMenuObj)}
-      </Menu>
-    }
-
-    return <Menu onClick={this._handleMenuClick}>
-      {this._renderGeneratedMenu(worldMenuObj)}
-    </Menu>
-
-    return null;
   }
 }

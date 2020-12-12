@@ -8,7 +8,7 @@ const questGivingIdSelectPrefix = 'quest-id-'
 
 const removeResourceTagPrefix = 'remove-resource-tag-'
 
-export function handleExtraMenuClicks(key, objectSelected, openColorPicker, subObject) {
+export async function handleExtraMenuClicks(key, objectSelected, openColorPicker, subObject) {
     const { startResize, startRelativeDrag, onStartDrag, selectSubObject, deleteObject, onCopy, removeObject, onStartSetPathfindingLimit, openConstructEditor, networkEditObject } = MAPEDITOR
     const { resourceLimit, resourceWithdrawAmount } = objectSelected
     const { spawnLimit, spawnPoolInitial, spawnWaitTimer } = objectSelected
@@ -29,9 +29,41 @@ export function handleExtraMenuClicks(key, objectSelected, openColorPicker, subO
       })
     }
 
-    if (key === 'open-path-editor') {
+    if(key === 'open-live-particle') {
+      LIVEEDITOR.open(objectSelected, 'particle')
+    }
+
+    if(key === 'open-live-light') {
+      LIVEEDITOR.open(objectSelected, 'light')
+    }
+
+    if(key === 'open-path-editor') {
       MAPEDITOR.openPathEditor(objectSelected)
-      return
+    }
+
+    if (key === "open-live-physics") {
+      LIVEEDITOR.open(objectSelected, 'physics')
+    }
+
+    if(key === 'drop') {
+      window.socket.emit('dropObject', objectSelected.ownerId, objectSelected.subObjectName)
+    }
+    if(key === 'unequip') {
+      window.socket.emit('unequipObject', objectSelected.ownerId, objectSelected.subObjectName)
+    }
+    if(key === 'equip') {
+      window.socket.emit('equipObject', objectSelected.ownerId, objectSelected.subObjectName, 'available')
+    }
+
+    if(key === 'edit-descriptors') {
+      Object.keys(objectSelected.descriptors || {}).forEach((tag) => {
+        if(!objectSelected.descriptors[tag]) delete objectSelected.descriptors[tag]
+      })
+      modals.openEditDescriptorsModal(objectSelected.descriptors || {}, ({value}) => {
+        if(value) {
+          networkEditObject(objectSelected, {descriptors: value})
+        }
+      })
     }
 
     if (key === 'toggle-outline') {
@@ -72,10 +104,7 @@ export function handleExtraMenuClicks(key, objectSelected, openColorPicker, subO
         return
     }
 
-    if (key === "open-physics-live-menu") {
-        LIVEEDITOR.open(objectSelected, 'physics')
-        return
-    }
+
     if (key === "open-daynight-live-menu") {
         LIVEEDITOR.open({}, 'daynightcycle')
         return
@@ -152,10 +181,11 @@ export function handleExtraMenuClicks(key, objectSelected, openColorPicker, subO
         return
     }
 
-    if (key === "open-physics-live-editor") {
-        LIVEEDITOR.open(objectSelected, 'physics')
-        return
+    if(key === 'open-media-manager-sprite-selector') {
+      BELOWMANAGER.open({ selectedManager: 'MediaManager', selectedMenu: 'SpriteSelector', objectSelected, spriteValue: 'default'})
+      return
     }
+
     if (key === 'enter-quest-giving-id') {
         modals.editProperty(objectSelected, 'questGivingId', objectSelected.questGivingId || '')
         return
@@ -186,6 +216,58 @@ export function handleExtraMenuClicks(key, objectSelected, openColorPicker, subO
         return
     }
 
+    if(key === 'rename-sub-object') {
+      const owner = OBJECTS.getObjectOrHeroById(objectSelected.ownerId)
+      const { value: name } = await Swal.fire({
+        title: 'Rename sub object',
+        text: "What is the new name of this sub object?",
+        input: 'text',
+        inputAttributes: {
+          autocapitalize: 'off'
+        },
+        showCancelButton: true,
+        confirmButtonText: 'Next',
+      })
+
+      const oldName =  objectSelected.subObjectName
+      const copy = Object.replaceAll(owner, objectSelected.subObjectName, name, true , true)
+      if(copy.subObjects[oldName]) copy.subObjects[oldName] = null
+      if(copy.subObjectChances[oldName]) copy.subObjectChances[oldName] = null
+
+      MAPEDITOR.networkEditObject(owner, copy)
+    }
+
+    if(key === 'resize') {
+      if(subObject || objectSelected.tags.subObject) {
+        startResize(objectSelected, { snapToGrid: false })
+      } else {
+        startResize(objectSelected)
+      }
+    }
+
+    if(key === 'resize-grid') {
+      startResize(objectSelected, { snapToGrid: true })
+    }
+
+    if(key === 'drag') {
+      onStartDrag(objectSelected)
+    }
+
+    if(key === 'drag-off-grid') {
+      MAPEDITOR.onStartDrag(objectSelected, { snapToGrid: false })
+    }
+
+    if(key === 'delete') {
+      deleteObject(objectSelected)
+    }
+
+    if(key === 'remove') {
+      removeObject(objectSelected)
+    }
+
+    if(key === 'copy') {
+      onCopy(objectSelected)
+    }
 
     if (key === 'edit-withdraw-amount') {
         modals.editPropertyNumber(objectSelected, 'resourceWithdrawAmount', resourceWithdrawAmount)
@@ -268,6 +350,24 @@ export function handleExtraMenuClicks(key, objectSelected, openColorPicker, subO
 
     }
 
+    if(key == "edit-popover-text") {
+      const { value: text } = await Swal.fire({
+        title: "What is the popover text?",
+        input: 'text',
+        inputAttributes: {
+          autocapitalize: 'off'
+        },
+        inputValue: objectSelected.popoverText || '',
+        showCancelButton: true,
+        confirmButtonText: 'Confirm',
+      })
+      networkEditObject(objectSelected, { popoverText: text})
+    }
+
+    if(key == "clear-popover-text") {
+      networkEditObject(objectSelected, { popoverText: null})
+    }
+
     if (key === 'spawn-all-now') {
         window.socket.emit('spawnAllNow', objectSelected.id)
         return
@@ -316,6 +416,39 @@ export function handleExtraMenuClicks(key, objectSelected, openColorPicker, subO
       PAGE.downloadObjectAsJson(saveGame, GAME.id)
     }
 
+
+    ///DIALOGUE
+    if(key === "add-dialogue-set") {
+      if(!objectSelected.heroDialogueSets) {
+        objectSelected.heroDialogueSets = {}
+      }
+
+      const name = await window.getGlobalName()
+
+      if(!name) return
+
+      objectSelected.heroDialogueSets[name] = {}
+      objectSelected.heroDialogueSets[name].dialogue = [_.cloneDeep(window.defaultDialogue)]
+      networkEditObject(objectSelected, {heroDialogueSets: objectSelected.heroDialogueSets })
+    }
+
+    if(key === "set-dialogue-set") {
+      const { value: name } = await Swal.fire({
+        title: 'Add Dialogue Set',
+        text: "Set the dialogue of this object to which dialogue set?",
+        input: 'text',
+        inputAttributes: {
+          autocapitalize: 'off'
+        },
+        showCancelButton: true,
+        confirmButtonText: 'Next',
+      })
+      if(!name) return
+      networkEditObject(objectSelected, {heroDialogueSet: name })
+      return
+    }
+
+
     if(key.charAt(0) !== '{') return
 
     const data = JSON.parse(key)
@@ -323,6 +456,10 @@ export function handleExtraMenuClicks(key, objectSelected, openColorPicker, subO
         SpriteChooser.open(objectSelected, data.spriteName)
         return
     }
+
+
+    ///TRIGGER
+
     if (data.action === 'add-trigger') {
         modals.addTrigger(objectSelected, data.eventName)
         return
@@ -343,6 +480,8 @@ export function handleExtraMenuClicks(key, objectSelected, openColorPicker, subO
         return
     }
 
+
+    ///DIALOGUE
     if (data.action === 'add-hook') {
         modals.addHook(objectSelected, data.eventName)
         return
@@ -356,5 +495,111 @@ export function handleExtraMenuClicks(key, objectSelected, openColorPicker, subO
     if (data.action === 'delete-hook') {
         window.socket.emit('deleteHook', objectSelected.id, data.hook.id)
         return
+    }
+
+
+
+    ///DIALOGUE
+    if(data.action === "add-dialogue") {
+      if(!objectSelected.heroDialogueSets[data.setName]) {
+        objectSelected.heroDialogueSets[data.setName] = {}
+      }
+      if(!objectSelected.heroDialogueSets[data.setName].dialogue) {
+        objectSelected.heroDialogueSets[data.setName].dialogue = []
+      }
+      const { value: dialogue } = await Swal.fire({
+        title: 'Edit Dialogue',
+        text: "What is the dialogue?",
+        input: 'text',
+        inputAttributes: {
+          autocapitalize: 'off'
+        },
+        showCancelButton: true,
+        confirmButtonText: 'Next',
+      })
+      if(!dialogue) return
+
+      objectSelected.heroDialogueSets[data.setName].dialogue.push({...window.defaultDialogue, text: dialogue})
+      networkEditObject(objectSelected, {heroDialogueSets: objectSelected.heroDialogueSets })
+      return
+    }
+
+    if(data.action == "remove-dialogue") {
+      let dialogueIndex = data.index
+      objectSelected.heroDialogueSets[data.setName].dialogue.splice(dialogueIndex, 1)
+      networkEditObject(objectSelected, {heroDialogueSets: objectSelected.heroDialogueSets})
+    }
+
+    if(data.action == "edit-dialogue") {
+      let dialogueIndex = data.index
+      const { value: dialogue } = await Swal.fire({
+        title: 'Edit Dialogue',
+        text: "What is the dialogue?",
+        input: 'text',
+        inputAttributes: {
+          autocapitalize: 'off'
+        },
+        inputValue: objectSelected.heroDialogueSets[data.setName].dialogue[dialogueIndex].text,
+        showCancelButton: true,
+        confirmButtonText: 'Next',
+      })
+      if(!dialogue) return
+      objectSelected.heroDialogueSets[data.setName].dialogue[dialogueIndex].text = dialogue
+      networkEditObject(objectSelected, {heroDialogueSets: objectSelected.heroDialogueSets})
+    }
+
+    if(data.action === "set-as-current") {
+      networkEditObject(objectSelected, {heroDialogueSet: data.setName })
+      return
+    }
+
+    if(data.action === "rename-set") {
+      const name = await window.getGlobalName()
+
+      const oldSet = objectSelected.heroDialogueSets[data.setName]
+      objectSelected.heroDialogueSets[data.setName] = null
+      objectSelected.heroDialogueSets[name] = oldSet
+      networkEditObject(objectSelected, {heroDialogueSets: objectSelected.heroDialogueSets })
+      return
+    }
+
+    if(data.action === "remove-set") {
+      objectSelected.heroDialogueSets[data.setName] = null
+      networkEditObject(objectSelected, {heroDialogueSets: objectSelected.heroDialogueSets })
+    }
+
+    if(data.action === "turn-into-sequence") {
+      const { value: id } = await Swal.fire({
+        title: 'Turn dialogue into a sequence',
+        text: "What will the id of the sequence be?",
+        input: 'text',
+        inputAttributes: {
+          autocapitalize: 'off'
+        },
+        showCancelButton: true,
+        confirmButtonText: 'Ok',
+      })
+
+      const oldSet = objectSelected.heroDialogueSets[data.setName]
+      objectSelected.heroDialogueSets[data.setName] = null
+      if(!objectSelected.sequences) objectSelected.sequences = {}
+      objectSelected.sequences[data.setName] = id
+
+      GAME.library.sequences[id] = {
+        id,
+        items: oldSet.dialogue.map((dialogueJSON, i) => {
+          return {
+            id: window.alphaarray[i],
+            effectValue: 'dialogue',
+            sequenceType: 'sequenceDialogue',
+            effectJSON: [dialogueJSON],
+            next: 'sequential'
+          }
+        })
+      }
+      window.socket.emit('updateLibrary', { sequences: GAME.library.sequences })
+
+      networkEditObject(objectSelected, {heroDialogueSets: objectSelected.heroDialogueSets, sequences: objectSelected.sequences })
+      return
     }
 }

@@ -9,7 +9,7 @@ import QuestMenu from '../menus/QuestMenu.jsx';
 import SpawnZoneMenu from '../menus/SpawnZoneMenu.jsx';
 import ResourceZoneMenu from '../menus/ResourceZoneMenu.jsx';
 import NameMenu from '../menus/NameMenu.jsx';
-import ObjectAdvancedMenu from '../menus/ObjectAdvancedMenu.jsx';
+import EditorActionMenu from '../menus/EditorActionMenu.jsx';
 import SelectSubObjectMenu from '../menus/SelectSubObjectMenu.jsx';
 import RelativeMenu from '../menus/RelativeMenu.jsx';
 import TriggerMenu from '../menus/TriggerMenu.jsx';

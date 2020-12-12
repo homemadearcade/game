@@ -26,7 +26,8 @@ export default class SpawnZoneMenu extends React.Component{
       if(key === 'add-spawn-object') {
         modals.openNameSubObjectModal((result) => {
           if(result && result.value) {
-            const subObjectChances = objectSelected.subObjectChances
+            let subObjectChances = objectSelected.subObjectChances
+            if(!subObjectChances)subObjectChances ={}
             window.socket.emit('editObjects', [{id: objectSelected.id, subObjectChances: {...subObjectChances, [result.value]: {randomWeight: 1, conditionList: null} }}])
           }
         })
@@ -44,7 +45,7 @@ export default class SpawnZoneMenu extends React.Component{
 
   render() {
     const { objectSelected } = this.props
-    const subObjectChanceNames = Object.keys(objectSelected.subObjectChances)
+    const subObjectChanceNames = Object.keys(objectSelected.subObjectChances || {})
 
     return <Menu onClick={this._handleSpawnZoneMenuClick}>
       <MenuItem key="edit-spawn-pool-initial">Edit Initial Spawn Pool</MenuItem>

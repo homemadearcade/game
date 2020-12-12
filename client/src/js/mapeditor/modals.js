@@ -203,11 +203,8 @@ function nameObject(object, cb) {
   openNameObjectModal(object, (result) => {
     if(result && result.value[0] && result.value[0].length) {
       object.name = result.value[0]
-      object.namePosition = "center"
-      if(result.value[1]) object.namePosition = "center"
-      if(result.value[2]) object.namePosition = "above"
       if(cb) cb(object)
-      else MAPEDITOR.networkEditObject(object, { name: object.name, namePosition: object.namePosition})
+      else MAPEDITOR.networkEditObject(object, { name: object.name})
     }
     PAGE.typingMode = false
   })
@@ -513,7 +510,6 @@ function openNameObjectModal(object, cb) {
       popup: 'animated fadeOutUp faster'
     },
     // html:'<canvas id="swal-canvas" width="200" height="200"></canvas>',
-    html:"<input type='radio' name='name-where' checked id='center-name'>Center name within object</input><br><input type='radio' name='name-where' id='name-above'>Display name above object</input>",
     input: 'text',
     inputAttributes: {
       autocapitalize: 'off'
@@ -521,8 +517,6 @@ function openNameObjectModal(object, cb) {
     preConfirm: (result) => {
       return [
         result,
-        document.getElementById('center-name').checked,
-        document.getElementById('name-above').checked,
       ]
     }
   }).then(cb)

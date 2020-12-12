@@ -201,23 +201,18 @@ export default class HeroContextMenu extends React.Component {
     // </SubMenu>
     // <MenuItem key='set-world-respawn-point'>Set current position as world respawn point</MenuItem>
 
+    // <SubMenu title="Open">
+    //   <MenuItem key="edit-all-json">Edit All JSON</MenuItem>
+    //   <MenuItem key="open-hero-live-edit">Live Hero Edit</MenuItem>
+    //   <MenuItem key="edit-descriptors">Edit Descriptors</MenuItem>
+    // </SubMenu>
 
     return <Menu onClick={this._handleHeroMenuClick}>
       <MenuItem key='copy-id' className="bold-menu-item">{objectSelected.name || objectSelected.id}</MenuItem>
-      <SubMenu title='Map Operations'>
-        <MenuItem key='drag'>Drag</MenuItem>
-        <MenuItem key='resize'>Resize</MenuItem>
-        <MenuItem key='respawn'>Respawn</MenuItem>
-      </SubMenu>
-      <SubMenu title='Infographical'>
-        <SubMenu title='Sprite'><SpriteMenu objectSelected={objectSelected}/></SubMenu>
-        <SubMenu title="Color">
-          <MenuItem key="select-color" className='dont-close-menu'>Color Picker</MenuItem>
-          <MenuItem key="toggle-outline">{ objectSelected.tags.outline ? 'On border only' : "Fill object" }</MenuItem>
-        </SubMenu>
-        <SubMenu title="Name">
-          <NameMenu objectSelected={objectSelected}/>
-        </SubMenu>
+      <MenuItem key='resize'>Resize</MenuItem>
+      <SubMenu title='Sprite'><SpriteMenu objectSelected={objectSelected}/></SubMenu>
+      <SubMenu title="Name">
+        <NameMenu objectSelected={objectSelected}/>
       </SubMenu>
       <SubMenu title="Quests">
         <MenuItem key="add-quest">Add Quest</MenuItem>
@@ -258,23 +253,14 @@ export default class HeroContextMenu extends React.Component {
       <SubMenu title="Sequences">
         <SequencesMenu objectSelected={objectSelected}/>
       </SubMenu>
-      <SubMenu title="Current Tags">
-        <CurrentTagsMenu objectSelected={objectSelected} currentTags={objectSelected.tags}></CurrentTagsMenu>
-      </SubMenu>
       <SubMenu title="All Tags">
         <TagMenu objectSelected={objectSelected}></TagMenu>
       </SubMenu>
-      <SubMenu title="Data/Services">
+      <SubMenu title="Actions">
         <MenuItem key="reset-to-game-default">Reset To Game Default</MenuItem>
         <MenuItem key="reset-to-core-default">Reset To Core Default</MenuItem>
         <MenuItem key='add-new-subobject'>Add new sub object</MenuItem>
-        <MenuItem key="edit-all-json">Edit All JSON</MenuItem>
-        <MenuItem key="open-hero-live-edit">Live Hero Edit</MenuItem>
-        <MenuItem key="edit-descriptors">Edit Descriptors</MenuItem>
       </SubMenu>
-      {Object.keys(objectSelected.subObjects || {}).length && <SubMenu title="Sub Objects">
-        <SelectSubObjectMenu objectSelected={objectSelected} selectSubObject={this.props.selectSubObject} />
-      </SubMenu>}
       {GAME.gameState.started ? <MenuItem key="remove">Remove</MenuItem> : <MenuItem key="delete">Delete</MenuItem>}
     </Menu>
   }

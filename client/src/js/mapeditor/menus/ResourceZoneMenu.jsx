@@ -25,7 +25,8 @@ export default class ResourceZoneMenu extends React.Component{
       if(key === 'add-resource-tag') {
         modals.openSelectTag((result) => {
           if(result && result.value) {
-            const resourceTags = objectSelected.resourceTags
+            let resourceTags = objectSelected.resourceTags
+            if(!resourceTags) resourceTags = {}
             resourceTags[Object.keys(window.allTags)[result.value]] = true
             networkEditObject(objectSelected, { resourceTags })
           }
@@ -49,7 +50,7 @@ export default class ResourceZoneMenu extends React.Component{
       <MenuItem key="edit-withdraw-amount">Edit Withdraw Amount</MenuItem>
       <MenuItem key="edit-resource-limit">Edit Resource Limit</MenuItem>
       <SubMenu title="Resource Tags">
-        {Object.keys(objectSelected.resourceTags).map((tag) => {
+        {Object.keys(objectSelected.resourceTags || {}).map((tag) => {
           if(objectSelected.resourceTags[tag] === false) return null
           return <MenuItem key={`${removeResourceTagPrefix}${tag}`}>{'Remove ' + tag}</MenuItem>
         })}

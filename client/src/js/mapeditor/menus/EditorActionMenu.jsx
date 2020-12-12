@@ -5,43 +5,53 @@ import { genMaze } from '../../procedural/maze.js'
 
 import Swal from 'sweetalert2/src/sweetalert2.js';
 
-export default class ServicesMenu extends React.Component{
+export default class EditorActionMenu extends React.Component{
   constructor(props) {
     super(props)
 
-    this._handleServicesMenuClick = async ({ key }) => {
+    this._handleEditorActionMenuClick = async ({ key }) => {
       const { objectSelected, subObject } = this.props
       const { onStartSetPathfindingLimit, networkEditObject, openConstructEditor } = MAPEDITOR
 
-      if(key === 'edit-descriptors') {
-        Object.keys(objectSelected.descriptors || {}).forEach((tag) => {
-          if(!objectSelected.descriptors[tag]) delete objectSelected.descriptors[tag]
-        })
-        modals.openEditDescriptorsModal(objectSelected.descriptors || {}, ({value}) => {
-          if(value) {
-            networkEditObject(objectSelected, {descriptors: value})
+      if(key === 'add-new-subobject') {
+        const library = window.subObjectLibrary.addGameLibrary()
+        modals.openSelectFromList('Select a sub object', Object.keys(library), async (result) => {
+          const id = result.value
+          if(!id) return
+          const { value: name } = await Swal.fire({
+            title: 'What will be the name of the sub object?',
+            input: 'text',
+            inputAttributes: {
+              autocapitalize: 'off'
+            },
+            inputValue: id,
+            showCancelButton: true,
+            confirmButtonText: 'Next',
+          })
+
+          if(name) {
+            const copy = Object.replaceAll(library[id], id, name, true, true)
+            window.socket.emit('addSubObject', objectSelected, copy, name)
           }
+
         })
       }
 
-      if(key === 'open-live-particle') {
-        LIVEEDITOR.open(objectSelected, 'particle')
+      if(key === 'set-world-respawn-point') {
+        window.socket.emit('updateWorld', {worldSpawnPointX: objectSelected.x, worldSpawnPointY:  objectSelected.y})
       }
 
-      if(key === 'open-live-light') {
-        LIVEEDITOR.open(objectSelected, 'light')
+      if(key === 'set-object-respawn-point') {
+        networkEditObject(objectSelected, { spawnPointX: objectSelected.x, spawnPointY: objectSelected.y })
       }
 
-      if(key === 'open-construct-editor') {
-        openConstructEditor(objectSelected)
+      if(key === 'turn-into-spawn-zone') {
+        window.socket.emit('addSubObject', objectSelected, { tags: { potential: true } }, 'spawner')
+        networkEditObject(objectSelected, { tags: {spawnZone: true}, spawnLimit: -1, spawnPoolInitial: 1, subObjectChances: {'spawner': {randomWeight: 1, conditionList: null}} })
       }
 
-      if(key === 'open-path-editor') {
-        MAPEDITOR.openPathEditor(objectSelected)
-      }
-
-      if (key === "open-physics-live-editor") {
-        LIVEEDITOR.open(objectSelected, 'physics')
+      if(key === 'turn-into-resource-zone') {
+        networkEditObject(objectSelected, { tags: {resourceZone: true}, resourceWithdrawAmount: 1, resourceLimit: -1, resourceTags: { resource: true } })
       }
 
       if (key === "add-to-creator-library") {
@@ -55,6 +65,8 @@ export default class ServicesMenu extends React.Component{
           showCancelButton: true,
           confirmButtonText: 'Next',
         })
+
+        if(!name) return
         const { value: columnName } = await Swal.fire({
           title: 'Add to creator library',
           text: "What column? (enter name case sensitive)",
@@ -66,6 +78,8 @@ export default class ServicesMenu extends React.Component{
           confirmButtonText: 'Add to library',
         })
 
+        if(!columnName) return
+
         if(objectSelected.tags.hero) {
 
         } else if(subObject) {
@@ -75,7 +89,6 @@ export default class ServicesMenu extends React.Component{
             columnName,
             libraryName: 'subObjectLibrary',
             libraryId: name,
-            JSON: OBJECTS.getProperties(objectSelected)
           } } })
         } else {
           window.socket.emit('updateLibrary', { object: {...GAME.library.object, [name]: OBJECTS.getProperties(objectSelected)} })
@@ -84,7 +97,6 @@ export default class ServicesMenu extends React.Component{
             columnName,
             libraryName: 'objectLibrary',
             libraryId: name,
-            JSON: OBJECTS.getProperties(objectSelected)
           } } })
         }
       }
@@ -100,6 +112,8 @@ export default class ServicesMenu extends React.Component{
           showCancelButton: true,
           confirmButtonText: 'Next',
         })
+        if(!name) return
+
         window.socket.emit('updateLibrary', { object: {...GAME.library.objects, [name]: OBJECTS.getProperties(objectSelected)} })
       }
 
@@ -114,6 +128,8 @@ export default class ServicesMenu extends React.Component{
           showCancelButton: true,
           confirmButtonText: 'Next',
         })
+        if(!columnName) return
+
         window.socket.emit('updateLibrary', { subObject: {...GAME.library.subObject, [name]: OBJECTS.getProperties(objectSelected)} })
       }
 
@@ -156,20 +172,14 @@ export default class ServicesMenu extends React.Component{
 
     // <MenuItem key='set-object-respawn-point'>Set current position as object respawn point</MenuItem>
     // <MenuItem key='set-world-respawn-point'>Set current position as world respawn point</MenuItem>
-    // <MenuItem key="edit-properties-json">Edit Properties JSON</MenuItem>
-    // <MenuItem key="edit-state-json">Edit State JSON</MenuItem>
-
-    return <Menu onClick={this._handleServicesMenuClick}>
+    return <Menu onClick={this._handleEditorActionMenuClick}>
       {!objectSelected.tags.hero && <MenuItem key="add-to-creator-library">Add to creator library</MenuItem>}
       {!objectSelected.tags.hero && <MenuItem key="add-to-object-library">Add to object library</MenuItem>}
       {!objectSelected.tags.hero && <MenuItem key="add-to-subobject-library">Add to sub object library</MenuItem>}
-      <MenuItem key='open-construct-editor'>Open construct editor</MenuItem>
-      <MenuItem key='open-path-editor'>Open path editor</MenuItem>
-      <MenuItem key='open-physics-live-editor'>Live Edit Physics</MenuItem>
-      <MenuItem key='open-live-particle'>Live Edit Particle</MenuItem>
-      <MenuItem key='open-live-light'>Live Edit Light</MenuItem>
       <MenuItem key='generate-maze'>Generate maze</MenuItem>
-      <MenuItem key='edit-descriptors'>Edit Descriptors</MenuItem>
+      <MenuItem key='add-new-subobject'>Add new sub object</MenuItem>
+      <MenuItem key='turn-into-spawn-zone'>Turn into spawn zone</MenuItem>
+      <MenuItem key='turn-into-resource-zone'>Turn into resource zone</MenuItem>
     </Menu>
   }
 }

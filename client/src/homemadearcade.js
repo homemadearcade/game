@@ -44,8 +44,6 @@ If you have a descriptor on an object that has a withDescriptors property, do a 
 
 Home made arcade music
 
-right click -> open advanced menu which switches to a new context menu
-
 If an array changes we need to send the whole thing in the DIFF
 
 Create new descriptor tag in sprite editor, it just adds the descriptor to the sprite but
@@ -53,8 +51,6 @@ Create new descriptor tag in sprite editor, it just adds the descriptor to the s
 update prologue to incorporate new flow. Draw -> Describe -> Dialogue -> Decide Themes
 
 experience password for ha-live. Use month+day - 100
-
-Change on collide to on touch start for certain tags
 
 STORY - Fade in/out to game (we will probably use this in HA opening animations..)
 //^^ take a loot at animate.css which i think is already installed..
@@ -66,7 +62,6 @@ COMPENDIUM SERVICE UPGRADEs
 ////////////////////////////////
 global compendium service that I can add to remove without copying and pasting JSON
 need to create interface for the entire library/compendium!
-have CREATOR service always look up the JSON from the library, it should not store its own JSON
 
 ////////////////////////////////
 ////////////////////////////////
@@ -74,7 +69,6 @@ UX UPGRADE
 ////////////////////////////////
 // suggested tags, in the tags library, make tags objects, and add suggested as a property
 right click creator service - add to heros guidance? NOT BAD!
-Simple Context Menu for items with certain descriptors, cuz right now this shit is off the hook w too many options
 suggestedContextMenu items is the key...
 Pinch hitter - Transform To…
 
