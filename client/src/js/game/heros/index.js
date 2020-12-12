@@ -104,7 +104,7 @@ class Hero{
     }
 
     window.local.on('onGridLoaded', () => {
-      window.defaultHero.tags = {...window.heroTags}
+      window.defaultHero.tags = {...window.defaultHeroTags}
       window.defaultHero.x = GAME.grid.startX + (GAME.grid.width * GAME.grid.nodeSize)/2
       window.defaultHero.y = GAME.grid.startY + (GAME.grid.height * GAME.grid.nodeSize)/2
       window.defaultHero.width = GAME.grid.nodeSize

@@ -11,6 +11,7 @@ import PlayerCreateObjectMenu from '../menus/PlayerCreateObjectMenu.jsx';
 import SequencesMenu from '../menus/SequencesMenu.jsx';
 import CurrentTagsMenu from '../menus/CurrentTagsMenu.jsx';
 import EmitterMenu from '../menus/EmitterMenu.jsx';
+import RelatedTagsMenu from '../menus/RelatedTagsMenu.jsx';
 
 // import DescriptorsMenu from '../menus/DescriptorMenu.jsx';
 import QuestMenu from '../menus/QuestMenu.jsx';
@@ -259,8 +260,11 @@ export default class GeneratedMenu extends React.Component {
         </SubMenu>}
         {!isInvisible && !objectSelected.contructParts && <MenuItem key="select-color" className='dont-close-menu'>Color</MenuItem>}
         {!isInvisible && !objectSelected.contructParts && <MenuItem key="open-media-manager-sprite-selector">Sprite</MenuItem>}
-          <SubMenu title="Current Tags">
+        <SubMenu title="Current Tags">
           <CurrentTagsMenu objectSelected={objectSelected} currentTags={objectSelected.tags}></CurrentTagsMenu>
+        </SubMenu>
+        <SubMenu title="Suggested Tags">
+          <RelatedTagsMenu objectSelected={objectSelected}></RelatedTagsMenu>
         </SubMenu>
         {objectSelected.tags.talker && <SubMenu title="Dialogue Sets">
           <DialogueSetsMenu objectSelected={objectSelected} subObject={subObject}/>

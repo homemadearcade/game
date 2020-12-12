@@ -108,7 +108,7 @@ export default class TagMenu extends React.Component{
         {this._renderTagMenuItems(window.subObjectTags)}
       </SubMenu>}
       {objectSelected.tags.hero && <SubMenu title="Hero">
-        {this._renderTagMenuItems(window.heroTags)}
+        {this._renderTagMenuItems(window.defaultHeroTags)}
       </SubMenu>}
       <SubMenu title="Optimization">
         {this._renderTagMenuItems(window.featureOptimizationTags)}

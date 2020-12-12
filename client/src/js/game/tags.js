@@ -1,6 +1,8 @@
 function setDefault() {
   window.movementTags = {
-    moving: false,
+    moving: {
+      relatedTags: ['gravityY', 'pacer', 'spelunker', 'wander', 'lemmings', 'goomba', 'goombaSideways']
+    },
     pacer: false,
     spelunker: false,
     lemmings: false,
@@ -10,8 +12,12 @@ function setDefault() {
   }
 
   window.targetTags = {
-    homing: false,
-    zombie: false,
+    homing: {
+      relatedTags: ['targetAuto', 'targetBehind', 'targetResetEveryRound', 'targetHeroOnAware', 'targetVictimOnAware', 'targetSwitchOnAware', 'targetClearOnUnaware']
+    },
+    zombie: {
+      relatedTags: ['targetAuto', 'targetBehind', 'targetResetEveryRound', 'targetHeroOnAware', 'targetVictimOnAware', 'targetSwitchOnAware', 'targetClearOnUnaware']
+    },
     targetAuto: false,
     targetBehind: false,
     targetResetEveryRound: false,
@@ -24,14 +30,18 @@ function setDefault() {
   window.physicsTags = {
     gravityY: false,
     ignoreWorldGravity: false,
-    obstacle: false,
+    obstacle: {
+      relatedTags: ['noMonsterAllowed', 'heroPushable']
+    },
     // projectile: false,
     noMonsterAllowed: false,
     noHeroAllowed: false,
     movingPlatform: false,
     heroPushable: false,
     skipHeroGravityOnCollide: false,
-    rotateable: false,
+    rotateable: {
+      relatedTags: ['realRotate', 'realRotateFast']
+    },
   }
 
   window.featureOptimizationTags = {
@@ -51,7 +61,7 @@ function setDefault() {
     interactable: false,
 
     // allows corrections and physics movement
-    moving: false,
+    moving: window.movementTags.moving,
 
     trackObjectsTouching: false,
 
@@ -74,8 +84,12 @@ function setDefault() {
 
   window.combatTags = {
     monsterDestroyer: false,
-    monsterVictim: false,
-    monster: false,
+    monsterVictim: {
+      relatedTags: ['respawn']
+    },
+    monster:  {
+      relatedTags: ['respawn']
+    },
     respawn: false,
     // knockBackOnHit,
     // explodeOnDestroy: false,
@@ -92,7 +106,9 @@ function setDefault() {
 
   window.resourceZoneTags = {
     resource: false,
-    resourceZone: false,
+    resourceZone: {
+      relatedTags: ['popResourceCount', 'resourceDepositOnInteract', 'resourceDepositAllOnCollide', 'resourceWithdrawOnCollide', 'resourceWithdrawOnInteract']
+    },
     resourceDepositOnInteract: false,
     resourceDepositAllOnCollide: false,
     resourceWithdrawOnInteract: false,
@@ -107,8 +123,12 @@ function setDefault() {
   }
 
   window.spawnZoneTags = {
-    spawnZone: false,
-    spawnRandomlyWithin: false,
+    spawnZone: {
+      relatedTags: ['spawnRandomlyWithin', 'spawnOnInterval', 'spawnAllOnDestroy', 'spawnAllInHeroInventory', 'destroyOnSpawnPoolDepleted']
+    },
+    spawnRandomlyWithin: {
+      relatedTags: ['spawnOverObstacles', 'spawnOverNonObstacles', 'spawnClearAllObjects', 'spawnClearSpawnedObjects']
+    },
     spawnOnInterval: false,
 
     // spawnAllOnStart: false,
@@ -125,7 +145,9 @@ function setDefault() {
   }
 
   window.dialogueTags = {
-    talker: false,
+    talker: {
+      relatedTags: ['talkOnStart', 'talkOnHeroCollide', 'talkOnHeroInteract', 'oneTimeTalker', 'loopInteractionOnDialogueComplete', 'autoTalkOnInteractable'],
+    },
     talkOnStart: false,
     talkOnHeroCollide: false,
     talkOnHeroInteract: false,
@@ -158,9 +180,13 @@ function setDefault() {
   }
 
   window.graphicalTags = {
-    glowing: false,
+    glowing: {
+      relatedTags: ['stopGlowingOnTrigger']
+    },
     outline: false,
-    invisible: false,
+    invisible: {
+      relatedTags: ['cameraLock', 'darkArea']
+    },
     tilingSprite: false, //cant change
     inputDirectionSprites: false,
     light: false,
@@ -183,18 +209,23 @@ function setDefault() {
     hidden: false,
     seeThroughOnHeroCollide: false,
     background: false,
-    foreground: false,
+    foreground: {
+      relatedTags: ['seeThroughOnHeroCollide']
+    },
   }
 
   window.inventoryTags = {
-    pickupable: false,
+    pickupable: {
+      relatedTags: ['startsPickedUp', 'startsEquipped', 'dontDestroyOnPickup', 'pickupOnHeroCollide', 'pickupOnHeroInteract', 'equipOnPickup']
+    },
     dontDestroyOnPickup: false,
     pickupOnHeroInteract: false,
     pickupOnHeroCollide: false,
-    equippable: false,
     equipOnPickup: false,
     // potential: false,
-    stackable: false,
+    stackable: {
+      relatedTags: ['popCount', 'showCountInHUD']
+    },
     // dropOnOwnerDestroyed: false,
     startsPickedUp: false,
     startsEquipped: false,
@@ -224,21 +255,6 @@ function setDefault() {
     // realHover: false,
   }
 
-  window.descriptiveTags = {
-    plain: false,
-    hero: false,
-    fresh: false,
-    spawned: false,
-    // npc: false,
-    // alive: false,
-    // removed: false,
-    maze: false,
-  }
-
-  window.proceduralTags = {
-    heroHomePlatform: false,
-  }
-
   window.pathTags = {
     path: false,
     pathfindLoop: false,
@@ -254,6 +270,30 @@ function setDefault() {
     popCount: false,
   }
 
+  window.heroTags = {
+    hero: true,
+    centerOfAttention: false,
+    disableUpKeyMovement: false,
+    disableDownKeyMovement: false,
+    seeThroughForegrounds: false,
+    seeHiddenObjects: false,
+    autoUpdateMaxVelocity: true,
+  }
+
+  window.subObjectTags = {
+    subObject: {
+      relatedTags: ['potential','onMapWhenEquipped', 'awarenessTriggerArea', 'relativeToDirection','relativeToAngle' ]
+    },
+    onMapWhenEquipped: false, //cant change,
+    // showCountInHUD: false,
+    heroInteractTriggerArea: false,
+    awarenessTriggerArea: false,
+    objectInteractTriggerArea: false,
+    relativeToDirection: false,
+    relativeToAngle: false,
+    potential: false, //cant change
+  }
+
   window.defaultTags = {
     ...window.physicsTags,
     ...window.spawnZoneTags,
@@ -266,7 +306,6 @@ function setDefault() {
     ...window.questTags,
     ...window.movementTags,
     ...window.graphicalTags,
-    ...window.descriptiveTags,
     ...window.cameraTags,
     ...window.particleTags,
     ...window.inventoryTags,
@@ -275,8 +314,22 @@ function setDefault() {
     ...window.proceduralTags,
     ...window.pathTags,
     ...window.popoverTags,
+    ...window.targetTags,
+    ...window.subObjectTags,
   }
 
+
+  /// THESE TAGS BELOW ARENT USED... in the SAME WAY... I guess..
+  window.descriptiveTags = {
+    plain: false,
+    hero: false,
+    fresh: false,
+    spawned: false,
+    // npc: false,
+    // alive: false,
+    // removed: false,
+    maze: false,
+  }
 
   window.audioQualityTags = {
     walkRetro: false,
@@ -284,11 +337,13 @@ function setDefault() {
     walkDescriptor: false,
     walkOverhead: false,
   }
-  window.heroTags = {
-    hero: true,
+
+  window.defaultHeroTags = {
+    ...window.heroTags,
     respawn: true,
     gravityY: false,
     saveAsDefaultHero: false,
+
     monsterDestroyer: false,
     obstacle: false,
     rotateable: false,
@@ -296,56 +351,31 @@ function setDefault() {
     hasTrail: false,
     moving: true,
     noticeable: true,
-    centerOfAttention: false,
+
+    inputDirectionSprites: false,
+
     trackObjectsWithin: false,
     trackObjectsTouching: true,
+    poweredUp: false,
     // allowCameraRotation: false,
 
-    seeThroughForegrounds: false,
-    seeHiddenObjects: false,
-    autoUpdateMaxVelocity: true,
-
     ...window.audioQualityTags,
-  }
-
-  window.subObjectTags = {
-    subObject: true,
-    onMap: false,
-    onMapWhenEquipped: false, //cant change,
-    // showCountInHUD: false,
-    heroInteractTriggerArea: false,
-    awarenessTriggerArea: false,
-    objectInteractTriggerArea: false,
-    relativeToDirection: false,
-    relativeToAngle: false,
-    potential: false, //cant change
-  }
-
-  window.keyInputTags = {
-    disableUpKeyMovement: false,
-    disableDownKeyMovement: false,
-    zButtonHoldable: false,
-    xButtonHoldable: false,
-    cButtonHoldable: false,
-    spaceBarHoldable: false,
   }
 
   window.generatedTags = {
     lastAnticipatedObject: false,
     fresh: false,
     adminInch: false,
+    heroHomePlatform: false,
   }
 
   window.tags = JSON.parse(JSON.stringify(window.defaultTags))
 
   window.allTags = {
     ...window.tags,
-    ...window.keyInputTags,
-    ...window.heroTags,
-    ...window.subObjectTags,
+    // ...window.defaultHeroTags,
     ...window.descriptiveTags,
     ...window.generatedTags,
-    ...window.targetTags,
     ...window.allDescriptors,
   }
 
