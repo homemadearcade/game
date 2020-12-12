@@ -71,10 +71,16 @@ function createBullet({ shooter, actionProps, direction }) {
 
   const velocity = actionProps.shootVelocity || 100
 
-  if(shooter.angle) {
+  if(shooter.angle && shooter.tags.relativeToAngle) {
+    const heightRotated = (shooter.height/2) * -1
+    const widthRotated = (shooter.width/2) * -1
+
+    var rotatedRelativeX = Math.cos(shooter.angle) * ((widthRotated)) - Math.sin(shooter.angle) * (heightRotated);
+    var rotatedRelativeY = Math.sin(shooter.angle) * ((widthRotated)) + Math.cos(shooter.angle) * (heightRotated);
+
     Object.assign(shot, {
-      x: shooter.x + (shooter.width/2),
-      y: shooter.y,
+      x: shooter.x + shooter.mod().width/2 + rotatedRelativeX - shot.width/2,
+      y: shooter.y + shooter.mod().height/2 + rotatedRelativeY - shot.height/2,
       velocityAngle: velocity,
       angle: shooter.angle,
     })
