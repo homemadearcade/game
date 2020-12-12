@@ -9,6 +9,17 @@ export default class CreateObject extends React.Component {
     this._handleCreateObjectClick = ({ key }) => {
       const { objectSelected } = this.props
 
+      if(key === 'select-from-library') {
+        const library = window.objectLibrary.addGameLibrary()
+        modals.openSelectFromList('Select an object', Object.keys(library), async (result) => {
+          const id = result.value
+          if(!id) return
+
+          OBJECTS.create({...objectSelected, ...library[id]})
+        })
+      }
+
+
       if(key === 'create-obstacle') {
         OBJECTS.create({...objectSelected, tags: {obstacle: true}})
       }
@@ -63,6 +74,7 @@ export default class CreateObject extends React.Component {
 
   render() {
     return <Menu onClick={this._handleCreateObjectClick}>
+      <MenuItem key={'select-from-library'}>Select from Library</MenuItem>
       <MenuItem key={'create-obstacle'}>Obstacle</MenuItem>
       <MenuItem key={'create-invisible'}>Invisible</MenuItem>
       <MenuItem key={'create-emitter'}>Emitter</MenuItem>

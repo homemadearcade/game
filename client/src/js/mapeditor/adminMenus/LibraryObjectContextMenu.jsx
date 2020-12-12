@@ -46,7 +46,6 @@ export default class LibraryObjectContextMenu extends React.Component{
           columnName: GAME.library.creator[libraryId].columnName,
           libraryName,
           libraryId,
-          JSON: OBJECTS.getProperties(objectSelected)
         }
         GAME.library.creator[creatorLibraryId] = null
         window.socket.emit('updateLibrary', { creator: GAME.library.creator })
@@ -89,7 +88,6 @@ export default class LibraryObjectContextMenu extends React.Component{
             columnName,
             libraryName: 'subObjectLibrary',
             libraryId: name,
-            JSON: OBJECTS.getProperties(copy)
           } } })
         } else {
           window.socket.emit('updateLibrary', { object: {...GAME.library.object, [name]: OBJECTS.getProperties(copy)} })
@@ -98,7 +96,6 @@ export default class LibraryObjectContextMenu extends React.Component{
             columnName,
             libraryName: 'objectLibrary',
             libraryId: name,
-            JSON: OBJECTS.getProperties(copy)
           } } })
         }
       }
@@ -111,10 +108,6 @@ export default class LibraryObjectContextMenu extends React.Component{
         modals.openEditCodeModal('Edit Library Object - ' + creatorLibraryId, objectSelected, (result) => {
           if(result && result.value) {
             const editedCode = JSON.parse(result.value)
-            if(GAME.library.creator[creatorLibraryId]) {
-              GAME.library.creator[creatorLibraryId].JSON = editedCode
-              window.socket.emit('updateLibrary', { creator: GAME.library.creator })
-            }
 
             if(!subObject && GAME.library.object[libraryId]) {
               const editedCode = JSON.parse(result.value)

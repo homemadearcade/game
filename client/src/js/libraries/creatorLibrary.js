@@ -45,12 +45,12 @@ function toggleMod(modId) {
 function toggleSubObject(subObjectId, modId) {
   let objectId = null
   return {
-    onToggleOn: () => {
+    onShiftToggleOn: () => {
       const so = _.cloneDeep(window.subObjectLibrary.addGameLibrary()[subObjectId])
       so.tags.startsEquipped = true
       window.socket.emit('addSubObject', GAME.heros[HERO.editingId || HERO.id], so, subObjectId)
     },
-    onToggleOff: () => {
+    onShiftToggleOff: () => {
       window.socket.emit('deleteSubObject', GAME.heros[HERO.editingId || HERO.id], subObjectId)
     }
   }
@@ -90,63 +90,54 @@ function onFirstPageGameLoaded() {
       columnName: 'Objects',
       libraryName:'objectLibrary',
       libraryId:'background',
-      JSON: window.objectLibrary.background,
     },
     obstacle: {
       label: 'Obstacle',
       columnName: 'Objects',
       libraryName:'objectLibrary',
       libraryId:'obstacle',
-      JSON: window.objectLibrary.default,
     },
     foreground: {
       label: 'Foreground',
       columnName: 'Objects',
       libraryName:'objectLibrary',
       libraryId:'foreground',
-      JSON: window.objectLibrary.foreground,
     },
     welcomer: {
       label: 'Welcomer',
       columnName: 'NPCs',
       libraryName:'objectLibrary',
       libraryId:'welcomer',
-      JSON: window.objectLibrary.welcomer,
     },
     standingNPC: {
       label: 'Standing',
       columnName: 'NPCs',
       libraryName:'objectLibrary',
       libraryId:'standingNPC',
-      JSON: window.objectLibrary.standingNPC,
     },
     wanderingNPC: {
       label: 'Wandering',
       columnName: 'NPCs',
       libraryName:'objectLibrary',
       libraryId:'wanderingNPC',
-      JSON: window.objectLibrary.wanderingNPC,
     },
     light: {
       label: 'Medium  Light',
       columnName: 'Lights',
       libraryName:'objectLibrary',
       libraryId:'light',
-      JSON: window.objectLibrary.light,
     },
     fire: {
       label: 'Fire',
       columnName: 'Lights',
       libraryName:'objectLibrary',
       libraryId:'fire',
-      JSON: window.objectLibrary.fire,
     },
     spawnZone: {
       label: 'Spawn Zone',
       columnName: 'Zones',
       libraryName:'objectLibrary',
       libraryId:'spawnZone',
-      JSON: window.objectLibrary.spawnZone,
       // onCreateObject: (object) => {
       //   window.socket.emit('addSubObject', object, { tags: { potential: true } }, 'spawner')
       // },
@@ -156,28 +147,24 @@ function onFirstPageGameLoaded() {
       columnName: 'Zones',
       libraryName:'objectLibrary',
       libraryId:'resourceZone',
-      JSON: window.objectLibrary.resourceZone
     },
     resource: {
       label: 'Resource',
       columnName: 'Items',
       libraryName:'objectLibrary',
       libraryId:'items',
-      JSON: window.objectLibrary.resource
     },
     chest: {
       label: 'Chest',
       columnName: 'Items',
       libraryName:'objectLibrary',
       libraryId:'chest',
-      JSON: window.objectLibrary.chest,
     },
     homing: {
       label: 'Homing',
       columnName: 'Monsters',
       libraryName:'objectLibrary',
       libraryId:'homing',
-      JSON: window.objectLibrary.homing,
     },
     spin: {
       label: 'Spin',
@@ -335,57 +322,48 @@ function onFirstPageGameLoaded() {
       columnName: 'Blocks',
       libraryName:'objectLibrary',
       libraryId:'zeldaPowerBlock',
-      JSON: window.objectLibrary.zeldaPowerBlock,
     },
     marioPowerBlock: {
       label: 'Mario',
       columnName: 'Blocks',
       libraryName:'objectLibrary',
       libraryId:'marioPowerBlock',
-      JSON: window.objectLibrary.marioPowerBlock,
     },
     asteroidsPowerBlock: {
       label: 'Asteroids',
       columnName: 'Blocks',
       libraryName:'objectLibrary',
       libraryId:'asteroidsPowerBlock',
-      JSON: window.objectLibrary.asteroidsPowerBlock,
     },
     ufoPowerBlock: {
       label: 'UFO',
       columnName: 'Blocks',
       libraryName:'objectLibrary',
       libraryId:'ufoPowerBlock',
-      JSON: window.objectLibrary.ufoPowerBlock,
     },
     starViewBlock: {
       label: 'Star View',
       columnName: 'Blocks',
       libraryName:'objectLibrary',
       libraryId:'starViewBlock',
-      JSON: window.objectLibrary.starViewBlock,
     },
     roof: {
       label: 'Roof',
       columnName: 'Basic',
       libraryName:'objectLibrary',
       libraryId:'roof',
-      JSON: window.objectLibrary.roof,
     },
     // gunPickupable: {
     //   label: 'Gun',
     //   columnName: 'Items',
-    //   JSON: window.subObjectLibrary.gun,
     // },
     // spearPickupable: {
     //   label: 'Spear',
     //   columnName: 'Items',
-    //   JSON: window.subObjectLibrary.spear,
     // },
     // marioCap: {
     //   label: 'Mario Hat',
     //   columnName: 'Items',
-    //   JSON: window.subObjectLibrary.marioCap,
     // },
     seeHiddenPower: {
       label: 'Uncoverer',
@@ -482,23 +460,23 @@ function onFirstPageGameLoaded() {
     snake: true,
     sword: true,
     spear: true,
-    spearToggleable: true,
-    spearDialogueChoice: true,
+    // spearToggleable: true,
+    // spearDialogueChoice: true,
     gun: true,
     fireballGun: true,
-    randomGun: true,
-    randomLaser: true,
+    // randomGun: true,
+    // randomLaser: true,
     shrinkRay: true,
     bombs: true,
-    seeThroughForegroundPower: true,
-    seeHiddenPower: true,
+    // seeThroughForegroundPower: true,
+    // seeHiddenPower: true,
     zeldaPowerBlock: true,
     marioPowerBlock: true,
     asteroidsPowerBlock: true,
     ufoPowerBlock: true,
     starViewBlock: true,
 
-    evidenceChain1: true,
+    // evidenceChain1: true,
     // evidenceChain2: true,
 
     engineTrail: true,

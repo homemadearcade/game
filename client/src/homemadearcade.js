@@ -56,9 +56,6 @@ experience password for ha-live. Use month+day - 100
 
 Change on collide to on touch start for certain tags
 
-Swords can just be the SLASHES you dont actually have to show the sword!! Omg genius…
-HITBOXES with duration. Use my own collision system
-
 STORY - Fade in/out to game (we will probably use this in HA opening animations..)
 //^^ take a loot at animate.css which i think is already installed..
 
@@ -70,22 +67,6 @@ COMPENDIUM SERVICE UPGRADEs
 global compendium service that I can add to remove without copying and pasting JSON
 need to create interface for the entire library/compendium!
 have CREATOR service always look up the JSON from the library, it should not store its own JSON
-
-////////////////////////////////
-////////////////////////////////
-ADD SUBOBJECT UPGRADES
-////////////////////////////////
-Similar to right click create object. I need a right click - create subobject
-  // and it should have similar options as the object one
-Spear
-Gun
-Inventory Item
-Area x 2
-Area X 3
-Area x 4
-Potential Sub Object
-awareness areas toggleable, interact area toggleable in subobject library??idk
-Shift click on sub object in creator to add it to the map! or other way around?
 
 ////////////////////////////////
 ////////////////////////////////
@@ -139,9 +120,8 @@ Main questions for this upgrade is
   -- How to detect the destroyer! Thats key... how does _destroyedById work -- by weapon, by bullet, by player?
   -- How much damage does it do?
   -- Start with just rock paper scissors??
-  -- how to handle animations?
   -- The key to CONVENIENCE is also making sure this system works without TRIGGERS
-  -- allow a system for pattern recognition ( with patterns, timing )
+  -- allow a system for pattern recognition ( with patterns, timing )? wow like punchout..
 
 HP, DEFENSE, ATTACK, ETC, hittable, LIVES, respawn options,
 VICTIMS, ENEMIES, NEUTRAL,
@@ -277,10 +257,8 @@ bouncing ball
 various guns
   - BOOMERANG
   Bouncing ball action - mario fireball
-Sword - pickaxe? ax? Are these the same thing?
-Sword options..
-  time quota - Time that the collision boxes are active
 bullets that ping around!
+bullets that stop short before they are destroyed, so its like a limited range bullet. you can basically make a stopVelocityBeforeDestroyTimerComplete tag
 Maybe dual stick shooter potential?
 
 //TAGS

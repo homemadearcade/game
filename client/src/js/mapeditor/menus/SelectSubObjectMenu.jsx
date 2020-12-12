@@ -13,7 +13,27 @@ export default class SelectSubObjectMenu extends React.Component{
       const { objectSelected, selectSubObject } = this.props;
 
       if(key === 'add-new-subobject') {
-        modals.addNewSubObjectTemplate(objectSelected)
+        const library = window.subObjectLibrary.addGameLibrary()
+        modals.openSelectFromList('Select a sub object', Object.keys(library), async (result) => {
+          const id = result.value
+          if(!id) return
+          const { value: name } = await Swal.fire({
+            title: 'What will be the name of the sub object?',
+            input: 'text',
+            inputAttributes: {
+              autocapitalize: 'off'
+            },
+            inputValue: id,
+            showCancelButton: true,
+            confirmButtonText: 'Next',
+          })
+
+          if(name) {
+            const copy = Object.replaceAll(library[id], id, name, true, true)
+            window.socket.emit('addSubObject', objectSelected, copy, name)
+          }
+
+        })
       }
 
       if(key.indexOf(selectSubObjectPrefix) === 0) {
@@ -50,8 +70,8 @@ export default class SelectSubObjectMenu extends React.Component{
     const { objectSelected } = this.props;
 
     return <Menu onClick={this._handleSelectSubObjectMenuClick}>
-      {this._renderSelectSubObjectMenuItems(objectSelected.subObjects)}
       <MenuItem key='add-new-subobject'>Add new sub object</MenuItem>
+      {this._renderSelectSubObjectMenuItems(objectSelected.subObjects)}
     </Menu>
   }
 }

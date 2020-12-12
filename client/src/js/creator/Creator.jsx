@@ -220,17 +220,20 @@ export default class Creator extends React.Component {
     const { creatorObjectsToggled } = this.state;
     if(object.onShiftClick && EDITOR.shiftPressed) {
       object.onShiftClick.bind(this)()
-    } else if(object.onToggleOn && !creatorObjectsToggled[object.toggleId]) {
+    } else if(((object.onShiftToggleOn && EDITOR.shiftPressed) || (object.onToggleOn && !EDITOR.shiftPressed)) && !creatorObjectsToggled[object.toggleId]) {
       if(object.columnExclusiveToggle) await this._untoggleExclusivesInColumn(object.columnName)
-      object.onToggleOn.bind(this)()
+      if(object.onToggleOn) object.onToggleOn.bind(this)()
+      if(object.onShiftToggleOn) object.onShiftToggleOn.bind(this)()
       this.setState({
         creatorObjectsToggled: {
           ...this.state.creatorObjectsToggled,
           [object.toggleId]: true
         }
       })
-    } else if(object.onToggleOff && creatorObjectsToggled[object.toggleId]) {
-      object.onToggleOff.bind(this)()
+    } else if(((object.onShiftToggleOff && EDITOR.shiftPressed) || (object.onToggleOff && !EDITOR.shiftPressed)) && creatorObjectsToggled[object.toggleId]) {
+      if(object.onToggleOff) object.onToggleOff.bind(this)()
+      if(object.onShiftToggleOff) object.onShiftToggleOff.bind(this)()
+
       this.setState({
         creatorObjectsToggled: {
           ...creatorObjectsToggled,
@@ -241,7 +244,7 @@ export default class Creator extends React.Component {
       object.onSelect.bind(this)()
     } else {
       this.setState({
-        creatorObjectSelected: object
+        creatorObjectSelected: {...object, JSON: window[object.libraryName].addGameLibrary()[object.libraryId] }
       })
     }
   }
@@ -277,7 +280,7 @@ export default class Creator extends React.Component {
       </div>
       {open &&
         column.map((object) => {
-          const hasShiftClick = object.onShiftClick && EDITOR.shiftPressed
+          const hasShiftClick = (object.onShiftClick || object.onShiftToggleOn) && EDITOR.shiftPressed
           const selected = object.label === creatorObjectSelected.label
           const toggledOn = creatorObjectsToggled[object.toggleId]
           return <Textfit className={classnames("Creator__category-item", { "Creator__category-item--selected": selected, "Creator__category-item--shift": hasShiftClick })} id='fitty' mode="single" min={14} max={26}>

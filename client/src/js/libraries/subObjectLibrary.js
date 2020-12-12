@@ -2,6 +2,29 @@ window.radianCircle = 6.28319
 
 window.local.on('onFirstPageGameLoaded', () => {
   window.subObjectLibrary = {
+    potential: {
+      relativeWidth: 0,
+      relativeHeight: 0,
+      relativeX: 0,
+      relativeY: 0,
+      tags: { potential: true},
+    },
+    heroInteractTriggerArea: {
+      x: 0, y: 0, width: 40, height: 40,
+      relativeWidth: GAME.grid.nodeSize * 2,
+      relativeHeight: GAME.grid.nodeSize * 2,
+      relativeX: 0,
+      relativeY: 0,
+      tags: { obstacle: false, invisible: true, heroInteractTriggerArea: true },
+    },
+    awarenessTriggerArea: {
+      x: 0, y: 0, width: 40, height: 40,
+      relativeWidth: GAME.grid.nodeSize * 12,
+      relativeHeight: GAME.grid.nodeSize * 12,
+      relativeX: 0,
+      relativeY: 0,
+      tags: { obstacle: false, invisible: true, awarenessTriggerArea: true, relativeToDirection: true, },
+    },
     smallSword: {
       "relativeX": -0.5714285714286689,
       "relativeY": -30.28571646554127,

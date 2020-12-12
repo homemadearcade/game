@@ -122,9 +122,9 @@ class Hero{
         awarenessTriggerArea: {
           x: 0, y: 0, width: 40, height: 40,
           relativeWidth: GAME.grid.nodeSize * 12,
-          relativeHeight: GAME.grid.nodeSize * 16,
+          relativeHeight: GAME.grid.nodeSize * 12,
           relativeX: 0,
-          relativeY: -GAME.grid.nodeSize * 4,
+          relativeY: 0,
           tags: { obstacle: false, invisible: true, awarenessTriggerArea: true, relativeToDirection: true, },
         },
         // spear: {

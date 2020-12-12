@@ -45,7 +45,7 @@ function update() {
   if((PAGE.role.isAdmin || (GAME.heros[HERO.id].flags.showMapHighlight && (!GAME.gameState.started || GAME.heros[HERO.id].flags.editAllowedWhenGameStarted) )) && objectHighlighted && !objectHighlighted.CREATOR) {
     if(objectHighlighted.tags && (objectHighlighted.defaultSprite === 'invisible' || objectHighlighted.tags.invisible) && objectHighlightedChildren.length === 0 && (!resizingObject || objectHighlighted.id !== resizingObject.id)) {
       let color = 'rgba(255,255,255,0.2)'
-      drawTools.drawFilledObject(ctx, {...objectHighlighted, color}, camera)
+      drawTools.drawObject(ctx, {...objectHighlighted, tags: {...objectHighlighted.tags, invisible: false }, color}, camera)
       drawTools.drawBorder(ctx, {...objectHighlighted, color: 'white'}, camera)
     } else {
       let color = 'white'

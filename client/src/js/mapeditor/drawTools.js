@@ -135,9 +135,18 @@ function drawVertice(ctx, vertice, camera) {
 }
 
 function drawBorder(ctx, object, camera, options = { thickness: 1 }) {
+  ctx.save()
+  if(object.tags && object.tags.rotateable) {
+    ctx.beginPath();
+    ctx.translate((object.x * camera.multiplier) - camera.x + ((object.width/2) * camera.multiplier), (object.y * camera.multiplier) - camera.y + ((object.height/2) * camera.multiplier));
+    ctx.rotate(object.angle);
+    object = {...object, x: -(object.width/2), y: -(object.height/2)}
+    camera = {...camera, x: 0, y: 0}
+  }
   getObjectVertices(ctx, object, camera, options).forEach((vertice) => {
     drawVertice(ctx, vertice, camera)
   })
+  ctx.restore()
 }
 
 function drawObject(ctx, object, camera, options = {showInvisible: false, strokeRect: false }) {

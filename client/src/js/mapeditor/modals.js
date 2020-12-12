@@ -270,6 +270,20 @@ function openSelectEffect(cb) {
   }).then(cb)
 }
 
+function openSelectLibrarySubObject(cb) {
+  Swal.fire({
+    title: 'What sub object do you want to add?',
+    showClass: {
+      popup: 'animated fadeInDown faster'
+    },
+    hideClass: {
+      popup: 'animated fadeOutUp faster'
+    },
+    input: 'select',
+    inputOptions: window.subObjectLibrary.addGameLibrary(),
+  }).then(cb)
+}
+
 function openSelectTag(cb) {
   Swal.fire({
     title: 'Select a tag',
@@ -296,7 +310,6 @@ function openSelectFromList(title, list, cb) {
     input: 'select',
     inputOptions: list,
     preConfirm: (result) => {
-      console.log('RE', result)
       return list[result]
     }
   }).then(cb)
@@ -855,6 +868,7 @@ export default {
   openSelectEaseAnimation,
   openEditSequenceModal,
   openSelectParticleAnimation,
+  openSelectLibrarySubObject,
   // editTriggerEvent,
   openEditMod,
   addMod,
