@@ -116,7 +116,6 @@ function update(camera) {
   let viewBoundaries = HERO.getViewBoundaries(clientHero)
   GAME.objects.forEach((object) => {
     object = object.mod()
-
     if((object.tags.showXWhenRemoved && object.removed) || object.tags.showX) {
       drawTools.drawFilledObject(ctx, {...object, color: 'rgba(0,0,0, 0.33)'}, camera)
       drawTools.drawX(ctx, camera, object)

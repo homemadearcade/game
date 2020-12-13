@@ -54,8 +54,6 @@ experience password for ha-live. Use month+day - 100
 STORY - Fade in/out to game (we will probably use this in HA opening animations..)
 //^^ take a loot at animate.css which i think is already installed..
 
-Pinch hitter - Transform To…
-
 Filter for fish tank from pixi filter demo
 
 ////////////////////////////////

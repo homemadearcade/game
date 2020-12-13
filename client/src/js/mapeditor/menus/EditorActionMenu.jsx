@@ -13,6 +13,22 @@ export default class EditorActionMenu extends React.Component{
       const { objectSelected, subObject } = this.props
       const { onStartSetPathfindingLimit, networkEditObject, openConstructEditor } = MAPEDITOR
 
+      if(key === 'transform-into-library-object') {
+        const library = window.objectLibrary.addGameLibrary()
+        modals.openSelectFromList('Select an object', Object.keys(library), async (result) => {
+          const id = result.value
+          if(!id) return
+          const newObject = _.cloneDeep(library[id])
+          if(newObject.subObjects) {
+            Object.keys(newObject.subObjects).forEach((soName) => {
+              window.socket.emit('addSubObject', objectSelected, newObject.subObjects[soName], soName)
+            })
+            delete newObject.subObjects
+          }
+          networkEditObject(objectSelected, newObject)
+        })
+      }
+
       if(key === 'add-new-subobject') {
         const library = window.subObjectLibrary.addGameLibrary()
         modals.openSelectFromList('Select a sub object', Object.keys(library), async (result) => {
@@ -180,6 +196,7 @@ export default class EditorActionMenu extends React.Component{
       <MenuItem key='add-new-subobject'>Add new sub object</MenuItem>
       <MenuItem key='turn-into-spawn-zone'>Turn into spawn zone</MenuItem>
       <MenuItem key='turn-into-resource-zone'>Turn into resource zone</MenuItem>
+      <MenuItem key='transform-into-library-object'>Transform into library object</MenuItem>
     </Menu>
   }
 }

@@ -75,7 +75,7 @@ MAP.onRender = function(delta) {
 
   if(hero.zoomMultiplierTarget || hero.animationZoomTarget) PAGE.resizingMap = true
   else PAGE.resizingMap = false
-  
+
   let camera = MAP.camera
   //set camera so we render everything in the right place
   if(CONSTRUCTEDITOR.open) {
@@ -98,7 +98,7 @@ MAP.onRender = function(delta) {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   if(PIXIMAP.assetsLoaded && (!GAME.gameState.paused || CONSTRUCTEDITOR.open || PATHEDITOR.open)) {
-    // render.update(camera)
+    render.update(camera)
     // drawShadow(ctx, GAME.objects.filter((o) => {
     //   if(o.tags.obstacle) return true
     // }), GAME.heros[HERO.id])

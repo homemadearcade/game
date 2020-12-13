@@ -233,6 +233,8 @@ window.isTargetTextInput = function(keyEvent) {
 }
 
 window.isObjectSelectable = function(gameObject) {
+  if(gameObject.tags.potential) return false
+
   if(!PAGE.role.isAdmin && GAME.gameState.started) return true
 
   if(gameObject.tags.subObject && (EDITOR.preferences.selectable.subObjects === false)) return false
