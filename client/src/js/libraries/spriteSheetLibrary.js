@@ -19,6 +19,20 @@
 
     'timefantasy-animations': true,
 
+
+    'whtdragon-fish': true,
+    'whtdragon-birds': true,
+    'whtdragon-mythological': true,
+    'whtdragon-predators': true,
+    'whtdragon-farm': true,
+    'whtdragon-woodland': true,
+    'whtdragon-dragons': true,
+    'whtdragon-horses': true,
+    'whtdragon-pets': true,
+    'whtdragon-other': true,
+    'whtdragon-lawn': true,
+    'whtdragon-reptiles': true,
+
     // 'oryx-24px-scifi-environment': true,
     // 'oryx-24px-scifi-transports': true,
     // 'oryx-24px-scifi-characters': true,
@@ -57,6 +71,7 @@
   window.spriteSheetAuthors = {
     lordofthebling: false,
     oryx: true,
+    whtdragon: false,
     timeFantasy: false,
     amsimuz: false,
     tylerWarren: false,

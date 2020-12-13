@@ -4,6 +4,10 @@ window.local.on('onFirstPageGameLoaded', () => {
       objectType: 'plainObject',
       tags: { obstacle: true },
     },
+    obstacle: {
+      objectType: 'plainObject',
+      tags: { obstacle: true },
+    },
     foreground: {
       objectType: 'plainObject',
       tags: { foreground: true },

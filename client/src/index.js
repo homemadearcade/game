@@ -80,7 +80,7 @@ action props editor
 timer editor
 quest editor ( inside of default hero editor )
 GENRE libraries ( creator, generatedMenu )
-Toggle between drawing types?? Double object in construct editor to open drawing for that
+Toggle between drawing types?? Double click object in construct editor to open drawing for that
 
 draw absurd path with mouse ( as spencer suggested, just use like drag? but record mouse points. this is LOL but awesome )
 
@@ -95,7 +95,6 @@ right click - follow, pathfindTo
 LIBRARY UPGRADE
 ////////////////////////////////
 WORLDLIBRARY - Turn the editor world switching into something pulled out of a library, you feel me?..
-The real thing is going from object/subobject -> creator
 
 ////////////////////////////////
 ////////////////////////////////
@@ -162,7 +161,6 @@ Camera filters ??? Yeah? Like the pixie demo? Let them customize the LOOK and fe
 mini-map
 map rotation having problems 1) object stage already pivoted for camera reason 2) admin canvas is not rotating with
 maybe the key to rendering optimization is switching thigns like scale and position to the layers...?
-cacheing colors
 if you are a ghost, then shift+arrowkey should change camera temporarily instead of movement thing
 
 ////////////////////////////////////////////////////

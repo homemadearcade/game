@@ -175,7 +175,7 @@ class Page{
 
     let heroSummonType = 'singlePlayer'
     if(PAGE.getParameterByName('heroSummonType')) {
-      if(hasSavedHero) heroSummonType = 'resume'
+      if(hasSavedHero && JSON.parse(hasSavedHero).heroSummonType == PAGE.getParameterByName('heroSummonType')) heroSummonType = 'resume'
       else heroSummonType = PAGE.getParameterByName('heroSummonType')
     } else {
       const { value: heroLibraryNameIndex } = await Swal.fire({

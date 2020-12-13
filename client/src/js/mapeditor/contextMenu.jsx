@@ -7,7 +7,7 @@ import ObjectContextMenu from './adminMenus/objectContextMenu.jsx';
 import EditingObjectContextMenu from './adminMenus/EditingObjectContextMenu.jsx';
 import EditingSequenceContextMenu from './adminMenus/EditingSequenceContextMenu.jsx';
 import WorldContextMenu from './adminMenus/worldContextMenu.jsx';
-import SmartMenu from './adminMenus/smartMenu.jsx';
+import SmartMenu from './adminMenus/SmartMenu.jsx';
 import GeneratedMenu from './playerMenus/generatedMenu.jsx';
 import InventoryMenu from './playerMenus/InventoryMenu.jsx';
 import LibraryObjectContextMenu from './adminMenus/LibraryObjectContextMenu.jsx';

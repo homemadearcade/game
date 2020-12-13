@@ -35,7 +35,7 @@ class Objects{
     window.defaultObject.height = GAME.grid.nodeSize
     window.defaultSubObject.width = GAME.grid.nodeSize
     window.defaultSubObject.height = GAME.grid.nodeSize
-    window.defaultSubObject.tags = JSON.parse(JSON.stringify(window.subObjectTags))
+    window.defaultSubObject.tags = { subObject: true }
   }
 
   onGameLoaded() {

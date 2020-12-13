@@ -44,10 +44,10 @@ window.local.on('onGameReady', () => {
       useExistingMenu: 'Popover',
       title: 'Popover'
     },
-    properties: {
-      useExistingMenu: 'Properties',
-      title: 'Properties'
-    },
+    // properties: {
+    //   useExistingMenu: 'Properties',
+    //   title: 'Properties'
+    // },
     descriptors: {
       action: 'edit-descriptors',
       title: 'Edit Descriptors'
@@ -121,7 +121,7 @@ window.local.on('onGameReady', () => {
     name: false,
     constructEditor: false,
     dialogue: false,
-    dialogueName: false,
+    dialogueSets: false,
     popover: false,
     group: false,
     // properties: false,

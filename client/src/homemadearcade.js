@@ -4,6 +4,14 @@
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
 
+My new goal is to essentially make sure descriptors work.
+Make sure you have all the sprites that you want...
+Get ready for sprite mania..
+
+The randomness project is not done do not abandon it...
+
+--
+
 CASUAL WORK
 Make a particle effect - see list
 Add a sprite sheet
@@ -43,8 +51,6 @@ If you have a descriptor on an object that has a withDescriptors property, do a 
 
 Home made arcade music
 
-If an array changes we need to send the whole thing in the DIFF
-
 Create new descriptor tag in sprite editor, it just adds the descriptor to the sprite
 
 update prologue to incorporate new flow. Draw -> Describe -> Dialogue -> Decide Themes
@@ -55,6 +61,8 @@ STORY - Fade in/out to game (we will probably use this in HA opening animations.
 //^^ take a loot at animate.css which i think is already installed..
 
 Filter for fish tank from pixi filter demo
+
+Simple select recommended sprite modal when we have the data...
 
 ////////////////////////////////
 ////////////////////////////////
@@ -114,8 +122,6 @@ Game Over State
 SOUND AND PIXEL GENERATOR UPGRADE
 ////////////////////////////////
 
-IN DATA -> add genre descriptors to sprites via the spritesheet tags?
-
 audio right click -> set as ___ sound
 
 Only allow the use of ONE descriptor for construct parts? Pre select a single descriptor before generating?
@@ -143,6 +149,11 @@ and randomize perhaps the camera filter!! <--- yes on camera filter and also don
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ////////////////////////////////////////////////////
 
+cacheing colors
+dont have ALL tags be moddable, I need to only support modding for certain properties...
+
+If an array changes we need to send the whole thing in the DIFF
+
 remove emitter /1000 thing.. in pixi map app
 
 NON host
@@ -152,10 +163,6 @@ Added/removed sub Objects?? DO not change via map state?
 --
 
 Trigger pool not getting reset?
-
-YOU CANNOT MOD DIALOGUE OR ANY ARRAYS
-heroDialogue is an array, what else is?
-tagsSeeking for lasers, is an ARRAY right now...
 
 If object is outside of its custom grid to start off, It will not be able to find the correct grid
 Theres needs to be a flag, perhaps the _fresh flag that allows it to use the other pathfinding grid to make its away to the new path

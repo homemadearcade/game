@@ -369,6 +369,11 @@ function setDefault() {
     heroHomePlatform: false,
   }
 
+  window.keyInputTags = {
+    disableUpKeyMovement: false,
+    disableDownKeyMovement: false,
+  }
+
   window.tags = JSON.parse(JSON.stringify(window.defaultTags))
 
   window.allTags = {
