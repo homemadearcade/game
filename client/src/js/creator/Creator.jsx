@@ -119,7 +119,7 @@ export default class Creator extends React.Component {
       Object.keys(creatorObjects).forEach((objectName) => {
         if(creatorObjects[objectName] === false) return
 
-        const object = window.creatorLibrary[objectName]
+        const object = window.creatorLibrary.addGameLibrary()[objectName]
         object.creatorLibraryId = objectName
 
         if(object.specialAction && object.specialAction == 'selectColor') {
@@ -134,7 +134,7 @@ export default class Creator extends React.Component {
         rows[object.columnName].push(object)
       })
 
-      Object.keys(GAME.library.creator).forEach((objectName) => {
+      if(PAGE.role.isAdmin) Object.keys(GAME.library.creator).forEach((objectName) => {
         if(!GAME.library.creator[objectName]) return
         const object = GAME.library.creator[objectName]
         object.creatorLibraryId = objectName

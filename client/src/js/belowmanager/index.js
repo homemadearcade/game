@@ -28,6 +28,12 @@ class BelowManager {
     if(this.ref) this.ref.forceUpdate()
   }
 
+  onEditHero = ({id}) => {
+    if(id === HERO.editingId) {
+      if(this.ref) this.ref.forceUpdate()
+    }
+  }
+
   onFirstPageGameLoaded() {
     const initialProps = {
       ref: ref => BELOWMANAGER.ref = ref

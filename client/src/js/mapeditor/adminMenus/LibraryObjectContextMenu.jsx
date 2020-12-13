@@ -56,6 +56,11 @@ export default class LibraryObjectContextMenu extends React.Component{
         window.socket.emit('updateLibrary', { creator: GAME.library.creator })
       }
 
+      if (key === "add-to-editing-hero-creator") {
+        const editingHero = GAME.heros[HERO.editingId]
+        window.socket.emit('editHero', { id: HERO.editingId, creator : {...editingHero.creator, [libraryId]: true }})
+      }
+
       if (key === "add-to-creator-library") {
         const { value: columnName } = await Swal.fire({
           title: 'Add to creator library',
@@ -71,14 +76,14 @@ export default class LibraryObjectContextMenu extends React.Component{
         if(!columnName) return
 
         if(subObject) {
-          window.socket.emit('updateLibrary', { creator: {...GAME.library.creator, [name]: {
+          window.socket.emit('updateLibrary', { creator: {...GAME.library.creator, [libraryId]: {
             label: libraryId,
             columnName,
             libraryName: 'subObjectLibrary',
             libraryId: libraryId,
           } } })
         } else {
-          window.socket.emit('updateLibrary', { creator: {...GAME.library.creator, [name]: {
+          window.socket.emit('updateLibrary', { creator: {...GAME.library.creator, [libraryId]: {
             label: libraryId,
             columnName,
             libraryName: 'objectLibrary',
@@ -264,9 +269,11 @@ export default class LibraryObjectContextMenu extends React.Component{
 
     const isCore = window[libraryName][libraryId]
 
+    const editingHero = GAME.heros[HERO.editingId]
     return <Menu onClick={this._handleLibraryObjectMenuClick}>
       {libraryName && <MenuItem className="bold-menu-item">{libraryName}</MenuItem>}
       {libraryId && <MenuItem className="bold-menu-item">{libraryId}</MenuItem>}
+      {editingHero && !editingHero.creator[libraryId] && window.creatorLibrary.addGameLibrary()[libraryId] && <MenuItem key='add-to-editing-hero-creator'>Add to Editing Hero's Creator</MenuItem>}
       {!window.creatorLibrary.addGameLibrary()[libraryId] && <MenuItem key='add-to-creator-library'>Add to Creator Library</MenuItem>}
       <MenuItem key='copy-to-creator-library'>Copy to Creator Library</MenuItem>
       <MenuItem key='copy-to-object-library'>Copy to Object Library</MenuItem>

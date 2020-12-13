@@ -12,11 +12,15 @@ export default class Library extends React.Component {
   _renderLibrary(libraryName, data) {
     const libraryItems = Object.keys(data)
 
+    const editingHero = GAME.heros[HERO.editingId]
+    const editingCreator = editingHero.creator
     return libraryItems.map((libraryId) => {
       return <div data-libraryname={libraryName} data-libraryid={libraryId} onClick={() => {
         modals.openEditCodeModal(libraryId, data[libraryId], () => {})
       }}
-       className={classnames("Manager__list-item", {})}>
+       className={classnames("Manager__list-item", {
+         'Manager__list-item--selected': editingHero && editingCreator && editingCreator[libraryId]
+       })}>
         {libraryId}
       </div>
     })
