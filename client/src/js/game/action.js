@@ -49,11 +49,19 @@ function swingBlade({ swinger, animationArea, hitBoxes, direction }) {
   baseHitBox.id = swinger.id
   baseHitBox.width = swinger.width;
   baseHitBox.height = swinger.height;
-  baseHitBox.tags = {
-    obstacle: true,
-    moving: false,
-    rotateable: true,
-    monsterDestroyer: true,
+
+
+  if(GAME.gameState.started) {
+    baseHitBox.tags = {
+      obstacle: true,
+      rotateable: true,
+      monsterDestroyer: true,
+    }
+  } else {
+    baseHitBox.tags = {
+      rotateable: true,
+      destroyEventually: true,
+    }
   }
 
   setTimeout(() => {
@@ -131,6 +139,13 @@ function createBullet({ shooter, actionProps, direction }) {
     height: 4,
     ownerId: shooter.ownerId || shooter.id,
     ...actionProps.bulletJSON,
+  }
+
+  if(!GAME.gameState.started) {
+    shot.tags = {
+      destroyEventually: true,
+      destroyOnCollideWithObstacle: true,
+    }
   }
 
   shot.tags.rotateable = true
@@ -250,6 +265,13 @@ function dropAndModify({ dropper, dropping, actionProps, direction }) {
         },
         opacity: actionProps.explosionProps.opacity,
         color: actionProps.explosionProps.color,
+      }
+
+      if(!GAME.gameState.started) {
+        newObject.subObjects.explosion.tags = {
+          destroyQuickly: true,
+          potential: true
+        }
       }
     }
     newObject.subObjectChances = {explosion:{randomWeight:1,conditionList:null}}

@@ -444,6 +444,9 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
       // emitterTypeExplosion: object.emitterTypeExplosion,
       // emitterTypeAction: object.emitterTypeAction,
 
+      isEquipped: object.isEquipped,
+      inInventory: object.inInventory,
+
       path: object.path,
       targetXY: object.targetXY,
 

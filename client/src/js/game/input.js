@@ -251,7 +251,6 @@ function handleActionButtonBehavior(hero, action, delta) {
   }
 
   if(action === 'shoot' && !delta) {
-    if(!GAME.gameState.started) return
     actionFired = true
     if(subObject) {
       shootBullet({direction: hero.inputDirection, shooter: subObject, actionProps: subObject.actionProps })
@@ -265,7 +264,6 @@ function handleActionButtonBehavior(hero, action, delta) {
   }
 
   if(action === 'swing' && !delta) {
-    if(!GAME.gameState.started) return
     actionFired = true
     if(subObject) {
       swingBlade({direction: hero.inputDirection, swinger: subObject, actionProps: subObject.actionProps })
@@ -279,11 +277,12 @@ function handleActionButtonBehavior(hero, action, delta) {
   }
 
   if((action === 'shrink' || action === 'grow' || action === 'vacuum') && delta) {
-    if(!GAME.gameState.started) return
     actionFired = true
 
     hero._shootingLaser = true
     subObject._shootingLaser = true
+
+    if(!GAME.gameState.started) return
     if(subObject) {
       closestObjectBehavior({
         direction: hero.inputDirection,
@@ -308,7 +307,6 @@ function handleActionButtonBehavior(hero, action, delta) {
   }
 
   if(action === 'dropAndModify' && !delta) {
-    if(!GAME.gameState.started) return
     actionFired = true
 
     if(subObject) {

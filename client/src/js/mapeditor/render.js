@@ -34,7 +34,9 @@ function update() {
         Object.keys(object.subObjects).forEach((soName) => {
           const so = object.subObjects[soName]
           if(so.tags.potential || so.removed) return
-          drawTools.drawObject(ctx, {...so, tags: { ...object.tags, invisible: false, outline: true }, color: 'rgba(255,255,255,1)'}, camera)
+          if(so.defaultSprite == 'invisible' || so.tags.invisible || so.tags.hidden || so.opacity == 0) {
+            drawTools.drawObject(ctx, {...so, tags: { ...object.tags, invisible: false, outline: true }, color: 'rgba(255,255,255,1)'}, camera)
+          }
         })
       }
     })

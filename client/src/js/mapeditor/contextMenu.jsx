@@ -132,6 +132,7 @@ class contextMenuEl extends React.Component{
       this.setState({
         subObjectSelected: subObject,
         subObjectSelectedName: name,
+        specialMenuType: null,
       })
     }
   }
