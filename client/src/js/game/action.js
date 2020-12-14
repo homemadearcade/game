@@ -266,12 +266,11 @@ function dropAndModify({ dropper, dropping, actionProps, direction }) {
         opacity: actionProps.explosionProps.opacity,
         color: actionProps.explosionProps.color,
       }
-
-      if(!GAME.gameState.started) {
-        newObject.subObjects.explosion.tags = {
-          destroyQuickly: true,
-          potential: true
-        }
+    }
+    if(!GAME.gameState.started) {
+      newObject.subObjects.explosion.tags = {
+        destroyQuickly: true,
+        potential: true
       }
     }
     newObject.subObjectChances = {explosion:{randomWeight:1,conditionList:null}}

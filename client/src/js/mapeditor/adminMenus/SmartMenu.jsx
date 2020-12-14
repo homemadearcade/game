@@ -271,6 +271,12 @@ export default class GeneratedMenu extends React.Component {
         </SubMenu>}
         {this._renderObjectSpawnZoneMenu()}
         {this._renderObjectResourceZoneMenu()}
+        {Object.keys(objectSelected.triggers || {}).length && <SubMenu title="Triggers">
+          <TriggerMenu objectSelected={objectSelected} subObject={subObject}/>
+        </SubMenu>}
+        {Object.keys(objectSelected.sequences || {}).length && <SubMenu title="Sequences">
+          <SequencesMenu objectSelected={objectSelected} subObject={subObject}/>
+        </SubMenu>}
         {<MenuItem key="edit-all-json">Edit JSON</MenuItem>}
         <MenuItem key="edit-descriptors">Edit Descriptors</MenuItem>
         <MenuItem key="open-tag-search-modal">Edit Tags</MenuItem>
@@ -280,6 +286,9 @@ export default class GeneratedMenu extends React.Component {
         {objectSelected.tags.path && <MenuItem key="open-path-editor">Open Path Editor</MenuItem>}
         {!isInvisible && <MenuItem key="open-construct-editor">Open Construct Editor</MenuItem>}
         <MenuItem className='dont-close-menu' key="open-advanced-menu">Open Advanced Menu</MenuItem>
+        {Object.keys(objectSelected.subObjects || {}).length && <SubMenu title="Sub Objects">
+          <SelectSubObjectMenu objectSelected={objectSelected} selectSubObject={selectSubObject} />
+        </SubMenu>}
         { subObject && !objectSelected.isEquipped && objectSelected.actionButtonBehavior && <MenuItem key="equip">Equip</MenuItem> }
         { subObject && objectSelected.isEquipped && <MenuItem key="unequip">Unequip</MenuItem> }
         { subObject && objectSelected.tags.pickupable && <MenuItem key="drop">Drop</MenuItem> }

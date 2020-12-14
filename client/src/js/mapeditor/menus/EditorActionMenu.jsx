@@ -118,6 +118,8 @@ export default class EditorActionMenu extends React.Component{
       }
 
       if (key === "add-to-object-library") {
+        let initialName = objectSelected.subObjectName
+
         const { value: name } = await Swal.fire({
           title: 'Add to object library',
           text: "What will be the library id of this object?",
@@ -125,6 +127,7 @@ export default class EditorActionMenu extends React.Component{
           inputAttributes: {
             autocapitalize: 'off'
           },
+          inputValue: initialName,
           showCancelButton: true,
           confirmButtonText: 'Next',
         })
@@ -134,17 +137,21 @@ export default class EditorActionMenu extends React.Component{
       }
 
       if (key === "add-to-subobject-library") {
-        const { value: name } = await Swal.fire({
+        let initialName = objectSelected.subObjectName
+
+        let { value: name } = await Swal.fire({
           title: 'Add to sub object library',
           text: "What will be the library id of this object?",
           input: 'text',
           inputAttributes: {
             autocapitalize: 'off'
           },
+          inputValue: initialName,
           showCancelButton: true,
           confirmButtonText: 'Next',
         })
-        if(!columnName) return
+
+        if(!name) return
 
         window.socket.emit('updateLibrary', { subObject: {...GAME.library.subObject, [name]: OBJECTS.getProperties(objectSelected)} })
       }

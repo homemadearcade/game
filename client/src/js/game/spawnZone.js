@@ -65,13 +65,20 @@ function spawnObjectOnMap(object, newObject) {
 window.getSubObjectFromChances = function(mainObject, guestObject, ownerObject) {
   let subObjectNames = Object.keys(ownerObject.subObjectChances)
 
-  if(!ownerObject.subObjects) return
+  const availableSubObjects = {...window.subObjectLibrary.addGameLibrary(), ...ownerObject.subObjects}
+
+  console.log(availableSubObjects)
+
+  if(!availableSubObjects) return
 
   subObjectNames = subObjectNames.filter((name) => {
-    return ownerObject.subObjects[name]
+    console.log(name, availableSubObjects[name])
+    return availableSubObjects[name]
   })
 
-  if(subObjectNames.length === 1) return ownerObject.subObjects[subObjectNames[0]]
+  console.log(subObjectNames)
+
+  if(subObjectNames.length === 1) return availableSubObjects[subObjectNames[0]]
 
   subObjectNames = subObjectNames.filter((name) => {
     if(!ownerObject.subObjectChances[name].conditionList) return true
@@ -82,7 +89,7 @@ window.getSubObjectFromChances = function(mainObject, guestObject, ownerObject) 
     })
   })
 
-  if(subObjectNames.length === 1) return ownerObject.subObjects[subObjectNames[0]]
+  if(subObjectNames.length === 1) return availableSubObjects[subObjectNames[0]]
   if(subObjectNames.length === 0) return null
 
   const totalWeight = subObjectNames.reduce((acc, name) => { return acc + ownerObject.subObjectChances[name].randomWeight }, 0)
@@ -91,7 +98,7 @@ window.getSubObjectFromChances = function(mainObject, guestObject, ownerObject) 
     const weight = ownerObject.subObjectChances[name].randomWeight
     let i = start
     for(i = start; i < weight + start; i++) {
-      acc[i] = ownerObject.subObjects[name]
+      acc[i] = availableSubObjects[name]
     }
     acc.lastNumber = i
     return acc

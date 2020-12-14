@@ -83,6 +83,8 @@ export default class Creator extends React.Component {
 
       let newObject
 
+      if(!MAPEDITOR.objectHighlighted) return
+      
       const isObstacle = MAPEDITOR.objectHighlighted.id && MAPEDITOR.objectHighlighted.tags.obstacle
       if(!isObstacle && creatorObjectSelected.JSON) {
         newObject = _.cloneDeep(creatorObjectSelected.JSON)

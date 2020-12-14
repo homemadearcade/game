@@ -219,6 +219,8 @@ class contextMenuEl extends React.Component{
   _renderAdminMenus() {
     const { objectSelected, subObjectSelected, subObjectSelectedName, specialMenuType, item, libraryName, libraryId, creatorLibraryId, audioFileId, spriteData, textureIds } = this.state;
 
+    MAPEDITOR.contextMenuVisible = true
+
     if(specialMenuType === 'selectLayer') {
       return <Menu onClick={this._handleSelectLayerClick}>
         <MenuItem className="bold-menu-item dont-close-menu">Select Which</MenuItem>
@@ -285,8 +287,6 @@ class contextMenuEl extends React.Component{
     }
 
     const { networkEditObject } = MAPEDITOR
-
-    MAPEDITOR.contextMenuVisible = true
 
     if(BELOWMANAGER.editingSequenceItemId) {
       return <EditingSequenceContextMenu

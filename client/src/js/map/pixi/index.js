@@ -794,6 +794,18 @@ PIXIMAP.makeInvisibleIfRemoved = function(object) {
     if(PIXIMAP.childrenById[object.id].emitter) {
       updatePixiEmitter(PIXIMAP.childrenById[object.id].emitter, object)
     }
+    if(PIXIMAP.childrenById[object.id].light) {
+      PIXIMAP.childrenById[object.id].light.visible = false
+    }
+    if(PIXIMAP.childrenById[object.id].darkArealight) {
+      PIXIMAP.childrenById[object.id].darkArealight.visible = false
+    }
+    return false
+  }
+  if(object.constructParts && object.mod().removed) {
+    object.constructParts.forEach((part) => {
+      if(PIXIMAP.childrenById[part.id]) PIXIMAP.childrenById[part.id].visible = false
+    })
     return false
   }
   if(object.subObjects) {

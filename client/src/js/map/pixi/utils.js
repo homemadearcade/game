@@ -351,8 +351,12 @@ function updateLight(pixiChild, gameObject) {
     if(typeof lightPower !== 'number' || isNaN(lightPower)) lightPower = .1
     lightPower -= GAME.gameState.ambientLight/5
     if(lightPower < .05) lightPower = .05
-    pixiChild.transform.scale.x = (gameObject.width * lightPower) * camera.multiplier
-    pixiChild.transform.scale.y = (gameObject.height * lightPower) * camera.multiplier
+    let width = gameObject.width
+    let height = gameObject.height
+    if(width < GAME.grid.nodeSize) width = GAME.grid.nodeSize
+    if(height < GAME.grid.nodeSize) height = GAME.grid.nodeSize
+    pixiChild.transform.scale.x = (width * lightPower) * camera.multiplier
+    pixiChild.transform.scale.y = (height * lightPower) * camera.multiplier
   }
 
   if(gameObject.lightOpacity >= 0 && typeof gameObject.lightOpacity === 'number') {

@@ -39,6 +39,9 @@ COMBAT + GOALS + QUESTS
 
 TODO RIGHT NOW
 
+Water decay vs air decay vs ground decay
+Hero.inWater ELEMENT stuff GREAT!
+
 Basically sprites should be able to be OVER TAGGED
 and object should be able to be UNDER TAGGED
 
@@ -59,8 +62,6 @@ experience password for ha-live. Use month+day - 100
 
 STORY - Fade in/out to game (we will probably use this in HA opening animations..)
 //^^ take a loot at animate.css which i think is already installed..
-
-Filter for fish tank from pixi filter demo
 
 Simple select recommended sprite modal when we have the data...
 
@@ -159,7 +160,6 @@ remove emitter /1000 thing.. in pixi map app
 NON host
 Popover text remove after NOT destroyed for yellow
 White flash did not reset
-Added/removed sub Objects?? DO not change via map state?
 --
 
 Trigger pool not getting reset?

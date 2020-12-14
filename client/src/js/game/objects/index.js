@@ -440,6 +440,8 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
         }
       }),
 
+      spawnPool: object.spawnPool,
+
       // ? needed?
       // emitterTypeExplosion: object.emitterTypeExplosion,
       // emitterTypeAction: object.emitterTypeAction,

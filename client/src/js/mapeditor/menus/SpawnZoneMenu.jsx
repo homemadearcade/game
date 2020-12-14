@@ -28,8 +28,19 @@ export default class SpawnZoneMenu extends React.Component{
           if(result && result.value) {
             let subObjectChances = objectSelected.subObjectChances
             if(!subObjectChances)subObjectChances ={}
-            window.socket.emit('editObjects', [{id: objectSelected.id, subObjectChances: {...subObjectChances, [result.value]: {randomWeight: 1, conditionList: null} }}])
+            window.socket.emit('editObjects', [{id: objectSelected.id, subObjectChances: {...subObjectChances, [result.value]: {randomWeight: 1, conditionList: null}} }])
           }
+        })
+      }
+
+      if(key === 'add-library-spawn-object') {
+        const library = window.subObjectLibrary.addGameLibrary()
+        modals.openSelectFromList('Select a sub object', Object.keys(library), async (result) => {
+          const id = result.value
+          if(!id) return
+          let subObjectChances = objectSelected.subObjectChances
+          if(!subObjectChances)subObjectChances ={}
+          window.socket.emit('editObjects', [{id: objectSelected.id, subObjectChances: {...subObjectChances, [id]: {randomWeight: 1, conditionList: null, spawnFromLibrary:true} }}])
         })
       }
 
@@ -53,11 +64,19 @@ export default class SpawnZoneMenu extends React.Component{
       {objectSelected.tags.spawnOnInterval && <MenuItem key="edit-spawn-limit">Edit Spawn Limit</MenuItem>}
       <SubMenu title="Spawn Objects">
         {subObjectChanceNames.map((subObjectName) => {
-          return <SubMenu title={subObjectName}>
-            <SubObjectChanceMenu objectSelected={objectSelected} subObjectName={subObjectName}></SubObjectChanceMenu>
-          </SubMenu>
+          const soChance = objectSelected.subObjectChances[subObjectName]
+          if(soChance.spawnFromLibrary) {
+            return <SubMenu title={subObjectName + ' (Library)'}>
+              <SubObjectChanceMenu objectSelected={objectSelected} subObjectName={subObjectName}></SubObjectChanceMenu>
+            </SubMenu>
+          } else {
+            return <SubMenu title={subObjectName}>
+              <SubObjectChanceMenu objectSelected={objectSelected} subObjectName={subObjectName}></SubObjectChanceMenu>
+            </SubMenu>
+          }
         })}
         <MenuItem key="add-spawn-object">Add Spawn Object</MenuItem>
+        <MenuItem key="add-library-spawn-object">Add Spawn Object (Library)</MenuItem>
       </SubMenu>
       <MenuItem key="spawn-all-now">Spawn All Now</MenuItem>
       <MenuItem key="destroy-spawned">Destroy Spawned</MenuItem>

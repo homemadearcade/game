@@ -269,6 +269,7 @@ function handleMouseDown(event) {
   MAPEDITOR.clickStart.y = ((y + camera.y) / camera.multiplier)
 
   let selectionAllowed = (PAGE.role.isAdmin || GAME.heros[HERO.id].flags.allowObjectSelection) && window.isClickingMap(event.target.className)
+
   if(event.target.className.indexOf('dont-close-menu') >= 0) {
     selectionAllowed = false
   } else if(MAPEDITOR.contextMenuVisible) {

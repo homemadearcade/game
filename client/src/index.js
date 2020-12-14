@@ -30,6 +30,8 @@ LEVELS ( sub worlds )
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ////////////////////////////////////////////////////
 
+Thumbs up emote thumbs down emote ?
+
 KING MODE ( where its like you make various yes/no choices and that changes whats happening on the world map )
 
 ////////////////////////////////
