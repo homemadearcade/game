@@ -3,129 +3,52 @@
 
 function setDefault() {
   window.generalDescriptors = {
-    'Scifi Theme': {
-      children: [],
-      inSprites: true,
-    },
-    'Fantasy Theme': {
-      children: [],
-      inSprites: true,
-    },
-    'Platformer Useable': {
-      children: [],
-      inSprites: true,
-    },
+    'Scifi Theme': {},
+    'Fantasy Theme': {},
+    'Platformer Useable': {},
   }
 
   window.elementDescriptors = {
-    Grass: {
-      children: [],
-      inSprites: true,
-    },
-    Dirt: {
-      children: [],
-      inSprites: true,
-    },
-    Snow: {
-      children: [],
-      inSprites: true,
-    },
-    Ice: {
-      children: [],
-      inSprites: true,
-    },
-    Sand: {
-      children: [],
-      inSprites: true,
-    },
-    Water: {
-      children: [],
-      inSprites: true,
-    },
-    Stone: {
-      children: [],
-      inSprites: true,
-    },
-    Metal: {
-      children: [],
-      inSprites: true,
-    },
-    Wood: {
-      children: [],
-      inSprites: true,
-    },
-    Glass: {
-      children: [],
-      inSprites: true,
-    },
-    Gravel: {
-      children: [],
-      inSprites: true,
-    },
-    Concrete: {
-      children: [],
-      inSprites: true,
-    },
-    Mud: {
-      children: [],
-      inSprites: true,
-    },
-    Gem: {
-      children: [],
-      inSprites: true,
-    },
-    Ore: {
-      children: [],
-      inSprites: true,
-    },
-    Fire: {
-      children: [],
-      inSprites: true,
-    },
-    Electricity: {
-      children: [],
-      inSprites: true,
-    },
+    Grass: {},
+    Dirt: {},
+    Snow: {},
+    Ice: {},
+    Sand: {},
+    Water: {},
+    Stone: {},
+    Metal: {},
+    Wood: {},
+    Glass: {},
+    Gravel: {},
+    Concrete: {},
+    Mud: {},
+    Gem: {},
+    Ore: {},
+    Fire: {},
+    Electricity: {},
   }
 
   window.waterElementDescriptors = {
     'Water Element': {
       dontShowAdminsInSpriteSheetEditor: true,
       children: ['Bubbles', 'Waterfall', 'Whirlpool', 'Lily Pad'],
-      inSprites: true,
     },
-    'Lily Pad': {
-      children: [],
-      inSprites: true,
-    },
+    'Lily Pad': {},
     'Dark Water': {
       withDescriptors: {
         Water: true,
         Dark: true
       }
     },
-    'Bubbles': {
-      children: [],
-      inSprites: true,
-    },
-    'Waterfall': {
-      children: [],
-      inSprites: true,
-    },
-    'Whirlpool': {
-      children: [],
-      inSprites: true,
-    },
+    'Bubbles': {},
+    'Waterfall': {},
+    'Whirlpool': {},
   }
 
   window.overworldMapDescriptors = {
-    Mountain : {
-      children: [],
-      inSprites: true,
-    },
+    Mountain : {},
     Tree : {
       children: ['Dead Tree', 'Colored Tree', 'Forest'],
-      inSprites: true,
     },
     'Dead Tree' : {
       withDescriptors: {
@@ -145,309 +68,136 @@ function setDefault() {
         Sand: true
       }
     },
+    'Hill' : {},
     Forest : {
       withDescriptors: {
         Tree: true,
         Many: true
       }
     },
-    Planet : {
-      children: [],
-      inSprites: true,
-    },
+    Planet : {},
     House : {
       children: ['Village'],
-      inSprites: true,
     },
     Village: {
-      children: ['House'],
-      inSprites: true,
+      withDescriptors: {
+        House: true,
+        Many: true
+      }
     },
-    Castle : {
-      children: [],
-      inSprites: true,
-    },
-    Cave : {
-      children: [],
-      inSprites: true,
-    },
+    Castle : {},
+    Cave : {},
     Building : {
       children: ['Castle', 'House', 'Church', 'Store', 'Village'],
-      inSprites: true,
     },
-    Church : {
-      children: [],
-      inSprites: true,
-    },
-    Store : {
-      children: [],
-      inSprites: true,
-    },
-    'Wall' : {
-      children: [],
-      inSprites: true,
-    },
+    Church : {},
+    Store : {},
+    'Wall' : {},
   }
 
   window.buildingPartDescriptors = {
-    'Building Wall': {
-      children: [],
-      inSprites: true,
-    },
-    'Building Floor Tile': {
-      children: [],
-      inSprites: true,
-    },
+    'Building Wall': {},
+    'Building Floor Tile': {},
     // 'Special Floor Tile': {
     //   children: []
     // },
     'Magic Floor Tile': {
       children: [],//'Special Floor Tile',
-      inSprites: true,
     },
-    'Spaceship Wall': {
-      children: [],
-      inSprites: true,
-    },
-    Block: {
-      children: [],
-      inSprites: true,
-    },
-    Door: {
-      children: [],
-      inSprites: true,
-    },
-    Ladder: {
-      children: [],
-      inSprites: true,
-    },
-    Stairs: {
-      children: [],
-      inSprites: true,
-    },
-    Window: {
-      children: [],
-      inSprites: true,
-    },
-    Pipe: {
-      children: [],
-      inSprites: true,
-    },
-    Chimney: {
-      children: [],
-      inSprites: true,
-    },
+    'Spaceship Wall': {},
+    Block: {},
+    Door: {},
+    Ladder: {},
+    Stairs: {},
+    Window: {},
+    Pipe: {},
+    Chimney: {},
   }
 
   window.outsideBuildingDescriptors = {
-    Fence: {
-      children: [],
-      inSprites: true,
-    },
+    Fence: {},
     Plant: {
       dontShowAdminsInSpriteSheetEditor: true,
       children: ['Crop', 'Bush', 'Flower'],
-      inSprites: true,
     },
-    Bush: {
-      children: [],
-      inSprites: true,
-    },
-    Flower: {
-      children: [],
-      inSprites: true,
-    },
-    Crop: {
-      children: [],
-      inSprites: true,
-    },
-    Sign: {
-      children: [],
-      inSprites: true,
-    },
-    Grave: {
-      children: [],
-      inSprites: true,
-    },
-    Flag: {
-      children: [],
-      inSprites: true,
-    },
-    Barrel: {
-      children: [],
-      inSprites: true,
-    },
-    Crate: {
-      children: [],
-      inSprites: true,
-    },
-    Pot: {
-      children: [],
-      inSprites: true,
-    },
+    Bush: {},
+    Flower: {},
+    Crop: {},
+    Sign: {},
+    Grave: {},
+    Flag: {},
+    Barrel: {},
+    Crate: {},
+    Pot: {},
     Box: {
       dontShowAdminsInSpriteSheetEditor: true,
       children: ['Pot', 'Barrel', 'Crate'],
-      inSprites: true,
     },
   }
 
   window.insideBuildingDescriptors = {
-    'Musical Instrument': {
-      children: [],
-      inSprites: true,
-    },
+    'Musical Instrument': {},
     Candle: {
-      children: ['Torch'],
-      inSprites: true,
+      relatedSprites: ['Torch'],
     },
-    Chest: {
-      children: [],
-      inSprites: true,
-    },
-    Appliance: {
-      children: [],
-      inSprites: true,
-    },
+    Appliance: {},
     Machine: {
       children: ['Computer'],
-      inSprites: true,
     },
-    Computer: {
-      children: [],
-      inSprites: true,
-    },
+    Computer: {},
     Furniture: {
       children: ['Chair', 'Table', 'Fireplace', 'Couch'],
-      inSprites: true,
     },
-    Couch: {
-      children: [],
-      inSprites: true,
-    },
-    Chair: {
-      children: [],
-      inSprites: true,
-    },
-    Table: {
-      children: [],
-      inSprites: true,
-    },
+    Couch: {},
+    Chair: {},
+    Table: {},
     Jewelry: {
-      children: [],
-      inSprites: true,
+      children: ['Necklace', 'Ring']
     },
-    'Kitchen Utensil': {
-      children: [],
-      inSprites: true,
-    },
-    Food: {
-      children: [],
-      inSprites: true,
-    },
+    Necklance: {},
+    Ring: {},
+    'Kitchen Utensil': {},
+    Food: {},
     Device: {
       children: ['Clock', 'Computer', 'Phone'],
-      inSprites: true,
     },
-    Phone: {
-      children: [],
-      inSprites: true,
-    },
-    Clock: {
-      children: [],
-      inSprites: true,
-    },
-    Key: {
-      children: [],
-      inSprites: true,
-    },
-    KeyHole: {
-      children: [],
-      inSprites: true,
-    },
-    Fireplace: {
-      children: [],
-      inSprites: true,
-    },
-    Bed: {
-      children: [],
-      inSprites: true,
-    },
+    Phone: {},
+    Clock: {},
+    Fireplace: {},
+    Bed: {},
   }
 
   window.otherDescriptors = {
-    Stalagmite: {
-      children: [],
-      inSprites: true,
-    },
-    'Spider Web': {
-      children: [],
-      inSprites: true,
-    },
-    Candy: {
-      children: [],
-      inSprites: true,
-    },
-    'Sports Equipment': {
-      children: [],
-      inSprites: true,
-    },
-    'Christmas Item': {
-      children: [],
-      inSprites: true,
-    },
-    Manican: {
-      children: [],
-      inSprites: true,
-    },
-    Mirror: {
-      children: [],
-      inSprites: true,
-    },
+    Stalagmite: {},
+    'Spider Web': {},
+    Candy: {},
+    'Sports Equipment': {},
+    'Christmas Item': {},
+    Manican: {},
+    Mirror: {},
     'Bathroom Item': {
       children: ['Toilet', 'Sink'],
-      inSprites: true,
     },
-    Toilet: {
-      children: [],
-      inSprites: true,
-    },
-    Sink: {
-      children: [],
-      inSprites: true,
-    },
-    Statue: {
-      children: [],
-      inSprites: true,
-    },
+    Toilet: {},
+    Sink: {},
+    Statue: {},
     'Church Item': {
       children: ['Candle'],
-      inSprites: true,
     },
     'Public Item': {
       children: ['Trash', 'Mailbox', 'Fire Hydrant'],
-      inSprites: true,
     },
-    Trash: {
-      children: [],
-      inSprites: true,
-    },
-    Mailbox: {
-      children: [],
-      inSprites: true,
-    },
-    'Fire Hydrant': {
-      children: [],
-      inSprites: true,
-    },
+    Trash: {},
+    Mailbox: {},
+    'Fire Hydrant': {},
     'User Interface': {
       children: ['Heart'],
-      inSprites: true,
     },
-    'Undescribed': {
-      children: [],
-      inSprites: true,
-    },
+    'Genie Lamp': {},
+    'Crystal Ball': {},
+    'Magnifying Glass': {},
+    'Glasses': {},
+    'Undescribed': {},
   }
 
 
@@ -455,468 +205,339 @@ function setDefault() {
     Tool:  {
       dontShowAdminsInSpriteSheetEditor: true,
       children: ['Pickaxe', 'Torch', 'Device'],
-      inSprites: true,
     },
     Device: window.insideBuildingDescriptors.Device,
-    Pickaxe: {
-      children: [],
-      inSprites: true,
-    },
-    Torch: {
-      children: [],
-      inSprites: true,
-    },
+    Pickaxe: {},
+    Torch: {},
     Weapon: {
       dontShowAdminsInSpriteSheetEditor: true,
       children: ['Axe', 'Staff', 'Mace', 'Gun', 'Sword','Bow', 'Laser', 'Spear', 'Bomb'],
-      inSprites: true,
     },
     'Melee Weapon': {
       dontShowAdminsInSpriteSheetEditor: true,
-      children: ['Axe','Mace', 'Sword','Spear'],
-      inSprites: true,
+      children: ['Axe','Mace', 'Sword','Spear', 'Whip'],
     },
     'Ranged Weapon': {
       dontShowAdminsInSpriteSheetEditor: true,
-      children: ['Staff','Gun','Bow','Laser','Spear'],
-      inSprites: true,
+      children: ['Staff','Gun','Bow','Laser','Spear', 'Wand'],
     },
-    Axe: {
-      children: [],
-      inSprites: true,
-    },
-    Staff: {
-      children: [],
-      inSprites: true,
-    },
-    Mace: {
-      children: [],
-      inSprites: true,
-    },
+    Axe: {},
+    Staff: {},
+    Wand: {},
+    Mace: {},
     Gun: {
       dontShowAdminsInSpriteSheetEditor: true,
       children: ['Cannon', 'Shotgun', 'Pistol', 'Rocket Launcher', 'Rifle', 'Machine Gun'],
-      inSprites: true,
     },
-    Cannon: {
-      children: [],
-      inSprites: true,
-    },
-    Shotgun: {
-      children: [],
-      inSprites: true,
-    },
-    Pistol: {
-      children: [],
-      inSprites: true,
-    },
-    'Rocket Launcher': {
-      children: [],
-      inSprites: true,
-    },
-    'Rifle': {
-      children: [],
-      inSprites: true,
-    },
-    'Machine Gun':{
-      children: [],
-      inSprites: true,
-    },
-    Sword: {
-      children: [],
-      inSprites: true,
-    },
-    Bow: {
-      children: [],
-      inSprites: true,
-    },
-    Laser: {
-      children: [],
-      inSprites: true,
-    },
-    Spear: {
-      children: [],
-      inSprites: true,
-    },
+    Cannon: {},
+    Shotgun: {},
+    Pistol: {},
+    'Rocket Launcher': {},
+    'Rifle': {},
+    'Machine Gun':{},
+    Whip: {},
+    Sword: {},
+    Bow: {},
+    Laser: {},
+    Spear: {},
     Bomb: {
       children: ['Dynamite'],
-      inSprites: true,
     },
-    'Dynamite': {
-      children: [],
-      inSprites: true,
-    },
+    'Dynamite': {},
     Projectile: {
       dontShowAdminsInSpriteSheetEditor: true,
       children: ['Magic', 'Bullet', 'Arrow', 'Spear', 'Cannonball'],
-      inSprites: true,
     },
-    Magic: {
-      children: [],
-      inSprites: true,
-    },
-    Bullet: {
-      children: [],
-      inSprites: true,
-    },
-    Cannonball: {
-      children: [],
-      inSprites: true,
-    },
-    Arrow: {
-      children: [],
-      inSprites: true,
-    },
+    Magic: {},
+    Bullet: {},
+    Cannonball: {},
+    Arrow: {},
     Wearable: {
       dontShowAdminsInSpriteSheetEditor: true,
-      children: ['Armor', 'Clothes', 'Robes', 'Hat'],
-      inSprites: true,
+      children: ['Armor', 'Clothes', 'Robes', 'Hat', 'Gloves', 'Boots'],
     },
-    Armor: {
-      children: [],
-      inSprites: true,
-    },
-    Clothes: {
-      children: [],
-      inSprites: true,
-    },
-    Robes: {
-      children: [],
-      inSprites: true,
-    },
-    Hat: {
-      children: [],
-      inSprites: true,
-    },
+    Armor: {},
+    Clothes: {},
+    Gloves: {},
+    Boots: {},
+    Robes: {},
+    Hat: {},
   }
 
   window.itemDescriptors = {
     Key: {
       children: window.insideBuildingDescriptors.Key,
-      inSprites: true,
     },
-    Bottle: {
-      children: [],
-      inSprites: true,
-    },
-    Heart: {
-      children: [],
-      inSprites: true,
-    },
+    Bottle: {},
+    Heart: {},
     Food: window.insideBuildingDescriptors.Food,
     Bullet: window.toolDescriptors.Bullet,
     'Expensive Item': {
       dontShowAdminsInSpriteSheetEditor: true,
       children: ['Gold', 'Jewelry', 'Coin'],
-      inSprites: true,
     },
-    Gold: {
-      children: [],
-      inSprites: true,
-    },
-    Coin: {
-      children: [],
-      inSprites: true,
-    },
+    Gold: {},
+    Coin: {},
     Literature: {
       dontShowAdminsInSpriteSheetEditor: true,
       children: ['Book', 'Page', 'Scroll', 'Disk'],
-      inSprites: true,
     },
-    Book: {
-      children: [],
-      inSprites: true,
-    },
-    Page: {
-      children: [],
-      inSprites: true,
-    },
-    Scroll: {
-      children: [],
-      inSprites: true,
-    },
+    Book: {},
+    Page: {},
+    Scroll: {},
     Disk: {
       children: []
     }
   }
 
-  // window.dungeonItemDescriptors = {
-  //   Door: window.insideBuildingDescriptors.Door,
-  //   Ladder: window.insideBuildingDescriptors.Ladder,
-  //   Stairs: window.insideBuildingDescriptors.Stairs,
-  //   Key: window.insideBuildingDescriptors.Stairs
-  //   Keyhole: {
-  //     children: []
-  //   },
-  //   Chest: {
-  //     children: []
-  //   },
-  //   Block: {
-  //     children: []
-  //   },
-  //   'Magic Floor Tile': window.insideBuildingDescriptors['Magic Floor Tile']
-  // }
+  window.dungeonItemDescriptors = {
+    Door: window.insideBuildingDescriptors.Door,
+    Ladder: window.insideBuildingDescriptors.Ladder,
+    Stairs: window.insideBuildingDescriptors.Stairs,
+    Key: window.insideBuildingDescriptors.Key,
+    Keyhole: {},
+    Chest: {},
+    Block: {},
+    'Spikes': {},
+    'Hole': {},
+    'Magic Floor Tile': window.insideBuildingDescriptors['Magic Floor Tile']
+  }
 
   window.transportDescriptors = {
     Vehicle: {
       dontShowAdminsInSpriteSheetEditor: true,
       children: ['Car', 'Boat', 'Spaceship', 'Rail Car'],
-      inSprites: true,
     },
-    Boat: {
-      children: [],
-      inSprites: true,
-    },
-    Car: {
-      children: [],
-      inSprites: true,
-    },
+    Boat: {},
+    Car: {},
     // Tank: {
     //   children: []
     // },
-    Spaceship: {
-      children: [],
-      inSprites: true,
-    },
+    Spaceship: {},
     // Plane: {
     //   children: []
     // },
-    Rail: {
-      children: [],
-      inSprites: true,
-    },
-    'Rail Car': {
-      children: [],
-      inSprites: true,
-    },
-    Street: {
-      children: [],
-      inSprites: true,
-    },
-    'Traffic Item': {
-      children: [],
-      inSprites: true,
-    },
-    'Spaceship Wall': {
-      children: [],
-      inSprites: true,
-    },
+    Rail: {},
+    'Rail Car': {},
+    Street: {},
+    'Traffic Item': {},
+    'Spaceship Wall': {},
   }
 
   window.humanDescriptors = {
     Human: {
       dontShowAdminsInSpriteSheetEditor: true,
       children: ['Spaceman', 'Wizard', 'King', 'Archer', 'Thief', 'Athlete', 'Priest', 'Cop'],
-      inSprites: true,
     },
-    Spaceman: {
-      children: [],
-      inSprites: true,
+    Spaceman: {},
+    Wizard: {},
+    King: {},
+    Archer: {},
+    Warrior: {},
+    'Rogue': {
+      children: ['Thief', 'Ninja']
     },
-    Wizard: {
-      children: [],
-      inSprites: true,
-    },
-    King: {
-      children: [],
-      inSprites: true,
-    },
-    Archer: {
-      children: [],
-      inSprites: true,
-    },
-    Warrior: {
-      children: [],
-      inSprites: true,
-    },
-    Thief: {
-      children: [],
-      inSprites: true,
-    },
-    Athlete: {
-      children: [],
-      inSprites: true,
-    },
-    Priest: {
-      children: [],
-      inSprites: true,
-    },
-    Cop: {
-      children: [],
-      inSprites: true,
-    },
+    'Thief': {},
+    'Ninja': {},
+    'Musician': {},
+    Engineer: {},
+    Athlete: {},
+    Priest: {},
+    Cop: {},
+    'Citizen': {},
+    'Villager': {},
+    Detective: {},
+    Cavalry: {},
   }
 
   window.animalDescriptors = {
     Animal: {
       dontShowAdminsInSpriteSheetEditor: true,
-      children: ['Cat', 'Bird', 'Dog', 'Mouse', 'Chicken', 'Bug', 'Fish', 'Reptile', 'Bat', 'Deer', 'Bear'],
-      inSprites: true,
+      children: ['Cat', 'Bird', 'Dog', 'Mouse', 'Chicken', 'Bug', 'Fish', 'Reptile', 'Deer', 'Bear'],
     },
     /// sound oriented
-    Cat: {
-      children: [],
-      inSprites: true,
-    },
     Bird: {
-      children: [],
-      inSprites: true,
+      children: [ 'Chicken', 'Crow', 'Bat', 'Duck', 'Ostrich', 'Owl', 'Penguin', 'Seagull',],
     },
-    Dog: {
-      children: [],
-      inSprites: true,
+    'Farm Animal': {
+      dontShowAdminsInSpriteSheetEditor: true,
+      children: [ 'Donkey', 'Horse', 'Chicken', 'Cow', 'Goat', 'Bull', 'Pig', 'Yak']
     },
-    Horse: {
-      children: [],
-      inSprites: true,
+    'Saddle Animal': {
+      dontShowAdminsInSpriteSheetEditor: true,
+      children: [ 'Donkey', 'Horse', 'Camel']
     },
-    Lion: {
-      children: [],
-      inSprites: true,
-    },
-    Wolf: {
-      children: [],
-      inSprites: true,
-    },
-    Sheep: {
-      children: [],
-      inSprites: true,
-    },
-    Mouse: {
-      children: ['Rat'],
-      inSprites: true,
-    },
-    Chicken: {
-      children: [],
-      inSprites: true,
-    },
-    /// non sound oriented
-    Bug: {
-      children: [],
-      inSprites: true,
+    'Lawn Animal': {
+      dontShowAdminsInSpriteSheetEditor: true,
+      children: [ 'Bunny', 'Mouse', 'Racoon', 'Squirrel', 'Frog', 'Mole']
     },
     Fish: {
-      children: [],
-      inSprites: true,
+      children: ['Mola Mola', 'Shark']
+    },
+    Bug: {
+      children: [
+        'Bee',
+        'Butterfly'
+      ]
     },
     Reptile: {
-      children: [],
-      inSprites: true,
+      children: [
+        'Alligator',
+        'Cobra',
+        'Crocodile',
+        'Frog',
+        'Turtles',
+        'Snake'
+      ]
     },
-    Bat: {
-      children: [],
-      inSprites: true,
-    },
-    Deer: {
-      children: [],
-      inSprites: true,
-    },
-    Bear: {
-      children: [],
-      inSprites: true,
-    },
+
+    // fish
+    'Mola Mola': {},
+    Shark: {},
+    Eel: {},
+    Jellyfish: {},
+    Crayfish: {},
+    Whale: {},
+
+    // other
+    'Musk Ox': {},
+    Hippo: {},
+    Bison: {},
+    Monkey: {},
+    Panda: {},
+    Elephant: {},
+
+    // pets
+    Cat: {},
+    Dog: {},
+    Ferret: {},
+    Chinchilla: {},
+
+    // predator
+    Cougar: {},
+    Tiger: {},
+    Lion: {},
+    Wolf: {},
+
+    // Woodland
+    Deer: {},
+    Bear: {},
+    Badger: {},
+    Fox: {},
+    Boar: {},
+
+    // Bugs
+    Bee: {},
+    Butterfly: {},
+    Scorpion: {},
+    Fly: {},
+    Ladybug: {},
+    Spider: {},
+    Leech: {},
+    Beetle: {},
+    Grasshopper: {},
+
+
     'Mythical Beast': {
-      children: [],
-      inSprites: true,
+      children: ['Unicorn', 'Dragon', 'Mermaid', 'Vampire', 'Mermaid', 'Demon', 'Golem', 'Griffin', 'Ent', 'Hag', 'Harpie'],
     },
+    /// mythical
+    Unicorn: {},
+    Dragon: {},
+    Demon: {},
+    Ent: {},
+  }
+
+  window.reptileDescriptors = {
+    Alligator: {},
+    Cobra: {},
+    Crocodile: {},
+    Frog: {},
+    Turtles: {},
+    Snake: {},
+  }
+
+  window.lawnAnimalDescriptors = {
+    Bunny: {},
+    Mouse: {},
+    Racoon: {},
+    Squirrel: {},
+    Mole: {},
+    Frog: window.reptileDescriptors.Frog
+  }
+
+  window.farmAnimalDescriptors = {
+    'Donkey': {},
+    'Horse': {},
+    'Chicken': {},
+    'Cow': {},
+    'Goat': {},
+    'Bull': {},
+    'Pig': {},
+    'Yak': {}
+  }
+
+  window.birdDescriptors = {
+    Chicken: window.farmAnimalDescriptors.Chicken,
+    Crow: {},
+    Bat: {},
+    Duck: {},
+    Ostrich:{},
+    Owl: {},
+    Penguin: {},
+    Seagull: {},
   }
 
   window.monsterDescriptors = {
     Monster: {
       dontShowAdminsInSpriteSheetEditor: true,
-      children: ['Bug', 'Ghost', 'Goblin', 'Undead', 'Zombie', 'Alien', 'Mythical', 'Machine'],
-      inSprites: true,
+      children: ['Bug', 'Ghost', 'Goblin', 'Undead', 'Zombie', 'Alien', 'Mythical Beast', 'Machine'],
     },
-    Bug: window.animalDescriptors.Bug,
-    Ghost: {
-      children: [],
-      inSprites: true,
-    },
-    Goblin: {
-      children: [],
-      inSprites: true,
-    },
-    Undead: {
-      children: [],
-      inSprites: true,
-    },
-    Zombie: {
-      children: [],
-      inSprites: true,
-    },
-    Alien: {
-      children: [],
-      inSprites: true,
-    },
-    Robot: {
-      children: [],
-      inSprites: true,
-    },
-    'Mythical Beast': window.animalDescriptors['Mythical Beast']
+    // Pest: {},
+    Ghost: {},
+    Goblin: {},
+    Skeleton: {},
+    Zombie: {},
+    Mummy: {},
+    Slime: {},
+    Alien: {},
+    Robot: {},
+    Golem: {},
+    Mermaid: {},
+    Vampire: {},
+    Hag: {},
+    Harpie: {}
   }
 
   window.edgeDescriptors = {
-    'Top': {
-      children: [],
-      inSprites: true,
-    },
-    'Right': {
-      children: [],
-      inSprites: true,
-    },
-    'Left': {
-      children: [],
-      inSprites: true,
-    },
-    'Bottom': {
-      children: [],
-      inSprites: true,
-    },
-    'TopLeft': {
-      children: [],
-      inSprites: true,
-    },
-    'TopRight': {
-      children: [],
-      inSprites: true,
-    },
-    'BottomLeft': {
-      children: [],
-      inSprites: true,
-    },
-    'BottomRight': {
-      children: [],
-      inSprites: true,
-    },
+    'Top': {},
+    'Right': {},
+    'Left': {},
+    'Bottom': {},
+    'TopLeft': {},
+    'TopRight': {},
+    'BottomLeft': {},
+    'BottomRight': {},
   }
 
   window.graphicalModifierDescriptors = {
-    'Many': {
-      children: [],
-      inSprites: true,
-    },
-    'Dead': {
-      children: [],
-      inSprites: true,
-    },
-    'Darker': {
-      children: [],
-      inSprites: true,
-    },
-    'Broken': {
-      children: [],
-      inSprites: true,
-    },
+    'Many': {},
+    'Dead': {},
+    'Darker': {},
+    'Broken': {},
+    'In Water': {},
+    'In Air': {},
+    'Mythical': {},
+    'Magical': {},
+    'Child': {},
+    'Male': {},
+    "Female": {},
     Small: {
       audioRelated: true,
-      dontShowAdminsInSpriteSheetEditor: true,
-      children: [],
-    },
+      dontShowAdminsInSpriteSheetEditor: true,},
     Large: {
       audioRelated: true,
-      dontShowAdminsInSpriteSheetEditor: true,
-      children: [],
-    },
+      dontShowAdminsInSpriteSheetEditor: true,},
   }
 
   window.audioModifierDescriptor = {
@@ -924,33 +545,21 @@ function setDefault() {
     Large: window.graphicalModifierDescriptors.Large,
     Cute: {
       audioRelated: true,
-      dontShowAdminsInSpriteSheetEditor: true,
-      children: [],
-    },
+      dontShowAdminsInSpriteSheetEditor: true,},
     Mean: {
       audioRelated: true,
-      dontShowAdminsInSpriteSheetEditor: true,
-      children: [],
-    },
+      dontShowAdminsInSpriteSheetEditor: true,},
     Evil: {
       audioRelated: true,
-      dontShowAdminsInSpriteSheetEditor: true,
-      children: [],
-    },
+      dontShowAdminsInSpriteSheetEditor: true,},
     Mad: {
       audioRelated: true,
-      dontShowAdminsInSpriteSheetEditor: true,
-      children: [],
-    },
+      dontShowAdminsInSpriteSheetEditor: true,},
     Happy: {
       audioRelated: true,
-      dontShowAdminsInSpriteSheetEditor: true,
-      children: [],
-    },
+      dontShowAdminsInSpriteSheetEditor: true,},
     Random: {
-      dontShowAdminsInSpriteSheetEditor: true,
-      children: [],
-    },
+      dontShowAdminsInSpriteSheetEditor: true,},
   }
 
   window.allDescriptors = {
@@ -967,6 +576,10 @@ function setDefault() {
     ...window.humanDescriptors,
     ...window.monsterDescriptors,
     ...window.animalDescriptors,
+    ...window.farmAnimalDescriptors,
+    ...window.lawnAnimalDescriptors,
+    ...window.reptileDescriptors,
+    ...window.birdDescriptors,
     ...window.edgeDescriptors,
     ...window.audioModifierDescriptors,
     ...window.graphicalModifierDescriptors,

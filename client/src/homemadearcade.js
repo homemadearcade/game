@@ -1,14 +1,23 @@
 /*
 // THE BEST FEATURES ARE THE ONES THAT THE PLAYER THINKS EXISTS BUT ACTUALLY DOESNT
 // U CAN HAVE COOL GRAPHICS BUT IF THEY DONT MEAN ANYTHING MEANINGFUL TO THE GAMEPLAY IT DOESNT MATTER
+
+Remember that fullstack guys random theater generator - you're close
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
 
-My new goal is to essentially make sure descriptors work.
-Make sure you have all the sprites that you want...
-Get ready for sprite mania..
+TODO IMMEDIATE
 
-The randomness project is not done do not abandon it...
+Add has, silmar, other json to game
+
+try your own sprite sheet, look through the rest to see if we have enough descriptors
+
+view full sprite in right click menu
+set object size to sprite dimensions
+Create new descriptor tag in sprite editor, it just adds the descriptor to the sprite
+
+Water decay vs air decay vs ground decay
+Hero.inWater ELEMENT stuff GREAT!
 
 --
 
@@ -36,11 +45,7 @@ COMBAT + GOALS + QUESTS
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-TODO RIGHT NOW
-
-Water decay vs air decay vs ground decay
-Hero.inWater ELEMENT stuff GREAT!
+--
 
 Basically sprites should be able to be OVER TAGGED
 and object should be able to be UNDER TAGGED
@@ -54,16 +59,27 @@ If you have a descriptor on an object that has a withDescriptors property, do a 
 
 Home made arcade music
 
-Create new descriptor tag in sprite editor, it just adds the descriptor to the sprite
+Game tint! Yeah just like, does this game have a little tint to it?
 
-update prologue to incorporate new flow. Draw -> Describe -> Dialogue -> Decide Themes
-
-experience password for ha-live. Use month+day - 100
+experience password for ha-live.
+Have a random number based on the day, every will need to use that same number.
+The first person that logs on with that number makes the server remember that number and only allows connections with that number
 
 STORY - Fade in/out to game (we will probably use this in HA opening animations..)
-//^^ take a loot at animate.css which i think is already installed..
+//^^ take a look at animate.css which i think is already installed..
 
 Simple select recommended sprite modal when we have the data...
+
+////////////////////////////////
+////////////////////////////////
+ELEMENTS..
+////////////////////////////////
+Terrain brush
+  - water, lava, grass, sand, building, etc. Mountain, forest?
+  this is a different kind of brush, this is for objects that are very simple, they wont be selected.. or moved whatsoever, they wont be DESTROYED, they wont be taken apart
+  can we just give terrain to background nodes?
+  it starts off blue, red, green, biege, etc, based on the element drawn until you add sprites. the generating system will ALWAYS have this stuff available so yeah, it just finds it and adds to it based on the author
+
 
 ////////////////////////////////
 ////////////////////////////////

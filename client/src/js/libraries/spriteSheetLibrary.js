@@ -19,6 +19,11 @@
 
     'timefantasy-animations': true,
 
+    'dawnlike-characters': true,
+    'dawnlike-creatures2': true,
+    'dawnlike-creatures': true,
+    'dawnlike-items': true,
+    'dawnlike-environment': true,
 
     'whtdragon-fish': true,
     'whtdragon-birds': true,
@@ -33,6 +38,16 @@
     'whtdragon-lawn': true,
     'whtdragon-reptiles': true,
 
+
+
+    // Really we need 3 authors
+    // oryx 8px ( 8 bit bundle )
+    // oryx 16px ( tiny fantasy, tiny scifi )
+    // oryx 24px ( 16 bit bundle )
+    // oryx 64px ( ultimate fantasy )
+    // oryx roguelike16x24
+
+    //ORYX - 16 bit bundle
     // 'oryx-24px-scifi-environment': true,
     // 'oryx-24px-scifi-transports': true,
     // 'oryx-24px-scifi-characters': true,
@@ -43,7 +58,7 @@
     // 'oryx-16px-fantasy-items': true,
     // 'oryx-24px-fantasy-creatures-characters': true,
 
-
+    //ORYX - 8 bit bundle
     'oryx-lofi-fantasy-creatures-8px': true,
     'oryx-lofi-fantasy-creatures-long-8px': true,
     'oryx-lofi-fantasy-characters-creatures-8px': true,
@@ -59,6 +74,7 @@
     'oryx-lofi-scifi-planets': true,
     'oryx-lofi-scifi-items-8px': true,
     'oryx-lofi-scifi-spaceship-environment-8px': true,
+
     'candy-1': true,
     'retro-1': true,
     'retro-2-30px': true,
@@ -71,10 +87,11 @@
   window.spriteSheetAuthors = {
     lordofthebling: false,
     oryx: true,
+    dawnlike: true,
     whtdragon: false,
-    timeFantasy: false,
+    timefantasy: false,
     amsimuz: false,
-    tylerWarren: false,
+    tylerwarren: false,
     kenney: false,
     shackal: false,
     unknown: false,
