@@ -9,6 +9,38 @@ export default class SpriteDataContextMenu extends React.Component{
     this._handleSpriteMenuClick = async ({ key }) => {
       const { textureIds, spriteData } = this.props
 
+      if(key === 'open-search-add') {
+        modals.openEditDescriptorsModal({}, ({value}) => {
+          if(value) {
+            window.local.emit('onEditSpriteData', textureIds ? textureIds : {[spriteData.textureId]: true}, { descriptors: value })
+          }
+        })
+      }
+
+      if(key === 'open-search-remove') {
+        modals.openEditDescriptorsModal({}, ({value}) => {
+          if(value) {
+            window.local.emit('onEditSpriteData', textureIds ? textureIds : {[spriteData.textureId]: true}, { descriptors: Object.keys(value).reduce((prev, desc) => {
+              prev[desc] = false
+              return prev
+            }, {}) })
+          }
+        })
+      }
+
+      if(key === 'add-custom') {
+        const { value: name } = await Swal.fire({
+          title: 'Add Descriptoor',
+          input: 'text',
+          inputAttributes: {
+            autocapitalize: 'off'
+          },
+          showCancelButton: true,
+          confirmButtonText: 'Next',
+        })
+        window.local.emit('onEditSpriteData', textureIds ? textureIds : {[spriteData.textureId]: true}, { descriptors: { [name]: true }})
+      }
+
       if(key === 'copy-id-to-clipboard') {
         PAGE.copyToClipBoard(spriteData.textureId || textureIds)
         return
@@ -203,9 +235,12 @@ export default class SpriteDataContextMenu extends React.Component{
         <MenuItem className="bold-menu-item">{Object.keys(textureIds).length + ' Sprites Selected'}</MenuItem>
         <MenuItem key="clear-selection">Clear Selection</MenuItem>
         <SubMenu title="Descriptors - Add">
+          <MenuItem key="open-search-add">Open Search</MenuItem>
+          <MenuItem key="add-custom">Add Custom Descriptor</MenuItem>
           {this._renderAllDescriptorMenus(false)}
         </SubMenu>
         <SubMenu title="Descriptors - Remove">
+          <MenuItem key="open-search-remove">Open Search</MenuItem>
           {this._renderAllDescriptorMenus(true)}
         </SubMenu>
         <MenuItem>Close Menu</MenuItem>

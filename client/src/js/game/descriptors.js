@@ -859,7 +859,7 @@ function setDefault() {
     ...window.graphicalModifierDescriptors,
     ...window.complexDescriptors,
     ...window.goreDescriptors,
-
+    ...window.colorModifiers,
   }
 
 }
