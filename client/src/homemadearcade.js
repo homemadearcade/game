@@ -8,8 +8,6 @@ Remember that fullstack guys random theater generator - you're close
 
 TODO IMMEDIATE
 
-Add has, silmar, other json to game
-
 try your own sprite sheet, look through the rest to see if we have enough descriptors
 
 view full sprite in right click menu
@@ -80,6 +78,10 @@ Terrain brush
   can we just give terrain to background nodes?
   it starts off blue, red, green, biege, etc, based on the element drawn until you add sprites. the generating system will ALWAYS have this stuff available so yeah, it just finds it and adds to it based on the author
 
+Easy draw its called
+  basically its the other end of the construct editor
+  the construct editor is for when you REALLY wanna draw anything you want
+  this is for when you want to draw something weve already decided
 
 ////////////////////////////////
 ////////////////////////////////
