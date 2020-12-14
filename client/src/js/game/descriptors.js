@@ -5,7 +5,7 @@ function setDefault() {
   window.generalDescriptors = {
     'Scifi Theme': {},
     'Fantasy Theme': {},
-    'Platformer Useable': {},
+    'Platformer View': {},
   }
 
   window.elementDescriptors = {
@@ -21,9 +21,12 @@ function setDefault() {
     Glass: {},
     Gravel: {},
     Concrete: {},
+    Brick: {},
     Mud: {},
+
     Gem: {},
     Ore: {},
+
     Fire: {},
     Electricity: {},
   }
@@ -34,12 +37,6 @@ function setDefault() {
       children: ['Bubbles', 'Waterfall', 'Whirlpool', 'Lily Pad'],
     },
     'Lily Pad': {},
-    'Dark Water': {
-      withDescriptors: {
-        Water: true,
-        Dark: true
-      }
-    },
     'Bubbles': {},
     'Waterfall': {},
     'Whirlpool': {},
@@ -50,40 +47,12 @@ function setDefault() {
     Tree : {
       children: ['Dead Tree', 'Colored Tree', 'Forest'],
     },
-    'Dead Tree' : {
-      withDescriptors: {
-        Tree: true,
-        Dead: true
-      }
-    },
-    'Dark Tree' : {
-      withDescriptors: {
-        Tree: true,
-        Darker: true
-      }
-    },
-    'Sand Dune' : {
-      withDescriptors: {
-        Mountain: true,
-        Sand: true
-      }
-    },
     'Hill' : {},
-    Forest : {
-      withDescriptors: {
-        Tree: true,
-        Many: true
-      }
-    },
     Planet : {},
+    Sun: {},
+    Star: {},
     House : {
       children: ['Village'],
-    },
-    Village: {
-      withDescriptors: {
-        House: true,
-        Many: true
-      }
     },
     Castle : {},
     Cave : {},
@@ -91,8 +60,21 @@ function setDefault() {
       children: ['Castle', 'House', 'Church', 'Store', 'Village'],
     },
     Church : {},
-    Store : {},
-    'Wall' : {},
+    Store : {
+      children: ['Weapon Store', 'Item Store']
+    },
+    'Weapon Store': {},
+    'Item Store': {},
+    'Castle Wall' : {},
+    Tornado: {},
+    Volcano: {},
+    Lightning: {},
+    Gazebo: {},
+    Totem: {},
+    Farm: {},
+    Lake: {},
+    Graveyard: {},
+    Mine: {},
   }
 
   window.buildingPartDescriptors = {
@@ -101,31 +83,36 @@ function setDefault() {
     // 'Special Floor Tile': {
     //   children: []
     // },
-    'Magic Floor Tile': {
-      children: [],//'Special Floor Tile',
-    },
     'Spaceship Wall': {},
+    'Spaceship Floor': {},
     Block: {},
     Door: {},
+    Archway: {},
+    Entryway: {},
     Ladder: {},
     Stairs: {},
     Window: {},
     Pipe: {},
     Chimney: {},
+    'Magic Floor Tile': {
+      children: [],//'Special Floor Tile',
+    },
   }
 
   window.outsideBuildingDescriptors = {
     Fence: {},
     Plant: {
-      dontShowAdminsInSpriteSheetEditor: true,
-      children: ['Crop', 'Bush', 'Flower'],
+      children: ['Crop', 'Bush', 'Flower', 'Mushroom'],
     },
+    Cactus: {},
+    Mushroom: {},
     Bush: {},
     Flower: {},
     Crop: {},
     Sign: {},
     Grave: {},
-    Flag: {},
+    Gravestone: {},
+    Coffin: {},
     Barrel: {},
     Crate: {},
     Pot: {},
@@ -133,44 +120,79 @@ function setDefault() {
       dontShowAdminsInSpriteSheetEditor: true,
       children: ['Pot', 'Barrel', 'Crate'],
     },
+    Fountain: {}
   }
 
   window.insideBuildingDescriptors = {
-    'Musical Instrument': {},
+    'Musical Instrument': {
+      children: ['Harp', 'Guitar','Drum', 'Flute', 'Piano']
+    },
+    Harp: {},
+    Guitar: {},
+    Drum: {},
+    Flute: {},
+    Piano: {},
     Candle: {
       relatedSprites: ['Torch'],
     },
+    Lantern: {},
+    Altar: {},
     Appliance: {},
     Machine: {
-      children: ['Computer'],
+      children: ['Computer', 'Engine'],
     },
     Computer: {},
     Furniture: {
-      children: ['Chair', 'Table', 'Fireplace', 'Couch'],
+      children: ['Chair', 'Table', 'Fireplace', 'Couch', 'Bookshelf', 'Stove', 'Oven'],
     },
+    Booshelf: {},
     Couch: {},
     Chair: {},
     Table: {},
     Jewelry: {
-      children: ['Necklace', 'Ring']
+      children: ['Necklace', 'Ring', 'Chalice']
     },
+    Chalice: {},
     Necklance: {},
     Ring: {},
-    'Kitchen Utensil': {},
-    Food: {},
+    'Kitchen Utensil': {
+      children: ['Fork', 'Knife', 'Spoon']
+    },
+    Fork: {},
+    Knife: {},
+    Spoon: {},
+    Stove: {},
+    Oven: {},
+    Food: {
+      children: ['Meat', 'Fruit', 'Vegetable', 'Drink']
+    },
+    Candy: {},
+    Soda: {},
+    Snack: {},
+    Meat: {},
+    Fruit: {},
+    Vegetable: {},
+    Drink: {},
+
     Device: {
       children: ['Clock', 'Computer', 'Phone'],
     },
+    Engine: {},
     Phone: {},
     Clock: {},
     Fireplace: {},
     Bed: {},
+    Throne: {},
+    Carpet: {},
+    'Display Case': {},
+    'Weapon/Armor Stand': {}
   }
 
   window.otherDescriptors = {
+    Stick: {},
+    Rocks: {},
     Stalagmite: {},
     'Spider Web': {},
-    Candy: {},
     'Sports Equipment': {},
     'Christmas Item': {},
     Manican: {},
@@ -182,8 +204,10 @@ function setDefault() {
     Sink: {},
     Statue: {},
     'Church Item': {
-      children: ['Candle'],
+      children: ['Candle', 'Altar'],
     },
+    Clothesline: {},
+    'Food Stand': {},
     'Public Item': {
       children: ['Trash', 'Mailbox', 'Fire Hydrant'],
     },
@@ -197,31 +221,48 @@ function setDefault() {
     'Crystal Ball': {},
     'Magnifying Glass': {},
     'Glasses': {},
-    'Undescribed': {},
+    Parasol: {},
+    'Toxic Waste': {},
+    Flag: {},
+    Banner: {},
+    'Medal': {},
+    Feather: {},
+    Syringe: {},
+    'Gas Can': {}
   }
 
 
   window.toolDescriptors = {
     Tool:  {
       dontShowAdminsInSpriteSheetEditor: true,
-      children: ['Pickaxe', 'Torch', 'Device'],
+      children: ['Axe', 'Pickaxe', 'Torch', 'Device', 'Shovel'],
     },
     Device: window.insideBuildingDescriptors.Device,
     Pickaxe: {},
     Torch: {},
+
+    Shovel: {},
     Weapon: {
       dontShowAdminsInSpriteSheetEditor: true,
-      children: ['Axe', 'Staff', 'Mace', 'Gun', 'Sword','Bow', 'Laser', 'Spear', 'Bomb'],
+      children: ['Waraxe', 'Staff', 'Mace', 'Gun', 'Sword','Bow', 'Crossbow', 'Laser', 'Spear', 'Halbierd', 'Scythe', 'Bomb', 'Scimitar', 'Rapier'],
     },
     'Melee Weapon': {
       dontShowAdminsInSpriteSheetEditor: true,
-      children: ['Axe','Mace', 'Sword','Spear', 'Whip'],
+      children: ['Waraxe','Mace', 'Sword','Spear', 'Whip', 'Scimitar', 'Rapier', 'Scythe', 'Halbierd', 'Dagger'],
     },
     'Ranged Weapon': {
       dontShowAdminsInSpriteSheetEditor: true,
-      children: ['Staff','Gun','Bow','Laser','Spear', 'Wand'],
+      children: ['Staff','Gun','Bow','Crossbow', 'Laser','Spear', 'Wand', 'Sling', 'Boomerang'],
     },
+    Waraxe: {},
+    Crossbow: {},
+    Scythe: {},
+    Halbierd: {},
+    Dagger: {},
     Axe: {},
+    Scimitar: {},
+    Rapier: {},
+    Boomerang: {},
     Staff: {},
     Wand: {},
     Mace: {},
@@ -229,6 +270,7 @@ function setDefault() {
       dontShowAdminsInSpriteSheetEditor: true,
       children: ['Cannon', 'Shotgun', 'Pistol', 'Rocket Launcher', 'Rifle', 'Machine Gun'],
     },
+    Sling: {},
     Cannon: {},
     Shotgun: {},
     Pistol: {},
@@ -240,9 +282,8 @@ function setDefault() {
     Bow: {},
     Laser: {},
     Spear: {},
-    Bomb: {
-      children: ['Dynamite'],
-    },
+    Bomb: {},
+    'Grenade': {},
     'Dynamite': {},
     Projectile: {
       dontShowAdminsInSpriteSheetEditor: true,
@@ -254,13 +295,23 @@ function setDefault() {
     Arrow: {},
     Wearable: {
       dontShowAdminsInSpriteSheetEditor: true,
-      children: ['Armor', 'Clothes', 'Robes', 'Hat', 'Gloves', 'Boots'],
+      children: ['Cape', 'Robe', 'Hood', 'Shield', 'Armor', 'Helment', 'Clothes', 'Hat', 'Gloves', 'Boots'],
     },
-    Armor: {},
+    'Crown': {},
+    Helmet: {},
+    'Plate Leggings': {},
+    'Platebody': {},
+    'Chainmail': {},
+    Armor: {
+      children: ['Armor', 'Gloves', 'Boots', 'Shield', 'Helment', 'Plate Leggings', 'Platebody', 'Chainmail']
+    },
     Clothes: {},
     Gloves: {},
     Boots: {},
-    Robes: {},
+    Robe: {},
+    Hood: {},
+    Cape: {},
+    Shield: {},
     Hat: {},
   }
 
@@ -300,7 +351,11 @@ function setDefault() {
     Block: {},
     'Spikes': {},
     'Hole': {},
-    'Magic Floor Tile': window.insideBuildingDescriptors['Magic Floor Tile']
+    'Switch': {},
+    'Magic Floor Tile': window.insideBuildingDescriptors['Magic Floor Tile'],
+    'Arrow Tile': {},
+    'Warp Tile': {},
+    'Button Tile': {},
   }
 
   window.transportDescriptors = {
@@ -310,9 +365,9 @@ function setDefault() {
     },
     Boat: {},
     Car: {},
-    // Tank: {
-    //   children: []
-    // },
+    Tank: {
+      children: []
+    },
     Spaceship: {},
     // Plane: {
     //   children: []
@@ -320,7 +375,12 @@ function setDefault() {
     Rail: {},
     'Rail Car': {},
     Street: {},
-    'Traffic Item': {},
+    'Traffic Item': {
+      children: ['Traffic Cone', 'Traffic Light', 'Traffic Barricade']
+    },
+    'Traffic Cone': {},
+    'Traffic Light': {},
+    'Traffic Barricade': {},
     'Spaceship Wall': {},
   }
 
@@ -337,6 +397,7 @@ function setDefault() {
     'Rogue': {
       children: ['Thief', 'Ninja']
     },
+    'Angel': {},
     'Thief': {},
     'Ninja': {},
     'Musician': {},
@@ -347,7 +408,6 @@ function setDefault() {
     'Citizen': {},
     'Villager': {},
     Detective: {},
-    Cavalry: {},
   }
 
   window.animalDescriptors = {
@@ -371,15 +431,6 @@ function setDefault() {
       dontShowAdminsInSpriteSheetEditor: true,
       children: [ 'Bunny', 'Mouse', 'Racoon', 'Squirrel', 'Frog', 'Mole']
     },
-    Fish: {
-      children: ['Mola Mola', 'Shark']
-    },
-    Bug: {
-      children: [
-        'Bee',
-        'Butterfly'
-      ]
-    },
     Reptile: {
       children: [
         'Alligator',
@@ -392,12 +443,19 @@ function setDefault() {
     },
 
     // fish
+    Fish: {
+      children: ['Mola Mola', 'Stingray', 'Anglerfish', 'Shark', 'Eel', 'Jellyfish', 'Crayfish', 'Whale', 'Squid', 'Seahorse']
+    },
+    'Anglerfish': {},
     'Mola Mola': {},
     Shark: {},
     Eel: {},
     Jellyfish: {},
     Crayfish: {},
     Whale: {},
+    Squid: {},
+    Seahorse: {},
+    Stingray: {},
 
     // other
     'Musk Ox': {},
@@ -406,6 +464,7 @@ function setDefault() {
     Monkey: {},
     Panda: {},
     Elephant: {},
+    Gorilla: {},
 
     // pets
     Cat: {},
@@ -427,6 +486,22 @@ function setDefault() {
     Boar: {},
 
     // Bugs
+    Bug: {
+      children: [
+        'Bee',
+        'Butterfly',
+        'Ant',
+        'Scorpion',
+        'Fly',
+        'Ladybug',
+        'Spier',
+        'Leech',
+        'Beetle',
+        'Grasshopper',
+        'Worm'
+      ]
+    },
+    Ant: {},
     Bee: {},
     Butterfly: {},
     Scorpion: {},
@@ -436,7 +511,7 @@ function setDefault() {
     Leech: {},
     Beetle: {},
     Grasshopper: {},
-
+    Worm: {},
 
     'Mythical Beast': {
       children: ['Unicorn', 'Dragon', 'Mermaid', 'Vampire', 'Mermaid', 'Demon', 'Golem', 'Griffin', 'Ent', 'Hag', 'Harpie'],
@@ -474,7 +549,8 @@ function setDefault() {
     'Goat': {},
     'Bull': {},
     'Pig': {},
-    'Yak': {}
+    'Yak': {},
+    'Turkey': {}
   }
 
   window.birdDescriptors = {
@@ -486,6 +562,7 @@ function setDefault() {
     Owl: {},
     Penguin: {},
     Seagull: {},
+    Egg: {},
   }
 
   window.monsterDescriptors = {
@@ -506,7 +583,14 @@ function setDefault() {
     Mermaid: {},
     Vampire: {},
     Hag: {},
-    Harpie: {}
+    Harpie: {},
+    Elemental: {},
+    'Evil Eyeball': {
+      withDescriptors: {
+        Eyeball: true,
+        Evil: true,
+      }
+    }
   }
 
   window.edgeDescriptors = {
@@ -523,15 +607,32 @@ function setDefault() {
   window.graphicalModifierDescriptors = {
     'Many': {},
     'Dead': {},
-    'Darker': {},
     'Broken': {},
+    'Carpeted': {},
+    'Messy': {},
+    'Frozen': {},
+    'With Snow': {},
+    'With Fruit': {},
+    'Pine': {},
+    'Tropical': {},
+    'On Fire': {},
     'In Water': {},
     'In Air': {},
+    'With Blood': {},
+    'Elf': {},
+    'Goblin': {},
+    'Two Headed': {},
+    'Open': {},
+    'Mounted': {},
+    'Boarded Up': {},
+    'With Window': {},
     'Mythical': {},
     'Magical': {},
     'Child': {},
     'Male': {},
     "Female": {},
+    'Horned': {},
+    'Evil': {},
     Small: {
       audioRelated: true,
       dontShowAdminsInSpriteSheetEditor: true,},
@@ -562,6 +663,179 @@ function setDefault() {
       dontShowAdminsInSpriteSheetEditor: true,},
   }
 
+  window.colorModifiers = {
+    'Dark': {},
+    'Brown': {},
+    'Orange': {},
+    'Grey': {},
+    'Blue': {},
+    'Red': {},
+    'Rainbow': {},
+    'Purple': {},
+    'White': {},
+    'Flame': {},
+    'Pink': {}
+  }
+
+  window.complexDescriptors = {
+    Forest : {
+      withDescriptors: {
+        Tree: true,
+        Many: true
+      }
+    },
+    // 'Mountain Range' : {
+    //   withDescriptors: {
+    //     Mountain: true,
+    //     Many: true
+    //   }
+    // },
+    'House (Snow)' : {
+      withDescriptors: {
+        House: true,
+        'With Snow': true
+      }
+    },
+    Village: {
+      withDescriptors: {
+        House: true,
+        Many: true
+      }
+    },
+    'Tree (Pine)' : {
+      withDescriptors: {
+        Tree: true,
+        Pine: true
+      }
+    },
+    'Tree (Cherry Blossom)' : {
+      withDescriptors: {
+        Tree: true,
+        Pink: true
+      }
+    },
+    'Tree (Tropical)' : {
+      withDescriptors: {
+        Tree: true,
+        Tropical: true
+      }
+    },
+    'Tree (Fruit)' : {
+      withDescriptors: {
+        Tree: true,
+        'With Fruit': true
+      }
+    },
+    'Tree (Dead)' : {
+      withDescriptors: {
+        Tree: true,
+        Dead: true
+      }
+    },
+    'Tree (Snow)' : {
+      withDescriptors: {
+        Tree: true,
+        'With Snow': true
+      }
+    },
+    'Tree (Frozen)' : {
+      withDescriptors: {
+        Tree: true,
+        Blue: true
+      }
+    },
+    'Tree (Hot)' : {
+      withDescriptors: {
+        Tree: true,
+        Red: true
+      }
+    },
+    'Tree (Dark)' : {
+      withDescriptors: {
+        Tree: true,
+        Darker: true
+      }
+    },
+    'Water (Deep)': {
+      withDescriptors: {
+        Water: true,
+        Dark: true
+      }
+    },
+    'Sand Dune' : {
+      withDescriptors: {
+        Mountain: true,
+        Sand: true
+      }
+    },
+    'Coin Stack' : {
+      withDescriptors: {
+        Coin: true,
+        Many: true
+      }
+    },
+    'Chest (Open)' : {
+      withDescriptors: {
+        Chest: true,
+        Open: true
+      }
+    },
+    'Lumber' : {
+      withDescriptors: {
+        Wood: true,
+        Many: true
+      }
+    },
+    'Carpeted Stairs' : {
+      withDescriptors: {
+        Stairs: true,
+        carpeted: true
+      }
+    },
+    'Carpeted Tile' : {
+      withDescriptors: {
+        'Building Floor Tile': true,
+        carpeted: true
+      }
+    },
+    'Torch (On)': {
+      withDescriptors: {
+        Torch: true,
+        'On Fire': true
+      }
+    },
+    'Lantern (On)': {
+      withDescriptors: {
+        Lantern: true,
+        'On Fire': true
+      }
+    },
+    'Quiver': {
+      withDescriptors: {
+        Arrow: true,
+        Many: true
+      }
+    },
+    Cavalry: {
+      withDescriptors: {
+        Knight: true,
+        Mounted: true
+      }
+    },
+    'Evil Eyeball': window.monsterDescriptors['Evil Eyeball']
+  }
+
+  window.goreDescriptors = {
+    'Body Part': {
+      children: ['Eyeball', 'Arm', 'Leg', 'Torso', 'Head']
+    },
+    Eyeball: {},
+    Arm: {},
+    Leg: {},
+    Torso: {},
+    Head: {}
+  }
+
   window.allDescriptors = {
     ...window.generalDescriptors,
     ...window.elementDescriptors,
@@ -583,6 +857,8 @@ function setDefault() {
     ...window.edgeDescriptors,
     ...window.audioModifierDescriptors,
     ...window.graphicalModifierDescriptors,
+    ...window.complexDescriptors,
+    ...window.goreDescriptors,
 
   }
 

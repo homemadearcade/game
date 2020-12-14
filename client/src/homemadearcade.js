@@ -8,11 +8,10 @@ Remember that fullstack guys random theater generator - you're close
 
 TODO IMMEDIATE
 
-try your own sprite sheet, look through the rest to see if we have enough descriptors
+try your own sprite sheet
 
-view full sprite in right click menu
-set object size to sprite dimensions
-Create new descriptor tag in sprite editor, it just adds the descriptor to the sprite
+Modifier = no longer the original
+Admins need to be as specific as possible and select as few tags as possible
 
 Water decay vs air decay vs ground decay
 Hero.inWater ELEMENT stuff GREAT!
@@ -73,7 +72,9 @@ Simple select recommended sprite modal when we have the data...
 ELEMENTS..
 ////////////////////////////////
 Terrain brush
-  - water, lava, grass, sand, building, etc. Mountain, forest?
+  - water, lava, grass, sand
+    - spaceship wall, wood wall, wood floor, fortified wall, etc, or perhaps Wood wall
+    - mountain, forest, ice
   this is a different kind of brush, this is for objects that are very simple, they wont be selected.. or moved whatsoever, they wont be DESTROYED, they wont be taken apart
   can we just give terrain to background nodes?
   it starts off blue, red, green, biege, etc, based on the element drawn until you add sprites. the generating system will ALWAYS have this stuff available so yeah, it just finds it and adds to it based on the author

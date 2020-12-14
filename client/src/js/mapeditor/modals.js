@@ -7,6 +7,7 @@ import ConditionList from '../sequenceeditor/ConditionList.jsx'
 import SubObjectModal from './SubObjectModal.jsx'
 import DescriptorSelect from '../components/DescriptorSelect.jsx';
 import TagSelect from '../components/TagSelect.jsx';
+import PixiMapSprite from '../components/PixiMapSprite.jsx';
 
 function editTrigger(owner, trigger, cb) {
   PAGE.typingMode = true
@@ -475,6 +476,26 @@ function addCustomInputBehavior(behaviorProp) {
   })
 }
 
+function viewFullSprite(sprite) {
+  Swal.fire({
+    title: sprite.textureId,
+    showClass: {
+      popup: 'animated fadeInDown faster'
+    },
+    hideClass: {
+      popup: 'animated fadeOutUp faster'
+    },
+    customClass: 'swal-wide',
+    html:"<div id='view-full-sprite'></div>",
+  })
+
+  const ref = React.createRef()
+  ReactDOM.render(
+    React.createElement(PixiMapSprite, { textureId: sprite.textureId }),
+    document.getElementById('view-full-sprite')
+  )
+}
+
 function openEditCodeModal(title, code, cb) {
   Swal.fire({
     title,
@@ -866,7 +887,7 @@ export default {
   // editTriggerEvent,
   openEditMod,
   addMod,
-
+  viewFullSprite,
   editTrigger,
   editSubObjectChanceConditions
 }

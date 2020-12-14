@@ -14,7 +14,9 @@ export default class SpriteSheetEditor extends React.Component {
     this.state = {
       spriteSheet: {
         sprites: []
-      }
+      },
+      showDescribedOnly: false,
+      hideDescribed: false,
     }
   }
 
@@ -87,10 +89,33 @@ export default class SpriteSheetEditor extends React.Component {
           else spriteSheet.tags = event.map(({value}) => value)
           this.setState({spriteSheet})
         }}/>
+        <div className="ManagerInput__text">
+          Show Described Sprites Only
+          <input type="checkbox"
+            onClick={() => {
+              const state = this.state
+              state.showDescribedOnly = !state.showDescribedOnly
+              this.setState(state)
+            }}
+            checked={this.state.showDescribedOnly}
+          />
+        </div>
+        <div className="ManagerInput__text">
+          Hide Described Sprites
+          <input type="checkbox"
+            onClick={() => {
+              const state = this.state
+              state.hideDescribed = !state.hideDescribed
+              this.setState(state)
+            }}
+            checked={this.state.hideDescribed}
+          />
+        </div>
       </div>
-      <SpriteSheet selectMultiple spriteSheet={spriteSheet} onClick={(sprite) => {
+      <SpriteSheet selectMultiple hideDescribed={this.state.hideDescribed} showDescribedOnly={this.state.showDescribedOnly} spriteSheet={spriteSheet}
+        onClick={(sprite) => {
 
-      }}/>
+        }}/>
     </div>
   }
 }

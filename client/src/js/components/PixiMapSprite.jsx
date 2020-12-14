@@ -3,8 +3,8 @@ export default class PixiMapSprite extends React.Component {
   render() {
     const texture = PIXIMAP.textures[this.props.textureId]
 
-    const desiredWidth = this.props.width || GAME.grid.nodeSize
-    const desiredHeight = this.props.height || GAME.grid.nodeSize
+    const desiredWidth = this.props.width || texture.orig.width
+    const desiredHeight = this.props.height || texture.orig.height
 
     if(!texture) {
       return <div style={{width: desiredWidth, height: desiredHeight}}></div>

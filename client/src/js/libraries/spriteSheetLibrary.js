@@ -50,15 +50,15 @@
     // oryx roguelike16x24
 
     //ORYX - 16 bit bundle
-    // 'oryx-24px-scifi-environment': true,
-    // 'oryx-24px-scifi-transports': true,
-    // 'oryx-24px-scifi-characters': true,
-    // 'oryx-16px-scifi-items': true,
-    // 'oryx-24px-scifi-creatures': true,
-    // 'oryx-24px-fantasy-environment': true,
-    // 'oryx-24px-fantasy-tiles': true,
-    // 'oryx-16px-fantasy-items': true,
-    // 'oryx-24px-fantasy-creatures-characters': true,
+    'oryx-24px-scifi-environment': true,
+    'oryx-24px-scifi-transports': true,
+    'oryx-24px-scifi-characters': true,
+    'oryx-16px-scifi-items': true,
+    'oryx-24px-scifi-creatures': true,
+    'oryx-24px-fantasy-environment': true,
+    'oryx-24px-fantasy-tiles': true,
+    'oryx-16px-fantasy-items': true,
+    'oryx-24px-fantasy-creatures-characters': true,
 
     //ORYX - 8 bit bundle
     'oryx-lofi-fantasy-creatures-8px': true,
