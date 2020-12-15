@@ -157,7 +157,7 @@ actionSFX
 
 pick random song
 randomize hero physics
-gameTheme: ’scifi vs fantasy vs retro vs fun vs horror’. This effects title selection randomization, sprite sheet selection?? and audio generation
+gameTheme: ’scifi vs fantasy vs retro vs fun vs horror vs modern’. This effects title selection randomization, sprite sheet selection?? and audio generation
 
 and randomize perhaps the camera filter!! <--- yes on camera filter and also dont forget about camera shakes too, those are good animations, or EASE! remember ease..
 

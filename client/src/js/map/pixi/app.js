@@ -253,7 +253,7 @@ const initPixiApp = (canvasRef, onLoad) => {
     })
     // console.log(world.stage)
     PIXIMAP.emitters.forEach((emitter) => {
-      emitter.update(delta/1000);
+      emitter.update(delta/10);
     })
     if(PIXIMAP.backgroundStage && PIXIMAP.backgroundStage.filters) PIXIMAP.backgroundStage.filters.forEach(updateFilters);
     if(PIXIMAP.cameraStage && PIXIMAP.cameraStage.filters) PIXIMAP.cameraStage.filters.forEach(updateFilters);

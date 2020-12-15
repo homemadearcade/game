@@ -159,15 +159,15 @@ export default class ParticleLive extends React.Component {
     }
 
     let frequency = emitterData.frequency
-    let frequencyDivider = 1000
+    let frequencyDivider = 10
     if(emitterData.speedType == 'slow') {
-      frequencyDivider = 100
+      frequencyDivider = 10
     }
     if(emitterData.speedType == 'normal') {
-      frequencyDivider = 1000
+      frequencyDivider = 100
     }
     if(emitterData.speedType == 'fast') {
-      frequencyDivider = 10000
+      frequencyDivider = 1000
     }
 
     if(!fromLoad) {
@@ -353,25 +353,25 @@ export default class ParticleLive extends React.Component {
             <DatBoolean path={'emitterData.scaleToGameObject'} label="Match object size" />
           </DatFolder>
           <DatFolder title='Speed'>
-            <DatNumber path='emitterData.speed.start' label="Speed Start" min={0} max={20000} step={1} />
-            <DatNumber path='emitterData.speed.end' label="Speed End" min={0} max={20000} step={1} />
+            <DatNumber path='emitterData.speed.start' label="Speed Start" min={0} max={500} step={1} />
+            <DatNumber path='emitterData.speed.end' label="Speed End" min={0} max={500} step={1} />
             <DatNumber path='emitterData.speed.minimumSpeedMultiplier' label="Minumum Speed Multiplier" min={0} max={5} step={.1} />
-            <DatNumber path='emitterData.acceleration.x' label="Acceleration X" min={0} max={150000} step={10} />
-            <DatNumber path='emitterData.acceleration.y' label="Acceleration Y" min={0} max={150000} step={10} />
-            <DatNumber path='emitterData.maxSpeed' label="Max Speed" min={0} max={20000} step={10} />
+            <DatNumber path='emitterData.acceleration.x' label="Acceleration X" min={0} max={1500} step={10} />
+            <DatNumber path='emitterData.acceleration.y' label="Acceleration Y" min={0} max={1500} step={10} />
+            <DatNumber path='emitterData.maxSpeed' label="Max Speed" min={0} max={1500} step={10} />
           </DatFolder>
           <DatFolder title='Rotation'>
             <DatNumber path='emitterData.startRotation.min' label="Rotation Start Min" min={0} max={360} step={1} />
             <DatNumber path='emitterData.startRotation.max' label="Rotation Start Max" min={0} max={360} step={1} />
-            <DatNumber path='emitterData.rotationSpeed.min' label="Rotation Speed Min" min={0} max={10000} step={1} />
-            <DatNumber path='emitterData.rotationSpeed.max' label="Rotation Speed Max" min={0} max={10000} step={1} />
+            <DatNumber path='emitterData.rotationSpeed.min' label="Rotation Speed Min" min={0} max={100} step={1} />
+            <DatNumber path='emitterData.rotationSpeed.max' label="Rotation Speed Max" min={0} max={100} step={1} />
             <DatBoolean path={'emitterData.useUpdateOwnerPos'} label="Don't rotate particles with object" />
           </DatFolder>
 
           <DatFolder title='Lifetime'>
             <DatNumber path='emitterData.lifetime.min' label="Particle Lifetime Min" min={0} max={10} step={.01} />
             <DatNumber path='emitterData.lifetime.max' label="Particle Lifetime Max" min={0} max={10} step={.01} />
-            <DatNumber path='emitterData.emitterLifetime' label="Emitter Lifetime" min={-1} max={100} step={1} />
+            <DatNumber path='emitterData.emitterLifetime' label="Emitter Lifetime" min={-1} max={10} step={1} />
             <DatBoolean path={'emitterData.persistAfterRemoved'} label="Continue emitting after object removed" />
           </DatFolder>
 

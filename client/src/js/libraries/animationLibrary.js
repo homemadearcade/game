@@ -34,11 +34,11 @@ window.local.on('onFirstPageGameLoaded', () => {
     		"max": 0
     	},
     	"lifetime": {
-    		"min": .18,
-    		"max": .2
+    		"min": 1.8,
+    		"max": 2
     	},
     	"blendMode": "screen",
-    	"frequency": 0.001,
+    	"frequency": 0.1,
     	"emitterLifetime": -1,
     	"maxParticles": 1000,
     	"pos": {
@@ -56,8 +56,8 @@ window.local.on('onFirstPageGameLoaded', () => {
         smokeparticle: true
       }
     },
-    groundDisturbanceRight: {"alpha":{"start":1,"end":1},"scale":{"start":0.35,"end":0.35,"minimumScaleMultiplier":0},"color":{"start":"#fff191","end":"#ff622c"},"speed":{"start":2000,"end":2000,"minimumSpeedMultiplier":2.2},"acceleration":{"x":0,"y":140000},"maxSpeed":8050,"startRotation":{"min":265,"max":275},"noRotation":false,"rotationSpeed":{"min":100,"max":10000},"lifetime":{"min":1.81,"max":1.56},"blendMode":"normal","frequency":0.091,"emitterLifetime":6,"maxParticles":3,"pos":{"x":0,"y":0},"addAtBack":false,"spawnType":"burst","spawnCircle":{"x":0,"y":0,"r":2,"minR":156},"spawnWaitTime":10,"speedType":"normal","matchObjectColor":true,"scaleToGameObject":false,"particlesPerWave":3,"particleSpacing":26,"angleStart":323,"animationType":"particle"},
-    groundDisturbanceLeft: {"alpha":{"start":1,"end":1},"scale":{"start":0.35,"end":0.35,"minimumScaleMultiplier":0},"color":{"start":"#fff191","end":"#ff622c"},"speed":{"start":2000,"end":2000,"minimumSpeedMultiplier":2.2},"acceleration":{"x":0,"y":140000},"maxSpeed":8050,"startRotation":{"min":265,"max":275},"noRotation":false,"rotationSpeed":{"min":100,"max":10000},"lifetime":{"min":1.81,"max":1.56},"blendMode":"normal","frequency":0.091,"emitterLifetime":6,"maxParticles":3,"pos":{"x":0,"y":0},"addAtBack":false,"spawnType":"burst","spawnCircle":{"x":0,"y":0,"r":2,"minR":156},"spawnWaitTime":10,"speedType":"normal","matchObjectColor":true,"scaleToGameObject":false,"particlesPerWave":3,"particleSpacing":26,"angleStart":206,"animationType":"particle"},
+    groundDisturbanceRight: {"alpha":{"start":1,"end":1},"scale":{"start":0.35,"end":0.35,"minimumScaleMultiplier":0},"color":{"start":"#fff191","end":"#ff622c"},"speed":{"start":20,"end":20,"minimumSpeedMultiplier":2.2},"acceleration":{"x":0,"y":14},"maxSpeed":80,"startRotation":{"min":265,"max":275},"noRotation":false,"rotationSpeed":{"min":1,"max":100},"lifetime":{"min":10.81,"max":10.56},"blendMode":"normal","frequency":0.91,"emitterLifetime":60,"maxParticles":3,"pos":{"x":0,"y":0},"addAtBack":false,"spawnType":"burst","spawnCircle":{"x":0,"y":0,"r":2,"minR":156},"spawnWaitTime":10,"speedType":"normal","matchObjectColor":true,"scaleToGameObject":false,"particlesPerWave":3,"particleSpacing":26,"angleStart":323,"animationType":"particle"},
+    groundDisturbanceLeft: {"alpha":{"start":1,"end":1},"scale":{"start":0.35,"end":0.35,"minimumScaleMultiplier":0},"color":{"start":"#fff191","end":"#ff622c"},"speed":{"start":20,"end":20,"minimumSpeedMultiplier":2.2},"acceleration":{"x":0,"y":14},"maxSpeed":80,"startRotation":{"min":265,"max":275},"noRotation":false,"rotationSpeed":{"min":1,"max":100},"lifetime":{"min":10.81,"max":10.56},"blendMode":"normal","frequency":0.91,"emitterLifetime":60,"maxParticles":3,"pos":{"x":0,"y":0},"addAtBack":false,"spawnType":"burst","spawnCircle":{"x":0,"y":0,"r":2,"minR":156},"spawnWaitTime":10,"speedType":"normal","matchObjectColor":true,"scaleToGameObject":false,"particlesPerWave":3,"particleSpacing":26,"angleStart":206,"animationType":"particle"},
     fireBall: {
       acceleration: {x: 0, y: 0},
       addAtBack: false,
@@ -66,8 +66,8 @@ window.local.on('onFirstPageGameLoaded', () => {
       blendMode: "normal",
       color: {start: "#fce400", end: "#ff4e00"},
       emitterLifetime: -1,
-      frequency: 0.001,
-      lifetime: {min: 0.01, max: 0.01},
+      frequency: 0.1,
+      lifetime: {min: 1, max: 1},
       maxParticles: 1000,
       maxSpeed: 0,
       noRotation: false,
@@ -78,13 +78,13 @@ window.local.on('onFirstPageGameLoaded', () => {
       spawnRect: { w: 200, h: 200, x: -100, y: -100},
       spawnType: "point",
       spawnWaitTime: 100,
-      speed: {start: 1000, end: 200, minimumSpeedMultiplier: 1},
+      speed: {start: 10, end: 2, minimumSpeedMultiplier: 1},
       speedType: "very fast",
       startRotation: {min: 0, max: 360},
       useUpdateOwnerPos: true,
     },
-    powerRingSubtle:{"images":{"Sparks":false,"particleCartoonStar":false,"smokeparticle":false,"Fire":false,"burst":false,"particleSmallStar":true},"alpha":{"start":0.2,"end":0.3},"scale":{"start":3.3,"end":0.4,"minimumScaleMultiplier":0.05},"color":{"start":"#ffffff","end":"#ffffff"},"speed":{"start":1,"end":1,"minimumSpeedMultiplier":1},"acceleration":{"x":0,"y":0},"maxSpeed":0,"startRotation":{"min":35,"max":360},"noRotation":false,"rotationSpeed":{"min":9999,"max":10000},"lifetime":{"min":0.01,"max":0.1},"blendMode":"normal","frequency":0.001,"emitterLifetime":-1,"maxParticles":1000,"pos":{"x":0,"y":0},"addAtBack":false,"spawnType":"ring","spawnCircle":{"x":0,"y":0,"r":22,"minR":22},"speedType":"normal","useUpdateOwnerPos":true,"spawnWaitTime":100,"spawnRect":{"r":10,"minR":10,"w":20,"h":20,"x":-10,"y":-10},"animationType":"particle"},
-    powerRing:{"images":{"Sparks":false,"particleCartoonStar":false,"smokeparticle":false,"Fire":false,"burst":false,"particleSmallStar":true},"alpha":{"start":0.8,"end":0.5},"scale":{"start":5.3,"end":1.4,"minimumScaleMultiplier":0.05},"color":{"start":"#ffffff","end":"#ffffff"},"speed":{"start":1,"end":1,"minimumSpeedMultiplier":1},"acceleration":{"x":0,"y":0},"maxSpeed":0,"startRotation":{"min":35,"max":360},"noRotation":false,"rotationSpeed":{"min":9999,"max":10000},"lifetime":{"min":0.01,"max":0.1},"blendMode":"normal","frequency":0.001,"emitterLifetime":-1,"maxParticles":1000,"pos":{"x":0,"y":0},"addAtBack":false,"spawnType":"ring","spawnCircle":{"x":0,"y":0,"r":22,"minR":22},"speedType":"normal","useUpdateOwnerPos":true,"spawnWaitTime":100,"spawnRect":{"r":10,"minR":10,"w":20,"h":20,"x":-10,"y":-10},"animationType":"particle"},
+    powerRingSubtle:{"images":{"Sparks":false,"particleCartoonStar":false,"smokeparticle":false,"Fire":false,"burst":false,"particleSmallStar":true},"alpha":{"start":0.2,"end":0.3},"scale":{"start":3.3,"end":0.4,"minimumScaleMultiplier":0.05},"color":{"start":"#ffffff","end":"#ffffff"},"speed":{"start":1,"end":1,"minimumSpeedMultiplier":1},"acceleration":{"x":0,"y":0},"maxSpeed":0,"startRotation":{"min":35,"max":360},"noRotation":false,"rotationSpeed":{"min":99,"max":100},"lifetime":{"min":1,"max":10},"blendMode":"normal","frequency":0.1,"emitterLifetime":-1,"maxParticles":1000,"pos":{"x":0,"y":0},"addAtBack":false,"spawnType":"ring","spawnCircle":{"x":0,"y":0,"r":22,"minR":22},"speedType":"normal","useUpdateOwnerPos":true,"spawnWaitTime":100,"spawnRect":{"r":10,"minR":10,"w":20,"h":20,"x":-10,"y":-10},"animationType":"particle"},
+    powerRing:{"images":{"Sparks":false,"particleCartoonStar":false,"smokeparticle":false,"Fire":false,"burst":false,"particleSmallStar":true},"alpha":{"start":0.8,"end":0.5},"scale":{"start":5.3,"end":1.4,"minimumScaleMultiplier":0.05},"color":{"start":"#ffffff","end":"#ffffff"},"speed":{"start":1,"end":1,"minimumSpeedMultiplier":1},"acceleration":{"x":0,"y":0},"maxSpeed":0,"startRotation":{"min":35,"max":360},"noRotation":false,"rotationSpeed":{"min":99,"max":100},"lifetime":{"min":1,"max":10},"blendMode":"normal","frequency":0.1,"emitterLifetime":-1,"maxParticles":1000,"pos":{"x":0,"y":0},"addAtBack":false,"spawnType":"ring","spawnCircle":{"x":0,"y":0,"r":22,"minR":22},"speedType":"normal","useUpdateOwnerPos":true,"spawnWaitTime":100,"spawnRect":{"r":10,"minR":10,"w":20,"h":20,"x":-10,"y":-10},"animationType":"particle"},
     smallFire: {
       images: {},
       "alpha": {
@@ -101,8 +101,8 @@ window.local.on('onFirstPageGameLoaded', () => {
         "end": "#ff622c"
       },
       "speed": {
-        "start": 100,
-        "end": 50,
+        "start": 1,
+        "end": .5,
         "minimumSpeedMultiplier": 1
       },
       "acceleration": {
@@ -120,11 +120,11 @@ window.local.on('onFirstPageGameLoaded', () => {
         "max": 50
       },
       "lifetime": {
-        "min": 0.01,
-        "max": 0.1
+        "min": 1,
+        "max": 10
       },
       "blendMode": "normal",
-      "frequency": 0.001,
+      "frequency": 0.1,
       "emitterLifetime": -1,
       "maxParticles": 1000,
       "pos": {
@@ -175,11 +175,11 @@ window.local.on('onFirstPageGameLoaded', () => {
         "max": 0
       },
       "lifetime": {
-        "min": 0.2,
-        "max": 0.2
+        "min": 20,
+        "max": 20
       },
       "blendMode": "normal",
-      "frequency": 0.01,
+      "frequency": 1,
       "emitterLifetime": -1,
       "maxParticles": 1000,
       "pos": {
@@ -230,11 +230,11 @@ window.local.on('onFirstPageGameLoaded', () => {
     		"max": 0
     	},
     	"lifetime": {
-    		"min": 0.025,
-    		"max": 0.025
+    		"min": 25,
+    		"max": 25
     	},
     	"blendMode": "normal",
-    	"frequency": 0.001,
+    	"frequency": 0.1,
     	"emitterLifetime": -1,
     	"maxParticles": 1000,
     	"pos": {
@@ -259,8 +259,8 @@ window.local.on('onFirstPageGameLoaded', () => {
     		"end": "#757575"
     	},
     	"speed": {
-    		"start": 40000,
-    		"end": 40000,
+    		"start": 400,
+    		"end": 400,
     		"minimumSpeedMultiplier": 1
     	},
     	"acceleration": {
@@ -274,12 +274,12 @@ window.local.on('onFirstPageGameLoaded', () => {
     	},
     	"noRotation": false,
     	"rotationSpeed": {
-    		"min": 20000,
-    		"max": 20000
+    		"min": 200,
+    		"max": 200
     	},
     	"lifetime": {
-    		"min": 100,
-    		"max": 100,
+    		"min": 1000,
+    		"max": 1000,
     	},
     	"blendMode": "normal",
     	"ease": [
@@ -299,7 +299,7 @@ window.local.on('onFirstPageGameLoaded', () => {
     			"e": 1
     		}
     	],
-    	"frequency": 0.001,
+    	"frequency": 0.1,
     	"emitterLifetime": 100,
     	"maxParticles": 1,
     	"pos": {
@@ -325,7 +325,7 @@ window.local.on('onFirstPageGameLoaded', () => {
     		"end": "#ffffff"
     	},
     	"speed": {
-    		"start": 20000,
+    		"start": 200,
     		"end": 0,
     		"minimumSpeedMultiplier": 0.4
     	},
@@ -365,7 +365,7 @@ window.local.on('onFirstPageGameLoaded', () => {
     			"e": 1
     		}
     	],
-    	"frequency": 0.00001,
+    	"frequency": 0.001,
     	"emitterLifetime": 10,
     	"maxParticles": 12,
     	"pos": {
@@ -391,8 +391,8 @@ window.local.on('onFirstPageGameLoaded', () => {
     		"end": "#f5b830"
     	},
     	"speed": {
-    		"start": 200,
-    		"end": 100,
+    		"start": 2,
+    		"end": 1,
     		"minimumSpeedMultiplier": 1
     	},
     	"acceleration": {
@@ -410,12 +410,12 @@ window.local.on('onFirstPageGameLoaded', () => {
     		"max": 0
     	},
     	"lifetime": {
-    		"min": 0.05,
-    		"max": 0.05
+    		"min": 5,
+    		"max": 5
     	},
     	"blendMode": "normal",
-    	"frequency": 0.0008,
-    	"emitterLifetime": 0.031,
+    	"frequency": 0.08,
+    	"emitterLifetime": 3.1,
     	"maxParticles": 1000,
     	"pos": {
     		"x": 0,
@@ -445,7 +445,7 @@ window.local.on('onFirstPageGameLoaded', () => {
     		"end": "#100f0c"
     	},
     	"speed": {
-    		"start": 7000,
+    		"start": 70,
     		"end": 0,
     		"minimumSpeedMultiplier": 1
     	},
@@ -461,11 +461,11 @@ window.local.on('onFirstPageGameLoaded', () => {
     	"noRotation": false,
     	"rotationSpeed": {
     		"min": 0,
-    		"max": 2000
+    		"max": 20
     	},
     	"lifetime": {
-    		"min": 0.05,
-    		"max": .1
+    		"min": 5,
+    		"max": 10
     	},
     	"blendMode": "normal",
     	"ease": [
@@ -485,8 +485,8 @@ window.local.on('onFirstPageGameLoaded', () => {
     			"e": 1
     		}
     	],
-    	"frequency": 0.0001,
-    	"emitterLifetime": 0.01,
+    	"frequency": 0.01,
+    	"emitterLifetime": 1,
     	"maxParticles": 100,
     	"pos": {
     		"x": 0,
@@ -511,8 +511,8 @@ window.local.on('onFirstPageGameLoaded', () => {
     		"end": "#0ec8f8"
     	},
     	"speed": {
-    		"start": 2000,
-    		"end": 2000,
+    		"start": 20,
+    		"end": 20,
     		"minimumSpeedMultiplier": 1
     	},
     	"acceleration": {
@@ -530,12 +530,12 @@ window.local.on('onFirstPageGameLoaded', () => {
     		"max": 0
     	},
     	"lifetime": {
-    		"min": 0.08,
-    		"max": 0.08
+    		"min": 8,
+    		"max": 8
     	},
     	"blendMode": "normal",
-    	"frequency": 0.02,
-    	"emitterLifetime": 0.41,
+    	"frequency": 2,
+    	"emitterLifetime": 4.1,
     	"maxParticles": 1000,
     	"pos": {
     		"x": 0,
@@ -562,8 +562,8 @@ window.local.on('onFirstPageGameLoaded', () => {
     		"end": "#3fcbff"
     	},
     	"speed": {
-    		"start": 2000,
-    		"end": 500,
+    		"start": 20,
+    		"end": 5,
     		"minimumSpeedMultiplier": 1
     	},
     	"acceleration": {
@@ -581,11 +581,11 @@ window.local.on('onFirstPageGameLoaded', () => {
     		"max": 0
     	},
     	"lifetime": {
-    		"min": 0.2,
-    		"max": 0.8
+    		"min": 2,
+    		"max": 8
     	},
     	"blendMode": "normal",
-    	"frequency": 0.0001,
+    	"frequency": 0.01,
     	"emitterLifetime": -1,
     	"maxParticles": 500,
     	"pos": {
@@ -615,8 +615,8 @@ window.local.on('onFirstPageGameLoaded', () => {
     		"end": "#ffffff"
     	},
     	"speed": {
-    		"start": 2000,
-    		"end": 500,
+    		"start": 20,
+    		"end": 5,
     		"minimumSpeedMultiplier": 1
     	},
     	"acceleration": {
@@ -634,11 +634,11 @@ window.local.on('onFirstPageGameLoaded', () => {
     		"max": 100
     	},
     	"lifetime": {
-    		"min": .4,
-    		"max": .4
+    		"min": 40,
+    		"max": 40
     	},
     	"blendMode": "normal",
-    	"frequency": 0.0016,
+    	"frequency": 0.16,
     	"emitterLifetime": -1,
     	"maxParticles": 500,
     	"pos": {
@@ -663,8 +663,8 @@ window.local.on('onFirstPageGameLoaded', () => {
     		"end": "#ffffff"
     	},
     	"speed": {
-    		"start": 6000,
-    		"end": 2000,
+    		"start": 60,
+    		"end": 20,
     		"minimumSpeedMultiplier": 1
     	},
     	"acceleration": {
@@ -679,15 +679,15 @@ window.local.on('onFirstPageGameLoaded', () => {
     	"noRotation": false,
     	"rotationSpeed": {
     		"min": 0,
-    		"max": 100
+    		"max": 1
     	},
     	"lifetime": {
-    		"min": 0.05,
-    		"max": .1
+    		"min": 5,
+    		"max": 10
     	},
     	"blendMode": "normal",
-    	"frequency": 0.0008,
-    	"emitterLifetime": 0.015,
+    	"frequency": 0.08,
+    	"emitterLifetime": 1.5,
     	"maxParticles": 500,
     	"pos": {
     		"x": 0,
@@ -711,8 +711,8 @@ window.local.on('onFirstPageGameLoaded', () => {
     		"end": "#ffffff"
     	},
     	"speed": {
-    		"start": 2000,
-    		"end": 2000,
+    		"start": 20,
+    		"end": 20,
     		"minimumSpeedMultiplier": 1
     	},
     	"acceleration": {
@@ -727,11 +727,11 @@ window.local.on('onFirstPageGameLoaded', () => {
     	"noRotation": false,
     	"rotationSpeed": {
     		"min": 0,
-    		"max": 2000
+    		"max": 20
     	},
     	"lifetime": {
-    		"min": 4,
-    		"max": 4
+    		"min": 400,
+    		"max": 400
     	},
     	"blendMode": "normal",
     	"ease": [
@@ -751,7 +751,7 @@ window.local.on('onFirstPageGameLoaded', () => {
     			"e": 1
     		}
     	],
-    	"frequency": 0.0004,
+    	"frequency": 0.04,
     	"emitterLifetime": -1,
     	"maxParticles": 1000,
     	"pos": {
@@ -783,8 +783,8 @@ window.local.on('onFirstPageGameLoaded', () => {
     		"end": "#ffffff"
     	},
     	"speed": {
-    		"start": 30000,
-    		"end": 30000,
+    		"start": 300,
+    		"end": 300,
     		"minimumSpeedMultiplier": 1
     	},
     	"acceleration": {
@@ -802,11 +802,11 @@ window.local.on('onFirstPageGameLoaded', () => {
     		"max": 0
     	},
     	"lifetime": {
-    		"min": 0.081,
-    		"max": 0.081
+    		"min": 81,
+    		"max": 81
     	},
     	"blendMode": "normal",
-    	"frequency": 0.0004,
+    	"frequency": 0.04,
     	"emitterLifetime": -1,
     	"maxParticles": 1000,
     	"pos": {
@@ -838,8 +838,8 @@ window.local.on('onFirstPageGameLoaded', () => {
     		"end": "#ffffff"
     	},
     	"speed": {
-    		"start": 2000,
-    		"end": 2000,
+    		"start": 20,
+    		"end": 20,
     		"minimumSpeedMultiplier": 1
     	},
     	"acceleration": {
@@ -857,11 +857,11 @@ window.local.on('onFirstPageGameLoaded', () => {
     		"max": 500
     	},
     	"lifetime": {
-    		"min": .35,
-    		"max": .4
+    		"min": 35,
+    		"max": 40
     	},
     	"blendMode": "normal",
-    	"frequency": 0.0016,
+    	"frequency": 0.16,
     	"emitterLifetime": -1,
     	"maxParticles": 500,
     	"pos": {
@@ -893,8 +893,8 @@ window.local.on('onFirstPageGameLoaded', () => {
     		"end": "#9ff3ff"
     	},
     	"speed": {
-    		"start": 10000,
-    		"end": 2000,
+    		"start": 100,
+    		"end": 20,
     		"minimumSpeedMultiplier": 1
     	},
     	"acceleration": {
@@ -909,14 +909,14 @@ window.local.on('onFirstPageGameLoaded', () => {
     	"noRotation": false,
     	"rotationSpeed": {
     		"min": 0,
-    		"max": 200
+    		"max": 2
     	},
     	"lifetime": {
-    		"min": 0.025,
-    		"max": 0.05
+    		"min": 25,
+    		"max": 5
     	},
     	"blendMode": "normal",
-    	"frequency": 0.0001,
+    	"frequency": 0.01,
     	"emitterLifetime": -1,
     	"maxParticles": 1000,
     	"pos": {
@@ -926,8 +926,8 @@ window.local.on('onFirstPageGameLoaded', () => {
     	"addAtBack": false,
     	"spawnType": "point"
     },
-    areaGlow: {"images":{"particleSmallStar":false,"particleCartoonStar":true},"alpha":{"start":0.3,"end":0.1},"scale":{"start":4.1,"end":3.9,"minimumScaleMultiplier":0.05},"color":{"start":"#ffffff","end":"#a7d0ee"},"speed":{"start":67,"end":50,"minimumSpeedMultiplier":1},"acceleration":{"x":0,"y":0},"maxSpeed":0,"startRotation":{"min":265,"max":275},"noRotation":false,"rotationSpeed":{"min":0,"max":1992},"lifetime":{"min":0.46,"max":0.71},"blendMode":"normal","frequency":0.001,"emitterLifetime":-1,"maxParticles":1000,"pos":{"x":0,"y":0},"addAtBack":false,"spawnType":"rect","spawnCircle":{"x":0,"y":0,"r":2},"speedType":"normal","useUpdateOwnerPos":true,"spawnWaitTime":53,"spawnRect":{"w":216,"h":1000,"x":-108,"y":-500},"setSpawnRectToOwnerSize":true,"animationType":"particle"},
-    laser:{"alpha":{"start":0.3,"end":1},"scale":{"start":0.6,"end":0.3,"minimumScaleMultiplier":0.5},"color":{"start":"#ffffff","end":"#001cff"},"speed":{"start":13543,"end":14394,"minimumSpeedMultiplier":1},"acceleration":{"x":0,"y":0},"maxSpeed":0,"startRotation":{"min":270,"max":270},"noRotation":false,"rotationSpeed":{"min":0,"max":0},"lifetime":{"min":0.05,"max":0.1},"blendMode":"normal","frequency":0.0001,"emitterLifetime":-1,"maxParticles":1000,"pos":{"x":0,"y":0},"addAtBack":false,"spawnType":"point","speedType":"fast","spawnWaitTime":93,"images":{"HardRain":true},"animationType":"particle",},
+    areaGlow: {"images":{"particleSmallStar":false,"particleCartoonStar":true},"alpha":{"start":0.3,"end":0.1},"scale":{"start":4.1,"end":3.9,"minimumScaleMultiplier":0.05},"color":{"start":"#ffffff","end":"#a7d0ee"},"speed":{"start":0,"end":0,"minimumSpeedMultiplier":1},"acceleration":{"x":0,"y":0},"maxSpeed":0,"startRotation":{"min":265,"max":275},"noRotation":false,"rotationSpeed":{"min":0,"max":19},"lifetime":{"min":46,"max":71},"blendMode":"normal","frequency":0.1,"emitterLifetime":-1,"maxParticles":1000,"pos":{"x":0,"y":0},"addAtBack":false,"spawnType":"rect","spawnCircle":{"x":0,"y":0,"r":2},"speedType":"normal","useUpdateOwnerPos":true,"spawnWaitTime":53,"spawnRect":{"w":216,"h":1000,"x":-108,"y":-500},"setSpawnRectToOwnerSize":true,"animationType":"particle"},
+    laser:{"alpha":{"start":0.3,"end":1},"scale":{"start":0.6,"end":0.3,"minimumScaleMultiplier":0.5},"color":{"start":"#ffffff","end":"#001cff"},"speed":{"start":13543,"end":14394,"minimumSpeedMultiplier":1},"acceleration":{"x":0,"y":0},"maxSpeed":0,"startRotation":{"min":270,"max":270},"noRotation":false,"rotationSpeed":{"min":0,"max":0},"lifetime":{"min":5,"max":1},"blendMode":"normal","frequency":0.01,"emitterLifetime":-1,"maxParticles":1000,"pos":{"x":0,"y":0},"addAtBack":false,"spawnType":"point","speedType":"fast","spawnWaitTime":93,"images":{"HardRain":true},"animationType":"particle",},
   }
 
   window.particleEmitterLibrary.addGameLibrary = function() {
