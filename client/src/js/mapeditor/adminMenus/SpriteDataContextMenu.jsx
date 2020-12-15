@@ -9,12 +9,16 @@ export default class SpriteDataContextMenu extends React.Component{
     this._handleSpriteMenuClick = async ({ key }) => {
       const { textureIds, spriteData } = this.props
 
+      if(key === 'view-full-sprite') {
+        modals.viewFullSprite(spriteData)
+      }
+
       if(key === 'open-search-add') {
         modals.openEditDescriptorsModal({}, ({value}) => {
           if(value) {
             window.local.emit('onEditSpriteData', textureIds ? textureIds : {[spriteData.textureId]: true}, { descriptors: value })
           }
-        })
+        }, textureIds ? textureIds : [spriteData.textureId])
       }
 
       if(key === 'open-search-remove') {
@@ -25,7 +29,7 @@ export default class SpriteDataContextMenu extends React.Component{
               return prev
             }, {}) })
           }
-        })
+        }, textureIds ? textureIds : [spriteData.textureId])
       }
 
       if(key === 'add-custom') {
@@ -53,6 +57,7 @@ export default class SpriteDataContextMenu extends React.Component{
 
       if(!key) return
 
+      if(key[0] != '{') return
       const data = JSON.parse(key)
 
       if(data.action == 'add') {
@@ -95,7 +100,7 @@ export default class SpriteDataContextMenu extends React.Component{
     </SubMenu>)
 
     render.push(<SubMenu title="Water">
-      {Object.keys(window.elementDescriptors).map((descriptor) => {
+      {Object.keys(window.waterElementDescriptors).map((descriptor) => {
         if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
         return this._renderDescriptorMenuItems(descriptor, remove)
       })}
@@ -129,6 +134,13 @@ export default class SpriteDataContextMenu extends React.Component{
       })}
     </SubMenu>)
 
+    render.push(<SubMenu title="Dungeon Items">
+      {Object.keys(window.dungeonItemDescriptors).map((descriptor) => {
+        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
+        return this._renderDescriptorMenuItems(descriptor, remove)
+      })}
+    </SubMenu>)
+
     render.push(<SubMenu title="Tools">
       {Object.keys(window.toolDescriptors).map((descriptor) => {
         if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
@@ -136,8 +148,15 @@ export default class SpriteDataContextMenu extends React.Component{
       })}
     </SubMenu>)
 
-    render.push(<SubMenu title="Item">
+    render.push(<SubMenu title="Tools/Equipment">
       {Object.keys(window.itemDescriptors).map((descriptor) => {
+        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
+        return this._renderDescriptorMenuItems(descriptor, remove)
+      })}
+    </SubMenu>)
+
+    render.push(<SubMenu title="Weapons">
+      {Object.keys(window.weaponDescriptors).map((descriptor) => {
         if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
         return this._renderDescriptorMenuItems(descriptor, remove)
       })}
@@ -178,8 +197,8 @@ export default class SpriteDataContextMenu extends React.Component{
       })}
     </SubMenu>)
 
-    render.push(<SubMenu title="Modifiers ( Graphical )">
-      {Object.keys(window.graphicalModifierDescriptors).map((descriptor) => {
+    render.push(<SubMenu title="Modifiers ( Other )">
+      {Object.keys(window.modifierDescriptors).map((descriptor) => {
         if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
         return this._renderDescriptorMenuItems(descriptor, remove)
       })}
@@ -193,11 +212,40 @@ export default class SpriteDataContextMenu extends React.Component{
     </SubMenu>)
 
     render.push(<SubMenu title="Modifiers ( Edge )">
-      {Object.keys(window.edgeDescriptors).map((descriptor) => {
+      {Object.keys(window.edgeModifiers).map((descriptor) => {
         if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
         return this._renderDescriptorMenuItems(descriptor, remove)
       })}
     </SubMenu>)
+
+    render.push(<SubMenu title="Modifiers ( Path )">
+      {Object.keys(window.pathModifiers).map((descriptor) => {
+        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
+        return this._renderDescriptorMenuItems(descriptor, remove)
+      })}
+    </SubMenu>)
+
+    render.push(<SubMenu title="Modifiers ( Elemental )">
+      {Object.keys(window.elementalModifiers).map((descriptor) => {
+        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
+        return this._renderDescriptorMenuItems(descriptor, remove)
+      })}
+    </SubMenu>)
+
+    render.push(<SubMenu title="Modifiers ( Creature )">
+      {Object.keys(window.livingCreatureModifiers).map((descriptor) => {
+        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
+        return this._renderDescriptorMenuItems(descriptor, remove)
+      })}
+    </SubMenu>)
+
+
+    // render.push(<SubMenu title="Complex Descriptros">
+    //   {Object.keys(window.complexDescriptors).map((descriptor) => {
+    //     if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
+    //     return this._renderDescriptorMenuItems(descriptor, remove)
+    //   })}
+    // </SubMenu>)
 
     if(false) {
       render.push(<SubMenu title="Modifiers ( Audio )">
@@ -207,13 +255,13 @@ export default class SpriteDataContextMenu extends React.Component{
         })}
       </SubMenu>)
     }
-
-    render.push(<SubMenu title="Edge">
-      {Object.keys(window.edgeDescriptors).map((descriptor) => {
-        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
-        return this._renderDescriptorMenuItems(descriptor, remove)
-      })}
-    </SubMenu>)
+    //
+    // render.push(<SubMenu title="Edge (colorModifierser)">
+    //   {Object.keys(window.edgeModifiers).map((descriptor) => {
+    //     if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
+    //     return this._renderDescriptorMenuItems(descriptor, remove)
+    //   })}
+    // </SubMenu>)
 
     return render
   }
@@ -224,7 +272,14 @@ export default class SpriteDataContextMenu extends React.Component{
     if(spriteData) {
       return <Menu onClick={this._handleSpriteMenuClick}>
         <MenuItem key="copy-id-to-clipboard" className="bold-menu-item">{spriteData.textureId}</MenuItem>
-        <MenuItem key="clear-selection">Clear Selection</MenuItem>
+        <MenuItem key="open-search-add">Open Descriptor Search ( Add )</MenuItem>
+        <MenuItem key="view-full-sprite">View Full Sprite</MenuItem>
+        {textureIds && Object.keys(textureIds).length && <MenuItem key="clear-selection">Clear Texture Selection</MenuItem>}
+        <SubMenu title="Descriptors - Add">
+          <MenuItem key="open-search-add">Open Search</MenuItem>
+          <MenuItem key="add-custom">Add Custom Descriptor</MenuItem>
+          {this._renderAllDescriptorMenus(false)}
+        </SubMenu>
         <SubMenu title="Descriptors - Remove">
           {this._renderCurrentDescriptors(spriteData)}
         </SubMenu>
@@ -233,7 +288,8 @@ export default class SpriteDataContextMenu extends React.Component{
     } else if(textureIds){
       return <Menu onClick={this._handleSpriteMenuClick}>
         <MenuItem className="bold-menu-item">{Object.keys(textureIds).length + ' Sprites Selected'}</MenuItem>
-        <MenuItem key="clear-selection">Clear Selection</MenuItem>
+        <MenuItem key="open-search-add">Open Descriptor Search ( Add )</MenuItem>
+        <MenuItem key="clear-selection">Clear Texture Selection</MenuItem>
         <SubMenu title="Descriptors - Add">
           <MenuItem key="open-search-add">Open Search</MenuItem>
           <MenuItem key="add-custom">Add Custom Descriptor</MenuItem>

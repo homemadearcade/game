@@ -36,13 +36,13 @@ export default class SpriteSheetEditor extends React.Component {
               if(update.descriptors) {
                 if(!s.descriptors) s.descriptors = {}
                 Object.assign(s.descriptors, update.descriptors)
-                console.log(s.descriptors)
               }
             }
             return s
           })
         }
       })
+      window.local.emit('onClearTextureIdsSelection')
       this.forceUpdate()
     })
 
@@ -96,6 +96,7 @@ export default class SpriteSheetEditor extends React.Component {
               const state = this.state
               state.showDescribedOnly = !state.showDescribedOnly
               this.setState(state)
+              window.local.emit('onClearTextureIdsSelection')
             }}
             checked={this.state.showDescribedOnly}
           />
@@ -107,6 +108,7 @@ export default class SpriteSheetEditor extends React.Component {
               const state = this.state
               state.hideDescribed = !state.hideDescribed
               this.setState(state)
+              window.local.emit('onClearTextureIdsSelection')
             }}
             checked={this.state.hideDescribed}
           />

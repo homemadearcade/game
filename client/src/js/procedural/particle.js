@@ -194,14 +194,14 @@ window.generateEmitterData = {
       max: 30,
     },
     rotationSpeed: {
-      min: 4000,
-      max: 12000
+      min: 40,
+      max: 120
     },
     frequency: {
       //slower
-      max: 0.01,
+      max: 1,
       //faster
-      min: 0.0008,
+      min: 0.08,
     },
     // lifetimeMin: {
     //
@@ -224,12 +224,12 @@ window.generateEmitterData = {
       max: 2
     },
     speedStart: {
-      min: 100000,
-      max: 200000
+      min: 1000,
+      max: 2000
     },
     speedEnd: {
-      min: 100000,
-      max: 200000
+      min: 1000,
+      max: 2000
     }
   }
 }

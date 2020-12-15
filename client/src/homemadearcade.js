@@ -174,8 +174,6 @@ dont have ALL tags be moddable, I need to only support modding for certain prope
 
 If an array changes we need to send the whole thing in the DIFF
 
-remove emitter /1000 thing.. in pixi map app
-
 NON host
 Popover text remove after NOT destroyed for yellow
 White flash did not reset

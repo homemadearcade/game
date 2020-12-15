@@ -14,7 +14,6 @@ function setDefault() {
     Snow: {},
     Ice: {},
     Sand: {},
-    Water: {},
     Stone: {},
     Metal: {},
     Wood: {},
@@ -24,6 +23,10 @@ function setDefault() {
     Brick: {},
     Mud: {},
 
+    Cloth: {},
+    Bone: {},
+    Slime: {},
+
     Gem: {},
     Ore: {},
 
@@ -32,10 +35,12 @@ function setDefault() {
   }
 
   window.waterElementDescriptors = {
+    Water: {},
     'Water Element': {
       dontShowAdminsInSpriteSheetEditor: true,
       children: ['Bubbles', 'Waterfall', 'Whirlpool', 'Lily Pad'],
     },
+    'Wave': {},
     'Lily Pad': {},
     'Bubbles': {},
     'Waterfall': {},
@@ -48,9 +53,6 @@ function setDefault() {
       children: ['Dead Tree', 'Colored Tree', 'Forest'],
     },
     'Hill' : {},
-    Planet : {},
-    Sun: {},
-    Star: {},
     House : {
       children: ['Village'],
     },
@@ -75,6 +77,13 @@ function setDefault() {
     Lake: {},
     Graveyard: {},
     Mine: {},
+    Bridge: {},
+    'Mountain Wall': {},
+    Planet : {},
+    Sun: {},
+    Star: {},
+    'Moon': {},
+    'Earth': {},
   }
 
   window.buildingPartDescriptors = {
@@ -94,32 +103,35 @@ function setDefault() {
     Window: {},
     Pipe: {},
     Chimney: {},
-    'Magic Floor Tile': {
-      children: [],//'Special Floor Tile',
-    },
+    Column: {},
+    'Roof Tile/Shillings': {},
   }
 
   window.outsideBuildingDescriptors = {
     Fence: {},
+    Well: {},
     Plant: {
-      children: ['Crop', 'Bush', 'Flower', 'Mushroom'],
+      children: ['Crop', 'Bush', 'Flower', 'Mushroom', 'Ivy', 'Grass Tuft'],
     },
+    Ivy: {},
     Cactus: {},
     Mushroom: {},
     Bush: {},
     Flower: {},
     Crop: {},
+    'Grass Tufft': {},
     Sign: {},
+    'Directional Sign': {},
     Grave: {},
     Gravestone: {},
+    Skull: {},
+    Skeleton: {},
     Coffin: {},
     Barrel: {},
     Crate: {},
     Pot: {},
-    Box: {
-      dontShowAdminsInSpriteSheetEditor: true,
-      children: ['Pot', 'Barrel', 'Crate'],
-    },
+    Cauldron: {},
+    Box: {},
     Fountain: {}
   }
 
@@ -139,13 +151,14 @@ function setDefault() {
     Altar: {},
     Appliance: {},
     Machine: {
-      children: ['Computer', 'Engine'],
+      children: ['Computer', 'Engine', 'Generator'],
     },
     Computer: {},
     Furniture: {
-      children: ['Chair', 'Table', 'Fireplace', 'Couch', 'Bookshelf', 'Stove', 'Oven'],
+      children: ['Chair', 'Desk', 'Table', 'Fireplace', 'Couch', 'Bookshelf', 'Stove', 'Oven'],
     },
-    Booshelf: {},
+    Desk: {},
+    Bookshelf: {},
     Couch: {},
     Chair: {},
     Table: {},
@@ -153,7 +166,7 @@ function setDefault() {
       children: ['Necklace', 'Ring', 'Chalice']
     },
     Chalice: {},
-    Necklance: {},
+    Necklace: {},
     Ring: {},
     'Kitchen Utensil': {
       children: ['Fork', 'Knife', 'Spoon']
@@ -166,18 +179,11 @@ function setDefault() {
     Food: {
       children: ['Meat', 'Fruit', 'Vegetable', 'Drink']
     },
-    Candy: {},
-    Soda: {},
-    Snack: {},
-    Meat: {},
-    Fruit: {},
-    Vegetable: {},
-    Drink: {},
-
     Device: {
-      children: ['Clock', 'Computer', 'Phone'],
+      children: ['Clock', 'Computer', 'Phone', 'Compass'],
     },
     Engine: {},
+    Generator: {},
     Phone: {},
     Clock: {},
     Fireplace: {},
@@ -185,27 +191,36 @@ function setDefault() {
     Throne: {},
     Carpet: {},
     'Display Case': {},
-    'Weapon/Armor Stand': {}
+    'Weapon/Armor Stand': {},
+    'Liquid Tank': {},
   }
 
   window.otherDescriptors = {
     Stick: {},
-    Rocks: {},
+    Rock: {},
     Stalagmite: {},
+    Gear: {},
     'Spider Web': {},
     'Sports Equipment': {},
-    'Christmas Item': {},
+    'Candy Cane': {},
     Manican: {},
     Mirror: {},
     'Bathroom Item': {
       children: ['Toilet', 'Sink'],
     },
+    'Weight': {},
+    'Alarm Light': {},
+    'Security Camera': {},
     Toilet: {},
     Sink: {},
     Statue: {},
+    'Jail Cell Bars': {},
     'Church Item': {
-      children: ['Candle', 'Altar'],
+      children: ['Candlelabra','Candle', 'Altar'],
     },
+    'Candelabra': {},
+    'Stained Glass Window': {},
+    Awning: {},
     Clothesline: {},
     'Food Stand': {},
     'Public Item': {
@@ -228,20 +243,11 @@ function setDefault() {
     'Medal': {},
     Feather: {},
     Syringe: {},
-    'Gas Can': {}
+    'Gas Can': {},
+    Undescribed: {},
   }
 
-
-  window.toolDescriptors = {
-    Tool:  {
-      dontShowAdminsInSpriteSheetEditor: true,
-      children: ['Axe', 'Pickaxe', 'Torch', 'Device', 'Shovel'],
-    },
-    Device: window.insideBuildingDescriptors.Device,
-    Pickaxe: {},
-    Torch: {},
-
-    Shovel: {},
+  window.weaponDescriptors = {
     Weapon: {
       dontShowAdminsInSpriteSheetEditor: true,
       children: ['Waraxe', 'Staff', 'Mace', 'Gun', 'Sword','Bow', 'Crossbow', 'Laser', 'Spear', 'Halbierd', 'Scythe', 'Bomb', 'Scimitar', 'Rapier'],
@@ -289,14 +295,33 @@ function setDefault() {
       dontShowAdminsInSpriteSheetEditor: true,
       children: ['Magic', 'Bullet', 'Arrow', 'Spear', 'Cannonball'],
     },
-    Magic: {},
+    'Magic Ball': {},
     Bullet: {},
     Cannonball: {},
     Arrow: {},
+    'Quiver': {},
+  }
+
+  window.toolDescriptors = {
+    Tool:  {
+      dontShowAdminsInSpriteSheetEditor: true,
+      children: ['Axe', 'Pickaxe', 'Torch', 'Device', 'Shovel', 'Hammer', "Shears"],
+    },
+    Shears: {},
+    'Mortar and Pestle': {},
+    Compass: {},
+    Hammer: {},
+    Anvil: {},
+    Device: window.insideBuildingDescriptors.Device,
+    Pickaxe: {},
+    Torch: {},
+    Shovel: {},
     Wearable: {
       dontShowAdminsInSpriteSheetEditor: true,
-      children: ['Cape', 'Robe', 'Hood', 'Shield', 'Armor', 'Helment', 'Clothes', 'Hat', 'Gloves', 'Boots'],
+      children: ['Pants', 'Shirt', 'Cape', 'Robe', 'Hood', 'Shield', 'Armor', 'Helment', 'Clothes', 'Hat', 'Gloves', 'Boots'],
     },
+    Pants: {},
+    Shirt: {},
     'Crown': {},
     Helmet: {},
     'Plate Leggings': {},
@@ -319,9 +344,21 @@ function setDefault() {
     Key: {
       children: window.insideBuildingDescriptors.Key,
     },
+    Bucket: {},
     Bottle: {},
+    Potion: {},
+    Bag: {},
     Heart: {},
+    'First Aid Kit': {},
     Food: window.insideBuildingDescriptors.Food,
+    Candy: {},
+    Soda: {},
+    Snack: {},
+    Meat: {},
+    Fruit: {},
+    Vegetable: {},
+    Drink: {},
+    Bread: {},
     Bullet: window.toolDescriptors.Bullet,
     'Expensive Item': {
       dontShowAdminsInSpriteSheetEditor: true,
@@ -342,17 +379,24 @@ function setDefault() {
   }
 
   window.dungeonItemDescriptors = {
-    Door: window.insideBuildingDescriptors.Door,
-    Ladder: window.insideBuildingDescriptors.Ladder,
-    Stairs: window.insideBuildingDescriptors.Stairs,
-    Key: window.insideBuildingDescriptors.Key,
+    Door: window.buildingPartDescriptors.Door,
+    Ladder: window.buildingPartDescriptors.Ladder,
+    Stairs: window.buildingPartDescriptors.Stairs,
+    Key: window.itemDescriptors.Key,
     Keyhole: {},
+    'Trap Door': {},
     Chest: {},
     Block: {},
+    Icicle: {},
+    Spring: {},
+    Lever: {},
+    Switch: {},
+    'Upward Chomper': {},
     'Spikes': {},
+    'Bear Trap': {},
     'Hole': {},
     'Switch': {},
-    'Magic Floor Tile': window.insideBuildingDescriptors['Magic Floor Tile'],
+    'Magic Floor Tile': {},
     'Arrow Tile': {},
     'Warp Tile': {},
     'Button Tile': {},
@@ -365,6 +409,7 @@ function setDefault() {
     },
     Boat: {},
     Car: {},
+    Motorcycle: {},
     Tank: {
       children: []
     },
@@ -514,13 +559,18 @@ function setDefault() {
     Worm: {},
 
     'Mythical Beast': {
-      children: ['Unicorn', 'Dragon', 'Mermaid', 'Vampire', 'Mermaid', 'Demon', 'Golem', 'Griffin', 'Ent', 'Hag', 'Harpie'],
+      children: ['Unicorn', 'Dragon', 'Mermaid', 'Vampire', 'Mermaid', 'Demon', 'Golem', 'Griffin', 'Ent', 'Hag', 'Harpie', 'Siren', 'Genie', 'Minotaur', 'Troll', 'Centaur'],
     },
     /// mythical
     Unicorn: {},
     Dragon: {},
     Demon: {},
     Ent: {},
+    Mermaid: {},
+    'Genie': {},
+    'Minotaur': {},
+    Troll: {},
+    Centaur: {},
   }
 
   window.reptileDescriptors = {
@@ -573,18 +623,18 @@ function setDefault() {
     // Pest: {},
     Ghost: {},
     Goblin: {},
-    Skeleton: {},
+    'Skeleton Monster': {},
     Zombie: {},
     Mummy: {},
-    Slime: {},
+    'Slime Monster': {},
     Alien: {},
     Robot: {},
     Golem: {},
-    Mermaid: {},
     Vampire: {},
     Hag: {},
     Harpie: {},
-    Elemental: {},
+    'Elemental Monster': {},
+    'Possessed Object': {},
     'Evil Eyeball': {
       withDescriptors: {
         Eyeball: true,
@@ -593,47 +643,61 @@ function setDefault() {
     }
   }
 
-  window.edgeDescriptors = {
+  window.edgeModifiers = {
     'Top': {},
     'Right': {},
     'Left': {},
     'Bottom': {},
+    'Center': {},
     'TopLeft': {},
     'TopRight': {},
     'BottomLeft': {},
     'BottomRight': {},
   }
 
-  window.graphicalModifierDescriptors = {
+  window.facingModifiers = {
+    'FacingUp': {},
+    'FacingRight': {},
+    'FacingLeft': {},
+    'FacingDown': {},
+    'Going Up': {},
+    'Going Down': {}
+  }
+
+  window.pathModifiers= {
+    'Up-Right': {},
+    'Up-Down': {},
+    'Up-Left': {},
+    'Down-Right': {},
+    'Down-Left': {},
+    'Right-Left': {},
+    'Up-Down-Right-Left': {},
+    'Up-Right-Left': {},
+    'Down-Right-Left': {},
+    'Up-Down-Right': {},
+    'Up-Down-Left': {},
+  }
+
+  window.modifierDescriptors = {
     'Many': {},
-    'Dead': {},
+    'Empty': {},
     'Broken': {},
-    'Carpeted': {},
+    'Turned On': {},
     'Messy': {},
-    'Frozen': {},
-    'With Snow': {},
-    'With Fruit': {},
-    'Pine': {},
-    'Tropical': {},
-    'On Fire': {},
-    'In Water': {},
-    'In Air': {},
-    'With Blood': {},
-    'Elf': {},
-    'Goblin': {},
-    'Two Headed': {},
     'Open': {},
-    'Mounted': {},
+    'Closed': {},
     'Boarded Up': {},
     'With Window': {},
-    'Mythical': {},
-    'Magical': {},
-    'Child': {},
-    'Male': {},
-    "Female": {},
-    'Horned': {},
-    'Evil': {},
-    Small: {
+    'With Blood': {},
+    'Scaley': {},
+    'Carpeted': {},
+    'Potted': {},
+    'Decorated': {},
+    'Powered Up': {},
+    'Elevated': {},
+    'Alt1': {},
+    'Alt2': {},
+      Small: {
       audioRelated: true,
       dontShowAdminsInSpriteSheetEditor: true,},
     Large: {
@@ -641,9 +705,44 @@ function setDefault() {
       dontShowAdminsInSpriteSheetEditor: true,},
   }
 
+  window.livingCreatureModifiers = {
+    'Holding Weapon': {},
+    'Elf': {},
+    'Goblin': {},
+    'Two Headed': {},
+    'Mounted': {},
+    'Mythical': {},
+    'Magical': {},
+    'Child': {},
+    'Male': {},
+    "Female": {},
+    'Horned': {},
+    'Evil': {},
+    'Dead': {},
+    'With Face': {},
+  }
+
+  window.elementalModifiers = {
+    'Mossy': {},
+    'Ivied': {},
+    'Frozen': {},
+    'With Snow': {},
+    'With Fruit': {},
+    'Pine': {},
+    'Willow': {},
+    'Cherry Blossom': {},
+    'Muddy': {},
+    'Tropical': {},
+    'On Fire': {},
+    'In Water': {},
+    'Waters Edge': {},
+    'In Air': {},
+    'Lightning Charged': {},
+  }
+
   window.audioModifierDescriptor = {
-    Small: window.graphicalModifierDescriptors.Small,
-    Large: window.graphicalModifierDescriptors.Large,
+    Small: window.modifierDescriptors.Small,
+    Large: window.modifierDescriptors.Large,
     Cute: {
       audioRelated: true,
       dontShowAdminsInSpriteSheetEditor: true,},
@@ -665,16 +764,21 @@ function setDefault() {
 
   window.colorModifiers = {
     'Dark': {},
+    'Light': {},
     'Brown': {},
     'Orange': {},
+    'Yellow': {},
+    'Green': {},
     'Grey': {},
+    'Dark Grey': {},
     'Blue': {},
     'Red': {},
     'Rainbow': {},
     'Purple': {},
     'White': {},
+    'Pink': {},
     'Flame': {},
-    'Pink': {}
+    'Christmas': {}
   }
 
   window.complexDescriptors = {
@@ -684,12 +788,18 @@ function setDefault() {
         Many: true
       }
     },
-    // 'Mountain Range' : {
-    //   withDescriptors: {
-    //     Mountain: true,
-    //     Many: true
-    //   }
-    // },
+    'Mountain Range' : {
+      withDescriptors: {
+        Mountain: true,
+        Many: true
+      }
+    },
+    'Mountain (Snow)' : {
+      withDescriptors: {
+        Mountain: true,
+        'With Snow': true
+      }
+    },
     'House (Snow)' : {
       withDescriptors: {
         House: true,
@@ -753,7 +863,13 @@ function setDefault() {
     'Tree (Dark)' : {
       withDescriptors: {
         Tree: true,
-        Darker: true
+        Dark: true
+      }
+    },
+    'Grass (Dark)': {
+      withDescriptors: {
+        Grass: true,
+        Dark: true
       }
     },
     'Water (Deep)': {
@@ -801,25 +917,13 @@ function setDefault() {
     'Torch (On)': {
       withDescriptors: {
         Torch: true,
-        'On Fire': true
+        'Turned On': true
       }
     },
     'Lantern (On)': {
       withDescriptors: {
         Lantern: true,
-        'On Fire': true
-      }
-    },
-    'Quiver': {
-      withDescriptors: {
-        Arrow: true,
-        Many: true
-      }
-    },
-    Cavalry: {
-      withDescriptors: {
-        Knight: true,
-        Mounted: true
+        'Turned On': true
       }
     },
     'Evil Eyeball': window.monsterDescriptors['Evil Eyeball']
@@ -839,6 +943,7 @@ function setDefault() {
   window.allDescriptors = {
     ...window.generalDescriptors,
     ...window.elementDescriptors,
+    ...window.waterElementDescriptors,
     ...window.overworldMapDescriptors,
     ...window.buildingPartDescriptors,
     ...window.outsideBuildingDescriptors,
@@ -854,12 +959,29 @@ function setDefault() {
     ...window.lawnAnimalDescriptors,
     ...window.reptileDescriptors,
     ...window.birdDescriptors,
-    ...window.edgeDescriptors,
+    ...window.edgeModifiers,
+    ...window.pathModifiers,
     ...window.audioModifierDescriptors,
-    ...window.graphicalModifierDescriptors,
-    ...window.complexDescriptors,
+    ...window.modifierDescriptors,
+    ...window.weaponDescriptors,
+    // ...window.complexDescriptors,
     ...window.goreDescriptors,
     ...window.colorModifiers,
+    ...window.dungeonItemDescriptors,
+    ...window.elementalModifiers,
+    ...window.livingCreatureModifiers,
+    ...window.facingModifiers,
+  }
+
+  window.descriptionModifiers = {
+    ...window.colorModifiers,
+    ...window.edgeModifiers,
+    ...window.pathModifiers,
+    ...window.audioModifierDescriptors,
+    ...window.modifierDescriptors,
+    ...window.elementalModifiers,
+    ...window.livingCreatureModifiers,
+    ...window.facingModifiers,
   }
 
 }

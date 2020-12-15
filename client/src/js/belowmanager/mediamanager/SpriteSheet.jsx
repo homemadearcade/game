@@ -3,6 +3,15 @@ import classnames from 'classnames'
 import PixiMapSprite from '../../components/PixiMapSprite.jsx'
 import modals from '../../mapeditor/modals.js'
 
+window.getModifierDescriptors = function(descriptors) {
+  return Object.keys(descriptors).reduce((prev, descriptor) => {
+    if(descriptors[descriptor] && window.descriptionModifiers[descriptor]) {
+      prev.push(descriptor)
+    }
+    return prev
+  }, [])
+}
+
 export default class SpriteSheet extends React.Component {
   constructor(props) {
     super(props)
@@ -33,7 +42,14 @@ export default class SpriteSheet extends React.Component {
   refCallback = (item) => {
     if (item) {
       item.ondblclick = () => {
-        modals.viewFullSprite(JSON.parse(item.dataset.spritejson))
+        const { textureIdsSelected } = this.state
+        const useTextures = Object.keys(textureIdsSelected).length
+        console.log(textureIdsSelected, useTextures)
+        modals.openEditDescriptorsModal({}, ({value}) => {
+          if(value) {
+            window.local.emit('onEditSpriteData', useTextures ? textureIdsSelected : {[JSON.parse(item.dataset.spritejson).textureId]: true}, { descriptors: value })
+          }
+        }, useTextures ? textureIdsSelected : {[JSON.parse(item.dataset.spritejson).textureId]: true})
       };
     }
   }
@@ -44,7 +60,7 @@ export default class SpriteSheet extends React.Component {
 
 
     // if(showDescribedOnly && (!descriptors || !descriptors.length)) return
-    if(hideDescribed) {
+    if(hideDescribed && !showDescribedOnly) {
       let descriptors = sprite.descriptors
       if(descriptors) descriptors = Object.keys(descriptors).reduce((prev, name) => {
         if(descriptors[name]) prev.push(name)
@@ -78,7 +94,7 @@ export default class SpriteSheet extends React.Component {
         if(this.props.onClick) this.props.onClick(sprite, index)
       }}
       style={{backgroundColor: GAME.world.backgroundColor || 'black'}}>
-        <PixiMapSprite width="40" height="40" textureId={textureId} spriteData={sprite}/>
+        <PixiMapSprite width="40" height="40" textureId={textureId} textureIdsSelected={this.state.textureIdsSelected} spriteData={sprite}/>
     </div>
   }
 
@@ -89,12 +105,19 @@ export default class SpriteSheet extends React.Component {
     if(showDescribedOnly) {
       const categories = spriteSheet.sprites.reduce((prev, sprite) => {
         if(sprite.descriptors) {
-          Object.keys(sprite.descriptors).forEach((item, i) => {
-            if(sprite.descriptors[item]) {
-              if(!prev[item]) prev[item] = []
-              prev[item].push(sprite)
-            }
-          });
+          const modifiers = window.getModifierDescriptors(sprite.descriptors)
+          if(modifiers.length) {
+            const categoryName = Object.keys(sprite.descriptors).filter((d) => sprite.descriptors[d]).join('-')
+            if(!prev[categoryName]) prev[categoryName] = []
+            prev[categoryName].push(sprite)
+          } else {
+            Object.keys(sprite.descriptors).forEach((item, i) => {
+              if(sprite.descriptors[item]) {
+                if(!prev[item]) prev[item] = []
+                prev[item].push(sprite)
+              }
+            });
+          }
         }
         return prev
       }, {})
@@ -113,8 +136,18 @@ export default class SpriteSheet extends React.Component {
             })
     }
 
+    // {selectMultiple && <div className="SpriteSheet__edit-selected fa fa-edit" data-textureids={JSON.stringify(this.state.textureIdsSelected)}>Click to edit selected</div>}
+
     return <div className="SpriteSheet">
-      {selectMultiple && <div className="SpriteSheet__edit-selected fa fa-edit" data-textureids={JSON.stringify(this.state.textureIdsSelected)}>Click to edit selected</div>}
+      {selectMultiple && <div className="SpriteSheet__edit-selected fa fa-edit" onClick={() => {
+        const textureIdsSelected = spriteSheet.sprites.reduce((prev, next) => {
+          prev[next.textureId] = true
+          return prev
+        }, {})
+        this.setState({
+          textureIdsSelected
+        })
+      }}>Select All</div>}
       {ss}
     </div>
   }

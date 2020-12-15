@@ -3,8 +3,8 @@ export default class PixiMapSprite extends React.Component {
   render() {
     const texture = PIXIMAP.textures[this.props.textureId]
 
-    const desiredWidth = this.props.width || texture.orig.width
-    const desiredHeight = this.props.height || texture.orig.height
+    const desiredWidth = this.props.width || (texture.orig.width * 4)
+    const desiredHeight = this.props.height || (texture.orig.height * 4)
 
     if(!texture) {
       return <div style={{width: desiredWidth, height: desiredHeight}}></div>
@@ -22,8 +22,8 @@ export default class PixiMapSprite extends React.Component {
 
     const transformContainer = `translateX(${translate}) translateY(${translate})`
     const spriteData = (this.props.spriteData && JSON.stringify(this.props.spriteData))
-    return <div data-spritedata={spriteData} className={'PixiMapSpriteContainer ' + this.props.className} onClick={this.props.onClick} style={{transform: transformContainer, width: desiredWidth, height: desiredHeight, ...this.props.style}}>
-      <div data-spritedata={spriteData} className="Sprite" style = {{
+    return <div data-spritedata={spriteData} data-textureids={this.props.textureIdsSelected && Object.keys(this.props.textureIdsSelected).length ? JSON.stringify(this.props.textureIdsSelected): null} className={'PixiMapSpriteContainer ' + this.props.className} onClick={this.props.onClick} style={{transform: transformContainer, width: desiredWidth, height: desiredHeight, ...this.props.style}}>
+      <div data-spritedata={spriteData} data-textureids={this.props.textureIdsSelected && Object.keys(this.props.textureIdsSelected).length ? JSON.stringify(this.props.textureIdsSelected) : null} className="Sprite" style = {{
           backgroundImage,
           backgroundPositionY,
           backgroundPositionX,
