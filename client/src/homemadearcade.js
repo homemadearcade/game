@@ -8,11 +8,6 @@ Remember that fullstack guys random theater generator - you're close
 
 TODO IMMEDIATE
 
-try your own sprite sheet
-
-Modifier = no longer the original
-Admins need to be as specific as possible and select as few tags as possible
-
 Water decay vs air decay vs ground decay
 Hero.inWater ELEMENT stuff GREAT!
 

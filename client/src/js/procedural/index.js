@@ -4,6 +4,21 @@ import './sprites.js'
 import './title.js'
 import './lighting.js'
 
+import { generateTerrainJSON } from './terrain/index.js'
+
+class Procedural{
+  generateTerrain(object) {
+    generateTerrainJSON()
+  }
+
+
+  // renderNoise(noiseGrid) {
+  //
+  // }
+}
+
+window.PROCEDURAL = new Procedural()
+
 function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);

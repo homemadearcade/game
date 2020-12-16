@@ -213,4 +213,6 @@ IM GOING TO START OFF WITH HAVING A GAME MASTER PRESENT AND THEN EVENTUALLY ILL 
 
 ACTUALLY THE ENGINE IVE BEEN WANTING...
 https://github.com/timetocode/nengi-2d-csp
+
+consider firebase?
 */
