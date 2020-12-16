@@ -55,12 +55,12 @@ export default class SpriteSheet extends React.Component {
   }
 
   _renderSprite(sprite, index) {
-    const { selectMultiple, hideDescribed, showDescribedOnly } = this.props
+    const { selectMultiple, hideDescribed } = this.props
     const { textureId } = sprite
 
 
     // if(showDescribedOnly && (!descriptors || !descriptors.length)) return
-    if(hideDescribed && !showDescribedOnly) {
+    if(hideDescribed) {
       let descriptors = sprite.descriptors
       if(descriptors) descriptors = Object.keys(descriptors).reduce((prev, name) => {
         if(descriptors[name]) prev.push(name)
@@ -99,25 +99,27 @@ export default class SpriteSheet extends React.Component {
   }
 
   render() {
-    const { spriteSheet, selectMultiple, showDescribedOnly } = this.props;
+    const { spriteSheet, selectMultiple, hideUncategorized, dontSepereteModified } = this.props;
 
     let ss
-    if(showDescribedOnly) {
+    // if(showDescribedOnly) {
       const categories = spriteSheet.sprites.reduce((prev, sprite) => {
-        if(sprite.descriptors) {
+        const descriptorList = Object.keys(sprite.descriptors || {}).filter((d) => sprite.descriptors[d])
+        if(descriptorList.length) {
           const modifiers = window.getModifierDescriptors(sprite.descriptors)
-          if(modifiers.length) {
-            const categoryName = Object.keys(sprite.descriptors).filter((d) => sprite.descriptors[d]).join('-')
+          if(modifiers.length  && !dontSepereteModified) {
+            const categoryName = descriptorList.join('-')
             if(!prev[categoryName]) prev[categoryName] = []
             prev[categoryName].push(sprite)
           } else {
-            Object.keys(sprite.descriptors).forEach((item, i) => {
-              if(sprite.descriptors[item]) {
-                if(!prev[item]) prev[item] = []
-                prev[item].push(sprite)
-              }
+            descriptorList.forEach((item, i) => {
+              if(!prev[item]) prev[item] = []
+              prev[item].push(sprite)
             });
           }
+        } else if(!hideUncategorized){
+          if(!prev.uncategorized) prev.uncategorized = []
+          prev.uncategorized.push(sprite)
         }
         return prev
       }, {})
@@ -130,11 +132,13 @@ export default class SpriteSheet extends React.Component {
             })}
           </React.Fragment>
         })
-    } else {
-      ss =  spriteSheet.sprites.map((sprite, index) => {
-              return this._renderSprite(sprite, index)
-            })
-    }
+    // }
+
+   //  else {
+   //   ss =  spriteSheet.sprites.map((sprite, index) => {
+   //           return this._renderSprite(sprite, index)
+   //         })
+   // }
 
     // {selectMultiple && <div className="SpriteSheet__edit-selected fa fa-edit" data-textureids={JSON.stringify(this.state.textureIdsSelected)}>Click to edit selected</div>}
 

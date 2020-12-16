@@ -15,8 +15,10 @@ export default class SpriteSheetEditor extends React.Component {
       spriteSheet: {
         sprites: []
       },
-      showDescribedOnly: false,
+      hideUncategorized: false,
       hideDescribed: false,
+      dontSepereteModified: false,
+
     }
   }
 
@@ -68,7 +70,7 @@ export default class SpriteSheetEditor extends React.Component {
   }
 
   render() {
-    const { spriteSheet } = this.state;
+    const { spriteSheet, dontSepereteModified } = this.state;
 
     return <div className="SpriteSheetEditor">
       <div className="ManagerForm">
@@ -90,15 +92,27 @@ export default class SpriteSheetEditor extends React.Component {
           this.setState({spriteSheet})
         }}/>
         <div className="ManagerInput__text">
-          Show Described Sprites Only
+          Dont Seperate Modified
           <input type="checkbox"
             onClick={() => {
               const state = this.state
-              state.showDescribedOnly = !state.showDescribedOnly
+              state.dontSepereteModified = !state.dontSepereteModified
               this.setState(state)
               window.local.emit('onClearTextureIdsSelection')
             }}
-            checked={this.state.showDescribedOnly}
+            checked={this.state.dontSepereteModified}
+          />
+        </div>
+        <div className="ManagerInput__text">
+          Hide Uncategorized
+          <input type="checkbox"
+            onClick={() => {
+              const state = this.state
+              state.hideUncategorized = !state.hideUncategorized
+              this.setState(state)
+              window.local.emit('onClearTextureIdsSelection')
+            }}
+            checked={this.state.hideUncategorized}
           />
         </div>
         <div className="ManagerInput__text">
@@ -114,7 +128,7 @@ export default class SpriteSheetEditor extends React.Component {
           />
         </div>
       </div>
-      <SpriteSheet selectMultiple hideDescribed={this.state.hideDescribed} showDescribedOnly={this.state.showDescribedOnly} spriteSheet={spriteSheet}
+      <SpriteSheet selectMultiple dontSepereteModified={dontSepereteModified} hideDescribed={this.state.hideDescribed} hideUncategorized={this.state.hideUncategorized} spriteSheet={spriteSheet}
         onClick={(sprite) => {
 
         }}/>

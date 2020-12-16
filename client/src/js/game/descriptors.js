@@ -676,6 +676,8 @@ function setDefault() {
     'Down-Right-Left': {},
     'Up-Down-Right': {},
     'Up-Down-Left': {},
+    'TopRight-BottomLeft': {},
+    'TopLeft-BottomRight': {},
   }
 
   window.modifierDescriptors = {
@@ -697,6 +699,7 @@ function setDefault() {
     'Elevated': {},
     'Alt1': {},
     'Alt2': {},
+    'Duplicate': {},
       Small: {
       audioRelated: true,
       dontShowAdminsInSpriteSheetEditor: true,},
@@ -767,6 +770,7 @@ function setDefault() {
     'Light': {},
     'Brown': {},
     'Orange': {},
+    'GreenBlue': {},
     'Yellow': {},
     'Green': {},
     'Grey': {},
