@@ -309,6 +309,7 @@ function getVisibility(pixiChild, gameObject) {
   }
 
   if(CONSTRUCTEDITOR.open) {
+    if(gameObject.tags.terrain && CONSTRUCTEDITOR.mapVisible.terrain === false) invisible = true
     if(gameObject.tags.background && CONSTRUCTEDITOR.mapVisible.background === false) invisible = true
     if(gameObject.tags.foreground && CONSTRUCTEDITOR.mapVisible.foreground === false) invisible = true
     if(gameObject.tags.hero && CONSTRUCTEDITOR.mapVisible.hero === false) invisible = true

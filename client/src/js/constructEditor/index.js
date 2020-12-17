@@ -392,7 +392,7 @@ class ConstructEditor {
   }
 
   getBoundingBox(rectangles) {
-    return window.getBoundingBox(rectanges, this.grid)
+    return window.getBoundingBox(rectangles, this.grid)
   }
 
   bucketFill(empty) {

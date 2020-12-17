@@ -218,10 +218,10 @@ export default class Root extends React.Component{
             })
           }}
         />
-        <ToolbarButton text="hero"
-          active={this.state.isMapVisible.hero}
+        <ToolbarButton text="terrain"
+          active={this.state.isMapVisible.terrain}
           onClick={() => {
-            CONSTRUCTEDITOR.toggleMapVisibility('hero')
+            CONSTRUCTEDITOR.toggleMapVisibility('terrain')
             this.setState({
               isMapVisible: CONSTRUCTEDITOR.mapVisible
             })
@@ -247,6 +247,16 @@ export default class Root extends React.Component{
       <ToolbarButton text="close" onClick={this._saveClick}/>
     </div>
   }
+
+  // <ToolbarButton text="hero"
+  //   active={this.state.isMapVisible.hero}
+  //   onClick={() => {
+  //     CONSTRUCTEDITOR.toggleMapVisibility('hero')
+  //     this.setState({
+  //       isMapVisible: CONSTRUCTEDITOR.mapVisible
+  //     })
+  //   }}
+  // />
 
   _openColorPicker() {
     this.setState({isColorPickerOpen: true})

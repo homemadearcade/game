@@ -314,6 +314,8 @@ PIXIMAP.onRender = function(force) {
     // })
 
     PIXIMAP.renderId += .0001
+
+    // PIXIMAP.renderUpdateGridSprites()
   }
 }
 
@@ -482,6 +484,7 @@ PIXIMAP.onUpdateGrid = function() {
     }, 100)
     window.resettingDarkness = true
   }
+  PIXIMAP.updateGridSprites()
 }
 
 PIXIMAP.onUpdateGridNode = function(x, y, update) {
@@ -545,10 +548,17 @@ PIXIMAP.updateGridSprites = function() {
           PIXIMAP.setTerrainColor(nodeData, backgroundSprite)
         }
 
-        backgroundSprite.x = gridNode.x * MAP.camera.multiplier
-        backgroundSprite.y = gridNode.y * MAP.camera.multiplier
-        backgroundSprite.transform.scale.x = (GAME.grid.nodeSize/backgroundSprite.texture._frame.width) * MAP.camera.multiplier
-        backgroundSprite.transform.scale.y = (GAME.grid.nodeSize/backgroundSprite.texture._frame.width) * MAP.camera.multiplier
+        let camera = MAP.camera
+        if(CONSTRUCTEDITOR.open) {
+          camera = CONSTRUCTEDITOR.camera
+        } else if(PATHEDITOR.open) {
+          camera = PATHEDITOR.camera
+        }
+
+        backgroundSprite.x = gridNode.x * camera.multiplier
+        backgroundSprite.y = gridNode.y * camera.multiplier
+        backgroundSprite.transform.scale.x = (GAME.grid.nodeSize/backgroundSprite.texture._frame.width) * camera.multiplier
+        backgroundSprite.transform.scale.y = (GAME.grid.nodeSize/backgroundSprite.texture._frame.width) * camera.multiplier
       }
 
       // change
@@ -706,6 +716,15 @@ PIXIMAP.cleanUpMapAndAskPixiToSendGameReady = function() {
 }
 
 function resetConstructParts() {
+  // window.terrainObjects.forEach((gameObject) => {
+  //   gameObject.constructParts.forEach((part) => {
+  //     const partObject = PIXIMAP.convertToPartObject(gameObject, part)
+  //     updatePixiObject(partObject)
+  //   })
+  //
+  //   return
+  // })
+  PIXIMAP.updateGridSprites()
   GAME.objects.forEach((gameObject) => {
     /////////////////////
     /////////////////////

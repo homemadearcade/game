@@ -7,7 +7,7 @@ import './lighting.js'
 import { generateTerrainJSON } from './terrain/index.js'
 
 class Procedural{
-  generateTerrain(object) {
+  generateTerrain() {
     generateTerrainJSON()
   }
 

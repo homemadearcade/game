@@ -410,6 +410,31 @@ function updateTerrainDataPhysics(terrainData, remove) {
     })
 
   })
+  Object.keys(terrainData.landMasses).forEach((id) => {
+
+    const landMass = terrainData.landMasses[id]
+    const { x, y, width, height } = window.getBoundingBox(landMass, grid)
+
+    const object = {
+      id,
+      x, y, width, height,
+      terrainGroupType: 'landMass',
+      constructParts: landMass,
+      tags: {
+        land: true,
+        terrain: true,
+      }
+    }
+
+    GAME.objectsById[id] = object
+    if(!remove) window.terrainObjects.push(object)
+    object.constructParts.forEach((part) => {
+      part.ownerId = id
+      if(remove) PHYSICS.removeObject(part)
+      else PHYSICS.addObject(part)
+    })
+
+  })
   Object.keys(terrainData.waterMasses).forEach((id) => {
     const bodyOfWater = terrainData.waterMasses[id]
 
@@ -499,10 +524,10 @@ async function generateTerrainJSON(showModals) {
 
   GAME.grid.nodes = nodesCopy
   GAME.grid.terrainData = massData
+  applyChangesToNodeData(nodesCopy)
+  console.log('done w procedural map')
   window.socket.emit('updateGrid', GAME.grid)
 
-  console.log('done', GAME.grid)
-  applyChangesToNodeData(nodesCopy)
 }
 
 
