@@ -8,6 +8,8 @@ Remember that fullstack guys random theater generator - you're close
 
 TODO IMMEDIATE
 
+Think about user flow for adding descriptors, is everything ok?
+
 Water decay vs air decay vs ground decay
 Hero.inWater ELEMENT stuff GREAT!
 

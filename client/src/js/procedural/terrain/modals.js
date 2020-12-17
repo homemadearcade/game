@@ -12,8 +12,17 @@ window.elevationColors = {
   Snow: parseInt(tinycolor('#eee').toHex(), 16)
 }
 
+window.heatColors = {
+  'Coldest': parseInt(tinycolor('#00FFFF').toHex(), 16),
+  'Colder': parseInt(tinycolor('#AAFFFF').toHex(), 16),
+  'Cold': parseInt(tinycolor('#00CC99').toHex(), 16),
+  'Warm': parseInt(tinycolor('#FFFF66').toHex(), 16),
+  'Warmer': parseInt(tinycolor('#FF6600').toHex(), 16),
+  'Warmest': parseInt(tinycolor('#EE1100').toHex(), 16),
+}
 
-function viewNoiseData({noiseNodes, nodeProperty, title, type}) {
+
+function viewNoiseData({noiseNodes, nodeProperty, title, type, terrainData}) {
 
   const colorData = Object.keys(window.elevationColors).map((name) => {
 
@@ -42,15 +51,50 @@ function viewNoiseData({noiseNodes, nodeProperty, title, type}) {
       const sprite = new PIXI.Sprite(PIXI.Texture.WHITE)
       // console.log(noise, (noise + 1)/2)
 
-      const prop = node[nodeProperty].toFixed(2)
-      if(type == 'terrain') {
-        const terrainType = window.elevationIntegerLookup[prop]
-        sprite.tint = window.elevationColors[terrainType]
-        if(!terrainType) console.log(prop)
+
+      if(type == 'heat') {
+        const prop = node.heat.toFixed(2)
+
+        let heatType = window.heatIntegerLookup[prop]
+        if(node.elevationBitmask != 15) {
+          sprite.tint = 0x333
+        } else {
+          // console.log(heatType)
+          if(!heatType) console.log(node.heat)
+          sprite.tint = window.heatColors[heatType]
+        }
+      } else if(type == 'landwatergroups' && terrainData) {
+        if(node.isFloodFilled) {
+          if(node.isWater) {
+            sprite.tint = window.elevationColors.Water
+          }
+
+          if(node.isLand) {
+            if(terrainData.landMasses[node.landMassId].length < 10) {
+              sprite.tint = window.elevationColors.Snow
+            } else {
+              sprite.tint = window.elevationColors.Grass
+            }
+          }
+        }
+      } else if(type == 'terrain') {
+        const prop = node.elevation.toFixed(2)
+
+        let terrainType = window.elevationIntegerLookup[prop]
+        if(node.elevationBitmask != 15) {
+          sprite.tint = 0x333
+        } else {
+          // console.log(terrainType)
+          sprite.tint = window.elevationColors[terrainType]
+        }
       } else if(type == 'water'){
+        const prop = node.elevation.toFixed(2)
+
         if (prop < 0.4) sprite.tint = 0x0000FF;
         else sprite.tint = 0xFFFFFF
-      } else {
+      } else if(nodeProperty){
+        const prop = node[nodeProperty].toFixed(2)
+
         sprite.tint = 0xFFFFFF
         sprite.alpha = prop
       }
