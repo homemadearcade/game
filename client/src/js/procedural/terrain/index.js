@@ -2,7 +2,7 @@ import { Noise } from 'noisejs'
 import { viewNoiseData } from './modals'
 import gridUtil from '../../utils/grid'
 
-import Grid from './Grid'
+// import Grid from './drid'
 
 window.addTerrainDataToPhysics = function (terrainData) {
   updateTerrainDataPhysics(terrainData)
