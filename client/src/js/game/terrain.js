@@ -30,16 +30,23 @@ export function objectOnTerrain(object) {
   if(!gridNodeData) return
 
   const wasInWater = object.onWater
-  if(gridNodeData.elevationType === 'Water' || gridNodeData.elevationType === 'Deep Water') {
+
+  object.onWater = false
+  object.onLand = false
+
+  if((object._collidingWithWater) || gridNodeData.elevationType === 'Water' || gridNodeData.elevationType === 'Deep Water') {
     object.onWater = true
-  } else {
-    object.onWater = false
   }
+
   if(wasInWater != object.onWater) {
     if(object.onWater) {
       if(object.tags.hero) window.emitGameEvent('onHeroEnterWater', object)
     } else {
       if(object.tags.hero) window.emitGameEvent('onHeroLeaveWater', object)
     }
+  }
+
+  if(!object.onWater) {
+    object.onLand = true
   }
 }

@@ -18,7 +18,7 @@ window.defaultArrowKeys =  {
 window.advancedPlatformerDefaults = {
   velocityDecay: 300,
   velocityInAirDecayExtra: 0,
-  velocityOnGroundDecayExtra: 100,
+  velocityOnLandDecayExtra: 100,
   velocityDelta: 1000,
   velocityInputGoal: 300,
 }
@@ -380,7 +380,7 @@ function handleActionButtonBehavior(hero, action, delta) {
   }
 
   if((action === 'dash' || action === 'teleportDash') && !delta) {
-    if(hero._dashable === false && hero.onGround) {
+    if(hero._dashable === false && hero.onObstacle) {
       if(GAME.gameState.timeoutsById[hero.id + '-dashable']) GAME.clearTimeout(hero.id + '-dashable')
       hero._dashable = true
     }
@@ -436,7 +436,7 @@ function handleActionButtonBehavior(hero, action, delta) {
     }
   }
 
-  if(hero.onGround && action === 'groundJump' && !delta) {
+  if(hero.onObstacle && action === 'groundJump' && !delta) {
     actionFired = true
 
     hero.velocityY = hero.mod().jumpVelocity
@@ -447,7 +447,7 @@ function handleActionButtonBehavior(hero, action, delta) {
   if(action === 'wallJump' && !delta) {
     const velocity = hero.mod().wallJumpVelocity || 400
 
-    if(hero.onGround) {
+    if(hero.onObstacle) {
       hero.velocityY = hero.mod().jumpVelocity
       window.emitGameEvent('onHeroGroundJump', hero)
     }
@@ -468,7 +468,7 @@ function handleActionButtonBehavior(hero, action, delta) {
   }
 
   if(action === 'floatJump' && !delta) {
-    if(hero._floatable === false && hero.onGround) {
+    if(hero._floatable === false && hero.onObstacle) {
       if(GAME.gameState.timeoutsById[hero.id + '-floatable']) GAME.clearTimeout(hero.id + '-floatable')
       hero._floatable = true
     }
@@ -833,7 +833,7 @@ function onKeyDown(key, hero) {
       if(!hero.dialogue.length) {
         hero.flags.showDialogue = false
         hero.flags.paused = false
-        hero.onGround = false
+        hero.onObstacle = false
         hero.dialogueId = null
         hero._fireDialogueCompleteWithSpeakerId = false
       }
@@ -873,7 +873,7 @@ function onKeyDown(key, hero) {
       if(!hero.cutscenes.length) {
         hero.flags.showCutscene = false
         hero.flags.paused = false
-        hero.onGround = false
+        hero.onObstacle = false
       }
       hero._cantInteract = true
       window.emitGameEvent('onCutsceneCompleted', hero)

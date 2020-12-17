@@ -181,27 +181,42 @@ function updatePosition(object, delta) {
 
   const isVelocityDecayNumber = typeof object.mod().velocityDecay == 'number'
   if(isVelocityDecayNumber || object.arrowKeysBehavior === 'advancedPlatformer') {
-    let velocityDecayY
-    let velocityDecayX
-    let velocityInAirDecayExtra
-    let velocityOnGroundDecayExtra
+    let velocityDecayY = 0
+    let velocityDecayX = 0
+    let velocityInAirDecayExtra = 0
+    let velocityOnLandDecayExtra = 0
+    let velocityOnWaterDecayExtra = 0
 
     if(!isVelocityDecayNumber) {
       velocityDecayY = window.advancedPlatformerDefaults.velocityDecay
       velocityDecayX = window.advancedPlatformerDefaults.velocityDecay
-      velocityOnGroundDecayExtra = window.advancedPlatformerDefaults.velocityOnGroundDecayExtra
+      velocityOnLandDecayExtra = window.advancedPlatformerDefaults.velocityOnLandDecayExtra
       velocityInAirDecayExtra = window.advancedPlatformerDefaults.velocityInAirDecayExtra
+      velocityOnWaterExtra = window.advancedPlatformerDefaults.velocityonWaterDecayExtra
     } else {
       velocityDecayY = object.mod().velocityDecay + (object.mod().velocityDecayYExtra || 0)
       velocityDecayX = object.mod().velocityDecay + (object.mod().velocityDecayXExtra || 0)
-      velocityInAirDecayExtra = object.mod().velocityInAirDecayExtra
-      velocityOnGroundDecayExtra = object.mod().velocityOnGroundDecayExtra
+      if(object.mod().velocityInAirDecayExtra) velocityInAirDecayExtra = object.mod().velocityInAirDecayExtra
+      if(object.mod().velocityOnLandDecayExtra) velocityOnLandDecayExtra = object.mod().velocityOnLandDecayExtra
+      if(object.mod().velocityOnWaterDecayExtra) velocityOnWaterDecayExtra = object.mod().velocityOnWaterDecayExtra
     }
 
-    if(object.onGround && velocityOnGroundDecayExtra) {
-      velocityDecayY += velocityOnGroundDecayExtra
-      velocityDecayX += velocityOnGroundDecayExtra
-    } else if(velocityInAirDecayExtra) {
+    let onLand = object.onObstacle
+    let inAir = !object.onObstacle
+    let onWater = object.onWater
+
+    if(object.mod().tags.walkOverhead) {
+      onLand = object.onLand
+      inAir = false
+    }
+
+    if(onLand && velocityOnLandDecayExtra) {
+      velocityDecayY += velocityOnLandDecayExtra
+      velocityDecayX += velocityOnLandDecayExtra
+    } else if(onWater && velocityOnWaterDecayExtra) {
+      velocityDecayY += velocityOnWaterDecayExtra
+      velocityDecayX += velocityOnWaterDecayExtra
+    } else if(inAir && velocityInAirDecayExtra) {
       velocityDecayY += velocityInAirDecayExtra
       velocityDecayX += velocityInAirDecayExtra
     }
@@ -264,8 +279,7 @@ function prepareObjectsAndHerosForMovementPhase() {
   // })
 
   everything.forEach((object, i) => {
-
-    object.onGround = false
+    object._collidingWithWater = false
 
     object._deltaX = 0
     object._deltaY = 0
@@ -313,6 +327,8 @@ function prepareObjectsAndHerosForMovementPhase() {
 
 function prepareObjectsAndHerosForCollisionsPhase() {
   // set objects new position and widths
+
+
   let everything = [...GAME.objects]
   let allHeros = getAllHeros()
   if(window.terrainObstacles) everything.push(...window.terrainObstacles)
@@ -355,6 +371,8 @@ function prepareObjectsAndHerosForCollisionsPhase() {
         console.log('physics object not found for id: ' + object.id)
         return
       }
+
+      object.onObstacle = false
 
       let physicsObject = PHYSICS.objects[object.id]
       physicsObject.x = object.x

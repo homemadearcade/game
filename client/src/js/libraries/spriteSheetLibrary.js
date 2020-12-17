@@ -3,14 +3,13 @@
     // 'andbandtk': true,
 
     'overworld-2-8px': true,
-    // 'kenney-voxel-128px': true,
-    // 'kenney-platformer-21px': true,
-    // 'kenney-roguelike-environment-16px': true,
-    // 'kenney-roguelike-dungeon-16px': true,
-    // 'kenney-roguelike-indoor-16px': true,
-    // 'kenney-roguelike-characters-16px': true,
-
-    // 'kenney-roguelike-city-16px': true,
+    'kenney-voxel-128px': true,
+    'kenney-platformer-21px': true,
+    'kenney-roguelike-environment-16px': true,
+    'kenney-roguelike-dungeon-16px': true,
+    'kenney-roguelike-indoor-16px': true,
+    'kenney-roguelike-characters-16px': true,
+    'kenney-roguelike-city-16px': true,
 
     // 'kenney-tanks': true,
     // 'kenney-sports-characters-equipment': true,

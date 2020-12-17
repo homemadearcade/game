@@ -118,7 +118,7 @@ class Objects{
       _breakMaxVelocity: object._breakMaxVelocity,
       gridHeight: object.gridHeight,
       gridWidth: object.gridWidth,
-      onGround: object.onGround,
+      onObstacle: object.onObstacle,
       removed: object.removed,
       spawnedIds: object.spawnedIds,
       spawnWait: object.spawnWait,

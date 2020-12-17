@@ -55,8 +55,9 @@ export default class HeroLive extends React.Component {
       velocityDecay: hero.velocityDecay,
       velocityDecayXExtra: hero.velocityDecayXExtra,
       velocityDecayYExtra: hero.velocityDecayYExtra,
-      velocityOnGroundDecayExtra: hero.velocityOnGroundDecayExtra,
+      velocityOnLandDecayExtra: hero.velocityOnLandDecayExtra,
       velocityInAirDecayExtra: hero.velocityInAirDecayExtra,
+      velocityOnWaterDecayExtra: hero.velocityOnWaterDecayExtra,
       floatJumpTimeout: hero.floatJumpTimeout,
       dashTimeout: hero.dashTimeout,
       gravityVelocityY: hero.gravityVelocityY,
@@ -98,7 +99,8 @@ export default class HeroLive extends React.Component {
               <DatNumber path='objectSelected.velocityDecayXExtra' label="Additional Velocity Decay X" min={0} max={1000} step={1} />
               <DatNumber path='objectSelected.velocityDecayYExtra' label="Additional Velocity Decay Y" min={0} max={1000} step={1} />
               <DatNumber path='objectSelected.velocityInAirDecayExtra' label="Additional Velocity Decay In Air" min={0} max={1000} step={1} />
-              <DatNumber path='objectSelected.velocityOnGroundDecayExtra' label="Additional Velocity Decay On Ground" min={0} max={1000} step={1} />
+              <DatNumber path='objectSelected.velocityOnLandDecayExtra' label="Additional Velocity Decay On Land" min={0} max={1000} step={1} />
+              <DatNumber path='objectSelected.velocityOnWaterDecayExtra' label="Additional Velocity Decay On Water" min={0} max={1000} step={1} />
             </DatFolder>
           </DatFolder>
           <DatFolder title='Animations'>

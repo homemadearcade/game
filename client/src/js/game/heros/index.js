@@ -441,7 +441,7 @@ class Hero{
       gridHeight: hero.gridHeight,
       gridWidth: hero.gridWidth,
       updateHistory: hero.updateHistory,
-      onGround: hero.onGround,
+      onObstacle: hero.onObstacle,
       angle: hero.angle,
       questState: hero.questState,
       customState: hero.customState,
@@ -569,6 +569,10 @@ class Hero{
       velocityDecay: hero.velocityDecay,
       velocityDecayXExtra: hero.velocityDecayXExtra,
       velocityDecayYExtra: hero.velocityDecayYExtra,
+      velocityInAirDecayExtra: hero.velocityInAirDecayExtra,
+      velocityOnWaterDecayExtra: hero.velocityOnWaterDecayExtra,
+      velocityOnLandDecayExtra: hero.velocityOnLandDecayExtra,
+
       gravityVelocityY: hero.gravityVelocityY,
 
       floatJumpTimeout: hero.floatJumpTimeout,

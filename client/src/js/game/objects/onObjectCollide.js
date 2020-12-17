@@ -60,6 +60,10 @@ export default function onObjectCollide(agent, collider, result) {
       agent._goalDirection = 'down'
     }
   }
+
+  if(collider.mod().tags['Water']) {
+    agent._collidingWithWater = true
+  }
 }
 //
 // function shouldEffect(agent, collider) {

@@ -223,18 +223,9 @@ class contextMenuEl extends React.Component{
 
     if(specialMenuType === 'selectLayer') {
       return <Menu onClick={this._handleSelectLayerClick}>
-        <MenuItem className="bold-menu-item dont-close-menu">Select Which</MenuItem>
+        <MenuItem className="bold-menu-item">Select Which</MenuItem>
         {item.map((layer) => {
-          return <MenuItem key={JSON.stringify({action: 'select-layer', id: layer.id})}>{layer.name || layer.subObjectName || layer.id}</MenuItem>
-        })
-      }</Menu>
-    }
-
-    if(specialMenuType === 'selectLayer') {
-      return <Menu onClick={this._handleSelectLayerClick}>
-        <MenuItem className="bold-menu-item dont-close-menu">Select Which</MenuItem>
-        {item.map((layer) => {
-          return <MenuItem key={JSON.stringify({action: 'select-layer', id: layer.id})}>{layer.name || layer.subObjectName || layer.id}</MenuItem>
+          return <MenuItem className="dont-close-menu" key={JSON.stringify({action: 'select-layer', id: layer.id})}>{layer.name || layer.subObjectName || layer.id}</MenuItem>
         })
       }</Menu>
     }

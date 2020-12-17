@@ -118,7 +118,7 @@ class NotificationsControl{
       hero._walkingSound = null
 
       if(!hero.mod().tags.walkOverhead && (hero.mod().tags.gravityY || GAME.world.tags.allMovingObjectsHaveGravityY)) {
-        if(hero.onGround && (hero.velocityX || hero._flatVelocityX || hero.velocityY || hero._flatVelocityY) ) {
+        if(hero.onObstacle && (hero.velocityX || hero._flatVelocityX || hero.velocityY || hero._flatVelocityY) ) {
           setHeroWalkingSound(hero)
         }
       } else if(hero.mod().tags.walkOverhead) {

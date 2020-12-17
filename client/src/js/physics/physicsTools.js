@@ -133,6 +133,12 @@ function heroCorrection(hero) {
             landingObject = body
           }
         }
+
+        if(final) {
+          if(body.gameObject.mod().tags['Water']) {
+            hero._collidingWithWater = true
+          }
+        }
       }
     }
 
@@ -152,7 +158,7 @@ function heroCorrection(hero) {
       function correctHeroY() {
         let prevVelocityY = hero.velocityY
         if(result.overlap_y > 0) {
-          hero.onGround = true
+          hero.onObstacle = true
           if(landingObject && hero.velocityY > 500) {
             window.emitGameEvent('onHeroPowerLand', hero, landingObject.gameObject, result)
           }
@@ -415,7 +421,7 @@ function objectCorrection(po, final) {
     if(result.overlap_y === 1) {
       // if(po.gameObject.velocityY > 0) {
         po.gameObject.velocityY = 0
-        po.gameObject.onGround = true
+        po.gameObject.onObstacle = true
       // }
     } else if(result.overlap_y === -1){
       // if(po.gameObject.velocityY < 0)
