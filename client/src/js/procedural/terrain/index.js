@@ -383,6 +383,8 @@ function generateNoiseMap({type, seed, nodes, property, width, height}) {
 
 function updateTerrainDataPhysics(terrainData, remove) {
   window.terrainObjects = []
+  window.terrainObstacles = []
+
   const grid = {...GAME.grid, x: GAME.grid.startX, y: GAME.grid.startY, width: GAME.grid.width * GAME.grid.nodeSize, height: GAME.grid.height * GAME.grid.nodeSize}
   Object.keys(terrainData.mountainRanges).forEach((id) => {
 
@@ -403,6 +405,7 @@ function updateTerrainDataPhysics(terrainData, remove) {
 
     GAME.objectsById[id] = object
     if(!remove) window.terrainObjects.push(object)
+    if(!remove) window.terrainObstacles.push(object)
     object.constructParts.forEach((part) => {
       part.ownerId = id
       if(remove) PHYSICS.removeObject(part)
@@ -430,8 +433,8 @@ function updateTerrainDataPhysics(terrainData, remove) {
     if(!remove) window.terrainObjects.push(object)
     object.constructParts.forEach((part) => {
       part.ownerId = id
-      if(remove) PHYSICS.removeObject(part)
-      else PHYSICS.addObject(part)
+      // if(remove) PHYSICS.removeObject(part)
+      // else PHYSICS.addObject(part)
     })
 
   })
@@ -456,8 +459,8 @@ function updateTerrainDataPhysics(terrainData, remove) {
     GAME.objectsById[id] = object
     object.constructParts.forEach((part) => {
       part.ownerId = id
-      if(remove) PHYSICS.removeObject(part)
-      else PHYSICS.addObject(part)
+      // if(remove) PHYSICS.removeObject(part)
+      // else PHYSICS.addObject(part)
     })
   })
 }

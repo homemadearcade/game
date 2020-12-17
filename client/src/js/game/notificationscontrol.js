@@ -80,7 +80,8 @@ class NotificationsControl{
     }
   }
 
-  onHeroTouchStart(hero) {
+  onHeroTouchStart(hero, object) {
+    // console.log(object)
     // AUDIO.play('')
   }
 

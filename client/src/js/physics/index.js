@@ -6,6 +6,8 @@ just make sure to set something to stationary if its not supposed to be move, or
 import { Collisions } from 'collisions';
 import decomp from 'poly-decomp';
 import { onHeroTrigger } from '../game/heros/onHeroTrigger';
+import { objectOnTerrain } from '../game/terrain';
+
 
 import {
   checkIfShouldRunPhysics,
@@ -248,7 +250,7 @@ function prepareObjectsAndHerosForMovementPhase() {
   // set objects new position and widths
   let everything = [...GAME.objects]
   let allHeros = getAllHeros()
-  if(window.terrainObjects) everything.push(...window.terrainObjects)
+  if(window.terrainObstacles) everything.push(...window.terrainObstacles)
   everything.push(...allHeros)
   PHYSICS.correctedConstructs = {}
 
@@ -262,6 +264,9 @@ function prepareObjectsAndHerosForMovementPhase() {
   // })
 
   everything.forEach((object, i) => {
+
+    object.onGround = false
+
     object._deltaX = 0
     object._deltaY = 0
     object._parentId = null
@@ -310,7 +315,7 @@ function prepareObjectsAndHerosForCollisionsPhase() {
   // set objects new position and widths
   let everything = [...GAME.objects]
   let allHeros = getAllHeros()
-  if(window.terrainObjects) everything.push(...window.terrainObjects)
+  if(window.terrainObstacles) everything.push(...window.terrainObstacles)
   everything.push(...allHeros)
   everything.forEach((object) => {
     if(object.subObjects) {
@@ -528,6 +533,8 @@ function postPhysics() {
     if(object.subObjects) {
       attachSubObjects(object, object.subObjects)
     }
+
+    objectOnTerrain(object)
   })
 
   allHeros.forEach((hero) => {
@@ -538,6 +545,8 @@ function postPhysics() {
     if(hero.subObjects) {
       attachSubObjects(hero, hero.subObjects)
     }
+
+    objectOnTerrain(hero)
   })
 }
 
@@ -625,6 +634,7 @@ function processAwarenessAndWithinEvents(object) {
       }
     })
   }
+
 
   object._objectsTouching = object._objectsTouchingNext
 }

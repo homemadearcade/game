@@ -93,8 +93,6 @@ function heroCorrection(hero) {
     return
   }
 
-  hero.onGround = false
-
   let heroPO = PHYSICS.objects[hero.id]
   if(!PAGE.role.isHost) {
     heroPO.x = hero.x
