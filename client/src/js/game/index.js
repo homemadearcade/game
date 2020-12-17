@@ -284,6 +284,9 @@ class Game{
   loadGridWorldObjectsCompendiumState(game){
     GAME.id = game.id
     GAME.grid = game.grid
+    if(GAME.grid.terrainData) {
+      window.addTerrainDataToPhysics(GAME.grid.terrainData)
+    }
     window.local.emit('onGridLoaded')
 
     if(game.theme) GAME.theme = game.theme
@@ -408,6 +411,10 @@ class Game{
 
   unload() {
     window.local.emit('onGameUnload')
+
+    if(GAME.grid.terrainData) {
+      window.removeTerrainDataFromPhysics(GAME.grid.terrainData)
+    }
 
     MAP.popoverInstances.forEach((instance) => {
       instance.destroy()

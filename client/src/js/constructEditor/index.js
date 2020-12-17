@@ -14,6 +14,27 @@ import keyInput from './keyInput'
 import Root from './Root.jsx'
 import Swal from 'sweetalert2/src/sweetalert2.js';
 
+window.getBoundingBox = function(rectangles, grid) {
+  let minX = grid.x + grid.width
+  let minY = grid.y + grid.height
+  let maxX = grid.x
+  let maxY = grid.y
+
+  rectangles.forEach((rect) => {
+    if(rect.x < minX) minX = rect.x
+    if(rect.y < minY) minY = rect.y
+    if(rect.x + rect.width > maxX) maxX = rect.x + rect.width
+    if(rect.y + rect.height > maxY) maxY = rect.y + rect.height
+  })
+
+  return {
+    x: minX,
+    y: minY,
+    width: maxX - minX,
+    height: maxY - minY
+  }
+}
+
 class ConstructEditor {
   constructor() {
     keyInput.init()
@@ -371,24 +392,7 @@ class ConstructEditor {
   }
 
   getBoundingBox(rectangles) {
-    let minX = this.grid.x + this.grid.width
-    let minY = this.grid.y + this.grid.height
-    let maxX = this.grid.x
-    let maxY = this.grid.y
-
-    rectangles.forEach((rect) => {
-      if(rect.x < minX) minX = rect.x
-      if(rect.y < minY) minY = rect.y
-      if(rect.x + rect.width > maxX) maxX = rect.x + rect.width
-      if(rect.y + rect.height > maxY) maxY = rect.y + rect.height
-    })
-
-    return {
-      x: minX,
-      y: minY,
-      width: maxX - minX,
-      height: maxY - minY
-    }
+    return window.getBoundingBox(rectanges, this.grid)
   }
 
   bucketFill(empty) {

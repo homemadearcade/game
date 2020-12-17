@@ -292,14 +292,17 @@ const initPixiApp = (canvasRef, onLoad) => {
       if(!window.resettingDarkness) {
         setTimeout(() => {
           if(PIXIMAP.initialized) {
-            PIXIMAP.initializeDarknessSprites()
-            PIXIMAP.resetDarkness()
-            PIXIMAP.updateDarknessSprites()
+            // PIXIMAP.initializeDarknessSprites()
+            // PIXIMAP.resetDarkness()
+            // PIXIMAP.updateDarknessSprites()
+            // PIXIMAP.gridStage.removeChildren()
+            PIXIMAP.updateGridSprites()
           }
           window.resettingDarkness = false
         }, 100)
         window.resettingDarkness = true
       }
+
       PIXIMAP.resizeToWindow = onResize
       setTimeout(() => {
         PIXIMAP.resetConstructParts()

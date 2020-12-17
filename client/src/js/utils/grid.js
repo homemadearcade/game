@@ -28,10 +28,12 @@ function generateGridNodes(gridProps) {
     for(var j = 0; j < gridProps.height; j++) {
       const node = {x: gridProps.startX + (i * GAME.grid.nodeSize), y: gridProps.startY + (j * GAME.grid.nodeSize), width: GAME.grid.nodeSize, height: GAME.grid.nodeSize, gridX: i, gridY: j}
       const key = 'x:'+node.gridX+'y:'+node.gridY
-      if(nodeData && nodeData[key]) {
-        node.sprite = nodeData[key].sprite
-        node.color = nodeData[key].color
-      }
+      node.id = key
+      // if(nodeData && nodeData[key]) {
+      //   Object.assign(node, nodeData)
+      //   // node.sprite = nodeData[key].sprite
+      //   // node.color = nodeData[key].color
+      // }
       grid[i].push(node)
     }
   }

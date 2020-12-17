@@ -28,7 +28,7 @@ export default class SpawnZoneMenu extends React.Component{
           if(result && result.value) {
             let subObjectChances = objectSelected.subObjectChances
             if(!subObjectChances)subObjectChances ={}
-            window.socket.emit('editObjects', [{id: objectSelected.id, subObjectChances: {...subObjectChances, [result.value]: {randomWeight: 1, conditionList: null}} }])
+            window.socket.emit('editObjects', [{id: objectSelected.id, subObjectChances: {...subObjectChances, [result.value]: {randomWeight: 1, conditionList: null} } }])
           }
         })
       }

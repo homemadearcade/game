@@ -4,6 +4,14 @@ import gridUtil from '../../utils/grid'
 
 import Grid from './Grid'
 
+window.addTerrainDataToPhysics = function (terrainData) {
+  updateTerrainDataPhysics(terrainData)
+}
+
+window.removeTerrainDataFromPhysics = function (terrainData) {
+  updateTerrainDataPhysics(terrainData, true)
+}
+
 window.heatIntegers = {
   Coldest: 0.05,
   Colder:0.15,
@@ -105,6 +113,7 @@ function FloodFillAllNodes(nodes)
 
     const landMasses = {}
     const waterMasses = {}
+    const mountainRanges = {}
 
     nodes.forEach((row, x) => {
       row.forEach((node, y) => {
@@ -113,14 +122,36 @@ function FloodFillAllNodes(nodes)
             if (node.isFloodFilled) return;
 
             // Land
-            if (node.isLand)
+            if (node.isMountain)
+            {
+                const group = [];
+                group.type = 'isMountain'
+                stack.push(node);
+
+                while(stack.length > 0) {
+                  FloodFill(stack.pop(), group, stack, nodes);
+                }
+
+                let id = window.uniqueID()
+                mountainRanges[id] = group
+
+                group.forEach((groupNode) => {
+                  groupNode.isWater = false
+                  groupNode.isLand = false
+                  groupNode.isMountain = true
+                  groupNode.mountainRangeId = id
+                })
+            }
+
+            // Land
+            else if (node.isLand)
             {
                 const group = [];
                 group.type = 'isLand'
                 stack.push(node);
 
                 while(stack.length > 0) {
-                  FloodFill(stack.pop(), group, stack);
+                  FloodFill(stack.pop(), group, stack, nodes);
                 }
 
                 let id = window.uniqueID()
@@ -129,6 +160,7 @@ function FloodFillAllNodes(nodes)
                 group.forEach((groupNode) => {
                   groupNode.isWater = false
                   groupNode.isLand = true
+                  groupNode.isMountain = false
                   groupNode.landMassId = id
                 })
             }
@@ -139,7 +171,7 @@ function FloodFillAllNodes(nodes)
                 stack.push(node);
 
                 while(stack.length > 0)   {
-                  FloodFill(stack.pop(), group, stack);
+                  FloodFill(stack.pop(), group, stack, nodes);
                 }
 
                 let id = window.uniqueID()
@@ -148,6 +180,7 @@ function FloodFillAllNodes(nodes)
                 group.forEach((groupNode) => {
                   groupNode.isWater = true
                   groupNode.isLand = false
+                  groupNode.isMountain = false
                   groupNode.waterMassId = id
                 })
             }
@@ -156,15 +189,17 @@ function FloodFillAllNodes(nodes)
 
     return {
       waterMasses,
-      landMasses
+      landMasses,
+      mountainRanges
     }
 }
 
 
-function FloodFill(node, group, stack)
+function FloodFill(node, group, stack, nodes)
 {
     // Validate
     if (node.isFloodFilled) return;
+    if (group.type === 'isMountain' && !node.isMountain) return;
     if (group.type === 'isLand' && !node.isLand) return;
     if (group.type === 'isWater' && !node.isWater) return;
 
@@ -173,29 +208,48 @@ function FloodFill(node, group, stack)
     node.isFloodFilled = true;
 
     // floodfill into neighbors
-    let t = node.top
-    if (t && !t.isFloodFilled && node.isLand == t.isLand) stack.push (t);
+    const { top, left, right, bottom } = getNeighbors(node, nodes)
 
-    t = node.bottom
-    if (t && !t.isFloodFilled && node.isLand == t.isLand) stack.push (t);
+    if (top && !top.isFloodFilled && node.terrainType == top.terrainType) stack.push (top);
 
-    t = node.left
-    if (t && !t.isFloodFilled && node.isLand == t.isLand) stack.push (t);
+    if (bottom && !bottom.isFloodFilled && node.terrainType == bottom.terrainType) stack.push (bottom);
 
-    t = node.right
-    if (t && !t.isFloodFilled && node.isLand == t.isLand) stack.push (t);
+    if (left && !left.isFloodFilled && node.terrainType == left.terrainType) stack.push (left);
+
+    if (right && !right.isFloodFilled && node.terrainType == right.terrainType) stack.push (right);
 }
 
+function applyChangesToNodeData(nodes) {
+  nodes.forEach((row, x) => {
+    row.forEach((node, y) => {
+      let data = {}
+      if(GAME.grid.nodeData[node.id]) data = GAME.grid.nodeData[node.id]
+      else GAME.grid.nodeData[node.id] = data
+      // nodeData.elevation = node.elevation
+      // nodeData.elevationType = node.elevationType
+      data.elevationType = node.elevationType
+      // data.elevationType = node.elevationType
+      data.heatType = node.heatType
+      // node.heatNoise = null
+      // node.isLand = null
+      // node.isWater = null
+      // node.isFloodFilled = null
+      // node.elevationBitmask = null
+    })
+  })
+}
 
 function setAllNodesElevationBitmask(nodes) {
   nodes.forEach((row, x) => {
     row.forEach((node, y) => {
       let count = 0;
 
-      if (node.top && node.elevationType == node.top.elevationType) count += 1;
-      if (node.right && node.elevationType == node.right.elevationType) count += 2;
-      if (node.bottom && node.elevationType == node.bottom.elevationType) count += 4;
-      if (node.left && node.elevationType == node.left.elevationType) count += 8;
+      const { top, left, right, bottom } = getNeighbors(node, nodes)
+
+      if (top && node.elevationType == top.elevationType) count += 1;
+      if (right && node.elevationType == right.elevationType) count += 2;
+      if (bottom && node.elevationType == bottom.elevationType) count += 4;
+      if (left && node.elevationType == left.elevationType) count += 8;
 
       node.elevationBitmask = count;
     })
@@ -206,24 +260,48 @@ function setAllNodesElevationTypes(nodes) {
   nodes.forEach((row, x) => {
     row.forEach((node, y) => {
       const elevationType = window.elevationIntegerLookup[node.elevation.toFixed(2)]
-      if(node.elevation <= window.elevationIntegers.Water) node.isWater = true
-      else {
+
+      if(elevationType === 'Deep Water' || elevationType === 'Water') {
+        node.isWater = true
+      }
+      if(elevationType === 'Grass' || elevationType === 'Forest' || elevationType === 'Sand') {
         node.isLand = true
+      }
+      if(elevationType === 'Mountain' || elevationType === 'Snow') {
+        node.isMountain = true
       }
       node.elevationType = elevationType
     })
   })
 }
 
-function updateAllNodesNeighbors(nodes) {
+// function updateAllNodesNeighbors(nodes) {
+//   nodes.forEach((row, x) => {
+//     row.forEach((node, y) => {
+//       updateNodeNeighbors(node, nodes)
+//     })
+//   })
+// }
+
+function prepareNodesForGeneration(nodes) {
   nodes.forEach((row, x) => {
     row.forEach((node, y) => {
-      updateNodeNeighbors(node, nodes)
+      // node.left = null
+      // node.right = null
+      // node.up = null
+      // node.down = null
+      node.elevation = null
+      node.heat = null
+      node.heatNoise = null
+      node.isLand = null
+      node.isWater = null
+      node.isFloodFilled = null
+      node.elevationBitmask = null
     })
   })
 }
 
-function updateNodeNeighbors(node, nodes)
+function getNeighbors(node, nodes)
 {
   let top
   let bottom
@@ -239,19 +317,21 @@ function updateNodeNeighbors(node, nodes)
   if(nodes[node.gridX+1]) {
     right = nodes[node.gridX+1][node.gridY]
   }
+
+  return {
+    top,
+    bottom,
+    left,
+    right
+  }
   // node.getNeighbors = () => {
-  //   return {
-  //     top,
-  //     bottom,
-  //     left,
-  //     right
-  //   }
+
   // }
-  //
-  node.top = top
-  node.bottom = bottom
-  node.left = left
-  node.right = right
+  // //
+  // node.top = top
+  // node.bottom = bottom
+  // node.left = left
+  // node.right = right
 }
 
 function generateNoiseMap({type, seed, nodes, property, width, height}) {
@@ -301,52 +381,128 @@ function generateNoiseMap({type, seed, nodes, property, width, height}) {
   }
 }
 
-async function generateTerrainJSON() {
-  const nodesToUse = gridUtil.generateGridNodes({width: 100, height: 100, startX: 0, startY: 0})
-  const nodes = _.cloneDeep(nodesToUse)
-  const nodesCopy = _.cloneDeep(nodesToUse)
+function updateTerrainDataPhysics(terrainData, remove) {
+  window.terrainObjects = []
+  const grid = {...GAME.grid, x: GAME.grid.startX, y: GAME.grid.startY, width: GAME.grid.width * GAME.grid.nodeSize, height: GAME.grid.height * GAME.grid.nodeSize}
+  Object.keys(terrainData.mountainRanges).forEach((id) => {
+
+    const mountainRange = terrainData.mountainRanges[id]
+    const { x, y, width, height } = window.getBoundingBox(mountainRange, grid)
+
+    const object = {
+      id,
+      x, y, width, height,
+      terrainGroupType: 'mountainRange',
+      constructParts: mountainRange,
+      tags: {
+        obstacle: true,
+        mountain: true,
+        terrain: true,
+      }
+    }
+
+    GAME.objectsById[id] = object
+    if(!remove) window.terrainObjects.push(object)
+    object.constructParts.forEach((part) => {
+      part.ownerId = id
+      if(remove) PHYSICS.removeObject(part)
+      else PHYSICS.addObject(part)
+    })
+
+  })
+  Object.keys(terrainData.waterMasses).forEach((id) => {
+    const bodyOfWater = terrainData.waterMasses[id]
+
+    const { x, y, width, height } = window.getBoundingBox(bodyOfWater, grid)
+
+    const object = {
+      id,
+      x, y, width, height,
+      terrainGroupType: 'waterBody',
+      constructParts: bodyOfWater,
+      tags: {
+        obstacle: false,
+        water: true,
+        terrain: true,
+      }
+    }
+
+    if(!remove) window.terrainObjects.push(object)
+    GAME.objectsById[id] = object
+    object.constructParts.forEach((part) => {
+      part.ownerId = id
+      if(remove) PHYSICS.removeObject(part)
+      else PHYSICS.addObject(part)
+    })
+  })
+}
+
+async function generateTerrainJSON(showModals) {
+  const nodesToUse = GAME.grid.nodes
+  // const nodesToUse = gridUtil.generateGridNodes({width: 100, height: 100, startX: 0, startY: 0})
+
+  if(GAME.grid.terrainData) {
+    updateTerrainDataPhysics(GAME.grid.terrainData, true)
+  }
+
+  prepareNodesForGeneration(nodesToUse)
+
+  const nodes = nodesToUse
+  const nodesCopy = nodesToUse
 
   const terrainData = {}
 
   generateNoiseMap({type: 'perlin', seed: Math.random(), nodes: nodes, property: 'elevation'})
-  updateAllNodesNeighbors(nodes)
+  // updateAllNodesNeighbors(nodes)
   setAllNodesElevationTypes(nodes)
   setAllNodesElevationBitmask(nodes)
 
-  await viewNoiseData({noiseNodes: nodes, title: 'perlin-terrain', type: 'terrain', terrainData})
+  if(showModals) await viewNoiseData({noiseNodes: nodes, title: 'perlin-terrain', type: 'terrain', terrainData})
 
   let massData = FloodFillAllNodes(nodes)
   terrainData.landMasses = massData.landMasses
   terrainData.waterMasses = massData.waterMasses
+  terrainData.mountainRanges = massData.mountainRanges
 
-  await viewNoiseData({noiseNodes: nodes, title: 'perlin-landwater', type: 'landwatergroups', terrainData})
+  if(showModals) await viewNoiseData({noiseNodes: nodes, title: 'perlin-landwater', type: 'landwatergroups', terrainData})
 
   generateNoiseMap({type: 'perlin', seed: Math.random(), nodes: nodes, property: 'heatNoise'})
   setHeatGradient(nodes)
 
-  await viewNoiseData({noiseNodes: nodes, title: 'perlin-heat', type: 'heat', terrainData})
+  if(showModals) await viewNoiseData({noiseNodes: nodes, title: 'perlin-heat', type: 'heat', terrainData})
+
+  prepareNodesForGeneration(nodesToUse)
 
 
+  if(!GAME.grid.terrainSeed) GAME.grid.terrainSeed = Math.random()
 
-
-  generateNoiseMap({type: 'simplex', seed: Math.random(), nodes: nodesCopy, property: 'elevation'})
-  updateAllNodesNeighbors(nodesCopy)
+  generateNoiseMap({type: 'simplex', seed: GAME.grid.terrainSeed, nodes: nodesCopy, property: 'elevation'})
+  // updateAllNodesNeighbors(nodesCopy)
   setAllNodesElevationTypes(nodesCopy)
   setAllNodesElevationBitmask(nodesCopy)
 
-  await viewNoiseData({noiseNodes: nodesCopy, title: 'simplex-terrain', type: 'terrain', terrainData})
+  if(showModals) await viewNoiseData({noiseNodes: nodesCopy, title: 'simplex-terrain', type: 'terrain', terrainData})
 
   massData = FloodFillAllNodes(nodesCopy)
   terrainData.landMasses = massData.landMasses
   terrainData.waterMasses = massData.waterMasses
+  terrainData.mountainRanges = massData.mountainRanges
 
-  await viewNoiseData({noiseNodes: nodesCopy, title: 'simplex-landwater', type: 'landwatergroups', terrainData})
+  if(showModals) await viewNoiseData({noiseNodes: nodesCopy, title: 'simplex-landwater', type: 'landwatergroups', terrainData})
 
   generateNoiseMap({type: 'simplex', seed: Math.random(), nodes: nodesCopy, property: 'heatNoise'})
   setHeatGradient(nodesCopy)
 
-  await viewNoiseData({noiseNodes: nodesCopy, title: 'simplex-heat', type: 'heat', terrainData})
+  if(showModals) await viewNoiseData({noiseNodes: nodesCopy, title: 'simplex-heat', type: 'heat', terrainData})
 
+  updateTerrainDataPhysics(massData, false)
+
+  GAME.grid.nodes = nodesCopy
+  GAME.grid.terrainData = massData
+  window.socket.emit('updateGrid', GAME.grid)
+
+  console.log('done', GAME.grid)
+  applyChangesToNodeData(nodesCopy)
 }
 
 

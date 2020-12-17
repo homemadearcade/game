@@ -248,6 +248,7 @@ function prepareObjectsAndHerosForMovementPhase() {
   // set objects new position and widths
   let everything = [...GAME.objects]
   let allHeros = getAllHeros()
+  if(window.terrainObjects) everything.push(...window.terrainObjects)
   everything.push(...allHeros)
   PHYSICS.correctedConstructs = {}
 
@@ -309,6 +310,7 @@ function prepareObjectsAndHerosForCollisionsPhase() {
   // set objects new position and widths
   let everything = [...GAME.objects]
   let allHeros = getAllHeros()
+  if(window.terrainObjects) everything.push(...window.terrainObjects)
   everything.push(...allHeros)
   everything.forEach((object) => {
     if(object.subObjects) {

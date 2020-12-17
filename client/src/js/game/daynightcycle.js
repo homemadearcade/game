@@ -14,13 +14,13 @@ function setDefault() {
 
 function onGameLoaded(options = {}) {
   GAME.gameState.ambientLight = 1
-  if(typeof GAME.world.dayNightCycle.initialAmbientLight == 'number') GAME.gameState.ambientLight = GAME.world.dayNightCycle.initialAmbientLight
   GAME.gameState.ambientLightDelta = null
   GAME.gameState.currentTime = options.startTime || 0
   GAME.gameState.currentTimeOfDay = ''
   if(!GAME.world.dayNightCycle) {
     GAME.world.dayNightCycle = { ...JSON.parse(JSON.stringify(window.defaultDayNightCycle)), ...options }
   }
+  if(typeof GAME.world.dayNightCycle.initialAmbientLight == 'number') GAME.gameState.ambientLight = GAME.world.dayNightCycle.initialAmbientLight
 }
 
 function calculateCurrentTOD() {
