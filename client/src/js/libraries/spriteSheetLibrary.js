@@ -1,6 +1,6 @@
 
   window.spriteSheetIds = {
-    // 'andbandtk': true,
+    'andbandtk': true,
 
     'overworld-2-8px': true,
     'kenney-voxel-128px': true,
@@ -22,9 +22,9 @@
 
     'timefantasy-animations': true,
 
-    // 'dawnlike-characters': true,
-    // 'dawnlike-creatures2': true,
-    // 'dawnlike-creatures': true,
+    'dawnlike-characters': true,
+    'dawnlike-creatures2': true,
+    'dawnlike-creatures': true,
     // 'dawnlike-items': true,
     // 'dawnlike-environment': true,
 
@@ -102,7 +102,7 @@
     // 'retro-3-16px': true,
     // 'retro-4': true,
 
-    // 'unknownMonsters-1': true,
+    'unknownMonsters-1': true,
     //
     // 'overworld-1-16px': true,
     // // 'platformer-1': true,
