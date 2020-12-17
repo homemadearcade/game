@@ -381,6 +381,7 @@ function setDefault() {
     // ...window.defaultHeroTags,
     ...window.descriptiveTags,
     ...window.generatedTags,
+    ...window.audioQualityTags,
     ...window.allDescriptors,
   }
 

@@ -168,6 +168,7 @@ function triggerEffectSmart(trigger, ownerObject, mainObject, guestObject) {
   effectedObjects.forEach((effected) => {
     if(trigger.notificationText) {
       if(effected.tags.hero) {
+        console.log('?')
         window.socket.emit('sendNotification', { playerUIHeroId: effected.id, chatId: effected.id, logRecipientId: effected.id, toast: trigger.notificationToast, log: trigger.notificationLog, chat: trigger.notificationChat, modal: trigger.notificationModal, text: trigger.notificationText, modalHeader: trigger.notificationModalHeader, duration: trigger.notificationDuration })
         herosNotified.push(effected.id)
       } else window.socket.emit('sendNotification', { chatId: effected.id, log: trigger.notificationLog, chat: trigger.notificationChat, text: trigger.notificationText, duration: trigger.notificationDuration })

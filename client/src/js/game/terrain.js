@@ -46,7 +46,7 @@ export function objectOnTerrain(object) {
     }
   }
 
-  if(!object.onWater) {
+  if(!object.onWater && object.mod().tags.walkOverhead) {
     object.onLand = true
   }
 }

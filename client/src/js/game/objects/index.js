@@ -536,8 +536,8 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
         if(addedDialogueChoice) return
 
         let sequenceId = choice.guestSequenceId
-        console.log('??', choice, sequenceId, object.mod().sequences)
-        if(sequenceId && object.mod().sequences[sequenceId]) {
+        const sequences = object.mod().sequences
+        if(sequenceId && sequences && sequences[sequenceId]) {
           addedDialogueChoice = true
           interactions.push({text: choice.choiceText, dialogueChoice: choice})
         }

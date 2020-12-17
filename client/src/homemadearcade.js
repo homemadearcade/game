@@ -10,8 +10,8 @@ TODO IMMEDIATE
 
 Think about user flow for adding descriptors, is everything ok?
 
-Water decay vs air decay vs ground decay
-Hero.inWater ELEMENT stuff GREAT!
+On the side platformer generation..
+add moisture, rivers, and biomes
 
 --
 
@@ -63,6 +63,9 @@ STORY - Fade in/out to game (we will probably use this in HA opening animations.
 //^^ take a look at animate.css which i think is already installed..
 
 Simple select recommended sprite modal when we have the data...
+
+Green dot in corner if the current editing hero has this option...
+  Allow right clikcing to add the option to the heros object
 
 ////////////////////////////////
 ////////////////////////////////
