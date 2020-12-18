@@ -32,8 +32,8 @@ class PlayerUI {
   }
 
   onResolveAdminApproval(id) {
-    if(id === window.waitingForStart) {
-      window.waitingForStart = null
+    if(id === global.waitingForStart) {
+      global.waitingForStart = null
       PLAYERUI.ref.forceUpdate()
     }
   }
@@ -96,4 +96,4 @@ class PlayerUI {
   }
 }
 
-window.PLAYERUI = new PlayerUI()
+global.PLAYERUI = new PlayerUI()

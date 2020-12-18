@@ -54,4 +54,4 @@ class BelowManager {
   }
 }
 
-window.BELOWMANAGER = new BelowManager()
+global.BELOWMANAGER = new BelowManager()

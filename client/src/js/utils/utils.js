@@ -1,6 +1,6 @@
 import lodash from 'lodash'
 
-window._ = lodash
+global._ = lodash
 
 /**
  * Simple object check.
@@ -34,13 +34,13 @@ function mergeDeep(target, ...sources) {
   return mergeDeep(target, ...sources);
 }
 
-window.mergeDeep = mergeDeep
+global.mergeDeep = mergeDeep
 
-window.uniqueID = function uniqueID() {
+global.uniqueID = function uniqueID() {
   return Math.floor(Math.random() * Date.now())
 }
 
-window.measureWrapText = function(ctx, text, x, y, maxWidth, lineHeight) {
+global.measureWrapText = function(ctx, text, x, y, maxWidth, lineHeight) {
   var words = text.split(' ');
   var line = '';
 
@@ -63,7 +63,7 @@ window.measureWrapText = function(ctx, text, x, y, maxWidth, lineHeight) {
   return { height: lineHeight * lines, width: maxMetricsWidth }
 }
 
-window.wrapText = function(ctx, text, x, y, maxWidth, lineHeight) {
+global.wrapText = function(ctx, text, x, y, maxWidth, lineHeight) {
   var words = text.split(' ');
   var line = '';
 
@@ -82,13 +82,13 @@ window.wrapText = function(ctx, text, x, y, maxWidth, lineHeight) {
   ctx.fillText(line, x, y);
 }
 
-window.removeFalsey = function(object, removeFalse) {
+global.removeFalsey = function(object, removeFalse) {
   Object.keys(object).forEach((key) => {
     if((object[key] === false && removeFalse) || object[key] === null || object[key] === undefined) delete object[key]
   })
 }
 
-window.removeProps = function(object, options) {
+global.removeProps = function(object, options) {
   Object.keys(object).forEach((key) => {
     if((object[key] === false && options.false) || (object[key] === null && options.null) || (object[key] === undefined && options.undefined) || (object[key] === '' && options.empty) || (object[key] === [] && options.empty)) {
       console.log('delete', key)
@@ -97,12 +97,12 @@ window.removeProps = function(object, options) {
   })
 }
 
-window.degreesToRadians = function(degrees) {
+global.degreesToRadians = function(degrees) {
   var pi = Math.PI;
   return degrees * (pi/180);
 }
 
-window.setFontAwesomeCursor = function(unicode, color) {
+global.setFontAwesomeCursor = function(unicode, color) {
     var canvas = document.createElement("canvas");
     canvas.width = 24;
     canvas.height = 24;
@@ -122,7 +122,7 @@ Object.defineProperty(Object.prototype, 'mod', { value: function() {
   return GAME.mod(this)
 }})
 
-window.isClickingMap = function(className, id) {
+global.isClickingMap = function(className, id) {
   if(typeof className !== 'string') return false
 
   if(id && (id == 'game-canvas' || id == 'pixi-canvas')) return true
@@ -143,7 +143,7 @@ window.isClickingMap = function(className, id) {
   return true
 }
 
-window.byteLength = function(str) {
+global.byteLength = function(str) {
   // returns the byte length of an utf8 string
   var s = str.length;
   for (var i=str.length-1; i>=0; i--) {
@@ -155,20 +155,20 @@ window.byteLength = function(str) {
   return s;
 }
 
-window.emitGameEvent = function(gameEvent, arg1, arg2, arg3, arg4, arg5) {
+global.emitGameEvent = function(gameEvent, arg1, arg2, arg3, arg4, arg5) {
   if(arg1 && arg1.tags && arg1.tags.hero && arg1.interactableObjectId) {
     arg1 = { ...arg1, interactableObjectId: null }
   }
   if(arg2 && arg2.tags && arg2.tags.hero && arg2.interactableObjectId) {
     arg2 = { ...arg2, interactableObjectId: null }
   }
-  window.local.emit(gameEvent, arg1, arg2, arg3, arg4, arg5)
+  global.local.emit(gameEvent, arg1, arg2, arg3, arg4, arg5)
 
 
-  window.socket.emit('emitGameEvent', gameEvent, arg1, arg2, arg3, arg4, arg5)
+  global.socket.emit('emitGameEvent', gameEvent, arg1, arg2, arg3, arg4, arg5)
 }
 
-window.getObjectDiff = function(object, base) {
+global.getObjectDiff = function(object, base) {
 	function changes(object, base) {
 		let diff = _.transform(object, function(result, value, key) {
 			if (!_.isEqual(value, base[key])) {
@@ -182,7 +182,7 @@ window.getObjectDiff = function(object, base) {
 	return changes(object, base);
 }
 
-window.animateCSS = (element, animation, prefix = 'animate__') =>
+global.animateCSS = (element, animation, prefix = 'animate__') =>
   // We create a Promise and return it
   new Promise((resolve, reject) => {
     const animationName = `${prefix}${animation}`;
@@ -201,7 +201,7 @@ window.animateCSS = (element, animation, prefix = 'animate__') =>
     node.addEventListener('animationend', handleAnimationEnd);
   });
 
-window.convertToGameXY = function(event) {
+global.convertToGameXY = function(event) {
   var rect = PIXIMAP.app.view.getClientRects()[0];
   return {
     x: event.clientX - rect.left,
@@ -209,7 +209,7 @@ window.convertToGameXY = function(event) {
   }
 }
 
-window.getAngle = function(cx, cy, ex, ey, degrees = false) {
+global.getAngle = function(cx, cy, ex, ey, degrees = false) {
   var dy = ey - cy;
   var dx = ex - cx;
   var theta = Math.atan2(dy, dx); // range (-PI, PI]
@@ -220,7 +220,7 @@ window.getAngle = function(cx, cy, ex, ey, degrees = false) {
 }
 
 
-window.isTargetTextInput = function(keyEvent) {
+global.isTargetTextInput = function(keyEvent) {
   const target = keyEvent.target;
   const targetName = target.localName.toLowerCase();
   const contenteditable = target.getAttribute('contenteditable');
@@ -232,7 +232,7 @@ window.isTargetTextInput = function(keyEvent) {
   );
 }
 
-window.isObjectSelectable = function(gameObject) {
+global.isObjectSelectable = function(gameObject) {
   if(gameObject.tags.potential) return false
 
   if(!PAGE.role.isAdmin && GAME.gameState.started) return true
@@ -290,7 +290,7 @@ Object.replaceAll = function (entity, needle, replacement, affectsKeys, affectsV
 };
 
 
-window.seperateRectangleIntoSquares = function(object) {
+global.seperateRectangleIntoSquares = function(object) {
   const squares = []
   for(let x = object.x; x < object.x + object.mod().width; x += GAME.grid.nodeSize) {
     for(let y = object.y; y < object.y + object.mod().height; y += GAME.grid.nodeSize) {

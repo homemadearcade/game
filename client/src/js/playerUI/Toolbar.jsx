@@ -31,21 +31,21 @@ export default class Toolbar extends React.Component {
   }
 
   _renderStartStop() {
-    if(window.waitingForStart) {
+    if(global.waitingForStart) {
       return <ToolbarButton>
         <LoadingSpinner/>
       </ToolbarButton>
     }
     return <React.Fragment>{!GAME.gameState.started && !GAME.gameState.branch && <ToolbarButton iconName="fa-play" onClick={() => {
-      if(PAGE.role.isHomeEditor) window.socket.emit('startGame')
+      if(PAGE.role.isHomeEditor) global.socket.emit('startGame')
       else {
-        window.waitingForStart = 'request-'+window.uniqueID()
+        global.waitingForStart = 'request-'+global.uniqueID()
         this.forceUpdate()
-        window.socket.emit('requestAdminApproval', 'startGame', { text: 'Start Game Request', requestId: window.waitingForStart })
+        global.socket.emit('requestAdminApproval', 'startGame', { text: 'Start Game Request', requestId: global.waitingForStart })
       }
     }}/>}
     {GAME.gameState.started && <ToolbarButton iconName='fa-stop' onClick={() => {
-      window.socket.emit('stopGame')
+      global.socket.emit('stopGame')
     }}/>}
     </React.Fragment>
   }
@@ -54,13 +54,13 @@ export default class Toolbar extends React.Component {
     if(!GAME.gameState.branch) return
 
     return <ToolbarRow iconName="fa-code-branch" active={true} onClick={() => {
-        window.socket.emit('branchGameSave')
+        global.socket.emit('branchGameSave')
       }}>
       <ToolbarButton iconName='fa-save' onClick={() => {
-        window.socket.emit('branchGameSave')
+        global.socket.emit('branchGameSave')
       }}/>
       <ToolbarButton iconName='fa-trash' onClick={() => {
-        window.socket.emit('branchGameCancel')
+        global.socket.emit('branchGameCancel')
       }}/>
     </ToolbarRow>
   }
@@ -132,15 +132,15 @@ export default class Toolbar extends React.Component {
     return <React.Fragment>
       <ToolbarButton iconName="fa-search-plus" onClick={() => {
         EDITOR.preferences.zoomMultiplier -= (EDITOR.zoomDelta * 4)
-        window.local.emit('onZoomChange', HERO.editingId)
+        global.local.emit('onZoomChange', HERO.editingId)
       }}/>
       <ToolbarButton iconName="fa-search-minus" onClick={() => {
         EDITOR.preferences.zoomMultiplier += (EDITOR.zoomDelta * 4)
-        window.local.emit('onZoomChange', HERO.editingId)
+        global.local.emit('onZoomChange', HERO.editingId)
       }}/>
       <ToolbarButton iconName="fa-times" onClick={() => {
         EDITOR.preferences.zoomMultiplier = 0
-        window.local.emit('onZoomChange', HERO.editingId)
+        global.local.emit('onZoomChange', HERO.editingId)
       }}/>
     </React.Fragment>
   }
@@ -182,22 +182,22 @@ export default class Toolbar extends React.Component {
           active={hero.tags.adminInch}
           onClick={() => {
             if(hero.tags.adminInch) {
-              window.socket.emit('editHero', { id: hero.id, tags: { adminInch: false } })
+              global.socket.emit('editHero', { id: hero.id, tags: { adminInch: false } })
             } else {
-              window.socket.emit('editHero', { id: hero.id, tags: { adminInch: true } })
+              global.socket.emit('editHero', { id: hero.id, tags: { adminInch: true } })
             }
-            window.socket.emit()
+            global.socket.emit()
           }}
         ></ToolbarButton>
           <ToolbarButton iconName="fa-eye-slash"
             active={hero.tags.invisible}
             onClick={() => {
               if(hero.tags.invisible) {
-                window.socket.emit('editHero', { id: hero.id, tags: { invisible: false } })
+                global.socket.emit('editHero', { id: hero.id, tags: { invisible: false } })
               } else {
-                window.socket.emit('editHero', { id: hero.id, tags: { invisible: true, obstacle: false } })
+                global.socket.emit('editHero', { id: hero.id, tags: { invisible: true, obstacle: false } })
               }
-              window.socket.emit()
+              global.socket.emit()
             }}
           ></ToolbarButton>
           {this._renderZoomTools()}

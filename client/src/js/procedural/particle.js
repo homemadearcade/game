@@ -49,68 +49,68 @@ walkMetalAnimation1/2/3
 // startRotation: {min: 0, max: 360},
 // useUpdateOwnerPos: true,
 
-window.generateRandomColor = function () {
+global.generateRandomColor = function () {
   return '#' + Math.floor(Math.random()*16777215).toString(16);
 }
 
-window.generateRandomEmitter = function(name) {
+global.generateRandomEmitter = function(name) {
 
   const emitterData = {}
-  Object.keys(window.generateEmitterData[name]).forEach((randomizeName) => {
-    const value = window.generateEmitterData[name][randomizeName]
+  Object.keys(global.generateEmitterData[name]).forEach((randomizeName) => {
+    const value = global.generateEmitterData[name][randomizeName]
 
     if(randomizeName === 'colorStart' || randomizeName === 'colorEnd') {
       if(!emitterData.color) emitterData.color = {}
-      if(randomizeName === 'colorStart') emitterData.color.start = window.generateRandomColor()
-      if(randomizeName === 'colorEnd') emitterData.color.end = window.generateRandomColor()
+      if(randomizeName === 'colorStart') emitterData.color.start = global.generateRandomColor()
+      if(randomizeName === 'colorEnd') emitterData.color.end = global.generateRandomColor()
     }
 
     if(randomizeName === 'scaleStart' || randomizeName === 'scaleEnd') {
       if(!emitterData.scale) emitterData.scale = {}
-      if(randomizeName === 'scaleStart') emitterData.scale.start = window.getRandomFloat(value.min, value.max)
-      if(randomizeName === 'scaleEnd') emitterData.scale.end = window.getRandomFloat(value.min, value.max)
+      if(randomizeName === 'scaleStart') emitterData.scale.start = global.getRandomFloat(value.min, value.max)
+      if(randomizeName === 'scaleEnd') emitterData.scale.end = global.getRandomFloat(value.min, value.max)
     }
 
     if(randomizeName === 'alphaStart' || randomizeName === 'alphaEnd') {
       if(!emitterData.alpha) emitterData.alpha = {}
-      if(randomizeName === 'alphaStart') emitterData.alpha.start = window.getRandomFloat(value.min, value.max)
-      if(randomizeName === 'alphaEnd') emitterData.alpha.end = window.getRandomFloat(value.min, value.max)
+      if(randomizeName === 'alphaStart') emitterData.alpha.start = global.getRandomFloat(value.min, value.max)
+      if(randomizeName === 'alphaEnd') emitterData.alpha.end = global.getRandomFloat(value.min, value.max)
     }
 
     if(randomizeName === 'speedStart' || randomizeName === 'speedEnd') {
       if(!emitterData.speed) emitterData.speed = {}
-      if(randomizeName === 'speedStart') emitterData.speed.start = window.getRandomFloat(value.min, value.max)
-      if(randomizeName === 'speedEnd') emitterData.speed.end = window.getRandomFloat(value.min, value.max)
+      if(randomizeName === 'speedStart') emitterData.speed.start = global.getRandomFloat(value.min, value.max)
+      if(randomizeName === 'speedEnd') emitterData.speed.end = global.getRandomFloat(value.min, value.max)
     }
 
     if(randomizeName === 'rotationSpeedMin' || randomizeName === 'rotationSpeedMax') {
       if(!emitterData.rotationSpeed) emitterData.rotationSpeed = {}
-      if(randomizeName === 'rotationSpeedMin') emitterData.rotationSpeed.min = window.getRandomFloat(value.min, value.max)
-      if(randomizeName === 'rotationSpeedMax') emitterData.rotationSpeed.max = window.getRandomFloat(value.min, value.max)
+      if(randomizeName === 'rotationSpeedMin') emitterData.rotationSpeed.min = global.getRandomFloat(value.min, value.max)
+      if(randomizeName === 'rotationSpeedMax') emitterData.rotationSpeed.max = global.getRandomFloat(value.min, value.max)
     }
 
     if(randomizeName === 'rotationSpeed') {
       if(!emitterData.rotationSpeed) emitterData.rotationSpeed = {}
-      const val = window.getRandomFloat(value.min, value.max)
+      const val = global.getRandomFloat(value.min, value.max)
       emitterData.rotationSpeed.min = val
       emitterData.rotationSpeed.max = val
     }
 
     if(randomizeName === 'spawnCircleRadiusMax' || randomizeName === 'spawnCircleRadiusMax') {
       if(!emitterData.spawnCircle) emitterData.spawnCircle = {}
-      if(randomizeName === 'spawnCircleRadiusMin') emitterData.spawnCircle.minR = window.getRandomFloat(value.min, value.max)
-      if(randomizeName === 'spawnCircleRadiusMax') emitterData.spawnCircle.r = window.getRandomFloat(value.min, value.max)
+      if(randomizeName === 'spawnCircleRadiusMin') emitterData.spawnCircle.minR = global.getRandomFloat(value.min, value.max)
+      if(randomizeName === 'spawnCircleRadiusMax') emitterData.spawnCircle.r = global.getRandomFloat(value.min, value.max)
     }
 
     if(randomizeName === 'spawnCircleRadius') {
       if(!emitterData.spawnCircle) emitterData.spawnCircle = {}
-      const val = window.getRandomFloat(value.min, value.max)
+      const val = global.getRandomFloat(value.min, value.max)
       emitterData.spawnCircle.minR = val
       emitterData.spawnCircle.r = val
     }
 
     if(randomizeName === 'frequency') {
-      const val = window.getRandomFloat(value.min, value.max)
+      const val = global.getRandomFloat(value.min, value.max)
       emitterData.frequency = val
     }
 
@@ -118,30 +118,30 @@ window.generateRandomEmitter = function(name) {
       if(GAME.theme.genre === 'block') {
         emitterData.images = { Pixel: true }
       } else {
-        const index = window.getRandomInt(0, value.length-1)
+        const index = global.getRandomInt(0, value.length-1)
         emitterData.images = { [value[index]]: true }
       }
     }
   })
 
   if(name == 'projectile') {
-    const clone = _.clone(window.particleEmitterLibrary.fireBall)
+    const clone = _.clone(global.particleEmitterLibrary.fireBall)
     if(emitterData.images) delete clone.images
-    return window.mergeDeep(clone, emitterData)
+    return global.mergeDeep(clone, emitterData)
   }
   if(name == 'laser') {
-    const clone = _.clone(window.particleEmitterLibrary.laser)
+    const clone = _.clone(global.particleEmitterLibrary.laser)
     if(emitterData.images) delete clone.images
-    return window.mergeDeep(clone, emitterData)
+    return global.mergeDeep(clone, emitterData)
   }
   if(name == 'powerup') {
-    const clone = _.clone(window.particleEmitterLibrary.powerRingSubtle)
+    const clone = _.clone(global.particleEmitterLibrary.powerRingSubtle)
     if(emitterData.images) delete clone.images
-    return window.mergeDeep(clone, emitterData)
+    return global.mergeDeep(clone, emitterData)
   }
 }
 
-window.generateEmitterData = {
+global.generateEmitterData = {
   'explosion': {
 
   },

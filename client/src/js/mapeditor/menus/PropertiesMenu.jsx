@@ -36,7 +36,7 @@ export default class CurrentTagsMenu extends React.Component {
     }
 
     render() {
-        const tagsToRender = Object.keys(window.propertyTags)
+        const tagsToRender = Object.keys(global.propertyTags)
 
         return <Menu onClick={this._handleTagMenuClick}>
           {tagsToRender.map((tag, index) => {

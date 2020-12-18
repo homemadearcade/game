@@ -16,7 +16,7 @@ export default class SpriteDataContextMenu extends React.Component{
       if(key === 'open-search-add') {
         modals.openEditDescriptorsModal({}, ({value}) => {
           if(value) {
-            window.local.emit('onEditSpriteData', textureIds ? textureIds : {[spriteData.textureId]: true}, { descriptors: value })
+            global.local.emit('onEditSpriteData', textureIds ? textureIds : {[spriteData.textureId]: true}, { descriptors: value })
           }
         }, textureIds ? textureIds : [spriteData.textureId])
       }
@@ -24,7 +24,7 @@ export default class SpriteDataContextMenu extends React.Component{
       if(key === 'open-search-remove') {
         modals.openEditDescriptorsModal({}, ({value}) => {
           if(value) {
-            window.local.emit('onEditSpriteData', textureIds ? textureIds : {[spriteData.textureId]: true}, { descriptors: Object.keys(value).reduce((prev, desc) => {
+            global.local.emit('onEditSpriteData', textureIds ? textureIds : {[spriteData.textureId]: true}, { descriptors: Object.keys(value).reduce((prev, desc) => {
               prev[desc] = false
               return prev
             }, {}) })
@@ -42,7 +42,7 @@ export default class SpriteDataContextMenu extends React.Component{
           showCancelButton: true,
           confirmButtonText: 'Next',
         })
-        window.local.emit('onEditSpriteData', textureIds ? textureIds : {[spriteData.textureId]: true}, { descriptors: { [name]: true }})
+        global.local.emit('onEditSpriteData', textureIds ? textureIds : {[spriteData.textureId]: true}, { descriptors: { [name]: true }})
       }
 
       if(key === 'copy-id-to-clipboard') {
@@ -51,7 +51,7 @@ export default class SpriteDataContextMenu extends React.Component{
       }
 
       if(key === 'clear-selection') {
-        window.local.emit('onClearTextureIdsSelection')
+        global.local.emit('onClearTextureIdsSelection')
         return
       }
 
@@ -61,11 +61,11 @@ export default class SpriteDataContextMenu extends React.Component{
       const data = JSON.parse(key)
 
       if(data.action == 'add') {
-        window.local.emit('onEditSpriteData', textureIds ? textureIds : {[spriteData.textureId]: true}, { descriptors: { [data.descriptor]: true }})
+        global.local.emit('onEditSpriteData', textureIds ? textureIds : {[spriteData.textureId]: true}, { descriptors: { [data.descriptor]: true }})
       }
 
       if(data.action == 'remove') {
-        window.local.emit('onEditSpriteData', textureIds ? textureIds : {[spriteData.textureId]: true}, { descriptors: { [data.descriptor]: false }})
+        global.local.emit('onEditSpriteData', textureIds ? textureIds : {[spriteData.textureId]: true}, { descriptors: { [data.descriptor]: false }})
       }
     }
   }
@@ -93,172 +93,172 @@ export default class SpriteDataContextMenu extends React.Component{
     const render = []
 
     render.push(<SubMenu title="Elements">
-      {Object.keys(window.elementDescriptors).map((descriptor) => {
-        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
+      {Object.keys(global.elementDescriptors).map((descriptor) => {
+        if(global.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
         return this._renderDescriptorMenuItems(descriptor, remove)
       })}
     </SubMenu>)
 
     render.push(<SubMenu title="Water">
-      {Object.keys(window.waterElementDescriptors).map((descriptor) => {
-        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
+      {Object.keys(global.waterElementDescriptors).map((descriptor) => {
+        if(global.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
         return this._renderDescriptorMenuItems(descriptor, remove)
       })}
     </SubMenu>)
 
     render.push(<SubMenu title="Overworld">
-      {Object.keys(window.overworldMapDescriptors).map((descriptor) => {
-        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
+      {Object.keys(global.overworldMapDescriptors).map((descriptor) => {
+        if(global.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
         return this._renderDescriptorMenuItems(descriptor, remove)
       })}
     </SubMenu>)
 
     render.push(<SubMenu title="Building Parts">
-      {Object.keys(window.buildingPartDescriptors).map((descriptor) => {
-        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
+      {Object.keys(global.buildingPartDescriptors).map((descriptor) => {
+        if(global.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
         return this._renderDescriptorMenuItems(descriptor, remove)
       })}
     </SubMenu>)
 
     render.push(<SubMenu title="Inside Building">
-      {Object.keys(window.insideBuildingDescriptors).map((descriptor) => {
-        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
+      {Object.keys(global.insideBuildingDescriptors).map((descriptor) => {
+        if(global.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
         return this._renderDescriptorMenuItems(descriptor, remove)
       })}
     </SubMenu>)
 
     render.push(<SubMenu title="Outside Building">
-      {Object.keys(window.outsideBuildingDescriptors).map((descriptor) => {
-        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
+      {Object.keys(global.outsideBuildingDescriptors).map((descriptor) => {
+        if(global.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
         return this._renderDescriptorMenuItems(descriptor, remove)
       })}
     </SubMenu>)
 
     render.push(<SubMenu title="Dungeon Items">
-      {Object.keys(window.dungeonItemDescriptors).map((descriptor) => {
-        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
+      {Object.keys(global.dungeonItemDescriptors).map((descriptor) => {
+        if(global.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
         return this._renderDescriptorMenuItems(descriptor, remove)
       })}
     </SubMenu>)
 
     render.push(<SubMenu title="Tools">
-      {Object.keys(window.toolDescriptors).map((descriptor) => {
-        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
+      {Object.keys(global.toolDescriptors).map((descriptor) => {
+        if(global.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
         return this._renderDescriptorMenuItems(descriptor, remove)
       })}
     </SubMenu>)
 
     render.push(<SubMenu title="Tools/Equipment">
-      {Object.keys(window.itemDescriptors).map((descriptor) => {
-        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
+      {Object.keys(global.itemDescriptors).map((descriptor) => {
+        if(global.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
         return this._renderDescriptorMenuItems(descriptor, remove)
       })}
     </SubMenu>)
 
     render.push(<SubMenu title="Weapons">
-      {Object.keys(window.weaponDescriptors).map((descriptor) => {
-        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
+      {Object.keys(global.weaponDescriptors).map((descriptor) => {
+        if(global.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
         return this._renderDescriptorMenuItems(descriptor, remove)
       })}
     </SubMenu>)
 
     render.push(<SubMenu title="Other">
-      {Object.keys(window.otherDescriptors).map((descriptor) => {
-        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
+      {Object.keys(global.otherDescriptors).map((descriptor) => {
+        if(global.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
         return this._renderDescriptorMenuItems(descriptor, remove)
       })}
     </SubMenu>)
 
     render.push(<SubMenu title="Transport">
-      {Object.keys(window.transportDescriptors).map((descriptor) => {
-        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
+      {Object.keys(global.transportDescriptors).map((descriptor) => {
+        if(global.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
         return this._renderDescriptorMenuItems(descriptor, remove)
       })}
     </SubMenu>)
 
     render.push(<SubMenu title="Human">
-      {Object.keys(window.humanDescriptors).map((descriptor) => {
-        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
+      {Object.keys(global.humanDescriptors).map((descriptor) => {
+        if(global.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
         return this._renderDescriptorMenuItems(descriptor, remove)
       })}
     </SubMenu>)
 
     render.push(<SubMenu title="Animal">
-      {Object.keys(window.animalDescriptors).map((descriptor) => {
-        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
+      {Object.keys(global.animalDescriptors).map((descriptor) => {
+        if(global.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
         return this._renderDescriptorMenuItems(descriptor, remove)
       })}
     </SubMenu>)
 
     render.push(<SubMenu title="Monster">
-      {Object.keys(window.monsterDescriptors).map((descriptor) => {
-        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
+      {Object.keys(global.monsterDescriptors).map((descriptor) => {
+        if(global.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
         return this._renderDescriptorMenuItems(descriptor, remove)
       })}
     </SubMenu>)
 
     render.push(<SubMenu title="Modifiers ( Other )">
-      {Object.keys(window.modifierDescriptors).map((descriptor) => {
-        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
+      {Object.keys(global.modifierDescriptors).map((descriptor) => {
+        if(global.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
         return this._renderDescriptorMenuItems(descriptor, remove)
       })}
     </SubMenu>)
 
     render.push(<SubMenu title="Modifiers ( Color )">
-      {Object.keys(window.colorModifiers).map((descriptor) => {
-        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
+      {Object.keys(global.colorModifiers).map((descriptor) => {
+        if(global.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
         return this._renderDescriptorMenuItems(descriptor, remove)
       })}
     </SubMenu>)
 
     render.push(<SubMenu title="Modifiers ( Edge )">
-      {Object.keys(window.edgeModifiers).map((descriptor) => {
-        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
+      {Object.keys(global.edgeModifiers).map((descriptor) => {
+        if(global.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
         return this._renderDescriptorMenuItems(descriptor, remove)
       })}
     </SubMenu>)
 
     render.push(<SubMenu title="Modifiers ( Path )">
-      {Object.keys(window.pathModifiers).map((descriptor) => {
-        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
+      {Object.keys(global.pathModifiers).map((descriptor) => {
+        if(global.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
         return this._renderDescriptorMenuItems(descriptor, remove)
       })}
     </SubMenu>)
 
     render.push(<SubMenu title="Modifiers ( Elemental )">
-      {Object.keys(window.elementalModifiers).map((descriptor) => {
-        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
+      {Object.keys(global.elementalModifiers).map((descriptor) => {
+        if(global.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
         return this._renderDescriptorMenuItems(descriptor, remove)
       })}
     </SubMenu>)
 
     render.push(<SubMenu title="Modifiers ( Creature )">
-      {Object.keys(window.livingCreatureModifiers).map((descriptor) => {
-        if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
+      {Object.keys(global.livingCreatureModifiers).map((descriptor) => {
+        if(global.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
         return this._renderDescriptorMenuItems(descriptor, remove)
       })}
     </SubMenu>)
 
 
     // render.push(<SubMenu title="Complex Descriptros">
-    //   {Object.keys(window.complexDescriptors).map((descriptor) => {
-    //     if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
+    //   {Object.keys(global.complexDescriptors).map((descriptor) => {
+    //     if(global.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
     //     return this._renderDescriptorMenuItems(descriptor, remove)
     //   })}
     // </SubMenu>)
 
     if(false) {
       render.push(<SubMenu title="Modifiers ( Audio )">
-        {Object.keys(window.audioModifierDescriptors).map((descriptor) => {
-          if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
+        {Object.keys(global.audioModifierDescriptors).map((descriptor) => {
+          if(global.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
           return this._renderDescriptorMenuItems(descriptor, remove)
         })}
       </SubMenu>)
     }
     //
     // render.push(<SubMenu title="Edge (colorModifierser)">
-    //   {Object.keys(window.edgeModifiers).map((descriptor) => {
-    //     if(window.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
+    //   {Object.keys(global.edgeModifiers).map((descriptor) => {
+    //     if(global.allDescriptors[descriptor].dontShowAdminsInSpriteSheetEditor) return
     //     return this._renderDescriptorMenuItems(descriptor, remove)
     //   })}
     // </SubMenu>)

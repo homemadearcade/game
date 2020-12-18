@@ -78,17 +78,17 @@ class Page{
     //   let log = console.log
     //   console.log = function(msg, arg1, arg2, arg3) {
     //     let args = [msg, arg1, arg2, arg3].filter(i => !!i)
-    //     window.socket.emit('hostLog', ...args)
+    //     global.socket.emit('hostLog', ...args)
     //     log(...args)
     //   }
     //   let error = console.error
     //   console.error = function(msg, arg1, arg2, arg3) {
     //     let args = [msg, arg1, arg2, arg3].filter(i => !!i)
-    //     window.socket.emit('hostLog', ...args)
+    //     global.socket.emit('hostLog', ...args)
     //     error(...args)
     //   }
-    //   window.addEventListener('error', function(e) {
-    //     window.socket.emit('hostLog', 'ERROR', e.message
+    //   global.addEventListener('error', function(e) {
+    //     global.socket.emit('hostLog', 'ERROR', e.message
     //           , '\n', e.filename, ':', e.lineno, (e.colno ? ':' + e.colno : '')
     //           , e.error && e.error.stack ? '\n' : '', e.error ? e.error.stack : undefined
     //       );
@@ -96,7 +96,7 @@ class Page{
     // }
     PAGE.remoteLog = function(msg, arg1, arg2, arg3) {
       let args = [msg, arg1, arg2, arg3].filter(i => !!i)
-      window.socket.emit('hostLog', ...args)
+      global.socket.emit('hostLog', ...args)
       console.log(...args)
     }
   }
@@ -109,34 +109,34 @@ class Page{
   ///////////////////////////////
   load() {
     let gameServerUrl = 'http://ha-game.herokuapp.com'
-    if(window.location.hostname.indexOf('localhost') >= 0) {
+    if(global.location.hostname.indexOf('localhost') >= 0) {
       gameServerUrl = 'http://localhost:4000'
     }
-    window.HAGameServerUrl = gameServerUrl
+    global.HAGameServerUrl = gameServerUrl
 
     let gameClientUrl = 'http://ha-game.herokuapp.com'
-    if(window.location.hostname.indexOf('localhost') >= 0) {
+    if(global.location.hostname.indexOf('localhost') >= 0) {
       gameClientUrl = 'http://localhost:8080'
     }
-    window.HAGameClientUrl = gameClientUrl
+    global.HAGameClientUrl = gameClientUrl
 
     let socialClientUrl = 'http://ha-social.herokuapp.com'
-    if(window.location.hostname.indexOf('localhost') >= 0) {
+    if(global.location.hostname.indexOf('localhost') >= 0) {
       socialClientUrl = 'http://localhost:3005'
     }
-    window.HASocialClientUrl = socialClientUrl
+    global.HASocialClientUrl = socialClientUrl
 
     let socialServerUrl = 'http://ha-social.herokuapp.com'
-    if(window.location.hostname.indexOf('localhost') >= 0) {
+    if(global.location.hostname.indexOf('localhost') >= 0) {
       socialServerUrl = 'http://localhost:5000'
     }
-    window.HASocialServerUrl = socialServerUrl
+    global.HASocialServerUrl = socialServerUrl
 
     let landingUrl = 'http://ha-landing.herokuapp.com'
-    if(window.location.hostname.indexOf('localhost') >= 0) {
+    if(global.location.hostname.indexOf('localhost') >= 0) {
       landingUrl = 'http://localhost:3000'
     }
-    window.HALandingUrl = landingUrl
+    global.HALandingUrl = landingUrl
 
     AUDIO.loadData()
 
@@ -144,13 +144,13 @@ class Page{
       events.establishALocalHost()
       PAGE.establishRoleFromQueryOnly()
       HERO.getHeroId()
-      window.local.emit('onUserIdentified')
-      window.local.emit('onPlayerIdentified')
+      global.local.emit('onUserIdentified')
+      global.local.emit('onPlayerIdentified')
       PAGE.askCurrentGame((game, heroSummonType) => {
         GAME.loadGridWorldObjectsCompendiumState(game)
         GAME.heros = []
         HERO.addHero(HERO.summonFromGameData({ id: HERO.id, heroSummonType }))
-        window.local.emit('onGameLoaded')
+        global.local.emit('onGameLoaded')
       })
     } else {
       const container = document.createElement('div')
@@ -165,23 +165,23 @@ class Page{
   }
 
   async userIdentified() {
-    window.local.emit('onUserIdentified')
+    global.local.emit('onUserIdentified')
 
     if(PAGE.getParameterByName('homeEditor')) {
       events.establishALocalHost()
       PAGE.establishRoleFromQueryOnly()
       HERO.getHeroId()
-      window.local.emit('onPlayerIdentified')
+      global.local.emit('onPlayerIdentified')
       PAGE.askCurrentGame((game, heroSummonType) => {
         GAME.loadGridWorldObjectsCompendiumState(game)
         GAME.heros = []
         HERO.addHero(HERO.summonFromGameData({ id: HERO.id, heroSummonType }))
-        window.local.emit('onGameLoaded')
+        global.local.emit('onGameLoaded')
       })
       return
     }
 
-    const heroOptions = Object.keys(window.heroLibrary)
+    const heroOptions = Object.keys(global.heroLibrary)
     const hasSavedHero = localStorage.getItem('hero')
     if(hasSavedHero) heroOptions.unshift('resume')
 
@@ -208,7 +208,7 @@ class Page{
     if(document.hasFocus()) {
       PAGE.playerIdentified(heroSummonType)
     } else {
-      window.onfocus = () => {
+      global.onfocus = () => {
         PAGE.playerIdentified(heroSummonType)
       }
     }
@@ -219,23 +219,23 @@ class Page{
     PAGE.establishRoleFromQueryOnly()
     HERO.getHeroId(heroSummonType === 'resume')
 
-    window.onbeforeunload = function (event) {
+    global.onbeforeunload = function (event) {
       if(PAGE.role.isHost && GAME.gameState && GAME.gameState.started) {
         return "Please stop game before leaving page"
       }
     }
 
     if(PAGE.role.isHost) {
-      window.socket.on('onAskJoinGame', (heroId, role, userId) => {
-        window.local.emit('onAskJoinGame', heroId, role, userId)
+      global.socket.on('onAskJoinGame', (heroId, role, userId) => {
+        global.local.emit('onAskJoinGame', heroId, role, userId)
       })
     }
 
-    window.socket.on('onHeroJoinedGame', (hero) => {
-      window.local.emit('onHeroJoinedGame', hero)
+    global.socket.on('onHeroJoinedGame', (hero) => {
+      global.local.emit('onHeroJoinedGame', hero)
     })
 
-    window.local.emit('onPlayerIdentified')
+    global.local.emit('onPlayerIdentified')
 
     PAGE.askCurrentGame((game) => {
       ARCADE.changeGame(game.id)
@@ -262,15 +262,15 @@ class Page{
        'Access-Control-Allow-Origin': '*',
      }
     };
-    fetch(window.HASocialServerUrl + "/api/game/getGameSave/", gameSaveRequestOptions).then(handleResponse).then(res => {
+    fetch(global.HASocialServerUrl + "/api/game/getGameSave/", gameSaveRequestOptions).then(handleResponse).then(res => {
       cb(res)
     })
   }
 
   askMediaToLoad(cb, game, heroSummonType) {
-    window.local.emit('onStartLoadingScreen')
-    window.local.emit('onGameIdentified', game)
-    const rm1 = window.local.on('onPixiMapReady', () => {
+    global.local.emit('onStartLoadingScreen')
+    global.local.emit('onGameIdentified', game)
+    const rm1 = global.local.on('onPixiMapReady', () => {
       PAGE.pixiMapReady = true
       if(PAGE.audioReady) {
         rm1()
@@ -278,7 +278,7 @@ class Page{
         cb(game, heroSummonType)
       }
     })
-    const rm2 = window.local.on('onAudioReady', () => {
+    const rm2 = global.local.on('onAudioReady', () => {
       PAGE.audioReady = true
       if(PAGE.pixiMapReady) {
         rm1()
@@ -324,18 +324,18 @@ class Page{
         }
       };
 
-      axios.get(window.HAGameServerUrl + '/game', options).then(res => {
+      axios.get(global.HAGameServerUrl + '/game', options).then(res => {
         PAGE.askMediaToLoad(cb, res.data.game, heroSummonType)
       })
     } else {
       // when you are constantly reloading the page we will constantly need to just ask the server what the truth is
-      window.socket.emit('askRestoreCurrentGame')
-      window.socket.on('onAskRestoreCurrentGame', async (game) => {
+      global.socket.emit('askRestoreCurrentGame')
+      global.socket.on('onAskRestoreCurrentGame', async (game) => {
         let currentGameExists = game && game.id
         if(currentGameExists) {
           PAGE.askMediaToLoad(cb, game)
         } else {
-          const response  = await axios.get(window.HAGameServerUrl + '/gamesmetadata')
+          const response  = await axios.get(global.HAGameServerUrl + '/gamesmetadata')
           const gamesMetadata = response.data.games
 
           let gameId
@@ -360,10 +360,10 @@ class Page{
           }
 
           if(gameId) {
-            window.socket.on('onLoadGame', (game) => {
+            global.socket.on('onLoadGame', (game) => {
               PAGE.askMediaToLoad(cb, game)
             })
-            window.socket.emit('setAndLoadCurrentGame', gameId)
+            global.socket.emit('setAndLoadCurrentGame', gameId)
           } else {
             const { value: newGameId } = await Swal.fire({
               title: 'Create Game',
@@ -378,12 +378,12 @@ class Page{
             if(newGameId) {
               let game = {
                 id: newGameId,
-                world: JSON.parse(JSON.stringify(window.defaultWorld)),
-                // defaultHero: JSON.parse(JSON.stringify(window.defaultHero)),
+                world: JSON.parse(JSON.stringify(global.defaultWorld)),
+                // defaultHero: JSON.parse(JSON.stringify(global.defaultHero)),
                 objects: [],
-                grid: JSON.parse(JSON.stringify(window.defaultGrid)),
+                grid: JSON.parse(JSON.stringify(global.defaultGrid)),
               }
-              window.socket.emit('saveGame', game)
+              global.socket.emit('saveGame', game)
               PAGE.askMediaToLoad(cb, game)
             }
           }
@@ -401,27 +401,27 @@ class Page{
 
   onGameReady() {
     PAGE.isGameReady = true
-    window.local.emit('onLoadingScreenEnd')
+    global.local.emit('onLoadingScreenEnd')
   }
 
   onGameLoaded() {
     PAGE.initializeGameDragAndDrop()
 
     if(!PAGE.loopStarted) {
-      window.startGameLoop()
-      window.local.emit('onGameLoopStarted')
+      global.startGameLoop()
+      global.local.emit('onGameLoopStarted')
       PAGE.loopStarted = true
     }
     if(!PAGE.gameLoaded) {
       sockets.init()
-      window.focused = true
-      window.onfocus = () => {
-        window.focused = true
+      global.focused = true
+      global.onfocus = () => {
+        global.focused = true
       }
-      window.onblur = () => {
-        window.focused = false
+      global.onblur = () => {
+        global.focused = false
       }
-      window.local.emit('onFirstPageGameLoaded')
+      global.local.emit('onFirstPageGameLoaded')
     }
     PAGE.gameLoaded = true
 
@@ -429,7 +429,7 @@ class Page{
       PAGE.openLog()
     }
 
-    window.local.emit('cleanUpMapAndAskPixiToSendGameReady')
+    global.local.emit('cleanUpMapAndAskPixiToSendGameReady')
   }
 
   resetStorage() {
@@ -438,13 +438,13 @@ class Page{
     localStorage.removeItem('initialGameState')
     localStorage.removeItem('saveEditingGame')
     localStorage.removeItem('editorPreferences')
-    window.clearUserCookie()
+    global.clearUserCookie()
     PAGE.role.isPlayer = false
-    window.location.reload()
+    global.location.reload()
   }
 
   getParameterByName(name, url) {
-      if (!url) url = window.location.href;
+      if (!url) url = global.location.href;
       name = name.replace(/[\[\]]/g, '\\$&');
       var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
           results = regex.exec(url);
@@ -495,11 +495,11 @@ class Page{
 
   openLog() {
     PAGE.isLogOpen = true
-    window.local.emit('onOpenLog')
+    global.local.emit('onOpenLog')
   }
   closeLog() {
     PAGE.isLogOpen = false
-    window.local.emit('onCloseLog')
+    global.local.emit('onCloseLog')
   }
 
   showEditorTools() {
@@ -513,7 +513,7 @@ class Page{
   uploadToAws(file, name) {
     const contentType = file.type; // eg. image/jpeg or image/svg+xml
 
-    const generatePutUrl = window.socket.io.uri + '/generate-put-url';
+    const generatePutUrl = global.socket.io.uri + '/generate-put-url';
     const options = {
       params: {
         Key: file.name,
@@ -529,7 +529,7 @@ class Page{
       axios
         .put("https://cors-anywhere.herokuapp.com/" + res.data.url, file, options)
         .then(res => {
-          let url = window.awsURL + file.name
+          let url = global.awsURL + file.name
           console.log('Upload Successful', url)
           if(!name) name = url
           if(!GAME.library.images) GAME.library.images = {}
@@ -537,8 +537,8 @@ class Page{
             name,
             url
           }
-          window.local.emit('onSendNotification', { playerUIHeroId: HERO.id, toast: true, text: 'Image saved'})
-          window.socket.emit('updateLibrary', { images: GAME.library.images })
+          global.local.emit('onSendNotification', { playerUIHeroId: HERO.id, toast: true, text: 'Image saved'})
+          global.socket.emit('updateLibrary', { images: GAME.library.images })
         })
         .catch(err => {
           console.log('Sorry, something went wrong')
@@ -601,7 +601,7 @@ class Page{
           draggedGame.heros[HERO.id] = GAME.heros[HERO.id]
           draggedGame.gameState.started = false
           draggedGame.gameState.loaded = false
-          window.socket.emit('setGameJSON', draggedGame)
+          global.socket.emit('setGameJSON', draggedGame)
           return
         }
 
@@ -612,7 +612,7 @@ class Page{
               adding.push(obj)
             }
           })
-          window.socket.emit('addObjects', adding)
+          global.socket.emit('addObjects', adding)
         }
 
         if(integrationChoice == 'mergeObjects' || integrationChoice == 'mergeAndAddNewObjects') {
@@ -627,7 +627,7 @@ class Page{
               }
             }
           })
-          window.socket.emit('editObjects', editing)
+          global.socket.emit('editObjects', editing)
         }
 
 
@@ -639,9 +639,9 @@ class Page{
         //   delete hero.velocityX
         // })
         //
-        // window.mergeDeep(GAME.heros, draggedGame.heros)
-        // window.mergeDeep(GAME.world, draggedGame.world)
-        // window.mergeDeep(GAME.gameState, draggedGame.gameState)
+        // global.mergeDeep(GAME.heros, draggedGame.heros)
+        // global.mergeDeep(GAME.world, draggedGame.world)
+        // global.mergeDeep(GAME.gameState, draggedGame.gameState)
       }
     }
   }
@@ -659,21 +659,21 @@ class Page{
      mode: 'cors',
      body: JSON.stringify({
        gameSave: JSON.stringify(GAME.cleanForSave(GAME)),
-       userData: window.user,
+       userData: global.user,
      }),
      headers: {
        'Content-Type': 'application/json',
        'Access-Control-Allow-Origin': '*',
-       Authorization: 'Bearer ' + window.getUserCookie()
+       Authorization: 'Bearer ' + global.getUserCookie()
      }
     };
-    fetch(window.HASocialServerUrl + "/api/game/addGameSave", gameSaveRequestOptions).then(handleResponse).then(res => {
+    fetch(global.HASocialServerUrl + "/api/game/addGameSave", gameSaveRequestOptions).then(handleResponse).then(res => {
       const requestOptions = {
         method: "POST",
         mode: 'cors',
         body: JSON.stringify({
           gameSaveId: res.gameSaveId,
-          userData: window.user,
+          userData: global.user,
           description: name + ' - ' + description,
           photo: imageUrl,
           tags: JSON.stringify([])
@@ -681,23 +681,23 @@ class Page{
         headers: {
           'Content-Type': 'application/json',
           'Access-Control-Allow-Origin': '*',
-          Authorization: 'Bearer ' + window.getUserCookie()
+          Authorization: 'Bearer ' + global.getUserCookie()
         }
       };
 
-      return fetch(window.HASocialServerUrl + "/api/post/addPost/", requestOptions)
+      return fetch(global.HASocialServerUrl + "/api/post/addPost/", requestOptions)
         .then(res => {
-          window.local.emit('onSendNotification', { playerUIHeroId: HERO.id, toast: true, text: 'Game Published!'})
+          global.local.emit('onSendNotification', { playerUIHeroId: HERO.id, toast: true, text: 'Game Published!'})
         });
     })
   }
 
   onHostJoined() {
     if(PAGE.role.isTempHost) {
-      window.location = window.HAGameClientUrl;
-      window.reload()
+      global.location = global.HAGameClientUrl;
+      global.reload()
     }
   }
 }
 
-window.PAGE = new Page()
+global.PAGE = new Page()

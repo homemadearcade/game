@@ -3,7 +3,7 @@ import gridUtil from '../utils/grid'
 
 const keysDown = {}
 function init (){
-  window.addEventListener("keydown", function (e) {
+  global.addEventListener("keydown", function (e) {
     const key = keycode(e.keyCode)
     keysDown[key] = true
 
@@ -18,7 +18,7 @@ function init (){
     }
   })
 
-  window.addEventListener("keyup", function (e) {
+  global.addEventListener("keyup", function (e) {
     const key = keycode(e.keyCode)
     keysDown[key] = false
   })

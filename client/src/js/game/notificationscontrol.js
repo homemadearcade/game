@@ -63,7 +63,7 @@ class NotificationsControl{
       if(newObject.count > 1) {
         message = 'You deposited ' + newObject.count + ' ' + newObject.subObjectName
       }
-      window.local.emit('onSendNotification', { playerUIHeroId: hero.id, logRecipientId: hero.id, toast: true, log: true, text: message})
+      global.local.emit('onSendNotification', { playerUIHeroId: hero.id, logRecipientId: hero.id, toast: true, log: true, text: message})
     // }
   }
 
@@ -76,7 +76,7 @@ class NotificationsControl{
       if(newObject.count > 1) {
         message = 'You withdrew ' + newObject.count + ' ' + newObject.subObjectName
       }
-      window.local.emit('onSendNotification', { playerUIHeroId: hero.id, logRecipientId: hero.id, toast: true, log: true, text: message})
+      global.local.emit('onSendNotification', { playerUIHeroId: hero.id, logRecipientId: hero.id, toast: true, log: true, text: message})
     // }
   }
 
@@ -320,17 +320,17 @@ class NotificationsControl{
 
   onHeroWithdrawFail(hero, subObject) {
     //. You already have a ' + subObject.subObjectName
-    window.local.emit('onSendNotification', { playerUIHeroId: hero.id, logRecipientId: hero.id, toast: true, log: true, text: 'You can\'t withraw'})
+    global.local.emit('onSendNotification', { playerUIHeroId: hero.id, logRecipientId: hero.id, toast: true, log: true, text: 'You can\'t withraw'})
   }
 
   onHeroDepositFail(hero, subObject) {
     //Target already has a ' + subObject.subObjectName
-    window.local.emit('onSendNotification', { playerUIHeroId: hero.id, logRecipientId: hero.id, toast: true, log: true, text: 'You can\'t deposit'})
+    global.local.emit('onSendNotification', { playerUIHeroId: hero.id, logRecipientId: hero.id, toast: true, log: true, text: 'You can\'t deposit'})
   }
 
   onHeroDrop(hero, object) {
     // if(PAGE.role.isHost) {
-      window.local.emit('onSendNotification', { playerUIHeroId: hero.id, logRecipientId: hero.id, toast: true, log: true, text: message})
+      global.local.emit('onSendNotification', { playerUIHeroId: hero.id, logRecipientId: hero.id, toast: true, log: true, text: message})
       if(hero.id === HERO.id) AUDIO.play(GAME.theme.audio.onHeroDrop)
       let message =  'You dropped ' + object.subObjectName
       if(object.count > 1) {
@@ -360,28 +360,28 @@ class NotificationsControl{
       if(subObject.count > 1) {
         message = 'You picked up ' + subObject.count + ' ' + subObject.subObjectName
       }
-      window.local.emit('onSendNotification', { playerUIHeroId: hero.id, logRecipientId: hero.id, toast: true, log: true, text: message})
+      global.local.emit('onSendNotification', { playerUIHeroId: hero.id, logRecipientId: hero.id, toast: true, log: true, text: message})
     // }
   }
 
   onHeroPickupFail(hero, subObject) {
-    window.local.emit('onSendNotification', { playerUIHeroId: hero.id, logRecipientId: hero.id, toast: true, log: true, text: 'You can\'t pick this up. You already have a ' + subObject.subObjectName})
+    global.local.emit('onSendNotification', { playerUIHeroId: hero.id, logRecipientId: hero.id, toast: true, log: true, text: 'You can\'t pick this up. You already have a ' + subObject.subObjectName})
   }
 
   onEditHero(updatedHero) {
     if(updatedHero.spaceBarBehavior) {
-      // window.local.emit('onSendNotification', { playerUIHeroId: mod.ownerId, toast: true, text: 'Press Space Bar', viewControlsOnClick: true })
+      // global.local.emit('onSendNotification', { playerUIHeroId: mod.ownerId, toast: true, text: 'Press Space Bar', viewControlsOnClick: true })
     }
     //
     // if(updatedHero.arrowKeysBehavior || updatedHero.spaceBarBehavior || updatedHero.zButtonBehavior || updatedHero.xButtonBehavior || updatedHero.cButtonBehavior) {
-    //   window.local.emit('onSendNotification', { playerUIHeroId: updatedHero.id, toast: true, text: 'Your controls updated have been updated. Click to see more', viewControlsOnClick: true })
+    //   global.local.emit('onSendNotification', { playerUIHeroId: updatedHero.id, toast: true, text: 'Your controls updated have been updated. Click to see more', viewControlsOnClick: true })
     // }
   }
 
   onHeroEquip(hero, subObject) {
     if(hero.id === HERO.id) AUDIO.play(GAME.theme.audio.onHeroEquip)
     if(subObject.actionButtonBehavior) {
-      // window.local.emit('onSendNotification', { playerUIHeroId: hero.id, toast: true, text: 'Your controls updated have been updated. Click to see more', viewControlsOnClick: true })
+      // global.local.emit('onSendNotification', { playerUIHeroId: hero.id, toast: true, text: 'Your controls updated have been updated. Click to see more', viewControlsOnClick: true })
     }
   }
 
@@ -392,20 +392,20 @@ class NotificationsControl{
   onModEnabled(mod) {
     if(mod.ownerId === HERO.id) AUDIO.play(GAME.theme.audio.onModEnabled)
     if(mod.effectJSON.spaceBarBehavior) {
-      // window.local.emit('onSendNotification', { playerUIHeroId: mod.ownerId, toast: true, text: 'Press Space Bar', viewControlsOnClick: true })
+      // global.local.emit('onSendNotification', { playerUIHeroId: mod.ownerId, toast: true, text: 'Press Space Bar', viewControlsOnClick: true })
     }
     if(mod.effectJSON.creator) {
-      window.emitGameEvent('onUpdatePlayerUI', GAME.heros[mod.ownerId])
+      global.emitGameEvent('onUpdatePlayerUI', GAME.heros[mod.ownerId])
     }
     // if(mod.effectJSON.arrowKeysBehavior || mod.effectJSON.spaceBarBehavior || mod.effectJSON.zButtonBehavior || mod.effectJSON.xButtonBehavior || mod.effectJSON.cButtonBehavior) {
-    //   window.local.emit('onSendNotification', { playerUIHeroId: mod.ownerId, toast: true, text: 'Your controls updated have been updated. Click to see more', viewControlsOnClick: true })
+    //   global.local.emit('onSendNotification', { playerUIHeroId: mod.ownerId, toast: true, text: 'Your controls updated have been updated. Click to see more', viewControlsOnClick: true })
     // }
   }
 
   onModDisabled(mod) {
     if(mod.ownerId === HERO.id) AUDIO.play(GAME.theme.audio.onModDisabled)
     // if(mod.effectJSON.arrowKeysBehavior || mod.effectJSON.spaceBarBehavior || mod.effectJSON.zButtonBehavior || mod.effectJSON.xButtonBehavior || mod.effectJSON.cButtonBehavior) {
-    //   window.local.emit('onSendNotification', { playerUIHeroId: mod.ownerId, toast: true, text: 'Your controls updated have been updated. Click to see more', viewControlsOnClick: true })
+    //   global.local.emit('onSendNotification', { playerUIHeroId: mod.ownerId, toast: true, text: 'Your controls updated have been updated. Click to see more', viewControlsOnClick: true })
     // }
   }
 
@@ -430,4 +430,4 @@ class NotificationsControl{
   }
 }
 
-window.NOTIFICATIONSCONTROL = new NotificationsControl()
+global.NOTIFICATIONSCONTROL = new NotificationsControl()

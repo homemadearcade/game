@@ -18,7 +18,7 @@ export function onHeroTrigger(hero, collider, result, options = { fromInteractBu
   if(isInteraction) {
     if(!options.skipGreeting && collider.heroDialogueSets && collider.heroDialogueSets.greeting && collider.heroDialogueSets.greeting.dialogue && collider.heroDialogueSets.greeting.dialogue.length) {
       effects.processEffect({ effectName: 'dialogue', effectJSON: collider.heroDialogueSets.greeting.dialogue }, hero, collider)
-      const removeEL = window.local.on('onHeroDialogueComplete', (heroDialoguing) => {
+      const removeEL = global.local.on('onHeroDialogueComplete', (heroDialoguing) => {
         if(heroDialoguing.id === hero.id) {
           onHeroTrigger(hero, collider, result, {...options, skipGreeting: true})
           removeEL()
@@ -32,11 +32,11 @@ export function onHeroTrigger(hero, collider, result, options = { fromInteractBu
       hero.choiceOptions = interactions.slice().map((interaction) => {
         return {
           ...interaction,
-          id: window.uniqueID(),
+          id: global.uniqueID(),
           effectValue: interaction.text
         }
       })
-      window.emitGameEvent('onHeroOptionStart', hero)
+      global.emitGameEvent('onHeroOptionStart', hero)
       hero.flags.showChoices = true
       hero.flags.paused = true
       if(collider) {
@@ -48,8 +48,8 @@ export function onHeroTrigger(hero, collider, result, options = { fromInteractBu
         }
       }
 
-      window.emitGameEvent('onUpdatePlayerUI', hero)
-      const removeEventListener = window.local.on('onHeroChooseOption', (heroId, choiceId) => {
+      global.emitGameEvent('onUpdatePlayerUI', hero)
+      const removeEventListener = global.local.on('onHeroChooseOption', (heroId, choiceId) => {
         if(hero.id === heroId) {
           hero.choiceOptions.forEach((interaction) => {
             if(interaction.id !== choiceId) return
@@ -61,8 +61,8 @@ export function onHeroTrigger(hero, collider, result, options = { fromInteractBu
             hero.choiceOptions = null
             hero._cantInteract = true
             triggerInteraction(interaction, hero, collider, result, options)
-            window.emitGameEvent('onHeroOptionComplete', hero)
-            window.emitGameEvent('onUpdatePlayerUI', hero)
+            global.emitGameEvent('onHeroOptionComplete', hero)
+            global.emitGameEvent('onUpdatePlayerUI', hero)
           })
         }
       })
@@ -109,27 +109,27 @@ export function onHeroTrigger(hero, collider, result, options = { fromInteractBu
     }
 
     if(collider.tags && collider.mod().tags['cameraShakeOnCollide_quickrumble']) {
-      window.socket.emit('heroCameraEffect', 'cameraShake', hero.id, { duration: 50, frequency: 10, amplitude: 5})
+      global.socket.emit('heroCameraEffect', 'cameraShake', hero.id, { duration: 50, frequency: 10, amplitude: 5})
       triggered = true
     }
 
     if(collider.tags && collider.mod().tags['cameraShakeOnCollide_longrumble']) {
-      window.socket.emit('heroCameraEffect', 'cameraShake', hero.id, { duration: 3000, frequency: 10, amplitude: 8 })
+      global.socket.emit('heroCameraEffect', 'cameraShake', hero.id, { duration: 3000, frequency: 10, amplitude: 8 })
       triggered = true
     }
 
     if(collider.tags && collider.mod().tags['cameraShakeOnCollide_quick']) {
-      window.socket.emit('heroCameraEffect', 'cameraShake', hero.id, { duration: 50, frequency: 10, amplitude: 24})
+      global.socket.emit('heroCameraEffect', 'cameraShake', hero.id, { duration: 50, frequency: 10, amplitude: 24})
       triggered = true
     }
 
     if(collider.tags && collider.mod().tags['cameraShakeOnCollide_short']) {
-      window.socket.emit('heroCameraEffect', 'cameraShake', hero.id, { duration: 500, frequency: 20, amplitude: 36 })
+      global.socket.emit('heroCameraEffect', 'cameraShake', hero.id, { duration: 500, frequency: 20, amplitude: 36 })
       triggered = true
     }
 
     if(collider.tags && collider.mod().tags['cameraShakeOnCollide_long']) {
-      window.socket.emit('heroCameraEffect', 'cameraShake', hero.id, { duration: 2000, frequency: 40, amplitude: 36 })
+      global.socket.emit('heroCameraEffect', 'cameraShake', hero.id, { duration: 2000, frequency: 40, amplitude: 36 })
       triggered = true
     }
 
@@ -139,14 +139,14 @@ export function onHeroTrigger(hero, collider, result, options = { fromInteractBu
     }
 
     if(collider.tags && collider.mod().tags['resourceZone'] && collider.mod().tags['resourceWithdrawOnCollide']) {
-      let subObjectNameToWithdraw = window.getResourceSubObjectNames(collider, collider)
+      let subObjectNameToWithdraw = global.getResourceSubObjectNames(collider, collider)
 
       if(subObjectNameToWithdraw) withdrawFromInventory(hero, collider, subObjectNameToWithdraw, collider.resourceWithdrawAmount)
       triggered = true
     }
 
     if(collider.tags && collider.mod().tags['resourceZone'] && collider.mod().tags['resourceDepositAllOnCollide']) {
-      let subObjectNameToWithdraw = window.getResourceSubObjectNames(hero, collider)
+      let subObjectNameToWithdraw = global.getResourceSubObjectNames(hero, collider)
 
       if(subObjectNameToWithdraw) {
         const so = hero.subObjects[subObjectNameToWithdraw]
@@ -232,19 +232,19 @@ export function triggerInteraction(interaction, hero, collider, result, options)
   }
 
   if(interactionName === 'integratedInteractEvent') {
-    window.local.emit('onHeroInteract--integrated', hero, collider)
+    global.local.emit('onHeroInteract--integrated', hero, collider)
     triggered = true
   }
 
   if(interactionName === 'resourceWithdraw') {
-    let subObjectNameToWithdraw = window.getResourceSubObjectNames(collider, collider)
+    let subObjectNameToWithdraw = global.getResourceSubObjectNames(collider, collider)
 
     if(subObjectNameToWithdraw) withdrawFromInventory(hero, collider, subObjectNameToWithdraw, collider.resourceWithdrawAmount)
     triggered = true
   }
 
   if(interactionName === 'resourceDeposit') {
-    let subObjectNameToWithdraw = window.getResourceSubObjectNames(hero, collider)
+    let subObjectNameToWithdraw = global.getResourceSubObjectNames(hero, collider)
 
     if(subObjectNameToWithdraw) {
       const so = hero.subObjects[subObjectNameToWithdraw]
@@ -258,7 +258,7 @@ export function triggerInteraction(interaction, hero, collider, result, options)
   }
 }
 
-window.getResourceSubObjectNames = function(object, zone) {
+global.getResourceSubObjectNames = function(object, zone) {
   if(!object.subObjects) return null
 
   let subObjectNames = []

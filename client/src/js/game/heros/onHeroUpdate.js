@@ -57,7 +57,7 @@ function heroUpdate (hero, collider, heroUpdate) {
   }
   hero.updateHistory.push(update)
 
-  window.mergeDeep(hero, JSON.parse(JSON.stringify(collider.heroUpdate)))
+  global.mergeDeep(hero, JSON.parse(JSON.stringify(collider.heroUpdate)))
 
   if(collider.tags['revertHeroUpdateAfterTimeout']) {
     setRevertUpdateTimeout(timeoutId, hero, collider)
@@ -69,13 +69,13 @@ function setRevertUpdateTimeout(id, hero, collider) {
     hero.updateHistory = hero.updateHistory.filter((update) => {
       if(collider.fromCompendiumId) {
         if(collider.fromCompendiumId === update.id) {
-          window.mergeDeep(hero, {...update.prev})
+          global.mergeDeep(hero, {...update.prev})
           return false
         }
       }
 
       if(collider.id === update.id) {
-        window.mergeDeep(hero, {...update.prev})
+        global.mergeDeep(hero, {...update.prev})
         return false
       }
 

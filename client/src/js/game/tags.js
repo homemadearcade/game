@@ -1,5 +1,5 @@
 function setDefault() {
-  window.movementTags = {
+  global.movementTags = {
     moving: {
       relatedTags: ['gravityY', 'pacer', 'spelunker', 'wander', 'lemmings', 'goomba', 'goombaSideways']
     },
@@ -11,7 +11,7 @@ function setDefault() {
     goombaSideways: false,
   }
 
-  window.targetTags = {
+  global.targetTags = {
     homing: {
       relatedTags: ['targetAuto', 'targetBehind', 'targetResetEveryRound', 'targetHeroOnAware', 'targetVictimOnAware', 'targetSwitchOnAware', 'targetClearOnUnaware']
     },
@@ -27,7 +27,7 @@ function setDefault() {
     targetClearOnUnaware: false,
   }
 
-  window.physicsTags = {
+  global.physicsTags = {
     gravityY: false,
     ignoreWorldGravity: false,
     obstacle: {
@@ -44,7 +44,7 @@ function setDefault() {
     },
   }
 
-  window.featureOptimizationTags = {
+  global.featureOptimizationTags = {
     //no awareness, oncollide, interact, correction, anything, NOTHING. Most performant
     notInCollisions: false,
 
@@ -61,7 +61,7 @@ function setDefault() {
     interactable: false,
 
     // allows corrections and physics movement
-    moving: window.movementTags.moving,
+    moving: global.movementTags.moving,
 
     trackObjectsTouching: false,
 
@@ -77,12 +77,12 @@ function setDefault() {
     destroyQuickly: false,
   }
 
-  // window.otherTags = {
+  // global.otherTags = {
   //   removeAfterTrigger: false,
   //   showInteractBorder: false,
   // }
 
-  window.combatTags = {
+  global.combatTags = {
     monsterDestroyer: false,
     monsterVictim: {
       relatedTags: ['respawn']
@@ -97,14 +97,14 @@ function setDefault() {
     // flashWhiteOnHit,
   }
 
-  window.behaviorTags = {
+  global.behaviorTags = {
     coin: false,
     behaviorOnHeroCollide: false,
     behaviorOnHeroInteract: false,
     // behaviorOnDestroy: false,
   }
 
-  window.resourceZoneTags = {
+  global.resourceZoneTags = {
     resource: false,
     resourceZone: {
       relatedTags: ['popResourceCount', 'resourceDepositOnInteract', 'resourceDepositAllOnCollide', 'resourceWithdrawOnCollide', 'resourceWithdrawOnInteract']
@@ -118,11 +118,11 @@ function setDefault() {
     // resourceFlammable: false,
   }
 
-  window.projectileTags = {
+  global.projectileTags = {
     destroyOnCollideWithObstacle: false,
   }
 
-  window.spawnZoneTags = {
+  global.spawnZoneTags = {
     spawnZone: {
       relatedTags: ['spawnRandomlyWithin', 'spawnOnInterval', 'spawnAllOnDestroy', 'spawnAllInHeroInventory', 'destroyOnSpawnPoolDepleted']
     },
@@ -144,7 +144,7 @@ function setDefault() {
     destroyOnSpawnPoolDepleted: false,
   }
 
-  window.dialogueTags = {
+  global.dialogueTags = {
     talker: {
       relatedTags: ['talkOnStart', 'talkOnHeroCollide', 'talkOnHeroInteract', 'oneTimeTalker', 'loopInteractionOnDialogueComplete', 'autoTalkOnInteractable'],
     },
@@ -157,7 +157,7 @@ function setDefault() {
     autoTalkOnInteractable: false,
   }
 
-  window.heroUpdateTags = {
+  global.heroUpdateTags = {
     heroUpdate: false,
     oneTimeHeroUpdate: false,
     revertHeroUpdateAfterTimeout: false,
@@ -167,7 +167,7 @@ function setDefault() {
     // updateHeroOnDestroy: false,
   }
 
-  window.questTags = {
+  global.questTags = {
     questGiver: false,
     giveQuestOnStart: false,
     giveQuestOnHeroCollide: false,
@@ -179,7 +179,7 @@ function setDefault() {
     // completeQuestOnDestroy: false,
   }
 
-  window.graphicalTags = {
+  global.graphicalTags = {
     glowing: {
       relatedTags: ['stopGlowingOnTrigger']
     },
@@ -199,7 +199,7 @@ function setDefault() {
     // randomColor: false,
   }
 
-  window.cameraTags = {
+  global.cameraTags = {
     cameraShakeOnCollide_quickrumble: false,
     cameraShakeOnCollide_longrumble: false,
     cameraShakeOnCollide_quick: false,
@@ -214,7 +214,7 @@ function setDefault() {
     },
   }
 
-  window.inventoryTags = {
+  global.inventoryTags = {
     pickupable: {
       relatedTags: ['startsPickedUp', 'startsEquipped', 'dontDestroyOnPickup', 'pickupOnHeroCollide', 'pickupOnHeroInteract', 'equipOnPickup']
     },
@@ -232,7 +232,7 @@ function setDefault() {
     showCountInHUD: false,
   }
 
-  window.particleTags = {
+  global.particleTags = {
     emitter: false,
     hasTrail: false,
     hasEngineTrail: false,
@@ -241,7 +241,7 @@ function setDefault() {
     poweredUp: false,
   }
 
-  window.animationTags = {
+  global.animationTags = {
     shake: false,
     realRotate: false,
     realRotateFast: false,
@@ -255,7 +255,7 @@ function setDefault() {
     // realHover: false,
   }
 
-  window.pathTags = {
+  global.pathTags = {
     path: false,
     pathfindLoop: false,
     pathfindPatrol: false,
@@ -264,13 +264,13 @@ function setDefault() {
     pathfindAvoidUp: false,
   }
 
-  window.popoverTags = {
+  global.popoverTags = {
     popCountDownTimer: false,
     popResourceCount: false,
     popCount: false,
   }
 
-  window.heroTags = {
+  global.heroTags = {
     hero: true,
     centerOfAttention: false,
     disableUpKeyMovement: false,
@@ -280,7 +280,7 @@ function setDefault() {
     autoUpdateMaxVelocity: true,
   }
 
-  window.subObjectTags = {
+  global.subObjectTags = {
     subObject: {
       relatedTags: ['potential','onMapWhenEquipped', 'awarenessTriggerArea', 'relativeToDirection','relativeToAngle' ]
     },
@@ -294,33 +294,33 @@ function setDefault() {
     potential: false, //cant change
   }
 
-  window.defaultTags = {
-    ...window.physicsTags,
-    ...window.spawnZoneTags,
-    ...window.resourceZoneTags,
-    ...window.behaviorTags,
-    ...window.combatBehaviorTags,
-    ...window.triggerTags,
-    ...window.heroUpdateTags,
-    ...window.dialogueTags,
-    ...window.questTags,
-    ...window.movementTags,
-    ...window.graphicalTags,
-    ...window.cameraTags,
-    ...window.particleTags,
-    ...window.inventoryTags,
-    ...window.animationTags,
-    ...window.featureOptimizationTags,
-    ...window.proceduralTags,
-    ...window.pathTags,
-    ...window.popoverTags,
-    ...window.targetTags,
-    ...window.subObjectTags,
+  global.defaultTags = {
+    ...global.physicsTags,
+    ...global.spawnZoneTags,
+    ...global.resourceZoneTags,
+    ...global.behaviorTags,
+    ...global.combatBehaviorTags,
+    ...global.triggerTags,
+    ...global.heroUpdateTags,
+    ...global.dialogueTags,
+    ...global.questTags,
+    ...global.movementTags,
+    ...global.graphicalTags,
+    ...global.cameraTags,
+    ...global.particleTags,
+    ...global.inventoryTags,
+    ...global.animationTags,
+    ...global.featureOptimizationTags,
+    ...global.proceduralTags,
+    ...global.pathTags,
+    ...global.popoverTags,
+    ...global.targetTags,
+    ...global.subObjectTags,
   }
 
 
   /// THESE TAGS BELOW ARENT USED... in the SAME WAY... I guess..
-  window.descriptiveTags = {
+  global.descriptiveTags = {
     plain: false,
     hero: false,
     fresh: false,
@@ -331,15 +331,15 @@ function setDefault() {
     maze: false,
   }
 
-  window.audioQualityTags = {
+  global.audioQualityTags = {
     walkRetro: false,
     walkVehicle: false,
     walkDescriptor: false,
     walkOverhead: false,
   }
 
-  window.defaultHeroTags = {
-    ...window.heroTags,
+  global.defaultHeroTags = {
+    ...global.heroTags,
     respawn: true,
     gravityY: false,
     saveAsDefaultHero: false,
@@ -359,60 +359,60 @@ function setDefault() {
     poweredUp: false,
     // allowCameraRotation: false,
 
-    ...window.audioQualityTags,
+    ...global.audioQualityTags,
   }
 
-  window.generatedTags = {
+  global.generatedTags = {
     lastAnticipatedObject: false,
     fresh: false,
     adminInch: false,
     heroHomePlatform: false,
   }
 
-  window.keyInputTags = {
+  global.keyInputTags = {
     disableUpKeyMovement: false,
     disableDownKeyMovement: false,
   }
 
-  window.tags = JSON.parse(JSON.stringify(window.defaultTags))
+  global.tags = JSON.parse(JSON.stringify(global.defaultTags))
 
-  window.allTags = {
-    ...window.tags,
-    // ...window.defaultHeroTags,
-    ...window.descriptiveTags,
-    ...window.generatedTags,
-    ...window.audioQualityTags,
-    ...window.allDescriptors,
+  global.allTags = {
+    ...global.tags,
+    // ...global.defaultHeroTags,
+    ...global.descriptiveTags,
+    ...global.generatedTags,
+    ...global.audioQualityTags,
+    ...global.allDescriptors,
   }
 
-  window.propertyTags = {
-    ...window.combatTags,
-    ...window.movementTags,
-    ...window.physicsTags,
+  global.propertyTags = {
+    ...global.combatTags,
+    ...global.movementTags,
+    ...global.physicsTags,
 
-    glowing: window.graphicalTags.glowing,
-    invisible: window.graphicalTags.invisible,
+    glowing: global.graphicalTags.glowing,
+    invisible: global.graphicalTags.invisible,
 
-    shake: window.animationTags.shake,
-    realRotate: window.animationTags.realRotate,
-    realRotateFast: window.animationTags.realRotateFast,
-    pulseAlpha: window.animationTags.pulseAlpha,
-    pulseDarken: window.animationTags.pulseDarken,
-    pulseLighten: window.animationTags.pulseLighten,
+    shake: global.animationTags.shake,
+    realRotate: global.animationTags.realRotate,
+    realRotateFast: global.animationTags.realRotateFast,
+    pulseAlpha: global.animationTags.pulseAlpha,
+    pulseDarken: global.animationTags.pulseDarken,
+    pulseLighten: global.animationTags.pulseLighten,
 
     //
-    hasTrail: window.particleTags.hasTrail,
-    explodeOnDestroy: window.particleTags.explodeOnDestroy,
-    spinOffOnDestroy: window.particleTags.spinOffOnDestroy,
+    hasTrail: global.particleTags.hasTrail,
+    explodeOnDestroy: global.particleTags.explodeOnDestroy,
+    spinOffOnDestroy: global.particleTags.spinOffOnDestroy,
 
-    ...window.cameraTags,
+    ...global.cameraTags,
   }
 
 }
 
 function addGameTags(tags) {
-  Object.assign(window.tags, tags)
-  Object.assign(window.allTags, tags)
+  Object.assign(global.tags, tags)
+  Object.assign(global.allTags, tags)
 }
 
 export default {

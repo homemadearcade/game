@@ -1,5 +1,5 @@
-window.local.on('onFirstPageGameLoaded', () => {
-  window.spriteAnimationLibrary = {
+global.local.on('onFirstPageGameLoaded', () => {
+  global.spriteAnimationLibrary = {
     sword1: {
       textures: ['timefantasy-animations-sprite125', 'timefantasy-animations-sprite126', 'timefantasy-animations-sprite152', 'timefantasy-animations-sprite153', 'timefantasy-animations-sprite154', 'timefantasy-animations-sprite155'],
       correctiveAngle: 1.5708,
@@ -11,15 +11,15 @@ window.local.on('onFirstPageGameLoaded', () => {
     }
   }
 
-  window.spriteAnimationLibrary.addGameLibrary = function() {
+  global.spriteAnimationLibrary.addGameLibrary = function() {
     if(GAME.library.spriteAnimations) {
       return {
         ...GAME.library.spriteAnimations,
-        ...window.spriteAnimationLibrary,
+        ...global.spriteAnimationLibrary,
         addGameLibrary: null
       }
     } else {
-      return window.spriteAnimationLibrary
+      return global.spriteAnimationLibrary
     }
   }
 })

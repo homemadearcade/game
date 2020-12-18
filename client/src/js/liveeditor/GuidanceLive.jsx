@@ -37,7 +37,7 @@ export default class GuidanceLive extends React.Component {
       flags: hero.flags
     }
 
-    window.socket.emit('editHero', { id, ...updatedObjectProps })
+    global.socket.emit('editHero', { id, ...updatedObjectProps })
   }
 
   _renderLibrary(libraryProp, libraryObjectNames) {
@@ -62,62 +62,62 @@ export default class GuidanceLive extends React.Component {
         <DatGui labelWidth="64%" data={this.state} onUpdate={this.handleUpdate}>
           <div className="LiveEditor__title">{'Guidance'}</div>
           <DatFolder title='Creator Library'>
-            {this._renderLibrary('creator', window.homemadearcadeBasicLibrary)}
+            {this._renderLibrary('creator', global.homemadearcadeBasicLibrary)}
           </DatFolder>
           <DatFolder title='Right Click Menu'>
             <DatFolder title='Hero'>
-              {this._renderLibrary('heroMenu', window.heroMenuLibrary)}
+              {this._renderLibrary('heroMenu', global.heroMenuLibrary)}
             </DatFolder>
             <DatFolder title='Objects'>
-              {this._renderLibrary('objectMenu', window.objectMenuLibrary)}
+              {this._renderLibrary('objectMenu', global.objectMenuLibrary)}
             </DatFolder>
             <DatFolder title='World'>
-              {this._renderLibrary('worldMenu', window.worldMenuLibrary)}
+              {this._renderLibrary('worldMenu', global.worldMenuLibrary)}
             </DatFolder>
           </DatFolder>
           <DatFolder title='Sprite Sheets'>
             <DatFolder title='Kenney'>
-              {this._renderLibraryArray('spriteSheets', Object.keys(window.spriteSheetLibrary).filter(name => name.indexOf('kenney') >= 0))}
+              {this._renderLibraryArray('spriteSheets', Object.keys(global.spriteSheetLibrary).filter(name => name.indexOf('kenney') >= 0))}
             </DatFolder>
             <DatFolder title='Oryx'>
-              {this._renderLibraryArray('spriteSheets', Object.keys(window.spriteSheetLibrary).filter(name => name.indexOf('oryx') >= 0))}
+              {this._renderLibraryArray('spriteSheets', Object.keys(global.spriteSheetLibrary).filter(name => name.indexOf('oryx') >= 0))}
             </DatFolder>
             <DatFolder title='Other'>
-              {this._renderLibraryArray('spriteSheets', Object.keys(window.spriteSheetLibrary).filter(name => {
+              {this._renderLibraryArray('spriteSheets', Object.keys(global.spriteSheetLibrary).filter(name => {
                 return name.indexOf('kenney') == -1 && name.indexOf('oryx') == -1
               }))}
             </DatFolder>
           </DatFolder>
           <DatFolder title='Other'>
-            {this._renderLibrary('flags', window.heroFlags)}
+            {this._renderLibrary('flags', global.heroFlags)}
           </DatFolder>
           <DatFolder title='Demo'>
             <DatButton label="Send Explode" onClick={() => {
-                window.socket.emit('objectAnimation', 'explode', objectSelected.id)
+                global.socket.emit('objectAnimation', 'explode', objectSelected.id)
             }}></DatButton>
             <DatButton label="Send Spin Off" onClick={() => {
-                window.socket.emit('objectAnimation', 'spinOff', objectSelected.id)
+                global.socket.emit('objectAnimation', 'spinOff', objectSelected.id)
             }}></DatButton>
             <DatButton label="Send Flash" onClick={() => {
-                window.socket.emit('objectAnimation', 'flash', objectSelected.id)
+                global.socket.emit('objectAnimation', 'flash', objectSelected.id)
             }}></DatButton>
             <DatButton label="Send Quick Trail" onClick={() => {
-                window.socket.emit('objectAnimation', 'quickTrail', objectSelected.id)
+                global.socket.emit('objectAnimation', 'quickTrail', objectSelected.id)
             }}></DatButton>
             <DatButton label="Send Camera Shake" onClick={() => {
-                window.socket.emit('heroCameraEffect', 'cameraShake', objectSelected.id, {})
+                global.socket.emit('heroCameraEffect', 'cameraShake', objectSelected.id, {})
               }}></DatButton>
             <DatButton label="Send Toast" onClick={() => {
-                window.socket.emit('sendNotification', { playerUIHeroId: objectSelected.id, toast: true, text: 'This is a toast' })
+                global.socket.emit('sendNotification', { playerUIHeroId: objectSelected.id, toast: true, text: 'This is a toast' })
               }}></DatButton>
             <DatButton label="Send Chat" onClick={() => {
-                window.socket.emit('sendNotification', { chatId: objectSelected.id, chat: true, text: 'This is a chat' })
+                global.socket.emit('sendNotification', { chatId: objectSelected.id, chat: true, text: 'This is a chat' })
               }}></DatButton>
             <DatButton label="Send Modal" onClick={() => {
-              window.socket.emit('sendNotification', { playerUIHeroId: objectSelected.id, modal: true, text: 'This is the modal text', modalHeader: 'This is the modal header'})
+              global.socket.emit('sendNotification', { playerUIHeroId: objectSelected.id, modal: true, text: 'This is the modal text', modalHeader: 'This is the modal header'})
               }}></DatButton>
             <DatButton label="Send Log" onClick={() => {
-              window.socket.emit('sendNotification', { logRecipientId: objectSelected.id, logAuthorId: HERO.id, log: true, text: 'This is a log'})
+              global.socket.emit('sendNotification', { logRecipientId: objectSelected.id, logAuthorId: HERO.id, log: true, text: 'This is a log'})
               }}></DatButton>
           </DatFolder>
         </DatGui>

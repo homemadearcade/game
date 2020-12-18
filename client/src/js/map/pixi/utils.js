@@ -11,7 +11,7 @@ function setColor(pixiChild, data) {
     if(GAME.world.defaultObjectColor) {
       pixiChild.tint = getHexColor(GAME.world.defaultObjectColor)
     } else {
-      pixiChild.tint = getHexColor(window.defaultObjectColor)
+      pixiChild.tint = getHexColor(global.defaultObjectColor)
     }
   } else {
     pixiChild.tint = 0xFFFFFF
@@ -319,7 +319,7 @@ function getVisibility(pixiChild, gameObject) {
 
   if(PAGE.role.isAdmin) {
     if(!gameObject.tags.emitter) {
-      if(!window.isObjectSelectable(gameObject)) invisible = true
+      if(!global.isObjectSelectable(gameObject)) invisible = true
     }
   }
   // if(invisible) console.log(gameObject.id, gameObject.tags.outline,gameObject.tags.invisible,gameObject.removed,gameObject.tags.potential,gameObject.constructParts)
@@ -395,7 +395,7 @@ function getGameObjectStage(gameObject) {
 
 function updateChatBox(pixiChild, gameObject) {
   let shouldOpenPopover = false
-  window.popoverProperties.forEach((prop) => {
+  global.popoverProperties.forEach((prop) => {
     if(prop.tag) {
       if(gameObject[prop.prop] && gameObject.mod().tags[prop.tag]) shouldOpenPopover = true
     } else {
@@ -403,11 +403,11 @@ function updateChatBox(pixiChild, gameObject) {
     }
   })
 
-  if(shouldOpenPopover && !window.popoverOpen[gameObject.id]) {
+  if(shouldOpenPopover && !global.popoverOpen[gameObject.id]) {
     MAP.openPopover(gameObject)
   }
 
-  if(!shouldOpenPopover && window.popoverOpen[gameObject.id]) {
+  if(!shouldOpenPopover && global.popoverOpen[gameObject.id]) {
     MAP.closePopover(gameObject.id)
   }
 

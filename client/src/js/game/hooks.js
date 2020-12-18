@@ -1,6 +1,6 @@
 import { testCondition } from './conditions.js'
 
-window.hookEvents = {
+global.hookEvents = {
   onObjectInteractable: {},
   // onRespawn: {},
   // onDestroy: {},
@@ -53,7 +53,7 @@ function deleteHook(ownerObject, hookId) {
   delete ownerObject.hooks[hookId]
 }
 
-window.getHooksByEventName = function(ownerObject, eventName) {
+global.getHooksByEventName = function(ownerObject, eventName) {
   const hooks = []
 
   if(!ownerObject.hooks) return []

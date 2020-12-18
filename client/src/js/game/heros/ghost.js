@@ -47,19 +47,19 @@ class Ghost{
     if(!HERO.editingId) {
       HERO.editingId = HERO.id
     }
-    window.addEventListener("keydown", function (e) {
+    global.addEventListener("keydown", function (e) {
       keysDown[e.keyCode] = true
 
       //select left
       if(keysDown['188']){
         GHOST.previousHero()
-        window.local.emit('onZoomChange')
+        global.local.emit('onZoomChange')
       }
 
       //select right
       if(keysDown['190']){
         GHOST.nextHero()
-        window.local.emit('onZoomChange')
+        global.local.emit('onZoomChange')
       }
 
       EDITORUI.ref.forceUpdate()
@@ -68,7 +68,7 @@ class Ghost{
       else PAGE.role.isGhost = false
     }, false)
 
-    window.addEventListener("keyup", function (e) {
+    global.addEventListener("keyup", function (e) {
   	   delete keysDown[e.keyCode]
     }, false)
   }
@@ -106,7 +106,7 @@ class Ghost{
     //   }
     // }
 
-    // if(!HERO.ghost) HERO.ghost = JSON.parse(JSON.stringify(window.defaultHero))
+    // if(!HERO.ghost) HERO.ghost = JSON.parse(JSON.stringify(global.defaultHero))
     // HERO.ghost.color = 'rgba(255,255,255,0.1)'
     // HERO.ghost.arrowKeysBehavior = 'grid'
     // HERO.ghost.id = 'ghost'
@@ -115,4 +115,4 @@ class Ghost{
   }
 }
 
-window.GHOST = new Ghost()
+global.GHOST = new Ghost()

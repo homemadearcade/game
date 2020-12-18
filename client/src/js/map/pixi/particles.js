@@ -37,7 +37,7 @@ function updatePixiEmitterData(pixiChild, gameObject, options) {
   emitter.noRotation = data.noRotation
 
   if(PAGE.role.isHost && emitter.spawnType !== data.spawnType) {
-    window.socket.emit('resetLiveParticle', gameObject.id)
+    global.socket.emit('resetLiveParticle', gameObject.id)
     return
   }
 
@@ -56,7 +56,7 @@ function updatePixiEmitterData(pixiChild, gameObject, options) {
     }
     if(data.spawnCircle && data.spawnCircle.minR) emitter.spawnCircle.minRadius = data.spawnCircle.minR * MAP.camera.multiplier
   } else if(PAGE.role.isHost && usesCircle) {
-    window.socket.emit('resetLiveParticle', gameObject.id)
+    global.socket.emit('resetLiveParticle', gameObject.id)
     return
   }
 
@@ -74,7 +74,7 @@ function updatePixiEmitterData(pixiChild, gameObject, options) {
       if(data.spawnRect && data.spawnRect.y) emitter.spawnRect.y = (data.spawnRect.y * MAP.camera.multiplier)
     }
   } else if(PAGE.role.isHost && usesRect) {
-    window.socket.emit('resetLiveParticle', gameObject.id)
+    global.socket.emit('resetLiveParticle', gameObject.id)
     return
   }
 // particleImages: [Textures]
@@ -88,28 +88,28 @@ function updatePixiEmitterData(pixiChild, gameObject, options) {
   emitter.startScale.value = data.scale.start
   if(emitter.startScale.next) emitter.startScale.next.value = data.scale.end
   else if(PAGE.role.isHost && data.scale.start !== data.scale.end) {
-   window.socket.emit('resetLiveParticle', gameObject.id)
+   global.socket.emit('resetLiveParticle', gameObject.id)
    return
   }
 
   emitter.startAlpha.value = data.alpha.start
   if(emitter.startAlpha.next) emitter.startAlpha.next.value = data.alpha.end
   else if(PAGE.role.isHost && data.alpha.start !== data.alpha.end) {
-   window.socket.emit('resetLiveParticle', gameObject.id)
+   global.socket.emit('resetLiveParticle', gameObject.id)
    return
   }
 
   emitter.startSpeed.value = data.speed.start
   if(emitter.startSpeed.next) emitter.startSpeed.next.value = data.speed.end
   else if(PAGE.role.isHost && data.speed.start !== data.speed.end && data.acceleration.x === 0 && data.acceleration.y === 0) {
-   window.socket.emit('resetLiveParticle', gameObject.id)
+   global.socket.emit('resetLiveParticle', gameObject.id)
    return
   }
 
   emitter.startColor.value = tinycolor(data.color.start).toRgb()
   if(emitter.startColor.next) emitter.startColor.next.value = tinycolor(data.color.end).toRgb()
   else if(PAGE.role.isHost && !data.matchObjectColor && data.color.start !== data.color.end) {
-   window.socket.emit('resetLiveParticle', gameObject.id)
+   global.socket.emit('resetLiveParticle', gameObject.id)
    return
   }
 // startColor: PropertyNode
@@ -124,15 +124,15 @@ function createDefaultEmitter(stage, gameObject, emitterDataName, options) {
   let particleData
   if(emitterDataName === 'live') {
     particleData = {..._.cloneDeep(options), pos: startPos}
-  } if(window.particleEmitterLibrary[emitterDataName]){
-    particleData = {..._.cloneDeep(window.particleEmitterLibrary[emitterDataName]), pos: startPos}
+  } if(global.particleEmitterLibrary[emitterDataName]){
+    particleData = {..._.cloneDeep(global.particleEmitterLibrary[emitterDataName]), pos: startPos}
   }
   if(GAME.library.animations[emitterDataName]){
     particleData = {..._.cloneDeep(GAME.library.animations[emitterDataName]), pos: startPos}
   }
 
   if(options.matchObjectColor) {
-    let color = gameObject.color || GAME.world.defaultObjectColor || window.defaultObjectColor
+    let color = gameObject.color || GAME.world.defaultObjectColor || global.defaultObjectColor
     particleData.color.start = color
     // if(emitterDataName == 'trail') {
     //   particleData.color.end = lighten(color)
@@ -172,7 +172,7 @@ function createDefaultEmitter(stage, gameObject, emitterDataName, options) {
     // particleData.scale.minimumScaleMultiplier = particleData.scale.minimumScaleMultiplier * MAP.camera.multiplier
   }
 
-  window.giveEmitterDataSpawnCircleOrRect(particleData)
+  global.giveEmitterDataSpawnCircleOrRect(particleData)
 
   var emitter = new pixiParticles.Emitter(
     stage,

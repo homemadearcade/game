@@ -16,9 +16,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import modals from './modals.js';
 import keycode from 'keycode'
 
-window.readyForControlsToast = true
+global.readyForControlsToast = true
 
-window.currentToasts = []
+global.currentToasts = []
 
 function getToastTextData(text) {
   let parenthesisIndex = text.indexOf('(')
@@ -99,7 +99,7 @@ export default class Root extends React.Component {
   onSendNotification = (data) => {
     if(data.toast) {
       let currentToast
-      window.currentToasts.forEach((toast) => {
+      global.currentToasts.forEach((toast) => {
         const text = getToastTextData(toast.text)
         if(data.text === text) currentToast = toast
       })
@@ -118,30 +118,30 @@ export default class Root extends React.Component {
         newestOnTop: true,
         closeOnClick: data.duration <= 0,
         onClose: (props) => {
-          window.currentToasts = window.currentToasts.filter((toast) => {
+          global.currentToasts = global.currentToasts.filter((toast) => {
             return toast.id !== toastId
           })
         }
       }
       if(data.viewControlsOnClick) {
         // sometimes we edit the controls a lot... so we dont show if theres too many. We need a... id control system for this
-        if(!window.readyForControlsToast) return
+        if(!global.readyForControlsToast) return
         toastInfo.onClick = () => {
-          AUDIO.play(GAME.theme.audio.onPlayerUIMenuOpen || window.defaultAudioTheme.onPlayerUIMenuOpen, { volume: 0.6 })
+          AUDIO.play(GAME.theme.audio.onPlayerUIMenuOpen || global.defaultAudioTheme.onPlayerUIMenuOpen, { volume: 0.6 })
           this.setState({
             showControlsInfoModal: true
           })
         }
-        window.readyForControlsToast = false
+        global.readyForControlsToast = false
         setTimeout(() => {
-          window.readyForControlsToast = true
+          global.readyForControlsToast = true
         }, 4000)
       }
 
       let toastId = toast(data.text, toastInfo)
-      // AUDIO.play(GAME.theme.audio.onPlayerUIToast || window.defaultAudioTheme.onPlayerUIToast, { volume: 1 })
+      // AUDIO.play(GAME.theme.audio.onPlayerUIToast || global.defaultAudioTheme.onPlayerUIToast, { volume: 1 })
 
-      window.currentToasts.push({
+      global.currentToasts.push({
         id: toastId,
         text: data.text,
         count: 1,
@@ -164,7 +164,7 @@ export default class Root extends React.Component {
   }
 
   showInventoryModal = () => {
-    AUDIO.play(GAME.theme.audio.onPlayerUIMenuOpen || window.defaultAudioTheme.onPlayerUIMenuOpen, { volume: 0.6 })
+    AUDIO.play(GAME.theme.audio.onPlayerUIMenuOpen || global.defaultAudioTheme.onPlayerUIMenuOpen, { volume: 0.6 })
     this.setState({
       showInventoryModal: true,
       showControlsInfoModal: false,
@@ -174,7 +174,7 @@ export default class Root extends React.Component {
 
   _renderFontPreLoad() {
     return <div style={{position: 'fixed', opacity: 0}}>
-      {window.titleFontStyles.map((font) => {
+      {global.titleFontStyles.map((font) => {
         return <div style={{fontFamily: font.fontFamily}}>ABCDEFGHIJKL</div>
       })}
     </div>
@@ -216,11 +216,11 @@ export default class Root extends React.Component {
           hero={hero}
           onClose={() => this.setState({ showHeroMenuModal: false })}
           onOpenControlsInfoModal={() => {
-            AUDIO.play(GAME.theme.audio.onPlayerUIMenuOpen || window.defaultAudioTheme.onPlayerUIMenuOpen, { volume: 0.6 })
+            AUDIO.play(GAME.theme.audio.onPlayerUIMenuOpen || global.defaultAudioTheme.onPlayerUIMenuOpen, { volume: 0.6 })
             this.setState({ showControlsInfoModal: true })
           }}
           onOpenInventoryModal={() => {
-            AUDIO.play(GAME.theme.audio.onPlayerUIMenuOpen || window.defaultAudioTheme.onPlayerUIMenuOpen, { volume: 0.6 })
+            AUDIO.play(GAME.theme.audio.onPlayerUIMenuOpen || global.defaultAudioTheme.onPlayerUIMenuOpen, { volume: 0.6 })
             this.setState({ showInventoryModal: true })
           }}
         />}
@@ -237,7 +237,7 @@ export default class Root extends React.Component {
         {toastContainer}
         {this._renderGameLog()}
         {!PAGE.role.isArcadeMode && <Toolbar/>}
-        {hero.flags.showBrandImageScreen && <div className="Cutscene" style={{backgroundImage: "url('"+window.HomemadeArcadeImageAssetURL + 'homemade-arcade-play.png'+"')" }}>
+        {hero.flags.showBrandImageScreen && <div className="Cutscene" style={{backgroundImage: "url('"+global.HomemadeArcadeImageAssetURL + 'homemade-arcade-play.png'+"')" }}>
         </div>}
         <ControlsHUD/>
       </div>
@@ -352,10 +352,10 @@ export default class Root extends React.Component {
       if(this.state.showHeroMenuModal) {
         this.setState({ showHeroMenuModal: false })
       } else if(this._isModalOpen()){
-        AUDIO.play(GAME.theme.audio.onPlayerUIMenuOpen || window.defaultAudioTheme.onPlayerUIMenuOpen, { volume: 0.6 })
+        AUDIO.play(GAME.theme.audio.onPlayerUIMenuOpen || global.defaultAudioTheme.onPlayerUIMenuOpen, { volume: 0.6 })
         this.setState({ showHeroMenuModal: true, showInventoryModal: false, showControlsInfoModal: false })
       } else {
-        AUDIO.play(GAME.theme.audio.onPlayerUIMenuOpen || window.defaultAudioTheme.onPlayerUIMenuOpen, { volume: 0.6 })
+        AUDIO.play(GAME.theme.audio.onPlayerUIMenuOpen || global.defaultAudioTheme.onPlayerUIMenuOpen, { volume: 0.6 })
         this.setState({ showHeroMenuModal: true })
       }
     }

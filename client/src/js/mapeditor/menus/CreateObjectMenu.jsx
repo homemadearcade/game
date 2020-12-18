@@ -10,7 +10,7 @@ export default class CreateObject extends React.Component {
       const { objectSelected } = this.props
 
       if(key === 'select-from-library') {
-        const library = window.objectLibrary.addGameLibrary()
+        const library = global.objectLibrary.addGameLibrary()
         modals.openSelectFromList('Select an object', Object.keys(library), async (result) => {
           const id = result.value
           if(!id) return
@@ -48,25 +48,25 @@ export default class CreateObject extends React.Component {
         OBJECTS.create({...objectSelected, popoverText: 'Information', tags: {invisible: true}})
       }
       if(key === 'create-roof') {
-        OBJECTS.create({...objectSelected, ...window.objectLibrary.roof})
+        OBJECTS.create({...objectSelected, ...global.objectLibrary.roof})
       }
       if(key === 'create-tiling-sprite') {
         OBJECTS.create({...objectSelected, tags: { tilingSprite: true } })
       }
       if(key === 'create-light') {
-        OBJECTS.create({...objectSelected, ...window.objectLibrary.light})
+        OBJECTS.create({...objectSelected, ...global.objectLibrary.light})
       }
       if(key === 'create-resource') {
-        OBJECTS.create({...objectSelected, ...window.objectLibrary.resource})
+        OBJECTS.create({...objectSelected, ...global.objectLibrary.resource})
       }
       if(key === 'create-resourceZone') {
-        OBJECTS.create({...objectSelected, ...window.objectLibrary.resourceZone})
+        OBJECTS.create({...objectSelected, ...global.objectLibrary.resourceZone})
       }
       if(key === 'create-spawnZone') {
-        OBJECTS.create({...objectSelected, ...window.objectLibrary.spawnZone})
+        OBJECTS.create({...objectSelected, ...global.objectLibrary.spawnZone})
       }
       if(key === 'create-chest') {
-        OBJECTS.create({...objectSelected, ...window.objectLibrary.chest})
+        OBJECTS.create({...objectSelected, ...global.objectLibrary.chest})
       }
 
     }

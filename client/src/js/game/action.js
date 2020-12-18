@@ -72,7 +72,7 @@ function swingBlade({ swinger, animationArea, hitBoxes, direction }) {
     }
   }, 100)
 
-  window.emitGameEvent('onSpriteAnimation', baseHitBox, 'sword1', { followObject: true })
+  global.emitGameEvent('onSpriteAnimation', baseHitBox, 'sword1', { followObject: true })
 }
 
 function closestObjectBehavior({ shooter, actionProps, direction, behavior, delta }) {
@@ -134,7 +134,7 @@ function closestObjectBehavior({ shooter, actionProps, direction, behavior, delt
 
 function createBullet({ shooter, actionProps, direction }) {
   let shot = {
-    id: 'bullet-' + window.uniqueID(),
+    id: 'bullet-' + global.uniqueID(),
     width: 4,
     height: 4,
     ownerId: shooter.ownerId || shooter.id,

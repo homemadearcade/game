@@ -13,7 +13,7 @@ export default class SelectSubObjectMenu extends React.Component{
       const { objectSelected, selectSubObject } = this.props;
 
       if(key === 'add-new-subobject') {
-        const library = window.subObjectLibrary.addGameLibrary()
+        const library = global.subObjectLibrary.addGameLibrary()
         modals.openSelectFromList('Select a sub object', Object.keys(library), async (result) => {
           const id = result.value
           if(!id) return
@@ -30,7 +30,7 @@ export default class SelectSubObjectMenu extends React.Component{
 
           if(name) {
             const copy = Object.replaceAll(library[id], id, name, true, true)
-            window.socket.emit('addSubObject', objectSelected, copy, name)
+            global.socket.emit('addSubObject', objectSelected, copy, name)
           }
 
         })
@@ -43,7 +43,7 @@ export default class SelectSubObjectMenu extends React.Component{
 
       if(key.indexOf(deleteSubObjectPrefix) === 0) {
         const subObjectName = key.substr(deleteSubObjectPrefix.length)
-        window.socket.emit('deleteSubObject', objectSelected, subObjectName)
+        global.socket.emit('deleteSubObject', objectSelected, subObjectName)
       }
     }
   }

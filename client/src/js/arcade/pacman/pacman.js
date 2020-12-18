@@ -21,7 +21,7 @@ export default class CustomGame{
     GAME.gameState.paused = false
     GAME.gameState.started = true
     GAME.gameState.startTime = Date.now()
-    window.resetSpawnAreasAndObjects()
+    global.resetSpawnAreasAndObjects()
     HERO.respawn()
     GAME.heros[HERO.id].lives = 3
   }
@@ -41,7 +41,7 @@ export default class CustomGame{
   onUpdateHero(hero, keysDown, delta) {
     if(GAME.gameState.paused) {
       if(32 in keysDown) {
-        window.socket.emit('startGame')
+        global.socket.emit('startGame')
       }
     }
 
@@ -67,15 +67,15 @@ export default class CustomGame{
       const { minX, maxX, minY, maxY, centerY, centerX, cameraHeight, cameraWidth } = HERO.getViewBoundaries(GAME.heros[HERO.id])
 
       // ctx.fillStyle = 'rgba(0,0,0,0.8)';
-      // ctx.fillRect((minX/window.camera.multiplier - window.camera.x), (minY/window.camera.multiplier - window.camera.y), cameraWidth/window.camera.multiplier, cameraHeight/window.camera.multiplier);
+      // ctx.fillRect((minX/global.camera.multiplier - global.camera.x), (minY/global.camera.multiplier - global.camera.y), cameraWidth/global.camera.multiplier, cameraHeight/global.camera.multiplier);
       //
       // // wrapText(ctx, text, x, y, maxWidth, lineHeight) {
-      // // (minX/window.camera.multiplier - window.camera.x), (minY/window.camera.multiplier - window.camera.y), cameraWidth, cameraHeight
-      // ctx.font =`${40/window.camera.multiplier}pt Arial`
+      // // (minX/global.camera.multiplier - global.camera.x), (minY/global.camera.multiplier - global.camera.y), cameraWidth, cameraHeight
+      // ctx.font =`${40/global.camera.multiplier}pt Arial`
       // ctx.fillStyle ='rgba(255,255,255, 0.8)';
       // let text = 'Press space to start'
       // let metrics = ctx.measureText(text)
-      // window.wrapText(ctx, text, centerX/window.camera.multiplier - window.camera.x - (metrics.width/2), centerY/window.camera.multiplier - window.camera.y, 600/window.camera.multiplier, 80/window.camera.multiplier)
+      // global.wrapText(ctx, text, centerX/global.camera.multiplier - global.camera.x - (metrics.width/2), centerY/global.camera.multiplier - global.camera.y, 600/global.camera.multiplier, 80/global.camera.multiplier)
 
       let multiplier = ((4000 - (GAME.heros[HERO.id].animationZoomMultiplier || 0))/4000)
       // since I wanted the growth to occur very fast quickly, I had to decrease the value of the multiplier exponentialy ( it would turn into a decimal... oh god dont delte took me forever)

@@ -59,7 +59,7 @@ export default class GameLogs extends React.Component{
   submit = () => {
     if(this.state.chat == '') return
 
-    window.socket.emit('sendNotification', { logAuthorId: HERO.id, chatId: HERO.id, text: this.state.chat, chat: true, log: true })
+    global.socket.emit('sendNotification', { logAuthorId: HERO.id, chatId: HERO.id, text: this.state.chat, chat: true, log: true })
 
     this.setState({
       chat: '',

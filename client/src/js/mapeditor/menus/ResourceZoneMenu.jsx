@@ -27,7 +27,7 @@ export default class ResourceZoneMenu extends React.Component{
           if(result && result.value) {
             let resourceTags = objectSelected.resourceTags
             if(!resourceTags) resourceTags = {}
-            resourceTags[Object.keys(window.allTags)[result.value]] = true
+            resourceTags[Object.keys(global.allTags)[result.value]] = true
             networkEditObject(objectSelected, { resourceTags })
           }
         })

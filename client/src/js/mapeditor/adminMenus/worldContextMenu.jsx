@@ -16,19 +16,19 @@ export default class WorldContextMenu extends React.Component{
       }
 
       if(key === 'toggle-pause-game') {
-        window.socket.emit('editGameState', { paused: !GAME.gameState.paused })
+        global.socket.emit('editGameState', { paused: !GAME.gameState.paused })
       }
 
       if(key === 'toggle-start-game') {
         if(GAME.gameState.started) {
-          window.socket.emit('stopGame')
+          global.socket.emit('stopGame')
         } else {
-          window.socket.emit('startGame')
+          global.socket.emit('startGame')
         }
       }
 
       if(key === 'set-world-respawn-point') {
-        window.socket.emit('updateWorld', {worldSpawnPointX: objectSelected.x, worldSpawnPointY:  objectSelected.y})
+        global.socket.emit('updateWorld', {worldSpawnPointX: objectSelected.x, worldSpawnPointY:  objectSelected.y})
       }
 
       if(key === 'select-world-background-color') {

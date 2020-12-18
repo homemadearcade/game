@@ -67,7 +67,7 @@ export default class HeroLive extends React.Component {
     if (PAGE.role.isHost) {
       Object.assign(OBJECTS.getObjectOrHeroById(id), updatedObjectProps)
     } else {
-      window.socket.emit('editHero', { id, ...updatedObjectProps })
+      global.socket.emit('editHero', { id, ...updatedObjectProps })
     }
   }
 
@@ -109,20 +109,20 @@ export default class HeroLive extends React.Component {
               <DatBoolean path='quakeIsPowerWave' label="Power Wave"/>
               <DatNumber path='quakeSpeed' label='Speed' min={0} max={1000} step={1} />
               <DatButton label="Send Quake" onClick={() => {
-                  window.socket.emit('objectAnimation', 'quake', objectSelected.id, { tags: {}, color: this.state.animationColor, powerWave: this.state.quakeIsPowerWave, speed: this.state.quakeSpeed })
+                  global.socket.emit('objectAnimation', 'quake', objectSelected.id, { tags: {}, color: this.state.animationColor, powerWave: this.state.quakeIsPowerWave, speed: this.state.quakeSpeed })
                 }}></DatButton>
             </DatFolder>
             <DatButton label="Send Explode" onClick={() => {
-                window.socket.emit('objectAnimation', 'explode', objectSelected.id)
+                global.socket.emit('objectAnimation', 'explode', objectSelected.id)
             }}></DatButton>
             <DatButton label="Send Spin Off" onClick={() => {
-                window.socket.emit('objectAnimation', 'spinOff', objectSelected.id)
+                global.socket.emit('objectAnimation', 'spinOff', objectSelected.id)
             }}></DatButton>
             <DatButton label="Send Flash" onClick={() => {
-                window.socket.emit('objectAnimation', 'flash', objectSelected.id)
+                global.socket.emit('objectAnimation', 'flash', objectSelected.id)
             }}></DatButton>
             <DatButton label="Send Quick Trail" onClick={() => {
-                window.socket.emit('objectAnimation', 'quickTrail', objectSelected.id)
+                global.socket.emit('objectAnimation', 'quickTrail', objectSelected.id)
             }}></DatButton>
           </DatFolder>
           <DatFolder title='Camera'>
@@ -137,7 +137,7 @@ export default class HeroLive extends React.Component {
               <DatNumber path='cameraShakeFrequency' label='Frequency' min={0} max={1000} step={1} />
               <DatNumber path='cameraShakeAmplitude' label='Amplitude' min={0} max={400} step={1} />
               <DatButton label="Send Camera Shake" onClick={() => {
-                  window.socket.emit('heroCameraEffect', 'cameraShake', objectSelected.id, { amplitude: this.state.cameraShakeAmplitude, frequency: this.state.cameraShakeFrequency, duration: this.state.cameraShakeDuration })
+                  global.socket.emit('heroCameraEffect', 'cameraShake', objectSelected.id, { amplitude: this.state.cameraShakeAmplitude, frequency: this.state.cameraShakeFrequency, duration: this.state.cameraShakeDuration })
                 }}></DatButton>
             </DatFolder>
           </DatFolder>

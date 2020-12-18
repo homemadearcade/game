@@ -22,7 +22,7 @@ export default class ToolbarButton extends React.Component {
         style={{backgroundColor}}
         onMouseEnter={() => {
           if(cursorIcon) {
-            window.setFontAwesomeCursor(cursorIcon, "#FFF")
+            global.setFontAwesomeCursor(cursorIcon, "#FFF")
           }
         }} onMouseLeave={() => {
           if(cursorIcon) {

@@ -1,7 +1,7 @@
-window.radianCircle = 6.28319
+global.radianCircle = 6.28319
 
-window.local.on('onFirstPageGameLoaded', () => {
-  window.subObjectLibrary = {
+global.local.on('onFirstPageGameLoaded', () => {
+  global.subObjectLibrary = {
     potential: {
       relativeWidth: 0,
       relativeHeight: 0,
@@ -139,7 +139,7 @@ window.local.on('onFirstPageGameLoaded', () => {
             "heroDialogueSet": 'Present Evidence',
             heroEffectProps: { effectLibrarySubObject: "evidenceChain2"},
             heroDialogue: [{
-              ..._.cloneDeep(window.defaultDialogue),
+              ..._.cloneDeep(global.defaultDialogue),
               text: "You presented evidence 1"
             }],
             triggerPool: 1,
@@ -172,7 +172,7 @@ window.local.on('onFirstPageGameLoaded', () => {
             "heroEffect": "addLibrarySubObject",
             heroEffectProps: { effectLibrarySubObject: "evidenceChain3"},
             heroDialogue: [{
-              ..._.cloneDeep(window.defaultDialogue),
+              ..._.cloneDeep(global.defaultDialogue),
               text: "You presented evidence 2"
             }],
             triggerPool: 1,
@@ -209,7 +209,7 @@ window.local.on('onFirstPageGameLoaded', () => {
       actionProps: {
         debounceTime: 1.2,
         shootVelocity: 600,
-        // shootRadius: window.radianCircle,
+        // shootRadius: global.radianCircle,
         shootBulletsPerRound: 1,
         bulletJSON: {
           tags: {
@@ -235,7 +235,7 @@ window.local.on('onFirstPageGameLoaded', () => {
       actionProps: {
         debounceTime: 1.2,
         shootVelocity: 600,
-        // shootRadius: window.radianCircle,
+        // shootRadius: global.radianCircle,
         shootBulletsPerRound: 1,
         bulletJSON: {
           tags: {
@@ -263,7 +263,7 @@ window.local.on('onFirstPageGameLoaded', () => {
       actionProps: {
         debounceTime: 1.2,
         shootVelocity: 600,
-        // shootRadius: window.radianCircle,
+        // shootRadius: global.radianCircle,
         shootBulletsPerRound: 1,
         bulletJSON: {
           tags: {
@@ -290,7 +290,7 @@ window.local.on('onFirstPageGameLoaded', () => {
       tags: { pickupable: true, pickupOnHeroInteract: true, equipOnPickup: true },
       actionButtonBehavior: 'mod',
       actionProps: {
-        effectJSON: window.modLibrary.mario.effectJSON,
+        effectJSON: global.modLibrary.mario.effectJSON,
         revertable: true
       },
       actionState: {}
@@ -382,7 +382,7 @@ window.local.on('onFirstPageGameLoaded', () => {
       actionButtonBehavior: 'mod',
       actionButtonBehaviorLabel: 'Spy',
       actionProps: {
-        effectJSON: window.modLibrary.seeThroughForeground.effectJSON,
+        effectJSON: global.modLibrary.seeThroughForeground.effectJSON,
         revertable: true
       },
       actionState: {}
@@ -394,7 +394,7 @@ window.local.on('onFirstPageGameLoaded', () => {
       actionButtonBehavior: 'mod',
       actionButtonBehaviorLabel: 'Uncover',
       actionProps: {
-        effectJSON: window.modLibrary.seeHidden.effectJSON,
+        effectJSON: global.modLibrary.seeHidden.effectJSON,
         revertable: true
       },
       actionState: {}
@@ -416,15 +416,15 @@ window.local.on('onFirstPageGameLoaded', () => {
     }
   }
 
-  window.subObjectLibrary.addGameLibrary = function() {
+  global.subObjectLibrary.addGameLibrary = function() {
     if(GAME.library.subObject) {
       return {
         ...GAME.library.subObject,
-        ...window.subObjectLibrary,
+        ...global.subObjectLibrary,
         addGameLibrary: null
       }
     } else {
-      return window.subObjectLibrary
+      return global.subObjectLibrary
     }
   }
 

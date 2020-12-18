@@ -5,19 +5,19 @@ import Select from 'react-select';
 import modals from './modals';
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
-window.defaultSequence = {
+global.defaultSequence = {
   items: [],
   pauseGame: false,
-  id: 'sequence-' + window.uniqueID(),
+  id: 'sequence-' + global.uniqueID(),
 }
 
-window.reactSelectStyle = {control: styles => ({ ...styles, backgroundColor: '#19191a', color: 'white', zIndex: 10 }),
+global.reactSelectStyle = {control: styles => ({ ...styles, backgroundColor: '#19191a', color: 'white', zIndex: 10 }),
 option: styles => ({ ...styles, backgroundColor: '#19191a', color: 'white', zIndex: 10 }),
 input: styles => ({ ...styles, backgroundColor: '#19191a', color: 'white', borderColor: 'black', zIndex: 10 }),
 singleValue: styles => ({ ...styles, backgroundColor: '#19191a', color: 'white', zIndex: 10 })
 }
 
-window.defaultSequenceCondition =  {
+global.defaultSequenceCondition =  {
   conditionJSON: {},
   conditionType: 'matchJSON', // 'insideOfObjectTag', 'duringTime', 'hasTag', 'hasSubObjectWithName',
   conditionValue: '',
@@ -31,7 +31,7 @@ window.defaultSequenceCondition =  {
   failNext: 'sequential'
 }
 
-window.defaultSequenceWait = {
+global.defaultSequenceWait = {
   conditionType: 'onTimerEnd',
   conditionValue: '',
   conditionEventName: '',
@@ -42,13 +42,13 @@ window.defaultSequenceWait = {
   next: ''
 }
 
-window.defaultSequenceChoice = {
+global.defaultSequenceChoice = {
   options: [
     { text: '', next: 'sequential' }
   ]
 }
 
-window.defaultSequenceEffect = {
+global.defaultSequenceEffect = {
   effectName: '',
   effectJSON: {},
   effectValue: '',
@@ -60,7 +60,7 @@ window.defaultSequenceEffect = {
 }
 
 
-window.defaultSequenceTrigger = {
+global.defaultSequenceTrigger = {
   "sequenceType": "sequenceTrigger",
   "effector": "ownerObject",
   "mainObjectTag": "",
@@ -71,7 +71,7 @@ window.defaultSequenceTrigger = {
   "eventThreshold": -1
 }
 
-window.reactSelectTheme = theme => ({
+global.reactSelectTheme = theme => ({
       ...theme,
       borderRadius: 0,
       zIndex: 10,
@@ -81,7 +81,7 @@ window.reactSelectTheme = theme => ({
     })
 
 const alphaarray = "a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,a1,b1,c1,d1,e1,f1,g1,h1,i1,j1,k1,l1,m1,n1,o1,p1,q1,r1,s1,t1,u1,v1,w1,x1,y1,z1,a2,b2,c2,d2,e2,f2,g2,h2,i2,j2,k2,l2,m2,n2,o2,p2,q2,r2,s2,t2,u2,v2,w2,x2,y2,z2,a3,b3,c3,d3,e3,f3,g3,h3,i3,j3,k3,l3,m3,n3,o3,p3,q3,r3,s3,t3,u3,v3,w3,x3,y3,z3".split(",")
-window.alphaarray = alphaarray
+global.alphaarray = alphaarray
 
 const typeOptions = [
   { value: 'sequenceDialogue', label: 'Dialogue' },
@@ -168,33 +168,33 @@ export default class SequenceEditor extends React.Component {
     const sequenceItem = {id: this._findNextId(), sequenceType: selectedType }
 
     if(selectedType === 'sequenceDialogue') {
-      sequenceItem.effectJSON = [_.cloneDeep(window.defaultDialogue)]
+      sequenceItem.effectJSON = [_.cloneDeep(global.defaultDialogue)]
       sequenceItem.next = 'sequential'
     }
     if(selectedType === 'sequenceCondition') {
-      Object.assign(sequenceItem, window.defaultSequenceCondition)
+      Object.assign(sequenceItem, global.defaultSequenceCondition)
     }
     if(selectedType === 'sequenceChoice') {
-      Object.assign(sequenceItem, window.defaultSequenceChoice)
+      Object.assign(sequenceItem, global.defaultSequenceChoice)
     }
     if(selectedType === 'sequenceEffect') {
-      Object.assign(sequenceItem, window.defaultSequenceEffect)
+      Object.assign(sequenceItem, global.defaultSequenceEffect)
       sequenceItem.next = 'sequential'
     }
     if(selectedType === 'sequenceNotification') {
-      Object.assign(sequenceItem, window.defaultSequenceNotification)
+      Object.assign(sequenceItem, global.defaultSequenceNotification)
       sequenceItem.next = 'sequential'
     }
     if(selectedType === 'sequenceWait') {
-      Object.assign(sequenceItem, window.defaultSequenceWait)
+      Object.assign(sequenceItem, global.defaultSequenceWait)
       sequenceItem.next = 'sequential'
     }
     if(selectedType === 'sequenceCutscene') {
-      Object.assign(sequenceItem, window.defaultSequenceCutscene)
+      Object.assign(sequenceItem, global.defaultSequenceCutscene)
       sequenceItem.next = 'sequential'
     }
     if(selectedType === 'sequenceGoal') {
-      Object.assign(sequenceItem, window.defaultSequenceGoal)
+      Object.assign(sequenceItem, global.defaultSequenceGoal)
       sequenceItem.next = 'sequential'
     }
 
@@ -250,11 +250,11 @@ export default class SequenceEditor extends React.Component {
   newSequence(id) {
     if(typeof id == 'string') {
       this.setState({
-        sequence: {...JSON.parse(JSON.stringify(window.defaultSequence)), id}
+        sequence: {...JSON.parse(JSON.stringify(global.defaultSequence)), id}
       })
     } else {
       this.setState({
-        sequence: JSON.parse(JSON.stringify(window.defaultSequence))
+        sequence: JSON.parse(JSON.stringify(global.defaultSequence))
       })
     }
 
@@ -274,13 +274,13 @@ export default class SequenceEditor extends React.Component {
     })
 
     delete GAME.library.sequences[idToDelete]
-    window.socket.emit('updateLibrary', { sequences: GAME.library.sequences })
+    global.socket.emit('updateLibrary', { sequences: GAME.library.sequences })
   }
 
   onAddedSequence(sequence) {
     const { sequenceIdList } = this.state
 
-    window.socket.emit('updateLibrary', { sequences: GAME.library.sequences })
+    global.socket.emit('updateLibrary', { sequences: GAME.library.sequences })
 
     if(sequenceIdList.indexOf(sequence.id) == -1) {
       const newSequenceIdList = sequenceIdList.slice()
@@ -376,7 +376,7 @@ export default class SequenceEditor extends React.Component {
             <div style={{width: '150px', display: 'inline-block'}}><Select
               onChange={this._selectType}
               options={typeOptions}
-              styles={window.reactSelectStyle}/></div>
+              styles={global.reactSelectStyle}/></div>
             <i className="Manager__button fa fas fa-plus" onClick={this._onAddItem}></i>
           </div>
         </div>

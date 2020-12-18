@@ -42,9 +42,9 @@ export default class DescriptorSelect extends React.Component{
         isMulti
         value={Object.keys(descriptors).map((desc) => { return { value: desc, label: desc} })}
         onChange={this._onChange}
-        options={Object.keys(window.allDescriptors).map(eventName => { return { value: eventName, label: eventName}})}
-        styles={window.reactSelectStyle}
-        theme={window.reactSelectTheme}/>
+        options={Object.keys(global.allDescriptors).map(eventName => { return { value: eventName, label: eventName}})}
+        styles={global.reactSelectStyle}
+        theme={global.reactSelectTheme}/>
     </div>
   }
 

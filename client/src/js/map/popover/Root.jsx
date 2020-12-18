@@ -2,7 +2,7 @@ import React from 'react'
 import { Line } from 'rc-progress'
 import PixiMapSprite from '../../components/PixiMapSprite.jsx'
 
-window.popoverProperties = [
+global.popoverProperties = [
   { prop: '_timeUntilDestroyed', tag: 'popCountDownTimer'},
   'chat',
   { prop: 'count', tag: 'popCount'},
@@ -10,7 +10,7 @@ window.popoverProperties = [
   'popoverText'
 ]
 
-window.popoverOpen = {}
+global.popoverOpen = {}
 
 export default class Popover extends React.Component {
   constructor(props) {
@@ -68,7 +68,7 @@ export default class Popover extends React.Component {
     }
 
     if(object.resourceTags) {
-      let soName = window.getResourceSubObjectNames(object, object)
+      let soName = global.getResourceSubObjectNames(object, object)
       if(soName) {
         let so = object.subObjects[soName]
         render.push(<div className="Popover__resource">

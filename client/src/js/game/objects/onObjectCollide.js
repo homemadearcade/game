@@ -21,7 +21,7 @@ export default function onObjectCollide(agent, collider, result) {
 
   // if(collider.mod().tags['objectUpdate'] && collider.objectUpdate && shouldEffect(po.gameObject, collider)) {
   //   if(agent.lastHeroUpdateId !== collider.id) {
-  //     window.mergeDeep(agent, {...collider.objectUpdate})
+  //     global.mergeDeep(agent, {...collider.objectUpdate})
   //     agent.lastHeroUpdateId = collider.id
   //   }
   // } else {

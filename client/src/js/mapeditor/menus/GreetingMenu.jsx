@@ -29,7 +29,7 @@ export default class GreetingMenu extends React.Component{
         })
         if(!dialogue) return
 
-        objectSelected.heroDialogueSets['greeting'].dialogue.push({...window.greetingDialogue, text: dialogue})
+        objectSelected.heroDialogueSets['greeting'].dialogue.push({...global.greetingDialogue, text: dialogue})
         networkEditObject(objectSelected, {heroDialogueSets: objectSelected.heroDialogueSets })
         return
       }

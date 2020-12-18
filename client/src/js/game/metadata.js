@@ -1,5 +1,5 @@
 function setDefault() {
-  window.defaultMetadata = {
+  global.defaultMetadata = {
     featuredImage: 'gameplacholder.png',
     authorUserId: null,
     description: '',

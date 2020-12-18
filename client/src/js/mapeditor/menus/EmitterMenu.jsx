@@ -64,7 +64,7 @@ export default class EmitterMenu extends React.Component{
       }
 
       if(key === 'reset-emitters') {
-        window.socket.emit('resetLiveParticle', objectSelected.id)
+        global.socket.emit('resetLiveParticle', objectSelected.id)
       }
     }
   }

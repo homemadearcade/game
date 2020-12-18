@@ -60,7 +60,7 @@ class Game{
     dayNightCycle.setDefault()
     theme.setDefault()
 
-    this.theme = _.clone(window.defaultTheme)
+    this.theme = _.clone(global.defaultTheme)
 
     triggers.onPlayerIdentified()
     input.onPlayerIdentified()
@@ -95,7 +95,7 @@ class Game{
           GAME.heroList.forEach(hero => {
             if(hero.flags.paused) return
             if(GAME.heroInputs[hero.id]) input.onUpdate(hero, GAME.heroInputs[hero.id], delta)
-            window.local.emit('onUpdateHero', hero, GAME.heroInputs[hero.id], delta)
+            global.local.emit('onUpdateHero', hero, GAME.heroInputs[hero.id], delta)
             PHYSICS.updatePosition(hero, delta)
           })
 
@@ -113,7 +113,7 @@ class Game{
             if(object.mod().tags.destroySoon || object.mod().tags.destroyQuickly || object.mod().tags.destroyEventually) {
               OBJECTS.deleteObject(object)
             }
-            window.local.emit('onUpdateObject', object, delta)
+            global.local.emit('onUpdateObject', object, delta)
           })
           timeouts.onUpdate(delta)
           GAME.loadActiveMods()
@@ -144,7 +144,7 @@ class Game{
         GAME.heroList.forEach(hero => {
           if(hero.flags.paused) return
           if(GAME.heroInputs[hero.id]) input.onUpdate(hero, GAME.heroInputs[hero.id], delta)
-          window.local.emit('onUpdateHero', hero, GAME.heroInputs[hero.id], delta)
+          global.local.emit('onUpdateHero', hero, GAME.heroInputs[hero.id], delta)
         })
         //////////////////////////////
         //// OBJECTS
@@ -152,12 +152,12 @@ class Game{
         GAME.resetPaths = false
         GAME.objects.forEach((object) => {
           if(object.mod().removed) {
-            if(window.popoverOpen[object.id]) {
+            if(global.popoverOpen[object.id]) {
               MAP.closePopover(object.id)
             }
             return
           }
-          window.local.emit('onUpdateObject', object, delta)
+          global.local.emit('onUpdateObject', object, delta)
         })
 
         //// UPDATE GAME STATE PHASE -- END
@@ -249,14 +249,14 @@ class Game{
       hero = HERO.summonFromGameData({id: heroId, heroSummonType: role })
       hero.id = heroId
       hero.user = user
-      window.socket.emit('heroJoinedGamed', hero)
+      global.socket.emit('heroJoinedGamed', hero)
     }
   }
 
   onHeroJoinedGame(hero) {
     HERO.addHero(hero, { skipEventListeners: true })
     if(hero.id == HERO.id) {
-      window.local.emit('onHeroFound', hero)
+      global.local.emit('onHeroFound', hero)
     }
   }
 
@@ -264,7 +264,7 @@ class Game{
     PAGE.establishRoleFromQueryAndHero(hero)
     PAGE.logRole()
     GAME.loadHeros(GAME)
-    window.local.emit('onGameLoaded')
+    global.local.emit('onGameLoaded')
   }
 
   onGameLoaded() {
@@ -275,16 +275,16 @@ class Game{
   }
 
   loadAndJoin(game, heroName) {
-    // window.local.emit('onLoadingScreenStart')
+    // global.local.emit('onLoadingScreenStart')
 
     GAME.loadGridWorldObjectsCompendiumState(game)
 
     // if you are a player and you dont already have a hero from the server ask for one
     if(GAME.heros[HERO.id]) {
-      window.local.emit('onHeroFound', GAME.heros[HERO.id])
+      global.local.emit('onHeroFound', GAME.heros[HERO.id])
     } else {
-      if(PAGE.role.isHost) window.user.isHost = true
-      window.socket.emit('askJoinGame', HERO.id, heroName, window.user)
+      if(PAGE.role.isHost) global.user.isHost = true
+      global.socket.emit('askJoinGame', HERO.id, heroName, global.user)
     }
   }
 
@@ -292,9 +292,9 @@ class Game{
     GAME.id = game.id
     GAME.grid = game.grid
     if(GAME.grid.terrainData) {
-      window.addTerrainDataToPhysics(GAME.grid.terrainData)
+      global.addTerrainDataToPhysics(GAME.grid.terrainData)
     }
-    window.local.emit('onGridLoaded')
+    global.local.emit('onGridLoaded')
 
     if(game.theme) GAME.theme = game.theme
     if(!GAME.theme) {
@@ -327,13 +327,13 @@ class Game{
       GAME.customInputBehavior = game.customInputBehavior
     } else GAME.customInputBehavior = []
 
-    if(game.compendium) window.compendium = game.compendium
+    if(game.compendium) global.compendium = game.compendium
 
-    GAME.defaultHero = game.defaultHero || window.defaultHero
+    GAME.defaultHero = game.defaultHero || global.defaultHero
     GAME.defaultHero.id = 'default hero'
 
     if(game.metadata) GAME.metadata = game.metadata
-    else GAME.metadata = _.cloneDeep(window.defaultMetadata)
+    else GAME.metadata = _.cloneDeep(global.defaultMetadata)
 
     // let storedGameState = localStorage.getItem('gameStates')
     // if(storedGameState) storedGameState = storedGameState[game.id]
@@ -346,7 +346,7 @@ class Game{
     // game state
     if(game.gameState && game.gameState.loaded) {
       GAME.gameState = game.gameState
-      if(!GAME.gameState) GAME.gameState = JSON.parse(JSON.stringify(window.defaultGameState))
+      if(!GAME.gameState) GAME.gameState = JSON.parse(JSON.stringify(global.defaultGameState))
       // GAME.gameState.sequenceQueue = []
       // GAME.gameState.activeModList = []
       //( remove timouts from this list when you can convert this functions to strings and use eval..)
@@ -354,7 +354,7 @@ class Game{
       GAME.gameState.timeoutsById = {}
       // GAME.gameState.logs = []
     } else {
-      GAME.gameState = JSON.parse(JSON.stringify(window.defaultGameState))
+      GAME.gameState = JSON.parse(JSON.stringify(global.defaultGameState))
     }
 
     GAME.objectsById = {}
@@ -386,14 +386,14 @@ class Game{
     GAME.handleWorldUpdate(GAME.world)
 
     if(PAGE.role.isPlayEditor) {
-      window.gamestateeditor.update(GAME.gameState)
+      global.gamestateeditor.update(GAME.gameState)
     }
 
-    // window.local.emit('onWorldLoaded')
-    // window.local.emit('onGameStateLoaded')
-    // window.local.emit('onCompendiumLoaded')
-    // window.local.emit('onObjectsLoaded')
-    // window.local.emit('onGameHeroLoaded')
+    // global.local.emit('onWorldLoaded')
+    // global.local.emit('onGameStateLoaded')
+    // global.local.emit('onCompendiumLoaded')
+    // global.local.emit('onObjectsLoaded')
+    // global.local.emit('onGameHeroLoaded')
   }
 
   loadHeros(heros) {
@@ -413,20 +413,20 @@ class Game{
       hero.keysDown = {}
     })
 
-    window.local.emit('onHerosLoaded')
+    global.local.emit('onHerosLoaded')
   }
 
   unload() {
-    window.local.emit('onGameUnload')
+    global.local.emit('onGameUnload')
 
     if(GAME.grid.terrainData) {
-      window.removeTerrainDataFromPhysics(GAME.grid.terrainData)
+      global.removeTerrainDataFromPhysics(GAME.grid.terrainData)
     }
 
     MAP.popoverInstances.forEach((instance) => {
       instance.destroy()
     })
-    window.popoverOpen = {}
+    global.popoverOpen = {}
 
     GAME.objects.forEach((object) => {
       OBJECTS.unloadObject(object)
@@ -437,8 +437,8 @@ class Game{
     })
 
     GAME.removeListeners()
-    GAME.gameState = JSON.parse(JSON.stringify(window.defaultGameState))
-    GAME.theme = _.clone(window.defaultTheme)
+    GAME.gameState = JSON.parse(JSON.stringify(global.defaultGameState))
+    GAME.theme = _.clone(global.defaultTheme)
   }
 
   removeListeners() {
@@ -621,7 +621,7 @@ class Game{
       return console.log('trying to stop game that aint even started yet')
     }
 
-    window.local.emit('onLoadingScreenStart')
+    global.local.emit('onLoadingScreenStart')
 
     setTimeout(() => {
       let initialGameState = localStorage.getItem('initialGameState')
@@ -640,7 +640,7 @@ class Game{
         }
       })
       GAME.loadAndJoin(initialGameState)
-      window.local.emit('onGameStopped')
+      global.local.emit('onGameStopped')
     }, 100)
   }
 
@@ -652,10 +652,10 @@ class Game{
       GAME.gameState.paused = true
 
       startSequence('pregame', {})
-      const removeEventListener = window.local.on('onSequenceComplete', (id) => {
+      const removeEventListener = global.local.on('onSequenceComplete', (id) => {
         if(id === 'pregame') {
           removeEventListener()
-          window.local.emit('onGameStarted')
+          global.local.emit('onGameStarted')
           GAME.gameState.pregame = false
           GAME.gameState.paused = false
         }
@@ -670,7 +670,7 @@ class Game{
       return console.log('trying to start game that has already started')
     }
 
-    window.local.emit('onLoadingScreenStart')
+    global.local.emit('onLoadingScreenStart')
 
     const initialGameState = GAME.cleanForSave(GAME)
     initialGameState.heros = GAME.heros
@@ -683,7 +683,7 @@ class Game{
 
       GAME.heroList.forEach((hero) => {
         if(!options.dontRespawn) HERO.spawn(hero)
-        window.emitGameEvent('onHeroAwake', hero)
+        global.emitGameEvent('onHeroAwake', hero)
         hero.questState = {}
         if(hero.quests) {
           Object.keys(hero.quests).forEach((questId) => {
@@ -696,14 +696,14 @@ class Game{
         }
         if(hero.subObjects) {
           Object.keys(hero.subObjects).forEach((subObjectName) => {
-            window.emitGameEvent('onObjectAwake', hero.subObjects[subObjectName])
+            global.emitGameEvent('onObjectAwake', hero.subObjects[subObjectName])
           })
         }
       })
 
       GAME.objects.forEach((object) => {
         if(!options.dontRespawn) OBJECTS.respawn(object)
-        window.emitGameEvent('onObjectAwake', object)
+        global.emitGameEvent('onObjectAwake', object)
         if(object.tags.talkOnStart) {
           GAME.heroList.forEach((hero) => {
             onTalk(hero, object, {}, [], [], { fromStart: true })
@@ -716,17 +716,17 @@ class Game{
         }
         if(object.subObjects) {
           Object.keys(object.subObjects).forEach((subObjectName) => {
-            window.emitGameEvent('onObjectAwake', object.subObjects[subObjectName])
+            global.emitGameEvent('onObjectAwake', object.subObjects[subObjectName])
           })
         }
       })
 
       if(!PAGE.role.isAdmin && EDITOR.preferences.zoomMultiplier) {
-        window.local.emit('onZoomChange')
+        global.local.emit('onZoomChange')
       }
 
-      window.local.emit('onLoadingScreenEnd')
-      if(!options.silent) window.local.emit('onGameStarted')
+      global.local.emit('onLoadingScreenEnd')
+      if(!options.silent) global.local.emit('onGameStarted')
     }, 100)
   }
 
@@ -737,11 +737,11 @@ class Game{
     if(GAME.library.branches[id]) GAME.onBranchApply(id)
     GAME.gameState.branch = true
     GAME.gameState.branchName = id
-    window.local.emit('onBranchStart')
+    global.local.emit('onBranchStart')
   }
 
   reloadRoot(cb) {
-    window.local.emit('onLoadingScreenStart')
+    global.local.emit('onLoadingScreenStart')
     setTimeout(() => {
       let rootGameState = localStorage.getItem('rootGameState')
       if(!rootGameState) {
@@ -752,7 +752,7 @@ class Game{
       rootGameState = JSON.parse(rootGameState)
       GAME.unload()
       GAME.loadAndJoin(rootGameState)
-      window.local.emit('onBranchEnd')
+      global.local.emit('onBranchEnd')
       cb()
     }, 100)
   }
@@ -775,41 +775,41 @@ class Game{
       return prev
     },  { addedObjects: [], existingObjects: [] })
 
-    const diff = window.getObjectDiff(existingObjects, rootGameState.objects)
+    const diff = global.getObjectDiff(existingObjects, rootGameState.objects)
     const branchName = GAME.gameState.branchName
     GAME.reloadRoot(() => {
       GAME.library.branches[branchName] = {
         branchedOff:'root',
-        branchName: branchName+'-'+window.uniqueID(),
+        branchName: branchName+'-'+global.uniqueID(),
         existingObjectsDiff: diff,
         addedObjects,
       }
-      window.socket.emit('updateLibrary', { branches: GAME.library.branches })
+      global.socket.emit('updateLibrary', { branches: GAME.library.branches })
     })
   }
 
   onBranchApply(id) {
     const branch = _.cloneDeep(GAME.library.branches[id])
     if(!branch) return
-    window.socket.emit('editObjects', branch.existingObjectsDiff)
-    window.socket.emit('addObjects', branch.addedObjects.map((addedObj) => {
-      addedObj.id = 'branchadded-'+window.uniqueID()
+    global.socket.emit('editObjects', branch.existingObjectsDiff)
+    global.socket.emit('addObjects', branch.addedObjects.map((addedObj) => {
+      addedObj.id = 'branchadded-'+global.uniqueID()
       return addedObj
     }))
   }
 
   onBranchModRevert(id) {
-    window.local.emit('onEndMod', id)
+    global.local.emit('onEndMod', id)
   }
 
   onBranchModApply(id) {
     const branch = _.cloneDeep(GAME.library.branches[id])
     const addedObjects = branch.addedObjects.map((addedObj) => {
-      addedObj.id = 'branchadded-'+window.uniqueID()
+      addedObj.id = 'branchadded-'+global.uniqueID()
       OBJECTS.removeObject(addedObj)
       return addedObj
     })
-    window.socket.emit('addObjects', addedObjects)
+    global.socket.emit('addObjects', addedObjects)
     branch.existingObjectsDiff.forEach((diff) => {
       const objectId = diff.id
       delete diff.id
@@ -818,7 +818,7 @@ class Game{
         manualRevertId: id,
         effectJSON: diff,
       }
-      window.local.emit('onStartMod', mod)
+      global.local.emit('onStartMod', mod)
     })
     addedObjects.forEach((object) => {
       const mod = {
@@ -828,7 +828,7 @@ class Game{
           removed: false
         }
       }
-      window.local.emit('onStartMod', mod)
+      global.local.emit('onStartMod', mod)
     })
   }
 
@@ -864,12 +864,12 @@ class Game{
       // if(!gameCopy.defaultHero && game.heros[heroId]) gameCopy.defaultHero = JSON.parse(JSON.stringify(game.heros[heroId]))
       console.log('setting any hero as default hero')
       // if(game.heroList.length) gameCopy.defaultHero = JSON.parse(JSON.stringify(game.heroList[0]))
-      gameCopy.defaultHero = JSON.parse(JSON.stringify(window.defaultHero))
+      gameCopy.defaultHero = JSON.parse(JSON.stringify(global.defaultHero))
       // else return alert('could not find a game hero')
     }
 
     if(!gameCopy.id) {
-      gameCopy.id = 'game-' + window.uniqueID()
+      gameCopy.id = 'game-' + global.uniqueID()
     }
 
     if(gameCopy.grid && gameCopy.grid.nodes) {
@@ -877,9 +877,9 @@ class Game{
     }
 
     gameCopy.objects = gameCopy.objects.map((object) => {
-      window.removeFalsey(object.tags, options.removeFalseTags)
+      global.removeFalsey(object.tags, options.removeFalseTags)
       let props = OBJECTS.getProperties(object)
-      window.removeFalsey(props)
+      global.removeFalsey(props)
 
       if(options.keepState) {
         props.x = object.x
@@ -890,20 +890,20 @@ class Game{
     })
 
     gameCopy.defaultHero = HERO.getProperties(gameCopy.defaultHero)
-    window.removeFalsey(gameCopy.defaultHero)
-    window.removeFalsey(gameCopy.defaultHero.tags, options.removeFalseTags)
+    global.removeFalsey(gameCopy.defaultHero)
+    global.removeFalsey(gameCopy.defaultHero.tags, options.removeFalseTags)
 
     return gameCopy
   }
 
   onEditGameState(gameState) {
-    window.mergeDeep(GAME.gameState, gameState)
+    global.mergeDeep(GAME.gameState, gameState)
   }
 
   onUpdateGameState(gameState) {
     if(!PAGE.gameLoaded) return
     delete gameState.logs
-    if(!PAGE.role.isHost) window.mergeDeep(GAME.gameState, gameState)
+    if(!PAGE.role.isHost) global.mergeDeep(GAME.gameState, gameState)
   }
 
   onChangeGame(game) {
@@ -927,7 +927,7 @@ class Game{
     GAME.unload()
     GAME.loadAndJoin(game)
 
-    const removeEventListener = window.local.on('onGameLoaded', () => {
+    const removeEventListener = global.local.on('onGameLoaded', () => {
       // for demo
       if(animationZoomTarget) {
         GAME.heros[HERO.id].animationZoomTarget = animationZoomTarget
@@ -955,7 +955,7 @@ class Game{
 
       if(value instanceof Object) {
         GAME.library[key] = {}
-        window.mergeDeep(GAME.library[key], value)
+        global.mergeDeep(GAME.library[key], value)
       } else {
         GAME.library[key] = value
       }
@@ -969,13 +969,13 @@ class Game{
       if(key === 'audio') {
         Object.keys(value).forEach((property) => {
           if(value[property] === null) return
-          if(!window.audio.sounds[value[property]]) AUDIO.loadAsset(value[property])
+          if(!global.audio.sounds[value[property]]) AUDIO.loadAsset(value[property])
         })
       }
 
       if(value instanceof Object) {
         GAME.theme[key] = {}
-        window.mergeDeep(GAME.theme[key], value)
+        global.mergeDeep(GAME.theme[key], value)
       } else {
         GAME.theme[key] = value
       }
@@ -989,7 +989,7 @@ class Game{
 
         if(value instanceof Object) {
           GAME.world[key] = {}
-          window.mergeDeep(GAME.world[key], value)
+          global.mergeDeep(GAME.world[key], value)
         } else {
           GAME.world[key] = value
         }
@@ -1043,11 +1043,11 @@ class Game{
       }
     }
 
-    window.local.emit('onUpdatePFgrid', 'reset')
+    global.local.emit('onUpdatePFgrid', 'reset')
 
     if(PAGE.role.isPlayEditor) {
-      // window.worldeditor.update(GAME.world)
-      // window.worldeditor.expandAll()
+      // global.worldeditor.update(GAME.world)
+      // global.worldeditor.expandAll()
     }
   }
 
@@ -1065,14 +1065,14 @@ class Game{
   }
 
   onResetWorld() {
-    GAME.world = JSON.parse(JSON.stringify(window.defaultWorld))
+    GAME.world = JSON.parse(JSON.stringify(global.defaultWorld))
     if(!PAGE.role.isPlayEditor) MAP.camera.clearLimit()
     GAME.handleWorldUpdate(GAME.world)
   }
 
   onResetObjects() {
     [...GAME.objects].forEach((object) => {
-      window.local.emit('onDeleteObject', object)
+      global.local.emit('onDeleteObject', object)
     }, [])
     GAME.objects = []
     GAME.objectsById = {}
@@ -1099,7 +1099,7 @@ class Game{
     if(mod.conditionType) {
       mod._disabled = true
     } else {
-      window.emitGameEvent('onModEnabled', mod)
+      global.emitGameEvent('onModEnabled', mod)
     }
 
     GAME.gameState.activeModList.push(mod)
@@ -1107,7 +1107,7 @@ class Game{
     if(mod.conditionType && mod.conditionType.length && mod.conditionType !== 'none') {
       if(mod.conditionType === 'onEvent') {
         mod._disabled = false
-        mod.removeEventListener = window.local.on(mod.conditionEventName, (mainObject, guestObject) => {
+        mod.removeEventListener = global.local.on(mod.conditionEventName, (mainObject, guestObject) => {
           let ownerObject = OBJECTS.getObjectOrHeroById(mod.ownerId)
           const eventMatch = testEventMatch(mod.conditionEventName, mainObject, guestObject, mod, ownerObject, { testPassReverse: mod.testPassReverse, testModdedVersion: mod.testModdedVersion })
           if(eventMatch) {
@@ -1120,7 +1120,7 @@ class Game{
       }
       if(mod.conditionType === 'onTimerEnd') {
         mod._disabled = false
-        GAME.addTimeout(window.uniqueID(), mod.conditionNumber || 10, () => {
+        GAME.addTimeout(global.uniqueID(), mod.conditionNumber || 10, () => {
           mod._remove = true
           mod._disabled = true
         })
@@ -1175,12 +1175,12 @@ class Game{
 
       if(mod._remove) {
         if(mod.temporaryEquip && modOwnerObject.subObject[mod.effectValue]) unequipSubObject(modOwnerObject, modOwnerObject.subObject[mod.effectValue])
-        if(mod.temporaryDialogueChoice) window.local.emit('onDeleteDialogueChoice', modOwnerObject.id, mod.effectValue)
+        if(mod.temporaryDialogueChoice) global.local.emit('onDeleteDialogueChoice', modOwnerObject.id, mod.effectValue)
         if(mod.temporaryLibrarySubObject) {
-          window.local.emit('onDeleteSubObject', modOwnerObject, mod.effectLibrarySubObject)
+          global.local.emit('onDeleteSubObject', modOwnerObject, mod.effectLibrarySubObject)
         }
         if(mod.removeEventListener) mod.removeEventListener()
-        window.emitGameEvent('onModDisabled', mod)
+        global.emitGameEvent('onModDisabled', mod)
         return false
       }
 
@@ -1214,30 +1214,30 @@ class Game{
       if(mod.temporaryDialogueChoice) {
         const dialogueChoice = modOwnerObject.dialogueChoices[mod.effectValue]
         if(dialogueChoice && mod._disabled) {
-          window.local.emit('onDeleteDialogueChoice', modOwnerObject.id, mod.effectValue)
+          global.local.emit('onDeleteDialogueChoice', modOwnerObject.id, mod.effectValue)
         } else if(!mod._disabled && !dialogueChoice) {
-          window.local.emit('onAddDialogueChoice', modOwnerObject.id, mod.effectValue, mod.effectJSON)
+          global.local.emit('onAddDialogueChoice', modOwnerObject.id, mod.effectValue, mod.effectJSON)
         }
       }
 
       if(mod.temporaryLibrarySubObject) {
         const subObject = modOwnerObject.subObjects[mod.effectLibrarySubObject]
         if(subObject && mod._disabled) {
-          window.local.emit('onDeleteSubObject', modOwnerObject, mod.effectLibrarySubObject)
+          global.local.emit('onDeleteSubObject', modOwnerObject, mod.effectLibrarySubObject)
         } else if(!mod._disabled && !subObject) {
-          window.local.emit('onAddSubObject', modOwnerObject, window.subObjectLibrary.addGameLibrary()[mod.effectLibrarySubObject],  mod.effectLibrarySubObject)
+          global.local.emit('onAddSubObject', modOwnerObject, global.subObjectLibrary.addGameLibrary()[mod.effectLibrarySubObject],  mod.effectLibrarySubObject)
         }
       }
 
       if(prevDisabled && !mod._disabled) {
-        window.emitGameEvent('onModEnabled', mod)
+        global.emitGameEvent('onModEnabled', mod)
         if(mod.modResetPhysics) {
           OBJECTS.resetPhysicsProperties(modOwnerObject)
         }
       }
 
       if(!prevDisabled && mod._disabled) {
-        window.emitGameEvent('onModDisabled', mod)
+        global.emitGameEvent('onModDisabled', mod)
       }
 
       return keepInActiveMods
@@ -1349,7 +1349,7 @@ class Game{
 
     if(PAGE.role.isHost) {
       Object.keys(previousObjectsByTag).forEach((tag) => {
-        if(!GAME.objectsByTag[tag]) window.emitGameEvent('onTagDepleted', tag)
+        if(!GAME.objectsByTag[tag]) global.emitGameEvent('onTagDepleted', tag)
       })
     }
   }
@@ -1399,19 +1399,19 @@ class Game{
       if(mod.manualRevertId === manualRevertId) {
         mod._remove = true
         mod._disabled = true
-        if(mod.effectJSON.removed || (mod.effectJSON.tags && mod.effectJSON.tags.obstacle)) window.local.emit('onUpdatePFgrid')
+        if(mod.effectJSON.removed || (mod.effectJSON.tags && mod.effectJSON.tags.obstacle)) global.local.emit('onUpdatePFgrid')
       }
       if(mod.modId === manualRevertId) {
         mod._remove = true
         mod._disabled = true
-        if(mod.effectJSON.removed || (mod.effectJSON.tags && mod.effectJSON.tags.obstacle)) window.local.emit('onUpdatePFgrid')
+        if(mod.effectJSON.removed || (mod.effectJSON.tags && mod.effectJSON.tags.obstacle)) global.local.emit('onUpdatePFgrid')
       }
       return true
     })
   }
 
   onModDisabled(mod) {
-    if(PAGE.role.isHost) if(mod.effectJSON.removed || (mod.effectJSON.tags && mod.effectJSON.tags.obstacle)) window.local.emit('onUpdatePFgrid')
+    if(PAGE.role.isHost) if(mod.effectJSON.removed || (mod.effectJSON.tags && mod.effectJSON.tags.obstacle)) global.local.emit('onUpdatePFgrid')
   }
 
   onStartSequence(sequenceId, ownerId) {
@@ -1445,7 +1445,7 @@ class Game{
 
       if(value instanceof Object) {
         GAME.metadata[key] = {}
-        window.mergeDeep(GAME.metadata[key], value)
+        global.mergeDeep(GAME.metadata[key], value)
       } else {
         GAME.metadata[key] = value
       }
@@ -1453,4 +1453,4 @@ class Game{
   }
 }
 
-window.GAME = new Game()
+global.GAME = new Game()

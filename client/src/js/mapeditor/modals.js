@@ -16,7 +16,7 @@ function editTrigger(owner, trigger, cb) {
       const triggerUpdate = result.value
       const oldId = trigger.id
 
-      window.socket.emit('editTrigger', owner.id, oldId, triggerUpdate)
+      global.socket.emit('editTrigger', owner.id, oldId, triggerUpdate)
 
       if (cb) cb()
     }
@@ -30,7 +30,7 @@ function editHookConditions(owner, hook, cb) {
     if(result && result.value) {
       hook.conditionList = result.value
       const oldId = hook.id
-      window.socket.emit('editHook', owner.id, oldId, hook)
+      global.socket.emit('editHook', owner.id, oldId, hook)
       if(cb) cb()
     }
     PAGE.typingMode = false
@@ -45,7 +45,7 @@ function editSubObjectChanceConditions(object, subObjectName, cb) {
   openEditConditionListModal(conditionList, (result) => {
     if(result && result.value) {
       object.subObjectChances[subObjectName].conditionList = result.value
-      window.socket.emit('editObjects', [{ id: object.id, subObjectChances: object.subObjectChances }])
+      global.socket.emit('editObjects', [{ id: object.id, subObjectChances: object.subObjectChances }])
       if(cb) cb()
     }
     PAGE.typingMode = false
@@ -61,7 +61,7 @@ function addTrigger(owner) {
       openEditTriggerModal(trigger, (result) => {
         if (result && result.value) {
           const trigger = result.value
-          window.socket.emit('addTrigger', owner.id, trigger)
+          global.socket.emit('addTrigger', owner.id, trigger)
         }
         PAGE.typingMode = false
       })
@@ -78,7 +78,7 @@ function addMod(owner) {
       openEditMod(mod, (result) => {
         if (result && result.value) {
           const mod = result.value
-          window.socket.emit('startMod', owner.id, mod)
+          global.socket.emit('startMod', owner.id, mod)
         }
         PAGE.typingMode = false
       })
@@ -91,7 +91,7 @@ function addHook(owner, eventName) {
   openAddHook((result) => {
     if(result && result.value) {
       const hook = { id: result.value, eventName }
-      window.socket.emit('addHook', owner.id, hook)
+      global.socket.emit('addHook', owner.id, hook)
       editHookConditions(owner, hook, () => {
         PAGE.typingMode = false
       })
@@ -124,9 +124,9 @@ function addHook(owner, eventName) {
 //       eventThreshold,
 //     }
 //
-//     window.removeProps(triggerUpdate, { empty: true, null: true, undefined: true })
+//     global.removeProps(triggerUpdate, { empty: true, null: true, undefined: true })
 //
-//     window.socket.emit('editTrigger', owner.id, trigger.id, triggerUpdate)
+//     global.socket.emit('editTrigger', owner.id, trigger.id, triggerUpdate)
 //   })
 // }
 
@@ -134,7 +134,7 @@ function addNewSubObject(owner) {
   PAGE.typingMode = true
   openNameSubObjectModal((result) => {
     if(result && result.value && result.value.length) {
-      window.socket.emit('addSubObject', owner, {}, result.value)
+      global.socket.emit('addSubObject', owner, {}, result.value)
     }
     PAGE.typingMode = false
   })
@@ -146,7 +146,7 @@ function editEffectJSON(owner, trigger) {
     if(result && result.value) {
       const editedCode = JSON.parse(result.value)
       trigger.effectJSON = editedCode
-      window.socket.emit('editTrigger', owner.id, trigger.id, trigger)
+      global.socket.emit('editTrigger', owner.id, trigger.id, trigger)
     }
     PAGE.typingMode = false
   })
@@ -249,7 +249,7 @@ function editQuest(hero, quest, cb) {
     }
     questState[id] = state
 
-    window.socket.emit('editHero', { id: hero.id, quests, questState })
+    global.socket.emit('editHero', { id: hero.id, quests, questState })
   })
 
 }
@@ -264,7 +264,7 @@ function openSelectEffect(cb) {
       popup: 'animated fadeOutUp faster'
     },
     input: 'select',
-    inputOptions: window.effectNameList,
+    inputOptions: global.effectNameList,
   }).then(cb)
 }
 
@@ -278,7 +278,7 @@ function openSelectLibrarySubObject(cb) {
       popup: 'animated fadeOutUp faster'
     },
     input: 'select',
-    inputOptions: window.subObjectLibrary.addGameLibrary(),
+    inputOptions: global.subObjectLibrary.addGameLibrary(),
   }).then(cb)
 }
 
@@ -292,7 +292,7 @@ function openSelectTag(cb) {
       popup: 'animated fadeOutUp faster'
     },
     input: 'select',
-    inputOptions: Object.keys(window.allTags),
+    inputOptions: Object.keys(global.allTags),
   }).then(cb)
 }
 
@@ -315,8 +315,8 @@ function openSelectFromList(title, list, cb) {
 
 function openSelectParticleAnimation(cb) {
 
-  const inputOptions = Object.keys({...GAME.library.animations, ...window.particleEmitterLibrary}).filter((name) => {
-    if(window.particleEmitterLibrary[name]) return true
+  const inputOptions = Object.keys({...GAME.library.animations, ...global.particleEmitterLibrary}).filter((name) => {
+    if(global.particleEmitterLibrary[name]) return true
     if(GAME.library.animations[name]) {
       const animation = GAME.library.animations[name]
       if(animation.animationType === 'particle') return true
@@ -328,9 +328,9 @@ function openSelectParticleAnimation(cb) {
       GAME.library.animations[name].type = name
       return GAME.library.animations[name]
     }
-    if(window.particleEmitterLibrary[name]) {
-      window.particleEmitterLibrary[name].type = name
-      return window.particleEmitterLibrary[name]
+    if(global.particleEmitterLibrary[name]) {
+      global.particleEmitterLibrary[name].type = name
+      return global.particleEmitterLibrary[name]
     }
   })
 
@@ -431,7 +431,7 @@ function addGameTag() {
     },
   }).then((result) => {
     if(result && result.value && result.value.length) {
-      window.socket.emit('addGameTag', result.value)
+      global.socket.emit('addGameTag', result.value)
     }
   })
 }
@@ -471,7 +471,7 @@ function addCustomInputBehavior(behaviorProp) {
         behaviorProp,
         behaviorName: result.value,
       }
-      window.socket.emit('updateGameCustomInputBehavior', [...GAME.customInputBehavior, behaviorObject])
+      global.socket.emit('updateGameCustomInputBehavior', [...GAME.customInputBehavior, behaviorObject])
     }
   })
 }
@@ -662,8 +662,8 @@ function openEditNumberModal(property, currentValue = 0, options = { range: fals
 }
 
 function openEditTriggerModal(effect, cb) {
-  const triggerData = JSON.parse(JSON.stringify(window.defaultSequenceTrigger))
-  const newEffect = JSON.parse(JSON.stringify(window.defaultSequenceEffect))
+  const triggerData = JSON.parse(JSON.stringify(global.defaultSequenceTrigger))
+  const newEffect = JSON.parse(JSON.stringify(global.defaultSequenceEffect))
   Object.assign(newEffect, triggerData, effect)
 
   Swal.fire({
@@ -841,11 +841,11 @@ function addNewSubObjectTemplate(objectSelected, cb) {
         }).id
 
       if(tagValue === 'inventory') {
-        window.socket.emit('addSubObject', objectSelected, { inInventory: true, tags: { potential: true }}, nameValue)
+        global.socket.emit('addSubObject', objectSelected, { inInventory: true, tags: { potential: true }}, nameValue)
       } else if(tagValue === 'potential') {
-        window.socket.emit('addSubObject', objectSelected, { tags:{ potential: true }}, nameValue)
+        global.socket.emit('addSubObject', objectSelected, { tags:{ potential: true }}, nameValue)
       } else {
-        window.socket.emit('addSubObject', objectSelected, {}, nameValue)
+        global.socket.emit('addSubObject', objectSelected, {}, nameValue)
       }
     }
   }).then(cb)

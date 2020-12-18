@@ -199,10 +199,10 @@ export default class SequenceItem extends React.Component{
     sequenceItem.effectName = event.value;
 
     if(sequenceItem.effectName === 'temporaryDialogueChoice' || sequenceItem.effectName === 'addDialogueChoice') {
-      sequenceItem.effectJSON = window.defaultDialogueChoice
+      sequenceItem.effectJSON = global.defaultDialogueChoice
     }
     if(sequenceItem.effectName === 'dialogue') {
-      sequenceItem.effectJSON = [_.cloneDeep(window.defaultDialogue)]
+      sequenceItem.effectJSON = [_.cloneDeep(global.defaultDialogue)]
     }
     this.setState({sequenceItem})
   }
@@ -218,7 +218,7 @@ export default class SequenceItem extends React.Component{
 
     let initial = ''
     if(sequenceItem.sequenceType === 'sequenceDialogue') {
-      initial = [_.cloneDeep(window.defaultDialogue)]
+      initial = [_.cloneDeep(global.defaultDialogue)]
     }
     if(sequenceItem.sequenceType === 'sequenceEffect' ) {
       initial = sequenceItem.effectValue

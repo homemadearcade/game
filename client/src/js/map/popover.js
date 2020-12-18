@@ -5,7 +5,7 @@ import tippy, {roundArrow} from 'tippy.js';
 import 'tippy.js/dist/tippy.css'; // optional for styling
 import Popover from './popover/Root.jsx'
 
-window.local.on('onFirstPageGameLoaded', () => {
+global.local.on('onFirstPageGameLoaded', () => {
   MAP.popoverInstances = []
   const tippyArea = document.querySelector('#game-canvas');
 
@@ -15,7 +15,7 @@ window.local.on('onFirstPageGameLoaded', () => {
         instance.hide()
         ReactDOM.unmountComponentAtNode(document.getElementById(instance.domId))
         instance.destroy()
-        window.popoverOpen[objectId] = false
+        global.popoverOpen[objectId] = false
         return false
       } else return true
     })
@@ -28,12 +28,12 @@ window.local.on('onFirstPageGameLoaded', () => {
       instance.destroy()
     })
     MAP.popoverInstances = []
-    window.popoverOpen = {}
+    global.popoverOpen = {}
   }
 
   MAP.openPopover = function(object) {
     if(PATHEDITOR.open || CONSTRUCTEDITOR.open) return
-    window.popoverOpen[object.id] = true
+    global.popoverOpen[object.id] = true
     const popoverDomId = object.id + '-popover'
     const instance = tippy(tippyArea, {
       content: `<div id="${popoverDomId}">
@@ -66,7 +66,7 @@ window.local.on('onFirstPageGameLoaded', () => {
   MAP.updatePopovers = function() {
     MAP.popoverInstances.forEach((instance) => {
       let object = OBJECTS.getObjectOrHeroById(instance.objectId)
-      if(!object && window.popoverOpen[instance.objectId]) {
+      if(!object && global.popoverOpen[instance.objectId]) {
         MAP.closePopover(instance.objectId)
         return
       }
@@ -82,8 +82,8 @@ function setPopoverPosition(instance, object) {
       let y = (object.y * MAP.camera.multiplier) - MAP.camera.y
       let y2 = ((object.y + object.height) * MAP.camera.multiplier) - MAP.camera.y
 
-      y+= 45 - window.scrollY
-      y2+= 45 - window.scrollY
+      y+= 45 - global.scrollY
+      y2+= 45 - global.scrollY
 
       let pos = {
         width: (object.width * MAP.camera.multiplier),

@@ -50,7 +50,7 @@ class Grid {
   }
 
   updateNode(gridX, gridY, update) {
-    window.mergeDeep(this.nodes[gridX][gridY].data, update)
+    global.mergeDeep(this.nodes[gridX][gridY].data, update)
   }
 
   updateNodeXY(x, y, update) {

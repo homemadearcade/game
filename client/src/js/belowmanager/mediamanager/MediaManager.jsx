@@ -7,7 +7,7 @@ import Collapsible from 'react-collapsible';
 import classnames from 'classnames';
 import PixiMapSprite from '../../components/PixiMapSprite.jsx'
 
-window.spriteSheetTags = {
+global.spriteSheetTags = {
   scifi: false,
   fantasy: false,
   modern : false,
@@ -72,14 +72,14 @@ export default class MediaManager extends React.Component {
     if(this.selectedRef.current) {
       const json = this.selectedRef.current.getJSON()
       if(this.props.selectedMenu === 'SpriteSheetEditor') {
-        if(window.location.href.indexOf('localhost') >= 0) {
-          window.socket.emit('saveSpriteSheetJSON', json.id, json)
-          window.spriteSheets = window.spriteSheets.map((ss) => {
+        if(global.location.href.indexOf('localhost') >= 0) {
+          global.socket.emit('saveSpriteSheetJSON', json.id, json)
+          global.spriteSheets = global.spriteSheets.map((ss) => {
             if(ss.id === json.id) return json
             return ss
           })
         } else {
-          window.spriteSheets = window.spriteSheets.map((ss) => {
+          global.spriteSheets = global.spriteSheets.map((ss) => {
             if(ss.id === json.id) {
               PAGE.downloadObjectAsJson(json, json.id)
               return json
@@ -89,7 +89,7 @@ export default class MediaManager extends React.Component {
         }
 
       } else if(this.props.selectedMenu === 'AudioEditor'){
-        window.socket.emit('saveAudioDataJSON', json.id, json)
+        global.socket.emit('saveAudioDataJSON', json.id, json)
       }
     }
 
@@ -106,9 +106,9 @@ export default class MediaManager extends React.Component {
         popup: 'animated fadeOutUp faster'
       },
       input: 'select',
-      inputOptions: Object.keys(window.spriteSheetAuthors),
+      inputOptions: Object.keys(global.spriteSheetAuthors),
     }).then((result) => {
-      const ssAuthor = Object.keys(window.spriteSheetAuthors)[result.value]
+      const ssAuthor = Object.keys(global.spriteSheetAuthors)[result.value]
 
       Swal.fire({
         title: 'Give the sprite sheet an id',
@@ -142,8 +142,8 @@ export default class MediaManager extends React.Component {
                 imageUrl,
                 author: ssAuthor
               }
-              window.socket.emit('saveSpriteSheetJSON', id, json)
-              window.reload()
+              global.socket.emit('saveSpriteSheetJSON', id, json)
+              global.reload()
             }
           })
         })
@@ -154,7 +154,7 @@ export default class MediaManager extends React.Component {
   _organizeSpriteSheets() {
     const byTag = {}
 
-    window.spriteSheets.forEach((ss) => {
+    global.spriteSheets.forEach((ss) => {
       if(PAGE.role.isAdmin || (GAME.heros[HERO.id].spriteSheets && GAME.heros[HERO.id].spriteSheets[ss.id])) {
         if(ss.tags) ss.tags.forEach((tag) => {
           if(!byTag[tag]) byTag[tag] = []
@@ -168,7 +168,7 @@ export default class MediaManager extends React.Component {
 
   _renderSpriteSheets() {
     if(this.props.selectedMenu === 'SpriteSheetEditor') {
-      return window.spriteSheets.map((ss) => {
+      return global.spriteSheets.map((ss) => {
         return <div className="Manager__list-item" onClick={() => this.props.openId(this.props.index, ss.id)}>{ss.name || ss.id}</div>
       })
     }
@@ -198,7 +198,7 @@ export default class MediaManager extends React.Component {
   }
 
   _renderAudioFile(dataName, audioFile) {
-    const pageHasLoadedAsset = window.audio.sounds[audioFile.id]
+    const pageHasLoadedAsset = global.audio.sounds[audioFile.id]
     return <div>
       <div data-audioFileId={audioFile.id} className={classnames("Manager__list-item Manager__list-item--audio", {
           'Manager__list-item--border': pageHasLoadedAsset
@@ -224,14 +224,14 @@ export default class MediaManager extends React.Component {
 
   _onSelectSprite = (sprite) => {
     if(this.props.objectSelected === 'creator') {
-      window.local.emit('onSelectTextureId', sprite.textureId, 'creator')
+      global.local.emit('onSelectTextureId', sprite.textureId, 'creator')
     } else if(this.props.objectSelected === 'constructEditor') {
-      window.local.emit('onSelectTextureId', sprite.textureId, 'constructEditor')
+      global.local.emit('onSelectTextureId', sprite.textureId, 'constructEditor')
     } else if(this.props.objectSelected.id) {
       if(this.props.spriteValue === 'default') {
         MAPEDITOR.networkEditObject(this.props.objectSelected, { id: this.props.objectSelected.id, defaultSprite: sprite.textureId })
       } else {
-        window.local.emit('onSelectTextureId', sprite.textureId, this.props.objectSelected.id, this.props.spriteValue )
+        global.local.emit('onSelectTextureId', sprite.textureId, this.props.objectSelected.id, this.props.spriteValue )
       }
     }
   }
@@ -280,7 +280,7 @@ export default class MediaManager extends React.Component {
 
       let recommendedTextures
       if(this.props.objectSelected.descriptors) {
-        recommendedTextures = window.findTexturesForDescriptors(this.props.objectSelected.descriptors, { alwaysSearchchildren: true })
+        recommendedTextures = global.findTexturesForDescriptors(this.props.objectSelected.descriptors, { alwaysSearchchildren: true })
       }
       return <div className="Manager">
         <div className="Manager__list">

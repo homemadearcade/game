@@ -22,7 +22,7 @@ const updatePixiObject = (gameObject) => {
   if(gameObject.constructParts) {
 
 //    just for these dumbass non updating SOBs
-    if(!window.isObjectSelectable(gameObject)) {
+    if(!global.isObjectSelectable(gameObject)) {
       gameObject.constructParts.forEach((part) => {
         if(PIXIMAP.childrenById[part.id]) PIXIMAP.childrenById[part.id].visible = false
       })

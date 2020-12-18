@@ -17,7 +17,7 @@ export default class SpriteMenu extends React.Component{
       }
 
       if(key === 'apply-sprite-to-all-of-color') {
-        window.socket.emit('editObjects', GAME.objects.filter((object) => {
+        global.socket.emit('editObjects', GAME.objects.filter((object) => {
           if(object.color === objectSelected.color) return true
         }).map((object) => {
           return {
@@ -30,7 +30,7 @@ export default class SpriteMenu extends React.Component{
 
       if(key === 'select-sprite-equipped') {
         BELOWMANAGER.open({ selectedManager: 'MediaManager', selectedMenu: 'SpriteSelector', objectSelected, spriteValue: 'equipped'})
-        this._removeEventListenerInventory = window.local.on('onSelectTextureId', (textureId, objectId, spriteValue) => {
+        this._removeEventListenerInventory = global.local.on('onSelectTextureId', (textureId, objectId, spriteValue) => {
           if(objectSelected.id !== objectId || spriteValue != 'equipped') return
           if(!objectSelected.sprites) objectSelected.sprites = {}
           objectSelected.sprites.equipped = textureId
@@ -41,7 +41,7 @@ export default class SpriteMenu extends React.Component{
 
       if(key === 'select-sprite-empty') {
         BELOWMANAGER.open({ selectedManager: 'MediaManager', selectedMenu: 'SpriteSelector', objectSelected, spriteValue: 'empty'})
-        this._removeEventListenerEmpty = window.local.on('onSelectTextureId', (textureId, objectId, spriteValue) => {
+        this._removeEventListenerEmpty = global.local.on('onSelectTextureId', (textureId, objectId, spriteValue) => {
           if(objectSelected.id !== objectId || spriteValue != 'empty') return
           if(!objectSelected.sprites) objectSelected.sprites = {}
           objectSelected.sprites.spawnPoolEmpty = textureId
@@ -52,7 +52,7 @@ export default class SpriteMenu extends React.Component{
 
       if(key === 'select-sprite-UI') {
         BELOWMANAGER.open({ selectedManager: 'MediaManager', selectedMenu: 'SpriteSelector', objectSelected, spriteValue: 'UI'})
-        this._removeEventListenerUI = window.local.on('onSelectTextureId', (textureId, objectId, spriteValue) => {
+        this._removeEventListenerUI = global.local.on('onSelectTextureId', (textureId, objectId, spriteValue) => {
           if(objectSelected.id !== objectId || spriteValue != 'UI') return
           if(!objectSelected.sprites) objectSelected.sprites = {}
           objectSelected.sprites.UI = textureId

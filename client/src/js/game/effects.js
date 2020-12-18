@@ -23,7 +23,7 @@ import pathfinding from '../utils/pathfinding.js'
   // heroOnly: false
   //}
  //}
-  window.triggerEffects = {
+  global.triggerEffects = {
     remove: {
     },
     respawn: {
@@ -264,7 +264,7 @@ import pathfinding from '../utils/pathfinding.js'
   // apply mod from library
   // add library object to open space
 
-  window.effectNameList = Object.keys(window.triggerEffects)
+  global.effectNameList = Object.keys(global.triggerEffects)
 
 // owner object is just for sequences
 function processEffect(effect, effected, effector, ownerObject) {
@@ -272,10 +272,10 @@ function processEffect(effect, effected, effector, ownerObject) {
   if(effectName === 'mutate' && effectJSON) {
     OBJECTS.mergeWithJSON(effected, effectJSON)
     if(effectJSON.creator && effected.tags.hero) {
-      window.emitGameEvent('onUpdatePlayerUI', effected)
+      global.emitGameEvent('onUpdatePlayerUI', effected)
     }
     if(effected.tags.hero) {
-      window.emitGameEvent('onHeroMutate', effected)
+      global.emitGameEvent('onHeroMutate', effected)
     }
   }
 
@@ -295,7 +295,7 @@ function processEffect(effect, effected, effector, ownerObject) {
     }
     if(effected.tags.hero) {
       let newDialogue = {
-        ...window.defaultDialogue,
+        ...global.defaultDialogue,
         text: effect.effectValue
       }
       if(effected.dialogue && effected.dialogue.length) {
@@ -303,7 +303,7 @@ function processEffect(effect, effected, effector, ownerObject) {
       } else {
         effected.dialogue = [newDialogue]
       }
-      window.emitGameEvent('onHeroDialogueStart', effected, effector)
+      global.emitGameEvent('onHeroDialogueStart', effected, effector)
 
       effected.flags.showDialogue = true
       effected.flags.paused = true
@@ -319,7 +319,7 @@ function processEffect(effect, effected, effector, ownerObject) {
         }
       }
 
-      window.emitGameEvent('onUpdatePlayerUI', effected)
+      global.emitGameEvent('onUpdatePlayerUI', effected)
     } else {
       console.log('cannot dialogue effect non hero')
     }
@@ -337,7 +337,7 @@ function processEffect(effect, effected, effector, ownerObject) {
       } else {
         effected.dialogue = newDialogue
       }
-      window.emitGameEvent('onHeroDialogueStart', effected, effector)
+      global.emitGameEvent('onHeroDialogueStart', effected, effector)
       effected.flags.showDialogue = true
       effected.flags.paused = true
       if(effector) {
@@ -352,7 +352,7 @@ function processEffect(effect, effected, effector, ownerObject) {
         }
       }
 
-      window.emitGameEvent('onUpdatePlayerUI', effected)
+      global.emitGameEvent('onUpdatePlayerUI', effected)
     } else {
       console.log('cannot dialogue effect non hero')
     }
@@ -373,7 +373,7 @@ function processEffect(effect, effected, effector, ownerObject) {
       } else {
         effected.dialogue = newDialogue
       }
-      window.emitGameEvent('onHeroDialogueStart', effected, effector)
+      global.emitGameEvent('onHeroDialogueStart', effected, effector)
       effected.flags.showDialogue = true
       effected.flags.paused = true
       if(effector) {
@@ -388,7 +388,7 @@ function processEffect(effect, effected, effector, ownerObject) {
         }
       }
 
-      window.emitGameEvent('onUpdatePlayerUI', effected)
+      global.emitGameEvent('onUpdatePlayerUI', effected)
     } else {
       console.log('cannot dialogue effect non hero')
     }
@@ -410,7 +410,7 @@ function processEffect(effect, effected, effector, ownerObject) {
   }
 
   if(effectName === 'addLibrarySubObject') {
-    const libraryObject = window.subObjectLibrary.addGameLibrary()[effect.effectLibrarySubObject]
+    const libraryObject = global.subObjectLibrary.addGameLibrary()[effect.effectLibrarySubObject]
     if(!libraryObject) return console.log('no library sub object', effect.effectLibrarySubObject)
     OBJECTS.addSubObject(effected, libraryObject, effect.effectLibrarySubObject)
   }
@@ -431,7 +431,7 @@ function processEffect(effect, effected, effector, ownerObject) {
   }
 
   if(effectName === 'equipLibrarySubObject') {
-    const subObject = _.cloneDeep(window.subObjectLibrary.addGameLibrary()[effect.effectLibrarySubObject])
+    const subObject = _.cloneDeep(global.subObjectLibrary.addGameLibrary()[effect.effectLibrarySubObject])
     if(!subObject) return console.log('no sub object, equp library')
     subObject.tags.startsEquipped = true
     OBJECTS.addSubObject(effected, subObject, effect.effectLibrarySubObject)
@@ -447,11 +447,11 @@ function processEffect(effect, effected, effector, ownerObject) {
   }
 
   if(effectName === 'temporaryDialogueChoice') {
-    window.emitGameEvent('onStartMod', {ownerId: effected.id, temporaryDialogueChoice: true, ...effect})
+    global.emitGameEvent('onStartMod', {ownerId: effected.id, temporaryDialogueChoice: true, ...effect})
   }
 
   if(effectName === 'addDialogueChoice') {
-    window.local.emit('onAddDialogueChoice', effected.id, effectValue, effect.effectJSON)
+    global.local.emit('onAddDialogueChoice', effected.id, effectValue, effect.effectJSON)
   }
 
 
@@ -538,28 +538,28 @@ function processEffect(effect, effected, effector, ownerObject) {
   }
 
   if(effectName === 'mod') {
-    window.emitGameEvent('onStartMod', {ownerId: effected.id, ...effect})
+    global.emitGameEvent('onStartMod', {ownerId: effected.id, ...effect})
     // if(effectJSON.creator && effected.tags.hero) {
-    //   window.socket.emit('emitGameEvent', 'onUpdatePlayerUI', effected)
+    //   global.socket.emit('emitGameEvent', 'onUpdatePlayerUI', effected)
     // }
   }
 
   if(effectName === 'temporaryEquip') {
-    window.emitGameEvent('onStartMod', {ownerId: effected.id, temporaryEquip: true, ...effect})
+    global.emitGameEvent('onStartMod', {ownerId: effected.id, temporaryEquip: true, ...effect})
   }
 
   if(effectName === 'temporaryLibrarySubObject') {
-    window.emitGameEvent('onStartMod', {ownerId: effected.id, temporaryLibrarySubObject: true, ...effect})
+    global.emitGameEvent('onStartMod', {ownerId: effected.id, temporaryLibrarySubObject: true, ...effect})
   }
 
   if(effectName === 'libraryMod') {
-    const libraryMod = window.modLibrary[effect.effectLibraryMod]
+    const libraryMod = global.modLibrary[effect.effectLibraryMod]
     const mod = {
       ownerId: effected.id,
       manualRevertId: effect.effectLibraryMod,
       ...libraryMod
     }
-    window.emitGameEvent('onStartMod', mod)
+    global.emitGameEvent('onStartMod', mod)
   }
 
   if(effectName === 'openWorld') {
@@ -572,7 +572,7 @@ function processEffect(effect, effected, effector, ownerObject) {
   }
   if(effectName === 'openGameAsLevel') {
     console.log(effect)
-    axios.get(window.HAGameServerUrl + '/game', {
+    axios.get(global.HAGameServerUrl + '/game', {
       params: {
         gameId: effect.effectValue
       }
@@ -597,7 +597,7 @@ function processEffect(effect, effected, effector, ownerObject) {
       GAME.pfgrid = pathfinding.convertGridToPathfindingGrid(GAME.grid.nodes)
       GAME.handleWorldUpdate(GAME.world)
 
-      GAME.defaultHero = game.defaultHero || window.defaultHero
+      GAME.defaultHero = game.defaultHero || global.defaultHero
 
       GAME.heroList.forEach((hero) => {
         const oldTags = hero.tags
@@ -614,7 +614,7 @@ function processEffect(effect, effected, effector, ownerObject) {
       })
 
       GAME.objects.forEach((object) => {
-        window.emitGameEvent('onObjectAwake', object)
+        global.emitGameEvent('onObjectAwake', object)
         if(object.tags.talkOnStart) {
           GAME.heroList.forEach((hero) => {
             onTalk(hero, object, {}, [], [], { fromStart: true })
@@ -627,55 +627,55 @@ function processEffect(effect, effected, effector, ownerObject) {
         }
         if(object.subObjects) {
           Object.keys(object.subObjects).forEach((subObjectName) => {
-            window.emitGameEvent('onObjectAwake', object.subObjects[subObjectName])
+            global.emitGameEvent('onObjectAwake', object.subObjects[subObjectName])
           })
         }
       })
-      window.emitGameEvent('onGameStarted')
+      global.emitGameEvent('onGameStarted')
     })
   }
 
   if(effectName === 'anticipatedAdd' && effect.effectLibraryObject) {
-    const object = window.objectLibrary.addGameLibrary()[effect.effectLibraryObject]
-    window.local.emit('onAnticipateObject', object);
+    const object = global.objectLibrary.addGameLibrary()[effect.effectLibraryObject]
+    global.local.emit('onAnticipateObject', object);
   }
   if(effectName === 'anticipatedAddWall' && effect.effectLibraryObject) {
-    const object = window.objectLibrary.addGameLibrary()[effect.effectLibraryObject]
-    window.local.emit('onAnticipateObject', { ...object, wall: true, numberToAdd: effectValue  });
+    const object = global.objectLibrary.addGameLibrary()[effect.effectLibraryObject]
+    global.local.emit('onAnticipateObject', { ...object, wall: true, numberToAdd: effectValue  });
   }
   if(effectName === 'anticipatedAddPlatform' && effect.effectLibraryObject) {
-    const object = window.objectLibrary.addGameLibrary()[effect.effectLibraryObject]
-    window.local.emit('onAnticipateObject', { ...object, platform: true, numberToAdd: effectValue  });
+    const object = global.objectLibrary.addGameLibrary()[effect.effectLibraryObject]
+    global.local.emit('onAnticipateObject', { ...object, platform: true, numberToAdd: effectValue  });
   }
   if(effectName === 'viewAdd' && effect.effectLibraryObject) {
-    const object = window.objectLibrary.addGameLibrary()[effect.effectLibraryObject]
-    window.local.emit('onAnticipateObject', {...object, random: true, numberToAdd: effectValue });
+    const object = global.objectLibrary.addGameLibrary()[effect.effectLibraryObject]
+    global.local.emit('onAnticipateObject', {...object, random: true, numberToAdd: effectValue });
   }
   if(effectName === 'viewAddWall' && effect.effectLibraryObject) {
-    const object = window.objectLibrary.addGameLibrary()[effect.effectLibraryObject]
-    window.local.emit('onAnticipateObject', { ...object, wall: true, random: true, numberToAdd: effectValue });
+    const object = global.objectLibrary.addGameLibrary()[effect.effectLibraryObject]
+    global.local.emit('onAnticipateObject', { ...object, wall: true, random: true, numberToAdd: effectValue });
   }
   if(effectName === 'viewAddBlock' && effect.effectLibraryObject) {
-    const object = window.objectLibrary.addGameLibrary()[effect.effectLibraryObject]
-    window.local.emit('onAnticipateObject', { ...object, block: true, random: true, numberToAdd: effectValue });
+    const object = global.objectLibrary.addGameLibrary()[effect.effectLibraryObject]
+    global.local.emit('onAnticipateObject', { ...object, block: true, random: true, numberToAdd: effectValue });
   }
   if(effectName === 'viewAddPlatform' && effect.effectLibraryObject) {
-    const object = window.objectLibrary.addGameLibrary()[effect.effectLibraryObject]
-    window.local.emit('onAnticipateObject', { ...object, platform: true, random: true, numberToAdd: effectValue });
+    const object = global.objectLibrary.addGameLibrary()[effect.effectLibraryObject]
+    global.local.emit('onAnticipateObject', { ...object, platform: true, random: true, numberToAdd: effectValue });
   }
   if(effectName === 'addOnTop' && effect.effectLibraryObject) {
-    const object = window.objectLibrary.addGameLibrary()[effect.effectLibraryObject]
-    window.local.emit('onAnticipateObject', { ...object, onTop: true, nodesAbove: effectValue, targetTags: effect.effectTags });
+    const object = global.objectLibrary.addGameLibrary()[effect.effectLibraryObject]
+    global.local.emit('onAnticipateObject', { ...object, onTop: true, nodesAbove: effectValue, targetTags: effect.effectTags });
   }
 
   if(effectName === 'starViewGo') {
     const hero = GAME.heros[effected.id]
-    window.socket.emit('editHero', { id: effected.id, animationZoomTarget: window.constellationDistance, animationZoomMultiplier: hero.zoomMultiplier, endAnimation: false })
+    global.socket.emit('editHero', { id: effected.id, animationZoomTarget: global.constellationDistance, animationZoomMultiplier: hero.zoomMultiplier, endAnimation: false })
   }
 
   if(effectName === 'starViewReturn') {
     const hero = GAME.heros[effected.id]
-    window.socket.emit('editHero', { id: effected.id, animationZoomTarget: hero.zoomMultiplier, endAnimation: true, })
+    global.socket.emit('editHero', { id: effected.id, animationZoomTarget: hero.zoomMultiplier, endAnimation: true, })
   }
 
   if(effectName === 'stopGamePreserve') {
@@ -720,7 +720,7 @@ function processEffect(effect, effected, effector, ownerObject) {
       effected.cutscenes = _.cloneDeep(effectValue)
       effected.flags.showCutscene = true
       effected.flags.paused = true
-      window.emitGameEvent('onUpdatePlayerUI', effected)
+      global.emitGameEvent('onUpdatePlayerUI', effected)
     } else {
       console.log('cannot start cutscene effect non hero')
     }
@@ -758,7 +758,7 @@ function processEffect(effect, effected, effector, ownerObject) {
         },
       })
 
-      effect.goalId = 'goal-'+window.uniqueID()
+      effect.goalId = 'goal-'+global.uniqueID()
       if(!GAME.gameState.goals) GAME.gameState.goals = {}
       GAME.gameState.goals[effect.goalId] = effect
 
@@ -772,7 +772,7 @@ function processEffect(effect, effected, effector, ownerObject) {
         show: true,
       })
 
-      window.emitGameEvent('onUpdatePlayerUI', effected)
+      global.emitGameEvent('onUpdatePlayerUI', effected)
     } else {
       console.log('cannot start goal effect non hero')
     }

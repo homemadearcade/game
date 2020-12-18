@@ -1,5 +1,5 @@
-window.local.on('onFirstPageGameLoaded', () => {
-  window.particleEmitterLibrary = {
+global.local.on('onFirstPageGameLoaded', () => {
+  global.particleEmitterLibrary = {
     gas: {
     	"alpha": {
     		"start": 0.4,
@@ -930,15 +930,15 @@ window.local.on('onFirstPageGameLoaded', () => {
     laser:{"alpha":{"start":0.3,"end":1},"scale":{"start":0.6,"end":0.3,"minimumScaleMultiplier":0.5},"color":{"start":"#ffffff","end":"#001cff"},"speed":{"start":13543,"end":14394,"minimumSpeedMultiplier":1},"acceleration":{"x":0,"y":0},"maxSpeed":0,"startRotation":{"min":270,"max":270},"noRotation":false,"rotationSpeed":{"min":0,"max":0},"lifetime":{"min":5,"max":1},"blendMode":"normal","frequency":0.01,"emitterLifetime":-1,"maxParticles":1000,"pos":{"x":0,"y":0},"addAtBack":false,"spawnType":"point","speedType":"fast","spawnWaitTime":93,"images":{"HardRain":true},"animationType":"particle",},
   }
 
-  window.particleEmitterLibrary.addGameLibrary = function() {
+  global.particleEmitterLibrary.addGameLibrary = function() {
     if(GAME.library.animations) {
       return {
         ...GAME.library.animations,
-        ...window.particleEmitterLibrary,
+        ...global.particleEmitterLibrary,
         addGameLibrary: null
       }
     } else {
-      return window.particleEmitterLibrary
+      return global.particleEmitterLibrary
     }
   }
 })

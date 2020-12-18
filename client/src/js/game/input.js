@@ -2,20 +2,20 @@ import keycode from 'keycode'
 import { onHeroTrigger } from './heros/onHeroTrigger.js'
 import { shootBullet, swingBlade, dropAndModify, closestObjectBehavior } from './action.js';
 
-window.defaultWASD =  {
+global.defaultWASD =  {
   w: 'Move Up',
   s: 'Move Down',
   a: 'Move Left',
   d: 'Move Right',
 }
-window.defaultArrowKeys =  {
+global.defaultArrowKeys =  {
   up: 'Move Up',
   down: 'Move Down',
   left: 'Move Left',
   right: 'Move Right',
 }
 
-window.advancedPlatformerDefaults = {
+global.advancedPlatformerDefaults = {
   velocityDecay: 300,
   velocityInAirDecayExtra: 0,
   velocityOnLandDecayExtra: 100,
@@ -24,24 +24,24 @@ window.advancedPlatformerDefaults = {
 }
 
 function setDefault() {
-  window.arrowKeysBehavior = {
+  global.arrowKeysBehavior = {
     'flatDiagonal' : {
-      ...window.defaultArrowKeys,
+      ...global.defaultArrowKeys,
     },
     'velocity': {
-      ...window.defaultArrowKeys,
+      ...global.defaultArrowKeys,
     },
     'skating': {
-      ...window.defaultArrowKeys,
+      ...global.defaultArrowKeys,
     },
     'flatRecent': {
-      ...window.defaultArrowKeys,
+      ...global.defaultArrowKeys,
     },
     'advancedPlatformer': {
-      ...window.defaultArrowKeys,
+      ...global.defaultArrowKeys,
     },
     'inch': {
-      ...window.defaultArrowKeys,
+      ...global.defaultArrowKeys,
     },
     'angle' : {
       up: 'Face Up',
@@ -59,24 +59,24 @@ function setDefault() {
     }
   }
 
-  window.arrowKeysBehavior2 = {
+  global.arrowKeysBehavior2 = {
     'flatDiagonal' : {
-      ...window.defaultWASD,
+      ...global.defaultWASD,
     },
     'velocity': {
-      ...window.defaultWASD,
+      ...global.defaultWASD,
     },
     'skating': {
-      ...window.defaultWASD,
+      ...global.defaultWASD,
     },
     'flatRecent': {
-      ...window.defaultWASD,
+      ...global.defaultWASD,
     },
     'advancedPlatformer': {
-      ...window.defaultWASD,
+      ...global.defaultWASD,
     },
     'inch': {
-      ...window.defaultWASD,
+      ...global.defaultWASD,
     },
     'angleAndVelocity' : {
       w: 'Move Forward',
@@ -95,7 +95,7 @@ function setDefault() {
 
   }
 
-  window.actionButtonBehavior = {
+  global.actionButtonBehavior = {
     'dropWall': 'Drop Wall',
     'shoot': 'Shoot Bullet',
     'swing': 'Swing Weapon',
@@ -121,10 +121,10 @@ function addCustomInputBehavior(behaviorList) {
   behaviorList.forEach((behavior) => {
     const { behaviorProp, behaviorName } = behavior
     if(behaviorProp === 'actionButtonBehavior') {
-      window.actionButtonBehavior.unshift(behaviorName)
+      global.actionButtonBehavior.unshift(behaviorName)
     }
     if(behaviorProp === 'arrowKeysBehavior') {
-      window.arrowKeysBehavior.unshift(behaviorName)
+      global.arrowKeysBehavior.unshift(behaviorName)
     }
   })
 }
@@ -134,10 +134,10 @@ function onPlayerIdentified(){
   // this is the one for the host
   GAME.heroInputs = {}
 
-  window.addEventListener("keydown", function (e) {
+  global.addEventListener("keydown", function (e) {
     const key = keycode(e.keyCode)
 
-    if(window.isTargetTextInput(e)) return
+    if(global.isTargetTextInput(e)) return
 
     if(key === 'space' || key === 'left' || key === 'right' || key === 'up' || key === 'down') {
       e.preventDefault()
@@ -157,12 +157,12 @@ function onPlayerIdentified(){
         onKeyDown(key, GAME.heros[HERO.id])
       } else {
         onKeyDown(key, GAME.heros[HERO.id])
-        window.socket.emit('sendHeroKeyDown', key, HERO.id)
+        global.socket.emit('sendHeroKeyDown', key, HERO.id)
       }
     }
   }, false)
 
-  window.addEventListener("keyup", function (e) {
+  global.addEventListener("keyup", function (e) {
     const key = keycode(e.keyCode)
 
     if(PAGE.role.isGhost && !HERO.ghostControl) {
@@ -176,10 +176,10 @@ function onPlayerIdentified(){
         GAME.heros[HERO.id].keysDown = GAME.heroInputs[HERO.id]
         GAME.heroInputs[HERO.id][key] = false
       } else {
-        window.socket.emit('sendHeroKeyUp', key, HERO.id)
+        global.socket.emit('sendHeroKeyUp', key, HERO.id)
       }
     }
-    // window.socket.emit('sendHeroKeyUp', key, HERO.id)
+    // global.socket.emit('sendHeroKeyUp', key, HERO.id)
   }, false)
 }
 
@@ -202,7 +202,7 @@ function onKeyUp(key, hero) {
     handleActionEnd(hero, hero.mod().spaceBarBehavior)
   }
 
-  window.local.emit('onKeyUp', key, hero)
+  global.local.emit('onKeyUp', key, hero)
 }
 
 function handleActionEnd(hero, action) {
@@ -221,7 +221,7 @@ function handleActionEnd(hero, action) {
     if(change.tags && change.tags.gravityY) {
       OBJECTS.resetPhysicsProperties(hero)
     }
-    window.emitGameEvent('onEndMod', subObject.actionState.manualRevertId)
+    global.emitGameEvent('onEndMod', subObject.actionState.manualRevertId)
     subObject.actionState.manualRevertId = null
   }
 
@@ -253,19 +253,19 @@ function handleActionButtonBehavior(hero, action, delta) {
   if(action === 'toggle' && subObject && !delta) {
     actionFired = true
     subObject._toggledOff = !subObject._toggledOff
-    window.emitGameEvent('onHeroPutAwayToggle', hero, subObject)
+    global.emitGameEvent('onHeroPutAwayToggle', hero, subObject)
   }
 
   if(action === 'shoot' && !delta) {
     actionFired = true
     if(subObject) {
       shootBullet({direction: hero.inputDirection, shooter: subObject, actionProps: subObject.actionProps })
-      window.emitGameEvent('onHeroShootBullet', hero, subObject)
+      global.emitGameEvent('onHeroShootBullet', hero, subObject)
     } else {
       shootBullet({direction: hero.inputDirection, shooter: hero, actionProps: {
         tags: { monsterDestroyer: true, moving: true }
       }})
-      window.emitGameEvent('onHeroShootBullet', hero)
+      global.emitGameEvent('onHeroShootBullet', hero)
     }
   }
 
@@ -273,12 +273,12 @@ function handleActionButtonBehavior(hero, action, delta) {
     actionFired = true
     if(subObject) {
       swingBlade({direction: hero.inputDirection, swinger: subObject, actionProps: subObject.actionProps })
-      window.emitGameEvent('onHeroSwingBlade', hero, subObject)
+      global.emitGameEvent('onHeroSwingBlade', hero, subObject)
     } else {
       swingBlade({direction: hero.inputDirection, swinger: hero, actionProps: {
         tags: { monsterDestroyer: true, moving: true }
       }})
-      window.emitGameEvent('onHeroSwingBlade', hero)
+      global.emitGameEvent('onHeroSwingBlade', hero)
     }
   }
 
@@ -297,7 +297,7 @@ function handleActionButtonBehavior(hero, action, delta) {
         behavior: action,
         delta,
       })
-      // window.emitGameEvent('onHeroShootLaserTool', hero, subObject)
+      // global.emitGameEvent('onHeroShootLaserTool', hero, subObject)
     } else {
       closestObjectBehavior({
         direction: hero.inputDirection,
@@ -308,7 +308,7 @@ function handleActionButtonBehavior(hero, action, delta) {
         behavior: action,
         delta,
       })
-      // window.emitGameEvent('onHeroShootLaserTool', hero)
+      // global.emitGameEvent('onHeroShootLaserTool', hero)
     }
   }
 
@@ -328,8 +328,8 @@ function handleActionButtonBehavior(hero, action, delta) {
   if(action === 'mod' && !delta) {
     actionFired = true
     if(subObject && !subObject.actionState.manualRevertId) {
-      const manualRevertId = 'modrevert-' + window.uniqueID()
-      window.emitGameEvent('onStartMod', {
+      const manualRevertId = 'modrevert-' + global.uniqueID()
+      global.emitGameEvent('onStartMod', {
         ownerId: hero.id,
         effectJSON: subObject.actionProps.effectJSON,
         manualRevertId
@@ -401,20 +401,20 @@ function handleActionButtonBehavior(hero, action, delta) {
         }
         if(hero.inputDirection === 'up') {
           hero.y -= power * GAME.grid.nodeSize;
-          window.emitGameEvent('onHeroTeleDash', hero)
+          global.emitGameEvent('onHeroTeleDash', hero)
         } else if(hero.inputDirection === 'down') {
           hero.y += power * GAME.grid.nodeSize;
-          window.emitGameEvent('onHeroTeleDash', hero)
+          global.emitGameEvent('onHeroTeleDash', hero)
         } else if(hero.inputDirection === 'left') {
           hero.x -= power * GAME.grid.nodeSize;
-          window.emitGameEvent('onHeroTeleDash', hero)
+          global.emitGameEvent('onHeroTeleDash', hero)
         } else if(hero.inputDirection === 'right') {
           hero.x += power * GAME.grid.nodeSize;
-          window.emitGameEvent('onHeroTeleDash', hero)
+          global.emitGameEvent('onHeroTeleDash', hero)
         }
       } else {
         let dashVelocity = hero.mod().dashVelocity
-        window.emitGameEvent('onHeroDash', hero)
+        global.emitGameEvent('onHeroDash', hero)
         if(!dashVelocity) dashVelocity = 300
         if(hero.mod().tags.rotateable && hero.angle) {
           hero.velocityAngle = dashVelocity
@@ -446,7 +446,7 @@ function handleActionButtonBehavior(hero, action, delta) {
     actionFired = true
 
     hero.velocityY = hero.mod().jumpVelocity
-    window.emitGameEvent('onHeroGroundJump', hero)
+    global.emitGameEvent('onHeroGroundJump', hero)
     // lastJump = Date.now();
   }
 
@@ -455,20 +455,20 @@ function handleActionButtonBehavior(hero, action, delta) {
 
     if(hero.onObstacle) {
       hero.velocityY = hero.mod().jumpVelocity
-      window.emitGameEvent('onHeroGroundJump', hero)
+      global.emitGameEvent('onHeroGroundJump', hero)
     }
     if(hero._canWallJumpLeft) {
       actionFired = true
       hero.velocityX = -velocity
       hero.velocityY = - velocity
       hero._canWallJumpLeft = false
-      window.emitGameEvent('onHeroWallJump', hero)
+      global.emitGameEvent('onHeroWallJump', hero)
     }
     if(hero._canWallJumpRight) {
       actionFired = true
       hero.velocityX = velocity
       hero.velocityY = - velocity
-      window.emitGameEvent('onHeroWallJump', hero)
+      global.emitGameEvent('onHeroWallJump', hero)
       hero._canWallJumpRight = false
     }
   }
@@ -482,7 +482,7 @@ function handleActionButtonBehavior(hero, action, delta) {
     if(hero._floatable === true) {
       actionFired = true
       hero.velocityY = hero.mod().jumpVelocity
-      window.emitGameEvent('onHeroFloatJump', hero)
+      global.emitGameEvent('onHeroFloatJump', hero)
       GAME.addTimeout(hero.id + '-floatable', hero.mod().floatJumpTimeout || .6, () => {
         hero._floatable = true
       })
@@ -619,20 +619,20 @@ function onUpdate(hero, keysDown, delta) {
     if(typeof hero.velocityAngle !== 'number') hero.velocityAngle = 0
 
     if (upPressed) {
-      hero.angle = angleTowardsDegree(hero.angle, window.degreesToRadians(0), delta)
+      hero.angle = angleTowardsDegree(hero.angle, global.degreesToRadians(0), delta)
     }
     if (downPressed) {
-      // console.log(hero.angle, window.degreesToRadians(180))
-      hero.angle = angleTowardsDegree(hero.angle, window.degreesToRadians(180), delta)
+      // console.log(hero.angle, global.degreesToRadians(180))
+      hero.angle = angleTowardsDegree(hero.angle, global.degreesToRadians(180), delta)
     }
     if (leftPressed) {
-      hero.angle = angleTowardsDegree(hero.angle, window.degreesToRadians(270), delta)
+      hero.angle = angleTowardsDegree(hero.angle, global.degreesToRadians(270), delta)
     }
     if (rightPressed) {
-      hero.angle = angleTowardsDegree(hero.angle, window.degreesToRadians(90), delta)
+      hero.angle = angleTowardsDegree(hero.angle, global.degreesToRadians(90), delta)
     }
 
-    const angleCorrection = window.degreesToRadians(90)
+    const angleCorrection = global.degreesToRadians(90)
     hero.velocityX = hero.velocityAngle * Math.cos(hero.angle - angleCorrection)
     hero.velocityY = hero.velocityAngle * Math.sin(hero.angle - angleCorrection)
   }
@@ -661,8 +661,8 @@ function onUpdate(hero, keysDown, delta) {
     if(hero.mod().arrowKeysBehavior === 'advancedPlatformer') {
       let lowestXVelocityAllowed = xSpeed
       let lowestYVelocityAllowed = ySpeed
-      let normalDelta = (hero.mod().velocityDelta || window.advancedPlatformerDefaults.velocityDelta) * delta
-      let goalVelocity = hero.mod().velocityInputGoal ||  window.advancedPlatformerDefaults.velocityInputGoal
+      let normalDelta = (hero.mod().velocityDelta || global.advancedPlatformerDefaults.velocityDelta) * delta
+      let goalVelocity = hero.mod().velocityInputGoal ||  global.advancedPlatformerDefaults.velocityInputGoal
 
       if (upPressed && hero.inputDirection == 'up' && !hero.mod().tags.disableUpKeyMovement) {
         if(hero.velocityY > -lowestYVelocityAllowed) {
@@ -847,14 +847,14 @@ function onKeyDown(key, hero) {
       /// event
       if(_fireDialogueCompleteWithSpeakerId && dialogueId) {
         const object = OBJECTS.getObjectOrHeroById(dialogueId)
-        window.emitGameEvent('onHeroDialogueNext', hero, object)
-        if(!hero.dialogue.length) window.emitGameEvent('onHeroDialogueComplete', hero, object)
+        global.emitGameEvent('onHeroDialogueNext', hero, object)
+        if(!hero.dialogue.length) global.emitGameEvent('onHeroDialogueComplete', hero, object)
       } else if(dialogueId) {
-        window.emitGameEvent('onHeroDialogueNext', hero, { id: dialogueId })
-        if(!hero.dialogue.length) window.emitGameEvent('onHeroDialogueComplete', hero, { id: dialogueId })
+        global.emitGameEvent('onHeroDialogueNext', hero, { id: dialogueId })
+        if(!hero.dialogue.length) global.emitGameEvent('onHeroDialogueComplete', hero, { id: dialogueId })
       } else {
-        window.emitGameEvent('onHeroDialogueNext', hero)
-        if(!hero.dialogue.length) window.emitGameEvent('onHeroDialogueComplete', hero, { id: null })
+        global.emitGameEvent('onHeroDialogueNext', hero)
+        if(!hero.dialogue.length) global.emitGameEvent('onHeroDialogueComplete', hero, { id: null })
       }
 
       // loop
@@ -862,7 +862,7 @@ function onKeyDown(key, hero) {
         if(hero._loopDialogue && talkerId) {
           const talker = OBJECTS.getObjectOrHeroById(talkerId)
           if(talker) {
-            window.emitGameEvent('onHeroInteract', hero, talker)
+            global.emitGameEvent('onHeroInteract', hero, talker)
             onHeroTrigger(hero, talker, {}, {fromInteractButton: true})
             hero._loopDialogue = false
           }
@@ -871,7 +871,7 @@ function onKeyDown(key, hero) {
 
       hero._cantInteract = true
 
-      window.emitGameEvent('onUpdatePlayerUI', hero)
+      global.emitGameEvent('onUpdatePlayerUI', hero)
     }
 
     if(hero.cutscenes && hero.cutscenes.length) {
@@ -882,13 +882,13 @@ function onKeyDown(key, hero) {
         hero.onObstacle = false
       }
       hero._cantInteract = true
-      window.emitGameEvent('onCutsceneCompleted', hero)
-      window.emitGameEvent('onUpdatePlayerUI', hero)
+      global.emitGameEvent('onCutsceneCompleted', hero)
+      global.emitGameEvent('onUpdatePlayerUI', hero)
     }
   }
 
   if(hero.flags.paused || GAME.gameState.paused) {
-    window.local.emit('onKeyDown', key, hero)
+    global.local.emit('onKeyDown', key, hero)
     return
   }
 
@@ -937,7 +937,7 @@ function onKeyDown(key, hero) {
     hero.inputDirection = 'right'
   }
 
-  window.local.emit('onKeyDown', key, hero)
+  global.local.emit('onKeyDown', key, hero)
 }
 
 // cool that I pulled this off put please remove someday
@@ -945,9 +945,10 @@ Object.defineProperty(Number.prototype, 'mod', { value: function(n) {
   return ((this % n) + n) % n;
 }})
 
-const oneEighty = window.degreesToRadians(180)
-const threeSixty = window.degreesToRadians(360)
 function angleTowardsDegree(current, goal, delta) {
+  const oneEighty = global.degreesToRadians(180)
+  const threeSixty = global.degreesToRadians(360)
+
   current = (current % threeSixty)
   let distance = goal - current
 

@@ -1,11 +1,11 @@
-window._randomizeWorldAmbientLight = function() {
-  const ambientLight = window.getRandomFloat(0, .7)
+global._randomizeWorldAmbientLight = function() {
+  const ambientLight = global.getRandomFloat(0, .7)
 
-  window.socket.emit('editGameState', { ambientLight })
+  global.socket.emit('editGameState', { ambientLight })
 }
 
 
-window._randomizeDarkAreaAmbientLight = function(objects) {
+global._randomizeDarkAreaAmbientLight = function(objects) {
   if(!Array.isArray(objects)) objects = GAME.objects
 
   const editedObjects = []
@@ -14,7 +14,7 @@ window._randomizeDarkAreaAmbientLight = function(objects) {
     if(object.subObjects) {
       OBJECTS.forAllSubObjects(object.subObjects, (so) => {
         if(so.tags && so.tags.darkArea) {
-          window.socket.emit('editSubObject', object.id, so.subObjectName, { ambientLight: window.getRandomFloat(0, .7) })
+          global.socket.emit('editSubObject', object.id, so.subObjectName, { ambientLight: global.getRandomFloat(0, .7) })
         }
       })
     }
@@ -22,17 +22,17 @@ window._randomizeDarkAreaAmbientLight = function(objects) {
     if(object.tags.darkArea) {
       editedObjects.push({
         id: object.id,
-        ambientLight: window.getRandomFloat(0, .7)
+        ambientLight: global.getRandomFloat(0, .7)
       })
     }
   })
   if(editedObjects.length) {
-    window.socket.emit('editObjects', editedObjects)
+    global.socket.emit('editObjects', editedObjects)
   }
 }
 
 
-window._randomizeLightColor = function(objects) {
+global._randomizeLightColor = function(objects) {
   if(!Array.isArray(objects)) objects = GAME.objects
 
   const editedObjects = []
@@ -41,7 +41,7 @@ window._randomizeLightColor = function(objects) {
     if(object.subObjects) {
       OBJECTS.forAllSubObjects(object.subObjects, (so) => {
         if(so.tags && so.tags.light) {
-          window.socket.emit('editSubObject', object.id, so.subObjectName, { lightColor: window.generateRandomColor() })
+          global.socket.emit('editSubObject', object.id, so.subObjectName, { lightColor: global.generateRandomColor() })
         }
       })
     }
@@ -49,16 +49,16 @@ window._randomizeLightColor = function(objects) {
     if(object.tags.light) {
       editedObjects.push({
         id: object.id,
-        lightColor: window.generateRandomColor()
+        lightColor: global.generateRandomColor()
       })
     }
   })
   if(editedObjects.length) {
-    window.socket.emit('editObjects', editedObjects)
+    global.socket.emit('editObjects', editedObjects)
   }
 }
 
-window._randomizeLightPower = function(objects) {
+global._randomizeLightPower = function(objects) {
   if(!Array.isArray(objects)) objects = GAME.objects
 
   const editedObjects = []
@@ -67,7 +67,7 @@ window._randomizeLightPower = function(objects) {
     if(object.subObjects) {
       OBJECTS.forAllSubObjects(object.subObjects, (so) => {
         if(so.tags && so.tags.light) {
-          window.socket.emit('editSubObject', object.id, so.subObjectName, { lightPower: window.getRandomInt(5, 30) })
+          global.socket.emit('editSubObject', object.id, so.subObjectName, { lightPower: global.getRandomInt(5, 30) })
         }
       })
     }
@@ -75,16 +75,16 @@ window._randomizeLightPower = function(objects) {
     if(object.tags.light) {
       editedObjects.push({
         id: object.id,
-        lightPower: window.getRandomInt(5, 30)
+        lightPower: global.getRandomInt(5, 30)
       })
     }
   })
   if(editedObjects.length) {
-    window.socket.emit('editObjects', editedObjects)
+    global.socket.emit('editObjects', editedObjects)
   }
 }
 
-window._randomizeLightOpacity = function(objects) {
+global._randomizeLightOpacity = function(objects) {
   if(!Array.isArray(objects)) objects = GAME.objects
 
   const editedObjects = []
@@ -93,7 +93,7 @@ window._randomizeLightOpacity = function(objects) {
     if(object.subObjects) {
       OBJECTS.forAllSubObjects(object.subObjects, (so) => {
         if(so.tags && so.tags.light) {
-          window.socket.emit('editSubObject', object.id, so.subObjectName, { lightOpacity: window.getRandomFloat(.2, 1) })
+          global.socket.emit('editSubObject', object.id, so.subObjectName, { lightOpacity: global.getRandomFloat(.2, 1) })
         }
       })
     }
@@ -101,11 +101,11 @@ window._randomizeLightOpacity = function(objects) {
     if(object.tags.light) {
       editedObjects.push({
         id: object.id,
-        lightOpacity: window.getRandomFloat(.2, 1)
+        lightOpacity: global.getRandomFloat(.2, 1)
       })
     }
   })
   if(editedObjects.length) {
-    window.socket.emit('editObjects', editedObjects)
+    global.socket.emit('editObjects', editedObjects)
   }
 }

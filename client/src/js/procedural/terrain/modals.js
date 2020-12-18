@@ -2,7 +2,7 @@ import * as PIXI from 'pixi.js'
 import Swal from 'sweetalert2/src/sweetalert2.js';
 import tinycolor from 'tinycolor2';
 
-window.elevationColors = {
+global.elevationColors = {
   'Deep Water': parseInt(tinycolor('#00008b').toHex(), 16),
   'Water': parseInt(tinycolor('#4F42B5').toHex(), 16),
   Sand: parseInt(tinycolor('#ffe29c').toHex(), 16),
@@ -12,7 +12,7 @@ window.elevationColors = {
   Snow: parseInt(tinycolor('#eee').toHex(), 16)
 }
 
-window.heatColors = {
+global.heatColors = {
   'Coldest': parseInt(tinycolor('#00FFFF').toHex(), 16),
   'Colder': parseInt(tinycolor('#AAFFFF').toHex(), 16),
   'Cold': parseInt(tinycolor('#00CC99').toHex(), 16),
@@ -24,7 +24,7 @@ window.heatColors = {
 
 function viewNoiseData({noiseNodes, nodeProperty, title, type, terrainData}) {
 
-  const colorData = Object.keys(window.elevationColors).map((name) => {
+  const colorData = Object.keys(global.elevationColors).map((name) => {
 
   })
   const promise = Swal.fire({
@@ -55,37 +55,37 @@ function viewNoiseData({noiseNodes, nodeProperty, title, type, terrainData}) {
       if(type == 'heat') {
         const prop = node.heat.toFixed(2)
 
-        let heatType = window.heatIntegerLookup[prop]
+        let heatType = global.heatIntegerLookup[prop]
         if(node.elevationBitmask != 15) {
           sprite.tint = 0x333
         } else {
           // console.log(heatType)
           if(!heatType) console.log(node.heat)
-          sprite.tint = window.heatColors[heatType]
+          sprite.tint = global.heatColors[heatType]
         }
       } else if(type == 'landwatergroups' && terrainData) {
         if(node.isFloodFilled) {
           if(node.isWater) {
-            sprite.tint = window.elevationColors.Water
+            sprite.tint = global.elevationColors.Water
           }
 
           if(node.isLand) {
             if(terrainData.landMasses[node.landMassId].length < 10) {
-              sprite.tint = window.elevationColors.Snow
+              sprite.tint = global.elevationColors.Snow
             } else {
-              sprite.tint = window.elevationColors.Grass
+              sprite.tint = global.elevationColors.Grass
             }
           }
         }
       } else if(type == 'terrain') {
         const prop = node.elevation.toFixed(2)
 
-        let terrainType = window.elevationIntegerLookup[prop]
+        let terrainType = global.elevationIntegerLookup[prop]
         if(node.elevationBitmask != 15) {
           sprite.tint = 0x333
         } else {
           // console.log(terrainType)
-          sprite.tint = window.elevationColors[terrainType]
+          sprite.tint = global.elevationColors[terrainType]
         }
       } else if(type == 'water'){
         const prop = node.elevation.toFixed(2)

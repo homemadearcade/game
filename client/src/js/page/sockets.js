@@ -8,8 +8,8 @@ import io from 'socket.io-client'
 function init() {
   // EVENT SETUP
   if(PAGE.role.isArcadeMode || PAGE.role.isHomeEditor) {
-    window.networkSocket = window.socket
-    window.socket = window.mockSocket
+    global.networkSocket = global.socket
+    global.socket = global.mockSocket
   }
 
   ///////////////////////////////
@@ -18,151 +18,151 @@ function init() {
   ///////////////////////////////
 
   if(PAGE.role.isHost) {
-    window.socket.on('onBranchGame', (id) => {
-      window.local.emit('onBranchGame', id)
+    global.socket.on('onBranchGame', (id) => {
+      global.local.emit('onBranchGame', id)
     })
-    window.socket.on('onBranchGameCancel', () => {
-      window.local.emit('onBranchGameCancel')
+    global.socket.on('onBranchGameCancel', () => {
+      global.local.emit('onBranchGameCancel')
     })
-    window.socket.on('onBranchGameSave', (id) => {
-      window.local.emit('onBranchGameSave', id)
+    global.socket.on('onBranchGameSave', (id) => {
+      global.local.emit('onBranchGameSave', id)
     })
     // should be editor event
-    window.socket.on('onStartSequence', (sequenceId, ownerId) => {
-      window.local.emit('onStartSequence', sequenceId, ownerId)
+    global.socket.on('onStartSequence', (sequenceId, ownerId) => {
+      global.local.emit('onStartSequence', sequenceId, ownerId)
     })
-    window.socket.on('onTogglePauseSequence', (sequenceId) => {
-      window.local.emit('onTogglePauseSequence', sequenceId)
+    global.socket.on('onTogglePauseSequence', (sequenceId) => {
+      global.local.emit('onTogglePauseSequence', sequenceId)
     })
-    window.socket.on('onStopSequence', (sequenceId) => {
-      window.local.emit('onStopSequence', sequenceId)
+    global.socket.on('onStopSequence', (sequenceId) => {
+      global.local.emit('onStopSequence', sequenceId)
     })
 
     // these are editor events
-    window.socket.on('onSpawnAllNow', (objectId) => {
-      window.local.emit('onSpawnAllNow', objectId)
+    global.socket.on('onSpawnAllNow', (objectId) => {
+      global.local.emit('onSpawnAllNow', objectId)
     })
-    window.socket.on('onDestroySpawnIds', (objectId) => {
-      window.local.emit('onDestroySpawnIds', objectId)
-    })
-
-    window.socket.on('onEditSubObject', (ownerId, subObjectName, update) => {
-      window.local.emit('onEditSubObject', ownerId, subObjectName, update)
+    global.socket.on('onDestroySpawnIds', (objectId) => {
+      global.local.emit('onDestroySpawnIds', objectId)
     })
 
-    // PLAYERS CALL THIS
-    window.socket.on('onSendHeroInput', (heroInput, heroId) => {
-      window.local.emit('onSendHeroInput', heroInput, heroId)
+    global.socket.on('onEditSubObject', (ownerId, subObjectName, update) => {
+      global.local.emit('onEditSubObject', ownerId, subObjectName, update)
     })
 
     // PLAYERS CALL THIS
-    window.socket.on('onSendHeroKeyDown', (keyCode, heroId) => {
-      window.local.emit('onSendHeroKeyDown', keyCode, heroId)
+    global.socket.on('onSendHeroInput', (heroInput, heroId) => {
+      global.local.emit('onSendHeroInput', heroInput, heroId)
     })
-    window.socket.on('onSendHeroKeyUp', (keyCode, heroId) => {
-      window.local.emit('onSendHeroKeyUp', keyCode, heroId)
+
+    // PLAYERS CALL THIS
+    global.socket.on('onSendHeroKeyDown', (keyCode, heroId) => {
+      global.local.emit('onSendHeroKeyDown', keyCode, heroId)
+    })
+    global.socket.on('onSendHeroKeyUp', (keyCode, heroId) => {
+      global.local.emit('onSendHeroKeyUp', keyCode, heroId)
     })
 
     // EDITOR CALLS THIS
     // OBJECT -> ID
-    window.socket.on('onResetHeroToDefault', (hero) => {
-      window.local.emit('onResetHeroToDefault', hero)
+    global.socket.on('onResetHeroToDefault', (hero) => {
+      global.local.emit('onResetHeroToDefault', hero)
     })
     // EDITOR CALLS THIS
-    window.socket.on('onResetHeroToGameDefault', (hero) => {
-      window.local.emit('onResetHeroToGameDefault', hero)
+    global.socket.on('onResetHeroToGameDefault', (hero) => {
+      global.local.emit('onResetHeroToGameDefault', hero)
     })
     // EDITOR CALLS THIS
-    window.socket.on('onRespawnHero', (hero) => {
-      window.local.emit('onRespawnHero', hero)
-    })
-
-    // EDITOR CALLS THIS
-    window.socket.on('onEditGameState', (gameState) => {
-      window.local.emit('onEditGameState', gameState)
+    global.socket.on('onRespawnHero', (hero) => {
+      global.local.emit('onRespawnHero', hero)
     })
 
     // EDITOR CALLS THIS
-  	window.socket.on('onSnapAllObjectsToGrid', () => {
+    global.socket.on('onEditGameState', (gameState) => {
+      global.local.emit('onEditGameState', gameState)
+    })
+
+    // EDITOR CALLS THIS
+  	global.socket.on('onSnapAllObjectsToGrid', () => {
   	   GAME.snapToGrid()
   	})
 
     // EDITOR CALLS THIS
-    window.socket.on('onAnticipateObject', (object) => {
-      window.local.emit('onAnticipateObject', object)
+    global.socket.on('onAnticipateObject', (object) => {
+      global.local.emit('onAnticipateObject', object)
   	})
 
-    window.socket.on('onAddSubObject', (ownerId, subObject, subObjectName, options) => {
-      window.local.emit('onAddSubObject', ownerId, subObject, subObjectName, options)
+    global.socket.on('onAddSubObject', (ownerId, subObject, subObjectName, options) => {
+      global.local.emit('onAddSubObject', ownerId, subObject, subObjectName, options)
     })
   }
 
-  window.socket.on('onAddTrigger', (ownerId, trigger) => {
-    window.local.emit('onAddTrigger', ownerId, trigger)
+  global.socket.on('onAddTrigger', (ownerId, trigger) => {
+    global.local.emit('onAddTrigger', ownerId, trigger)
   })
-  window.socket.on('onEditTrigger', (ownerId, triggerId, trigger) => {
-    window.local.emit('onEditTrigger', ownerId, triggerId, trigger)
+  global.socket.on('onEditTrigger', (ownerId, triggerId, trigger) => {
+    global.local.emit('onEditTrigger', ownerId, triggerId, trigger)
   })
-  window.socket.on('onDeleteTrigger', (ownerId, triggerId) => {
-    window.local.emit('onDeleteTrigger', ownerId, triggerId)
-  })
-
-  window.socket.on('onAddHook', (ownerId, hook) => {
-    window.local.emit('onAddHook', ownerId, hook)
-  })
-  window.socket.on('onEditHook', (ownerId, hookId, hook) => {
-    window.local.emit('onEditHook', ownerId, hookId, hook)
-  })
-  window.socket.on('onDeleteHook', (ownerId, hookId) => {
-    window.local.emit('onDeleteHook', ownerId, hookId)
+  global.socket.on('onDeleteTrigger', (ownerId, triggerId) => {
+    global.local.emit('onDeleteTrigger', ownerId, triggerId)
   })
 
-  window.socket.on('onAddDialogueChoice', (ownerId, choiceId, choice) => {
-    window.local.emit('onAddDialogueChoice', ownerId, choiceId, choice)
+  global.socket.on('onAddHook', (ownerId, hook) => {
+    global.local.emit('onAddHook', ownerId, hook)
   })
-  window.socket.on('onDeleteDialogueChoice', (ownerId, choiceId) => {
-    window.local.emit('onDeleteDialogueChoice', ownerId, choiceId)
+  global.socket.on('onEditHook', (ownerId, hookId, hook) => {
+    global.local.emit('onEditHook', ownerId, hookId, hook)
+  })
+  global.socket.on('onDeleteHook', (ownerId, hookId) => {
+    global.local.emit('onDeleteHook', ownerId, hookId)
   })
 
-  window.socket.on('onEditGameHeroJSON', (gameHeroName, JSON) => {
-    window.local.emit('onEditGameHeroJSON', gameHeroName, JSON)
+  global.socket.on('onAddDialogueChoice', (ownerId, choiceId, choice) => {
+    global.local.emit('onAddDialogueChoice', ownerId, choiceId, choice)
+  })
+  global.socket.on('onDeleteDialogueChoice', (ownerId, choiceId) => {
+    global.local.emit('onDeleteDialogueChoice', ownerId, choiceId)
+  })
+
+  global.socket.on('onEditGameHeroJSON', (gameHeroName, JSON) => {
+    global.local.emit('onEditGameHeroJSON', gameHeroName, JSON)
   })
 
   // CLIENT HOST OR EDITOR CALL THIS
-  window.socket.on('onRemoveObject', (object) => {
+  global.socket.on('onRemoveObject', (object) => {
     OBJECTS.removeObject(object)
   })
 
   // CLIENT HOST OR EDITOR CALL THIS
-  window.socket.on('onRemoveHero', (hero) => {
+  global.socket.on('onRemoveHero', (hero) => {
     HERO.removeHero(hero)
   })
 
   // EDITORS and PLAYERS call this
-  window.socket.on('onEditHero', (updatedHero) => {
-    window.local.emit('onEditHero', updatedHero)
+  global.socket.on('onEditHero', (updatedHero) => {
+    global.local.emit('onEditHero', updatedHero)
   })
 
-  window.socket.on('onDeleteHero', (heroId) => {
-    window.local.emit('onDeleteHero', heroId)
+  global.socket.on('onDeleteHero', (heroId) => {
+    global.local.emit('onDeleteHero', heroId)
   })
-  window.socket.on('onDeleteQuest', (heroId, questId) => {
-    window.local.emit('onDeleteQuest', heroId, questId)
+  global.socket.on('onDeleteQuest', (heroId, questId) => {
+    global.local.emit('onDeleteQuest', heroId, questId)
   })
-  window.socket.on('onDeleteObject', (object) => {
-    window.local.emit('onDeleteObject', object)
+  global.socket.on('onDeleteObject', (object) => {
+    global.local.emit('onDeleteObject', object)
   })
-  window.socket.on('onDeleteSubObject', (owner, subObjectName) => {
-    window.local.emit('onDeleteSubObject', owner, subObjectName)
+  global.socket.on('onDeleteSubObject', (owner, subObjectName) => {
+    global.local.emit('onDeleteSubObject', owner, subObjectName)
   })
-  window.socket.on('onDeleteSubObjectChance', (ownerId, subObjectName) => {
-    window.local.emit('onDeleteSubObjectChance', ownerId, subObjectName)
+  global.socket.on('onDeleteSubObjectChance', (ownerId, subObjectName) => {
+    global.local.emit('onDeleteSubObjectChance', ownerId, subObjectName)
   })
 
 
   // EDITOR CALLS THIS
-  window.socket.on('onEditObjects', (editedObjects) => {
-    window.local.emit('onEditObjects', editedObjects)
+  global.socket.on('onEditObjects', (editedObjects) => {
+    global.local.emit('onEditObjects', editedObjects)
   })
 
   ///////////////////////////////
@@ -172,18 +172,18 @@ function init() {
 
   if(!PAGE.role.isHost) {
     // HOST CALLS THIS
-    window.socket.on('onUpdateGameState', (gameState) => {
-      window.local.emit('onUpdateGameState', gameState)
+    global.socket.on('onUpdateGameState', (gameState) => {
+      global.local.emit('onUpdateGameState', gameState)
     })
 
     // host CALLS THIS
-    window.socket.on('onUpdateObjectsComplete', (objectsUpdated) => {
-      window.local.emit('onNetworkUpdateObjectsComplete', objectsUpdated)
+    global.socket.on('onUpdateObjectsComplete', (objectsUpdated) => {
+      global.local.emit('onNetworkUpdateObjectsComplete', objectsUpdated)
     })
 
     // host CALLS THIS
-    window.socket.on('onUpdateObjects', (objectsUpdated) => {
-      window.local.emit('onNetworkUpdateObjects', objectsUpdated)
+    global.socket.on('onUpdateObjects', (objectsUpdated) => {
+      global.local.emit('onNetworkUpdateObjects', objectsUpdated)
         // old interpolation code
         // if(PAGE.role.isPlayer) {
         //   objectsUpdated.forEach((obj) => {
@@ -196,7 +196,7 @@ function init() {
         //     go._lerpY = obj.y
         //     delete obj.x
         //     delete obj.y
-        //     window.mergeDeep(go, obj)
+        //     global.mergeDeep(go, obj)
         //   })
         // } else if(PAGE.role.isPlayEditor) {
         //   GAME.objects = objectsUpdated
@@ -208,11 +208,11 @@ function init() {
     })
 
     // HOST CALLS THIS
-    window.socket.on('onUpdateHero', (updatedHero) => {
-      window.local.emit('onNetworkUpdateHero', updatedHero)
+    global.socket.on('onUpdateHero', (updatedHero) => {
+      global.local.emit('onNetworkUpdateHero', updatedHero)
       // old interpolation code
       // } else if(PAGE.role.isPlayEditor) {
-      //   window.mergeDeep(GAME.heros[updatedHero.id], updatedHero)
+      //   global.mergeDeep(GAME.heros[updatedHero.id], updatedHero)
       // } else if(PAGE.role.isPlayer) {
       //   let hero = GAME.heros[updatedHero.id]
       //   if(!hero) GAME.heros[updatedHero.id] = updatedHero
@@ -220,21 +220,21 @@ function init() {
       //   hero._lerpY = updatedHero.y
       //   delete updatedHero.x
       //   delete updatedHero.y
-      //   window.mergeDeep(hero, updatedHero)
+      //   global.mergeDeep(hero, updatedHero)
     })
 
-    window.socket.on('onUpdateHerosPos', (updatedHerosPos) => {
-      window.local.emit('onNetworkUpdateHerosPos', updatedHerosPos)
+    global.socket.on('onUpdateHerosPos', (updatedHerosPos) => {
+      global.local.emit('onNetworkUpdateHerosPos', updatedHerosPos)
     })
   }
 
   // EDITOR CALLS THIS
-  window.socket.on('onUpdateWorld', (updatedWorld) => {
-    window.local.emit('onUpdateWorld', updatedWorld)
+  global.socket.on('onUpdateWorld', (updatedWorld) => {
+    global.local.emit('onUpdateWorld', updatedWorld)
   })
 
-  window.socket.on('onUpdateLibrary', (updatedLibrary) => {
-    window.local.emit('onUpdateLibrary', updatedLibrary)
+  global.socket.on('onUpdateLibrary', (updatedLibrary) => {
+    global.local.emit('onUpdateLibrary', updatedLibrary)
   })
 
   ///////////////////////////////
@@ -243,141 +243,141 @@ function init() {
   ///////////////////////////////
 
   // EDITOR CALLS THIS
-  window.socket.on('onStopGame', (options) => {
-    window.local.emit('onStopGame', options)
+  global.socket.on('onStopGame', (options) => {
+    global.local.emit('onStopGame', options)
   })
 
   // EDITOR CALLS THIS
-  window.socket.on('onGameStart', (options) => {
-    window.local.emit('onGameStart', options)
+  global.socket.on('onGameStart', (options) => {
+    global.local.emit('onGameStart', options)
   })
 
   // EDITOR CALLS THIS
-  window.socket.on('onStartPregame', (options) => {
-    window.local.emit('onStartPregame', options)
+  global.socket.on('onStartPregame', (options) => {
+    global.local.emit('onStartPregame', options)
   })
 
   // EVERYONE CALLS THIS
-  window.socket.on('onAddObjects', (objectsAdded) => {
-    window.local.emit('onNetworkAddObjects', objectsAdded)
+  global.socket.on('onAddObjects', (objectsAdded) => {
+    global.local.emit('onNetworkAddObjects', objectsAdded)
   })
 
   // EDITOR CALLS THIS
-  window.socket.on('onResetObjects', () => {
-    window.local.emit('onResetObjects')
+  global.socket.on('onResetObjects', () => {
+    global.local.emit('onResetObjects')
   })
 
   // EDITOR CALLS THIS
-  window.socket.on('onResetWorld', () => {
-    window.local.emit('onResetWorld')
+  global.socket.on('onResetWorld', () => {
+    global.local.emit('onResetWorld')
   })
 
-  window.socket.on('onSendHeroMapEditor', (remoteState, heroId) => {
-    window.local.emit('onSendHeroMapEditor', remoteState, heroId)
+  global.socket.on('onSendHeroMapEditor', (remoteState, heroId) => {
+    global.local.emit('onSendHeroMapEditor', remoteState, heroId)
   })
 
   // CLIENT HOST OR EDITOR CALL THIS
   // OBJECT -> ID
 
   // EDITOR CALLS THIS
-  window.socket.on('onUpdateGrid', (grid) => {
-    window.local.emit('onLoadingScreenStart')
+  global.socket.on('onUpdateGrid', (grid) => {
+    global.local.emit('onLoadingScreenStart')
     setTimeout(() => {
-      window.local.emit('onUpdateGrid', grid)
-      window.local.emit('onLoadingScreenEnd')
+      global.local.emit('onUpdateGrid', grid)
+      global.local.emit('onLoadingScreenEnd')
     }, 100)
   })
 
-  window.socket.on('onUpdateGridNode', (x, y, update) => {
-    window.local.emit('onUpdateGridNode', x, y, update)
+  global.socket.on('onUpdateGridNode', (x, y, update) => {
+    global.local.emit('onUpdateGridNode', x, y, update)
   })
 
 
-  window.socket.on('onCopyGame', (game) => {
-    window.local.emit('onReloadGame', game)
+  global.socket.on('onCopyGame', (game) => {
+    global.local.emit('onReloadGame', game)
   })
 
 
   // this is switching between games
-  window.socket.on('onSetGame', (game) => {
+  global.socket.on('onSetGame', (game) => {
     console.log('changing', game.id)
-    window.local.emit('onChangeGame', game)
+    global.local.emit('onChangeGame', game)
   })
 
   // this is from branch merge
-  window.socket.on('onSetGameJSON', (game) => {
-    window.local.emit('onChangeGame', game)
+  global.socket.on('onSetGameJSON', (game) => {
+    global.local.emit('onChangeGame', game)
   })
 
-  // window.socket.on('onAskHeroToNameObject', (object, heroId) => {
-  //   window.local.emit('onAskHeroToNameObject', object, heroId)
+  // global.socket.on('onAskHeroToNameObject', (object, heroId) => {
+  //   global.local.emit('onAskHeroToNameObject', object, heroId)
   //   // let ctx = document.getElementById('swal-canvas').getContext('2d')
   //   // ctx.fillStyle = object.color
   //   // ctx.fillRect(10, 10, object.mod().width, object.mod().height);
   // })
   //
-  // window.socket.on('onAskHeroToWriteDialogue', (object, heroId) => {
-  //   window.local.emit('onAskHeroToWriteDialogue', object, heroId)
+  // global.socket.on('onAskHeroToWriteDialogue', (object, heroId) => {
+  //   global.local.emit('onAskHeroToWriteDialogue', object, heroId)
   // })
 
-  window.socket.on('onHeroChooseOption', (heroId, optionId) => {
-    window.local.emit('onHeroChooseOption', heroId, optionId)
+  global.socket.on('onHeroChooseOption', (heroId, optionId) => {
+    global.local.emit('onHeroChooseOption', heroId, optionId)
   })
 
-  window.socket.on('onAddGameTag', (tagName) => {
-    window.local.emit('onAddGameTag', tagName)
+  global.socket.on('onAddGameTag', (tagName) => {
+    global.local.emit('onAddGameTag', tagName)
   })
 
-  window.socket.on('onUpdateGameCustomInputBehavior', (tagName) => {
-    window.local.emit('onUpdateGameCustomInputBehavior', tagName)
+  global.socket.on('onUpdateGameCustomInputBehavior', (tagName) => {
+    global.local.emit('onUpdateGameCustomInputBehavior', tagName)
   })
 
-  window.socket.on('onGameSaved', (id) => {
-    window.local.emit('onGameSaved', id)
+  global.socket.on('onGameSaved', (id) => {
+    global.local.emit('onGameSaved', id)
   })
 
-  window.socket.on('onUpdateCustomGameFx', (customFx) => {
-    window.local.emit('onUpdateCustomGameFx', customFx)
+  global.socket.on('onUpdateCustomGameFx', (customFx) => {
+    global.local.emit('onUpdateCustomGameFx', customFx)
   })
 
-  window.socket.on('onCustomFxEvent', (eventName) => {
-    window.local.emit('onCustomFxEvent', eventName)
+  global.socket.on('onCustomFxEvent', (eventName) => {
+    global.local.emit('onCustomFxEvent', eventName)
   })
 
-  window.socket.on('onGetCustomGameFx', (eventName) => {
-    window.local.emit('onGetCustomGameFx', eventName)
+  global.socket.on('onGetCustomGameFx', (eventName) => {
+    global.local.emit('onGetCustomGameFx', eventName)
   })
 
-  window.socket.on('openHeroModal', (heroId, title, body) => {
-    window.local.emit('onOpenHeroModal', heroId, title, body)
+  global.socket.on('openHeroModal', (heroId, title, body) => {
+    global.local.emit('onOpenHeroModal', heroId, title, body)
   })
 
-  window.socket.on('showHeroToast', (heroId, body) => {
-    window.local.emit('onShowHeroToast', heroId, body)
+  global.socket.on('showHeroToast', (heroId, body) => {
+    global.local.emit('onShowHeroToast', heroId, body)
   })
 
-  window.socket.on('onHeroCameraEffect', (type, heroId, options) => {
-    window.local.emit('onHeroCameraEffect', type, heroId, options)
+  global.socket.on('onHeroCameraEffect', (type, heroId, options) => {
+    global.local.emit('onHeroCameraEffect', type, heroId, options)
   })
 
-  window.socket.on('onObjectAnimation', (type, objectId, options) => {
-    window.local.emit('onObjectAnimation', type, objectId, options)
+  global.socket.on('onObjectAnimation', (type, objectId, options) => {
+    global.local.emit('onObjectAnimation', type, objectId, options)
   })
 
-  window.socket.on('onEmitGameEvent', (eventName, arg1, arg2, arg3, arg4) => {
-    if(!PAGE.role.isHost) window.local.emit(eventName, arg1, arg2, arg3, arg4)
+  global.socket.on('onEmitGameEvent', (eventName, arg1, arg2, arg3, arg4) => {
+    if(!PAGE.role.isHost) global.local.emit(eventName, arg1, arg2, arg3, arg4)
   })
 
-  window.socket.on('onAddLog', (data) => {
-    window.local.emit('onAddLog', data)
+  global.socket.on('onAddLog', (data) => {
+    global.local.emit('onAddLog', data)
   })
 
-  window.socket.on('onSendNotification', (data) => {
-    window.local.emit('onSendNotification', data)
+  global.socket.on('onSendNotification', (data) => {
+    global.local.emit('onSendNotification', data)
   })
 
   if(!PAGE.role.isHost && PAGE.role.isAdmin) {
-    window.socket.on('onHostLog', (msg, arg1, arg2, arg3) => {
+    global.socket.on('onHostLog', (msg, arg1, arg2, arg3) => {
       let args = [msg, arg1, arg2, arg3].filter(i => !!i)
       console.log('host -> ', ...args)
     })
@@ -385,86 +385,86 @@ function init() {
 
 
   // these are game events
-  window.socket.on('onHeroStartQuest', (heroId, questId) => {
-    window.local.emit('onHeroStartQuest', heroId, questId)
+  global.socket.on('onHeroStartQuest', (heroId, questId) => {
+    global.local.emit('onHeroStartQuest', heroId, questId)
   })
 
-  window.socket.on('onHeroCompleteQuest', (heroId, questId) => {
-    window.local.emit('onHeroCompleteQuest', heroId, questId)
+  global.socket.on('onHeroCompleteQuest', (heroId, questId) => {
+    global.local.emit('onHeroCompleteQuest', heroId, questId)
   })
 
-  window.socket.on('onDropObject', (objectId, subObjectName, amount) => {
-    window.local.emit('onDropObject', objectId, subObjectName, amount)
+  global.socket.on('onDropObject', (objectId, subObjectName, amount) => {
+    global.local.emit('onDropObject', objectId, subObjectName, amount)
   })
-  window.socket.on('onUnequipObject', (objectId, subObjectName) => {
-    window.local.emit('onUnequipObject', objectId, subObjectName)
+  global.socket.on('onUnequipObject', (objectId, subObjectName) => {
+    global.local.emit('onUnequipObject', objectId, subObjectName)
   })
-  window.socket.on('onEquipObject', (objectId, subObjectName, key) => {
-    window.local.emit('onEquipObject', objectId, subObjectName, key)
-  })
-
-
-  window.socket.on('onAddAnimation', (name, animationData) => {
-    window.local.emit('onAddAnimation', name, animationData)
-  })
-
-  window.socket.on('onResetLiveParticle', (objectId) => {
-    window.local.emit('onResetLiveParticle', objectId)
-  })
-
-  window.socket.on('onStartMod', (mod) => {
-    window.local.emit('onStartMod', mod)
-  })
-  window.socket.on('onEndMod', (manualRevertId) => {
-    window.local.emit('onEndMod', manualRevertId)
-  })
-
-  window.socket.on('onResetPhysicsProperties', (objectId) => {
-    window.local.emit('onResetPhysicsProperties', objectId)
-  })
-
-  window.socket.on('onRequestAdminApproval', (action, data) => {
-    window.local.emit('onRequestAdminApproval', action, data)
-  })
-
-  window.socket.on('onResolveAdminApproval', (action, data) => {
-    window.local.emit('onResolveAdminApproval', action, data)
+  global.socket.on('onEquipObject', (objectId, subObjectName, key) => {
+    global.local.emit('onEquipObject', objectId, subObjectName, key)
   })
 
 
-  window.socket.on('onEditMetadata', (update) => {
-    window.local.emit('onEditMetadata', update)
+  global.socket.on('onAddAnimation', (name, animationData) => {
+    global.local.emit('onAddAnimation', name, animationData)
   })
 
-  window.socket.on('onProcessEffect', (effectName, effectedIds, effectorId) => {
-    window.local.emit('onProcessEffect', effectName, effectedIds, effectorId)
+  global.socket.on('onResetLiveParticle', (objectId) => {
+    global.local.emit('onResetLiveParticle', objectId)
   })
 
-  window.socket.on('onHostJoined', () => {
-    window.local.emit('onHostJoined')
+  global.socket.on('onStartMod', (mod) => {
+    global.local.emit('onStartMod', mod)
+  })
+  global.socket.on('onEndMod', (manualRevertId) => {
+    global.local.emit('onEndMod', manualRevertId)
   })
 
-  window.socket.on('onUpdateGameSession', (data) => {
-    window.HAGameSession = data
-    window.local.emit('onUpdateGameSession')
+  global.socket.on('onResetPhysicsProperties', (objectId) => {
+    global.local.emit('onResetPhysicsProperties', objectId)
   })
 
-  window.socket.on('onUpdateTheme', (data) => {
-    window.local.emit('onUpdateTheme', data)
-  })
-  window.socket.on('onPlaySoundAsType', (id, type) => {
-    window.local.emit('onPlaySoundAsType', id, type)
+  global.socket.on('onRequestAdminApproval', (action, data) => {
+    global.local.emit('onRequestAdminApproval', action, data)
   })
 
-  window.socket.on('onSpriteAnimation', (object, animationName, options) => {
-    window.local.emit('onSpriteAnimation', object, animationName, options)
+  global.socket.on('onResolveAdminApproval', (action, data) => {
+    global.local.emit('onResolveAdminApproval', action, data)
   })
 
-  window.socket.on('onStartDiffFlow', (id) => {
-    window.local.emit('onStartDiffFlow', id)
+
+  global.socket.on('onEditMetadata', (update) => {
+    global.local.emit('onEditMetadata', update)
   })
-  window.socket.on('onEndDiffFlow', (id) => {
-    window.local.emit('onEndDiffFlow', id)
+
+  global.socket.on('onProcessEffect', (effectName, effectedIds, effectorId) => {
+    global.local.emit('onProcessEffect', effectName, effectedIds, effectorId)
+  })
+
+  global.socket.on('onHostJoined', () => {
+    global.local.emit('onHostJoined')
+  })
+
+  global.socket.on('onUpdateGameSession', (data) => {
+    global.HAGameSession = data
+    global.local.emit('onUpdateGameSession')
+  })
+
+  global.socket.on('onUpdateTheme', (data) => {
+    global.local.emit('onUpdateTheme', data)
+  })
+  global.socket.on('onPlaySoundAsType', (id, type) => {
+    global.local.emit('onPlaySoundAsType', id, type)
+  })
+
+  global.socket.on('onSpriteAnimation', (object, animationName, options) => {
+    global.local.emit('onSpriteAnimation', object, animationName, options)
+  })
+
+  global.socket.on('onStartDiffFlow', (id) => {
+    global.local.emit('onStartDiffFlow', id)
+  })
+  global.socket.on('onEndDiffFlow', (id) => {
+    global.local.emit('onEndDiffFlow', id)
   })
 }
 

@@ -2,8 +2,8 @@ import gridUtil from '../utils/grid.js'
 import pathfinding from '../utils/pathfinding.js'
 
 function setDefault() {
-  window.defaultWorld = {
-    id: 'world-' + window.uniqueID(),
+  global.defaultWorld = {
+    id: 'world-' + global.uniqueID(),
   	lockCamera: null,
   	gameBoundaries: null,
     proceduralBoundaries: null,
@@ -41,9 +41,9 @@ function setDefault() {
     animations: {}
   }
 
-  window.local.on('onGridLoaded', () => {
-    window.defaultWorld.spawnPointX = GAME.grid.startX + (GAME.grid.width * GAME.grid.nodeSize)/2
-    window.defaultWorld.spawnPointY = GAME.grid.startY + (GAME.grid.height * GAME.grid.nodeSize)/2
+  global.local.on('onGridLoaded', () => {
+    global.defaultWorld.spawnPointX = GAME.grid.startX + (GAME.grid.width * GAME.grid.nodeSize)/2
+    global.defaultWorld.spawnPointY = GAME.grid.startY + (GAME.grid.height * GAME.grid.nodeSize)/2
   })
 }
 

@@ -39,15 +39,15 @@ export default class RelatedTagsMenu extends React.Component {
     render() {
         const { objectSelected, subObject } = this.props
         let tagsToRender = Object.keys(objectSelected.tags).reduce((prev, next) => {
-          if(window.allTags[next] && window.allTags[next].relatedTags) {
-            prev.push(...window.allTags[next].relatedTags)
+          if(global.allTags[next] && global.allTags[next].relatedTags) {
+            prev.push(...global.allTags[next].relatedTags)
           }
           return prev
         }, [])
 
         tagsToRender = Object.keys(objectSelected.descriptors || {}).reduce((prev, next) => {
-          if(window.allTags[next] && window.allTags[next].relatedTags) {
-            prev.push(...window.allTags[next].relatedTags)
+          if(global.allTags[next] && global.allTags[next].relatedTags) {
+            prev.push(...global.allTags[next].relatedTags)
           }
           return prev
         }, tagsToRender)

@@ -61,10 +61,10 @@ function heroCollisionEffects(hero) {
       if(body.constructPart && collider.mod().tags['seperateParts']) {
         const tags = collider.mod().tags
         body.constructPart.tags = tags
-        window.local.emit('onHeroCollide', heroPO.gameObject, body.constructPart, result)
+        global.local.emit('onHeroCollide', heroPO.gameObject, body.constructPart, result)
         delete body.constructPart.tags
       } else {
-        window.local.emit('onHeroCollide', heroPO.gameObject, collider, result)
+        global.local.emit('onHeroCollide', heroPO.gameObject, collider, result)
       }
 
       // dont enter objects that you cant enter...
@@ -160,10 +160,10 @@ function heroCorrection(hero) {
         if(result.overlap_y > 0) {
           hero.onObstacle = true
           if(landingObject && hero.velocityY > 500) {
-            window.emitGameEvent('onHeroPowerLand', hero, landingObject.gameObject, result)
+            global.emitGameEvent('onHeroPowerLand', hero, landingObject.gameObject, result)
           }
           if(landingObject && hero.velocityY > 100) {
-            window.emitGameEvent('onHeroLand', hero, landingObject.gameObject, result)
+            global.emitGameEvent('onHeroLand', hero, landingObject.gameObject, result)
           }
           if(landingObject && landingObject.gameObject.mod().tags['movingPlatform']) {
             hero._parentId = landingObject.gameObject.id
@@ -175,7 +175,7 @@ function heroCorrection(hero) {
           if(hero.velocityY < 0) {
             hero.velocityY = 0
             if(landingObject) {
-              window.emitGameEvent('onHeroHeadHit', hero, landingObject.gameObject, result)
+              global.emitGameEvent('onHeroHeadHit', hero, landingObject.gameObject, result)
             }
           }
           if(hero.velocityAngle) hero.velocityAngle *= .09
@@ -234,7 +234,7 @@ function heroCorrection(hero) {
 
     if(final) {
 
-      hero.directions = {...window.defaultHero.directions}
+      hero.directions = {...global.defaultHero.directions}
       // just give up correction and prevent any movement from these mother fuckers
       if(illegal) {
         hero.x = hero._initialX
@@ -282,7 +282,7 @@ function objectCollisionEffects(po) {
         const colliderIsHidden = collider.mod().tags.hidden && !hero.mod().tags.seeHiddenObjects
 
         if(hero && !colliderIsHidden) {
-          const hooks = window.getHooksByEventName(collider.mod(), 'onObjectInteractable')
+          const hooks = global.getHooksByEventName(collider.mod(), 'onObjectInteractable')
 
           let passed = true
           if(hooks.length) {
@@ -303,8 +303,8 @@ function objectCollisionEffects(po) {
               }
             }
             if(hero._prevInteractableObjectId !== hero.interactableObjectId) {
-              window.emitGameEvent('onUpdatePlayerUI', hero)
-              window.emitGameEvent('onHeroCanInteract', hero, collider)
+              global.emitGameEvent('onUpdatePlayerUI', hero)
+              global.emitGameEvent('onHeroCanInteract', hero, collider)
             }
           }
         }
@@ -337,11 +337,11 @@ function objectCollisionEffects(po) {
       if(body.constructPart && collider.mod().tags['seperateParts']) {
         const tags = collider.mod().tags
         body.constructPart.tags = tags
-        window.local.emit('onObjectCollide', agent, body.constructPart, result)
+        global.local.emit('onObjectCollide', agent, body.constructPart, result)
         delete body.constructPart.tags
       } else {
         // this will only not get called if you set ( notInCollisions )
-        window.local.emit('onObjectCollide', agent, collider, result)
+        global.local.emit('onObjectCollide', agent, collider, result)
       }
     }
   }
@@ -486,7 +486,7 @@ function containObjectWithinGridBoundaries(object) {
       // FOR ZOOM IN PURGATORY, PURGATORY ONLY SUPPORTS 1 PLAYER RIGHT NOW
       let hero = GAME.heros[HERO.id]
       if(PAGE.role.isPlayEditor) {
-        hero = window.editingHero
+        hero = global.editingHero
       }
 
       if(objectToEdit.x + objectToEdit.mod().width > gameBoundaries.x + gameBoundaries.width - ((HERO.cameraWidth * hero.zoomMultiplier)/2 )) {

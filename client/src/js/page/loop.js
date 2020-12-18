@@ -16,9 +16,9 @@ let mapNetworkInterval = 1000/24
 let completeNetworkInterval = 1000/.1
 var frameCount = 0;
 var fps, startTime, now, deltaRender, deltaMapNetwork, deltaCompleteNetwork, thenRender, thenMapNetwork, thenCompleteNetwork, thenUpdate, deltaUpdate;
-window.w = window;
+global.w = window;
 requestAnimationFrame = w.requestAnimationFrame || w.webkitRequestAnimationFrame || w.msRequestAnimationFrame || w.mozRequestAnimationFrame;
-window.startGameLoop = function() {
+global.startGameLoop = function() {
   if(!GAME.objects || !GAME.world || !GAME.grid || !GAME.heros || (PAGE.role.isPlayer && !GAME.heros[HERO.id])) {
     console.log('game loaded without critical data, trying again soon', !GAME.objects, !GAME.world, !GAME.grid, !GAME.heros, (PAGE.role.isPlayer && !GAME.heros[HERO.id]))
     setTimeout(startGameLoop, 1000)
@@ -26,7 +26,7 @@ window.startGameLoop = function() {
   }
 
   if(PAGE.role.isHost && !PAGE.role.isTempHost) {
-    window.socket.emit('hostJoined')
+    global.socket.emit('hostJoined')
   }
 
   startTime = Date.now();
@@ -38,7 +38,7 @@ window.startGameLoop = function() {
   // begin main loop
   mainLoop()
   if(PAGE.role.isHost && !PAGE.role.isArcadeMode) setInterval(() => {
-    window.socket.emit('updateGameOnServerOnly', {
+    global.socket.emit('updateGameOnServerOnly', {
       id: GAME.id,
       metadata: GAME.metadata,
       version: GAME.version,
@@ -110,10 +110,10 @@ var mainLoop = function () {
 ///////////////////////////////
 
 function update(delta) {
-  window.local.emit('onUpdate', delta)
+  global.local.emit('onUpdate', delta)
 
   if(PAGE.role.isHost && !PAGE.role.isArcadeMode) {
-    window.socket.emit('updateHerosPos', SI.snapshot.create(GAME.heroList.map((hero) => {
+    global.socket.emit('updateHerosPos', SI.snapshot.create(GAME.heroList.map((hero) => {
       const data = {
         id: hero.id,
         x: hero.x,
@@ -136,10 +136,10 @@ function update(delta) {
 }
 
 function render(delta) {
-  window.local.emit('onRender', delta)
+  global.local.emit('onRender', delta)
 }
 
-window.updateHistory = {
+global.updateHistory = {
   objectMap: {},
   heroMap: {},
   gameState: {},
@@ -149,12 +149,12 @@ window.updateHistory = {
 
 function getDiff(historyProp, nextUpdate) {
   let diff
-  if(window.updateHistory[historyProp]) {
-    diff = window.getObjectDiff(nextUpdate, window.updateHistory[historyProp])
+  if(global.updateHistory[historyProp]) {
+    diff = global.getObjectDiff(nextUpdate, global.updateHistory[historyProp])
   } else {
     diff = nextUpdate
   }
-  window.updateHistory[historyProp] = nextUpdate
+  global.updateHistory[historyProp] = nextUpdate
   if(Array.isArray(diff)) diff = diff.filter((object) => !!object)
   return diff
 }
@@ -162,16 +162,16 @@ function getDiff(historyProp, nextUpdate) {
 let lastMapUpdate
 function mapNetworkUpdate() {
   if(PAGE.role.isArcadeMode) return
-  window.socket.emit('updateGameState', getDiff('gameState', _.cloneDeep(GAME.gameState) ))
-  window.socket.emit('updateObjects', getDiff('objectMap', _.cloneDeep(GAME.objects.map(GAME.mod).map(OBJECTS.getMapState)) ))
-  window.socket.emit('updateHeros', getDiff('heroMap', _.cloneDeep(GAME.heroList.map(GAME.mod).map(HERO.getMapState)) ))
+  global.socket.emit('updateGameState', getDiff('gameState', _.cloneDeep(GAME.gameState) ))
+  global.socket.emit('updateObjects', getDiff('objectMap', _.cloneDeep(GAME.objects.map(GAME.mod).map(OBJECTS.getMapState)) ))
+  global.socket.emit('updateHeros', getDiff('heroMap', _.cloneDeep(GAME.heroList.map(GAME.mod).map(HERO.getMapState)) ))
 }
 
 function completeNetworkUpdate() {
   if(PAGE.role.isArcadeMode) return
-  window.socket.emit('updateObjects', getDiff('objectComplete', _.cloneDeep(GAME.objects.map(GAME.mod)) ))
+  global.socket.emit('updateObjects', getDiff('objectComplete', _.cloneDeep(GAME.objects.map(GAME.mod)) ))
   const heroCompleteUpdate = getDiff('heroComplete', _.cloneDeep(GAME.heroList.map(GAME.mod)) )
-  window.socket.emit('updateHeros', heroCompleteUpdate)
+  global.socket.emit('updateHeros', heroCompleteUpdate)
   // if(GAME.gameState.started && GAME.world.tags.storeEntireGameState) {
   //   let storedGameState = localStorage.getItem('gameStates')
   //   localStorage.setItem('gameStates', JSON.stringify({...JSON.parse(storedGameState), [GAME.id]: {...GAME, grid: {...GAME.grid, nodes: null }}}))

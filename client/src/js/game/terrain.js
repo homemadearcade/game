@@ -40,9 +40,9 @@ export function objectOnTerrain(object) {
 
   if(wasInWater != object.onWater) {
     if(object.onWater) {
-      if(object.tags.hero) window.emitGameEvent('onHeroEnterWater', object)
+      if(object.tags.hero) global.emitGameEvent('onHeroEnterWater', object)
     } else {
-      if(object.tags.hero) window.emitGameEvent('onHeroLeaveWater', object)
+      if(object.tags.hero) global.emitGameEvent('onHeroLeaveWater', object)
     }
   }
 

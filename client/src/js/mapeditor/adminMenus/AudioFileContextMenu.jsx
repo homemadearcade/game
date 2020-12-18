@@ -11,7 +11,7 @@ export default class AudioFileContextMenu extends React.Component{
 
       // if (key === "remove-from-game-assets") {
       //   GAME.assets.audio[audioFileId] = null
-      //   window.socket.emit('updateAssets', { audio: GAME.assets.audio })
+      //   global.socket.emit('updateAssets', { audio: GAME.assets.audio })
       //   BELOWMANAGER.ref.forceUpdate()
       // }
 
@@ -30,7 +30,7 @@ export default class AudioFileContextMenu extends React.Component{
       //     showCancelButton: true,
       //     confirmButtonText: 'Next',
       //   })
-      //   window.socket.emit('updateLibrary', { subObject: {...GAME.library.subObject, [name]: OBJECTS.getProperties(objectSelected)} })
+      //   global.socket.emit('updateLibrary', { subObject: {...GAME.library.subObject, [name]: OBJECTS.getProperties(objectSelected)} })
       // }
     }
   }

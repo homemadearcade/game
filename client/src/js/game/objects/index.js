@@ -10,15 +10,15 @@ import { setTarget, setPathTarget } from '../ai/pathfinders.js'
 
 class Objects{
   constructor() {
-    window.defaultObjectColor = '#525252'
-    window.defaultSubObject = {
+    global.defaultObjectColor = '#525252'
+    global.defaultSubObject = {
       relativeX: 0, relativeY: 0,
       objectType: 'subObject',
       defaultSprite: 'solidcolorsprite',
       count: 1,
     }
 
-    window.defaultObject = {
+    global.defaultObject = {
       velocityX: 0,
       velocityY: 0,
       velocityMax: 100,
@@ -31,16 +31,16 @@ class Objects{
   }
 
   onGridLoaded() {
-    window.defaultObject.width = GAME.grid.nodeSize
-    window.defaultObject.height = GAME.grid.nodeSize
-    window.defaultSubObject.width = GAME.grid.nodeSize
-    window.defaultSubObject.height = GAME.grid.nodeSize
-    window.defaultSubObject.tags = { subObject: true }
+    global.defaultObject.width = GAME.grid.nodeSize
+    global.defaultObject.height = GAME.grid.nodeSize
+    global.defaultSubObject.width = GAME.grid.nodeSize
+    global.defaultSubObject.height = GAME.grid.nodeSize
+    global.defaultSubObject.tags = { subObject: true }
   }
 
   onGameLoaded() {
-    // window.defaultObject.tags = window.tags
-    // window.mergeDeep(window.defaultObject.tags, window.plainObjectTags)
+    // global.defaultObject.tags = global.tags
+    // global.mergeDeep(global.defaultObject.tags, global.plainObjectTags)
   }
 
   onObjectCollide(agent, collider, result) {
@@ -78,7 +78,7 @@ class Objects{
 
     // game.objects.forEach((childObject) => {
     //   if(childObject.parentId === object.id) {
-    //     window.setObjectPos(childObject, {x: childObject.x + diffX, y: childObject.y + diffY}, game)
+    //     global.setObjectPos(childObject, {x: childObject.x + diffX, y: childObject.y + diffY}, game)
     //   }
     // })
 
@@ -161,7 +161,7 @@ class Objects{
       state.subObjects = {}
       OBJECTS.forAllSubObjects(object.subObjects, (subObject, subObjectName) => {
         state.subObjects[subObjectName] = OBJECTS.getState(subObject)
-        window.removeFalsey(state.subObjects[subObjectName])
+        global.removeFalsey(state.subObjects[subObjectName])
       })
     }
 
@@ -176,7 +176,7 @@ class Objects{
           disabled,
         }
 
-        window.removeFalsey(state.triggers[triggerId])
+        global.removeFalsey(state.triggers[triggerId])
       })
     }
 
@@ -398,7 +398,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
           triggerDestroyAfter,
         }
 
-        window.removeFalsey(properties.triggers[triggerId])
+        global.removeFalsey(properties.triggers[triggerId])
       })
     }
 
@@ -782,7 +782,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
         object.failCount = 0
         if(object.numberToAdd) {
         } else {
-          window.local.emit('onAnticipateCompleted', object)
+          global.local.emit('onAnticipateCompleted', object)
           complete()
         }
       } else {
@@ -807,16 +807,16 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
     let hasBeenWarned = false
 
     objects = objects.map((newObject) => {
-      newObject = window.mergeDeep(JSON.parse(JSON.stringify(window.defaultObject)), newObject)
+      newObject = global.mergeDeep(JSON.parse(JSON.stringify(global.defaultObject)), newObject)
 
       if(!newObject.id){
-        newObject.id = 'object-' + window.uniqueID();
+        newObject.id = 'object-' + global.uniqueID();
       }
 
       if(newObject.subObjects) {
         OBJECTS.forAllSubObjects(newObject.subObjects, (subObject, subObjectName) => {
           if(!subObject.id){
-            subObject.id = 'subObject-' + window.uniqueID();
+            subObject.id = 'subObject-' + global.uniqueID();
           }
         })
       }
@@ -840,7 +840,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
       //ALWAYS CONTAIN WITHIN BOUNDARIES OF THE GRID!!
       if(newObject.x + newObject.mod().width > (GAME.grid.nodeSize * GAME.grid.width) + GAME.grid.startX) {
         const diff = newObject.x + newObject.mod().width - ((GAME.grid.nodeSize * GAME.grid.width) + GAME.grid.startX)
-        if(PAGE.role.isPlayEditor && !window.playEditorKeysDown[18] && !hasBeenWarned) alert('adding obj outside grid system, canceled')
+        if(PAGE.role.isPlayEditor && !global.playEditorKeysDown[18] && !hasBeenWarned) alert('adding obj outside grid system, canceled')
         hasBeenWarned = true
 
         GAME.grid.width += Math.ceil(diff/GAME.grid.nodeSize)
@@ -848,14 +848,14 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
       }
       if(newObject.y + newObject.mod().height > (GAME.grid.nodeSize * GAME.grid.height) + GAME.grid.startY) {
         const diff = newObject.y + newObject.mod().height - ((GAME.grid.nodeSize * GAME.grid.height) + GAME.grid.startY)
-        if(PAGE.role.isPlayEditor && !window.playEditorKeysDown[18] && !hasBeenWarned) alert('adding obj outside grid system, canceled')
+        if(PAGE.role.isPlayEditor && !global.playEditorKeysDown[18] && !hasBeenWarned) alert('adding obj outside grid system, canceled')
         hasBeenWarned = true
         // return null
         GAME.grid.height += Math.ceil(diff/GAME.grid.nodeSize)
       }
       if(newObject.x < GAME.grid.startX) {
         const diff = GAME.grid.startX - newObject.x
-        if(PAGE.role.isPlayEditor && !window.playEditorKeysDown[18] && !hasBeenWarned) alert('adding obj outside grid system, canceled')
+        if(PAGE.role.isPlayEditor && !global.playEditorKeysDown[18] && !hasBeenWarned) alert('adding obj outside grid system, canceled')
         hasBeenWarned = true
 
         GAME.grid.width += Math.ceil(diff/GAME.grid.nodeSize)
@@ -866,7 +866,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
       if(newObject.y < GAME.grid.startY) {
         const diff = GAME.grid.startY - newObject.y
 
-        if(PAGE.role.isPlayEditor && !window.playEditorKeysDown[18] && !hasBeenWarned) alert('adding obj outside grid system, canceled')
+        if(PAGE.role.isPlayEditor && !global.playEditorKeysDown[18] && !hasBeenWarned) alert('adding obj outside grid system, canceled')
         hasBeenWarned = true
 
         GAME.grid.height += Math.ceil(diff/GAME.grid.nodeSize)
@@ -875,7 +875,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
       }
 
       if(hasBeenWarned) {
-        window.socket.emit('updateGrid', GAME.grid)
+        global.socket.emit('updateGrid', GAME.grid)
       }
 
       if(newObject.tags.destroySoon || newObject.tags.destroyQuickly || newObject.tags.destroyEventually) {
@@ -885,7 +885,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
       return newObject
     }).filter(obj => !!obj)
 
-    if(PAGE.role.isPlayEditor && !options.fromLiveGame && !window.playEditorKeysDown[18]) {
+    if(PAGE.role.isPlayEditor && !options.fromLiveGame && !global.playEditorKeysDown[18]) {
       if(alertAboutCollision) {
         if(!confirm('already an object on this grid node..confirm to add anyways')) return
       }
@@ -924,13 +924,13 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
 
     function emitNewObjects() {
       if(!options.silently) {
-        if(window.editingGame && window.editingGame.branch && !options.fromLiveGame) {
-          window.branch.objects.push(...objects)
+        if(global.editingGame && global.editingGame.branch && !options.fromLiveGame) {
+          global.branch.objects.push(...objects)
         } else {
           if(options.local) {
-            window.local.emit('onNetworkAddObjects', objects)
+            global.local.emit('onNetworkAddObjects', objects)
           } else {
-            window.socket.emit('addObjects', objects)
+            global.socket.emit('addObjects', objects)
           }
         }
       }
@@ -967,7 +967,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
       }
     }
     object.path = null
-    window.mergeDeep(object, update)
+    global.mergeDeep(object, update)
   }
 
   onEditObjects(editedObjects) {
@@ -982,7 +982,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
       }
     })
 
-    window.local.emit('onUpdatePFgrid', 'edit', editedObjects)
+    global.local.emit('onUpdatePFgrid', 'edit', editedObjects)
   }
 
   onAnticipateObject(object) {
@@ -1032,7 +1032,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
   }
 
   addObject(object) {
-    // object.tags = window.mergeDeep(JSON.parse(JSON.stringify({...window.defaultTags, plain: true})), object.tags)
+    // object.tags = global.mergeDeep(JSON.parse(JSON.stringify({...global.defaultTags, plain: true})), object.tags)
     GAME.objectsById[object.id] = object
     if(object.subObjects) {
       OBJECTS.forAllSubObjects(object.subObjects, (subObject, subObjectName) => {
@@ -1055,7 +1055,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
       })
     }
 
-    if(PAGE.role.isAdmin && GAME.gameState.started) window.emitGameEvent('onObjectAwake', object)
+    if(PAGE.role.isAdmin && GAME.gameState.started) global.emitGameEvent('onObjectAwake', object)
   }
 
   addSubObject(owner, subObject, subObjectName) {
@@ -1063,10 +1063,10 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
       if(subObject.id && !PHYSICS.objects[subObject.id]) PHYSICS.addObject(subObject)
       return
     }
-    subObject = window.mergeDeep(JSON.parse(JSON.stringify(window.defaultSubObject)), subObject)
+    subObject = global.mergeDeep(JSON.parse(JSON.stringify(global.defaultSubObject)), subObject)
     subObject.ownerId = owner.id
     subObject.subObjectName = subObjectName
-    if(!subObject.id) subObject.id = subObjectName + '-' + window.uniqueID()
+    if(!subObject.id) subObject.id = subObjectName + '-' + global.uniqueID()
     GAME.objectsById[subObject.id] = subObject
 
     let subObjectAlreadyExisted = false
@@ -1083,7 +1083,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
           }
           return
         } else {
-          subObject.subObjectName = subObject.subObjectName + '-copy-'+window.uniqueID()
+          subObject.subObjectName = subObject.subObjectName + '-copy-'+global.uniqueID()
           subObjectName = subObject.subObjectName
           console.trace('i have copied', existingSubObject, subObject)
         }
@@ -1101,10 +1101,10 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
           triggers.addTrigger(subObject, trigger)
         })
       }
-      if(GAME.gameState.started) window.emitGameEvent('onObjectAwake', subObject)
+      if(GAME.gameState.started) global.emitGameEvent('onObjectAwake', subObject)
 
       if(!subObject.inInventory && !isPotential && (subObject.tags.startsPickedUp || subObject.tags.startsEquipped || subObject.actionProps || subObject.tags.pickupable)) {
-        window.emitGameEvent('onHeroPickup', owner, subObject)
+        global.emitGameEvent('onHeroPickup', owner, subObject)
         subObject.inInventory = true
       }
     }
@@ -1152,13 +1152,13 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
 
   removeObject(object) {
     GAME.objectsById[object.id].removed = true
-    // if(window.popoverOpen[object.id]) MAP.closePopover(object)
+    // if(global.popoverOpen[object.id]) MAP.closePopover(object)
     if(object.subObjects) {
       OBJECTS.forAllSubObjects(object.subObjects, (subObject, subObjectName) => {
         OBJECTS.removeSubObject(subObject)
       })
     }
-    window.local.emit('onUpdatePFgrid', 'remove', object)
+    global.local.emit('onUpdatePFgrid', 'remove', object)
   }
 
   unloadObject(object) {
@@ -1200,7 +1200,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
   onDeleteObject(object) {
     OBJECTS.deleteObject(object)
     MAP.closePopover(object.id)
-    window.local.emit('onUpdatePFgrid', 'delete', object)
+    global.local.emit('onUpdatePFgrid', 'delete', object)
   }
 
   onDeleteSubObjectChance(ownerId, subObjectName) {
@@ -1246,14 +1246,14 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
       unequipSubObject(OBJECTS.getObjectOrHeroById(so.ownerId), so)
     }
     so.removed = true
-    // if(window.popoverOpen[so.id]) {
+    // if(global.popoverOpen[so.id]) {
     //   MAP.closePopover(so)
     // }
   }
 
   onEditSubObject(ownerId, subObjectName, update) {
     const owner = OBJECTS.getObjectOrHeroById(ownerId)
-    window.mergeDeep(owner.subObjects[subObjectName], update)
+    global.mergeDeep(owner.subObjects[subObjectName], update)
   }
 
   onDropObject(objectId, subObjectName, amount) {
@@ -1302,7 +1302,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
     objectsAdded.forEach((object) => {
       OBJECTS.addObject(object)
     })
-    window.local.emit('onUpdatePFgrid', 'add', objectsAdded)
+    global.local.emit('onUpdatePFgrid', 'add', objectsAdded)
   }
 
   getRelativeXY(object, relative) {
@@ -1373,7 +1373,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
     lastCreatedObjects = OBJECTS.create([left, top, bottom, right])
     createdObjects.push(...lastCreatedObjects)
 
-    const removeUpdateListener = window.local.on('onUpdate', (delta) => {
+    const removeUpdateListener = global.local.on('onUpdate', (delta) => {
       if(stage === maxStage) {
         let lowestOpacity = 1
         createdObjects.forEach((co) => {
@@ -1395,7 +1395,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
           diagonals.forEach((co) => {
             const go = GAME.objectsById[co.id]
             if(go) {
-              window.socket.emit('deleteObject', go)
+              global.socket.emit('deleteObject', go)
             }
           })
         }
@@ -1408,7 +1408,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
               go.velocityY = 0
             }
 
-            if(go.opacity <= 0) window.socket.emit('deleteObject', go)
+            if(go.opacity <= 0) global.socket.emit('deleteObject', go)
             if(go.opacity > lowestOpacity || allEqualOpacity) {
               let opacityDelta = ((go.opacity/100) * delta) + .05
               if(powerWave) opacityDelta = opacityDelta/1000
@@ -1435,7 +1435,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
             return GAME.objectsById[id]
           }).forEach((diag) => {
             if(diag) {
-              window.socket.emit('deleteObject', diag)
+              global.socket.emit('deleteObject', diag)
               const hasWeight = stage >= 2
               const opacity = hasWeight ? 1 : diag.opacity
               diagChildren.push({...diag, id: null, velocityX: 0, tags: hasWeight ? options.tags : {}, velocityMax: 1000, opacity: opacity, color: options.color })
@@ -1520,10 +1520,10 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
   onObjectDestroyed(object) {
     if(!object.mod().tags) return console.log('yeah it didnt have tags for a construct part')
     if(object.mod().tags.explodeOnDestroy) {
-      window.local.emit('onObjectAnimation', 'explode', object.id)
+      global.local.emit('onObjectAnimation', 'explode', object.id)
     }
     if(object.mod().tags.spinOffOnDestroy) {
-      window.local.emit('onObjectAnimation', 'spinOff', object.id)
+      global.local.emit('onObjectAnimation', 'spinOff', object.id)
     }
     if(object.mod().tags.spawnAllOnDestroy) {
       spawnAllNow(object)
@@ -1555,7 +1555,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
       }
     })
 
-    window.mergeDeep(object, JSON)
+    global.mergeDeep(object, JSON)
   }
 
   onObjectAware(object, awareOfObject) {
@@ -1622,11 +1622,11 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
   }
 
   turnIntoConstruct(object) {
-    window.socket.emit('editObjects', [{
+    global.socket.emit('editObjects', [{
       id:object.id,
-      parts: window.seperateRectangleIntoSquares(object)
+      parts: global.seperateRectangleIntoSquares(object)
     }])
   }
 }
 
-window.OBJECTS = new Objects()
+global.OBJECTS = new Objects()

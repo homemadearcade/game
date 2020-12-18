@@ -1,6 +1,6 @@
 
 function setDefault() {
-  window.defaultTheme = {
+  global.defaultTheme = {
     audio: {},
     ss: {},
     spriteSheetAuthor: '',
@@ -10,8 +10,8 @@ function setDefault() {
     }
   }
 
-  window.resetThemeToDefault = function() {
-    window.socket.emit('updateTheme', window.defaultTheme)
+  global.resetThemeToDefault = function() {
+    global.socket.emit('updateTheme', global.defaultTheme)
   }
 }
 

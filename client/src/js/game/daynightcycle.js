@@ -1,5 +1,5 @@
 function setDefault() {
-  window.defaultDayNightCycle = {
+  global.defaultDayNightCycle = {
     initialAmbientLight: 1,
     dayLength: 2,
     dayAmbientLight: 1,
@@ -18,7 +18,7 @@ function onGameLoaded(options = {}) {
   GAME.gameState.currentTime = options.startTime || 0
   GAME.gameState.currentTimeOfDay = ''
   if(!GAME.world.dayNightCycle) {
-    GAME.world.dayNightCycle = { ...JSON.parse(JSON.stringify(window.defaultDayNightCycle)), ...options }
+    GAME.world.dayNightCycle = { ...JSON.parse(JSON.stringify(global.defaultDayNightCycle)), ...options }
   }
   if(typeof GAME.world.dayNightCycle.initialAmbientLight == 'number') GAME.gameState.ambientLight = GAME.world.dayNightCycle.initialAmbientLight
 }

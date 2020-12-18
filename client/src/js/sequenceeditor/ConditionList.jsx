@@ -9,7 +9,7 @@ export default class ConditionList extends React.Component {
 
     this.state = {
       open: false,
-      sequenceItems: this.props.sequenceItems || [{...JSON.parse(JSON.stringify(window.defaultSequenceCondition)), id: 'a', sequenceType: 'sequenceCondition' }],
+      sequenceItems: this.props.sequenceItems || [{...JSON.parse(JSON.stringify(global.defaultSequenceCondition)), id: 'a', sequenceType: 'sequenceCondition' }],
       selectedType: null,
       sequenceItemRefs: [],
     }
@@ -45,7 +45,7 @@ export default class ConditionList extends React.Component {
     const { sequenceItems } = this.state
 
     const sequenceItem = {id: this._findNextId(), sequenceType: 'sequenceCondition' }
-    Object.assign(sequenceItem, window.defaultSequenceCondition)
+    Object.assign(sequenceItem, global.defaultSequenceCondition)
     const newSequenceItems = sequenceItems.slice()
     newSequenceItems.push(sequenceItem)
     this.setState({sequenceItems: newSequenceItems })

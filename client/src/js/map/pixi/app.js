@@ -1,5 +1,5 @@
 import * as PIXI from 'pixi.js'
-window.PIXI = PIXI
+global.PIXI = PIXI
 import './pixi-layers'
 import { GlowFilter, ColorMatrixFilter } from 'pixi-filters'
 import tinycolor from 'tinycolor2'
@@ -14,7 +14,7 @@ import {isColliding} from './utils.js'
 const textures = {};
 let stage
 
-window.maxCanvasMultiplier = 3.5
+global.maxCanvasMultiplier = 3.5
 
 const applyFilters = () => {
   /*
@@ -272,24 +272,24 @@ const initPixiApp = (canvasRef, onLoad) => {
       if(loadingTimeout) {
         clearTimeout(loadingTimeout)
       } else {
-        window.local.emit('onLoadingScreenStart')
+        global.local.emit('onLoadingScreenStart')
         PAGE.resizingMap = true
       }
       loadingTimeout = setTimeout(() => {
         PAGE.resizingMap = false
         if(GAME.gameState) MAP.camera.set(GAME.heros[HERO.id])
         PIXIMAP.onRender(true)
-        window.local.emit('onLoadingScreenEnd')
+        global.local.emit('onLoadingScreenEnd')
         loadingTimeout = null
       }, 200)
-      let gameElementWidth = window.innerWidth
+      let gameElementWidth = global.innerWidth
       if(PAGE.isLogOpen) gameElementWidth = gameElementWidth * .8
       MAP.canvasMultiplier = gameElementWidth/640;
-      if(MAP.canvasMultiplier > window.maxCanvasMultiplier) MAP.canvasMultiplier = MAP.canvasMultiplier > 3.5
+      if(MAP.canvasMultiplier > global.maxCanvasMultiplier) MAP.canvasMultiplier = MAP.canvasMultiplier > 3.5
       const width = (640 * MAP.canvasMultiplier);
       const height = (320 * MAP.canvasMultiplier);
       app.resize(width, height);
-      if(!window.resettingDarkness) {
+      if(!global.resettingDarkness) {
         setTimeout(() => {
           if(PIXIMAP.initialized) {
             // PIXIMAP.initializeDarknessSprites()
@@ -298,9 +298,9 @@ const initPixiApp = (canvasRef, onLoad) => {
             // PIXIMAP.gridStage.removeChildren()
             PIXIMAP.updateGridSprites()
           }
-          window.resettingDarkness = false
+          global.resettingDarkness = false
         }, 100)
-        window.resettingDarkness = true
+        global.resettingDarkness = true
       }
 
       PIXIMAP.resizeToWindow = onResize
@@ -310,26 +310,26 @@ const initPixiApp = (canvasRef, onLoad) => {
     }
     function onResize() {
       setGameWindowSize()
-      window.local.emit('onResize')
+      global.local.emit('onResize')
     }
-    window.local.on('onZoomChange', () => {
+    global.local.on('onZoomChange', () => {
       onResize()
     })
-    window.local.on('onCloseLog', onResize)
-    window.local.on('onOpenLog', onResize)
-    window.addEventListener("resize", onResize);
+    global.local.on('onCloseLog', onResize)
+    global.local.on('onOpenLog', onResize)
+    global.addEventListener("resize", onResize);
     setGameWindowSize()
   }
 
   applyFilters()
 
-  const spritesheetsRequested = Object.keys(window.spriteSheetIds).filter((name) => {
+  const spritesheetsRequested = Object.keys(global.spriteSheetIds).filter((name) => {
     if(spriteSheetIds[name]) return true
   })
 
-  let socket = window.socket
+  let socket = global.socket
   if(PAGE.role.isArcadeMode || PAGE.role.isHomeEditor) {
-    socket = window.networkSocket
+    socket = global.networkSocket
   }
 
   const options = {
@@ -338,12 +338,12 @@ const initPixiApp = (canvasRef, onLoad) => {
     }
   };
 
-  axios.get(window.HAGameServerUrl + '/spriteSheets', options).then(res => {
+  axios.get(global.HAGameServerUrl + '/spriteSheets', options).then(res => {
     const spriteSheets = res.data.spriteSheets
-    window.spriteSheets = spriteSheets
-    window.generateTextureIdsByDescriptors()
+    global.spriteSheets = spriteSheets
+    global.generateTextureIdsByDescriptors()
     startLoadingAssets(spriteSheets.map((ss) => {
-      ss.serverImageUrl = window.HomemadeArcadeImageAssetURL + ss.imageUrl
+      ss.serverImageUrl = global.HomemadeArcadeImageAssetURL + ss.imageUrl
       return ss
     }))
   })
@@ -352,7 +352,7 @@ const initPixiApp = (canvasRef, onLoad) => {
   ///////////////
   // SPRITES
 
-  window.textureMap = {}
+  global.textureMap = {}
   function startLoadingAssets(spriteSheets) {
     spriteSheets.reduce((prev, next) => {
       return prev.add(next.serverImageUrl)
@@ -365,8 +365,8 @@ const initPixiApp = (canvasRef, onLoad) => {
           if(tile.id) texture.id = ss.id + '-' + tile.id
           if(tile.name) texture.id = ss.id + '-' +  tile.name
           tile.textureId = texture.id
-          window.textureMap[texture.id] = tile
-          window.textureMap[texture.id].ss = ss.id
+          global.textureMap[texture.id] = tile
+          global.textureMap[texture.id].ss = ss.id
           textures[texture.id] = texture
           texture.ssauthor = ss.author
           texture.ssId = ss.id
@@ -413,7 +413,7 @@ const initPixiApp = (canvasRef, onLoad) => {
 
   PIXIMAP.darkAreaStage.addChild(darkAreaLightingSprite);
 
-  window.local.on('onRender', () => {
+  global.local.on('onRender', () => {
     if(!GAME.objectsByTag) return
 
     let indoors

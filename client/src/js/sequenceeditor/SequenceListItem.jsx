@@ -28,7 +28,7 @@ export default class SequenceListItem extends React.Component {
         <i
           className="fas fa-stop SequenceList__sequence-option"
           onClick={(e) => {
-            window.socket.emit('stopSequence', id, HERO.editingId)
+            global.socket.emit('stopSequence', id, HERO.editingId)
             e.stopPropagation()
             this.setState({
               isPaused: false,
@@ -39,7 +39,7 @@ export default class SequenceListItem extends React.Component {
         <i
           className={"fas SequenceList__sequence-option " + icon}
           onClick={(e) => {
-            window.socket.emit('togglePauseSequence', id, HERO.editingId)
+            global.socket.emit('togglePauseSequence', id, HERO.editingId)
             e.stopPropagation()
             this.setState({
               isPaused: !this.state.isPaused
@@ -51,7 +51,7 @@ export default class SequenceListItem extends React.Component {
       playIcons= <i
         className="fas fa-play SequenceList__sequence-option"
         onClick={(e) => {
-          window.socket.emit('startSequence', id, HERO.editingId)
+          global.socket.emit('startSequence', id, HERO.editingId)
           e.stopPropagation()
           this.setState({
             isStarted: true

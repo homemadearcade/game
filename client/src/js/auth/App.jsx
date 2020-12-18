@@ -3,10 +3,10 @@ import io from "socket.io-client";
 import { useCookies } from 'react-cookie'
 import Login from "./Login.jsx";
 
-if (window.location.origin.indexOf('localhost') > 0) {
-  window.socket = io.connect('http://localhost:4000');
+if (global.location.origin.indexOf('localhost') > 0) {
+  global.socket = io.connect('http://localhost:4000');
 } else {
-  window.socket = io.connect();
+  global.socket = io.connect();
 }
 
 function App() {
@@ -14,48 +14,48 @@ function App() {
   const [state, setState] = useState({ email: '', password: '', message: '', checkingCookie: !!cookies.user});
 
   useEffect(() => {
-    if(cookies.user && !window.user) {
-      window.socket.emit("authentication", {})
+    if(cookies.user && !global.user) {
+      global.socket.emit("authentication", {})
     }
   }, [])
 
-  window.socket.on("authenticated", ({cookie, user}) => {
+  global.socket.on("authenticated", ({cookie, user}) => {
     // for some reason this gets called a couple times even when user is false..
-    if (user && !window.user) {
+    if (user && !global.user) {
       setCookie('user', cookie, { path: '/' });
-      window.user = user;
+      global.user = user;
       setState({...state, checkingCookie: false});
       PAGE.userIdentified()
     }
 
-    window.clearUserCookie = () => {
+    global.clearUserCookie = () => {
       removeCookie("user");
-      window.user = null
+      global.user = null
       setState({...state, checkingCookie: true});
     }
 
-    window.getUserCookie = () => {
+    global.getUserCookie = () => {
       return cookies.user
     }
   });
 
-  window.socket.on("auth_message", ({ message }) => {
+  global.socket.on("auth_message", ({ message }) => {
     setState({...state, message, checkingCookie: false})
   });
 
   const onLogIn = () => {
-    window.socket.emit("authentication", {email: state.email, password: state.password});
+    global.socket.emit("authentication", {email: state.email, password: state.password});
   };
 
   const onSignUp = () => {
-    window.socket.emit("authentication", { email: state.email, password: state.password, signup: true });
+    global.socket.emit("authentication", { email: state.email, password: state.password, signup: true });
   };
 
   const onChange = e => {
     setState({ ...state, [e.target.name]: e.target.value });
   };
 
-  if (window.user) {
+  if (global.user) {
     return null
   }
 

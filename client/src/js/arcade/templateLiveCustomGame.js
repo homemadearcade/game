@@ -1,5 +1,5 @@
 // the more events we have hardcoded in the less we have to UNLOAD
-window.templateGameString = `class CustomGame{
+global.templateGameString = `class CustomGame{
   onGameLoaded() {
 
   }

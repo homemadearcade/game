@@ -91,13 +91,13 @@ export default class ObjectContextMenu extends React.Component{
       }
 
       if(key === 'drop') {
-        window.socket.emit('dropObject', objectSelected.ownerId, objectSelected.subObjectName)
+        global.socket.emit('dropObject', objectSelected.ownerId, objectSelected.subObjectName)
       }
       if(key === 'unequip') {
-        window.socket.emit('unequipObject', objectSelected.ownerId, objectSelected.subObjectName)
+        global.socket.emit('unequipObject', objectSelected.ownerId, objectSelected.subObjectName)
       }
       if(key === 'equip') {
-        window.socket.emit('equipObject', objectSelected.ownerId, objectSelected.subObjectName, 'available')
+        global.socket.emit('equipObject', objectSelected.ownerId, objectSelected.subObjectName, 'available')
       }
     }
   }

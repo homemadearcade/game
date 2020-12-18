@@ -21,7 +21,7 @@ export default class HookMenu extends React.Component{
       }
 
       if(data.action === 'delete') {
-        window.socket.emit('deleteHook', objectSelected.id, data.hook.id)
+        global.socket.emit('deleteHook', objectSelected.id, data.hook.id)
       }
     }
   }
@@ -54,7 +54,7 @@ export default class HookMenu extends React.Component{
 
     const items = []
 
-    Object.keys(window.hookEvents).forEach((eventName) => {
+    Object.keys(global.hookEvents).forEach((eventName) => {
       items.push(<SubMenu key={eventName} title={eventName}>
           <MenuItem key={JSON.stringify({eventName, action: 'add'})}>Add Hook</MenuItem>
           {this._renderEventConditions(eventName)}

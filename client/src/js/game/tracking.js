@@ -6,7 +6,7 @@ class Tracking {
 
   //{ trackingObject, targetEvent, targetCount, targetTags }
   startTracking(tracker) {
-    tracker.trackerId = 'tracker-' + window.uniqueID()
+    tracker.trackerId = 'tracker-' + global.uniqueID()
     tracker.count = 0
     GAME.gameState.trackers.push(tracker)
     return tracker
@@ -27,7 +27,7 @@ class Tracking {
   eventHappened(tracker, count = 1) {
     const { targetCount, trackingObject } = tracker
     tracker.count+= count
-    if(targetCount) window.emitGameEvent('onUpdatePlayerUI', trackingObject)
+    if(targetCount) global.emitGameEvent('onUpdatePlayerUI', trackingObject)
 
     TRACKING.checkIfTrackerShouldStop(tracker)
   }
@@ -65,7 +65,7 @@ class Tracking {
         })
 
         if(targetCount && initialCount !== tracker.count) {
-          window.emitGameEvent('onUpdatePlayerUI', trackingObject)
+          global.emitGameEvent('onUpdatePlayerUI', trackingObject)
           TRACKING.checkIfTrackerShouldStop(tracker)
         }
       }
@@ -134,4 +134,4 @@ class Tracking {
   }
 }
 
-window.TRACKING = new Tracking()
+global.TRACKING = new Tracking()

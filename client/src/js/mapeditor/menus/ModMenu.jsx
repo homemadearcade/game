@@ -18,11 +18,11 @@ export default class ModMenu extends React.Component{
       const data = JSON.parse(key)
 
       if(data.action === 'end') {
-        window.socket.emit('endMod', data.manualRevertId)
-        window.socket.emit('resetPhysicsProperties', objectSelected.id)
+        global.socket.emit('endMod', data.manualRevertId)
+        global.socket.emit('resetPhysicsProperties', objectSelected.id)
       }
       if(data.action === 'disable') {
-        window.socket.emit('disableMod', data.manualRevertId)
+        global.socket.emit('disableMod', data.manualRevertId)
       }
 
     }

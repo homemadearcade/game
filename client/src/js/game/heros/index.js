@@ -8,9 +8,9 @@ import triggers from '../triggers.js'
 import ai from '../ai/index.js'
 // import @geckos.io/snapshot-interpolation
 // import { SnapshotInterpolation, Vault } from '@geckos.io/snapshot-interpolation'
-// window.clientInterpolationVault = new Vault()
+// global.clientInterpolationVault = new Vault()
 // // initialize the library
-// window.SI = new SnapshotInterpolation(60)
+// global.SI = new SnapshotInterpolation(60)
 
 class Hero{
   constructor() {
@@ -33,12 +33,12 @@ class Hero{
     if(resume && savedHero && JSON.parse(savedHero).id){
       HERO.id = JSON.parse(savedHero).id
     } else {
-      HERO.id = 'hero-'+window.uniqueID()
+      HERO.id = 'hero-'+global.uniqueID()
     }
   }
 
   setDefault() {
-    window.defaultHero = {
+    global.defaultHero = {
     	width: 40,
     	height: 40,
     	velocityX: 0,
@@ -59,8 +59,8 @@ class Hero{
     	// spawnPointX: (40) * 20,
     	// spawnPointY: (40) * 20,
     	zoomMultiplier: 1.875,
-      // x: window.grid.startX + (window.grid.width * window.grid.nodeSize)/2,
-      // y: window.grid.startY + (window.grid.height * window.grid.nodeSize)/2,
+      // x: global.grid.startX + (global.grid.width * global.grid.nodeSize)/2,
+      // y: global.grid.startY + (global.grid.height * global.grid.nodeSize)/2,
       lives: 10,
       score: 0,
       dialogue: [],
@@ -103,14 +103,14 @@ class Hero{
 
     }
 
-    window.local.on('onGridLoaded', () => {
-      window.defaultHero.tags = {...window.defaultHeroTags}
-      window.defaultHero.x = GAME.grid.startX + (GAME.grid.width * GAME.grid.nodeSize)/2
-      window.defaultHero.y = GAME.grid.startY + (GAME.grid.height * GAME.grid.nodeSize)/2
-      window.defaultHero.width = GAME.grid.nodeSize
-      window.defaultHero.height = GAME.grid.nodeSize
+    global.local.on('onGridLoaded', () => {
+      global.defaultHero.tags = {...global.defaultHeroTags}
+      global.defaultHero.x = GAME.grid.startX + (GAME.grid.width * GAME.grid.nodeSize)/2
+      global.defaultHero.y = GAME.grid.startY + (GAME.grid.height * GAME.grid.nodeSize)/2
+      global.defaultHero.width = GAME.grid.nodeSize
+      global.defaultHero.height = GAME.grid.nodeSize
 
-      window.defaultHero.subObjects = {
+      global.defaultHero.subObjects = {
         heroInteractTriggerArea: {
           x: 0, y: 0, width: 40, height: 40,
           relativeWidth: GAME.grid.nodeSize * 2,
@@ -128,7 +128,7 @@ class Hero{
           tags: { obstacle: false, invisible: true, awarenessTriggerArea: true, relativeToDirection: true, },
         },
         // spear: {
-        //   id: 'spear-'+window.uniqueID(),
+        //   id: 'spear-'+global.uniqueID(),
         //   x: 0, y: 0, width: 40, height: 40,
         //   relativeX: GAME.grid.nodeSize/5,
         //   relativeY: -GAME.grid.nodeSize,
@@ -149,7 +149,7 @@ class Hero{
     if(PAGE.role.isPlayer && (HERO.originalId === HERO.id || HERO.ghostControl)){
       // we locally update the hero input as host so hosts do not send
       if(!PAGE.role.isHost && !PAGE.typingMode && !CONSTRUCTEDITOR.open) {
-        window.socket.emit('sendHeroInput', GAME.keysDown, HERO.id)
+        global.socket.emit('sendHeroInput', GAME.keysDown, HERO.id)
       }
     }
   }
@@ -205,7 +205,7 @@ class Hero{
       })
     }
 
-    window.emitGameEvent('onHeroRespawn', hero)
+    global.emitGameEvent('onHeroRespawn', hero)
     HERO.spawn(hero)
   }
 
@@ -213,27 +213,27 @@ class Hero{
     HERO.deleteHero(hero)
     hero.subObjects = {}
     hero.triggers = {}
-    let newHero = JSON.parse(JSON.stringify(window.defaultHero))
+    let newHero = JSON.parse(JSON.stringify(global.defaultHero))
     if(useGame) {
       const id = hero.id
       const heroSummonType = hero.heroSummonType
       if((heroSummonType === 'default' || heroSummonType === 'resume') && GAME.defaultHero) {
         newHero = JSON.parse(JSON.stringify(GAME.defaultHero))
       } else if(heroSummonType){
-        const libraryHero = _.cloneDeep(window.heroLibrary[heroSummonType])
+        const libraryHero = _.cloneDeep(global.heroLibrary[heroSummonType])
         let gameDefaultHero
         if(libraryHero.useGameDefault && GAME.defaultHero) {
           const gameDefaultHero = JSON.parse(JSON.stringify(GAME.defaultHero))
-          newHero = window.mergeDeep(defaultHero, gameDefaultHero, libraryHero.JSON)
+          newHero = global.mergeDeep(defaultHero, gameDefaultHero, libraryHero.JSON)
         } else if(libraryHero) {
-          newHero = window.mergeDeep(defaultHero, libraryHero.JSON)
+          newHero = global.mergeDeep(defaultHero, libraryHero.JSON)
         }
       }
       newHero.heroSummonType = heroSummonType
-      // newHero = JSON.parse(JSON.stringify(window.mergeDeep(newHero, GAME.defaultHero)))
+      // newHero = JSON.parse(JSON.stringify(global.mergeDeep(newHero, GAME.defaultHero)))
     }
     OBJECTS.forAllSubObjects(newHero.subObjects, (subObject) => {
-      subObject.id = 'subObject-'+window.uniqueID()
+      subObject.id = 'subObject-'+global.uniqueID()
     })
     if(!hero.id) {
       alert('hero getting reset without id')
@@ -258,17 +258,17 @@ class Hero{
 
   updateAll(update) {
     GAME.heroList.forEach(({id}) => {
-      window.mergeDeep(GAME.heros[id], update)
+      global.mergeDeep(GAME.heros[id], update)
     })
   }
 
   zoomAnimation(hero) {
-    if(hero.animationZoomMultiplier == hero.zoomMultiplier && hero.animationZoomTarget == window.constellationDistance) {
-      window.local.emit('onConstellationAnimationStart')
+    if(hero.animationZoomMultiplier == hero.zoomMultiplier && hero.animationZoomTarget == global.constellationDistance) {
+      global.local.emit('onConstellationAnimationStart')
     }
-    if(hero.animationZoomMultiplier == window.constellationDistance && hero.zoomMultiplier == hero.animationZoomTarget) {
+    if(hero.animationZoomMultiplier == global.constellationDistance && hero.zoomMultiplier == hero.animationZoomTarget) {
       setTimeout(() => {
-        window.local.emit('onConstellationAnimationEnd')
+        global.local.emit('onConstellationAnimationEnd')
       }, 2500)
     }
 
@@ -358,23 +358,23 @@ class Hero{
     const id = hero.id
     const heroSummonType = hero.heroSummonType
 
-    const defaultHero = _.cloneDeep(window.defaultHero)
+    const defaultHero = _.cloneDeep(global.defaultHero)
     if((heroSummonType === 'default' || heroSummonType === 'resume') && GAME.defaultHero) {
       const gameDefaultHero = JSON.parse(JSON.stringify(GAME.defaultHero))
-      newHero = window.mergeDeep(defaultHero, gameDefaultHero)
+      newHero = global.mergeDeep(defaultHero, gameDefaultHero)
       // console.log('summoning from default', GAME.defaultHero)
     } else if(heroSummonType) {
-      const libraryHero = _.cloneDeep(window.heroLibrary[heroSummonType])
+      const libraryHero = _.cloneDeep(global.heroLibrary[heroSummonType])
       let gameDefaultHero
       if(libraryHero.useGameDefault && GAME.defaultHero) {
         const gameDefaultHero = JSON.parse(JSON.stringify(GAME.defaultHero))
-        newHero = window.mergeDeep(defaultHero, gameDefaultHero, libraryHero.JSON)
+        newHero = global.mergeDeep(defaultHero, gameDefaultHero, libraryHero.JSON)
       } else if(libraryHero) {
-        newHero = window.mergeDeep(defaultHero, libraryHero.JSON)
+        newHero = global.mergeDeep(defaultHero, libraryHero.JSON)
       }
     } else {
       // const gameDefaultHero = JSON.parse(JSON.stringify(GAME.defaultHero))
-      // newHero = window.mergeDeep(defaultHero, gameDefaultHero)
+      // newHero = global.mergeDeep(defaultHero, gameDefaultHero)
       console.log('warning no hero summon type', hero)
     }
 
@@ -384,7 +384,7 @@ class Hero{
       newHero.user = hero.user
       newHero.heroSummonType = heroSummonType
       OBJECTS.forAllSubObjects(newHero.subObjects, (subObject) => {
-        subObject.id = 'subObject-'+window.uniqueID()
+        subObject.id = 'subObject-'+global.uniqueID()
       })
       HERO.spawn(newHero)
       return newHero
@@ -467,7 +467,7 @@ class Hero{
       state.subObjects = {}
       OBJECTS.forAllSubObjects(hero.subObjects, (subObject, subObjectName) => {
         state.subObjects[subObjectName] = OBJECTS.getState(subObject)
-        window.removeFalsey(state.subObjects[subObjectName])
+        global.removeFalsey(state.subObjects[subObjectName])
       })
     }
 
@@ -482,7 +482,7 @@ class Hero{
           disabled,
         }
 
-        window.removeFalsey(state.triggers[triggerId])
+        global.removeFalsey(state.triggers[triggerId])
       })
     }
 
@@ -600,7 +600,7 @@ class Hero{
       properties.subObjects = {}
       OBJECTS.forAllSubObjects(hero.subObjects, (subObject, subObjectName) => {
         properties.subObjects[subObjectName] = OBJECTS.getProperties(subObject)
-        window.removeFalsey(properties.subObjects[subObjectName])
+        global.removeFalsey(properties.subObjects[subObjectName])
       })
     }
 
@@ -689,7 +689,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
           triggerDestroyAfter,
         }
 
-        window.removeFalsey(properties.triggers[triggerId])
+        global.removeFalsey(properties.triggers[triggerId])
       })
     }
 
@@ -775,10 +775,10 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
       updatedHero.velocityY = 0
     }
     if(updatedHero.zoomMultiplier && updatedHero.zoomMultiplier !== GAME.heros[updatedHero.id].zoomMultiplier) {
-      window.local.emit('onZoomChange', updatedHero.id)
+      global.local.emit('onZoomChange', updatedHero.id)
     }
     HERO.resetReachablePlatformArea(updatedHero)
-    window.mergeDeep(GAME.heros[updatedHero.id], updatedHero)
+    global.mergeDeep(GAME.heros[updatedHero.id], updatedHero)
   }
 
   onResetHeroToDefault(hero) {
@@ -809,7 +809,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
     hero._dashable = true
     hero._floatable = true
 
-    if(GAME.gameState.started) window.emitGameEvent('onHeroAwake', hero)
+    if(GAME.gameState.started) global.emitGameEvent('onHeroAwake', hero)
     PHYSICS.addObject(hero)
   }
 
@@ -818,14 +818,14 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
       OBJECTS.removeSubObject(subObject)
     })
     GAME.heros[hero.id].removed = true
-    // if(window.popoverOpen[hero.id]) MAP.closePopover(hero)
+    // if(global.popoverOpen[hero.id]) MAP.closePopover(hero)
   }
 
   onDeleteHero(heroId) {
     const hero = GAME.heros[heroId]
     if(!hero) return
     HERO.deleteHero(hero)
-    window.local.emit('onDeletedHero', hero)
+    global.local.emit('onDeletedHero', hero)
     delete GAME.heros[heroId]
     GAME.heroList = GAME.heroList.filter(({id}) => id !== heroId)
   }
@@ -856,12 +856,12 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
     delete updatedHero.y
     if(!PAGE.gameLoaded) return
     if(updatedHero.subObjects) OBJECTS.forAllSubObjects(updatedHero.subObjects, (so) => {
-      window.mergeDeep(GAME.objectsById[so.id], so)
+      global.mergeDeep(GAME.objectsById[so.id], so)
     })
     if(!PAGE.role.isHost) {
-      window.mergeDeep(GAME.heros[updatedHero.id], updatedHero)
+      global.mergeDeep(GAME.heros[updatedHero.id], updatedHero)
       if(PAGE.role.isPlayer && HERO.id === updatedHero.id) {
-        window.mergeDeep(GAME.heros[HERO.id], updatedHero)
+        global.mergeDeep(GAME.heros[HERO.id], updatedHero)
       }
     }
   }
@@ -943,13 +943,13 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
       if(hero.flags.paused) return
       let prevY = hero.y
       input.onUpdate(hero, GAME.keysDown, delta)
-      // window.local.emit('onUpdateHero', hero, GAME.heroInputs[hero.id], delta)
+      // global.local.emit('onUpdateHero', hero, GAME.heroInputs[hero.id], delta)
       PHYSICS.updatePosition(hero, delta)
       PHYSICS.prepareObjectsAndHerosForCollisionsPhase(hero, [], [])
       PHYSICS.heroCorrection(hero, [], [])
       PHYSICS.postPhysics([], [])
-      window.clientInterpolationVault.add(
-        window.SI.snapshot.create([{ id: hero.id, x: hero.x, y: hero.y }])
+      global.clientInterpolationVault.add(
+        global.SI.snapshot.create([{ id: hero.id, x: hero.x, y: hero.y }])
       )
     }
 
@@ -963,7 +963,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
     if(serverSnapshot && GAME.world.tags.predictNonHostPosition) {
       // get the closest player snapshot that matches the server snapshot time
       // try {
-        const heroSnapshot = window.clientInterpolationVault.get(serverSnapshot.time, true)
+        const heroSnapshot = global.clientInterpolationVault.get(serverSnapshot.time, true)
 
         if (serverSnapshot && heroSnapshot) {
           // get the current hero position on the server
@@ -1128,4 +1128,4 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
   }
 }
 
-window.HERO = new Hero()
+global.HERO = new Hero()

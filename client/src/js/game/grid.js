@@ -1,5 +1,5 @@
 function setDefault() {
-  window.defaultGrid = {
+  global.defaultGrid = {
     width: 80,
     height: 40,
     nodeSize: 32,

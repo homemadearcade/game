@@ -85,7 +85,7 @@ class MapEditor {
       if (!MAPEDITOR.paused) handleMouseDown(event)
     })
     document.body.addEventListener("dblclick", (e) => {
-      if(!window.isClickingMap(e.target.className)) return
+      if(!global.isClickingMap(e.target.className)) return
       if(MAPEDITOR.objectHighlighted && MAPEDITOR.objectHighlighted.id) {
         OBJECTS.editingId = MAPEDITOR.objectHighlighted.id
         BELOWMANAGER.open({ objectSelected: MAPEDITOR.objectHighlighted, selectedManager: 'ObjectManager', selectedMenu: 'detail', selectedId: OBJECTS.editingId })
@@ -107,17 +107,17 @@ class MapEditor {
 
   openConstructEditor(object, startColor, startAtHero) {
     CONSTRUCTEDITOR.start(object, startColor, startAtHero)
-    // window.socket.emit('editGameState', { paused: true })
+    // global.socket.emit('editGameState', { paused: true })
 
     MAPEDITOR.initState()
     MAPEDITOR.pause()
 
-    const removeSaveListener = window.local.on('onConstructEditorSave', ({ constructParts, x, y, width, height }) => {
+    const removeSaveListener = global.local.on('onConstructEditorSave', ({ constructParts, x, y, width, height }) => {
       if (constructParts) {
-        window.socket.emit('editObjects', [{ id: object.id, constructParts, spawnPointX: x, spawnPointY: y, x, y, width, height }])
+        global.socket.emit('editObjects', [{ id: object.id, constructParts, spawnPointX: x, spawnPointY: y, x, y, width, height }])
       }
     })
-    const removeListener = window.local.on('onConstructEditorClose', () => {
+    const removeListener = global.local.on('onConstructEditorClose', () => {
       MAPEDITOR.resume()
       removeListener()
       removeSaveListener()
@@ -126,20 +126,20 @@ class MapEditor {
 
   openPathEditor(object, startAtHero) {
     PATHEDITOR.start(object, startAtHero)
-    // window.socket.emit('editGameState', { paused: true })
+    // global.socket.emit('editGameState', { paused: true })
 
     MAPEDITOR.initState()
     MAPEDITOR.pause()
 
-    const removeListener = window.local.on('onPathEditorClose', ({ pathParts, customGridProps }) => {
+    const removeListener = global.local.on('onPathEditorClose', ({ pathParts, customGridProps }) => {
       if (pathParts) {
         if(customGridProps) {
-          window.socket.emit('editObjects', [{ id: object.id, pathParts, tags: { path: true }, customGridProps }])
+          global.socket.emit('editObjects', [{ id: object.id, pathParts, tags: { path: true }, customGridProps }])
         } else {
-          window.socket.emit('editObjects', [{ id: object.id, pathParts, customGridProps: null, tags: { path: true } }])
+          global.socket.emit('editObjects', [{ id: object.id, pathParts, customGridProps: null, tags: { path: true } }])
         }
       }
-      // window.socket.emit('editGameState', { paused: false })
+      // global.socket.emit('editGameState', { paused: false })
       MAPEDITOR.resume()
       removeListener()
     })
@@ -155,7 +155,7 @@ class MapEditor {
   }
 
   onUpdate(delta) {
-    if(MAPEDITOR.objectHighlighted) window.socket.emit('sendHeroMapEditor', MAPEDITOR.objectHighlighted, HERO.id)
+    if(MAPEDITOR.objectHighlighted) global.socket.emit('sendHeroMapEditor', MAPEDITOR.objectHighlighted, HERO.id)
   }
 
   startResize(object, options = { snapToGrid: true }) {
@@ -219,43 +219,43 @@ class MapEditor {
   networkEditObject(object, update) {
     if (object.tags.subObject && object.subObjectName && object.ownerId) {
       const owner = OBJECTS.getOwner(object)
-      window.socket.emit('editSubObject', object.ownerId, object.subObjectName, update)
+      global.socket.emit('editSubObject', object.ownerId, object.subObjectName, update)
     } else if (object.tags.hero) {
-      window.socket.emit('editHero', { id: object.id, ...update })
+      global.socket.emit('editHero', { id: object.id, ...update })
     } else {
-      window.socket.emit('editObjects', [{ id: object.id, ...update }])
+      global.socket.emit('editObjects', [{ id: object.id, ...update }])
     }
   }
 
   deleteObject(object) {
     if (object.tags.subObject && object.subObjectName) {
       const owner = OBJECTS.getOwner(object)
-      window.socket.emit('deleteSubObject', owner, object.subObjectName)
+      global.socket.emit('deleteSubObject', owner, object.subObjectName)
     } else if(object.tags.hero) {
-      window.socket.emit('deleteHero', object.id)
+      global.socket.emit('deleteHero', object.id)
     } else if(object.id) {
-      window.socket.emit('deleteObject', object)
+      global.socket.emit('deleteObject', object)
     } else {
       console.error('trying to delete object without id')
     }
 
-    window.objectHighlighted = null
+    global.objectHighlighted = null
   }
 
   removeObject(object) {
     if (object.tags.subObject && object.subObjectName && object.ownerId) {
-      window.socket.emit('removeSubObject', object.ownerId, object.subObjectName)
+      global.socket.emit('removeSubObject', object.ownerId, object.subObjectName)
     } else if (object.tags.hero) {
-      window.socket.emit('removeHero', object)
+      global.socket.emit('removeHero', object)
     } else {
-      window.socket.emit('removeObject', object)
+      global.socket.emit('removeObject', object)
     }
   }
 }
 
 function handleMouseUp(event) {
   const { camera } = MAPEDITOR
-  const { x, y } = window.convertToGameXY(event)
+  const { x, y } = global.convertToGameXY(event)
 
   let clickEndX = ((x + camera.x) / camera.multiplier)
   let clickEndY = ((y + camera.y) / camera.multiplier)
@@ -264,11 +264,11 @@ function handleMouseUp(event) {
 function handleMouseDown(event) {
   const { camera, networkEditObject } = MAPEDITOR
   if(!PIXIMAP.app) return
-  const { x, y } = window.convertToGameXY(event)
+  const { x, y } = global.convertToGameXY(event)
   MAPEDITOR.clickStart.x = ((x + camera.x) / camera.multiplier)
   MAPEDITOR.clickStart.y = ((y + camera.y) / camera.multiplier)
 
-  let selectionAllowed = (PAGE.role.isAdmin || GAME.heros[HERO.id].flags.allowObjectSelection) && window.isClickingMap(event.target.className)
+  let selectionAllowed = (PAGE.role.isAdmin || GAME.heros[HERO.id].flags.allowObjectSelection) && global.isClickingMap(event.target.className)
 
   if(event.target.className.indexOf('dont-close-menu') >= 0) {
     selectionAllowed = false
@@ -284,13 +284,13 @@ function handleMouseDown(event) {
     if(subObjects) {
       Object.keys(subObjects).forEach((subObjectName) => {
         const so = subObjects[subObjectName]
-        so.id = subObjectName + '-' + window.uniqueID()
+        so.id = subObjectName + '-' + global.uniqueID()
       })
     }
     const constructParts = MAPEDITOR.copiedObject.constructParts
     if(constructParts) {
       constructParts.forEach((part) => {
-        part.id = window.uniqueID()
+        part.id = global.uniqueID()
       })
     }
     OBJECTS.create([MAPEDITOR.copiedObject])
@@ -323,7 +323,7 @@ function handleMouseDown(event) {
       networkEditObject(draggingObject, { id: draggingObject.id, spawnPointX: draggingObject.x, y: draggingObject.y, spawnPointY: draggingObject.y, x: draggingObject.x, y: draggingObject.y, pathParts: draggingObject.pathParts })
     } else if (draggingObject.constructParts) {
       networkEditObject(draggingObject, { id: draggingObject.id, spawnPointX: draggingObject.x, y: draggingObject.y, spawnPointY: draggingObject.y, x: draggingObject.x, y: draggingObject.y, constructParts: draggingObject.constructParts.map(part => {
-        part.id = window.uniqueID()
+        part.id = global.uniqueID()
         return part
       }) })
     } else if (GAME.gameState.started || GAME.gameState.branch) {
@@ -352,9 +352,9 @@ function handleMouseDown(event) {
 function handleMouseMove(event) {
   const { camera } = MAPEDITOR
 
-  if (!window.isClickingMap(event.target.className)) return
+  if (!global.isClickingMap(event.target.className)) return
 
-  const { x, y } = window.convertToGameXY(event)
+  const { x, y } = global.convertToGameXY(event)
 
   MAPEDITOR.mousePos.x = ((x + camera.x) / camera.multiplier)
   MAPEDITOR.mousePos.y = ((y + camera.y) / camera.multiplier)
@@ -503,4 +503,4 @@ function updateDraggingObject(object) {
   }
 }
 
-window.MAPEDITOR = new MapEditor()
+global.MAPEDITOR = new MapEditor()

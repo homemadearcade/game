@@ -27,7 +27,7 @@ export default class SpriteSheetEditor extends React.Component {
   }
 
   componentDidMount() {
-    this._removeListener1 = window.local.on('onEditSpriteData', (names, update) => {
+    this._removeListener1 = global.local.on('onEditSpriteData', (names, update) => {
       const ss = this.state.spriteSheet
 
       this.setState({
@@ -44,11 +44,11 @@ export default class SpriteSheetEditor extends React.Component {
           })
         }
       })
-      window.local.emit('onClearTextureIdsSelection')
+      global.local.emit('onClearTextureIdsSelection')
       this.forceUpdate()
     })
 
-    const ss = window.spriteSheets.find(({id}) => id == this.props.id)
+    const ss = global.spriteSheets.find(({id}) => id == this.props.id)
     if(!ss.tags) ss.tags= []
     this.setState({
       spriteSheet: ss
@@ -98,7 +98,7 @@ export default class SpriteSheetEditor extends React.Component {
               const state = this.state
               state.dontSepereteModified = !state.dontSepereteModified
               this.setState(state)
-              window.local.emit('onClearTextureIdsSelection')
+              global.local.emit('onClearTextureIdsSelection')
             }}
             checked={this.state.dontSepereteModified}
           />
@@ -110,7 +110,7 @@ export default class SpriteSheetEditor extends React.Component {
               const state = this.state
               state.hideUncategorized = !state.hideUncategorized
               this.setState(state)
-              window.local.emit('onClearTextureIdsSelection')
+              global.local.emit('onClearTextureIdsSelection')
             }}
             checked={this.state.hideUncategorized}
           />
@@ -122,7 +122,7 @@ export default class SpriteSheetEditor extends React.Component {
               const state = this.state
               state.hideDescribed = !state.hideDescribed
               this.setState(state)
-              window.local.emit('onClearTextureIdsSelection')
+              global.local.emit('onClearTextureIdsSelection')
             }}
             checked={this.state.hideDescribed}
           />

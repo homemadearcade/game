@@ -13,7 +13,7 @@ import classnames from 'classnames';
 // replace placeholder title with {title} prop
 // switch class to className
 
-window.titleAnimationStyles = [
+global.titleAnimationStyles = [
   'sunny mornings',
   'great thinkers',
   'beautiful questions',
@@ -25,7 +25,7 @@ window.titleAnimationStyles = [
 ]
 
 
-window.titleFontStyles = [
+global.titleFontStyles = [
   { fontFamily: "'Alien Mine', sans-serif", style: 'sci-fi'},
   { fontFamily: "'Planet N Compact Condensed', sans-serif", style: 'sci-fi' },
   { fontFamily: "'Daydream Daily', sans-serif", style: 'sci-fi' },
@@ -134,7 +134,7 @@ export default class TitleAnimation extends React.Component{
       var textWrapper = document.querySelector('.ml2');
       textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
 
-      anime.timeline({loop: window.demoTitles})
+      anime.timeline({loop: global.demoTitles})
         .add({
           targets: '.ml2 .letter',
           scale: [4,1],
@@ -161,7 +161,7 @@ export default class TitleAnimation extends React.Component{
       var textWrapper = document.querySelector('.ml3');
       textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
 
-      anime.timeline({loop: window.demoTitles})
+      anime.timeline({loop: global.demoTitles})
         .add({
           targets: '.ml3 .letter',
           opacity: [0,1],
@@ -187,7 +187,7 @@ export default class TitleAnimation extends React.Component{
       var textWrapper = document.querySelector('.ml6 .letters');
       textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
 
-      anime.timeline({loop: window.demoTitles})
+      anime.timeline({loop: global.demoTitles})
         .add({
           targets: '.ml6 .letter',
           translateY: ["1.1em", 0],
@@ -213,7 +213,7 @@ export default class TitleAnimation extends React.Component{
       var textWrapper = document.querySelector('.ml16');
       textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
 
-      anime.timeline({loop: window.demoTitles})
+      anime.timeline({loop: global.demoTitles})
         .add({
           targets: '.ml16 .letter',
           translateY: [-100,0],
@@ -239,7 +239,7 @@ export default class TitleAnimation extends React.Component{
       var textWrapper = document.querySelector('.ml12');
       textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
 
-      anime.timeline({loop: window.demoTitles})
+      anime.timeline({loop: global.demoTitles})
         .add({
           targets: '.ml12 .letter',
           translateX: [40,0],
@@ -272,7 +272,7 @@ export default class TitleAnimation extends React.Component{
       var textWrapper = document.querySelector('.ml11 .letters');
       textWrapper.innerHTML = textWrapper.textContent.replace(/([^\x00-\x80]|\w)/g, "<span class='letter'>$&</span>");
 
-      anime.timeline({loop: window.demoTitles})
+      anime.timeline({loop: global.demoTitles})
         .add({
           targets: '.ml11 .line',
           scaleY: [0,1],
@@ -313,7 +313,7 @@ export default class TitleAnimation extends React.Component{
       var textWrapper = document.querySelector('.ml1 .letters');
       textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
 
-      anime.timeline({loop: window.demoTitles})
+      anime.timeline({loop: global.demoTitles})
         .add({
           targets: '.ml1 .letter',
           scale: [0.3,1],
@@ -345,7 +345,7 @@ export default class TitleAnimation extends React.Component{
     }
 
     if(style === 'signal and noise') {
-      anime.timeline({loop: window.demoTitles})
+      anime.timeline({loop: global.demoTitles})
       .add({
         targets: '.ml5 .line',
         opacity: [0.5,1],

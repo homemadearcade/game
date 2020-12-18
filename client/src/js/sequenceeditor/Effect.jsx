@@ -22,7 +22,7 @@ export default class Effect extends React.Component{
     const { isTrigger } = this.props
     const { sequenceItem } = this.props
     const { effectName } = sequenceItem
-    const effectData = window.triggerEffects[effectName]
+    const effectData = global.triggerEffects[effectName]
 
     if(effectName.length && effectData.noEffected) return null
 
@@ -56,13 +56,13 @@ export default class Effect extends React.Component{
       Effect Name: <Select
         value={{value: effectName, label: effectName}}
         onChange={this.props._onChangeEffectName}
-        options={window.effectNameList.map(effectName => { return { value: effectName, label: effectName}})}
-        styles={window.reactSelectStyle}
-        theme={window.reactSelectTheme}/>
+        options={global.effectNameList.map(effectName => { return { value: effectName, label: effectName}})}
+        styles={global.reactSelectStyle}
+        theme={global.reactSelectTheme}/>
     </div>
 
     let chosenEffectForm = []
-    const effectData = window.triggerEffects[effectName]
+    const effectData = global.triggerEffects[effectName]
     if(effectName.length && effectData) {
 
       if(effectData.JSON) {
@@ -93,8 +93,8 @@ export default class Effect extends React.Component{
             this.props.setState({sequenceItem})
           }}
           options={Object.keys(GAME.library.sequences).map((id) => { return {value: id, label: id} })}
-          styles={window.reactSelectStyle}
-          theme={window.reactSelectTheme}/>
+          styles={global.reactSelectStyle}
+          theme={global.reactSelectTheme}/>
         </div>)
       }
 
@@ -162,7 +162,7 @@ export default class Effect extends React.Component{
           if(BELOWMANAGER.editingSequenceItemId) return
           BELOWMANAGER.editingSequenceItemId = sequenceItem.id
           BELOWMANAGER.ref.forceUpdate()
-          const removeEventListener = window.local.on('onSelectSequenceProperty', (option, objectSelected) => {
+          const removeEventListener = global.local.on('onSelectSequenceProperty', (option, objectSelected) => {
             const { sequenceItem } = this.props
             if(effectName === 'pathfindTo') {
               sequenceItem.effectValue = {

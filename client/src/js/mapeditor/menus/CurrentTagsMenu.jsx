@@ -58,10 +58,10 @@ export default class CurrentTagsMenu extends React.Component {
                 return this._renderTagMenuItems(tag)
             })}
             {/* <SubMenu title="Physics">
-                {this._renderTagMenuItems(window.physicsTags)}
+                {this._renderTagMenuItems(global.physicsTags)}
             </SubMenu>
             {subObject && <SubMenu title="Sub Object">
-                {this._renderTagMenuItems(window.subObjectTags)}
+                {this._renderTagMenuItems(global.subObjectTags)}
             </SubMenu>} */}
         </Menu>
     }

@@ -1,5 +1,5 @@
-window.local.on('onUserIdentified', () => {
-  window.heroLibrary = {
+global.local.on('onUserIdentified', () => {
+  global.heroLibrary = {
     admin: {
       useGameDefault: false,
       JSON: {
@@ -83,7 +83,7 @@ window.local.on('onUserIdentified', () => {
         worldMenu: {
           backgroundColor: true,
         },
-        spriteSheets: window.spriteSheetIds
+        spriteSheets: global.spriteSheetIds
       }
     }
   }

@@ -4,7 +4,7 @@ import Modal from '../components/Modal.jsx'
 
 export default class HeroMenuModal extends React.Component {
   _onMouseOverButton() {
-    AUDIO.play(GAME.theme.audio.onPlayerUIMouseOverButton || window.defaultAudioTheme.onPlayerUIMouseOverButton, { volume: 0.6 })
+    AUDIO.play(GAME.theme.audio.onPlayerUIMouseOverButton || global.defaultAudioTheme.onPlayerUIMouseOverButton, { volume: 0.6 })
   }
 
   render() {

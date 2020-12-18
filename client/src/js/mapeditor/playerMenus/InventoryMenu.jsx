@@ -10,42 +10,42 @@ export default class InventoryMenu extends React.Component{
       const { item } = this.props;
 
       if(key === 'drop') {
-        window.socket.emit('dropObject', item.ownerId, item.subObjectName, 1)
+        global.socket.emit('dropObject', item.ownerId, item.subObjectName, 1)
       }
       if(key === 'drop-1') {
-        window.socket.emit('dropObject', item.ownerId, item.subObjectName, 1)
+        global.socket.emit('dropObject', item.ownerId, item.subObjectName, 1)
       }
       if(key === 'drop-5') {
-        window.socket.emit('dropObject', item.ownerId, item.subObjectName, 5)
+        global.socket.emit('dropObject', item.ownerId, item.subObjectName, 5)
       }
       if(key === 'drop-10') {
-        window.socket.emit('dropObject', item.ownerId, item.subObjectName, 10)
+        global.socket.emit('dropObject', item.ownerId, item.subObjectName, 10)
       }
       if(key === 'drop-20') {
-        window.socket.emit('dropObject', item.ownerId, item.subObjectName, 20)
+        global.socket.emit('dropObject', item.ownerId, item.subObjectName, 20)
       }
       if(key === 'drop-all') {
-        window.socket.emit('dropObject', item.ownerId, item.subObjectName, item.count)
+        global.socket.emit('dropObject', item.ownerId, item.subObjectName, item.count)
       }
 
       if(key === 'unequip') {
-        window.socket.emit('unequipObject', item.ownerId, item.subObjectName)
+        global.socket.emit('unequipObject', item.ownerId, item.subObjectName)
       }
 
       if(key === 'equip-z') {
-        window.socket.emit('equipObject', item.ownerId, item.subObjectName, 'z')
+        global.socket.emit('equipObject', item.ownerId, item.subObjectName, 'z')
       }
       if(key === 'equip-x') {
-        window.socket.emit('equipObject', item.ownerId, item.subObjectName, 'x')
+        global.socket.emit('equipObject', item.ownerId, item.subObjectName, 'x')
       }
       if(key === 'equip-c') {
-        window.socket.emit('equipObject', item.ownerId, item.subObjectName, 'c')
+        global.socket.emit('equipObject', item.ownerId, item.subObjectName, 'c')
       }
       if(key === 'equip-space') {
-        window.socket.emit('equipObject', item.ownerId, item.subObjectName, 'space')
+        global.socket.emit('equipObject', item.ownerId, item.subObjectName, 'space')
       }
       if(key === 'equip-any') {
-        window.socket.emit('equipObject', item.ownerId, item.subObjectName)
+        global.socket.emit('equipObject', item.ownerId, item.subObjectName)
       }
     }
   }

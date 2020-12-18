@@ -11,7 +11,7 @@ import { Ease, ease } from 'pixi-ease'
 
 import { setColor, getHexColor, getGameObjectStage } from './utils'
 
-window.PIXIMAP = {
+global.PIXIMAP = {
   textures: {},
   initialized: false,
   app: null,
@@ -84,7 +84,7 @@ PIXIMAP.onGameIdentified = function(game) {
   if(!PIXIMAP.assetsLoaded) {
     // setInterval(PIXIMAP.updateGridSprites, 300)
     initPixiApp(MAP.canvas, (app, textures) => {
-      window.local.emit('onPixiMapReady')
+      global.local.emit('onPixiMapReady')
     })
   } else if(PIXIMAP.assetsLoaded) {
     // PIXIMAP.initializeDarknessSprites()
@@ -473,16 +473,16 @@ PIXIMAP.onUpdateGrid = function() {
   // PIXIMAP.grid = _.cloneDeep(GAME.grid)
 
 
-  if(GAME.world.tags.blockLighting && !window.resettingDarkness) {
+  if(GAME.world.tags.blockLighting && !global.resettingDarkness) {
     setTimeout(() => {
       if(PIXIMAP.initialized) {
         // PIXIMAP.initializeDarknessSprites()
         // PIXIMAP.resetDarkness()
         // PIXIMAP.updateDarknessSprites()
       }
-      window.resettingDarkness = false
+      global.resettingDarkness = false
     }, 100)
-    window.resettingDarkness = true
+    global.resettingDarkness = true
   }
   PIXIMAP.updateGridSprites()
 }
@@ -503,7 +503,7 @@ PIXIMAP.setTerrainColor = function(nodeData, backgroundSprite) {
     //   backgroundSprite.tint = 0x333
     // } else {
       // console.log(terrainType)
-      backgroundSprite.tint = window.elevationColors[nodeData.elevationType]
+      backgroundSprite.tint = global.elevationColors[nodeData.elevationType]
     // }
   }
 }
@@ -518,7 +518,7 @@ PIXIMAP.updateGridSprites = function() {
   // const { gridX, gridY } = gridUtil.convertToGridXY({x: hero.x + PIXIMAP.grid.nodeSize/2, y: hero.y + PIXIMAP.grid.nodeSize/2})
 
   if(!nodes) return
-  
+
   for(var x = 0; x < nodes.length; x++) {
     for(var y = 0; y < nodes[x].length; y++) {
       const gridNode = GAME.grid.nodes[x][y]
@@ -627,7 +627,7 @@ PIXIMAP.onObjectAnimation = function(type, objectId, options = {}) {
   if(type === 'explode') {
     let options = { persistAfterRemoved: true, matchObjectColor: true, useUpdateOwnerPos: true }
     if(object.emitterTypeExplosion) {
-      options = window.particleEmitterLibrary.addGameLibrary()[object.emitterTypeExplosion]
+      options = global.particleEmitterLibrary.addGameLibrary()[object.emitterTypeExplosion]
     }
     pixiChild.explodeEmitter = initEmitter(object, object.emitterTypeExplosion || 'explode', options, { hasNoOwner: true })
     setTimeout(() => {
@@ -713,12 +713,12 @@ PIXIMAP.cleanUpMapAndAskPixiToSendGameReady = function() {
     PIXIMAP.updateGridSprites()
     resetConstructParts()
     PIXIMAP.onRender(true)
-    window.local.emit('onGameReady')
+    global.local.emit('onGameReady')
   }, 100)
 }
 
 function resetConstructParts() {
-  // window.terrainObjects.forEach((gameObject) => {
+  // global.terrainObjects.forEach((gameObject) => {
   //   gameObject.constructParts.forEach((part) => {
   //     const partObject = PIXIMAP.convertToPartObject(gameObject, part)
   //     updatePixiObject(partObject)
@@ -779,7 +779,7 @@ function download_sprite_as_png(renderer, sprite, fileName) {
 PIXIMAP.convertCanvasImageToFile = function(cb) {
   const renderer = PIXIMAP.app.renderer
   const sprite = PIXIMAP.app.stage
-  const name = `piximapimage-${window.uniqueID()}.png`
+  const name = `piximapimage-${global.uniqueID()}.png`
 
   renderer.render(sprite);
   const dataURI = renderer.view.toDataURL('image/png', 1)

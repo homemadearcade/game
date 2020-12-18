@@ -4,15 +4,15 @@ import gridUtil from '../../utils/grid'
 
 // import Grid from './drid'
 
-window.addTerrainDataToPhysics = function (terrainData) {
+global.addTerrainDataToPhysics = function (terrainData) {
   updateTerrainDataPhysics(terrainData)
 }
 
-window.removeTerrainDataFromPhysics = function (terrainData) {
+global.removeTerrainDataFromPhysics = function (terrainData) {
   updateTerrainDataPhysics(terrainData, true)
 }
 
-window.heatIntegers = {
+global.heatIntegers = {
   Coldest: 0.05,
   Colder:0.15,
   Cold: 0.35,
@@ -21,26 +21,26 @@ window.heatIntegers = {
   Warmest: 1
 }
 
-window.heatIntegerLookup = {}
+global.heatIntegerLookup = {}
 
 for(let i = 0; i <= 100; i+= 1) {
   const key = (i/100).toFixed(2)
-  if(i <= window.heatIntegers['Coldest'] * 100) {
-    window.heatIntegerLookup[key] = 'Coldest'
-  } else if(i <= window.heatIntegers['Colder'] * 100) {
-    window.heatIntegerLookup[key] = 'Colder'
-  } else if(i <= window.heatIntegers['Cold'] * 100) {
-    window.heatIntegerLookup[key] = 'Cold'
-  } else if(i <= window.heatIntegers['Warm'] * 100) {
-    window.heatIntegerLookup[key] = 'Warm'
-  } else if(i <= window.heatIntegers['Warmer'] * 100) {
-    window.heatIntegerLookup[key] = 'Warmer'
-  } else if(i <= window.heatIntegers['Warmest'] * 100) {
-    window.heatIntegerLookup[key] = 'Warmest'
+  if(i <= global.heatIntegers['Coldest'] * 100) {
+    global.heatIntegerLookup[key] = 'Coldest'
+  } else if(i <= global.heatIntegers['Colder'] * 100) {
+    global.heatIntegerLookup[key] = 'Colder'
+  } else if(i <= global.heatIntegers['Cold'] * 100) {
+    global.heatIntegerLookup[key] = 'Cold'
+  } else if(i <= global.heatIntegers['Warm'] * 100) {
+    global.heatIntegerLookup[key] = 'Warm'
+  } else if(i <= global.heatIntegers['Warmer'] * 100) {
+    global.heatIntegerLookup[key] = 'Warmer'
+  } else if(i <= global.heatIntegers['Warmest'] * 100) {
+    global.heatIntegerLookup[key] = 'Warmest'
   }
 }
 
-window.elevationIntegers = {
+global.elevationIntegers = {
   'Deep Water': 0.2,
   'Water': 0.4,
   Sand: 0.5,
@@ -49,24 +49,24 @@ window.elevationIntegers = {
   Mountain: 0.9,
   Snow: 1
 }
-window.elevationIntegerLookup = {}
+global.elevationIntegerLookup = {}
 
 for(let i = 0; i <= 100; i+= 1) {
   const key = (i/100).toFixed(2)
-  if(i <= window.elevationIntegers['Deep Water'] * 100) {
-    window.elevationIntegerLookup[key] = 'Deep Water'
-  } else if(i <= window.elevationIntegers['Water'] * 100) {
-    window.elevationIntegerLookup[key] = 'Water'
-  } else if(i <= window.elevationIntegers['Sand'] * 100) {
-    window.elevationIntegerLookup[key] = 'Sand'
-  } else if(i <= window.elevationIntegers['Grass'] * 100) {
-    window.elevationIntegerLookup[key] = 'Grass'
-  } else if(i <= window.elevationIntegers['Forest'] * 100) {
-    window.elevationIntegerLookup[key] = 'Forest'
-  } else if(i <= window.elevationIntegers['Mountain'] * 100) {
-    window.elevationIntegerLookup[key] = 'Mountain'
-  } else if(i <= window.elevationIntegers['Snow'] * 100) {
-    window.elevationIntegerLookup[key] = 'Snow'
+  if(i <= global.elevationIntegers['Deep Water'] * 100) {
+    global.elevationIntegerLookup[key] = 'Deep Water'
+  } else if(i <= global.elevationIntegers['Water'] * 100) {
+    global.elevationIntegerLookup[key] = 'Water'
+  } else if(i <= global.elevationIntegers['Sand'] * 100) {
+    global.elevationIntegerLookup[key] = 'Sand'
+  } else if(i <= global.elevationIntegers['Grass'] * 100) {
+    global.elevationIntegerLookup[key] = 'Grass'
+  } else if(i <= global.elevationIntegers['Forest'] * 100) {
+    global.elevationIntegerLookup[key] = 'Forest'
+  } else if(i <= global.elevationIntegers['Mountain'] * 100) {
+    global.elevationIntegerLookup[key] = 'Mountain'
+  } else if(i <= global.elevationIntegers['Snow'] * 100) {
+    global.elevationIntegerLookup[key] = 'Snow'
   }
 }
 
@@ -101,7 +101,7 @@ function setHeatGradient(nodes) {
 
       if(node.heat < 0) node.heat = 0
 
-      node.heatType = window.heatIntegerLookup[node.heat]
+      node.heatType = global.heatIntegerLookup[node.heat]
     })
   })
 }
@@ -132,7 +132,7 @@ function FloodFillAllNodes(nodes)
                   FloodFill(stack.pop(), group, stack, nodes);
                 }
 
-                let id = window.uniqueID()
+                let id = global.uniqueID()
                 mountainRanges[id] = group
 
                 group.forEach((groupNode) => {
@@ -154,7 +154,7 @@ function FloodFillAllNodes(nodes)
                   FloodFill(stack.pop(), group, stack, nodes);
                 }
 
-                let id = window.uniqueID()
+                let id = global.uniqueID()
                 landMasses[id] = group
 
                 group.forEach((groupNode) => {
@@ -174,7 +174,7 @@ function FloodFillAllNodes(nodes)
                   FloodFill(stack.pop(), group, stack, nodes);
                 }
 
-                let id = window.uniqueID()
+                let id = global.uniqueID()
                 waterMasses[id] = group
 
                 group.forEach((groupNode) => {
@@ -259,7 +259,7 @@ function setAllNodesElevationBitmask(nodes) {
 function setAllNodesElevationTypes(nodes) {
   nodes.forEach((row, x) => {
     row.forEach((node, y) => {
-      const elevationType = window.elevationIntegerLookup[node.elevation.toFixed(2)]
+      const elevationType = global.elevationIntegerLookup[node.elevation.toFixed(2)]
 
       if(elevationType === 'Deep Water' || elevationType === 'Water') {
         node.isWater = true
@@ -382,14 +382,14 @@ function generateNoiseMap({type, seed, nodes, property, width, height}) {
 }
 
 function updateTerrainDataPhysics(terrainData, remove) {
-  window.terrainObjects = []
-  window.terrainObstacles = []
+  global.terrainObjects = []
+  global.terrainObstacles = []
 
   const grid = {...GAME.grid, x: GAME.grid.startX, y: GAME.grid.startY, width: GAME.grid.width * GAME.grid.nodeSize, height: GAME.grid.height * GAME.grid.nodeSize}
   Object.keys(terrainData.mountainRanges).forEach((id) => {
 
     const mountainRange = terrainData.mountainRanges[id]
-    const { x, y, width, height } = window.getBoundingBox(mountainRange, grid)
+    const { x, y, width, height } = global.getBoundingBox(mountainRange, grid)
 
     const object = {
       id,
@@ -404,8 +404,8 @@ function updateTerrainDataPhysics(terrainData, remove) {
     }
 
     GAME.objectsById[id] = object
-    if(!remove) window.terrainObjects.push(object)
-    if(!remove) window.terrainObstacles.push(object)
+    if(!remove) global.terrainObjects.push(object)
+    if(!remove) global.terrainObstacles.push(object)
     object.constructParts.forEach((part) => {
       part.ownerId = id
       if(remove) PHYSICS.removeObject(part)
@@ -416,7 +416,7 @@ function updateTerrainDataPhysics(terrainData, remove) {
   Object.keys(terrainData.landMasses).forEach((id) => {
 
     const landMass = terrainData.landMasses[id]
-    const { x, y, width, height } = window.getBoundingBox(landMass, grid)
+    const { x, y, width, height } = global.getBoundingBox(landMass, grid)
 
     const object = {
       id,
@@ -430,7 +430,7 @@ function updateTerrainDataPhysics(terrainData, remove) {
     }
 
     GAME.objectsById[id] = object
-    if(!remove) window.terrainObjects.push(object)
+    if(!remove) global.terrainObjects.push(object)
     object.constructParts.forEach((part) => {
       part.ownerId = id
       // if(remove) PHYSICS.removeObject(part)
@@ -441,7 +441,7 @@ function updateTerrainDataPhysics(terrainData, remove) {
   Object.keys(terrainData.waterMasses).forEach((id) => {
     const bodyOfWater = terrainData.waterMasses[id]
 
-    const { x, y, width, height } = window.getBoundingBox(bodyOfWater, grid)
+    const { x, y, width, height } = global.getBoundingBox(bodyOfWater, grid)
 
     const object = {
       id,
@@ -455,7 +455,7 @@ function updateTerrainDataPhysics(terrainData, remove) {
       }
     }
 
-    if(!remove) window.terrainObjects.push(object)
+    if(!remove) global.terrainObjects.push(object)
     GAME.objectsById[id] = object
     object.constructParts.forEach((part) => {
       part.ownerId = id
@@ -529,7 +529,7 @@ async function generateTerrainJSON(showModals) {
   GAME.grid.terrainData = massData
   applyChangesToNodeData(nodesCopy)
   console.log('done w procedural map')
-  window.socket.emit('updateGrid', GAME.grid)
+  global.socket.emit('updateGrid', GAME.grid)
 
 }
 

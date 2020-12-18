@@ -19,10 +19,10 @@ export default class WorldLive extends React.Component {
       ...newData
     })
 
-    window.socket.emit('updateWorld', { ...newData.world })
+    global.socket.emit('updateWorld', { ...newData.world })
 
     if(!this.compareGrids(newData.grid,GAME.grid)) {
-      window.socket.emit('updateGrid', { ...newData.grid })
+      global.socket.emit('updateGrid', { ...newData.grid })
     }
   }
 

@@ -169,11 +169,11 @@ class EventEmitter {
   }
 }
 
-window.local = new EventEmitter()
-window.mockSocket = new EventEmitter(true)
+global.local = new EventEmitter()
+global.mockSocket = new EventEmitter(true)
 
 function establishALocalHost() {
-  mockServer(null, window.mockSocket, window.mockSocket, { arcadeMode: true })
+  mockServer(null, global.mockSocket, global.mockSocket, { arcadeMode: true })
 }
 
 export default {

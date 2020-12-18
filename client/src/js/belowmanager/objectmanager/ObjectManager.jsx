@@ -6,7 +6,7 @@ import modals from '../../mapeditor/modals'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Collapsible from 'react-collapsible';
 
-window.objectManagerTabs = {
+global.objectManagerTabs = {
   detail: false,
   triggers: false,
 }
@@ -23,8 +23,8 @@ export default class ObjectManager extends React.Component {
       </div>
     }
 
-    // const triggerData = JSON.parse(JSON.stringify(window.defaultSequenceTrigger))
-    // const newEffect = JSON.parse(JSON.stringify(window.defaultSequenceEffect))
+    // const triggerData = JSON.parse(JSON.stringify(global.defaultSequenceTrigger))
+    // const newEffect = JSON.parse(JSON.stringify(global.defaultSequenceEffect))
     // Object.assign(newEffect, triggerData, effect)
 
     if(tabName === 'triggers') {
@@ -44,7 +44,7 @@ export default class ObjectManager extends React.Component {
               <i className="fas fa-save Manager__button" onClick={() => {
                 const triggerUpdate = ref.current.getItemValue()
                 const oldId = trigger.id
-                window.socket.emit('editTrigger', this.props.objectSelected.id, oldId, triggerUpdate)
+                global.socket.emit('editTrigger', this.props.objectSelected.id, oldId, triggerUpdate)
               }}></i>
               <SequenceItem sequenceItem={trigger} ref={ref} isTrigger/>
             </Collapsible>

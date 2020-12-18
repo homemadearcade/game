@@ -1,7 +1,7 @@
 import audio from './sound.js'
 import axios from 'axios'
 
-window.audio = audio
+global.audio = audio
 
 class Audio{
   constructor() {
@@ -32,7 +32,7 @@ class Audio{
       this.sounds3d[id] = null
     })
     Object.keys(this.loadedIds).forEach((id) => {
-      window.audio.sounds[id].pause()
+      global.audio.sounds[id].pause()
     })
   }
 
@@ -45,28 +45,28 @@ class Audio{
   }
 
   loadData() {
-    let socket = window.socket
+    let socket = global.socket
     if(PAGE.role.isArcadeMode || PAGE.role.isHomeEditor) {
-      socket = window.networkSocket
+      socket = global.networkSocket
     }
 
     const options = {
       params: {}
     };
 
-    axios.get(window.HAGameServerUrl + '/audioData', options).then(res => {
+    axios.get(global.HAGameServerUrl + '/audioData', options).then(res => {
       AUDIO.data = res.data
     })
 
     //Assign the callback function that should run
     //each time a file loaded, just like PIXI.js
-    window.audio.sounds.onProgress = function (progress, res) {
+    global.audio.sounds.onProgress = function (progress, res) {
       console.log('%' + progress + ' file(s) loaded.');
       console.log('File ' + res.url + ' just finished loading.');
       AUDIO.loadedIds[res.url] = true
     };
 
-    window.audio.sounds.whenLoaded = () => {
+    global.audio.sounds.whenLoaded = () => {
       if(AUDIO.loading.callback) AUDIO.loading.callback()
       AUDIO.loading.callback = null
     }
@@ -83,45 +83,45 @@ class Audio{
     Object.keys(assets).forEach((event) => {
       const asset = assets[event]
       if(!asset) return
-      if(window.audio.sounds[asset]) {
+      if(global.audio.sounds[asset]) {
         return
       }
       assetURLs.push(asset)
     })
-    Object.keys(window.defaultAudioTheme).forEach((event) => {
-      const asset = window.defaultAudioTheme[event]
+    Object.keys(global.defaultAudioTheme).forEach((event) => {
+      const asset = global.defaultAudioTheme[event]
       if(!asset) return
-      if(window.audio.sounds[asset]) {
+      if(global.audio.sounds[asset]) {
         return
       }
       assetURLs.push(asset)
     })
 
     AUDIO.loading.callback = () => {
-      window.local.emit('onAudioReady')
+      global.local.emit('onAudioReady')
     }
     AUDIO.loading.ids.push(...assetURLs)
-    window.audio.sounds.load(assetURLs)
+    global.audio.sounds.load(assetURLs)
   }
 
   play(id, options) {
     if(!id || !PAGE.gameLoaded) return
 
     try{
-      if(!window.audio.sounds[id]) {
+      if(!global.audio.sounds[id]) {
         AUDIO.loading.ids.push(id)
-        window.audio.sounds.load([id])
+        global.audio.sounds.load([id])
         AUDIO.loading.callback = () => {
           if(options) {
-            AUDIO.updateSound(window.audio.sounds[id], options)
+            AUDIO.updateSound(global.audio.sounds[id], options)
           }
-          if(window.audio.sounds[id]) window.audio.sounds[id].playFrom(0)
+          if(global.audio.sounds[id]) global.audio.sounds[id].playFrom(0)
         }
       } else {
         if(options) {
-          AUDIO.updateSound(window.audio.sounds[id], options)
+          AUDIO.updateSound(global.audio.sounds[id], options)
         }
-        if(window.audio.sounds[id]) window.audio.sounds[id].playFrom(0)
+        if(global.audio.sounds[id]) global.audio.sounds[id].playFrom(0)
       }
 
     } catch(e) {
@@ -132,9 +132,9 @@ class Audio{
   playDebounce({id, soundId, volume = 1, debounceTime = 25}) {
     if(!id || !soundId || !PAGE.gameLoaded) return
 
-    if(!window.audio.sounds[soundId]) {
+    if(!global.audio.sounds[soundId]) {
       AUDIO.loading.ids.push(soundId)
-      window.audio.sounds.load([soundId])
+      global.audio.sounds.load([soundId])
       AUDIO.loading.callback = () => {
         AUDIO.debounce({id, soundId, volume, debounceTime})
       }
@@ -152,8 +152,8 @@ class Audio{
     }
 
     this.playingDebounce[id] = _.debounce(() => {
-      window.audio.sounds[soundId].volume = volume
-      if(window.audio.sounds[soundId]) window.audio.sounds[soundId].playFrom(0)
+      global.audio.sounds[soundId].volume = volume
+      if(global.audio.sounds[soundId]) global.audio.sounds[soundId].playFrom(0)
     }, debounceTime, { leading: true, trailing: true, maxWait: 10})
     this.playingDebounce[id]()
   }
@@ -165,9 +165,9 @@ class Audio{
 
     if(!soundIds[0] || !PAGE.gameLoaded) return
 
-    if(!window.audio.sounds[soundIds[0]]) {
+    if(!global.audio.sounds[soundIds[0]]) {
       AUDIO.loading.ids.push(soundIds[0])
-      window.audio.sounds.load([soundIds[0]])
+      global.audio.sounds.load([soundIds[0]])
       AUDIO.loading.callback = () => {
         AUDIO.startLoop(id, soundIds[0])
       }
@@ -181,7 +181,7 @@ class Audio{
   }
 
   cloneSound(id, cb) {
-    return window.audio.makeSound(id, cb, false, window.audio.sounds[id].xhr)
+    return global.audio.makeSound(id, cb, false, global.audio.sounds[id].xhr)
   }
 
   startLoop(id, soundId) {
@@ -196,7 +196,7 @@ class Audio{
       return
     }
 
-    if(window.audio.sounds[soundId] && id) {
+    if(global.audio.sounds[soundId] && id) {
       const sound = this.cloneSound(soundId, () => {
         sound.loop = true
         sound.playFrom(0)
@@ -221,14 +221,14 @@ class Audio{
   //   if(!AUDIO.soundsByName[name]) {
   //     return
   //   }
-  //   window.audio.sounds[AUDIO.soundsByName[name]].play()
+  //   global.audio.sounds[AUDIO.soundsByName[name]].play()
   // }
 
   loadAsset(id, cb) {
-    window.audio.sounds.load([id])
+    global.audio.sounds.load([id])
     if(cb) AUDIO.loading.callback = cb
     AUDIO.loading.ids.push(id)
   }
 }
 
-window.AUDIO = new Audio()
+global.AUDIO = new Audio()

@@ -14,7 +14,7 @@ import {
   NextSelect,
 } from '../components/SelectComponents.jsx'
 
-window.goalTypes = {
+global.goalTypes = {
   'collectX': {
     number: true,
     tag: true,
@@ -41,7 +41,7 @@ window.goalTypes = {
   // }
 }
 
-window.defaultSequenceGoal = {
+global.defaultSequenceGoal = {
   goalName: 'collectX',
   goalTargetCount: 1,
   goalTargetTags: [],
@@ -59,14 +59,14 @@ window.defaultSequenceGoal = {
   goalDescription: '',
 }
 
-window.goalNameList = Object.keys(window.goalTypes)
+global.goalNameList = Object.keys(global.goalTypes)
 
 export default class Goal extends React.Component{
   _renderEffecteds() {
     const { isTrigger } = this.props
     const { sequenceItem } = this.props
     const { goalName } = sequenceItem
-    const goalData = window.goalTypes[goalName]
+    const goalData = global.goalTypes[goalName]
 
     return <React.Fragment>
       <div className="SequenceItem__effect-input"><input onChange={() => this.props._onToggleValue('goalAllHeros')} checked={sequenceItem.goalAllHeros} type="checkbox"></input>All Heros</div>
@@ -87,13 +87,13 @@ export default class Goal extends React.Component{
       Goal Type: <Select
         value={{value: goalName, label: goalName}}
         onChange={this.props._onChangeGoalName}
-        options={window.goalNameList.map(goalName => { return { value: goalName, label: goalName}})}
-        styles={window.reactSelectStyle}
-        theme={window.reactSelectTheme}/>
+        options={global.goalNameList.map(goalName => { return { value: goalName, label: goalName}})}
+        styles={global.reactSelectStyle}
+        theme={global.reactSelectTheme}/>
     </div>
 
     let chosenGoalForm = []
-    const goalData = window.goalTypes[goalName]
+    const goalData = global.goalTypes[goalName]
     if(goalName.length && goalData) {
 
       // if(goalData.JSON) {
@@ -121,7 +121,7 @@ export default class Goal extends React.Component{
       //     if(BELOWMANAGER.editingSequenceItemId) return
       //     BELOWMANAGER.editingSequenceItemId = sequenceItem.id
       //     BELOWMANAGER.ref.forceUpdate()
-      //     const removeEventListener = window.local.on('onSelectSequenceProperty', (option, objectSelected) => {
+      //     const removeEventListener = global.local.on('onSelectSequenceProperty', (option, objectSelected) => {
       //       const { sequenceItem } = this.props
       //       if(goalName === 'pathfindTo') {
       //         sequenceItem.effectValue = {
@@ -190,8 +190,8 @@ export default class Goal extends React.Component{
                 this.props.setState({sequenceItem})
               }}
               options={Object.keys(GAME.library.sequences).map((id) => { return {value: id, label: id} })}
-              styles={window.reactSelectStyle}
-              theme={window.reactSelectTheme}/>
+              styles={global.reactSelectStyle}
+              theme={global.reactSelectTheme}/>
             </div>
             <div className="SequenceItem__effected">Fail Sequence Id:<Select
               value={{value: sequenceItem.failSequenceId, label: sequenceItem.failSequenceId}}
@@ -200,8 +200,8 @@ export default class Goal extends React.Component{
                 this.props.setState({sequenceItem})
               }}
               options={Object.keys(GAME.library.sequences).map((id) => { return {value: id, label: id} })}
-              styles={window.reactSelectStyle}
-              theme={window.reactSelectTheme}/>
+              styles={global.reactSelectStyle}
+              theme={global.reactSelectTheme}/>
             </div>
           </Collapsible>
         </div>

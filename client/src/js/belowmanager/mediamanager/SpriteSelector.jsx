@@ -19,7 +19,7 @@ export default class SpriteSelector extends React.Component {
   }
 
   componentDidMount() {
-    const ss = window.spriteSheets.find(({id}) => id == this.props.id)
+    const ss = global.spriteSheets.find(({id}) => id == this.props.id)
     if(!ss.tags) ss.tags= []
     this.setState({
       spriteSheet: ss

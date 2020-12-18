@@ -30,7 +30,7 @@ const objects = {}
 
 // Create the collision system
 const system = new Collisions()
-window.PHYSICS = {
+global.PHYSICS = {
   addObject,
   removeObject,
   system,
@@ -79,7 +79,7 @@ function correctAndEffectAllObjectAndHeros (delta) {
 }
 
 function setAngleVelocity(hero) {
-  const angleCorrection = window.degreesToRadians(90)
+  const angleCorrection = global.degreesToRadians(90)
   hero.velocityX = hero.velocityAngle * Math.cos(hero.angle - angleCorrection)
   hero.velocityY = hero.velocityAngle * Math.sin(hero.angle - angleCorrection)
 }
@@ -185,11 +185,11 @@ function updatePosition(object, delta) {
     let velocityOnWaterDecayExtra = 0
 
     if(!isVelocityDecayNumber) {
-      velocityDecayY = window.advancedPlatformerDefaults.velocityDecay
-      velocityDecayX = window.advancedPlatformerDefaults.velocityDecay
-      velocityOnLandDecayExtra = window.advancedPlatformerDefaults.velocityOnLandDecayExtra
-      velocityInAirDecayExtra = window.advancedPlatformerDefaults.velocityInAirDecayExtra
-      velocityOnWaterExtra = window.advancedPlatformerDefaults.velocityonWaterDecayExtra
+      velocityDecayY = global.advancedPlatformerDefaults.velocityDecay
+      velocityDecayX = global.advancedPlatformerDefaults.velocityDecay
+      velocityOnLandDecayExtra = global.advancedPlatformerDefaults.velocityOnLandDecayExtra
+      velocityInAirDecayExtra = global.advancedPlatformerDefaults.velocityInAirDecayExtra
+      velocityOnWaterExtra = global.advancedPlatformerDefaults.velocityonWaterDecayExtra
     } else {
       velocityDecayY = object.mod().velocityDecay + (object.mod().velocityDecayYExtra || 0)
       velocityDecayX = object.mod().velocityDecay + (object.mod().velocityDecayXExtra || 0)
@@ -284,7 +284,7 @@ function prepareObjectsAndHerosForMovementPhase() {
   // set objects new position and widths
   let everything = [...GAME.objects]
   let allHeros = getAllHeros()
-  if(window.terrainObstacles) everything.push(...window.terrainObstacles)
+  if(global.terrainObstacles) everything.push(...global.terrainObstacles)
   everything.push(...allHeros)
   PHYSICS.correctedConstructs = {}
 
@@ -350,7 +350,7 @@ function prepareObjectsAndHerosForCollisionsPhase() {
 
   let everything = [...GAME.objects]
   let allHeros = getAllHeros()
-  if(window.terrainObstacles) everything.push(...window.terrainObstacles)
+  if(global.terrainObstacles) everything.push(...global.terrainObstacles)
   everything.push(...allHeros)
   everything.forEach((object) => {
     if(object.subObjects) {
@@ -476,19 +476,19 @@ function postPhysics() {
       let input = GAME.heroInputs[hero.id]
       const interactableObject = OBJECTS.getObjectOrHeroById(hero.interactableObjectId)
       // INTERACT WITH SMALLEST OBJECT
-      // window.emitGameEvent('onObjectInteractable', hero.interactableObjectId, hero)
+      // global.emitGameEvent('onObjectInteractable', hero.interactableObjectId, hero)
       if(interactableObject.mod().tags.autoTalkOnInteractable && !hero._cantInteract && !hero.flags.paused && !hero._cantautoTalk) {
         // if(interactableObject.mod().tags.autoTalkOnce) {
           interactableObject.tags.autoTalkOnInteractable = false
           // interactableObject.tags.autoTalkOnce = false
-          window.emitGameEvent('onHeroInteract', hero, interactableObject)
+          global.emitGameEvent('onHeroInteract', hero, interactableObject)
           onHeroTrigger(hero, interactableObject, {}, { skipToInteraction: 'talk'})
           hero._cantInteract = true
         // }
       }
 
       if(input && (input['e'] === true || input['v'] === true || input['enter'] === true) && !hero._cantInteract && !hero.flags.paused) {
-        window.emitGameEvent('onHeroInteract', hero, interactableObject)
+        global.emitGameEvent('onHeroInteract', hero, interactableObject)
         onHeroTrigger(hero, interactableObject, {}, {fromInteractButton: true})
         hero._cantInteract = true
       }
@@ -601,17 +601,17 @@ function processAwarenessAndWithinEvents(object) {
       left.forEach((objectLeftId) => {
         const objectLeft = OBJECTS.getObjectOrHeroById(objectLeftId)
         if(object.tags && object.tags.hero) {
-          window.emitGameEvent('onHeroUnaware', object, objectLeft)
+          global.emitGameEvent('onHeroUnaware', object, objectLeft)
         } else {
-          window.emitGameEvent('onObjectUnaware', object, objectLeft)
+          global.emitGameEvent('onObjectUnaware', object, objectLeft)
         }
       })
       entered.forEach((objectEnteredId) => {
         const objectEntered = OBJECTS.getObjectOrHeroById(objectEnteredId)
         if(object.tags && object.tags.hero) {
-          window.emitGameEvent('onHeroAware', object, objectEntered)
+          global.emitGameEvent('onHeroAware', object, objectEntered)
         } else {
-          window.emitGameEvent('onObjectAware', object, objectEntered)
+          global.emitGameEvent('onObjectAware', object, objectEntered)
         }
       })
     }
@@ -629,17 +629,17 @@ function processAwarenessAndWithinEvents(object) {
     left.forEach((objectLeftId) => {
       const objectLeft = OBJECTS.getObjectOrHeroById(objectLeftId)
       if(objectLeft.tags && objectLeft.tags.hero) {
-        window.emitGameEvent('onHeroLeave', objectLeft, object)
+        global.emitGameEvent('onHeroLeave', objectLeft, object)
       } else {
-        window.emitGameEvent('onObjectLeave', objectLeft, object)
+        global.emitGameEvent('onObjectLeave', objectLeft, object)
       }
     })
     entered.forEach((objectEnteredId) => {
       const objectEntered = OBJECTS.getObjectOrHeroById(objectEnteredId)
       if(objectEntered.tags && objectEntered.tags.hero) {
-        window.emitGameEvent('onHeroEnter', objectEntered, object)
+        global.emitGameEvent('onHeroEnter', objectEntered, object)
       } else {
-        window.emitGameEvent('onObjectEnter', objectEntered, object)
+        global.emitGameEvent('onObjectEnter', objectEntered, object)
       }
     })
   }
@@ -658,17 +658,17 @@ function processAwarenessAndWithinEvents(object) {
     left.forEach((objectLeftId) => {
       const objectLeft = OBJECTS.getObjectOrHeroById(objectLeftId)
       if(object.tags && object.tags.hero) {
-        window.emitGameEvent('onHeroTouchEnd', object, objectLeft)
+        global.emitGameEvent('onHeroTouchEnd', object, objectLeft)
       } else {
-        window.emitGameEvent('onObjectTouchEnd', object, objectLeft)
+        global.emitGameEvent('onObjectTouchEnd', object, objectLeft)
       }
     })
     entered.forEach((objectEnteredId) => {
       const objectEntered = OBJECTS.getObjectOrHeroById(objectEnteredId)
       if(object.tags && object.tags.hero) {
-        window.emitGameEvent('onHeroTouchStart', object, objectEntered)
+        global.emitGameEvent('onHeroTouchStart', object, objectEntered)
       } else {
-        window.emitGameEvent('onObjectTouchStart', object, objectEntered)
+        global.emitGameEvent('onObjectTouchStart', object, objectEntered)
       }
     })
   }
@@ -688,7 +688,7 @@ function removeAndRespawn() {
       } else hero._remove = true
       hero._destroy = null
       hero._destroyedById = null
-      window.emitGameEvent('onHeroDestroyed', {...hero, interactableObjectId: null }, OBJECTS.getObjectOrHeroById(hero._destroyedById))
+      global.emitGameEvent('onHeroDestroyed', {...hero, interactableObjectId: null }, OBJECTS.getObjectOrHeroById(hero._destroyedById))
     }
 
     if(hero._respawn) {
@@ -716,7 +716,7 @@ function processSubObjectRemoval(object) {
     object._remove = true
     object._destroy = null
     object._destroyedById = null
-    window.emitGameEvent('onObjectDestroyed', object, OBJECTS.getObjectOrHeroById(object._destroyedById))
+    global.emitGameEvent('onObjectDestroyed', object, OBJECTS.getObjectOrHeroById(object._destroyedById))
   }
 
   if(object._remove) {
@@ -734,7 +734,7 @@ function processObjectRemoval(object) {
     }
     object._destroy = null
     object._destroyedById = null
-    window.emitGameEvent('onObjectDestroyed', object, OBJECTS.getObjectOrHeroById(object._destroyedById))
+    global.emitGameEvent('onObjectDestroyed', object, OBJECTS.getObjectOrHeroById(object._destroyedById))
   }
 
   if(object._respawn) {
@@ -759,7 +759,7 @@ function processObjectRemoval(object) {
         part._remove = true
         part._destroy = null
         part._destroyedById = null
-        window.emitGameEvent('onObjectDestroyed', part, OBJECTS.getObjectOrHeroById(part._destroyedById))
+        global.emitGameEvent('onObjectDestroyed', part, OBJECTS.getObjectOrHeroById(part._destroyedById))
       }
 
       if(part._remove) {

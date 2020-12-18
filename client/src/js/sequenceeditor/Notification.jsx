@@ -14,7 +14,7 @@ import {
   NextSelect,
 } from '../components/SelectComponents.jsx'
 
-window.defaultSequenceNotification = {
+global.defaultSequenceNotification = {
   notificationAllHeros: false,
   notificationDuration: null,
   notificationToast: false,

@@ -72,8 +72,8 @@ function drawNameCenter(ctx, object, camera) {
   ctx.textAlign = "center";
   ctx.textBaseline = "top";
   let lineWidth = (object.width - fontSize)*camera.multiplier
-  let { width, height } = window.measureWrapText(ctx, object.name, 0, 0, lineWidth, fontSize)
-  window.wrapText(ctx, object.name, (object.x+(object.width/2))*camera.multiplier - camera.x, ((object.y+(object.height/2))*camera.multiplier - camera.y - (height/2)), lineWidth, fontSize)
+  let { width, height } = global.measureWrapText(ctx, object.name, 0, 0, lineWidth, fontSize)
+  global.wrapText(ctx, object.name, (object.x+(object.width/2))*camera.multiplier - camera.x, ((object.y+(object.height/2))*camera.multiplier - camera.y - (height/2)), lineWidth, fontSize)
 }
 
 function drawNameAbove(ctx, object, camera) {
@@ -84,8 +84,8 @@ function drawNameAbove(ctx, object, camera) {
   ctx.textAlign = "center";
   ctx.textBaseline = "top";
   let lineWidth = (object.width - fontSize)*camera.multiplier
-  let { width, height } = window.measureWrapText(ctx, object.name, 0, 0, lineWidth, fontSize)
-  window.wrapText(ctx, object.name, (object.x + (object.width/2))*camera.multiplier - camera.x, object.y*camera.multiplier - camera.y - height, lineWidth, fontSize)
+  let { width, height } = global.measureWrapText(ctx, object.name, 0, 0, lineWidth, fontSize)
+  global.wrapText(ctx, object.name, (object.x + (object.width/2))*camera.multiplier - camera.x, object.y*camera.multiplier - camera.y - height, lineWidth, fontSize)
 }
 
 function drawObject(ctx, object, withNames = false) {
@@ -226,7 +226,7 @@ function update(camera) {
     if(inView) {
       drawArrow(ctx, ((target.x + target.width/2) *camera.multiplier - camera.x), ((target.y - 60) *camera.multiplier - camera.y), ((target.x + target.width/2) *camera.multiplier - camera.x), ((target.y - 20) *camera.multiplier - camera.y), { size: .2 })
     }
-    // const angle = window.getAngle(clientHero.x, clientHero.y, target.x, target.y )
+    // const angle = global.getAngle(clientHero.x, clientHero.y, target.x, target.y )
     // drawArrow(ctx, MAP.canvas.width - 100, 50, MAP.canvas.width - 100, 50, { angle, size: 1 })
   }
 

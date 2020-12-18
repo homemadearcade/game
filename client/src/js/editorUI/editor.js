@@ -28,7 +28,7 @@ class Editor {
   }
 
   onPlayerIdentified() {
-    window.addEventListener("keydown", function (e) {
+    global.addEventListener("keydown", function (e) {
       if(e.keyCode === 16) {
         EDITOR.shiftPressed = true
         EDITORUI.ref.forceUpdate()
@@ -40,7 +40,7 @@ class Editor {
         PAGE.resetStorage()
       }
     })
-    window.addEventListener("keyup", function (e) {
+    global.addEventListener("keyup", function (e) {
       if(e.keyCode === 16) {
         EDITOR.shiftPressed = false
         CREATOR.ref._creatorRef.current.forceUpdate()
@@ -57,7 +57,7 @@ class Editor {
   }
 
   async loadGame() {
-    const response  = await axios.get(window.HAGameServerUrl + '/gamesmetadata')
+    const response  = await axios.get(global.HAGameServerUrl + '/gamesmetadata')
     const gamesMetadata = response.data.games
     let loadGameId
     const { value: gamesMetadataIndex } = await Swal.fire({
@@ -113,12 +113,12 @@ class Editor {
     if(newGameId) {
       let game = {
         id: newGameId,
-        world: JSON.parse(JSON.stringify(window.defaultWorld)),
-        // defaultHero: JSON.parse(JSON.stringify(window.defaultHero)),
+        world: JSON.parse(JSON.stringify(global.defaultWorld)),
+        // defaultHero: JSON.parse(JSON.stringify(global.defaultHero)),
         objects: [],
-        grid: JSON.parse(JSON.stringify(window.defaultGrid)),
+        grid: JSON.parse(JSON.stringify(global.defaultGrid)),
       }
-      window.socket.emit('saveGame', game)
+      global.socket.emit('saveGame', game)
       choseGameCallback(game.id)
     }
   }
@@ -127,17 +127,17 @@ class Editor {
     console.log('previous version before save', GAME)
     let saveGame = GAME.cleanForSave(GAME)
     saveGame = {...saveGame,
-          compendium: window.compendium }
+          compendium: global.compendium }
 
-    if(window.location.href.indexOf('localhost')) {
+    if(global.location.href.indexOf('localhost')) {
       console.log('saving to server', saveGame)
-      window.socket.emit('saveGame', {...saveGame,
-            compendium: window.compendium })
+      global.socket.emit('saveGame', {...saveGame,
+            compendium: global.compendium })
     } else {
       console.log('saving to local storage')
       const saveString = JSON.stringify(saveGame)
       // get megabytes
-      const size = window.byteLength(saveString)/1000000
+      const size = global.byteLength(saveString)/1000000
       if(size > 3) {
         // alert('save too big for browser storage, download as json instead')
       } else {
@@ -154,8 +154,8 @@ class Editor {
       if(EDITOR.shiftPressed) {
         GAME.grid.width = 200
         GAME.grid.height = 100
-        window.socket.emit('updateGrid', GAME.grid)
-        window.socket.emit('resetObjects')
+        global.socket.emit('updateGrid', GAME.grid)
+        global.socket.emit('resetObjects')
         setWorldAndHeroSpawnPointsTo('gridCenter')
         setTimeout(() => {
           respawnAllHeros()
@@ -166,15 +166,15 @@ class Editor {
       setGameBoundaryBehavior('default')
       setGameBoundaryTo('grid')
       setCameraLockTo('gridMinusOne')
-      sendWorldUpdate({ tags: { ...window.defaultWorld.tags, allMovingObjectsHaveGravityY: true, gameBoundaryBottomDestroyHero: true }})
+      sendWorldUpdate({ tags: { ...global.defaultWorld.tags, allMovingObjectsHaveGravityY: true, gameBoundaryBottomDestroyHero: true }})
     }
 
     if(worldName === 'Zelda') {
       if(EDITOR.shiftPressed) {
         GAME.grid.width = 200
         GAME.grid.height = 200
-        window.socket.emit('updateGrid', GAME.grid)
-        window.socket.emit('resetObjects')
+        global.socket.emit('updateGrid', GAME.grid)
+        global.socket.emit('resetObjects')
         setWorldAndHeroSpawnPointsTo('gridCenter')
         setTimeout(() => {
           respawnAllHeros()
@@ -185,15 +185,15 @@ class Editor {
       setGameBoundaryTo('gridMinusOne')
       setCameraLockTo('gridMinusOne')
       setHerosZoomTo('default')
-      sendWorldUpdate({ tags: { ...window.defaultWorld.tags }})
+      sendWorldUpdate({ tags: { ...global.defaultWorld.tags }})
     }
 
     if(worldName === 'Pacman') {
       if(EDITOR.shiftPressed) {
         GAME.grid.width = 44
         GAME.grid.height = 22
-        window.socket.emit('updateGrid', GAME.grid)
-        window.socket.emit('resetObjects')
+        global.socket.emit('updateGrid', GAME.grid)
+        global.socket.emit('resetObjects')
         setWorldAndHeroSpawnPointsTo('gridCenter')
         setTimeout(() => {
           respawnAllHeros()
@@ -205,15 +205,15 @@ class Editor {
       setCameraLockTo('gridMinusOne')
       setHerosZoomTo('gridMinusOne')
 
-      sendWorldUpdate({ tags: { ...window.defaultWorld.tags }})
+      sendWorldUpdate({ tags: { ...global.defaultWorld.tags }})
     }
 
     if(worldName === 'AdventureStart') {
       if(EDITOR.shiftPressed) {
         GAME.grid.width = 44
         GAME.grid.height = 22
-        window.socket.emit('updateGrid', GAME.grid)
-        window.socket.emit('resetObjects')
+        global.socket.emit('updateGrid', GAME.grid)
+        global.socket.emit('resetObjects')
         setWorldAndHeroSpawnPointsTo('gridCenter')
         setTimeout(() => {
           respawnAllHeros()
@@ -225,13 +225,13 @@ class Editor {
       setCameraLockTo('gridMinusOne')
       setHerosZoomTo('gridMinusOne')
 
-      sendWorldUpdate({ tags: { ...window.defaultWorld.tags }})
+      sendWorldUpdate({ tags: { ...global.defaultWorld.tags }})
     }
 
     if(worldName === 'Purgatory') {
       if(EDITOR.shiftPressed) {
         setGridTo('default')
-        window.socket.emit('resetObjects')
+        global.socket.emit('resetObjects')
         setWorldAndHeroSpawnPointsTo('gridCenter')
         setTimeout(() => {
           respawnAllHeros()
@@ -246,13 +246,13 @@ class Editor {
       setHerosZoomTo('smaller')
       setHerosZoomTo('smaller')
       setHerosZoomTo('smaller')
-      sendWorldUpdate({ tags: { ...window.defaultWorld.tags }})
+      sendWorldUpdate({ tags: { ...global.defaultWorld.tags }})
     }
 
     if(worldName === 'Smash') {
       if(EDITOR.shiftPressed) {
         setGridTo('default')
-        window.socket.emit('resetObjects')
+        global.socket.emit('resetObjects')
         setWorldAndHeroSpawnPointsTo('gridCenter')
         setTimeout(() => {
           respawnAllHeros()
@@ -277,19 +277,19 @@ class Editor {
       setCameraLockTo('smaller')
       setCameraLockTo('smaller')
       setHerosZoomTo('default')
-      sendWorldUpdate({ tags: { ...window.defaultWorld.tags, gameBoundaryDestroyHero: true }})
+      sendWorldUpdate({ tags: { ...global.defaultWorld.tags, gameBoundaryDestroyHero: true }})
     }
     if(worldName === 'Default') {
       if(EDITOR.shiftPressed) {
         setGridTo('default')
-        window.socket.emit('resetObjects')
+        global.socket.emit('resetObjects')
         setWorldAndHeroSpawnPointsTo('gridCenter')
         setTimeout(() => {
           respawnAllHeros()
         })
-        sendWorldUpdate({...window.defaultWorld})
+        sendWorldUpdate({...global.defaultWorld})
       }
-      sendWorldUpdate({ tags: { ...window.defaultWorld.tags}})
+      sendWorldUpdate({ tags: { ...global.defaultWorld.tags}})
       setHerosZoomTo('default')
       clearProperty('lockCamera')
       clearProperty('gameBoundaries')
@@ -533,15 +533,15 @@ class Editor {
     }
     if(propName === 'default') {
       const padding = GAME.world.chunkGamePadding
-      GAME.grid.width = window.defaultGrid.width + (padding * 2)
-      GAME.grid.height = window.defaultGrid.height + padding
+      GAME.grid.width = global.defaultGrid.width + (padding * 2)
+      GAME.grid.height = global.defaultGrid.height + padding
     }
-    window.socket.emit('updateGrid', GAME.grid)
+    global.socket.emit('updateGrid', GAME.grid)
   }
 
   respawnAllHeros() {
     GAME.heroList.forEach((hero) => {
-      window.socket.emit('respawnHero', hero)
+      global.socket.emit('respawnHero', hero)
     })
   }
 }
@@ -625,23 +625,23 @@ function getGridPaddingValue(minusOne = false) {
 
 
 function choseGameCallback(gameId) {
-  window.socket.emit('setGame', gameId)
+  global.socket.emit('setGame', gameId)
 }
 
 function sendHeroUpdate(update) {
-  window.socket.emit('editHero', { id: HERO.editingId || HERO.id, ...update })
+  global.socket.emit('editHero', { id: HERO.editingId || HERO.id, ...update })
 }
 
 function sendHerosUpdate(update) {
   GAME.heroList.forEach(({id}) => {
-    window.socket.emit('editHero', { id, ...update })
+    global.socket.emit('editHero', { id, ...update })
   })
 }
 
 let worldUpdate
 let flushWorldUpdateTimer
 function sendWorldUpdate(update) {
-  window.mergeDeep(GAME.world, update)
+  global.mergeDeep(GAME.world, update)
   if(worldUpdate) {
     Object.assign(worldUpdate, update)
   } else {
@@ -650,9 +650,9 @@ function sendWorldUpdate(update) {
 
   if(flushWorldUpdateTimer) clearTimeout(flushWorldUpdateTimer)
   flushWorldUpdateTimer = setTimeout(() => {
-    window.socket.emit('updateWorld', worldUpdate)
+    global.socket.emit('updateWorld', worldUpdate)
     worldUpdate = null
   }, 100)
 }
 
-window.EDITOR = new Editor
+global.EDITOR = new Editor

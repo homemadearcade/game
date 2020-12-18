@@ -49,7 +49,7 @@ class PathEditor {
   cancel() {
     this.open = false
     this.close()
-    window.local.emit('onPathEditorClose', false)
+    global.local.emit('onPathEditorClose', false)
   }
 
   close() {
@@ -84,10 +84,10 @@ class PathEditor {
         nodeWidth: this.grid.nodeWidth, nodeHeight: this.grid.nodeHeight
       }
       this.close()
-      window.local.emit('onPathEditorClose', {pathParts, customGridProps })
+      global.local.emit('onPathEditorClose', {pathParts, customGridProps })
     } else {
       this.close()
-      window.local.emit('onPathEditorClose', {pathParts })
+      global.local.emit('onPathEditorClose', {pathParts })
     }
 
   }
@@ -131,7 +131,7 @@ class PathEditor {
     this.camera.set(this.cameraController)
 
     this._mouseDownListener = (e) => {
-      if(!window.isClickingMap(e.target.className)) return
+      if(!global.isClickingMap(e.target.className)) return
       if(e.which === 1) {
         if(!this.paused) this.handleMouseDown(event)
       }
@@ -139,7 +139,7 @@ class PathEditor {
     document.body.addEventListener("mousedown", this._mouseDownListener)
 
     this._mouseMoveListener = (e) => {
-      if(!window.isClickingMap(e.target.className)) return
+      if(!global.isClickingMap(e.target.className)) return
       if(!this.paused && this.open) this.handleMouseMove(event)
     }
     document.body.addEventListener("mousemove", this._mouseMoveListener)
@@ -153,7 +153,7 @@ class PathEditor {
     this.ref.open(color)
     this.selectColor(color)
 
-    window.local.emit('onPathEditorStart', object)
+    global.local.emit('onPathEditorStart', object)
   }
 
   handleMouseUp() {
@@ -171,7 +171,7 @@ class PathEditor {
       this.unfillNodeXY(this.mousePos.x, this.mousePos.y)
     } else if(tool === 'eyeDropper') {
       const color = this.getColorFromNodeXY(this.mousePos.x, this.mousePos.y)
-      this.selectedColor = color || GAME.world.defaultObjectColor || window.defaultObjectColor
+      this.selectedColor = color || GAME.world.defaultObjectColor || global.defaultObjectColor
       this.ref.setColor(this.selectedColor)
     }
   }
@@ -364,4 +364,4 @@ class PathEditor {
   }
 }
 
-window.PATHEDITOR = new PathEditor()
+global.PATHEDITOR = new PathEditor()

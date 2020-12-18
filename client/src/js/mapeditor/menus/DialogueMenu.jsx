@@ -29,7 +29,7 @@ export default class DialogueMenu extends React.Component{
         })
         if(!dialogue) return
 
-        objectSelected.heroDialogueSets['default'].dialogue.push({...window.defaultDialogue, text: dialogue})
+        objectSelected.heroDialogueSets['default'].dialogue.push({...global.defaultDialogue, text: dialogue})
         networkEditObject(objectSelected, {heroDialogueSets: objectSelected.heroDialogueSets })
         return
       }

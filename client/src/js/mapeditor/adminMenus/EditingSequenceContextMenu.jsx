@@ -26,10 +26,10 @@ export default class EditingSequenceContextMenu extends React.Component{
       const { selectSubObject, objectSelected, subObject } = this.props;
 
       if(key === 'set-as-requested') {
-        window.local.emit('onSelectSequenceProperty', 'requested', objectSelected)
+        global.local.emit('onSelectSequenceProperty', 'requested', objectSelected)
       }
       if(key === 'set-as-sequenceitem-value') {
-        window.local.emit('onSelectSequenceProperty', 'value', objectSelected)
+        global.local.emit('onSelectSequenceProperty', 'value', objectSelected)
       }
 
       BELOWMANAGER.selectedSequenceProperty = null

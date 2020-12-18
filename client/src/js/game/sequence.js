@@ -9,7 +9,7 @@ function endSequence(sequence) {
     GAME.gameState.paused = false
   }
 
-  window.local.emit('onSequenceComplete', sequence.id)
+  global.local.emit('onSequenceComplete', sequence.id)
 
   GAME.gameState.sequenceQueue = GAME.gameState.sequenceQueue.filter((s) => {
     if(s.id === sequence.id) return false
@@ -37,7 +37,7 @@ function mapSequenceItems(sequenceItems) {
             optionCopy.next = 'end'
           }
         }
-        optionCopy.id = 'option-'+window.uniqueID()
+        optionCopy.id = 'option-'+global.uniqueID()
         map[optionCopy.id] = optionCopy
         return optionCopy
       })
@@ -174,7 +174,7 @@ function processSequence(sequence) {
     const effectedObjects = effects.getEffectedObjects(item, sequence.mainObject, sequence.guestObject, sequence.ownerObject)
     item.waiting = true
     effectedObjects[0].choiceOptions = item.options.slice()
-    window.emitGameEvent('onHeroOptionStart', effectedObjects[0])
+    global.emitGameEvent('onHeroOptionStart', effectedObjects[0])
     effectedObjects[0].flags.showChoices = true
     effectedObjects[0].flags.paused = true
     if(defaultEffector) {
@@ -186,8 +186,8 @@ function processSequence(sequence) {
       }
     }
 
-    window.emitGameEvent('onUpdatePlayerUI', effectedObjects[0])
-    const removeEventListener = window.local.on('onHeroChooseOption', (heroId, choiceId) => {
+    global.emitGameEvent('onUpdatePlayerUI', effectedObjects[0])
+    const removeEventListener = global.local.on('onHeroChooseOption', (heroId, choiceId) => {
       if(effectedObjects[0].id === heroId && sequence.itemMap[choiceId]) {
         removeEventListener()
         effectedObjects[0].flags.showChoices = false
@@ -201,8 +201,8 @@ function processSequence(sequence) {
           endSequence(sequence)
         }
         item.waiting = true
-        window.emitGameEvent('onHeroOptionComplete', effectedObjects[0])
-        window.emitGameEvent('onUpdatePlayerUI', effectedObjects[0])
+        global.emitGameEvent('onHeroOptionComplete', effectedObjects[0])
+        global.emitGameEvent('onUpdatePlayerUI', effectedObjects[0])
       }
     })
     sequence.eventListeners.push(removeEventListener)
@@ -211,7 +211,7 @@ function processSequence(sequence) {
   if(item.sequenceType === 'sequenceWait') {
     item.waiting = true
     if(item.conditionType === 'onTimerEnd') {
-      sequence.currentTimerId = GAME.addTimeout(window.uniqueID(), item.conditionNumber || 10, () => {
+      sequence.currentTimerId = GAME.addTimeout(global.uniqueID(), item.conditionNumber || 10, () => {
         item.waiting = false
         sequence.currentItemId = item.next
         sequence.currentTimerId = null
@@ -220,7 +220,7 @@ function processSequence(sequence) {
         }
       })
     } else if(item.conditionType === 'onEvent') {
-      const removeEventListener = window.local.on(item.conditionEventName, (mainObject, guestObject) => {
+      const removeEventListener = global.local.on(item.conditionEventName, (mainObject, guestObject) => {
         const eventMatch = testEventMatch(item.conditionEventName, mainObject, guestObject, item, null, { testPassReverse: item.testPassReverse, testModdedVersion: item.testModdedVersion })
         if(eventMatch) {
           item.waiting = false
@@ -238,7 +238,7 @@ function processSequence(sequence) {
       } else {
         sequence.paused = true
         sequence.currentItemId = item.next
-        window.socket.emit('requestAdminApproval', 'unpauseSequence', { sequenceId: sequence.id, text: item.conditionValue || 'Sequence ' + sequence.id + ' needs approval to continue', approveButtonText: 'Resume', rejectButtonText: 'Stop', requestId: 'request-'+window.uniqueID()})
+        global.socket.emit('requestAdminApproval', 'unpauseSequence', { sequenceId: sequence.id, text: item.conditionValue || 'Sequence ' + sequence.id + ' needs approval to continue', approveButtonText: 'Resume', rejectButtonText: 'Stop', requestId: 'request-'+global.uniqueID()})
         return
       }
     } else if(item.conditionType === 'onPreviousItemCompleted') {
@@ -269,7 +269,7 @@ function processSequence(sequence) {
         if(!OBJECTS.anticipatedForAdd) {
           sequence.currentItemId = previousItem.next
         } else {
-          const removeEventListener = window.local.on('onAnticipateCompleted', (mainObject) => {
+          const removeEventListener = global.local.on('onAnticipateCompleted', (mainObject) => {
             resolveWaiting()
             removeEventListener()
           })
@@ -278,7 +278,7 @@ function processSequence(sequence) {
       }
 
       if(previousItem.sequenceType === 'sequenceCutscene') {
-        const removeEventListener = window.local.on('onCutsceneCompleted', (mainObject) => {
+        const removeEventListener = global.local.on('onCutsceneCompleted', (mainObject) => {
           let idIndex = previousItem.effectedIds.indexOf(mainObject.id)
           if(idIndex >= 0) {
             previousItem.effectedIds.splice(idIndex, 1)
@@ -299,9 +299,9 @@ function processSequence(sequence) {
        sequence.currentItemId = item.passNext
      } else {
        sequence.paused = true
-       const requestId = 'request-'+window.uniqueID()
-       window.socket.emit('requestAdminApproval', 'custom', { sequenceId: sequence.id, text: item.conditionValue || 'Sequence ' + sequence.id + ' needs approval to continue', approveButtonText: 'Yes', rejectButtonText: 'No', requestId})
-       const removeEventListener = window.local.on('onResolveAdminApproval', (id, passed) => {
+       const requestId = 'request-'+global.uniqueID()
+       global.socket.emit('requestAdminApproval', 'custom', { sequenceId: sequence.id, text: item.conditionValue || 'Sequence ' + sequence.id + ' needs approval to continue', approveButtonText: 'Yes', rejectButtonText: 'No', requestId})
+       const removeEventListener = global.local.on('onResolveAdminApproval', (id, passed) => {
          if(id === requestId) {
            if(passed) {
              sequence.currentItemId = item.passNext
@@ -373,16 +373,16 @@ function processSequence(sequence) {
     effectedObjects.forEach((effected) => {
       if(item.notificationText) {
         if(effected.tags.hero) {
-          window.socket.emit('sendNotification', { playerUIHeroId: effected.id, chatId: effected.id, logRecipientId: effected.id, toast: item.notificationToast, log: item.notificationLog, chat: item.notificationChat, modal: item.notificationModal, text: item.notificationText, modalHeader: item.notificationModalHeader, duration: item.notificationDuration })
+          global.socket.emit('sendNotification', { playerUIHeroId: effected.id, chatId: effected.id, logRecipientId: effected.id, toast: item.notificationToast, log: item.notificationLog, chat: item.notificationChat, modal: item.notificationModal, text: item.notificationText, modalHeader: item.notificationModalHeader, duration: item.notificationDuration })
           herosNotified.push(effected.id)
-        } else window.socket.emit('sendNotification', { chatId: effected.id, log: item.notificationLog, chat: item.notificationChat, text: item.notificationText, duration: item.notificationDuration })
+        } else global.socket.emit('sendNotification', { chatId: effected.id, log: item.notificationLog, chat: item.notificationChat, text: item.notificationText, duration: item.notificationDuration })
       }
     })
 
     if(item.notificationAllHeros) {
       GAME.heroList.forEach((hero) => {
         if(herosNotified.indexOf(hero.id) > -1) return
-        window.socket.emit('sendNotification', { playerUIHeroId: hero.id, logRecipientId: hero.id, chatId: hero.id, toast: item.notificationToast, chat: item.notificationChat, text: item.notificationText, log: item.notificationLog, modal: item.notificationModal, modalHeader: item.notificationModalHeader, duration: item.notificationDuration})
+        global.socket.emit('sendNotification', { playerUIHeroId: hero.id, logRecipientId: hero.id, chatId: hero.id, toast: item.notificationToast, chat: item.notificationChat, text: item.notificationText, log: item.notificationLog, modal: item.notificationModal, modalHeader: item.notificationModalHeader, duration: item.notificationDuration})
       })
     }
   }

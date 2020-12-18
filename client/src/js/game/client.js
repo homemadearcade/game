@@ -3,17 +3,17 @@ import modals from '../mapeditor/modals.js'
 class GameClient {
   onStartDiffFlow(id) {
     const object = OBJECTS.getObjectOrHeroById(id)
-    window.diffFlowId = id
+    global.diffFlowId = id
     localStorage.setItem('diffFlowObject', JSON.stringify(object))
   }
 
   onEndDiffFlow(id) {
     const object = OBJECTS.getObjectOrHeroById(id)
 
-    window.diffFlowId = null
+    global.diffFlowId = null
     const original = JSON.parse(localStorage.getItem('diffFlowObject'))
 
-    modals.openEditCodeModal('Object Diff', window.getObjectDiff(object, original), () => {})
+    modals.openEditCodeModal('Object Diff', global.getObjectDiff(object, original), () => {})
 
     if(PAGE.role.isHost) {
       if(object.tags.hero) {
@@ -25,4 +25,4 @@ class GameClient {
   }
 }
 
-window.GAME_CLIENT = new GameClient()
+global.GAME_CLIENT = new GameClient()

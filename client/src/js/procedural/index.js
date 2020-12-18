@@ -17,7 +17,7 @@ class Procedural{
   // }
 }
 
-window.PROCEDURAL = new Procedural()
+global.PROCEDURAL = new Procedural()
 
 function getRandomInt(min, max) {
     min = Math.ceil(min);
@@ -25,8 +25,8 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-window.getRandomInt = getRandomInt
+global.getRandomInt = getRandomInt
 
-window.getRandomFloat = function(min, max) {
+global.getRandomFloat = function(min, max) {
   return (Math.random() * (max - min)) + min;
 }

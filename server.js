@@ -31,8 +31,8 @@ dotenv.config()
 
 
 global.window = {}; // Temporarily define window for server-side
-console.log(global)
-// import './client/src/js/game/index.js'
+// console.log(global)
+import './client/src/js/game/index.js'
 
 
 

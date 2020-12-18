@@ -3,25 +3,25 @@
 ////////////////////////////////////////
 ///TITLE
 //////////
-window.generateTitleTheme = function() {
+global.generateTitleTheme = function() {
   const newTitleTheme = GAME.theme.title || {}
-  const indexAnimation = getRandomInt(0, window.titleAnimationStyles.length -1)
-  newTitleTheme.animation = window.titleAnimationStyles[indexAnimation]
-  const indexFont = getRandomInt(0, window.titleFontStyles.length -1)
-  newTitleTheme.font = window.titleFontStyles[indexFont]
-  window.socket.emit('updateTheme', { title: newTitleTheme })
+  const indexAnimation = getRandomInt(0, global.titleAnimationStyles.length -1)
+  newTitleTheme.animation = global.titleAnimationStyles[indexAnimation]
+  const indexFont = getRandomInt(0, global.titleFontStyles.length -1)
+  newTitleTheme.font = global.titleFontStyles[indexFont]
+  global.socket.emit('updateTheme', { title: newTitleTheme })
 }
 
-window.generateTitleAnimation = function() {
+global.generateTitleAnimation = function() {
   const newTitleTheme = GAME.theme.title || {}
-  const indexAnimation = getRandomInt(0, window.titleAnimationStyles.length -1)
-  newTitleTheme.animation = window.titleAnimationStyles[indexAnimation]
-  window.socket.emit('updateTheme', { title: newTitleTheme })
+  const indexAnimation = getRandomInt(0, global.titleAnimationStyles.length -1)
+  newTitleTheme.animation = global.titleAnimationStyles[indexAnimation]
+  global.socket.emit('updateTheme', { title: newTitleTheme })
 }
 
-window.generateTitleFont = function() {
+global.generateTitleFont = function() {
   const newTitleTheme = GAME.theme.title || {}
-  const indexFont = getRandomInt(0, window.titleFontStyles.length -1)
-  newTitleTheme.font = window.titleFontStyles[indexFont]
-  window.socket.emit('updateTheme', { title: newTitleTheme })
+  const indexFont = getRandomInt(0, global.titleFontStyles.length -1)
+  newTitleTheme.font = global.titleFontStyles[indexFont]
+  global.socket.emit('updateTheme', { title: newTitleTheme })
 }

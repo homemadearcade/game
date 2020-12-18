@@ -31,14 +31,14 @@ function spawnObject(object) {
     if((object.spawnedIds.length < object.spawnLimit || object.spawnLimit < 0) && !object.spawnWait && (object.spawnPool === undefined || object.spawnPool === null || object.spawnPool > 0 || object.spawnPool < 0)) {
       extraSpawnFunctionality(object)
 
-      const spawnSubObject = window.getSubObjectFromChances(null, null, object)
+      const spawnSubObject = global.getSubObjectFromChances(null, null, object)
       if(!spawnSubObject) return
       const newObject = getSpawnObjectData(object, spawnSubObject)
       if(newObject) {
         spawnObjectOnMap(object, newObject)
         object.spawnPool--
         object.spawnWait = true
-        object.spawnWaitTimerId = GAME.addTimeout('spawnWait-' + window.uniqueID(), object.spawnWaitTimer || 10, () => {
+        object.spawnWaitTimerId = GAME.addTimeout('spawnWait-' + global.uniqueID(), object.spawnWaitTimer || 10, () => {
           object.spawnWait = false
         })
       } else {
@@ -62,10 +62,10 @@ function spawnObjectOnMap(object, newObject) {
   return createdObject[0]
 }
 
-window.getSubObjectFromChances = function(mainObject, guestObject, ownerObject) {
+global.getSubObjectFromChances = function(mainObject, guestObject, ownerObject) {
   let subObjectNames = Object.keys(ownerObject.subObjectChances)
 
-  const availableSubObjects = {...window.subObjectLibrary.addGameLibrary(), ...ownerObject.subObjects}
+  const availableSubObjects = {...global.subObjectLibrary.addGameLibrary(), ...ownerObject.subObjects}
 
   console.log(availableSubObjects)
 
@@ -142,7 +142,7 @@ function getSpawnObjectData(object, subObject, spawnPending = [], isRespawn = fa
     x: object.x,
     y: object.y,
     ...JSON.parse(JSON.stringify(subObject.mod())),
-    id: 'spawned-' + window.uniqueID(),
+    id: 'spawned-' + global.uniqueID(),
     spawned: !isRespawn,
   }
 
@@ -202,9 +202,9 @@ function spawnAllNow(spawningObject, spawnInto) {
 
     if(spawnInto) {
       // spawnAllInHeroInventoryOnHeroInteract means spawnInto is the hero
-      sso = window.getSubObjectFromChances(spawnInto, spawningObject, spawningObject)
+      sso = global.getSubObjectFromChances(spawnInto, spawningObject, spawningObject)
     } else {
-      sso = window.getSubObjectFromChances(null, null, spawningObject)
+      sso = global.getSubObjectFromChances(null, null, spawningObject)
     }
 
     if(!sso) {
@@ -217,10 +217,10 @@ function spawnAllNow(spawningObject, spawnInto) {
   if(spawnInto) {
     spawnSubObjects.forEach((sso) => {
       sso = _.cloneDeep(sso.mod())
-      sso.id = 'spawned-' + window.uniqueID()
+      sso.id = 'spawned-' + global.uniqueID()
       sso.tags.potential = false
       sso.tags.subObject = true
-      window.local.emit('onAddSubObject', spawnInto, sso, sso.subObjectName)
+      global.local.emit('onAddSubObject', spawnInto, sso, sso.subObjectName)
     })
   } else {
     const readyToSpawn = []
@@ -240,7 +240,7 @@ function spawnAllNow(spawningObject, spawnInto) {
 
   if(spawningObject.spawnPool === 0 && spawningObject.mod().tags.destroyOnSpawnPoolDepleted) {
     // need a destroy object event
-    window.socket.emit('deleteObject', spawningObject)
+    global.socket.emit('deleteObject', spawningObject)
   }
 }
 
@@ -248,7 +248,7 @@ function destroySpawnIds(object) {
   if(object.spawnedIds && object.spawnedIds.length) {
     object.spawnedIds.forEach((id) => {
       if(GAME.objectsById[id]) {
-        window.socket.emit('deleteObject', GAME.objectsById[id])
+        global.socket.emit('deleteObject', GAME.objectsById[id])
       }
     })
   }
@@ -257,7 +257,7 @@ function destroySpawnIds(object) {
 function extraSpawnFunctionality(object) {
   if(object.mod().tags.spawnClearAllObjects) {
     collisionsUtil.checkAnything(object, GAME.objects, (collided) => {
-      window.socket.emit('deleteObject', collided)
+      global.socket.emit('deleteObject', collided)
     })
   }
 

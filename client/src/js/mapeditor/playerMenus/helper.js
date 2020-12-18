@@ -51,13 +51,13 @@ export async function handleExtraMenuClicks(key, objectSelected, openColorPicker
     }
 
     if(key === 'drop') {
-      window.socket.emit('dropObject', objectSelected.ownerId, objectSelected.subObjectName)
+      global.socket.emit('dropObject', objectSelected.ownerId, objectSelected.subObjectName)
     }
     if(key === 'unequip') {
-      window.socket.emit('unequipObject', objectSelected.ownerId, objectSelected.subObjectName)
+      global.socket.emit('unequipObject', objectSelected.ownerId, objectSelected.subObjectName)
     }
     if(key === 'equip') {
-      window.socket.emit('equipObject', objectSelected.ownerId, objectSelected.subObjectName, 'available')
+      global.socket.emit('equipObject', objectSelected.ownerId, objectSelected.subObjectName, 'available')
     }
 
     if(key === 'edit-descriptors') {
@@ -161,11 +161,11 @@ export async function handleExtraMenuClicks(key, objectSelected, openColorPicker
     }
 
     if(key === 'respawn') {
-      window.socket.emit('respawnHero', objectSelected)
+      global.socket.emit('respawnHero', objectSelected)
     }
 
     if (key === 'set-world-respawn-point') {
-        window.socket.emit('updateWorld', { worldSpawnPointX: objectSelected.x, worldSpawnPointY: objectSelected.y })
+        global.socket.emit('updateWorld', { worldSpawnPointX: objectSelected.x, worldSpawnPointY: objectSelected.y })
         return
     }
 
@@ -175,7 +175,7 @@ export async function handleExtraMenuClicks(key, objectSelected, openColorPicker
     }
 
     if (key === 'turn-into-spawn-zone') {
-        window.socket.emit('addSubObject', objectSelected, { tags: { potential: true } }, 'spawner')
+        global.socket.emit('addSubObject', objectSelected, { tags: { potential: true } }, 'spawner')
         networkEditObject(objectSelected, { tags: { spawnZone: true }, spawnLimit: -1, spawnPoolInitial: 1, subObjectChances: { 'spawner': { randomWeight: 1, conditionList: null } } })
         return
     }
@@ -292,7 +292,7 @@ export async function handleExtraMenuClicks(key, objectSelected, openColorPicker
       modals.openSelectTag((result) => {
         if(result && result.value) {
           const resourceTags = objectSelected.resourceTags
-          resourceTags[Object.keys(window.allTags)[result.value]] = true
+          resourceTags[Object.keys(global.allTags)[result.value]] = true
           networkEditObject(objectSelected, { resourceTags })
         }
       })
@@ -318,7 +318,7 @@ export async function handleExtraMenuClicks(key, objectSelected, openColorPicker
 
     if (key.indexOf(deleteSubObjectPrefix) === 0) {
         const subObjectName = key.substr(deleteSubObjectPrefix.length)
-        window.socket.emit('deleteSubObject', objectSelected, subObjectName)
+        global.socket.emit('deleteSubObject', objectSelected, subObjectName)
         return
     }
 
@@ -341,7 +341,7 @@ export async function handleExtraMenuClicks(key, objectSelected, openColorPicker
         modals.openNameSubObjectModal((result) => {
             if (result && result.value) {
                 const subObjectChances = objectSelected.subObjectChances
-                window.socket.emit('editObjects', [{ id: objectSelected.id, subObjectChances: { ...subObjectChances, [result.value]: { randomWeight: 1, conditionList: null } } }])
+                global.socket.emit('editObjects', [{ id: objectSelected.id, subObjectChances: { ...subObjectChances, [result.value]: { randomWeight: 1, conditionList: null } } }])
             }
         })
         if (key === 'edit-random-weight') {
@@ -350,7 +350,7 @@ export async function handleExtraMenuClicks(key, objectSelected, openColorPicker
             modals.openEditNumberModal('random weight', subObjectChance.randomWeight, {}, (result) => {
                 if (result && result.value) {
                     subObjectChance.randomWeight = Number(result.value)
-                    window.socket.emit('editObjects', [{ id: objectSelected.id, subObjectChances: objectSelected.subObjectChances }])
+                    global.socket.emit('editObjects', [{ id: objectSelected.id, subObjectChances: objectSelected.subObjectChances }])
                 }
                 PAGE.typingMode = false
             })
@@ -378,12 +378,12 @@ export async function handleExtraMenuClicks(key, objectSelected, openColorPicker
     }
 
     if (key === 'spawn-all-now') {
-        window.socket.emit('spawnAllNow', objectSelected.id)
+        global.socket.emit('spawnAllNow', objectSelected.id)
         return
     }
 
     if (key === 'destroy-spawned') {
-        window.socket.emit('destroySpawnIds', objectSelected.id)
+        global.socket.emit('destroySpawnIds', objectSelected.id)
         return
     }
 
@@ -393,14 +393,14 @@ export async function handleExtraMenuClicks(key, objectSelected, openColorPicker
     }
 
     if(key === 'toggle-pause-game') {
-      window.socket.emit('editGameState', { paused: !GAME.gameState.paused })
+      global.socket.emit('editGameState', { paused: !GAME.gameState.paused })
     }
 
     if(key === 'toggle-start-game') {
       if(GAME.gameState.started) {
-        window.socket.emit('stopGame')
+        global.socket.emit('stopGame')
       } else {
-        window.socket.emit('startGame')
+        global.socket.emit('startGame')
       }
     }
 
@@ -428,12 +428,12 @@ export async function handleExtraMenuClicks(key, objectSelected, openColorPicker
         objectSelected.heroDialogueSets = {}
       }
 
-      const name = await window.getGlobalName()
+      const name = await global.getGlobalName()
 
       if(!name) return
 
       objectSelected.heroDialogueSets[name] = {}
-      objectSelected.heroDialogueSets[name].dialogue = [_.cloneDeep(window.defaultDialogue)]
+      objectSelected.heroDialogueSets[name].dialogue = [_.cloneDeep(global.defaultDialogue)]
       networkEditObject(objectSelected, {heroDialogueSets: objectSelected.heroDialogueSets })
     }
 
@@ -481,7 +481,7 @@ export async function handleExtraMenuClicks(key, objectSelected, openColorPicker
     }
 
     if (data.action === 'delete-trigger') {
-        window.socket.emit('deleteTrigger', objectSelected.id, data.trigger.id)
+        global.socket.emit('deleteTrigger', objectSelected.id, data.trigger.id)
         return
     }
 
@@ -498,7 +498,7 @@ export async function handleExtraMenuClicks(key, objectSelected, openColorPicker
     }
 
     if (data.action === 'delete-hook') {
-        window.socket.emit('deleteHook', objectSelected.id, data.hook.id)
+        global.socket.emit('deleteHook', objectSelected.id, data.hook.id)
         return
     }
 
@@ -524,7 +524,7 @@ export async function handleExtraMenuClicks(key, objectSelected, openColorPicker
       })
       if(!dialogue) return
 
-      objectSelected.heroDialogueSets[data.setName].dialogue.push({...window.defaultDialogue, text: dialogue})
+      objectSelected.heroDialogueSets[data.setName].dialogue.push({...global.defaultDialogue, text: dialogue})
       networkEditObject(objectSelected, {heroDialogueSets: objectSelected.heroDialogueSets })
       return
     }
@@ -559,7 +559,7 @@ export async function handleExtraMenuClicks(key, objectSelected, openColorPicker
     }
 
     if(data.action === "rename-set") {
-      const name = await window.getGlobalName()
+      const name = await global.getGlobalName()
 
       const oldSet = objectSelected.heroDialogueSets[data.setName]
       objectSelected.heroDialogueSets[data.setName] = null
@@ -594,7 +594,7 @@ export async function handleExtraMenuClicks(key, objectSelected, openColorPicker
         id,
         items: oldSet.dialogue.map((dialogueJSON, i) => {
           return {
-            id: window.alphaarray[i],
+            id: global.alphaarray[i],
             effectValue: 'dialogue',
             sequenceType: 'sequenceDialogue',
             effectJSON: [dialogueJSON],
@@ -602,7 +602,7 @@ export async function handleExtraMenuClicks(key, objectSelected, openColorPicker
           }
         })
       }
-      window.socket.emit('updateLibrary', { sequences: GAME.library.sequences })
+      global.socket.emit('updateLibrary', { sequences: GAME.library.sequences })
 
       networkEditObject(objectSelected, {heroDialogueSets: objectSelected.heroDialogueSets, sequences: objectSelected.sequences })
       return

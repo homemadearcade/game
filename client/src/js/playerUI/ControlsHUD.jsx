@@ -38,7 +38,7 @@ export default class ControlsHUD extends React.Component {
         }
       }
       return {
-        behavior: window.actionButtonBehavior[so.actionButtonBehavior],
+        behavior: global.actionButtonBehavior[so.actionButtonBehavior],
         key,
         timeoutId,
       }

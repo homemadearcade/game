@@ -1,5 +1,5 @@
 
-  window.spriteSheetIds = {
+  global.spriteSheetIds = {
     'andbandtk': true,
 
     'overworld-2-8px': true,
@@ -109,7 +109,7 @@
     // 'minecraft-1-48px': true,
   }
 
-  window.spriteSheetAuthors = {
+  global.spriteSheetAuthors = {
     slimar: true,
     has: true,
     andbangtk: true,

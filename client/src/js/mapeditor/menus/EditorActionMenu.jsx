@@ -14,14 +14,14 @@ export default class EditorActionMenu extends React.Component{
       const { onStartSetPathfindingLimit, networkEditObject, openConstructEditor } = MAPEDITOR
 
       if(key === 'transform-into-library-object') {
-        const library = window.objectLibrary.addGameLibrary()
+        const library = global.objectLibrary.addGameLibrary()
         modals.openSelectFromList('Select an object', Object.keys(library), async (result) => {
           const id = result.value
           if(!id) return
           const newObject = _.cloneDeep(library[id])
           if(newObject.subObjects) {
             Object.keys(newObject.subObjects).forEach((soName) => {
-              window.socket.emit('addSubObject', objectSelected, newObject.subObjects[soName], soName)
+              global.socket.emit('addSubObject', objectSelected, newObject.subObjects[soName], soName)
             })
             delete newObject.subObjects
           }
@@ -30,7 +30,7 @@ export default class EditorActionMenu extends React.Component{
       }
 
       if(key === 'add-new-subobject') {
-        const library = window.subObjectLibrary.addGameLibrary()
+        const library = global.subObjectLibrary.addGameLibrary()
         modals.openSelectFromList('Select a sub object', Object.keys(library), async (result) => {
           const id = result.value
           if(!id) return
@@ -47,14 +47,14 @@ export default class EditorActionMenu extends React.Component{
 
           if(name) {
             const copy = Object.replaceAll(library[id], id, name, true, true)
-            window.socket.emit('addSubObject', objectSelected, copy, name)
+            global.socket.emit('addSubObject', objectSelected, copy, name)
           }
 
         })
       }
 
       if(key === 'set-world-respawn-point') {
-        window.socket.emit('updateWorld', {worldSpawnPointX: objectSelected.x, worldSpawnPointY:  objectSelected.y})
+        global.socket.emit('updateWorld', {worldSpawnPointX: objectSelected.x, worldSpawnPointY:  objectSelected.y})
       }
 
       if(key === 'set-object-respawn-point') {
@@ -62,7 +62,7 @@ export default class EditorActionMenu extends React.Component{
       }
 
       if(key === 'turn-into-spawn-zone') {
-        window.socket.emit('addSubObject', objectSelected, { tags: { potential: true } }, 'spawner')
+        global.socket.emit('addSubObject', objectSelected, { tags: { potential: true } }, 'spawner')
         networkEditObject(objectSelected, { tags: {spawnZone: true}, spawnLimit: -1, spawnPoolInitial: 1, subObjectChances: {'spawner': {randomWeight: 1, conditionList: null}} })
       }
 
@@ -71,11 +71,11 @@ export default class EditorActionMenu extends React.Component{
       }
 
       if(key === 'start-mod-creation-flow') {
-        window.socket.emit('startDiffFlow', objectSelected.id)
+        global.socket.emit('startDiffFlow', objectSelected.id)
       }
 
       if(key === 'end-mod-creation-flow') {
-        window.socket.emit('endDiffFlow', objectSelected.id)
+        global.socket.emit('endDiffFlow', objectSelected.id)
       }
 
       if (key === "add-to-creator-library") {
@@ -107,16 +107,16 @@ export default class EditorActionMenu extends React.Component{
         if(objectSelected.tags.hero) {
 
         } else if(subObject) {
-          window.socket.emit('updateLibrary', { subObject: {...GAME.library.subObject, [name]: OBJECTS.getProperties(objectSelected)} })
-          window.socket.emit('updateLibrary', { creator: {...GAME.library.creator, [name]: {
+          global.socket.emit('updateLibrary', { subObject: {...GAME.library.subObject, [name]: OBJECTS.getProperties(objectSelected)} })
+          global.socket.emit('updateLibrary', { creator: {...GAME.library.creator, [name]: {
             label: name,
             columnName,
             libraryName: 'subObjectLibrary',
             libraryId: name,
           } } })
         } else {
-          window.socket.emit('updateLibrary', { object: {...GAME.library.object, [name]: OBJECTS.getProperties(objectSelected)} })
-          window.socket.emit('updateLibrary', { creator: {...GAME.library.creator, [name]: {
+          global.socket.emit('updateLibrary', { object: {...GAME.library.object, [name]: OBJECTS.getProperties(objectSelected)} })
+          global.socket.emit('updateLibrary', { creator: {...GAME.library.creator, [name]: {
             label: name,
             columnName,
             libraryName: 'objectLibrary',
@@ -141,7 +141,7 @@ export default class EditorActionMenu extends React.Component{
         })
         if(!name) return
 
-        window.socket.emit('updateLibrary', { object: {...GAME.library.object, [name]: OBJECTS.getProperties(objectSelected)} })
+        global.socket.emit('updateLibrary', { object: {...GAME.library.object, [name]: OBJECTS.getProperties(objectSelected)} })
       }
 
       if (key === "add-to-subobject-library") {
@@ -161,7 +161,7 @@ export default class EditorActionMenu extends React.Component{
 
         if(!name) return
 
-        window.socket.emit('updateLibrary', { subObject: {...GAME.library.subObject, [name]: OBJECTS.getProperties(objectSelected)} })
+        global.socket.emit('updateLibrary', { subObject: {...GAME.library.subObject, [name]: OBJECTS.getProperties(objectSelected)} })
       }
 
       if(key === 'generate-maze') {

@@ -6,7 +6,7 @@ export default class Metadata extends React.Component {
     super(props)
 
     this.state = {
-      author: window.user.username,
+      author: global.user.username,
       ...GAME.metadata,
     }
   }
@@ -28,7 +28,7 @@ export default class Metadata extends React.Component {
   }
 
   save = () => {
-    window.socket.emit('editMetadata', this.state)
+    global.socket.emit('editMetadata', this.state)
   }
 
   render() {

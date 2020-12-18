@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import KeySprite from './KeySprite.jsx';
 import PixiMapSprite from '../components/PixiMapSprite.jsx'
 
-window.defaultDialogue = {
+global.defaultDialogue = {
   reverseSpeaker: false,
   dialogueId: null,//‘??’ <— this is for onHeroDialogueComplete event
   text: 'hello',
@@ -20,13 +20,13 @@ export default class DialogueBox extends React.Component{
     }
 
     if(this.props.options) {
-      window.addEventListener('keydown', this._onKeyDown)
+      global.addEventListener('keydown', this._onKeyDown)
     }
   }
 
   componentWillUnmount() {
     if(this.props.options) {
-      window.removeEventListener('keydown', this._onKeyDown)
+      global.removeEventListener('keydown', this._onKeyDown)
     }
   }
 
@@ -57,36 +57,36 @@ export default class DialogueBox extends React.Component{
     }
 
     if(e.keyCode == 86 || e.keyCode == 69 || e.keyCode == 13) {
-      window.socket.emit('heroChooseOption', HERO.id, this.props.options[selectedOptionIndex].id)
+      global.socket.emit('heroChooseOption', HERO.id, this.props.options[selectedOptionIndex].id)
     }
 
     if(e.keyCode == 27) {
-      window.socket.emit('heroChooseOption', HERO.id, null)
+      global.socket.emit('heroChooseOption', HERO.id, null)
     }
 
     if(e.keyCode == 49 && this.props.options[0]) {
-      window.socket.emit('heroChooseOption', HERO.id, this.props.options[0].id)
+      global.socket.emit('heroChooseOption', HERO.id, this.props.options[0].id)
     }
     if(e.keyCode == 50 && this.props.options[1]) {
-      window.socket.emit('heroChooseOption', HERO.id, this.props.options[1].id)
+      global.socket.emit('heroChooseOption', HERO.id, this.props.options[1].id)
     }
     if(e.keyCode == 51 && this.props.options[2]) {
-      window.socket.emit('heroChooseOption', HERO.id, this.props.options[2].id)
+      global.socket.emit('heroChooseOption', HERO.id, this.props.options[2].id)
     }
     if(e.keyCode == 52 && this.props.options[3]) {
-      window.socket.emit('heroChooseOption', HERO.id, this.props.options[3].id)
+      global.socket.emit('heroChooseOption', HERO.id, this.props.options[3].id)
     }
     if(e.keyCode == 53 && this.props.options[4]) {
-      window.socket.emit('heroChooseOption', HERO.id, this.props.options[4].id)
+      global.socket.emit('heroChooseOption', HERO.id, this.props.options[4].id)
     }
     if(e.keyCode == 54 && this.props.options[5]) {
-      window.socket.emit('heroChooseOption', HERO.id, this.props.options[5].id)
+      global.socket.emit('heroChooseOption', HERO.id, this.props.options[5].id)
     }
     if(e.keyCode == 55 && this.props.options[6]) {
-      window.socket.emit('heroChooseOption', HERO.id, this.props.options[6].id)
+      global.socket.emit('heroChooseOption', HERO.id, this.props.options[6].id)
     }
     if(e.keyCode == 56 && this.props.options[7]) {
-      window.socket.emit('heroChooseOption', HERO.id, this.props.options[6].id)
+      global.socket.emit('heroChooseOption', HERO.id, this.props.options[6].id)
     }
   }
 
@@ -96,7 +96,7 @@ export default class DialogueBox extends React.Component{
     } else if(item.tags.invisible || item.tags.outline || item.defaultSprite === 'invisible') {
       return <div className="DialogueBox__sprite DialogueBox__sprite--box"/>
     } else if(item.defaultSprite == 'solidcolorsprite'){
-      return <div className="DialogueBox__sprite" style={{background: item.color || GAME.world.defaultObjectColor || window.defaultObjectColor}}/>
+      return <div className="DialogueBox__sprite" style={{background: item.color || GAME.world.defaultObjectColor || global.defaultObjectColor}}/>
     } else if(item.defaultSprite) {
       return <div className="DialogueBox__sprite"><PixiMapSprite width="50" height="50" textureId={item.defaultSprite}/></div>
     }
@@ -152,7 +152,7 @@ export default class DialogueBox extends React.Component{
                 })
               }}
               onClick={() => {
-                window.socket.emit('heroChooseOption', HERO.id, option.id)
+                global.socket.emit('heroChooseOption', HERO.id, option.id)
               }}>{(index + 1) + '. ' + option.effectValue}
           </div>
         })}

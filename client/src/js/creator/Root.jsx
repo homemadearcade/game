@@ -56,7 +56,7 @@ export default class Root extends React.Component {
   render() {
     if(PAGE.role.isAdmin) {
       return (
-        <Creator ref={this._creatorRef} textureIdSelected={this.state.textureIdSelected} creatorObjects={window.adminCreatorObjects}></Creator>
+        <Creator ref={this._creatorRef} textureIdSelected={this.state.textureIdSelected} creatorObjects={global.adminCreatorObjects}></Creator>
       )
     }
 

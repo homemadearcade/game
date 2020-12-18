@@ -5,7 +5,7 @@
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
 	typeof define === 'function' && define.amd ? define(factory) :
-	(global.Sweetalert2 = factory());
+	(window.Sweetalert2 = factory());
 }(this, (function () { 'use strict';
 
 function _typeof(obj) {

@@ -399,8 +399,10 @@ https://codepen.io/mladen___/pen/gbvqBo
 // MARKETING IDEA
 // Make a game for their birthday
 
-window.awsURL = 'https://homemadearcade.s3-us-west-1.amazonaws.com/'
-window.HomemadeArcadeImageAssetURL = 'assets/images/'
+window.global = window
+
+global.awsURL = 'https://homemadearcade.s3-us-west-1.amazonaws.com/'
+global.HomemadeArcadeImageAssetURL = 'assets/images/'
 
 import "core-js/stable";
 import "regenerator-runtime/runtime";
@@ -453,7 +455,7 @@ var onLocalStorageEvent = function(e){
     otherPageOpen = true
   }
 };
-window.addEventListener('storage', onLocalStorageEvent, false);
+global.addEventListener('storage', onLocalStorageEvent, false);
 
 setTimeout(() => {
   if(otherPageOpen) {
@@ -466,7 +468,7 @@ setTimeout(() => {
 
 // if(document.hasFocus()) {
 // } else {
-//   window.onfocus = PAGE.load
+//   global.onfocus = PAGE.load
 // }
 
 /*

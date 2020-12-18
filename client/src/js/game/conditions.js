@@ -1,7 +1,7 @@
 import collisions from '../utils/collisions.js'
 import isMatchWith from 'lodash.ismatchwith'
 
-window.conditionTypes = {
+global.conditionTypes = {
   matchJSON: {
     JSON: true,
   },

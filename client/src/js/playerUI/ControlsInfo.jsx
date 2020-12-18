@@ -46,7 +46,7 @@ export default class ControlsInfo extends React.Component {
         }
       }
       return {
-        behavior: window.actionButtonBehavior[so.actionButtonBehavior],
+        behavior: global.actionButtonBehavior[so.actionButtonBehavior],
         key
       }
     }

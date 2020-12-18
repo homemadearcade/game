@@ -18,7 +18,7 @@ export default class Condition extends React.Component {
     const { sequenceItem } = this.props
     const { conditionType } = sequenceItem
 
-    const conditionTypeOptions = Object.keys(window.conditionTypes).map((conditionType) => {
+    const conditionTypeOptions = Object.keys(global.conditionTypes).map((conditionType) => {
       return { value: conditionType, label: conditionType }
     })
 
@@ -27,11 +27,11 @@ export default class Condition extends React.Component {
         value={{value: conditionType, label: conditionType}}
         onChange={this.props._onChangeConditionType}
         options={conditionTypeOptions}
-        styles={window.reactSelectStyle}
-        theme={window.reactSelectTheme}/>
+        styles={global.reactSelectStyle}
+        theme={global.reactSelectTheme}/>
     </div>
 
-    const conditionData = window.conditionTypes[conditionType]
+    const conditionData = global.conditionTypes[conditionType]
 
     let chosenConditionForm = []
     if(conditionData) {

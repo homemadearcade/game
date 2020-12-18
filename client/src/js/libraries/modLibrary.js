@@ -1,5 +1,5 @@
-window.local.on('onFirstPageGameLoaded', () => {
-  window.modLibrary = {
+global.local.on('onFirstPageGameLoaded', () => {
+  global.modLibrary = {
     spin: {
       modId: 'spin',
       effectJSON: {

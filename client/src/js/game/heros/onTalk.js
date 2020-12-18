@@ -9,7 +9,7 @@ export default function onTalk(hero, collider, result, options) {
       newDialogue = collider.mod().heroDialogue.slice()
     }
     if(!options.fromInteractButton) hero.lastDialogueId = collider.id
-    window.emitGameEvent('onHeroDialogueStart', hero, collider)
+    global.emitGameEvent('onHeroDialogueStart', hero, collider)
     if(hero.dialogue && hero.dialogue.length) {
       hero.dialogue.push(...newDialogue)
     } else {
@@ -35,6 +35,6 @@ export default function onTalk(hero, collider, result, options) {
       hero.lastDialogueId = null
     })
 
-    window.emitGameEvent('onUpdatePlayerUI', hero)
+    global.emitGameEvent('onUpdatePlayerUI', hero)
   }
 }

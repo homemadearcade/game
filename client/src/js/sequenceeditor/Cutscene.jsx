@@ -14,7 +14,7 @@ import {
   NextSelect,
 } from '../components/SelectComponents.jsx'
 
-window.defaultSequenceCutscene = {
+global.defaultSequenceCutscene = {
   notificationAllHeros: false,
   effectedMainObject: false,
   effectedGuestObject: false,

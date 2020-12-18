@@ -49,7 +49,7 @@ export default class Toolbar extends React.Component {
 
         Bulldoze -> Map Action
         <i className="Toolbar__tool-selector fa fas fa-snowplow" onMouseEnter={() => {
-          window.setFontAwesomeCursor("\uf7d2", "#FFF")
+          global.setFontAwesomeCursor("\uf7d2", "#FFF")
         }} onMouseLeave={() => {
           document.body.style.cursor = 'default';
         }}></i>
@@ -57,14 +57,14 @@ export default class Toolbar extends React.Component {
 
         {!GAME.gameState.started && !GAME.gameState.branch &&
           <ToolbarRow iconName="fa-play" onClick={() => {
-            window.socket.emit('startGame')
+            global.socket.emit('startGame')
           }}
           onShiftClick={() => {
-            window.socket.emit('startGame', { dontRespawn: true })
+            global.socket.emit('startGame', { dontRespawn: true })
           }}
           >
             <ToolbarButton iconName='fa-play-circle' onClick={() => {
-              window.socket.emit('startPregame')
+              global.socket.emit('startPregame')
             }}/>
             <ToolbarButton iconName='fa-code-branch' onClick={async () => {
               const branchOptions = Object.keys(GAME.library.branches)
@@ -98,23 +98,23 @@ export default class Toolbar extends React.Component {
                   confirmButtonText: 'Start Branch',
                 })
                 if(name) {
-                  window.socket.emit('branchGame', name)
+                  global.socket.emit('branchGame', name)
                 }
               } else {
-                window.socket.emit('branchGame', chosenOption)
+                global.socket.emit('branchGame', chosenOption)
               }
             }}/>
           </ToolbarRow>
         }
         {GAME.gameState.branch &&
           <ToolbarRow iconName="fa-code-branch" active={true} onClick={() => {
-            window.socket.emit('branchGameSave')
+            global.socket.emit('branchGameSave')
           }}>
             <ToolbarButton iconName='fa-save' onClick={() => {
-              window.socket.emit('branchGameSave')
+              global.socket.emit('branchGameSave')
             }}/>
             <ToolbarButton iconName='fa-trash' onClick={() => {
-              window.socket.emit('branchGameCancel')
+              global.socket.emit('branchGameCancel')
             }}/>
           </ToolbarRow>
         }
@@ -132,17 +132,17 @@ export default class Toolbar extends React.Component {
               confirmButtonText: 'Yes, preserve this state',
             })
             if(confirm) {
-              window.socket.emit('processEffect', {
+              global.socket.emit('processEffect', {
                 effectName: 'stopGamePreserve'
               })
             }
           }}
           onClick={() => {
-            window.socket.emit('stopGame')
+            global.socket.emit('stopGame')
           }}>
           <ToolbarButton iconName={GAME.gameState.paused ? "fa-play" : "fa-pause"} onClick={() => {
-            if(!GAME.gameState.paused) window.socket.emit('editGameState', { paused: true })
-            if(GAME.gameState.paused) window.socket.emit('editGameState', { paused: false })
+            if(!GAME.gameState.paused) global.socket.emit('editGameState', { paused: true })
+            if(GAME.gameState.paused) global.socket.emit('editGameState', { paused: false })
           }}/>
         </ToolbarRow>
       }
@@ -161,7 +161,7 @@ export default class Toolbar extends React.Component {
           {/* Clear All Objects -> Map Action */}
           <ToolbarButton iconName="fa-trash-alt"
             onShiftClick={() => {
-              window.socket.emit('resetObjects')
+              global.socket.emit('resetObjects')
             }}
           onClick={async () => {
             const { value: confirm } = await Swal.fire({
@@ -176,7 +176,7 @@ export default class Toolbar extends React.Component {
               confirmButtonText: 'Yes, Delete all objects',
             })
             if(confirm) {
-              window.socket.emit('resetObjects')
+              global.socket.emit('resetObjects')
             }
           }}/>
         </ToolbarRow>
@@ -211,10 +211,10 @@ export default class Toolbar extends React.Component {
 
         {/* anticipate object
           <ToolbarButton iconName="fa-plus-square" onClick={() => {
-            window.socket.emit('anticipateObject', { tags: { obstacle: true }}, HERO.editingId);
+            global.socket.emit('anticipateObject', { tags: { obstacle: true }}, HERO.editingId);
           }}
           onShiftClick={() => {
-            window.socket.emit('anticipateObject', { tags: { obstacle: true }, wall: true}, HERO.editingId);
+            global.socket.emit('anticipateObject', { tags: { obstacle: true }, wall: true}, HERO.editingId);
           }}
           />
         */}
@@ -223,16 +223,16 @@ export default class Toolbar extends React.Component {
             LIVEEDITOR.open(GAME.heros[HERO.editingId], 'hero')
           }}/>
           {/* star view */}
-          {hero && hero.animationZoomTarget === window.constellationDistance ? <ToolbarButton iconName="fa-globe-asia" onClick={() => {
-              window.socket.emit('editHero', { id: hero.id, animationZoomTarget: hero.zoomMultiplier, endAnimation: true, })
+          {hero && hero.animationZoomTarget === global.constellationDistance ? <ToolbarButton iconName="fa-globe-asia" onClick={() => {
+              global.socket.emit('editHero', { id: hero.id, animationZoomTarget: hero.zoomMultiplier, endAnimation: true, })
           }}/> : <ToolbarButton iconName="fa-star" onClick={() => {
-              window.socket.emit('editHero', { id: hero.id, animationZoomTarget: window.constellationDistance, animationZoomMultiplier: hero.zoomMultiplier, endAnimation: false })
+              global.socket.emit('editHero', { id: hero.id, animationZoomTarget: global.constellationDistance, animationZoomMultiplier: hero.zoomMultiplier, endAnimation: false })
           }}/>}
 
           {/* camera shake
 
             <ToolbarButton iconName="fa-camera" onClick={() => {
-              window.socket.emit('heroCameraEffect', 'cameraShake', HERO.editingId, { duration: 500, frequency: 20, amplitude: 36 })
+              global.socket.emit('heroCameraEffect', 'cameraShake', HERO.editingId, { duration: 500, frequency: 20, amplitude: 36 })
             }}/>
 
             <ToolbarButton iconName="fa-cloud-meatball" onClick={() => {
@@ -265,11 +265,11 @@ export default class Toolbar extends React.Component {
           }}/>
 
           <ToolbarButton iconName="fa-recycle" onClick={() => {
-              window.socket.emit('resetPhysicsProperties', hero.id)
+              global.socket.emit('resetPhysicsProperties', hero.id)
             }}
             onShiftClick={() => {
-              window.socket.emit('resetHeroToGameDefault', hero)
-              // window.socket.emit('resetHeroToDefault', hero)
+              global.socket.emit('resetHeroToGameDefault', hero)
+              // global.socket.emit('resetHeroToDefault', hero)
             }}
           />
 
@@ -313,16 +313,16 @@ export default class Toolbar extends React.Component {
           {/* Default Heros -> Menu */}
           <ToolbarButton iconName="fa-theater-masks" onClick={() => {
             PAGE.typingMode = true
-            modals.openEditCodeModal('Edit Default Hero JSON', GAME.defaultHero || window.defaultHero, (result) => {
+            modals.openEditCodeModal('Edit Default Hero JSON', GAME.defaultHero || global.defaultHero, (result) => {
               if(result && result.value) {
                 const editedCode = JSON.parse(result.value)
-                window.socket.emit('editGameHeroJSON', 'default', editedCode)
+                global.socket.emit('editGameHeroJSON', 'default', editedCode)
               }
               PAGE.typingMode = false
             })
           }}
           onShiftClick={() => {
-            window.socket.emit('editGameHeroJSON', 'default', window.defaultHero)
+            global.socket.emit('editGameHeroJSON', 'default', global.defaultHero)
           }}
           />
            <ToolbarButton iconName="fa-icons" onClick={() => {
@@ -330,7 +330,7 @@ export default class Toolbar extends React.Component {
              modals.openEditCodeModal('Edit Theme JSON', GAME.theme, (result) => {
                if(result && result.value) {
                  const editedCode = JSON.parse(result.value)
-                 window.socket.emit('updateTheme', editedCode)
+                 global.socket.emit('updateTheme', editedCode)
                }
                PAGE.typingMode = false
              })
@@ -380,15 +380,15 @@ export default class Toolbar extends React.Component {
         <ToolbarRow iconName='fa-search'>
           <ToolbarButton iconName="fa-search-plus" onClick={() => {
             EDITOR.preferences.zoomMultiplier -= (EDITOR.zoomDelta * 4)
-            window.local.emit('onZoomChange', HERO.editingId)
+            global.local.emit('onZoomChange', HERO.editingId)
           }}/>
           <ToolbarButton iconName="fa-search-minus" onClick={() => {
             EDITOR.preferences.zoomMultiplier += (EDITOR.zoomDelta * 4)
-            window.local.emit('onZoomChange', HERO.editingId)
+            global.local.emit('onZoomChange', HERO.editingId)
           }}/>
           <ToolbarButton iconName="fa-times" onClick={() => {
             EDITOR.preferences.zoomMultiplier = 0
-            window.local.emit('onZoomChange', HERO.editingId)
+            global.local.emit('onZoomChange', HERO.editingId)
           }}/>
         </ToolbarRow>
 
@@ -396,9 +396,9 @@ export default class Toolbar extends React.Component {
           {/* go incognito */}
           <ToolbarButton active={GAME.heros[HERO.originalId].tags.hidden} iconName="fa-eye-slash" onClick={() => {
             if(GAME.heros[HERO.originalId].tags.hidden) {
-              window.socket.emit('editHero', { id: HERO.originalId, tags: { hidden: false } })
+              global.socket.emit('editHero', { id: HERO.originalId, tags: { hidden: false } })
             } else {
-              window.socket.emit('editHero', { id: HERO.originalId, tags: { hidden: true } })
+              global.socket.emit('editHero', { id: HERO.originalId, tags: { hidden: true } })
             }
           }}/>
           <ToolbarButton active={HERO.id === HERO.editingId && HERO.id !== HERO.originalId} iconName="fa-user-secret" onClick={() => {
@@ -416,12 +416,12 @@ export default class Toolbar extends React.Component {
           <ToolbarButton iconName="fa-chevron-left" onShiftClick onClick={() => {
             GHOST.previousHero()
             EDITORUI.ref.forceUpdate()
-            window.local.emit('onZoomChange')
+            global.local.emit('onZoomChange')
           }}/>
           <ToolbarButton iconName="fa-chevron-right" onShiftClick onClick={() => {
             GHOST.nextHero()
             EDITORUI.ref.forceUpdate()
-            window.local.emit('onZoomChange')
+            global.local.emit('onZoomChange')
           }}/>
           <ToolbarButton iconName="fa-times" onClick={() => {
               HERO.id = HERO.originalId

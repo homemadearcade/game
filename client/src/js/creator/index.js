@@ -87,4 +87,4 @@ class Creator {
 
 }
 
-window.CREATOR = new Creator()
+global.CREATOR = new Creator()

@@ -8,7 +8,7 @@ function constructEditorOnSelect(objectId, tags) {
     OBJECTS.create(globalConstructStationaryObstacle)
     MAPEDITOR.openConstructEditor(globalConstructStationaryObstacle, EDITOR.preferences.creatorColorSelected, true)
   }
-  const removeListener = window.local.on('onConstructEditorClose', () => {
+  const removeListener = global.local.on('onConstructEditorClose', () => {
     setTimeout(() => {
       this.setState({
         creatorObjectSelected: {}
@@ -22,22 +22,22 @@ function toggleMod(modId) {
   let objectId = null
   return {
     onShiftClick: () => {
-      const json = window.modLibrary[modId].effectJSON
-      window.socket.emit('editHero', { id: HERO.editingId || HERO.id, ...json})
+      const json = global.modLibrary[modId].effectJSON
+      global.socket.emit('editHero', { id: HERO.editingId || HERO.id, ...json})
     },
     onToggleOn: () => {
-      const libraryMod = window.modLibrary[modId]
+      const libraryMod = global.modLibrary[modId]
       const mod = {
         ownerId: objectId || HERO.editingId || HERO.id,
         manualRevertId: modId,
         ...libraryMod
       }
-      window.socket.emit('startMod', mod)
-      window.socket.emit('resetPhysicsProperties', objectId || HERO.editingId || HERO.id)
+      global.socket.emit('startMod', mod)
+      global.socket.emit('resetPhysicsProperties', objectId || HERO.editingId || HERO.id)
     },
     onToggleOff: () => {
-      window.socket.emit('endMod', modId)
-      window.socket.emit('resetPhysicsProperties', objectId || HERO.editingId || HERO.id)
+      global.socket.emit('endMod', modId)
+      global.socket.emit('resetPhysicsProperties', objectId || HERO.editingId || HERO.id)
     }
   }
 }
@@ -46,18 +46,18 @@ function toggleSubObject(subObjectId, modId) {
   let objectId = null
   return {
     onShiftToggleOn: () => {
-      const so = _.cloneDeep(window.subObjectLibrary.addGameLibrary()[subObjectId])
+      const so = _.cloneDeep(global.subObjectLibrary.addGameLibrary()[subObjectId])
       so.tags.startsEquipped = true
-      window.socket.emit('addSubObject', GAME.heros[HERO.editingId || HERO.id], so, subObjectId)
+      global.socket.emit('addSubObject', GAME.heros[HERO.editingId || HERO.id], so, subObjectId)
     },
     onShiftToggleOff: () => {
-      window.socket.emit('deleteSubObject', GAME.heros[HERO.editingId || HERO.id], subObjectId)
+      global.socket.emit('deleteSubObject', GAME.heros[HERO.editingId || HERO.id], subObjectId)
     }
   }
 }
 
 function onFirstPageGameLoaded() {
-  window.creatorLibrary = {
+  global.creatorLibrary = {
     selectColor: {
       specialAction: 'selectColor',
     },
@@ -139,7 +139,7 @@ function onFirstPageGameLoaded() {
       libraryName:'objectLibrary',
       libraryId:'spawnZone',
       // onCreateObject: (object) => {
-      //   window.socket.emit('addSubObject', object, { tags: { potential: true } }, 'spawner')
+      //   global.socket.emit('addSubObject', object, { tags: { potential: true } }, 'spawner')
       // },
     },
     resourceZone: {
@@ -407,7 +407,7 @@ function onFirstPageGameLoaded() {
     },
   }
 
-  window.homemadearcadeBasicLibrary = {
+  global.homemadearcadeBasicLibrary = {
     selectColor: false,
     selectSprite: false,
     // drawStructure: false,
@@ -432,7 +432,7 @@ function onFirstPageGameLoaded() {
     // gun: true,
   }
 
-  window.adminCreatorObjects = {
+  global.adminCreatorObjects = {
     selectColor: true,
     selectSprite: true,
     // drawStructure: true,
@@ -485,15 +485,15 @@ function onFirstPageGameLoaded() {
     // spearPickupable: true,
   }
 
-  window.creatorLibrary.addGameLibrary = function() {
+  global.creatorLibrary.addGameLibrary = function() {
     if(GAME.library.creator) {
       return {
         ...GAME.library.creator,
-        ...window.creatorLibrary,
+        ...global.creatorLibrary,
         addGameLibrary: null
       }
     } else {
-      return window.creatorLibrary
+      return global.creatorLibrary
     }
   }
 }

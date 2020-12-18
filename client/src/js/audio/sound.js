@@ -28,9 +28,9 @@ Thank you, Chris!
       param.setTargetAtTime = param.setTargetValueAtTime;
   }
 
-  if (window.hasOwnProperty('webkitAudioContext') &&
-    !window.hasOwnProperty('AudioContext')) {
-    window.AudioContext = webkitAudioContext;
+  if (global.hasOwnProperty('webkitAudioContext') &&
+    !global.hasOwnProperty('AudioContext')) {
+    global.AudioContext = webkitAudioContext;
 
     if (!AudioContext.prototype.hasOwnProperty('createGain'))
       AudioContext.prototype.createGain = AudioContext.prototype.createGainNode;
@@ -144,9 +144,9 @@ Thank you, Chris!
     }
   }
 
-  if (window.hasOwnProperty('webkitOfflineAudioContext') &&
-    !window.hasOwnProperty('OfflineAudioContext')) {
-    window.OfflineAudioContext = webkitOfflineAudioContext;
+  if (global.hasOwnProperty('webkitOfflineAudioContext') &&
+    !global.hasOwnProperty('OfflineAudioContext')) {
+    global.OfflineAudioContext = webkitOfflineAudioContext;
   }
 
 }(window));
@@ -1008,10 +1008,10 @@ function keyboard(keyCode) {
   };
 
   //Attach event listeners
-  window.addEventListener(
+  global.addEventListener(
     "keydown", key.downHandler.bind(key), false
   );
-  window.addEventListener(
+  global.addEventListener(
     "keyup", key.upHandler.bind(key), false
   );
   return key;

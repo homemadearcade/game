@@ -48,17 +48,17 @@ export default class LibraryObjectContextMenu extends React.Component{
           libraryId,
         }
         GAME.library.creator[creatorLibraryId] = null
-        window.socket.emit('updateLibrary', { creator: GAME.library.creator })
+        global.socket.emit('updateLibrary', { creator: GAME.library.creator })
       }
 
       if (key === "remove-from-library") {
         GAME.library.creator[creatorLibraryId] = false
-        window.socket.emit('updateLibrary', { creator: GAME.library.creator })
+        global.socket.emit('updateLibrary', { creator: GAME.library.creator })
       }
 
       if (key === "add-to-editing-hero-creator") {
         const editingHero = GAME.heros[HERO.editingId]
-        window.socket.emit('editHero', { id: HERO.editingId, creator : {...editingHero.creator, [libraryId]: true }})
+        global.socket.emit('editHero', { id: HERO.editingId, creator : {...editingHero.creator, [libraryId]: true }})
       }
 
       if (key === "add-to-creator-library") {
@@ -76,14 +76,14 @@ export default class LibraryObjectContextMenu extends React.Component{
         if(!columnName) return
 
         if(subObject) {
-          window.socket.emit('updateLibrary', { creator: {...GAME.library.creator, [libraryId]: {
+          global.socket.emit('updateLibrary', { creator: {...GAME.library.creator, [libraryId]: {
             label: libraryId,
             columnName,
             libraryName: 'subObjectLibrary',
             libraryId: libraryId,
           } } })
         } else {
-          window.socket.emit('updateLibrary', { creator: {...GAME.library.creator, [libraryId]: {
+          global.socket.emit('updateLibrary', { creator: {...GAME.library.creator, [libraryId]: {
             label: libraryId,
             columnName,
             libraryName: 'objectLibrary',
@@ -121,16 +121,16 @@ export default class LibraryObjectContextMenu extends React.Component{
         if(objectSelected.tags.hero) {
 
         } else if(subObject) {
-          window.socket.emit('updateLibrary', { subObject: {...GAME.library.subObject, [name]: OBJECTS.getProperties(copy)} })
-          window.socket.emit('updateLibrary', { creator: {...GAME.library.creator, [name]: {
+          global.socket.emit('updateLibrary', { subObject: {...GAME.library.subObject, [name]: OBJECTS.getProperties(copy)} })
+          global.socket.emit('updateLibrary', { creator: {...GAME.library.creator, [name]: {
             label: name,
             columnName,
             libraryName: 'subObjectLibrary',
             libraryId: name,
           } } })
         } else {
-          window.socket.emit('updateLibrary', { object: {...GAME.library.object, [name]: OBJECTS.getProperties(copy)} })
-          window.socket.emit('updateLibrary', { creator: {...GAME.library.creator, [name]: {
+          global.socket.emit('updateLibrary', { object: {...GAME.library.object, [name]: OBJECTS.getProperties(copy)} })
+          global.socket.emit('updateLibrary', { creator: {...GAME.library.creator, [name]: {
             label: name,
             columnName,
             libraryName: 'objectLibrary',
@@ -151,13 +151,13 @@ export default class LibraryObjectContextMenu extends React.Component{
             if(!subObject && GAME.library.object[libraryId]) {
               const editedCode = JSON.parse(result.value)
               GAME.library.object[libraryId] = editedCode
-              window.socket.emit('updateLibrary', { object: GAME.library.object })
+              global.socket.emit('updateLibrary', { object: GAME.library.object })
             }
 
             if(subObject && GAME.library.subObject[libraryId]) {
               const editedCode = JSON.parse(result.value)
               GAME.library.subObject[libraryId] = editedCode
-              window.socket.emit('updateLibrary', { subObject: GAME.library.subObject })
+              global.socket.emit('updateLibrary', { subObject: GAME.library.subObject })
             }
           }
         })
@@ -175,7 +175,7 @@ export default class LibraryObjectContextMenu extends React.Component{
           confirmButtonText: 'Next',
         })
         if(!name) return
-        window.socket.emit('updateLibrary', { object: {...GAME.library.objects, [name]: OBJECTS.getProperties(objectSelected)} })
+        global.socket.emit('updateLibrary', { object: {...GAME.library.objects, [name]: OBJECTS.getProperties(objectSelected)} })
       }
 
       if (key === "copy-to-subobject-library") {
@@ -190,7 +190,7 @@ export default class LibraryObjectContextMenu extends React.Component{
           confirmButtonText: 'Next',
         })
         if(!name) return
-        window.socket.emit('updateLibrary', { subObject: {...GAME.library.subObject, [name]: OBJECTS.getProperties(objectSelected)} })
+        global.socket.emit('updateLibrary', { subObject: {...GAME.library.subObject, [name]: OBJECTS.getProperties(objectSelected)} })
       }
     }
   }
@@ -273,8 +273,8 @@ export default class LibraryObjectContextMenu extends React.Component{
     return <Menu onClick={this._handleLibraryObjectMenuClick}>
       {libraryName && <MenuItem className="bold-menu-item">{libraryName}</MenuItem>}
       {libraryId && <MenuItem className="bold-menu-item">{libraryId}</MenuItem>}
-      {editingHero && !editingHero.creator[libraryId] && window.creatorLibrary.addGameLibrary()[libraryId] && <MenuItem key='add-to-editing-hero-creator'>Add to Editing Hero's Creator</MenuItem>}
-      {!window.creatorLibrary.addGameLibrary()[libraryId] && <MenuItem key='add-to-creator-library'>Add to Creator Library</MenuItem>}
+      {editingHero && !editingHero.creator[libraryId] && global.creatorLibrary.addGameLibrary()[libraryId] && <MenuItem key='add-to-editing-hero-creator'>Add to Editing Hero's Creator</MenuItem>}
+      {!global.creatorLibrary.addGameLibrary()[libraryId] && <MenuItem key='add-to-creator-library'>Add to Creator Library</MenuItem>}
       <MenuItem key='copy-to-creator-library'>Copy to Creator Library</MenuItem>
       <MenuItem key='copy-to-object-library'>Copy to Object Library</MenuItem>
       <MenuItem key='copy-to-subobject-library'>Copy to Sub Object Library</MenuItem>

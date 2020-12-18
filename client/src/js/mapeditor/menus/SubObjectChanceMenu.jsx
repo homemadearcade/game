@@ -15,7 +15,7 @@ export default class SubObjectChanceMenu extends React.Component{
         modals.openEditNumberModal('random weight', subObjectChance.randomWeight, {}, (result) => {
           if(result && result.value) {
             subObjectChance.randomWeight = Number(result.value)
-            window.socket.emit('editObjects', [{id: objectSelected.id, subObjectChances: objectSelected.subObjectChances }])
+            global.socket.emit('editObjects', [{id: objectSelected.id, subObjectChances: objectSelected.subObjectChances }])
           }
           PAGE.typingMode = false
         })
@@ -26,7 +26,7 @@ export default class SubObjectChanceMenu extends React.Component{
       }
 
       if(key === 'remove') {
-        window.socket.emit('deleteSubObjectChance', objectSelected.id, subObjectName)
+        global.socket.emit('deleteSubObjectChance', objectSelected.id, subObjectName)
       }
     }
   }

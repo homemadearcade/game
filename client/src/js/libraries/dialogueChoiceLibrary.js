@@ -4,14 +4,14 @@ effectLibraryMod,
 effectLibraryObject,
 effectLibrarySubObject,
 */
-window.defaultDialogueChoice = {
+global.defaultDialogueChoice = {
   tags: {},
   heroEffect: '',
   heroEffectProps: {
     effectValue: '',
   },
   heroDialogueSet: '',
-  heroDialogue: [{...window.defaultDialogue}],
+  heroDialogue: [{...global.defaultDialogue}],
   heroSequence: '',
   guestEffect: '',
   guestEffectProps: {
@@ -22,6 +22,6 @@ window.defaultDialogueChoice = {
   triggerPool: -1
 }
 
-window.dialogueChoiceLibrary = {
+global.dialogueChoiceLibrary = {
 
 }

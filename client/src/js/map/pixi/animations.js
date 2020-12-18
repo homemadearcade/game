@@ -9,7 +9,7 @@ PIXIMAP.animateSprite = function (object, animationName, options) {
   if(!options) options = {}
   const stage = getGameObjectStage({...object, tags: {...object.tags, emitter: true}})
 
-  const animation = window.spriteAnimationLibrary.addGameLibrary()[animationName]
+  const animation = global.spriteAnimationLibrary.addGameLibrary()[animationName]
   if(!animation) return
   const textureArray = animation.textures.map((id) => PIXIMAP.textures[id])
   let animatedSprite = new PIXI.AnimatedSprite(textureArray, true);
@@ -45,7 +45,7 @@ PIXIMAP.animateSprite = function (object, animationName, options) {
 }
 
 PIXIMAP.updatePixiSpriteAnimation = function(sprite, gameObject) {
-  const animationData = window.spriteAnimationLibrary.addGameLibrary()[sprite.animationName]
+  const animationData = global.spriteAnimationLibrary.addGameLibrary()[sprite.animationName]
 
   const clone = _.clone(gameObject)
   if(animationData.relativeWidth) clone.width = gameObject.width + (animationData.relativeWidth)

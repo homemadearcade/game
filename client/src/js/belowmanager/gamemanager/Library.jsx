@@ -31,10 +31,10 @@ export default class Library extends React.Component {
 
     return <div className="Manager__list">
         <Collapsible trigger={'Objects (Core)'}>
-          {this._renderLibrary('objectLibrary', window.objectLibrary)}
+          {this._renderLibrary('objectLibrary', global.objectLibrary)}
         </Collapsible>
         <Collapsible trigger={'Sub Objects (Core)'}>
-          {this._renderLibrary('subObjectLibrary', window.subObjectLibrary)}
+          {this._renderLibrary('subObjectLibrary', global.subObjectLibrary)}
         </Collapsible>
         {GAME.library.object && <Collapsible trigger={'Objects (Game)'}>
           {this._renderLibrary('objectLibrary', GAME.library.object)}

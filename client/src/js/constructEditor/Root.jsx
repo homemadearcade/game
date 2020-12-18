@@ -124,9 +124,9 @@ export default class Root extends React.Component{
     return <div className="ConstructEditor__menu-list">
       {colorSelection && !isColorPickerOpen && <ToolbarRow iconName="fa-palette" rowButtonBackgroundColor={CONSTRUCTEDITOR.selectedColor} onClick={this._openColorPicker}>
         <ToolbarButton iconName="fa-times" onClick={() => {
-            selectColor(GAME.world.defaultObjectColor || window.defaultObjectColor)
+            selectColor(GAME.world.defaultObjectColor || global.defaultObjectColor)
             this.setState({
-              selectColor: GAME.world.defaultObjectColor || window.defaultObjectColor,
+              selectColor: GAME.world.defaultObjectColor || global.defaultObjectColor,
             })
           }}/>
       </ToolbarRow>}
@@ -166,11 +166,11 @@ export default class Root extends React.Component{
       <ToolbarRow iconName='fa-search'>
         <ToolbarButton iconName="fa-search-plus" onClick={() => {
             CONSTRUCTEDITOR.cameraController.zoomMultiplier -= (EDITOR.zoomDelta * 4)
-            window.local.emit('onZoomChange')
+            global.local.emit('onZoomChange')
         }}/>
         <ToolbarButton iconName="fa-search-minus" onClick={() => {
           CONSTRUCTEDITOR.cameraController.zoomMultiplier += (EDITOR.zoomDelta * 4)
-          window.local.emit('onZoomChange')
+          global.local.emit('onZoomChange')
         }}/>
       </ToolbarRow>
       <ToolbarRow iconName="fa-layer-group"
@@ -272,7 +272,7 @@ export default class Root extends React.Component{
     this.setState({
       toolSelected: 'paintBrush'
     })
-    // window.setFontAwesomeCursor("\uf1fc", 'white')
+    // global.setFontAwesomeCursor("\uf1fc", 'white')
   }
 
   _eyeDropperClick() {
@@ -281,7 +281,7 @@ export default class Root extends React.Component{
     this.setState({
       toolSelected: 'eyeDropper'
     })
-    // window.setFontAwesomeCursor("\uf1fb", 'white')
+    // global.setFontAwesomeCursor("\uf1fb", 'white')
   }
 
   _eraserClick() {
@@ -289,7 +289,7 @@ export default class Root extends React.Component{
     this.setState({
       toolSelected: 'eraser'
     })
-    // window.setFontAwesomeCursor("\uf12d", 'white')
+    // global.setFontAwesomeCursor("\uf12d", 'white')
     toolChange('eraser')
   }
 

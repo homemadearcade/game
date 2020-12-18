@@ -1,5 +1,5 @@
-window.local.on('onFirstPageGameLoaded', () => {
-  window.objectLibrary = {
+global.local.on('onFirstPageGameLoaded', () => {
+  global.objectLibrary = {
     default: {
       objectType: 'plainObject',
       tags: { obstacle: true },
@@ -18,12 +18,12 @@ window.local.on('onFirstPageGameLoaded', () => {
     },
     standingNPC: {
       objectType: 'plainObject',
-      heroDialogue: [{...window.defaultDialogue}],
+      heroDialogue: [{...global.defaultDialogue}],
       tags: { obstacle: true, talker: true, talkOnHeroInteract: true },
     },
     wanderingNPC: {
       objectType: 'plainObject',
-      heroDialogue: [{...window.defaultDialogue}],
+      heroDialogue: [{...global.defaultDialogue}],
       tags: { obstacle: true, wander: true, moving: true, talker: true, talkOnHeroInteract: true },
     },
     light: {
@@ -124,7 +124,7 @@ window.local.on('onFirstPageGameLoaded', () => {
     		"targetResetEveryRound": true,
     		"autoTalkOnInteractable": true
     	},
-      heroDialogue: [{...window.defaultDialogue}],
+      heroDialogue: [{...global.defaultDialogue}],
     	"subObjects": {
     		"awarenessTriggerArea": {
     			"objectType": "subObject",
@@ -341,15 +341,15 @@ window.local.on('onFirstPageGameLoaded', () => {
     },
   }
 
-  window.objectLibrary.addGameLibrary = function() {
+  global.objectLibrary.addGameLibrary = function() {
     if(GAME.library.object) {
       return {
         ...GAME.library.object,
-        ...window.objectLibrary,
+        ...global.objectLibrary,
         addGameLibrary: null
       }
     } else {
-      return window.objectLibrary
+      return global.objectLibrary
     }
   }
 })

@@ -3,9 +3,9 @@ import classnames from 'classnames'
 import PixiMapSprite from '../../components/PixiMapSprite.jsx'
 import modals from '../../mapeditor/modals.js'
 
-window.getModifierDescriptors = function(descriptors) {
+global.getModifierDescriptors = function(descriptors) {
   return Object.keys(descriptors).reduce((prev, descriptor) => {
-    if(descriptors[descriptor] && window.descriptionModifiers[descriptor]) {
+    if(descriptors[descriptor] && global.descriptionModifiers[descriptor]) {
       prev.push(descriptor)
     }
     return prev
@@ -24,7 +24,7 @@ export default class SpriteSheet extends React.Component {
   }
 
   componentDidMount() {
-    this._removeListener1 = window.local.on('onClearTextureIdsSelection', () => {
+    this._removeListener1 = global.local.on('onClearTextureIdsSelection', () => {
       this._clearTextureIdsSelection()
     })
   }
@@ -47,7 +47,7 @@ export default class SpriteSheet extends React.Component {
         console.log(textureIdsSelected, useTextures)
         modals.openEditDescriptorsModal({}, ({value}) => {
           if(value) {
-            window.local.emit('onEditSpriteData', useTextures ? textureIdsSelected : {[JSON.parse(item.dataset.spritejson).textureId]: true}, { descriptors: value })
+            global.local.emit('onEditSpriteData', useTextures ? textureIdsSelected : {[JSON.parse(item.dataset.spritejson).textureId]: true}, { descriptors: value })
           }
         }, useTextures ? textureIdsSelected : {[JSON.parse(item.dataset.spritejson).textureId]: true})
       };
@@ -106,7 +106,7 @@ export default class SpriteSheet extends React.Component {
       const categories = spriteSheet.sprites.reduce((prev, sprite) => {
         const descriptorList = Object.keys(sprite.descriptors || {}).filter((d) => sprite.descriptors[d])
         if(descriptorList.length) {
-          const modifiers = window.getModifierDescriptors(sprite.descriptors)
+          const modifiers = global.getModifierDescriptors(sprite.descriptors)
           if(modifiers.length  && !dontSepereteModified) {
             const categoryName = descriptorList.join('-')
             if(!prev[categoryName]) prev[categoryName] = []

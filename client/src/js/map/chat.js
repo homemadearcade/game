@@ -26,7 +26,7 @@ function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
   }
   ctx.fillText(line, x, y);
 }
-window.wrapText = wrapText
+global.wrapText = wrapText
 
 function drawChat(ctx, chat){
 	//textbox

@@ -1,5 +1,5 @@
 function setDefault() {
-  window.defaultGameState = {
+  global.defaultGameState = {
     paused : false,
     started: false,
     loaded: false,

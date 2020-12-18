@@ -59,7 +59,7 @@ function findSmallestObjectInArea(area, objects) {
   let smallestObject = []
   for(let i = 0; i < objectsToSearch.length; i++) {
     let object = objectsToSearch[i].mod()
-    if(object.tags && !window.isObjectSelectable(object)) continue
+    if(object.tags && !global.isObjectSelectable(object)) continue
     if(object.constructParts) {
       objectsToSearch.push(...object.constructParts)
       continue

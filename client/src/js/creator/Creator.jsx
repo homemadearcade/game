@@ -19,7 +19,7 @@ export default class Creator extends React.Component {
       colorSelected: EDITOR.preferences.creatorColorSelected,
     }
 
-    this.setCreatorObjects = (creatorObjects = window.defaultCreatorObjects) => {
+    this.setCreatorObjects = (creatorObjects = global.defaultCreatorObjects) => {
       this.setState({
         creatorObjects
       }, () => {
@@ -40,7 +40,7 @@ export default class Creator extends React.Component {
     }
 
     this._onMouseDown = (event) => {
-      if(!window.isClickingMap(event.target.className)) return
+      if(!global.isClickingMap(event.target.className)) return
 
       this.setState({
         mouseDown: true,
@@ -77,23 +77,23 @@ export default class Creator extends React.Component {
 
     this._onClick = (event) => {
       if(CONSTRUCTEDITOR.open || PATHEDITOR.open) return
-      if(!window.isClickingMap(event.target.className)) return
+      if(!global.isClickingMap(event.target.className)) return
       const { creatorObjectSelected, colorSelected } = this.state
       const { textureIdSelected } = this.props
 
       let newObject
 
       if(!MAPEDITOR.objectHighlighted) return
-      
+
       const isObstacle = MAPEDITOR.objectHighlighted.id && MAPEDITOR.objectHighlighted.tags.obstacle
       if(!isObstacle && creatorObjectSelected.JSON) {
         newObject = _.cloneDeep(creatorObjectSelected.JSON)
 
         newObject.x = MAPEDITOR.objectHighlighted.x
         newObject.y = MAPEDITOR.objectHighlighted.y
-        newObject.id = 'creator-'+window.uniqueID()
+        newObject.id = 'creator-'+global.uniqueID()
         OBJECTS.forAllSubObjects(newObject.subObjects, (subObject) => {
-          subObject.id = 'subObject-'+window.uniqueID()
+          subObject.id = 'subObject-'+global.uniqueID()
         })
         if(colorSelected && colorSelected !== GAME.world.defaultObjectColor) newObject.color = colorSelected
         if(textureIdSelected) newObject.defaultSprite = textureIdSelected
@@ -121,7 +121,7 @@ export default class Creator extends React.Component {
       Object.keys(creatorObjects).forEach((objectName) => {
         if(creatorObjects[objectName] === false) return
 
-        const object = window.creatorLibrary.addGameLibrary()[objectName]
+        const object = global.creatorLibrary.addGameLibrary()[objectName]
         object.creatorLibraryId = objectName
 
         if(object.specialAction && object.specialAction == 'selectColor') {
@@ -200,7 +200,7 @@ export default class Creator extends React.Component {
       Object.keys(creatorObjects).forEach((objectName) => {
         if(creatorObjects[objectName] === false) return
 
-        const object = window.creatorLibrary[objectName]
+        const object = global.creatorLibrary[objectName]
         if(object.columnName === columnName && object.columnExclusiveToggle && creatorObjectsToggled[object.toggleId] && object.onToggleOff) {
           object.onToggleOff()
           toggleOff[object.toggleId] = false
@@ -315,7 +315,7 @@ export default class Creator extends React.Component {
     if(!isColorPickerOpen) return null
 
     return <div className="Creator__color-picker"><SketchPicker
-        color={colorSelected || GAME.world.defaultObjectColor || window.defaultObjectColor }
+        color={colorSelected || GAME.world.defaultObjectColor || global.defaultObjectColor }
         onChange={(color) => {
           this.setState({
             colorSelected: color.hex
@@ -331,7 +331,7 @@ export default class Creator extends React.Component {
       />
     <br/>
     <SwatchesPicker
-      color={colorSelected || GAME.world.defaultObjectColor || window.defaultObjectColor}
+      color={colorSelected || GAME.world.defaultObjectColor || global.defaultObjectColor}
       onChangeComplete={ (color) => {
         this.setState({
           colorSelected: color.hex
@@ -365,7 +365,7 @@ export default class Creator extends React.Component {
         : <i className="fa fas fa-image"></i>}
         </div>
         {this.state.selectSpriteOpen && this.props.textureIdSelected && <div className={classnames("Creator__category-item")} onClick={() => {
-            window.local.emit('onSelectTextureId', null, 'creator')
+            global.local.emit('onSelectTextureId', null, 'creator')
           }}>
           <i className="fa fas fa-times"/>
         </div>}
@@ -386,8 +386,8 @@ export default class Creator extends React.Component {
             this.setState({selectColorOpen: false})
           }}
         >
-        {!isColorPickerOpen && <div className="Creator__category-top" style={{backgroundColor: colorSelected || GAME.world.defaultObjectColor || window.defaultObjectColor }} onClick={this._openColorPicker}><i className="fa fas fa-palette"></i></div>}
-        {isColorPickerOpen && <div className="Creator__category-top" style={{backgroundColor: colorSelected || GAME.world.defaultObjectColor || window.defaultObjectColor }} onClick={this._closeColorPicker}><i className="fa fas fa-chevron-down"></i></div>}
+        {!isColorPickerOpen && <div className="Creator__category-top" style={{backgroundColor: colorSelected || GAME.world.defaultObjectColor || global.defaultObjectColor }} onClick={this._openColorPicker}><i className="fa fas fa-palette"></i></div>}
+        {isColorPickerOpen && <div className="Creator__category-top" style={{backgroundColor: colorSelected || GAME.world.defaultObjectColor || global.defaultObjectColor }} onClick={this._closeColorPicker}><i className="fa fas fa-chevron-down"></i></div>}
         {this._renderColorPicker()}
         {!isColorPickerOpen && this.state.selectColorOpen && colorSelected && <div className={classnames("Creator__category-item")} onClick={() => {
             this.setState({colorSelected: null})

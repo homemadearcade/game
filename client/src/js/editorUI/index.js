@@ -90,4 +90,4 @@ class EditorUI {
   }
 }
 
-window.EDITORUI = new EditorUI()
+global.EDITORUI = new EditorUI()

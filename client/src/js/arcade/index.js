@@ -37,7 +37,7 @@ class Arcade{
     ARCADE.defaultCompendium = defaultCompendium
 
     if(!PAGE.role.isArcadeMode) {
-      window.socket.emit('getCustomGameFx')
+      global.socket.emit('getCustomGameFx')
     }
   }
 
@@ -47,7 +47,7 @@ class Arcade{
 
   onGameReady() {
     if(PAGE.role.isArcadeMode) {
-      window.local.emit('onGameStart', { started: true })
+      global.local.emit('onGameStart', { started: true })
     }
   }
 
@@ -65,7 +65,7 @@ class Arcade{
     }
 
     if(PAGE.role.isPlayEditor) {
-      window.customFx = customFx
+      global.customFx = customFx
     }
   }
 
@@ -103,4 +103,4 @@ class Arcade{
   }
 }
 
-window.ARCADE = new Arcade()
+global.ARCADE = new Arcade()

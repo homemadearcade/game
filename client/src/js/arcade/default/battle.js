@@ -9,11 +9,11 @@ let direction = 'right';
 
 const keysDown = {}
 function start(game, hitSize, speed) {
-  window.addEventListener("keydown", function (e) {
+  global.addEventListener("keydown", function (e) {
     keysDown[e.keyCode] = true
   }, false)
 
-  window.addEventListener("keyup", function (e) {
+  global.addEventListener("keyup", function (e) {
      delete keysDown[e.keyCode]
   }, false)
 

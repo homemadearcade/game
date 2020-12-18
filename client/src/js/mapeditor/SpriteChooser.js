@@ -12,9 +12,9 @@ function open(object, spriteName, ssauthor = 'unknown') {
       popup: 'animated fadeOutUp faster'
     },
     input: 'select',
-    inputOptions: Object.keys(window.spriteSheetAuthors),
+    inputOptions: Object.keys(global.spriteSheetAuthors),
   }).then((result) => {
-    ssauthor = Object.keys(window.spriteSheetAuthors)[result.value]
+    ssauthor = Object.keys(global.spriteSheetAuthors)[result.value]
 
     Swal.fire({
       title: 'Select sprite',

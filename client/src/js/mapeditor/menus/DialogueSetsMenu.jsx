@@ -2,8 +2,8 @@ import React from 'react'
 import Menu, { SubMenu, MenuItem } from 'rc-menu'
 import modals from '../modals.js'
 
-window.getGlobalName = async function() {
-  const list = window.getListOfAllSetsAndSequences()
+global.getGlobalName = async function() {
+  const list = global.getListOfAllSetsAndSequences()
 
   list.unshift('New')
 
@@ -39,16 +39,16 @@ window.getGlobalName = async function() {
 
   return name
 }
-window.getListOfAllSetsAndSequences = function() {
+global.getListOfAllSetsAndSequences = function() {
   const map = {}
   const sequenceItems = Object.keys(GAME.library.sequences).map((name) => GAME.library.sequences[name]).reduce((prev, next) => {
     if(next.items) prev.push(...next.items)
     return prev
   }, [])
-  const items = [...GAME.objects, ...GAME.heroList, ...Object.keys(window.objectLibrary.addGameLibrary()).map((libraryName) => {
-    return window.objectLibrary.addGameLibrary()[libraryName]
-  }), Object.keys(window.subObjectLibrary.addGameLibrary()).map((libraryName) => {
-    return window.subObjectLibrary.addGameLibrary()[libraryName]
+  const items = [...GAME.objects, ...GAME.heroList, ...Object.keys(global.objectLibrary.addGameLibrary()).map((libraryName) => {
+    return global.objectLibrary.addGameLibrary()[libraryName]
+  }), Object.keys(global.subObjectLibrary.addGameLibrary()).map((libraryName) => {
+    return global.subObjectLibrary.addGameLibrary()[libraryName]
   })]
 
   items.forEach((item) => {
@@ -134,12 +134,12 @@ export default class DialogueSetMenu extends React.Component{
           objectSelected.heroDialogueSets = {}
         }
 
-        const name = await window.getGlobalName()
+        const name = await global.getGlobalName()
 
         if(!name) return
 
         objectSelected.heroDialogueSets[name] = {}
-        objectSelected.heroDialogueSets[name].dialogue = [_.cloneDeep(window.defaultDialogue)]
+        objectSelected.heroDialogueSets[name].dialogue = [_.cloneDeep(global.defaultDialogue)]
         networkEditObject(objectSelected, {heroDialogueSets: objectSelected.heroDialogueSets })
       }
 
@@ -180,7 +180,7 @@ export default class DialogueSetMenu extends React.Component{
         })
         if(!dialogue) return
 
-        objectSelected.heroDialogueSets[data.setName].dialogue.push({...window.defaultDialogue, text: dialogue})
+        objectSelected.heroDialogueSets[data.setName].dialogue.push({...global.defaultDialogue, text: dialogue})
         networkEditObject(objectSelected, {heroDialogueSets: objectSelected.heroDialogueSets })
         return
       }
@@ -215,7 +215,7 @@ export default class DialogueSetMenu extends React.Component{
       }
 
       if(data.action === "rename-set") {
-        const name = await window.getGlobalName()
+        const name = await global.getGlobalName()
 
         const oldSet = objectSelected.heroDialogueSets[data.setName]
         objectSelected.heroDialogueSets[data.setName] = null
@@ -250,7 +250,7 @@ export default class DialogueSetMenu extends React.Component{
           id,
           items: oldSet.dialogue.map((dialogueJSON, i) => {
             return {
-              id: window.alphaarray[i],
+              id: global.alphaarray[i],
               effectValue: 'dialogue',
               sequenceType: 'sequenceDialogue',
               effectJSON: [dialogueJSON],
@@ -258,7 +258,7 @@ export default class DialogueSetMenu extends React.Component{
             }
           })
         }
-        window.socket.emit('updateLibrary', { sequences: GAME.library.sequences })
+        global.socket.emit('updateLibrary', { sequences: GAME.library.sequences })
 
         networkEditObject(objectSelected, {heroDialogueSets: objectSelected.heroDialogueSets, sequences: objectSelected.sequences })
         return

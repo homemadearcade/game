@@ -29,12 +29,12 @@ export default class PhysicsLive extends React.Component {
       Object.assign(OBJECTS.getObjectOrHeroById(id), updatedProps)
     } else {
       if (objectSelected.tags.hero) {
-        window.socket.emit('editHero', { id, ...updatedProps })
+        global.socket.emit('editHero', { id, ...updatedProps })
         // }
         // else if(objectSelected.tags.subObject) {
-        // window.socket.emit('editSubObject', objectSelected.ownerId, objectSelected.subObjectName, updatedProps)
+        // global.socket.emit('editSubObject', objectSelected.ownerId, objectSelected.subObjectName, updatedProps)
       } else {
-        window.socket.emit('editObjects', [{ id, ...updatedProps }])
+        global.socket.emit('editObjects', [{ id, ...updatedProps }])
       }
     }
   }

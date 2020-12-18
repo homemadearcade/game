@@ -3,7 +3,7 @@ import effects from './effects.js'
 import { testEventMatch } from './conditions.js'
 
 function onPlayerIdentified() {
-  window.triggerEvents = {
+  global.triggerEvents = {
     onHeroCollide: { mainObject: 'hero', guestObject: 'anything' },
     onHeroLand: { mainObject: 'hero', guestObject: 'anything' },
     onHeroPowerLand: { mainObject: 'hero', guestObject: 'anything' },
@@ -88,7 +88,7 @@ function addTrigger(ownerObject, trigger) {
   // honestly cant believe this was happening..lol I got a lot of work to do
   if(!PAGE.role.isHost) return
 
-  ownerObject.triggers[trigger.id].removeEventListener = window.local.on(eventName, (mainObject, guestObject) => {
+  ownerObject.triggers[trigger.id].removeEventListener = global.local.on(eventName, (mainObject, guestObject) => {
     // console.log('triggered', eventName)
     fireTrigger(trigger, ownerObject, mainObject, guestObject, true)
   })
@@ -168,9 +168,9 @@ function triggerEffectSmart(trigger, ownerObject, mainObject, guestObject) {
   effectedObjects.forEach((effected) => {
     if(trigger.notificationText) {
       if(effected.tags.hero) {
-        window.socket.emit('sendNotification', { playerUIHeroId: effected.id, chatId: effected.id, logRecipientId: effected.id, toast: trigger.notificationToast, log: trigger.notificationLog, chat: trigger.notificationChat, modal: trigger.notificationModal, text: trigger.notificationText, modalHeader: trigger.notificationModalHeader, duration: trigger.notificationDuration })
+        global.socket.emit('sendNotification', { playerUIHeroId: effected.id, chatId: effected.id, logRecipientId: effected.id, toast: trigger.notificationToast, log: trigger.notificationLog, chat: trigger.notificationChat, modal: trigger.notificationModal, text: trigger.notificationText, modalHeader: trigger.notificationModalHeader, duration: trigger.notificationDuration })
         herosNotified.push(effected.id)
-      } else window.socket.emit('sendNotification', { chatId: effected.id, log: trigger.notificationLog, chat: trigger.notificationChat, text: trigger.notificationText, duration: trigger.notificationDuration })
+      } else global.socket.emit('sendNotification', { chatId: effected.id, log: trigger.notificationLog, chat: trigger.notificationChat, text: trigger.notificationText, duration: trigger.notificationDuration })
     }
 
     processTriggerTags(effected)
@@ -189,13 +189,13 @@ function triggerEffectSmart(trigger, ownerObject, mainObject, guestObject) {
   //   if(guestObject.tags.hero) {
   //     heroId = ownerObject.id
   //   }
-  //   window.socket.emit('sendNotification', { heroId, toast: trigger.notificationToast, log: trigger.notificationLog, chat: trigger.notificationChat, text: trigger.notificationText })
+  //   global.socket.emit('sendNotification', { heroId, toast: trigger.notificationToast, log: trigger.notificationLog, chat: trigger.notificationChat, text: trigger.notificationText })
   // }
 
   if(trigger.notificationAllHeros) {
     GAME.heroList.forEach((hero) => {
       if(herosNotified.indexOf(hero.id) > -1) return
-      window.socket.emit('sendNotification', { playerUIHeroId: hero.id, logRecipientId: hero.id, chatId: hero.id, toast: trigger.notificationToast, chat: trigger.notificationChat, text: trigger.notificationText, log: trigger.notificationLog, modal: trigger.notificationModal, modalHeader: trigger.notificationModalHeader, duration: trigger.notificationDuration})
+      global.socket.emit('sendNotification', { playerUIHeroId: hero.id, logRecipientId: hero.id, chatId: hero.id, toast: trigger.notificationToast, chat: trigger.notificationChat, text: trigger.notificationText, log: trigger.notificationLog, modal: trigger.notificationModal, modalHeader: trigger.notificationModalHeader, duration: trigger.notificationDuration})
     })
   }
 

@@ -1,4 +1,4 @@
-window.constellationDistance = 4000
+global.constellationDistance = 4000
 
 function Star(x,y,r,color){
     this.x = x;
@@ -20,8 +20,8 @@ Star.prototype = {
     render: function(){
 
       let hero = GAME.heros[HERO.id]
-      if(PAGE.role.isPlayEditor) hero = window.editingHero
-      let multiplier = (hero.animationZoomMultiplier)/window.constellationDistance
+      if(PAGE.role.isPlayEditor) hero = global.editingHero
+      let multiplier = (hero.animationZoomMultiplier)/global.constellationDistance
 
       context.beginPath();
       context.arc(((this.x/multiplier ) -  camera.x) , ((this.y/multiplier ) -  camera.y) , (this.r / multiplier), 0, 2*Math.PI, false);
@@ -51,12 +51,12 @@ function update(){
 }
 
 function onRender(){
-  if(window.constellationDistance === GAME.heros[HERO.id].animationZoomMultiplier) {
+  if(global.constellationDistance === GAME.heros[HERO.id].animationZoomMultiplier) {
     update();
   }
 
   let hero = GAME.heros[HERO.id]
-  if(PAGE.role.isPlayEditor) hero = window.editingHero
+  if(PAGE.role.isPlayEditor) hero = global.editingHero
   /*
     Remove comments below these for a cool trailing effect & comment
     out the context.clearRect.
@@ -64,7 +64,7 @@ function onRender(){
     // context.fillStyle = 'rgba(255, 255, 255, .1)';
     // context.fillRect(0,0,MAP.canvas.width,MAP.canvas.height);
     // context.clearRect(0,0,MAP.canvas.width,MAP.canvas.height);
-    let multiplier = (hero.animationZoomMultiplier)/window.constellationDistance
+    let multiplier = (hero.animationZoomMultiplier)/global.constellationDistance
 
     camera.x = ((MAP.canvas.width/2)/multiplier) - MAP.canvas.width /2
     camera.y = ((MAP.canvas.height/2)/multiplier) -MAP.canvas.height /2
@@ -76,7 +76,7 @@ function onRender(){
 
 let context;
 function onResize(ctx) {
-  window.arrStars = [];
+  global.arrStars = [];
   context = ctx
   for(let i = 0; i < 800; i++){
     var randX = Math.floor((Math.random()*(MAP.canvas.width))+1);

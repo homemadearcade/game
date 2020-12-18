@@ -1,5 +1,5 @@
-window.local.on('onGameReady', () => {
-  window.playerMenuLibrary = {
+global.local.on('onGameReady', () => {
+  global.playerMenuLibrary = {
     // create: {
     //   useExistingMenu: 'PlayerCreateObject',
     //   title: 'Create'
@@ -79,7 +79,7 @@ window.local.on('onGameReady', () => {
     }
   }
 
-  window.heroFlags = {
+  global.heroFlags = {
     paused: false,
     isAdmin: false,
     // showScore: false,
@@ -98,7 +98,7 @@ window.local.on('onGameReady', () => {
     canZoomInAndOut: false,
   }
 
-  window.heroMenuLibrary = {
+  global.heroMenuLibrary = {
     move: false,
     resize: false,
     color: false,
@@ -112,7 +112,7 @@ window.local.on('onGameReady', () => {
     dialogueName: false,
   }
 
-  window.objectMenuLibrary = {
+  global.objectMenuLibrary = {
     move: false,
     resize: false,
     copy: false,
@@ -132,13 +132,13 @@ window.local.on('onGameReady', () => {
     delete: false,
   }
 
-  window.worldMenuLibrary = {
+  global.worldMenuLibrary = {
     // create: false,
     backgroundColor: false,
   }
 
-  window.spriteSheetLibrary = _.cloneDeep(window.spriteSheetIds)
-  Object.keys(window.spriteSheetLibrary).forEach((ssId) => {
-    window.spriteSheetLibrary[ssId] = false
+  global.spriteSheetLibrary = _.cloneDeep(global.spriteSheetIds)
+  Object.keys(global.spriteSheetLibrary).forEach((ssId) => {
+    global.spriteSheetLibrary[ssId] = false
   })
 })

@@ -3,7 +3,7 @@ import Toolbar from './Toolbar.jsx'
 import FileUploader from '../components/FileUploader.jsx'
 import { ToastContainer, toast, Slide, Zoom, Flip, Bounce } from 'react-toastify';
 
-window.toastIds = {}
+global.toastIds = {}
 export default class Root extends React.Component {
   constructor(props) {
     super(props)
@@ -38,27 +38,27 @@ export default class Root extends React.Component {
         {data.text}
       </div>
       <button onClick={() => {
-        if(action === 'startGame') window.socket.emit('startGame')
-        if(action === 'stopGame') window.socket.emit('stopGame')
-        if(action === 'resolveSequenceItem') window.socket.emit('resolveSequenceItem', data.sequenceId)
-        if(action === 'unpauseSequence') window.socket.emit('togglePauseSequence', data.sequenceId)
-        window.socket.emit('resolveAdminApproval', data.requestId, true)
+        if(action === 'startGame') global.socket.emit('startGame')
+        if(action === 'stopGame') global.socket.emit('stopGame')
+        if(action === 'resolveSequenceItem') global.socket.emit('resolveSequenceItem', data.sequenceId)
+        if(action === 'unpauseSequence') global.socket.emit('togglePauseSequence', data.sequenceId)
+        global.socket.emit('resolveAdminApproval', data.requestId, true)
       }}>
         {data.approveButtonText || 'Approve'}
       </button>
       <button onClick={() => {
-        if(action === 'unpauseSequence') window.socket.emit('stopSequence', data.sequenceId)
-        window.socket.emit('resolveAdminApproval', data.requestId, false)
+        if(action === 'unpauseSequence') global.socket.emit('stopSequence', data.sequenceId)
+        global.socket.emit('resolveAdminApproval', data.requestId, false)
       }}>
         {data.rejectButtonText || 'Reject'}
       </button>
     </div>, toastInfo)
 
-    window.toastIds[data.requestId] = toastId
+    global.toastIds[data.requestId] = toastId
   }
 
   onResolveAdminApproval(id) {
-    toast.dismiss(window.toastIds[id])
+    toast.dismiss(global.toastIds[id])
   }
 
   render() {

@@ -14,7 +14,7 @@ import keyInput from './keyInput'
 import Root from './Root.jsx'
 import Swal from 'sweetalert2/src/sweetalert2.js';
 
-window.getBoundingBox = function(rectangles, grid) {
+global.getBoundingBox = function(rectangles, grid) {
   let minX = grid.x + grid.width
   let minY = grid.y + grid.height
   let maxX = grid.x
@@ -80,7 +80,7 @@ class ConstructEditor {
   cancel() {
     this.open = false
     this.close()
-    window.local.emit('onConstructEditorClose', false)
+    global.local.emit('onConstructEditorClose', false)
   }
 
   close() {
@@ -103,26 +103,26 @@ class ConstructEditor {
   save() {
     let constructParts = this.combineNodesIntoRectangles()
     constructParts.forEach((part) => {
-      part.id = window.uniqueID()
-      if(part.color == GAME.world.defaultObjectColor || part.color == window.defaultObjectColor) {
+      part.id = global.uniqueID()
+      if(part.color == GAME.world.defaultObjectColor || part.color == global.defaultObjectColor) {
         part.color = null
       }
     })
     const { x, y, width, height } = this.getBoundingBox(constructParts)
-    window.local.emit('onConstructEditorSave', {constructParts, x, y, width, height})
+    global.local.emit('onConstructEditorSave', {constructParts, x, y, width, height})
     this.initializeGridNodes({constructParts, x, y, width, height})
   }
 
   finish() {
     this.save()
     this.close()
-    window.local.emit('onConstructEditorClose')
+    global.local.emit('onConstructEditorClose')
   }
 
   start(object, startColor, startAtHero = false) {
     document.body.draggable=false
     this._autoSave = setInterval(() => {
-      // window.local.emit('onSendNotification', { playerUIHeroId: HERO.id, toast: true, text: 'Drawing Autosaved'})
+      // global.local.emit('onSendNotification', { playerUIHeroId: HERO.id, toast: true, text: 'Drawing Autosaved'})
       this.save()
     }, 10000)
     this.initState()
@@ -163,7 +163,7 @@ class ConstructEditor {
     this.camera.set(this.cameraController)
 
     this._mouseDownListener = (e) => {
-      if(!window.isClickingMap(e.target.className)) return
+      if(!global.isClickingMap(e.target.className)) return
       if(e.which === 1) {
         if(!this.paused && this.open) this.handleMouseDown(event)
       }
@@ -171,7 +171,7 @@ class ConstructEditor {
     document.body.addEventListener("mousedown", this._mouseDownListener)
 
     this._mouseMoveListener = (e) => {
-      if(!window.isClickingMap(e.target.className)) return
+      if(!global.isClickingMap(e.target.className)) return
       if(!this.paused && this.open) this.handleMouseMove(event)
     }
     document.body.addEventListener("mousemove", this._mouseMoveListener)
@@ -181,12 +181,12 @@ class ConstructEditor {
     }
     document.body.addEventListener("mouseup", this._mouseUpListener)
 
-    let color = startColor || EDITOR.preferences.creatorColorSelected || object.color || GAME.world.defaultObjectColor || window.defaultObjectColor
+    let color = startColor || EDITOR.preferences.creatorColorSelected || object.color || GAME.world.defaultObjectColor || global.defaultObjectColor
     this.ref.open(color)
     this.selectColor(color)
 
     this.nodesHistory = []
-    window.local.emit('onConstructEditorStart', object)
+    global.local.emit('onConstructEditorStart', object)
   }
 
   handleMouseUp() {
@@ -209,7 +209,7 @@ class ConstructEditor {
       this.ref.closeColorPicker()
     } else if(tool === 'eyeDropper') {
       const { color, defaultSprite } = this.getDataFromNodeXY(this.mousePos.x, this.mousePos.y)
-      this.selectedColor = color || GAME.world.defaultObjectColor || window.defaultObjectColor
+      this.selectedColor = color || GAME.world.defaultObjectColor || global.defaultObjectColor
       this.selectedTextureId = defaultSprite
       this.ref.setColor(this.selectedColor)
       this.ref.setTextureId(this.selectedTextureId)
@@ -261,7 +261,7 @@ class ConstructEditor {
     if(this.painting) this.paintNodeXY(this.mousePos.x, this.mousePos.y)
     if(this.erasing) this.unfillNodeXY(this.mousePos.x, this.mousePos.y)
 
-    const { x, y } = window.convertToGameXY(event)
+    const { x, y } = global.convertToGameXY(event)
 
     this.mousePos.x = ((x + camera.x) / camera.multiplier)
     this.mousePos.y = ((y + camera.y) / camera.multiplier)
@@ -392,7 +392,7 @@ class ConstructEditor {
   }
 
   getBoundingBox(rectangles) {
-    return window.getBoundingBox(rectangles, this.grid)
+    return global.getBoundingBox(rectangles, this.grid)
   }
 
   bucketFill(empty) {
@@ -541,4 +541,4 @@ class ConstructEditor {
   }
 }
 
-window.CONSTRUCTEDITOR = new ConstructEditor()
+global.CONSTRUCTEDITOR = new ConstructEditor()

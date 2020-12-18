@@ -31,4 +31,4 @@ class LiveEditor {
   }
 }
 
-window.LIVEEDITOR = new LiveEditor()
+global.LIVEEDITOR = new LiveEditor()

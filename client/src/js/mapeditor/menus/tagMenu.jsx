@@ -54,67 +54,67 @@ export default class TagMenu extends React.Component{
     const { subObject, objectSelected } = this.props
 
     // <SubMenu title="Behavior">
-    //   {this._renderTagMenuItems(window.behaviorTags)}
+    //   {this._renderTagMenuItems(global.behaviorTags)}
     // </SubMenu>
 
     return <Menu onClick={this._handleTagMenuClick}>
       <MenuItem key='open-search-modal'>Open Search Modal</MenuItem>
       <SubMenu title="Physics">
-        {this._renderTagMenuItems(window.physicsTags)}
+        {this._renderTagMenuItems(global.physicsTags)}
       </SubMenu>
       <SubMenu title="Movement">
-        {this._renderTagMenuItems(window.movementTags)}
+        {this._renderTagMenuItems(global.movementTags)}
       </SubMenu>
       <SubMenu title="Target">
-        {this._renderTagMenuItems(window.targetTags)}
+        {this._renderTagMenuItems(global.targetTags)}
       </SubMenu>
       <SubMenu title="Path">
-        {this._renderTagMenuItems(window.pathTags)}
+        {this._renderTagMenuItems(global.pathTags)}
       </SubMenu>
       <SubMenu title="Hero Update">
-        {this._renderTagMenuItems(window.heroUpdateTags)}
+        {this._renderTagMenuItems(global.heroUpdateTags)}
       </SubMenu>
       <SubMenu title="Quest">
-        {this._renderTagMenuItems(window.questTags)}
+        {this._renderTagMenuItems(global.questTags)}
       </SubMenu>
       <SubMenu title="Dialogue">
-        {this._renderTagMenuItems(window.dialogueTags)}
+        {this._renderTagMenuItems(global.dialogueTags)}
       </SubMenu>
       <SubMenu title="Combat">
-        {this._renderTagMenuItems(window.combatTags)}
+        {this._renderTagMenuItems(global.combatTags)}
       </SubMenu>
       <SubMenu title="Spawn Zone">
-        {this._renderTagMenuItems(window.spawnZoneTags)}
+        {this._renderTagMenuItems(global.spawnZoneTags)}
       </SubMenu>
       <SubMenu title="Resource Zone">
-        {this._renderTagMenuItems(window.resourceZoneTags)}
+        {this._renderTagMenuItems(global.resourceZoneTags)}
       </SubMenu>
       <SubMenu title="Graphical">
-        {this._renderTagMenuItems(window.graphicalTags)}
+        {this._renderTagMenuItems(global.graphicalTags)}
       </SubMenu>
       <SubMenu title="Camera">
-        {this._renderTagMenuItems(window.cameraTags)}
+        {this._renderTagMenuItems(global.cameraTags)}
       </SubMenu>
       <SubMenu title="Particle">
-        {this._renderTagMenuItems(window.particleTags)}
+        {this._renderTagMenuItems(global.particleTags)}
       </SubMenu>
       <SubMenu title="Animation">
-        {this._renderTagMenuItems(window.animationTags)}
+        {this._renderTagMenuItems(global.animationTags)}
       </SubMenu>
       <SubMenu title="Inventory">
-        {this._renderTagMenuItems(window.inventoryTags)}
+        {this._renderTagMenuItems(global.inventoryTags)}
       </SubMenu>
       {subObject && <SubMenu title="Sub Object">
-        {this._renderTagMenuItems(window.subObjectTags)}
+        {this._renderTagMenuItems(global.subObjectTags)}
       </SubMenu>}
       {objectSelected.tags.hero && <SubMenu title="Hero">
-        {this._renderTagMenuItems(window.defaultHeroTags)}
+        {this._renderTagMenuItems(global.defaultHeroTags)}
       </SubMenu>}
       <SubMenu title="Optimization">
-        {this._renderTagMenuItems(window.featureOptimizationTags)}
+        {this._renderTagMenuItems(global.featureOptimizationTags)}
       </SubMenu>
       <SubMenu title="Popover">
-        {this._renderTagMenuItems(window.popoverTags)}
+        {this._renderTagMenuItems(global.popoverTags)}
       </SubMenu>
     </Menu>
   }

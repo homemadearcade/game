@@ -8,8 +8,8 @@ function drawTextCenter(ctx, object, color, text, camera) {
   ctx.textAlign = "center";
   ctx.textBaseline = "top";
   let lineWidth = (object.width - fontSize)*camera.multiplier
-  let { width, height } = window.measureWrapText(ctx, text, 0, 0, lineWidth, fontSize)
-  window.wrapText(ctx, text, (object.x+(object.width/2))*camera.multiplier - camera.x, ((object.y+(object.height/2))*camera.multiplier - camera.y - (height/2)), lineWidth, fontSize)
+  let { width, height } = global.measureWrapText(ctx, text, 0, 0, lineWidth, fontSize)
+  global.wrapText(ctx, text, (object.x+(object.width/2))*camera.multiplier - camera.x, ((object.y+(object.height/2))*camera.multiplier - camera.y - (height/2)), lineWidth, fontSize)
 }
 
 function update() {
@@ -244,7 +244,7 @@ function update() {
   drawTools.drawLoadingScreen(ctx, camera)
 
   let pauseWindowUp = false
-  if(!window.focused) {
+  if(!global.focused) {
     ctx.fillStyle = "rgba(0,0,0,.8)"
     ctx.fillRect(0, 0, MAP.canvas.width, MAP.canvas.height)
     // if(PAGE.role.isAdmin) {

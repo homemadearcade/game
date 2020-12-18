@@ -2,13 +2,13 @@
 // Locker, Chalkboard, School Chair, Desk, Etc
 
 function setDefault() {
-  window.generalDescriptors = {
+  global.generalDescriptors = {
     'Scifi Theme': {},
     'Fantasy Theme': {},
     'Platformer View': {},
   }
 
-  window.elementDescriptors = {
+  global.elementDescriptors = {
     Grass: {},
     Dirt: {},
     Snow: {},
@@ -34,7 +34,7 @@ function setDefault() {
     Electricity: {},
   }
 
-  window.waterElementDescriptors = {
+  global.waterElementDescriptors = {
     Water: {},
     'Water Element': {
       dontShowAdminsInSpriteSheetEditor: true,
@@ -47,7 +47,7 @@ function setDefault() {
     'Whirlpool': {},
   }
 
-  window.overworldMapDescriptors = {
+  global.overworldMapDescriptors = {
     Mountain : {},
     Tree : {
       children: ['Dead Tree', 'Colored Tree', 'Forest'],
@@ -86,7 +86,7 @@ function setDefault() {
     'Earth': {},
   }
 
-  window.buildingPartDescriptors = {
+  global.buildingPartDescriptors = {
     'Building Wall': {},
     'Building Floor Tile': {},
     // 'Special Floor Tile': {
@@ -107,7 +107,7 @@ function setDefault() {
     'Roof Tile/Shillings': {},
   }
 
-  window.outsideBuildingDescriptors = {
+  global.outsideBuildingDescriptors = {
     Fence: {},
     Well: {},
     Plant: {
@@ -135,7 +135,7 @@ function setDefault() {
     Fountain: {}
   }
 
-  window.insideBuildingDescriptors = {
+  global.insideBuildingDescriptors = {
     'Musical Instrument': {
       children: ['Harp', 'Guitar','Drum', 'Flute', 'Piano']
     },
@@ -195,7 +195,7 @@ function setDefault() {
     'Liquid Tank': {},
   }
 
-  window.otherDescriptors = {
+  global.otherDescriptors = {
     Stick: {},
     Rock: {},
     Stalagmite: {},
@@ -247,7 +247,7 @@ function setDefault() {
     Undescribed: {},
   }
 
-  window.weaponDescriptors = {
+  global.weaponDescriptors = {
     Weapon: {
       dontShowAdminsInSpriteSheetEditor: true,
       children: ['Waraxe', 'Staff', 'Mace', 'Gun', 'Sword','Bow', 'Crossbow', 'Laser', 'Spear', 'Halbierd', 'Scythe', 'Bomb', 'Scimitar', 'Rapier'],
@@ -302,7 +302,7 @@ function setDefault() {
     'Quiver': {},
   }
 
-  window.toolDescriptors = {
+  global.toolDescriptors = {
     Tool:  {
       dontShowAdminsInSpriteSheetEditor: true,
       children: ['Axe', 'Pickaxe', 'Torch', 'Device', 'Shovel', 'Hammer', "Shears"],
@@ -312,7 +312,7 @@ function setDefault() {
     Compass: {},
     Hammer: {},
     Anvil: {},
-    Device: window.insideBuildingDescriptors.Device,
+    Device: global.insideBuildingDescriptors.Device,
     Pickaxe: {},
     Torch: {},
     Shovel: {},
@@ -340,9 +340,9 @@ function setDefault() {
     Hat: {},
   }
 
-  window.itemDescriptors = {
+  global.itemDescriptors = {
     Key: {
-      children: window.insideBuildingDescriptors.Key,
+      children: global.insideBuildingDescriptors.Key,
     },
     Bucket: {},
     Bottle: {},
@@ -350,7 +350,7 @@ function setDefault() {
     Bag: {},
     Heart: {},
     'First Aid Kit': {},
-    Food: window.insideBuildingDescriptors.Food,
+    Food: global.insideBuildingDescriptors.Food,
     Candy: {},
     Soda: {},
     Snack: {},
@@ -359,7 +359,7 @@ function setDefault() {
     Vegetable: {},
     Drink: {},
     Bread: {},
-    Bullet: window.toolDescriptors.Bullet,
+    Bullet: global.toolDescriptors.Bullet,
     'Expensive Item': {
       dontShowAdminsInSpriteSheetEditor: true,
       children: ['Gold', 'Jewelry', 'Coin'],
@@ -378,11 +378,11 @@ function setDefault() {
     }
   }
 
-  window.dungeonItemDescriptors = {
-    Door: window.buildingPartDescriptors.Door,
-    Ladder: window.buildingPartDescriptors.Ladder,
-    Stairs: window.buildingPartDescriptors.Stairs,
-    Key: window.itemDescriptors.Key,
+  global.dungeonItemDescriptors = {
+    Door: global.buildingPartDescriptors.Door,
+    Ladder: global.buildingPartDescriptors.Ladder,
+    Stairs: global.buildingPartDescriptors.Stairs,
+    Key: global.itemDescriptors.Key,
     Keyhole: {},
     'Trap Door': {},
     Chest: {},
@@ -402,7 +402,7 @@ function setDefault() {
     'Button Tile': {},
   }
 
-  window.transportDescriptors = {
+  global.transportDescriptors = {
     Vehicle: {
       dontShowAdminsInSpriteSheetEditor: true,
       children: ['Car', 'Boat', 'Spaceship', 'Rail Car'],
@@ -429,7 +429,7 @@ function setDefault() {
     'Spaceship Wall': {},
   }
 
-  window.humanDescriptors = {
+  global.humanDescriptors = {
     Human: {
       dontShowAdminsInSpriteSheetEditor: true,
       children: ['Spaceman', 'Wizard', 'King', 'Archer', 'Thief', 'Athlete', 'Priest', 'Cop'],
@@ -455,7 +455,7 @@ function setDefault() {
     Detective: {},
   }
 
-  window.animalDescriptors = {
+  global.animalDescriptors = {
     Animal: {
       dontShowAdminsInSpriteSheetEditor: true,
       children: ['Cat', 'Bird', 'Dog', 'Mouse', 'Chicken', 'Bug', 'Fish', 'Reptile', 'Deer', 'Bear'],
@@ -573,7 +573,7 @@ function setDefault() {
     Centaur: {},
   }
 
-  window.reptileDescriptors = {
+  global.reptileDescriptors = {
     Alligator: {},
     Cobra: {},
     Crocodile: {},
@@ -582,16 +582,16 @@ function setDefault() {
     Snake: {},
   }
 
-  window.lawnAnimalDescriptors = {
+  global.lawnAnimalDescriptors = {
     Bunny: {},
     Mouse: {},
     Racoon: {},
     Squirrel: {},
     Mole: {},
-    Frog: window.reptileDescriptors.Frog
+    Frog: global.reptileDescriptors.Frog
   }
 
-  window.farmAnimalDescriptors = {
+  global.farmAnimalDescriptors = {
     'Donkey': {},
     'Horse': {},
     'Chicken': {},
@@ -603,8 +603,8 @@ function setDefault() {
     'Turkey': {}
   }
 
-  window.birdDescriptors = {
-    Chicken: window.farmAnimalDescriptors.Chicken,
+  global.birdDescriptors = {
+    Chicken: global.farmAnimalDescriptors.Chicken,
     Crow: {},
     Bat: {},
     Duck: {},
@@ -615,7 +615,7 @@ function setDefault() {
     Egg: {},
   }
 
-  window.monsterDescriptors = {
+  global.monsterDescriptors = {
     Monster: {
       dontShowAdminsInSpriteSheetEditor: true,
       children: ['Bug', 'Ghost', 'Goblin', 'Undead', 'Zombie', 'Alien', 'Mythical Beast', 'Machine'],
@@ -643,7 +643,7 @@ function setDefault() {
     }
   }
 
-  window.edgeModifiers = {
+  global.edgeModifiers = {
     'Top': {},
     'Right': {},
     'Left': {},
@@ -655,7 +655,7 @@ function setDefault() {
     'BottomRight': {},
   }
 
-  window.facingModifiers = {
+  global.facingModifiers = {
     'FacingUp': {},
     'FacingRight': {},
     'FacingLeft': {},
@@ -664,7 +664,7 @@ function setDefault() {
     'Going Down': {}
   }
 
-  window.pathModifiers= {
+  global.pathModifiers= {
     'Up-Right': {},
     'Up-Down': {},
     'Up-Left': {},
@@ -680,7 +680,7 @@ function setDefault() {
     'TopLeft-BottomRight': {},
   }
 
-  window.modifierDescriptors = {
+  global.modifierDescriptors = {
     'Many': {},
     'Empty': {},
     'Broken': {},
@@ -708,7 +708,7 @@ function setDefault() {
       dontShowAdminsInSpriteSheetEditor: true,},
   }
 
-  window.livingCreatureModifiers = {
+  global.livingCreatureModifiers = {
     'Holding Weapon': {},
     'Elf': {},
     'Goblin': {},
@@ -725,7 +725,7 @@ function setDefault() {
     'With Face': {},
   }
 
-  window.elementalModifiers = {
+  global.elementalModifiers = {
     'Mossy': {},
     'Ivied': {},
     'Frozen': {},
@@ -743,9 +743,9 @@ function setDefault() {
     'Lightning Charged': {},
   }
 
-  window.audioModifierDescriptor = {
-    Small: window.modifierDescriptors.Small,
-    Large: window.modifierDescriptors.Large,
+  global.audioModifierDescriptor = {
+    Small: global.modifierDescriptors.Small,
+    Large: global.modifierDescriptors.Large,
     Cute: {
       audioRelated: true,
       dontShowAdminsInSpriteSheetEditor: true,},
@@ -765,7 +765,7 @@ function setDefault() {
       dontShowAdminsInSpriteSheetEditor: true,},
   }
 
-  window.colorModifiers = {
+  global.colorModifiers = {
     'Dark': {},
     'Light': {},
     'Brown': {},
@@ -785,7 +785,7 @@ function setDefault() {
     'Christmas': {}
   }
 
-  window.complexDescriptors = {
+  global.complexDescriptors = {
     Forest : {
       withDescriptors: {
         Tree: true,
@@ -930,10 +930,10 @@ function setDefault() {
         'Turned On': true
       }
     },
-    'Evil Eyeball': window.monsterDescriptors['Evil Eyeball']
+    'Evil Eyeball': global.monsterDescriptors['Evil Eyeball']
   }
 
-  window.goreDescriptors = {
+  global.goreDescriptors = {
     'Body Part': {
       children: ['Eyeball', 'Arm', 'Leg', 'Torso', 'Head']
     },
@@ -944,48 +944,48 @@ function setDefault() {
     Head: {}
   }
 
-  window.allDescriptors = {
-    ...window.generalDescriptors,
-    ...window.elementDescriptors,
-    ...window.waterElementDescriptors,
-    ...window.overworldMapDescriptors,
-    ...window.buildingPartDescriptors,
-    ...window.outsideBuildingDescriptors,
-    ...window.insideBuildingDescriptors,
-    ...window.otherDescriptors,
-    ...window.toolDescriptors,
-    ...window.itemDescriptors,
-    ...window.transportDescriptors,
-    ...window.humanDescriptors,
-    ...window.monsterDescriptors,
-    ...window.animalDescriptors,
-    ...window.farmAnimalDescriptors,
-    ...window.lawnAnimalDescriptors,
-    ...window.reptileDescriptors,
-    ...window.birdDescriptors,
-    ...window.edgeModifiers,
-    ...window.pathModifiers,
-    ...window.audioModifierDescriptors,
-    ...window.modifierDescriptors,
-    ...window.weaponDescriptors,
-    // ...window.complexDescriptors,
-    ...window.goreDescriptors,
-    ...window.colorModifiers,
-    ...window.dungeonItemDescriptors,
-    ...window.elementalModifiers,
-    ...window.livingCreatureModifiers,
-    ...window.facingModifiers,
+  global.allDescriptors = {
+    ...global.generalDescriptors,
+    ...global.elementDescriptors,
+    ...global.waterElementDescriptors,
+    ...global.overworldMapDescriptors,
+    ...global.buildingPartDescriptors,
+    ...global.outsideBuildingDescriptors,
+    ...global.insideBuildingDescriptors,
+    ...global.otherDescriptors,
+    ...global.toolDescriptors,
+    ...global.itemDescriptors,
+    ...global.transportDescriptors,
+    ...global.humanDescriptors,
+    ...global.monsterDescriptors,
+    ...global.animalDescriptors,
+    ...global.farmAnimalDescriptors,
+    ...global.lawnAnimalDescriptors,
+    ...global.reptileDescriptors,
+    ...global.birdDescriptors,
+    ...global.edgeModifiers,
+    ...global.pathModifiers,
+    ...global.audioModifierDescriptors,
+    ...global.modifierDescriptors,
+    ...global.weaponDescriptors,
+    // ...global.complexDescriptors,
+    ...global.goreDescriptors,
+    ...global.colorModifiers,
+    ...global.dungeonItemDescriptors,
+    ...global.elementalModifiers,
+    ...global.livingCreatureModifiers,
+    ...global.facingModifiers,
   }
 
-  window.descriptionModifiers = {
-    ...window.colorModifiers,
-    ...window.edgeModifiers,
-    ...window.pathModifiers,
-    ...window.audioModifierDescriptors,
-    ...window.modifierDescriptors,
-    ...window.elementalModifiers,
-    ...window.livingCreatureModifiers,
-    ...window.facingModifiers,
+  global.descriptionModifiers = {
+    ...global.colorModifiers,
+    ...global.edgeModifiers,
+    ...global.pathModifiers,
+    ...global.audioModifierDescriptors,
+    ...global.modifierDescriptors,
+    ...global.elementalModifiers,
+    ...global.livingCreatureModifiers,
+    ...global.facingModifiers,
   }
 
 }

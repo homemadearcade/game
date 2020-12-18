@@ -3,7 +3,7 @@ function getAliases(descriptors) {
 
   const aliases = []
   descriptorList.forEach((desc) => {
-    if(window.allDescriptors[desc].children) aliases.push(...window.allDescriptors[desc].children)
+    if(global.allDescriptors[desc].children) aliases.push(...global.allDescriptors[desc].children)
   })
 
   return aliases
@@ -13,20 +13,20 @@ function getAliases(descriptors) {
 ////////////////////////////////////////
 ///TEXTURES
 //////////
-window.textureIdsByDescriptor = {}
+global.textureIdsByDescriptor = {}
 
-window.generateTextureIdsByDescriptors = function() {
-  window.textureIdsByDescriptor = {}
+global.generateTextureIdsByDescriptors = function() {
+  global.textureIdsByDescriptor = {}
 
-  window.spriteSheets.forEach((ss) => {
+  global.spriteSheets.forEach((ss) => {
     ss.sprites.forEach((s, i) => {
       if(s.descriptors) {
         Object.keys(s.descriptors).forEach((desc) => {
           if(!s.descriptors[desc]) return
-          if(!window.textureIdsByDescriptor[desc]) {
-            window.textureIdsByDescriptor[desc] = []
+          if(!global.textureIdsByDescriptor[desc]) {
+            global.textureIdsByDescriptor[desc] = []
           }
-          window.textureIdsByDescriptor[desc].push({...s, author: ss.author})
+          global.textureIdsByDescriptor[desc].push({...s, author: ss.author})
         })
       }
     });
@@ -35,7 +35,7 @@ window.generateTextureIdsByDescriptors = function() {
 }
 
 //dontSearchAliases
-window.findTexturesForDescriptors = function(descriptors, options) {
+global.findTexturesForDescriptors = function(descriptors, options) {
   if(!options) options = {}
 
   let descriptorList = Object.keys(descriptors)
@@ -43,16 +43,16 @@ window.findTexturesForDescriptors = function(descriptors, options) {
   let possibleTextures = []
   descriptorList.forEach((desc) => {
     if(!descriptors[desc]) return
-    if(desc && window.textureIdsByDescriptor[desc]) {
-      possibleTextures.push(...window.textureIdsByDescriptor[desc])
+    if(desc && global.textureIdsByDescriptor[desc]) {
+      possibleTextures.push(...global.textureIdsByDescriptor[desc])
     }
   })
 
   // if(!possibleTextures.length && !options.dontSearchAliases) {
   //   const aliasesList = getAliases(descriptors)
   //   aliasesList.forEach((desc) => {
-  //     if(desc && window.textureIdsByDescriptor[desc]) {
-  //       possibleTextures.push(...window.textureIdsByDescriptor[desc])
+  //     if(desc && global.textureIdsByDescriptor[desc]) {
+  //       possibleTextures.push(...global.textureIdsByDescriptor[desc])
   //     }
   //   })
   // }
@@ -65,8 +65,8 @@ window.findTexturesForDescriptors = function(descriptors, options) {
   return possibleTextures
 }
 
-window.findRandomAuthorsTextureIdForDescriptors = function(descriptors, author, options) {
-  const possibleTextures = window.findTexturesForDescriptors(descriptors, options)
+global.findRandomAuthorsTextureIdForDescriptors = function(descriptors, author, options) {
+  const possibleTextures = global.findTexturesForDescriptors(descriptors, options)
 
   const authorsTextures = possibleTextures.filter((s) => {
     console.log(s.author)
@@ -87,8 +87,8 @@ window.findRandomAuthorsTextureIdForDescriptors = function(descriptors, author, 
 }
 
 
-window.findRandomTextureIdForDescriptors = function(descriptors, options) {
-  const possibleTextures = window.findTexturesForDescriptors(descriptors, options)
+global.findRandomTextureIdForDescriptors = function(descriptors, options) {
+  const possibleTextures = global.findTexturesForDescriptors(descriptors, options)
 
   if(!possibleTextures || !possibleTextures.length) return null
 
@@ -97,14 +97,14 @@ window.findRandomTextureIdForDescriptors = function(descriptors, options) {
   return possibleTextures[textureIndex].textureId
 }
 
-window.breakDownConstructPartIntoEqualNodes = function(constructParts) {
+global.breakDownConstructPartIntoEqualNodes = function(constructParts) {
 
   return parts
 }
 
-window.getRandomSSAuthor = function() {
-  const authorList = Object.keys(window.spriteSheetAuthors).filter((author) => {
-    if(window.spriteSheetAuthors[author]) return true
+global.getRandomSSAuthor = function() {
+  const authorList = Object.keys(global.spriteSheetAuthors).filter((author) => {
+    if(global.spriteSheetAuthors[author]) return true
     else return false
   })
   const authorIndex = getRandomInt(0, authorList.length -1)
@@ -116,13 +116,13 @@ window.getRandomSSAuthor = function() {
 // mixAuthor
 // dontOverrideCurrentSprites
 // dontSearchAliases
-window.findSpritesForDescribedObjects = function(objects, options) {
+global.findSpritesForDescribedObjects = function(objects, options) {
   if(!objects) objects = [...GAME.objects, ...GAME.heroList]
   if(!options) options = {}
 
   let editedObjects = []
   let currentAuthor = options.authorName || GAME.theme.spriteSheetAuthor
-  if(!currentAuthor) currentAuthor = window.getRandomSSAuthor()
+  if(!currentAuthor) currentAuthor = global.getRandomSSAuthor()
 
   function getTextureId(object) {
     if(object.defaultSprite && options.dontOverrideCurrentSprites) return null
@@ -130,9 +130,9 @@ window.findSpritesForDescribedObjects = function(objects, options) {
     let textureId
     console.log(currentAuthor)
     if(currentAuthor && !options.mixAuthor) {
-      textureId = window.findRandomAuthorsTextureIdForDescriptors(object.descriptors, currentAuthor, options)
+      textureId = global.findRandomAuthorsTextureIdForDescriptors(object.descriptors, currentAuthor, options)
     } else {
-      textureId = window.findRandomTextureIdForDescriptors(object.descriptors, options)
+      textureId = global.findRandomTextureIdForDescriptors(object.descriptors, options)
     }
 
     return textureId
@@ -146,7 +146,7 @@ window.findSpritesForDescribedObjects = function(objects, options) {
         if(so && !so.descriptors) return
         const textureId = getTextureId(so)
         if(textureId) {
-          window.socket.emit('editSubObject', object.id, so.subObjectName, { defaultSprite: textureId })
+          global.socket.emit('editSubObject', object.id, so.subObjectName, { defaultSprite: textureId })
         }
       })
     }
@@ -182,6 +182,6 @@ window.findSpritesForDescribedObjects = function(objects, options) {
   console.log('UPDATED SPRITES FOR', editedObjects)
 
   if(editedObjects.length) {
-    window.socket.emit('editObjects', editedObjects)
+    global.socket.emit('editObjects', editedObjects)
   }
 }

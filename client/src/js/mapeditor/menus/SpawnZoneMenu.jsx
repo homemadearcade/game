@@ -28,28 +28,28 @@ export default class SpawnZoneMenu extends React.Component{
           if(result && result.value) {
             let subObjectChances = objectSelected.subObjectChances
             if(!subObjectChances)subObjectChances ={}
-            window.socket.emit('editObjects', [{id: objectSelected.id, subObjectChances: {...subObjectChances, [result.value]: {randomWeight: 1, conditionList: null} } }])
+            global.socket.emit('editObjects', [{id: objectSelected.id, subObjectChances: {...subObjectChances, [result.value]: {randomWeight: 1, conditionList: null} } }])
           }
         })
       }
 
       if(key === 'add-library-spawn-object') {
-        const library = window.subObjectLibrary.addGameLibrary()
+        const library = global.subObjectLibrary.addGameLibrary()
         modals.openSelectFromList('Select a sub object', Object.keys(library), async (result) => {
           const id = result.value
           if(!id) return
           let subObjectChances = objectSelected.subObjectChances
           if(!subObjectChances)subObjectChances ={}
-          window.socket.emit('editObjects', [{id: objectSelected.id, subObjectChances: {...subObjectChances, [id]: {randomWeight: 1, conditionList: null, spawnFromLibrary:true} }}])
+          global.socket.emit('editObjects', [{id: objectSelected.id, subObjectChances: {...subObjectChances, [id]: {randomWeight: 1, conditionList: null, spawnFromLibrary:true} }}])
         })
       }
 
       if(key === 'spawn-all-now') {
-        window.socket.emit('spawnAllNow', objectSelected.id)
+        global.socket.emit('spawnAllNow', objectSelected.id)
       }
 
       if(key === 'destroy-spawned') {
-        window.socket.emit('destroySpawnIds', objectSelected.id)
+        global.socket.emit('destroySpawnIds', objectSelected.id)
       }
     }
   }

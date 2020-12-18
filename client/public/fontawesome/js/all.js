@@ -3793,7 +3793,7 @@
 
       var headers = {};
 
-      if (_typeof(WINDOW.FontAwesomeKitConfig) === 'object' && typeof window.FontAwesomeKitConfig.token === 'string') {
+      if (_typeof(WINDOW.FontAwesomeKitConfig) === 'object' && typeof global.FontAwesomeKitConfig.token === 'string') {
         headers['fa-kit-token'] = WINDOW.FontAwesomeKitConfig.token;
       }
 

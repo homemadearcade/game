@@ -72,7 +72,7 @@ class contextMenuEl extends React.Component{
       if(e.target.dataset.creatorlibraryid) {
         this._openMenuWithEvent(e)
 
-        const creatorLibraryObject = window.creatorLibrary.addGameLibrary()[e.target.dataset.creatorlibraryid]
+        const creatorLibraryObject = global.creatorLibrary.addGameLibrary()[e.target.dataset.creatorlibraryid]
         const libraryObject = window[creatorLibraryObject.libraryName].addGameLibrary()[creatorLibraryObject.libraryId]
         this._setContextMenuSpecialItem(creatorLibraryObject.libraryName, libraryObject, {creatorLibraryId: e.target.dataset.creatorlibraryid, libraryName: creatorLibraryObject.libraryName, libraryId: creatorLibraryObject.libraryId})
         return false;
@@ -87,7 +87,7 @@ class contextMenuEl extends React.Component{
         return false;
       }
 
-      if(!window.isClickingMap(e.target.className)) return
+      if(!global.isClickingMap(e.target.className)) return
 
       if(!PAGE.showEditorTools()) {
         return null
@@ -95,12 +95,12 @@ class contextMenuEl extends React.Component{
 
       if(!MAPEDITOR.paused) {
         if(MAPEDITOR.objectLayers) {
-          // AUDIO.play(window.defaultAudioTheme.onPlayerUIMenuOpen, { volume: 0.6 })
+          // AUDIO.play(global.defaultAudioTheme.onPlayerUIMenuOpen, { volume: 0.6 })
           this._setContextMenuSpecialItem('selectLayer', MAPEDITOR.objectLayers)
           this._openMenuWithEvent(e)
           return false;
         } else {
-          // AUDIO.play(window.defaultAudioTheme.onPlayerUIMenuOpen, { volume: 0.6 })
+          // AUDIO.play(global.defaultAudioTheme.onPlayerUIMenuOpen, { volume: 0.6 })
           this._openMenuWithEvent(e)
           return false;
         }
@@ -108,7 +108,7 @@ class contextMenuEl extends React.Component{
       }
     });
 
-    // window.addEventListener("click", e => {
+    // global.addEventListener("click", e => {
     //   if(e.target.className.indexOf('dont-close-menu') >= 0) {
     //   } else {
     //     this._toggleContextMenu("hide");
@@ -151,7 +151,7 @@ class contextMenuEl extends React.Component{
 
   _openMenuWithEvent(e, adjust = true) {
     e.preventDefault();
-    const { x, y } = window.convertToGameXY(e)
+    const { x, y } = global.convertToGameXY(e)
     const origin = {
       left: x,
       top: y
@@ -172,15 +172,15 @@ class contextMenuEl extends React.Component{
       const heightDesired = 350
       const widthDesired = 450
 
-      const bottomDistance = window.innerHeight - top
-      const rightDistance = window.innerWidth - left
+      const bottomDistance = global.innerHeight - top
+      const rightDistance = global.innerWidth - left
 
       if(bottomDistance < heightDesired) {
-        top = window.innerHeight - heightDesired
+        top = global.innerHeight - heightDesired
       }
 
       if(rightDistance < widthDesired) {
-        left = window.innerWidth - widthDesired
+        left = global.innerWidth - widthDesired
       }
     }
 
@@ -377,9 +377,9 @@ class contextMenuEl extends React.Component{
         color={ coloringObject.color }
         onChange={ (color) => {
           if(coloringObject == 'worldBackground') {
-            window.socket.emit('updateWorld', {backgroundColor: color.hex})
+            global.socket.emit('updateWorld', {backgroundColor: color.hex})
           } else if(coloringObject == 'defaultObject') {
-            window.socket.emit('updateWorld', {defaultObjectColor: color.hex})
+            global.socket.emit('updateWorld', {defaultObjectColor: color.hex})
           } else {
             coloringObject.tags.outline = false
             networkEditObject(coloringObject, {color: color.hex})

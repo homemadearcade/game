@@ -14,7 +14,7 @@ export default class RandomizeLive extends React.Component {
   handleUpdate(newData) {
     this.setState(newData)
     if(newData.genre !== GAME.theme.genre) {
-      window.socket.emit('updateTheme', { genre: newData.genre })
+      global.socket.emit('updateTheme', { genre: newData.genre })
     }
   }
 
@@ -67,25 +67,25 @@ export default class RandomizeLive extends React.Component {
           <div className="LiveEditor__title">{'Game Randomizer'}</div>
           <DatFolder title='Select Audio'>
             <DatButton label='Generate Selected Audio' onClick={this._generateAudioSelected}></DatButton>
-            {this._renderAudioSelected('audioSelected', window.generateAudioThemeData)}
+            {this._renderAudioSelected('audioSelected', global.generateAudioThemeData)}
           </DatFolder>
           <DatFolder title='Lighting'>
             <DatButton label='Light Power' onClick={this._generateRandomLighting}></DatButton>
-            <DatButton label='Light Power' onClick={window._randomizeLightPower}></DatButton>
-            <DatButton label='Light Color' onClick={window._randomizeLightColor}></DatButton>
-            <DatButton label='Light Opacity' onClick={window._randomizeLightOpacity}></DatButton>
-            <DatButton label='World Ambient Light' onClick={window._randomizeWorldAmbientLight}></DatButton>
-            <DatButton label='Dark Area Ambient Light' onClick={window._randomizeDarkAreaAmbientLight}></DatButton>
+            <DatButton label='Light Power' onClick={global._randomizeLightPower}></DatButton>
+            <DatButton label='Light Color' onClick={global._randomizeLightColor}></DatButton>
+            <DatButton label='Light Opacity' onClick={global._randomizeLightOpacity}></DatButton>
+            <DatButton label='World Ambient Light' onClick={global._randomizeWorldAmbientLight}></DatButton>
+            <DatButton label='Dark Area Ambient Light' onClick={global._randomizeDarkAreaAmbientLight}></DatButton>
           </DatFolder>
           <DatFolder title='Emitters'>
-            {this._renderEmitters('emitterSelected', window.generateEmitterData)}
+            {this._renderEmitters('emitterSelected', global.generateEmitterData)}
           </DatFolder>
           <DatFolder title='Group'>
-            <DatButton label='Sound FX' onClick={() => window.generateAudioTheme()}></DatButton>
+            <DatButton label='Sound FX' onClick={() => global.generateAudioTheme()}></DatButton>
             <DatButton label='Title Animation' onClick={this._generateTitleAnimation}></DatButton>
             <DatButton label='Title Font' onClick={this._generateTitleFont}></DatButton>
             <DatButton label='Descriptor Sprites' onClick={this._findSpritesForDescribedObjects}></DatButton>
-            <DatButton label='Light Power' onClick={window._randomizeLightPower}></DatButton>
+            <DatButton label='Light Power' onClick={global._randomizeLightPower}></DatButton>
             <DatButton label='All Emitters' onClick={this._generateRandomEmitters}></DatButton>
             <DatButton label='All of the above' onClick={this._generateAll}></DatButton>
           </DatFolder>
@@ -103,10 +103,10 @@ export default class RandomizeLive extends React.Component {
 
   _generateAll = () => {
     this._generateRandomEmitters()
-    window.generateTitleTheme()
-    window.generateAudioTheme()
-    window._randomizeLightPower()
-    window.findSpritesForDescribedObjects()
+    global.generateTitleTheme()
+    global.generateAudioTheme()
+    global._randomizeLightPower()
+    global.findSpritesForDescribedObjects()
   }
 
   _generateRandomEmitters = () => {
@@ -116,25 +116,25 @@ export default class RandomizeLive extends React.Component {
   }
 
   _generateRandomEmitter(name) {
-    const emitterData = window.generateRandomEmitter(name)
+    const emitterData = global.generateRandomEmitter(name)
 
     GAME.library.animations['random-'+name] = emitterData
-    GAME.library.animations['random-'+name+'-'+window.getRandomInt(0, 99)] = emitterData
+    GAME.library.animations['random-'+name+'-'+global.getRandomInt(0, 99)] = emitterData
 
-    window.socket.emit('updateLibrary', {animations: GAME.library.animations})
+    global.socket.emit('updateLibrary', {animations: GAME.library.animations})
 
     if(name == 'powerup') {
-      window.socket.emit('resetLiveParticle', HERO.id)
-      if(HERO.editingId) window.socket.emit('resetLiveParticle', HERO.editingId)
+      global.socket.emit('resetLiveParticle', HERO.id)
+      if(HERO.editingId) global.socket.emit('resetLiveParticle', HERO.editingId)
     }
   }
 
   _generateRandomLighting() {
-    window._randomizeLightPower()
-    window._randomizeLightColor()
-    window._randomizeLightOpacity()
-    window._randomizeWorldAmbientLight()
-    window._randomizeDarkAreaAmbientLight()
+    global._randomizeLightPower()
+    global._randomizeLightColor()
+    global._randomizeLightOpacity()
+    global._randomizeWorldAmbientLight()
+    global._randomizeDarkAreaAmbientLight()
   }
 
   /// HERO
@@ -155,19 +155,19 @@ export default class RandomizeLive extends React.Component {
   /// THEME
   _generateAudioSelected = () => {
     const audioSelected = this.state.audioSelected
-    window.generateAudioTheme(audioSelected)
+    global.generateAudioTheme(audioSelected)
   }
 
   _generateTitleFont() {
-    window.generateTitleFont()
+    global.generateTitleFont()
   }
   _generateTitleAnimation() {
-    window.generateTitleAnimation()
+    global.generateTitleAnimation()
   }
 
 
   // SPRITES
   _findSpritesForDescribedObjects() {
-    window.findSpritesForDescribedObjects()
+    global.findSpritesForDescribedObjects()
   }
 }

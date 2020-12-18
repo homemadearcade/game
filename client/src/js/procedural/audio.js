@@ -2,16 +2,16 @@
 ////////////////////////////////////////
 ///AUDIO
 //////////
-window.clearAudioTheme = function() {
-  window.socket.emit('updateTheme', { audio: window.defaultAudioTheme })
+global.clearAudioTheme = function() {
+  global.socket.emit('updateTheme', { audio: global.defaultAudioTheme })
 }
 
-window.generateAudioTheme = function(keys) {
+global.generateAudioTheme = function(keys) {
   const newAudioTheme = {}
   // const newAudioTheme = {}
-  Object.keys(window.generateAudioThemeData).forEach((event) => {
+  Object.keys(global.generateAudioThemeData).forEach((event) => {
     if(keys && !keys[event]) return
-    const eventData = window.generateAudioThemeData[event]
+    const eventData = global.generateAudioThemeData[event]
 
     const index = getRandomInt(0, eventData.length-1)
     const selectedAssets = eventData[index]
@@ -26,10 +26,10 @@ window.generateAudioTheme = function(keys) {
     newAudioTheme[event] = file.id
   })
 
-  window.socket.emit('updateTheme', { audio: { ...GAME.theme.audio, ...newAudioTheme} })
+  global.socket.emit('updateTheme', { audio: { ...GAME.theme.audio, ...newAudioTheme} })
 }
 
-window.generateAudioThemeData = {
+global.generateAudioThemeData = {
   'heroMoving--retro': [
     // {
     //   audioCollection: 'retro',
@@ -390,7 +390,7 @@ window.generateAudioThemeData = {
   // ],
 }
 
-window.defaultAudioTheme = {
+global.defaultAudioTheme = {
   'heroMoving--retro': null,
   'heroMoving--vehicle': null,
   'heroMoving--dirt': null,

@@ -2,7 +2,7 @@ import React from 'react';
 import DatGui, { DatFolder, DatSelect, DatBoolean, DatButton, DatColor, DatNumber, DatString } from 'react-dat-gui';
 import modals from '../mapeditor/modals.js'
 
-window.particles = [
+global.particles = [
   'default',
   'Bubbles',
   // 'Bubbles99px',
@@ -31,7 +31,7 @@ window.particles = [
   // 'particleWhite_7',
 ]
 
-// window.randomParticles = [
+// global.randomParticles = [
 //
 //   'Fire',
 //   'HardCircle',
@@ -46,7 +46,7 @@ window.particles = [
 //   'particleStar',
 // ]
 
-window.giveEmitterDataSpawnCircleOrRect = function(emitterData) {
+global.giveEmitterDataSpawnCircleOrRect = function(emitterData) {
   if(emitterData.spawnType == 'rect') {
     if(!emitterData.spawnRect) {
       emitterData.spawnRect = {}
@@ -79,7 +79,7 @@ window.giveEmitterDataSpawnCircleOrRect = function(emitterData) {
 
 function _initObjectForParticleLive(objectSelected) {
   if(!objectSelected.emitterData) {
-    objectSelected.emitterData = window.particleEmitterLibrary.smallFire
+    objectSelected.emitterData = global.particleEmitterLibrary.smallFire
   }
   if(!objectSelected.emitterData.spawnWaitTime) {
     objectSelected.emitterData.spawnWaitTime = 100
@@ -325,11 +325,11 @@ export default class ParticleLive extends React.Component {
             PAGE.typingMode = false
             if(name) {
               objectSelected.emitterData.animationType = 'particle';
-              window.socket.emit('addAnimation', name, objectSelected.emitterData)
+              global.socket.emit('addAnimation', name, objectSelected.emitterData)
             }
             }}></DatButton>
             <DatButton label="Reset Animation" onClick={() => {
-              window.socket.emit('resetLiveParticle', objectSelected.id)
+              global.socket.emit('resetLiveParticle', objectSelected.id)
             }}/>
             <DatButton label="Open animation" onClick={() => {
               modals.openSelectParticleAnimation((result) => {
@@ -385,7 +385,7 @@ export default class ParticleLive extends React.Component {
 
           <DatFolder title='Images'>
             <DatBoolean path='emitterData.useOwnerSprite' label="Use Owners Sprite" />
-            {window.particles.map((name) => {
+            {global.particles.map((name) => {
               return <DatBoolean path={'emitterData.images.'+name} label={name}/>
             })}
           </DatFolder>

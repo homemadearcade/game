@@ -89,7 +89,7 @@ function drawFilledObject(ctx, object, camera, options = {}) {
     else if(GAME.world.defaultObjectColor) {
       ctx.strokeStyle = GAME.world.defaultObjectColor
     }
-    else ctx.strokeStyle = window.defaultObjectColor
+    else ctx.strokeStyle = global.defaultObjectColor
 
     ctx.strokeRect((object.x * camera.multiplier) - camera.x, (object.y * camera.multiplier) - camera.y, (object.width * camera.multiplier), (object.height * camera.multiplier));
   } else {
@@ -97,7 +97,7 @@ function drawFilledObject(ctx, object, camera, options = {}) {
     else if(GAME.world.defaultObjectColor) {
       ctx.fillStyle = GAME.world.defaultObjectColor
     }
-    else ctx.fillStyle = window.defaultObjectColor
+    else ctx.fillStyle = global.defaultObjectColor
 
     ctx.fillRect((object.x * camera.multiplier) - camera.x, (object.y * camera.multiplier) - camera.y, (object.width * camera.multiplier), (object.height * camera.multiplier));
   }
@@ -111,7 +111,7 @@ function drawVertice(ctx, vertice, camera) {
 
   if(vertice.color) ctx.strokeStyle = vertice.color
   else if(GAME.world.defaultObjectColor) ctx.strokeStyle = GAME.world.defaultObjectColor
-  else ctx.strokeStyle = window.defaultObjectColor
+  else ctx.strokeStyle = global.defaultObjectColor
 
   if(vertice.thickness) {
     ctx.lineWidth = vertice.thickness
@@ -127,7 +127,7 @@ function drawVertice(ctx, vertice, camera) {
     drawVertice(ctx, {...vertice, glow: false}, camera)
   }
   if(vertice.color) {
-    ctx.strokeStyle = window.defaultObjectColor;
+    ctx.strokeStyle = global.defaultObjectColor;
   }
   if(vertice.thickness) {
     ctx.lineWidth = 1
@@ -196,7 +196,7 @@ function drawLine(ctx, pointA, pointB, options, camera) {
   ctx.stroke();
 
   if(options.color) {
-    ctx.strokeStyle = window.defaultObject.color;
+    ctx.strokeStyle = global.defaultObject.color;
   }
   if(options.thickness) {
     ctx.lineWidth = 1
@@ -253,10 +253,10 @@ function drawPFGrid(ctx, camera, pfGrid, props, options = {}) {
 
 function drawSprite(ctx, camera, textureId, object) {
   ctx.save()
-  const texture = window.textureMap[textureId]
+  const texture = global.textureMap[textureId]
   const pixiImage = PIXIMAP.textures[textureId].baseTexture.resource.source
 
-  if(object.color && object.color !== window.defaultObjectColor && object.color !== GAME.world.defaultObjectColor && object.color !== '#ffffff' && object.color !== '#FFFFFF' && object.color !== 'white' && object.color !== '#FFF' && object.color !== '#fff') {
+  if(object.color && object.color !== global.defaultObjectColor && object.color !== GAME.world.defaultObjectColor && object.color !== '#ffffff' && object.color !== '#FFFFFF' && object.color !== 'white' && object.color !== '#FFF' && object.color !== '#fff') {
     const buffer = document.createElement('canvas');
     buffer.width = (object.width * camera.multiplier);
     buffer.height = (object.height * camera.multiplier);
@@ -271,7 +271,7 @@ function drawSprite(ctx, camera, textureId, object) {
     // else if(GAME.world.defaultObjectColor) {
     //   bx.fillStyle = GAME.world.defaultObjectColor
     // }
-    // else bx.fillStyle = window.defaultObjectColor
+    // else bx.fillStyle = global.defaultObjectColor
 
     bx.fillRect(0,0,buffer.width,buffer.height);
 

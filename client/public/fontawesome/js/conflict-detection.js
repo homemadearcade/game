@@ -690,7 +690,7 @@
         parent.FontAwesomeDetection.__pollUntil({
           fn: function fn() {
             var iEl = document.getElementById(testIconId);
-            var computedStyle = window.getComputedStyle(iEl);
+            var computedStyle = global.getComputedStyle(iEl);
             var fontFamily = computedStyle.getPropertyValue('font-family');
 
             if (!!fontFamily.match(/FontAwesome/) || !!fontFamily.match(/Font Awesome 5/)) {
@@ -799,7 +799,7 @@
       var diagScriptFun = function diagScriptFun(nodeUnderTestId, md5, parentOrigin) {
         parent.FontAwesomeDetection.__pollUntil({
           fn: function fn() {
-            return !!window.FontAwesomeConfig;
+            return !!global.FontAwesomeConfig;
           }
         }).then(function () {
           var scriptNode = document.getElementById(nodeUnderTestId);
@@ -883,7 +883,7 @@
 
     var testCount = Object.keys(scriptsToTest).length + Object.keys(cssToTest).length; // The resultsCollectionMaxWait allows for the time between when the tests running under
     // child iframes call postMessage with their results, and when the parent window
-    // receives and handles those events with window.onmessage.
+    // receives and handles those events with global.onmessage.
     // Making it configurable allows us to test the scenario where this timeout is exceeded.
     // Naming it something very different from "timeout" is to help avoid the potential ambiguity between
     // these two timeout-related settings.
@@ -987,7 +987,7 @@
 
   bunker(function () {
     if (IS_BROWSER && IS_DOM) {
-      conflictDetection(window.FontAwesomeDetection.report);
+      conflictDetection(global.FontAwesomeDetection.report);
     }
   });
 

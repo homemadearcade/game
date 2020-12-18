@@ -35,9 +35,9 @@ export default class TagSelect extends React.Component{
         isMulti
         value={Object.keys(tags).map((desc) => { return { value: desc, label: desc} })}
         onChange={this._onChange}
-        options={Object.keys(window.allTags).map(eventName => { return { value: eventName, label: eventName}})}
-        styles={window.reactSelectStyle}
-        theme={window.reactSelectTheme}/>
+        options={Object.keys(global.allTags).map(eventName => { return { value: eventName, label: eventName}})}
+        styles={global.reactSelectStyle}
+        theme={global.reactSelectTheme}/>
     </div>
   }
 

@@ -49,7 +49,7 @@ export default class HeroContextMenu extends React.Component {
       }
 
       if(key === 'respawn') {
-        window.socket.emit('respawnHero', objectSelected)
+        global.socket.emit('respawnHero', objectSelected)
       }
 
       if(key === 'toggle-outline') {
@@ -71,7 +71,7 @@ export default class HeroContextMenu extends React.Component {
 
       if(key.indexOf(deleteQuestPrefix) === 0) {
         let questId = key.substr(deleteQuestPrefix.length)
-        window.socket.emit('deleteQuest', objectSelected.id, questId)
+        global.socket.emit('deleteQuest', objectSelected.id, questId)
       }
 
       if(key[0] === '{') {
@@ -95,15 +95,15 @@ export default class HeroContextMenu extends React.Component {
       }
 
       if(key === 'set-world-respawn-point') {
-        window.socket.emit('updateWorld', {worldSpawnPointX: objectSelected.x, worldSpawnPointY:  objectSelected.y})
+        global.socket.emit('updateWorld', {worldSpawnPointX: objectSelected.x, worldSpawnPointY:  objectSelected.y})
       }
 
       if(key === 'reset-to-game-default') {
-        window.socket.emit('resetHeroToGameDefault', objectSelected)
+        global.socket.emit('resetHeroToGameDefault', objectSelected)
       }
 
       if(key === 'reset-to-core-default') {
-        window.socket.emit('resetHeroToDefault', objectSelected)
+        global.socket.emit('resetHeroToDefault', objectSelected)
       }
 
       if (key === "open-hero-live-edit") {
@@ -122,11 +122,11 @@ export default class HeroContextMenu extends React.Component {
       }
 
       if(key === 'start-mod-creation-flow') {
-        window.socket.emit('startDiffFlow', objectSelected.id)
+        global.socket.emit('startDiffFlow', objectSelected.id)
       }
 
       if(key === 'end-mod-creation-flow') {
-        window.socket.emit('endDiffFlow', objectSelected.id)
+        global.socket.emit('endDiffFlow', objectSelected.id)
       }
     }
 
@@ -232,23 +232,23 @@ export default class HeroContextMenu extends React.Component {
       </SubMenu>}
       <SubMenu title="Controls">
         <SubMenu title="Arrow Keys">
-          {this._renderInputBehaviorMenu('arrowKeysBehavior', Object.keys(window.arrowKeysBehavior))}
+          {this._renderInputBehaviorMenu('arrowKeysBehavior', Object.keys(global.arrowKeysBehavior))}
         </SubMenu>
         <SubMenu title="Z Key">
-          {this._renderInputBehaviorMenu('zButtonBehavior', Object.keys(window.actionButtonBehavior))}
+          {this._renderInputBehaviorMenu('zButtonBehavior', Object.keys(global.actionButtonBehavior))}
         </SubMenu>
         <SubMenu title="X Key">
-          {this._renderInputBehaviorMenu('xButtonBehavior', Object.keys(window.actionButtonBehavior))}
+          {this._renderInputBehaviorMenu('xButtonBehavior', Object.keys(global.actionButtonBehavior))}
         </SubMenu>
         <SubMenu title="C Key">
-          {this._renderInputBehaviorMenu('cButtonBehavior', Object.keys(window.actionButtonBehavior))}
+          {this._renderInputBehaviorMenu('cButtonBehavior', Object.keys(global.actionButtonBehavior))}
         </SubMenu>
         <SubMenu title="Space Bar">
-          {this._renderInputBehaviorMenu('spaceBarBehavior', Object.keys(window.actionButtonBehavior))}
+          {this._renderInputBehaviorMenu('spaceBarBehavior', Object.keys(global.actionButtonBehavior))}
         </SubMenu>
         <SubMenu title="Modifiers">
           <Menu onClick={this._handleTagMenuClick}>
-            {this._renderTagMenuItems(window.keyInputTags)}
+            {this._renderTagMenuItems(global.keyInputTags)}
           </Menu>
         </SubMenu>
       </SubMenu>
@@ -268,8 +268,8 @@ export default class HeroContextMenu extends React.Component {
         <MenuItem key="reset-to-game-default">Reset To Game Default</MenuItem>
         <MenuItem key="reset-to-core-default">Reset To Core Default</MenuItem>
         <MenuItem key='add-new-subobject'>Add new sub object</MenuItem>
-        {!window.diffFlowId && <MenuItem key='start-mod-creation-flow'>Start Mod Creation Flow</MenuItem>}
-        {window.diffFlowId == objectSelected.id && <MenuItem key='end-mod-creation-flow'>End Mod Creation Flow</MenuItem>}
+        {!global.diffFlowId && <MenuItem key='start-mod-creation-flow'>Start Mod Creation Flow</MenuItem>}
+        {global.diffFlowId == objectSelected.id && <MenuItem key='end-mod-creation-flow'>End Mod Creation Flow</MenuItem>}
       </SubMenu>
       {GAME.gameState.started ? <MenuItem key="remove">Remove</MenuItem> : <MenuItem key="delete">Delete</MenuItem>}
     </Menu>
