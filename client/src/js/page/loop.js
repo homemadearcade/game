@@ -37,7 +37,7 @@ window.startGameLoop = function() {
 
   // begin main loop
   mainLoop()
-  if(PAGE.role.isHost) setInterval(() => {
+  if(PAGE.role.isHost && !PAGE.role.isArcadeMode) setInterval(() => {
     window.socket.emit('updateGameOnServerOnly', {
       id: GAME.id,
       metadata: GAME.metadata,
@@ -46,7 +46,7 @@ window.startGameLoop = function() {
       gameState: GAME.gameState,
       objects: GAME.objects,
       world: GAME.world,
-      grid: {...GAME.grid, nodes: null},
+      // grid: {...GAME.grid, nodes: null, nodeData: {}},
       defaultHero: GAME.defaultHero,
       library: GAME.library,
       theme: GAME.theme,
@@ -112,7 +112,7 @@ var mainLoop = function () {
 function update(delta) {
   window.local.emit('onUpdate', delta)
 
-  if(PAGE.role.isHost) {
+  if(PAGE.role.isHost && !PAGE.role.isArcadeMode) {
     window.socket.emit('updateHerosPos', SI.snapshot.create(GAME.heroList.map((hero) => {
       const data = {
         id: hero.id,
@@ -139,7 +139,6 @@ function render(delta) {
   window.local.emit('onRender', delta)
 }
 
-
 window.updateHistory = {
   objectMap: {},
   heroMap: {},
@@ -162,12 +161,14 @@ function getDiff(historyProp, nextUpdate) {
 
 let lastMapUpdate
 function mapNetworkUpdate() {
+  if(PAGE.role.isArcadeMode) return
   window.socket.emit('updateGameState', getDiff('gameState', _.cloneDeep(GAME.gameState) ))
   window.socket.emit('updateObjects', getDiff('objectMap', _.cloneDeep(GAME.objects.map(GAME.mod).map(OBJECTS.getMapState)) ))
   window.socket.emit('updateHeros', getDiff('heroMap', _.cloneDeep(GAME.heroList.map(GAME.mod).map(HERO.getMapState)) ))
 }
 
 function completeNetworkUpdate() {
+  if(PAGE.role.isArcadeMode) return
   window.socket.emit('updateObjects', getDiff('objectComplete', _.cloneDeep(GAME.objects.map(GAME.mod)) ))
   const heroCompleteUpdate = getDiff('heroComplete', _.cloneDeep(GAME.heroList.map(GAME.mod)) )
   window.socket.emit('updateHeros', heroCompleteUpdate)

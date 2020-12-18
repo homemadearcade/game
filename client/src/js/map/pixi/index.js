@@ -517,6 +517,8 @@ PIXIMAP.updateGridSprites = function() {
 
   // const { gridX, gridY } = gridUtil.convertToGridXY({x: hero.x + PIXIMAP.grid.nodeSize/2, y: hero.y + PIXIMAP.grid.nodeSize/2})
 
+  if(!nodes) return
+  
   for(var x = 0; x < nodes.length; x++) {
     for(var y = 0; y < nodes[x].length; y++) {
       const gridNode = GAME.grid.nodes[x][y]

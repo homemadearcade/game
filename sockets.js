@@ -296,7 +296,9 @@ function socketEvents(fs, io, socket, options = { arcadeMode: false }){
     io.emit('onResetWorld')
   })
   socket.on('updateGameOnServerOnly', (game) => {
+    let prevGame = currentGame
     currentGame = game
+    currentGame.grid = prevGame.grid
   })
 
 

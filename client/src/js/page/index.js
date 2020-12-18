@@ -138,13 +138,20 @@ class Page{
     }
     window.HALandingUrl = landingUrl
 
+    AUDIO.loadData()
+
     if(PAGE.getParameterByName('arcadeMode')) {
       events.establishALocalHost()
       PAGE.establishRoleFromQueryOnly()
       HERO.getHeroId()
       window.local.emit('onUserIdentified')
       window.local.emit('onPlayerIdentified')
-      PAGE.askCurrentGame()
+      PAGE.askCurrentGame((game, heroSummonType) => {
+        GAME.loadGridWorldObjectsCompendiumState(game)
+        GAME.heros = []
+        HERO.addHero(HERO.summonFromGameData({ id: HERO.id, heroSummonType }))
+        window.local.emit('onGameLoaded')
+      })
     } else {
       const container = document.createElement('div')
       container.id = 'HomemadeArcade'
@@ -165,7 +172,12 @@ class Page{
       PAGE.establishRoleFromQueryOnly()
       HERO.getHeroId()
       window.local.emit('onPlayerIdentified')
-      PAGE.askCurrentGame()
+      PAGE.askCurrentGame((game, heroSummonType) => {
+        GAME.loadGridWorldObjectsCompendiumState(game)
+        GAME.heros = []
+        HERO.addHero(HERO.summonFromGameData({ id: HERO.id, heroSummonType }))
+        window.local.emit('onGameLoaded')
+      })
       return
     }
 
@@ -179,7 +191,7 @@ class Page{
       else heroSummonType = PAGE.getParameterByName('heroSummonType')
     } else {
       const { value: heroLibraryNameIndex } = await Swal.fire({
-        title: 'Select your hero',
+        title: 'Select your editor',
         showClass: {
           popup: 'animated fadeInDown faster'
         },
@@ -205,7 +217,6 @@ class Page{
   playerIdentified(heroSummonType) {
     PAGE.setupRemoteLogging()
     PAGE.establishRoleFromQueryOnly()
-    AUDIO.loadData()
     HERO.getHeroId(heroSummonType === 'resume')
 
     window.onbeforeunload = function (event) {
@@ -227,27 +238,8 @@ class Page{
     window.local.emit('onPlayerIdentified')
 
     PAGE.askCurrentGame((game) => {
-      window.local.emit('onStartLoadingScreen')
-
-      window.local.emit('onGameIdentified', game)
-      const rm1 = window.local.on('onPixiMapReady', () => {
-        PAGE.pixiMapReady = true
-        if(PAGE.audioReady) {
-          ARCADE.changeGame(game.id)
-          GAME.loadAndJoin(game, heroSummonType)
-          rm1()
-          rm2()
-        }
-      })
-      const rm2 = window.local.on('onAudioReady', () => {
-        PAGE.audioReady = true
-        if(PAGE.pixiMapReady) {
-          ARCADE.changeGame(game.id)
-          GAME.loadAndJoin(game, heroSummonType)
-          rm1()
-          rm2()
-        }
-      })
+      ARCADE.changeGame(game.id)
+      GAME.loadAndJoin(game, heroSummonType)
     })
   }
 
@@ -275,6 +267,27 @@ class Page{
     })
   }
 
+  askMediaToLoad(cb, game, heroSummonType) {
+    window.local.emit('onStartLoadingScreen')
+    window.local.emit('onGameIdentified', game)
+    const rm1 = window.local.on('onPixiMapReady', () => {
+      PAGE.pixiMapReady = true
+      if(PAGE.audioReady) {
+        rm1()
+        rm2()
+        cb(game, heroSummonType)
+      }
+    })
+    const rm2 = window.local.on('onAudioReady', () => {
+      PAGE.audioReady = true
+      if(PAGE.pixiMapReady) {
+        rm1()
+        rm2()
+        cb(game, heroSummonType)
+      }
+    })
+  }
+
   //////////////////////////////////////////////////////////////
   //////////////////////////////////////////////////////////////
   //////////////////////////////////////////////////////////////
@@ -290,10 +303,7 @@ class Page{
 
       if(PAGE.getParameterByName('gameSaveId')) {
         PAGE.loadGameSave(PAGE.getParameterByName('gameSaveId'), (res) => {
-          GAME.loadGridWorldObjectsCompendiumState(JSON.parse(res.gameSave))
-          GAME.heros = []
-          HERO.addHero(HERO.summonFromGameData({ id: HERO.id, heroSummonType }))
-          window.local.emit('onGameLoaded')
+          PAGE.askMediaToLoad(cb, JSON.parse(res.gameSave), heroSummonType)
         })
         return
       }
@@ -303,10 +313,7 @@ class Page{
       if(gameId === 'load') {
         modals.openEditCodeModal('Paste JSON code here', {}, (result) => {
           const game = JSON.parse(result.value)
-          GAME.loadGridWorldObjectsCompendiumState(game)
-          GAME.heros = []
-          HERO.addHero(HERO.summonFromGameData({ id: HERO.id, heroSummonType }))
-          window.local.emit('onGameLoaded')
+          PAGE.askMediaToLoad(cb, game, heroSummonType)
         })
         return
       }
@@ -318,10 +325,7 @@ class Page{
       };
 
       axios.get(window.HAGameServerUrl + '/game', options).then(res => {
-        GAME.loadGridWorldObjectsCompendiumState(res.data.game)
-        GAME.heros = []
-        HERO.addHero(HERO.summonFromGameData({ id: HERO.id, heroSummonType }))
-        window.local.emit('onGameLoaded')
+        PAGE.askMediaToLoad(cb, res.data.game, heroSummonType)
       })
     } else {
       // when you are constantly reloading the page we will constantly need to just ask the server what the truth is
@@ -329,7 +333,7 @@ class Page{
       window.socket.on('onAskRestoreCurrentGame', async (game) => {
         let currentGameExists = game && game.id
         if(currentGameExists) {
-          cb(game)
+          PAGE.askMediaToLoad(cb, game)
         } else {
           const response  = await axios.get(window.HAGameServerUrl + '/gamesmetadata')
           const gamesMetadata = response.data.games
@@ -357,7 +361,7 @@ class Page{
 
           if(gameId) {
             window.socket.on('onLoadGame', (game) => {
-              cb(game)
+              PAGE.askMediaToLoad(cb, game)
             })
             window.socket.emit('setAndLoadCurrentGame', gameId)
           } else {
@@ -380,7 +384,7 @@ class Page{
                 grid: JSON.parse(JSON.stringify(window.defaultGrid)),
               }
               window.socket.emit('saveGame', game)
-              cb(game)
+              PAGE.askMediaToLoad(cb, game)
             }
           }
          //  else {
