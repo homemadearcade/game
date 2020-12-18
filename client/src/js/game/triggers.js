@@ -1,6 +1,6 @@
-import { startQuest, completeQuest } from './heros/quests'
-import effects from './effects'
-import { testEventMatch } from './conditions'
+import { startQuest, completeQuest } from './heros/quests.js'
+import effects from './effects.js'
+import { testEventMatch } from './conditions.js'
 
 function onPlayerIdentified() {
   window.triggerEvents = {

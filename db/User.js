@@ -1,7 +1,7 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose"
+import uniqueValidator from "mongoose-unique-validator"
+import bcrypt from "bcryptjs"
 const Schema = mongoose.Schema;
-const uniqueValidator = require("mongoose-unique-validator");
-const bcrypt = require("bcryptjs");
 
 const UserSchema = new Schema({
   email: { type: String, required: true, unique: true },
@@ -20,4 +20,4 @@ UserSchema.methods.validPassword = function(password) {
 
 const User = mongoose.model("User", UserSchema);
 
-module.exports = User;
+export default User;

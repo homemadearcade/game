@@ -1,5 +1,6 @@
-require('dotenv').config(); // Loading dotenv to have access to env variables
-const AWS = require('aws-sdk'); // Requiring AWS SDK.
+import AWS from 'aws-sdk'; // Requiring AWS SDK.
+import dotenv from 'dotenv'; // Loading dotenv to have access to env variables
+dotenv.config()
 
 // Configuring AWS
 AWS.config = new AWS.Config({
@@ -57,4 +58,4 @@ function generatePutUrl(Key, ContentType) {
 }
 
 // Finally, we export the methods so we can use it in our main application.
-module.exports = { generateGetUrl, generatePutUrl };
+export default { generateGetUrl, generatePutUrl };

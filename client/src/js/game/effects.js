@@ -1,5 +1,5 @@
-import onTalk from './heros/onTalk'
-import { startSequence } from './sequence'
+import onTalk from './heros/onTalk.js'
+import { startSequence } from './sequence.js'
 import { setPathTarget, setTarget } from './ai/pathfinders.js'
 import { equipSubObject, unequipSubObject, pickupObject, dropObject } from './heros/inventory.js'
 

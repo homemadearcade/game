@@ -18,17 +18,6 @@ export async function handleExtraMenuClicks(key, objectSelected, openColorPicker
         return
     }
 
-    if(key === 'edit-descriptors') {
-      Object.keys(objectSelected.descriptors || {}).forEach((tag) => {
-        if(!objectSelected.descriptors[tag]) delete objectSelected.descriptors[tag]
-      })
-      modals.openEditDescriptorsModal(objectSelected.descriptors || {}, ({value}) => {
-        if(value) {
-          networkEditObject(objectSelected, {descriptors: value})
-        }
-      })
-    }
-
     if(key === 'open-tag-search-modal') {
       Object.keys(objectSelected.tags).forEach((tag) => {
         if(!objectSelected.tags[tag]) delete objectSelected.tags[tag]

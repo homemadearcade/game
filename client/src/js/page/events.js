@@ -34,6 +34,10 @@ class EventEmitter {
         event.push(GAME[eventName])
       }
 
+      if(GAME_CLIENT[eventName]) {
+        event.push(GAME_CLIENT[eventName])
+      }
+
       if(PAGE.role.isHost) {
         try {
           if(ARCADE.defaultCustomGame && ARCADE.defaultCustomGame[eventName]) {

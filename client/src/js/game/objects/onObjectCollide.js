@@ -1,4 +1,4 @@
-import effects from '../effects'
+import effects from '../effects.js'
 
 export default function onObjectCollide(agent, collider, result) {
   if(agent.mod().tags['monsterDestroyer'] && collider.mod().tags['monster']) {

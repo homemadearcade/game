@@ -1,5 +1,5 @@
-import effects from './effects'
-import { testCondition, testEventMatch } from './conditions'
+import effects from './effects.js'
+import { testCondition, testEventMatch } from './conditions.js'
 import _ from 'lodash'
 
 function endSequence(sequence) {

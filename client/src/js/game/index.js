@@ -1,31 +1,30 @@
 import gridUtil from '../utils/grid.js'
 import pathfinding from '../utils/pathfinding.js'
-import modals from '../mapeditor/modals.js'
 
-import ai from './ai'
+import ai from './ai/index.js'
 import input from './input.js'
 import triggers from './triggers.js'
 import gameState from './gameState.js'
 import tags from './tags.js'
 import descriptors from './descriptors.js'
-import timeouts from './timeouts'
-import theme from './theme'
+import timeouts from './timeouts.js'
+import theme from './theme.js'
 import world from './world.js'
 import grid from './grid.js'
-import tracking from './tracking.js'
+import './tracking.js'
 import dayNightCycle from './daynightcycle.js'
 import metadata from './metadata.js'
 import effects from './effects.js'
 
 import { dropObject, equipSubObject, unequipSubObject } from './heros/inventory.js'
 
-import onTalk from './heros/onTalk'
-import { startQuest } from './heros/quests'
-import { startSequence, processSequence, togglePauseSequence, endSequence } from './sequence'
-import { testCondition, testEventMatch } from './conditions'
+import onTalk from './heros/onTalk.js'
+import { startQuest } from './heros/quests.js'
+import { startSequence, processSequence, togglePauseSequence, endSequence } from './sequence.js'
+import { testCondition, testEventMatch } from './conditions.js'
 
-import './objects'
-import './heros'
+import './objects/index.js'
+import './heros/index.js'
 
 class Game{
   constructor() {
@@ -47,11 +46,9 @@ class Game{
       tags: {},
       creator: {}
     }
-
-    this.theme = _.clone(window.defaultTheme)
   }
 
-  onPlayerIdentified() {
+  onPlayerIdentified = () => {
     world.setDefault()
     metadata.setDefault()
     gameState.setDefault()
@@ -61,6 +58,9 @@ class Game{
     input.setDefault()
     timeouts.setDefault()
     dayNightCycle.setDefault()
+    theme.setDefault()
+
+    this.theme = _.clone(window.defaultTheme)
 
     triggers.onPlayerIdentified()
     input.onPlayerIdentified()
@@ -1076,29 +1076,6 @@ class Game{
     }, [])
     GAME.objects = []
     GAME.objectsById = {}
-  }
-
-  onStartDiffFlow(id) {
-    const object = OBJECTS.getObjectOrHeroById(id)
-    window.diffFlowId = id
-    localStorage.setItem('diffFlowObject', JSON.stringify(object))
-  }
-
-  onEndDiffFlow(id) {
-    const object = OBJECTS.getObjectOrHeroById(id)
-
-    window.diffFlowId = null
-    const original = JSON.parse(localStorage.getItem('diffFlowObject'))
-
-    modals.openEditCodeModal('Object Diff', window.getObjectDiff(object, original), () => {})
-
-    if(PAGE.role.isHost) {
-      if(object.tags.hero) {
-        GAME.heros[object.id] = original
-      } else {
-        console.log('not supported for non heros')
-      }
-    }
   }
 
   addSequence(sequence) {

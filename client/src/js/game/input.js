@@ -1,5 +1,5 @@
 import keycode from 'keycode'
-import { onHeroTrigger } from './heros/onHeroTrigger'
+import { onHeroTrigger } from './heros/onHeroTrigger.js'
 import { shootBullet, swingBlade, dropAndModify, closestObjectBehavior } from './action.js';
 
 window.defaultWASD =  {

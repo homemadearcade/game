@@ -19,11 +19,11 @@
 // _pfGrid: object.pfGrid,
 
 import pathfinding from '../../utils/pathfinding.js'
-import collision from '../../utils/collisions'
+import collision from '../../utils/collisions.js'
 import gridUtil from '../../utils/grid.js'
 
-import { pathfindingAI, setTarget, setPathTarget } from './pathfinders'
-import { spawnObject } from '../spawnZone'
+import { pathfindingAI, setTarget, setPathTarget } from './pathfinders.js'
+import { spawnObject } from '../spawnZone.js'
 
 function moveTowardsTarget(object, target, delta, options = { flat: false, force: false }) {
   let oldX = object.x

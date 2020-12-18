@@ -1,4 +1,4 @@
-import collisions from './collisions'
+import collisions from './collisions.js'
 
 function convertToGridXY(object, options = { }) {
   // pretend we are dealing with a 0,0 plane

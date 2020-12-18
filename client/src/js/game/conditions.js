@@ -1,4 +1,4 @@
-import collisions from '../utils/collisions'
+import collisions from '../utils/collisions.js'
 import isMatchWith from 'lodash.ismatchwith'
 
 window.conditionTypes = {

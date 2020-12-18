@@ -1,16 +1,16 @@
-import { onHeroTrigger } from './onHeroTrigger'
-import ghost from './ghost.js'
+import { onHeroTrigger } from './onHeroTrigger.js'
+import './ghost.js'
 import pathfinding from '../../utils/pathfinding.js'
-import collisions from '../../utils/collisions'
+import collisions from '../../utils/collisions.js'
 import gridUtil from '../../utils/grid.js'
 import input from '../input.js'
 import triggers from '../triggers.js'
 import ai from '../ai/index.js'
 // import @geckos.io/snapshot-interpolation
-import { SnapshotInterpolation, Vault } from '@geckos.io/snapshot-interpolation'
-window.clientInterpolationVault = new Vault()
-// initialize the library
-window.SI = new SnapshotInterpolation(60)
+// import { SnapshotInterpolation, Vault } from '@geckos.io/snapshot-interpolation'
+// window.clientInterpolationVault = new Vault()
+// // initialize the library
+// window.SI = new SnapshotInterpolation(60)
 
 class Hero{
   constructor() {
@@ -869,9 +869,9 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
   onNetworkUpdateHerosPos(updatedHerosPos) {
     if(!PAGE.gameLoaded) return
     if(!PAGE.role.isHost) {
-      if(GAME.world.tags.interpolateHeroPositions) {
-        SI.snapshot.add(updatedHerosPos)
-      } else {
+      // if(GAME.world.tags.interpolateHeroPositions) {
+      //   SI.snapshot.add(updatedHerosPos)
+      // } else {
         updatedHerosPos.state.forEach((hero) => {
           GAME.heros[hero.id].x = hero.x
           GAME.heros[hero.id].y = hero.y
@@ -884,7 +884,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
             })
           }
         })
-      }
+      // }
     }
   }
 

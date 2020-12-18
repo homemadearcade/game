@@ -1,6 +1,6 @@
-import onObjectCollide from './onObjectCollide'
+import onObjectCollide from './onObjectCollide.js'
 import pathfinding from '../../utils/pathfinding.js'
-import collisions from '../../utils/collisions'
+import collisions from '../../utils/collisions.js'
 import gridUtil from '../../utils/grid.js'
 import triggers from '../triggers.js'
 import { dropObject, equipSubObject, unequipSubObject } from '../heros/inventory.js'

@@ -616,9 +616,6 @@ function socketEvents(fs, io, socket, options = { arcadeMode: false }){
     io.emit('onSpriteAnimation', object, animationName, options)
   })
 }
-
-module.exports = socketEvents
-
 /**
  * Simple object check.
  * @param item
@@ -650,3 +647,5 @@ function mergeDeep(target, ...sources) {
 
   return mergeDeep(target, ...sources);
 }
+
+export default socketEvents

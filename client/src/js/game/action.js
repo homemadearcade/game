@@ -1,6 +1,6 @@
 import collisionsUtil from '../utils/collisions.js'
 import { dropObject } from './heros/inventory.js'
-import onObjectCollide from './objects/onObjectCollide';
+import onObjectCollide from './objects/onObjectCollide.js';
 
 function swingBlade({ swinger, animationArea, hitBoxes, direction }) {
   let baseHitBox

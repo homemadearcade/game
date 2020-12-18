@@ -1,20 +1,42 @@
-var express = require('express')
-var fs = require('fs');
-var socketEvents = require('./sockets.js')
-var app = express();
-var server = require('http').Server(app);
-var io = require('socket.io')(server);
-var path = require('path');
-var aws = require('./aws');
-var cors = require('cors');
-const socketioAuth = require("socketio-auth")
-const jwt = require('jsonwebtoken')
-const cookie = require('cookie')
-require('dotenv').config(); // Loading dotenv to have access to env variables
-
+import express from 'express'
+import fs from 'fs';
+import socketEvents from './sockets.js'
+import http from 'http';
+import socketIO from 'socket.io';
+import path from 'path';
+import aws from './aws.js';
+import cors from 'cors';
+import socketioAuth from "socketio-auth";
+import jwt from 'jsonwebtoken'
+import cookie from 'cookie'
+import dotenv from 'dotenv'; // Loading dotenv to have access to env variables
 // Connect to the Database
-const mongoose = require("mongoose")
-mongoose.Promise = require("bluebird")
+import mongoose from "mongoose"
+import bluebird from 'bluebird'
+
+import User from "./db/User.js"
+
+mongoose.Promise = bluebird
+
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+const app = express();
+const server = http.Server(app)
+const io = socketIO(server)
+
+dotenv.config()
+
+
+global.window = {}; // Temporarily define window for server-side
+console.log(global)
+// import './client/src/js/game/index.js'
+
+
+
+
 const mongoOpts = {
   useNewUrlParser: true,
   keepAlive: 1, connectTimeoutMS: 30000,
@@ -131,7 +153,6 @@ server.listen(process.env.PORT || 4000, function(){
 
 
 // Authenticate!
-const User = require("./db/User")
 const authenticate = async (socket, data, callback) => {
   const { email, password, signup } = data
 

@@ -1,11 +1,11 @@
-import onHeroUpdate from './onHeroUpdate'
-import onTalk from './onTalk'
-import onBehavior from './onBehavior'
-import onCombat from './onCombat'
-import { startQuest, completeQuest } from './quests'
-import { pickupObject, withdrawFromInventory } from './inventory'
-import { spawnAllNow } from '../spawnZone'
-import effects from '../effects'
+import onHeroUpdate from './onHeroUpdate.js'
+import onTalk from './onTalk.js'
+import onBehavior from './onBehavior.js'
+import onCombat from './onCombat.js'
+import { startQuest, completeQuest } from './quests.js'
+import { pickupObject, withdrawFromInventory } from './inventory.js'
+import { spawnAllNow } from '../spawnZone.js'
+import effects from '../effects.js'
 
 export function onHeroTrigger(hero, collider, result, options = { fromInteractButton: false }) {
   const isInteraction = options.fromInteractButton

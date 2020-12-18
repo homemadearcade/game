@@ -1,4 +1,4 @@
-import { testCondition } from './conditions'
+import { testCondition } from './conditions.js'
 
 window.hookEvents = {
   onObjectInteractable: {},

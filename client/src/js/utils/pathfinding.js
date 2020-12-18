@@ -21,7 +21,7 @@
 
 import gridUtil from '../utils/grid.js'
 
-const PF = require('pathfinding')
+import PF from 'pathfinding'
 const finder = new PF.AStarFinder()
 
 function convertGridToPathfindingGrid(grid, saveToWindow = true) {

@@ -8,9 +8,9 @@
 // as of now the game will not keep anything marked as .spawned
 // spawned Ids are used to keep track of how many spawned are allowed
 
-import gridUtil from '../utils/grid'
-import collisionsUtil from '../utils/collisions'
-import { testCondition } from './conditions'
+import gridUtil from '../utils/grid.js'
+import collisionsUtil from '../utils/collisions.js'
+import { testCondition } from './conditions.js'
 
 function spawnObject(object) {
   if(object.tags && object.mod().tags['spawnZone'] && object.mod().tags['spawnOnInterval']) {
