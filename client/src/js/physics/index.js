@@ -123,9 +123,7 @@ function updatePosition(object, delta) {
 
     object.x += object.velocityX * delta
   }
-  if(object._flatVelocityX) {
-    object.x += object._flatVelocityX * delta
-  }
+
 
   // if(object.accY) {
   //   object.velocityY += ( object.accY )
@@ -177,7 +175,6 @@ function updatePosition(object, delta) {
       if(allowGravity) object.y += object.velocityY * delta
     }
   }
-  if(object._flatVelocityY) object.y += object._flatVelocityY * delta
 
   const isVelocityDecayNumber = typeof object.mod().velocityDecay == 'number'
   if(isVelocityDecayNumber || object.arrowKeysBehavior === 'advancedPlatformer') {
@@ -235,6 +232,28 @@ function updatePosition(object, delta) {
     } else {
       object.velocityY -= (velocityDecayY * delta)
       if(object.velocityY < 0) object.velocityY = 0
+    }
+
+    if(object._flatVelocityX) {
+      if(object._flatVelocityX < 0) {
+        object.x += (object._flatVelocityX + velocityDecayX) * delta
+      } else {
+        object.x += (object._flatVelocityX - velocityDecayX) * delta
+      }
+    }
+    if(object._flatVelocityY) {
+      if(object._flatVelocityY < 0) {
+        object.y += (object._flatVelocityY + velocityDecayY) * delta
+      } else {
+        object.y += (object._flatVelocityY - velocityDecayY) * delta
+      }
+    }
+  } else {
+    if(object._flatVelocityX) {
+      object.x += object._flatVelocityX * delta
+    }
+    if(object._flatVelocityY) {
+      object.y += object._flatVelocityY * delta
     }
   }
 
@@ -398,6 +417,7 @@ function prepareObjectsAndHerosForCollisionsPhase() {
       }
     }
   })
+
 
   system.update()
 }

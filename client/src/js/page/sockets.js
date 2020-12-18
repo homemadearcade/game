@@ -459,6 +459,13 @@ function init() {
   window.socket.on('onSpriteAnimation', (object, animationName, options) => {
     window.local.emit('onSpriteAnimation', object, animationName, options)
   })
+
+  window.socket.on('onStartDiffFlow', (id) => {
+    window.local.emit('onStartDiffFlow', id)
+  })
+  window.socket.on('onEndDiffFlow', (id) => {
+    window.local.emit('onEndDiffFlow', id)
+  })
 }
 
 export default {

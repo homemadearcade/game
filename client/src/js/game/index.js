@@ -1,5 +1,6 @@
 import gridUtil from '../utils/grid.js'
 import pathfinding from '../utils/pathfinding.js'
+import modals from '../mapeditor/modals.js'
 
 import ai from './ai'
 import input from './input.js'
@@ -96,11 +97,17 @@ class Game{
             if(GAME.heroInputs[hero.id]) input.onUpdate(hero, GAME.heroInputs[hero.id], delta)
             window.local.emit('onUpdateHero', hero, GAME.heroInputs[hero.id], delta)
             PHYSICS.updatePosition(hero, delta)
-            if(hero.mod().flags.isAdmin) return
-            PHYSICS.prepareObjectsAndHerosForCollisionsPhase(hero, [], [])
-            PHYSICS.heroCorrection(hero, [], [])
-            PHYSICS.postPhysics([], [])
           })
+
+          PHYSICS.prepareObjectsAndHerosForCollisionsPhase()
+
+          GAME.heroList.forEach(hero => {
+            if(hero.flags.paused) return
+            if(hero.mod().flags.isAdmin) return
+            PHYSICS.heroCorrection(hero, [], [])
+          })
+
+          PHYSICS.postPhysics([], [])
 
           GAME.objects.forEach((object) => {
             if(object.mod().tags.destroySoon || object.mod().tags.destroyQuickly || object.mod().tags.destroyEventually) {
@@ -782,9 +789,7 @@ class Game{
   }
 
   onBranchApply(id) {
-    console.log('HEYYYOH', id)
     const branch = _.cloneDeep(GAME.library.branches[id])
-    console.log(GAME.library.branches[id])
     if(!branch) return
     window.socket.emit('editObjects', branch.existingObjectsDiff)
     window.socket.emit('addObjects', branch.addedObjects.map((addedObj) => {
@@ -1071,6 +1076,29 @@ class Game{
     }, [])
     GAME.objects = []
     GAME.objectsById = {}
+  }
+
+  onStartDiffFlow(id) {
+    const object = OBJECTS.getObjectOrHeroById(id)
+    window.diffFlowId = id
+    localStorage.setItem('diffFlowObject', JSON.stringify(object))
+  }
+
+  onEndDiffFlow(id) {
+    const object = OBJECTS.getObjectOrHeroById(id)
+
+    window.diffFlowId = null
+    const original = JSON.parse(localStorage.getItem('diffFlowObject'))
+
+    modals.openEditCodeModal('Object Diff', window.getObjectDiff(object, original), () => {})
+
+    if(PAGE.role.isHost) {
+      if(object.tags.hero) {
+        GAME.heros[object.id] = original
+      } else {
+        console.log('not supported for non heros')
+      }
+    }
   }
 
   addSequence(sequence) {

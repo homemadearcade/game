@@ -194,9 +194,6 @@ const initPixiApp = (canvasRef, onLoad) => {
   PIXIMAP.emitterObjectStage = new PIXI.display.Layer()
   world.addChild(PIXIMAP.emitterObjectStage);
 
-  PIXIMAP.darkAreaStage = new PIXI.display.Layer()
-  world.addChild(PIXIMAP.darkAreaStage);
-
   PIXIMAP.foregroundStage = new PIXI.display.Layer()
   world.addChild(PIXIMAP.foregroundStage);
 
@@ -207,6 +204,9 @@ const initPixiApp = (canvasRef, onLoad) => {
   ///////////////
   ///////////////
   // SHADOW STAGE
+  PIXIMAP.darkAreaStage = new PIXI.display.Layer()
+  world.addChild(PIXIMAP.darkAreaStage);
+
   PIXIMAP.shadowStage = new PIXI.display.Layer()
   world.addChild(PIXIMAP.shadowStage);
 

@@ -442,6 +442,8 @@ class Hero{
       gridWidth: hero.gridWidth,
       updateHistory: hero.updateHistory,
       onObstacle: hero.onObstacle,
+      onLand: hero.onLand,
+      onWater: hero.onWater,
       angle: hero.angle,
       questState: hero.questState,
       customState: hero.customState,
@@ -565,6 +567,8 @@ class Hero{
       velocityInitialXExtra: hero.velocityInitialXExtra,
       velocityInitialYExtra: hero.velocityInitialYExtra,
       velocityDelta: hero.velocityDelta,
+
+      inchPower: hero.inchPower,
 
       velocityDecay: hero.velocityDecay,
       velocityDecayXExtra: hero.velocityDecayXExtra,

@@ -40,6 +40,9 @@ function setDefault() {
     'advancedPlatformer': {
       ...window.defaultArrowKeys,
     },
+    'inch': {
+      ...window.defaultArrowKeys,
+    },
     'angle' : {
       up: 'Face Up',
       down: 'Face Down',
@@ -70,6 +73,9 @@ function setDefault() {
       ...window.defaultWASD,
     },
     'advancedPlatformer': {
+      ...window.defaultWASD,
+    },
+    'inch': {
       ...window.defaultWASD,
     },
     'angleAndVelocity' : {
@@ -905,15 +911,16 @@ function onKeyDown(key, hero) {
   const downPressed = 's' === key || 'down' === key
   const leftPressed = 'a' === key || 'left' === key
 
-  if(hero.mod().arrowKeysBehavior === 'grid') {
+  if(hero.mod().arrowKeysBehavior === 'inch') {
+    const power = hero.inchPower || GAME.grid.nodeSize
     if (upPressed) {
-      hero.y -= GAME.grid.nodeSize
+      hero.y -= power
     } else if (downPressed) {
-      hero.y += GAME.grid.nodeSize
+      hero.y += power
     } else if (leftPressed) {
-      hero.x -= GAME.grid.nodeSize
+      hero.x -= power
     } else if (rightPressed) {
-      hero.x += GAME.grid.nodeSize
+      hero.x += power
     }
   }
 

@@ -381,6 +381,14 @@ function socketEvents(fs, io, socket, options = { arcadeMode: false }){
     io.emit('onUpdateGrid', gridIn)
   })
 
+  socket.on('startDiffFlow', (objectId) => {
+    io.emit('onStartDiffFlow', objectId)
+  })
+
+  socket.on('endDiffFlow', (objectId) => {
+    io.emit('onEndDiffFlow', objectId)
+  })
+
   socket.on('updateGridNode', (x, y, update) => {
     const key = 'x:'+x+'y:'+y
     if(!currentGame.grid.nodeData) currentGame.grid.nodeData = {}

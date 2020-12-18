@@ -70,6 +70,14 @@ export default class EditorActionMenu extends React.Component{
         networkEditObject(objectSelected, { tags: {resourceZone: true}, resourceWithdrawAmount: 1, resourceLimit: -1, resourceTags: { resource: true } })
       }
 
+      if(key === 'start-mod-creation-flow') {
+        window.socket.emit('startDiffFlow', objectSelected.id)
+      }
+
+      if(key === 'end-mod-creation-flow') {
+        window.socket.emit('endDiffFlow', objectSelected.id)
+      }
+
       if (key === "add-to-creator-library") {
         const { value: name } = await Swal.fire({
           title: 'Add to creator library',
