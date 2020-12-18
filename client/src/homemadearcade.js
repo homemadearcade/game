@@ -313,4 +313,20 @@ Maybe dual stick shooter potential?
   IMPROVE AESTHETIC AND GAME AESHTIC CUSTOMIZATION
   https://www.transparenttextures.com/
 
+  ////// Notes on performance
+
+  Basically
+
+  The cuprits are
+  Modding - the calling of the function itself, which apparently COSTS a lot more when mods are in place even if it doesn’t effect any of the objects…
+
+  Sending the Packet diff
+  Makes sense…
+
+
+  Both can be taken care of if we move the host off the browser …
+
+  Also for non hosts
+  Problem is - the updating of transform of objects which we should switch to be the layers job obviously… enough of this camera BS!
+
   */
