@@ -172,17 +172,17 @@ function init() {
 
   if(!PAGE.role.isHost) {
     // HOST CALLS THIS
-    global.socket.on('onUpdateGameState', (gameState) => {
-      global.local.emit('onUpdateGameState', gameState)
+    global.socket.on('onNetworkUpdateGameState', (gameState) => {
+      global.local.emit('onNetworkUpdateGameState', gameState)
     })
 
     // host CALLS THIS
-    global.socket.on('onUpdateObjectsComplete', (objectsUpdated) => {
+    global.socket.on('onNetworkUpdateObjectsComplete', (objectsUpdated) => {
       global.local.emit('onNetworkUpdateObjectsComplete', objectsUpdated)
     })
 
     // host CALLS THIS
-    global.socket.on('onUpdateObjects', (objectsUpdated) => {
+    global.socket.on('onNetworkUpdateObjects', (objectsUpdated) => {
       global.local.emit('onNetworkUpdateObjects', objectsUpdated)
         // old interpolation code
         // if(PAGE.role.isPlayer) {
@@ -208,7 +208,7 @@ function init() {
     })
 
     // HOST CALLS THIS
-    global.socket.on('onUpdateHero', (updatedHero) => {
+    global.socket.on('onNetworkUpdateHero', (updatedHero) => {
       global.local.emit('onNetworkUpdateHero', updatedHero)
       // old interpolation code
       // } else if(PAGE.role.isPlayEditor) {
@@ -223,7 +223,7 @@ function init() {
       //   global.mergeDeep(hero, updatedHero)
     })
 
-    global.socket.on('onUpdateHerosPos', (updatedHerosPos) => {
+    global.socket.on('onNetworkUpdateHerosPos', (updatedHerosPos) => {
       global.local.emit('onNetworkUpdateHerosPos', updatedHerosPos)
     })
   }

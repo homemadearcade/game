@@ -287,11 +287,8 @@ class Game{
 
     GAME.loadGridWorldObjectsCompendiumState(game)
 
-    console.log(game)
     // if you are a player and you dont already have a hero from the server ask for one
-    console.log(GAME.heros)
     if(GAME.heros[HERO.id]) {
-      console.log('?why not')
       global.local.emit('onHeroFound', GAME.heros[HERO.id])
     } else {
       if(PAGE.role.isHost) global.user.isHost = true
@@ -875,7 +872,7 @@ class Game{
     if(!gameCopy.defaultHero) {
       // if(!gameCopy.defaultHero && game.heros[heroId]) gameCopy.defaultHero = JSON.parse(JSON.stringify(game.heros[heroId]))
       console.log('setting any hero as default hero')
-      // if(game.heroList.length) gameCopy.defaultHero = JSON.parse(JSON.stringify(game.heroList[0]))
+      // if(GAME.heroList.length) gameCopy.defaultHero = JSON.parse(JSON.stringify(game.heroList[0]))
       gameCopy.defaultHero = JSON.parse(JSON.stringify(global.defaultHero))
       // else return alert('could not find a game hero')
     }

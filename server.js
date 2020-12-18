@@ -116,8 +116,10 @@ if(process.env.ISHOST) {
   //BS FOR CLIENT CRAP
   global.MAP = {
     camera: {
-      setLimit: () => {}
-    }
+      setLimit: () => {},
+      clearLimit: () => {}
+    },
+    popoverInstances: []
   }
   global.user = {
     isServer: true,

@@ -821,6 +821,12 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
     // if(global.popoverOpen[hero.id]) MAP.closePopover(hero)
   }
 
+  getList() {
+    return Object.keys(GAME.heros).map((id) => {
+      return GAME.heros[id]
+    })
+  }
+
   onDeleteHero(heroId) {
     const hero = GAME.heros[heroId]
     if(!hero) return
@@ -852,8 +858,8 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
   }
 
   onNetworkUpdateHero(updatedHero) {
-    delete updatedHero.x
-    delete updatedHero.y
+    // delete updatedHero.x
+    // delete updatedHero.y
     if(!PAGE.gameLoaded) return
     if(updatedHero.subObjects) OBJECTS.forAllSubObjects(updatedHero.subObjects, (so) => {
       global.mergeDeep(GAME.objectsById[so.id], so)
@@ -873,13 +879,13 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
       //   SI.snapshot.add(updatedHerosPos)
       // } else {
         updatedHerosPos.forEach((hero) => {
-          GAME.heros[hero.id].x = hero.x
-          GAME.heros[hero.id].y = hero.y
+          if(hero.x) GAME.heros[hero.id].x = hero.x
+          if(hero.y) GAME.heros[hero.id].y = hero.y
           if(hero.subObjects) {
             OBJECTS.forAllSubObjects(hero.subObjects, (so, name) => {
               if(GAME.heros[hero.id].subObjects[name]) {
-                GAME.heros[hero.id].subObjects[name].x = so.x
-                GAME.heros[hero.id].subObjects[name].y = so.y
+                if(so.x) GAME.heros[hero.id].subObjects[name].x = so.x
+                if(so.x) GAME.heros[hero.id].subObjects[name].y = so.y
               }
             })
           }
@@ -908,10 +914,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
       }
     }
 
-    // if(!hero.tags) console.log('REAL ROTATE', hero)
-    // else console.log('succesful with', hero.id)
-
-    
+    if(!hero.tags) console.log('REAL ROTATE', hero)
     if(!hero.tags) return
     if(hero.mod().tags.realRotate) {
       if(typeof hero.angle != 'number') hero.angle = 0
@@ -988,7 +991,6 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
             if(!hero.resetXThreshold) hero.resetXThreshold = 0
             hero.resetXThreshold++
             if(hero.resetXThreshold > 60) {
-              console.log('resetX')
               hero.x = serverPos.x
               hero.resetXThreshold = 0
             }
@@ -1036,20 +1038,20 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
       // }
     }
 
-    if(GAME.world.tags.interpolateHeroPositions) {
-      // calculate the interpolation for the parameters x and y and return the snapshot
-      const snapshot = SI.calcInterpolation('x y') // [deep: string] as optional second parameter
-
-      if(snapshot) {
-        // access your state
-        const { state } = snapshot
-        state.forEach((hero) => {
-          if(GAME.world.tags.predictNonHostPosition && hero.id == HERO.id) return
-          GAME.heros[hero.id].x = hero.x
-          GAME.heros[hero.id].y = hero.y
-        })
-      }
-    }
+    // if(GAME.world.tags.interpolateHeroPositions) {
+    //   // calculate the interpolation for the parameters x and y and return the snapshot
+    //   const snapshot = SI.calcInterpolation('x y') // [deep: string] as optional second parameter
+    //
+    //   if(snapshot) {
+    //     // access your state
+    //     const { state } = snapshot
+    //     state.forEach((hero) => {
+    //       if(GAME.world.tags.predictNonHostPosition && hero.id == HERO.id) return
+    //       GAME.heros[hero.id].x = hero.x
+    //       GAME.heros[hero.id].y = hero.y
+    //     })
+    //   }
+    // }
   }
 
   onSendHeroInput(input, heroId) {

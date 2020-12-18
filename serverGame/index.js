@@ -21,6 +21,10 @@ class GAME_HOST {
       global.local.emit('onFirstPageGameLoaded')
     }
   }
+
+  // onUpdate() {
+  //
+  // }
 }
 
 global.GAME_HOST = new GAME_HOST()

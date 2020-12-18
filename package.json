@@ -8,8 +8,8 @@
   },
   "scripts": {
     "start-dev": "cross-env NODE_ENV=production webpack-dev-server --config client/config/webpack.dev.cjs",
-    "start": "node --experimental-modules server.js",
-    "start-server-host": "ISHOST=true node --experimental-modules server.js",
+    "start-client-host": "node --experimental-modules server.js",
+    "start": "ISHOST=true node --experimental-modules server.js",
     "build": "cross-env NODE_ENV=production webpack --config client/config/webpack.prod.cjs"
   },
   "keywords": [

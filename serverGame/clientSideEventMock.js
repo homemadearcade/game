@@ -17,7 +17,7 @@ class EventEmitter {
       // debugEvent = true
 
       // if(eventName == 'onObjectUnaware' || eventName == 'onObjectAware') console.log(eventName)
-      const serverEvent = eventName == 'updateHerosPos' || eventName == 'onUpdateHerosPos' || eventName == 'updateGameState' || eventName == 'updateObjects' || eventName === 'onUpdateObjects' || eventName == 'updateHeros' || eventName == 'onUpdateHeros'
+      const serverEvent = eventName == 'networkUpdateHerosPos' || eventName == 'onNetworkUpdateHerosPos' || eventName == 'networkUpdateGameState' || eventName == 'onNetworkUpdateGameState' || eventName == 'networkUpdateObjects' || eventName === 'onNetworkUpdateObjects' || eventName == 'networkUpdateHeros' || eventName == 'onNetworkUpdateHeros'
 
       if(!serverEvent && !debugEvent && eventName !== 'onSendHeroKeyDown' && eventName !== 'onNetworkUpdateHerosPos' && eventName !== 'onNetworkUpdateObjectsComplete' && eventName !== 'onHeroHeadHit' && eventName !== 'onHeroLand' && eventName !== 'onSendHeroInput' && eventName !== 'onKeyDown' && eventName !== 'onSendHeroMapEditor' && eventName !== 'onUpdateGameState' && eventName !== 'onNetworkUpdateHero' && eventName !== 'onNetworkUpdateObjects' && eventName !== 'onUpdate' && eventName !== 'onRender' && eventName !== 'onUpdateHero' && eventName !== 'onUpdateObject' && eventName !== 'onObjectTouchStart' && eventName !== 'onObjectTouchEnd' && eventName !== 'onHeroTouchEnd' && eventName !== 'onHeroTouchStart' && eventName !== 'onObjectCollide' && eventName !== 'onHeroCollide' && eventName !== 'onSendHeroKeyUp' && eventName !== 'onKeyUp') console.log(eventName)
       //

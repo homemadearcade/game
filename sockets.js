@@ -172,10 +172,10 @@ function socketEvents(fs, io, socket, options = { arcadeMode: false }){
   })
 
   // great to have a constantly updating object shared on all computers
-  socket.on('updateGameState', (gameState) => {
+  socket.on('networkUpdateGameState', (gameState) => {
     // if(!global.currentGame.gameState) global.currentGame.gameState = gameState
     // Object.assign(global.currentGame.gameState, gameState)
-    io.emit('onUpdateGameState', gameState)
+    io.emit('onNetworkUpdateGameState', gameState)
   })
 
   socket.on('resetGameState', (gameState) => {
@@ -224,11 +224,11 @@ function socketEvents(fs, io, socket, options = { arcadeMode: false }){
   socket.on('anticipateObject', (object) => {
     io.emit('onAnticipateObject', object)
   })
-  socket.on('updateObjectsComplete', (updatedObjects) => {
-    io.emit('onUpdateObjectsComplete', updatedObjects)
+  socket.on('networkUpdateObjectsComplete', (updatedObjects) => {
+    io.emit('onNetworkUpdateObjectsComplete', updatedObjects)
   })
-  socket.on('updateObjects', (updatedobjects) => {
-    io.emit('onUpdateObjects', updatedobjects)
+  socket.on('networkUpdateObjects', (updatedobjects) => {
+    io.emit('onNetworkUpdateObjects', updatedobjects)
   })
   socket.on('editObjects', (editedobjects) => {
     io.emit('onEditObjects', editedobjects)
@@ -329,23 +329,23 @@ function socketEvents(fs, io, socket, options = { arcadeMode: false }){
     io.emit('onSendNotification', data)
   })
 
-  socket.on('updateHero', (hero) => {
-    io.emit('onUpdateHero', hero)
+  socket.on('networkUpdateHero', (hero) => {
+    io.emit('onNetworkUpdateHero', hero)
   })
-  socket.on('updateHeros', (heros) => {
+  socket.on('networkUpdateHeros', (heros) => {
     if(heros) {
       heros.forEach(hero => {
-        io.emit('onUpdateHero', hero)
+        io.emit('onNetworkUpdateHero', hero)
       })
     }
   })
-  socket.on('updateHerosPos', (heros) => {
-    io.emit('onUpdateHerosPos', heros)
+  socket.on('networkUpdateHerosPos', (heros) => {
+    io.emit('onNetworkUpdateHerosPos', heros)
   })
-  socket.on('updateHerosComplete', (heros) => {
+  socket.on('networkUpdateHerosComplete', (heros) => {
     if(heros) {
       heros.forEach(hero => {
-        io.emit('onUpdateHero', hero)
+        io.emit('onNetworkUpdateHero', hero)
       })
     }
   })

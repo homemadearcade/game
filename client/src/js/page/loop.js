@@ -112,7 +112,7 @@ function update(delta) {
   global.local.emit('onUpdate', delta)
 
   if(PAGE.role.isHost && !PAGE.role.isArcadeMode) {
-    global.socket.emit('updateHerosPos', GAME.heroList.map((hero) => {
+    global.socket.emit('networkUpdateHerosPos', GAME.heroList.map((hero) => {
       const data = {
         id: hero.id,
         x: hero.x,
@@ -161,16 +161,16 @@ function getDiff(historyProp, nextUpdate) {
 let lastMapUpdate
 function mapNetworkUpdate() {
   if(PAGE.role.isArcadeMode) return
-  global.socket.emit('updateGameState', getDiff('gameState', _.cloneDeep(GAME.gameState) ))
-  global.socket.emit('updateObjects', getDiff('objectMap', _.cloneDeep(GAME.objects.map(GAME.mod).map(OBJECTS.getMapState)) ))
-  global.socket.emit('updateHeros', getDiff('heroMap', _.cloneDeep(GAME.heroList.map(GAME.mod).map(HERO.getMapState)) ))
+  global.socket.emit('networkUpdateGameState', getDiff('gameState', _.cloneDeep(GAME.gameState) ))
+  global.socket.emit('networkUpdateObjects', getDiff('objectMap', _.cloneDeep(GAME.objects.map(GAME.mod).map(OBJECTS.getMapState)) ))
+  global.socket.emit('networkUpdateHeros', getDiff('heroMap', _.cloneDeep(GAME.heroList.map(GAME.mod).map(HERO.getMapState)) ))
 }
 
 function completeNetworkUpdate() {
   if(PAGE.role.isArcadeMode) return
-  global.socket.emit('updateObjects', getDiff('objectComplete', _.cloneDeep(GAME.objects.map(GAME.mod)) ))
+  global.socket.emit('networkUpdateObjects', getDiff('objectComplete', _.cloneDeep(GAME.objects.map(GAME.mod)) ))
   const heroCompleteUpdate = getDiff('heroComplete', _.cloneDeep(GAME.heroList.map(GAME.mod)) )
-  global.socket.emit('updateHeros', heroCompleteUpdate)
+  global.socket.emit('networkUpdateHeros', heroCompleteUpdate)
   // if(GAME.gameState.started && GAME.world.tags.storeEntireGameState) {
   //   let storedGameState = localStorage.getItem('gameStates')
   //   localStorage.setItem('gameStates', JSON.stringify({...JSON.parse(storedGameState), [GAME.id]: {...GAME, grid: {...GAME.grid, nodes: null }}}))
