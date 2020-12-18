@@ -9,6 +9,7 @@
   "scripts": {
     "start-dev": "cross-env NODE_ENV=production webpack-dev-server --config client/config/webpack.dev.js",
     "start": "node --experimental-modules server.js",
+    "start-server-host": "ISHOST=true node --experimental-modules server.js",
     "build": "cross-env NODE_ENV=production webpack --config client/config/webpack.prod.js"
   },
   "keywords": [

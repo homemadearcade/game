@@ -16,6 +16,14 @@ import dayNightCycle from './daynightcycle.js'
 import metadata from './metadata.js'
 import effects from './effects.js'
 
+import '../libraries/modLibrary.js'
+import '../libraries/subObjectLibrary.js'
+import '../libraries/objectLibrary.js'
+import '../libraries/heroLibrary.js'
+import '../libraries/spriteSheetLibrary.js'
+import '../libraries/dialogueChoiceLibrary.js'
+import '../libraries/spriteAnimationLibrary.js'
+
 import { dropObject, equipSubObject, unequipSubObject } from './heros/inventory.js'
 
 import onTalk from './heros/onTalk.js'

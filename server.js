@@ -29,13 +29,13 @@ const io = socketIO(server)
 
 dotenv.config()
 
-
 global.window = {}; // Temporarily define window for server-side
-// console.log(global)
+import './clientSideEventMock.js'
 import './client/src/js/game/index.js'
 
-
-
+if(process.env.ISHOST) {
+  console.log('IM HOSTING BABE')
+}
 
 const mongoOpts = {
   useNewUrlParser: true,
