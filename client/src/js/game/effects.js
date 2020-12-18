@@ -359,7 +359,6 @@ function processEffect(effect, effected, effector, ownerObject) {
   }
 
   if(effectName === 'dialogueSet') {
-    console.log(effected, effector)
     if(effected.ownerId) {
       const owner = OBJECTS.getObjectOrHeroById(effected.ownerId)
       effected = owner
@@ -571,7 +570,6 @@ function processEffect(effect, effected, effector, ownerObject) {
     EDITOR.shiftPressed = false
   }
   if(effectName === 'openGameAsLevel') {
-    console.log(effect)
     axios.get(global.HAGameServerUrl + '/game', {
       params: {
         gameId: effect.effectValue

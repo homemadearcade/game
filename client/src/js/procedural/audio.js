@@ -15,7 +15,6 @@ global.generateAudioTheme = function(keys) {
 
     const index = getRandomInt(0, eventData.length-1)
     const selectedAssets = eventData[index]
-    console.log(collection, selectedAssets.audioCollection, selectedAssets.folderName)
     const collection = AUDIO.data[selectedAssets.audioCollection][selectedAssets.folderName]
 
     const fileIndex = getRandomInt(0, collection.files.length -1)

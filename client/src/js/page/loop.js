@@ -1,8 +1,8 @@
-// import @geckos.io/snapshot-interpolation
-import { SnapshotInterpolation } from '@geckos.io/snapshot-interpolation'
-
-// initialize the library
-const SI = new SnapshotInterpolation(60)
+// // import @geckos.io/snapshot-interpolation
+// import { SnapshotInterpolation } from '@geckos.io/snapshot-interpolation'
+//
+// // initialize the library
+// const SI = new SnapshotInterpolation(60)
 
 //////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////
@@ -16,8 +16,7 @@ let mapNetworkInterval = 1000/24
 let completeNetworkInterval = 1000/.1
 var frameCount = 0;
 var fps, startTime, now, deltaRender, deltaMapNetwork, deltaCompleteNetwork, thenRender, thenMapNetwork, thenCompleteNetwork, thenUpdate, deltaUpdate;
-global.w = window;
-requestAnimationFrame = w.requestAnimationFrame || w.webkitRequestAnimationFrame || w.msRequestAnimationFrame || w.mozRequestAnimationFrame;
+var requestAnimationFrame = requestAnimationFrame || setImmediate;
 global.startGameLoop = function() {
   if(!GAME.objects || !GAME.world || !GAME.grid || !GAME.heros || (PAGE.role.isPlayer && !GAME.heros[HERO.id])) {
     console.log('game loaded without critical data, trying again soon', !GAME.objects, !GAME.world, !GAME.grid, !GAME.heros, (PAGE.role.isPlayer && !GAME.heros[HERO.id]))
@@ -37,7 +36,7 @@ global.startGameLoop = function() {
 
   // begin main loop
   mainLoop()
-  if(PAGE.role.isHost && !PAGE.role.isArcadeMode) setInterval(() => {
+  if(!global.isServerHost && PAGE.role.isHost && !PAGE.role.isArcadeMode) setInterval(() => {
     global.socket.emit('updateGameOnServerOnly', {
       id: GAME.id,
       metadata: GAME.metadata,
@@ -113,7 +112,7 @@ function update(delta) {
   global.local.emit('onUpdate', delta)
 
   if(PAGE.role.isHost && !PAGE.role.isArcadeMode) {
-    global.socket.emit('updateHerosPos', SI.snapshot.create(GAME.heroList.map((hero) => {
+    global.socket.emit('updateHerosPos', GAME.heroList.map((hero) => {
       const data = {
         id: hero.id,
         x: hero.x,
@@ -131,7 +130,7 @@ function update(delta) {
       }
 
       return data
-    })))
+    }))
   }
 }
 

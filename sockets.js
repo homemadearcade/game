@@ -1,4 +1,4 @@
-let herosockets = {
+global.herosockets = {
 
 }
 
@@ -6,7 +6,7 @@ let herosockets = {
 // setGame(initialGameId, (game) => {
 //   console.log('initial game set to ' + initialGameId)
 // })
-let currentGame = {
+global.currentGame = {
   heros: {},
   hero: {},
   grid: {
@@ -16,7 +16,7 @@ let currentGame = {
   world: {},
 }
 
-let savedCustomCode = ''
+global.savedCustomCode = ''
 
 function socketEvents(fs, io, socket, options = { arcadeMode: false }){
   // socket.on('saveSocket', (heroId) => {
@@ -98,10 +98,10 @@ function socketEvents(fs, io, socket, options = { arcadeMode: false }){
       else console.log('game: ' + game.id + ' saved')
     });
     io.emit('onGameSaved', game.id)
-    currentGame = JSON.parse(JSON.stringify(game))
+    global.currentGame = JSON.parse(JSON.stringify(game))
   })
 
-  // this is for when one player on a network wants to get a currentGame... should all be 1 -hero worlds?
+  // this is for when one player on a network wants to get a global.currentGame... should all be 1 -hero worlds?
   socket.on('getGame', (id) => {
     fs.readFile('data/game/' +id+'.json', 'utf8', function readFileCallback(err, data){
       if (err){
@@ -115,21 +115,21 @@ function socketEvents(fs, io, socket, options = { arcadeMode: false }){
   // this is for when we are editing and we want to send this world to all people
   socket.on('setGame', (id) => {
     getGame(id, (game) => {
-      currentGame = JSON.parse(JSON.stringify(game))
+      global.currentGame = JSON.parse(JSON.stringify(game))
       io.emit('onSetGame', game)
     })
   })
 
   socket.on('setGameJSON', (game) => {
-    currentGame = JSON.parse(JSON.stringify(game))
+    global.currentGame = JSON.parse(JSON.stringify(game))
     io.emit('onSetGameJSON', game)
   })
 
   // this is for when we are editing and we want to send this world to all people
   socket.on('copyGame', (id) => {
     getGame(id, (game) => {
-      game.id = currentGame.id
-      currentGame = JSON.parse(JSON.stringify(game))
+      game.id = global.currentGame.id
+      global.currentGame = JSON.parse(JSON.stringify(game))
       io.emit('onCopyGame', game)
     })
   })
@@ -141,9 +141,12 @@ function socketEvents(fs, io, socket, options = { arcadeMode: false }){
           console.log(err);
       } else {
       let obj = JSON.parse(data); //now it an object
-      currentGame = obj
-      currentGame.id = id
-      socket.emit('onLoadGame', currentGame)
+      global.currentGame = obj
+      global.global.currentGame.id = id
+      io.emit('onLoadGame', global.currentGame)
+      if(global.isServerHost) {
+        global.local.emit('onServerSetCurrentGame', global.currentGame)
+      }
     }});
   })
 
@@ -161,13 +164,17 @@ function socketEvents(fs, io, socket, options = { arcadeMode: false }){
 
   // this is really only for the live editing shit when im reloading their page all the time
   socket.on('askRestoreCurrentGame', () => {
-    socket.emit('onAskRestoreCurrentGame', currentGame)
+    if(global.isServerHost) {
+      socket.emit('onAskRestoreCurrentGame', global.GAME)
+    } else {
+      socket.emit('onAskRestoreCurrentGame', currentGame)
+    }
   })
 
   // great to have a constantly updating object shared on all computers
   socket.on('updateGameState', (gameState) => {
-    // if(!currentGame.gameState) currentGame.gameState = gameState
-    // Object.assign(currentGame.gameState, gameState)
+    // if(!global.currentGame.gameState) global.currentGame.gameState = gameState
+    // Object.assign(global.currentGame.gameState, gameState)
     io.emit('onUpdateGameState', gameState)
   })
 
@@ -180,18 +187,18 @@ function socketEvents(fs, io, socket, options = { arcadeMode: false }){
   })
 
   socket.on('addGameTag', (tagName) => {
-    if(!currentGame.library.tags) {
-      currentGame.library.tags = {}
+    if(!global.currentGame.library.tags) {
+      global.currentGame.library.tags = {}
     }
-    currentGame.library.tags[tagName] = false
+    global.currentGame.library.tags[tagName] = false
     io.emit('onAddGameTag', tagName)
   })
 
   socket.on('updateGameCustomInputBehavior', (customInputBehavior) => {
-    if(!currentGame.customInputBehavior) {
-      currentGame.customInputBehavior = {}
+    if(!global.currentGame.customInputBehavior) {
+      global.currentGame.customInputBehavior = {}
     }
-    currentGame.customInputBehavior = customInputBehavior
+    global.currentGame.customInputBehavior = customInputBehavior
     io.emit('onUpdateGameCustomInputBehavior', customInputBehavior)
   })
 
@@ -233,16 +240,16 @@ function socketEvents(fs, io, socket, options = { arcadeMode: false }){
     io.emit('onRemoveObject', object)
   })
   socket.on('deleteObject', (object) => {
-    // for(let i = 0; i < currentGame.objects.length; i++) {
-  	// 	if(currentGame.objects[i].id === object.id){
-  	// 		currentGame.objects.splice(i, 1)
+    // for(let i = 0; i < global.currentGame.objects.length; i++) {
+  	// 	if(global.currentGame.objects[i].id === object.id){
+  	// 		global.currentGame.objects.splice(i, 1)
   	// 		break;
   	// 	}
   	// }
     io.emit('onDeleteObject', object)
   })
   socket.on('askObjects', () => {
-    socket.emit('onAddObjects', currentGame.objects)
+    socket.emit('onAddObjects', global.currentGame.objects)
   })
   socket.on('addObjects', (addedobjects) => {
     io.emit('onAddObjects', addedobjects)
@@ -284,7 +291,7 @@ function socketEvents(fs, io, socket, options = { arcadeMode: false }){
   ///////////////////////////
   ///////////////////////////
   socket.on('askWorld', () => {
-    socket.emit('onUpdateWorld', currentGame.world)
+    socket.emit('onUpdateWorld', global.currentGame.world)
   })
   socket.on('updateWorld', (updatedWorld) => {
     io.emit('onUpdateWorld', updatedWorld)
@@ -297,8 +304,8 @@ function socketEvents(fs, io, socket, options = { arcadeMode: false }){
   })
   socket.on('updateGameOnServerOnly', (game) => {
     let prevGame = currentGame
-    currentGame = game
-    currentGame.grid = prevGame.grid
+    global.currentGame = game
+    global.currentGame.grid = prevGame.grid
   })
 
 
@@ -356,8 +363,8 @@ function socketEvents(fs, io, socket, options = { arcadeMode: false }){
     io.emit('onRespawnHero', hero)
   })
   // socket.on('askHeros', () => {
-  //   for(let heroId in currentGame.heros) {
-  //     socket.emit('onUpdateHero', currentGame.heros[heroId])
+  //   for(let heroId in global.currentGame.heros) {
+  //     socket.emit('onUpdateHero', global.currentGame.heros[heroId])
   //   }
   // })
   socket.on('deleteHero', (heroId) => {
@@ -379,7 +386,7 @@ function socketEvents(fs, io, socket, options = { arcadeMode: false }){
   })
 
   socket.on('updateGrid', (gridIn) => {
-    currentGame.grid = gridIn
+    global.currentGame.grid = gridIn
     io.emit('onUpdateGrid', gridIn)
   })
 
@@ -393,18 +400,18 @@ function socketEvents(fs, io, socket, options = { arcadeMode: false }){
 
   socket.on('updateGridNode', (x, y, update) => {
     const key = 'x:'+x+'y:'+y
-    if(!currentGame.grid.nodeData) currentGame.grid.nodeData = {}
-    if(!currentGame.grid.nodeData[key]) currentGame.grid.nodeData[key] = {}
-    Object.assign(currentGame.grid.nodeData[key], update)
+    if(!global.currentGame.grid.nodeData) global.currentGame.grid.nodeData = {}
+    if(!global.currentGame.grid.nodeData[key]) global.currentGame.grid.nodeData[key] = {}
+    Object.assign(global.currentGame.grid.nodeData[key], update)
 
-    if(currentGame.grid && currentGame.grid.nodes && currentGame.grid.nodes[x] && currentGame.grid.nodes[x][y]) {
-      Object.assign(currentGame.grid.nodes[x][y], update)
+    if(global.currentGame.grid && global.currentGame.grid.nodes && global.currentGame.grid.nodes[x] && global.currentGame.grid.nodes[x][y]) {
+      Object.assign(global.currentGame.grid.nodes[x][y], update)
     }
     io.emit('onUpdateGridNode', x, y, update)
   })
 
   socket.on('askGrid', () => {
-    io.emit('onUpdateGrid', currentGame.grid)
+    io.emit('onUpdateGrid', global.currentGame.grid)
   })
 
   ///////////////////////////
@@ -433,7 +440,7 @@ function socketEvents(fs, io, socket, options = { arcadeMode: false }){
   })
 
   socket.on('updateCompendium', (compendium) => {
-    currentGame.compendium = compendium
+    global.currentGame.compendium = compendium
     io.emit('onUpdateCompendium', compendium)
   })
 

@@ -1,7 +1,7 @@
-const paths = require('./paths')
+const paths = require('./paths.cjs')
 const webpack = require('webpack')
 const merge = require('webpack-merge')
-const common = require('./webpack.common.js')
+const common = require('./webpack.common.cjs')
 
 module.exports = merge(common, {
   /**

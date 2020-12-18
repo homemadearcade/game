@@ -5,8 +5,8 @@ just make sure to set something to stationary if its not supposed to be move, or
 
 import { Collisions } from 'collisions';
 import decomp from 'poly-decomp';
-import { onHeroTrigger } from '../game/heros/onHeroTrigger';
-import { objectOnTerrain } from '../game/terrain';
+import { onHeroTrigger } from '../game/heros/onHeroTrigger.js';
+import { objectOnTerrain } from '../game/terrain.js';
 
 
 import {

@@ -198,7 +198,6 @@ const updatePixiEmitter = (pixiChild, gameObject) => {
     //   // emitter.updateOwnerPos(gameObject.x * camera.multiplier, gameObject.y * camera.multiplier)
     // } else {
     // if(gameObject.tags.rotateable) {
-    //   console.log('???')
     //   pixiChild.pivot.set(gameObject.width/2, gameObject.height/2)
     //   pixiChild.rotation = gameObject.angle || 0
     // } else {

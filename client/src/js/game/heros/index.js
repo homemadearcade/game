@@ -872,7 +872,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
       // if(GAME.world.tags.interpolateHeroPositions) {
       //   SI.snapshot.add(updatedHerosPos)
       // } else {
-        updatedHerosPos.state.forEach((hero) => {
+        updatedHerosPos.forEach((hero) => {
           GAME.heros[hero.id].x = hero.x
           GAME.heros[hero.id].y = hero.y
           if(hero.subObjects) {
@@ -908,6 +908,11 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
       }
     }
 
+    // if(!hero.tags) console.log('REAL ROTATE', hero)
+    // else console.log('succesful with', hero.id)
+
+    
+    if(!hero.tags) return
     if(hero.mod().tags.realRotate) {
       if(typeof hero.angle != 'number') hero.angle = 0
       hero.angle += 1 * delta
@@ -953,14 +958,14 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
       )
     }
 
-    const serverSnapshot = SI.vault.get()
+    // const serverSnapshot = SI.vault.get()
 
     // this isnt working... dont use it.
     // the problem is that our prediction is out of sync with the server somehow..
     // im not sure whats causing it. it seems to be related to the timing of inputs<<<<<<<<<<
     // espcially since we have an authoritative client instead of authortitaive server
     //https://www.gabrielgambetta.com/entity-interpolation.html
-    if(serverSnapshot && GAME.world.tags.predictNonHostPosition) {
+    if(false && serverSnapshot && GAME.world.tags.predictNonHostPosition) {
       // get the closest player snapshot that matches the server snapshot time
       // try {
         const heroSnapshot = global.clientInterpolationVault.get(serverSnapshot.time, true)

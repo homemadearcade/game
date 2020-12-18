@@ -16,6 +16,68 @@ import bluebird from 'bluebird'
 
 import User from "./db/User.js"
 
+// import winston from 'winston';
+//
+// const logger = winston.createLogger({
+//   level: 'info',
+//   format: winston.format.json(),
+//   defaultMeta: { service: 'user-service' },
+//   transports: [
+//     //
+//     // - Write all logs with level `error` and below to `error.log`
+//     // - Write all logs with level `info` and below to `combined.log`
+//     //
+//     new winston.transports.File({ filename: 'error.log', level: 'error' }),
+//     new winston.transports.File({ filename: 'combined.log' }),
+//   ],
+// });
+//
+// //
+// // If we're not in production then log to the `console` with the format:
+// // `${info.level}: ${info.message} JSON.stringify({ ...rest }) `
+// //
+// if (process.env.NODE_ENV !== 'production') {
+//   logger.add(new winston.transports.Console({
+//     format: winston.format.simple(),
+//   }));
+// }
+//
+// var logger_info_old = logger.info;
+// logger.info = function(msg) {
+//   var fileAndLine = traceCaller(1);
+//   return logger_info_old.call(this, fileAndLine + ":" + msg);
+// }
+//
+// /**
+// * examines the call stack and returns a string indicating
+// * the file and line number of the n'th previous ancestor call.
+// * this works in chrome, and should work in nodejs as well.
+// *
+// * @param n : int (default: n=1) - the number of calls to trace up the
+// *   stack from the current call.  `n=0` gives you your current file/line.
+// *  `n=1` gives the file/line that called you.
+// */
+// function traceCaller(n) {
+//   let b
+//   if( isNaN(n) || n<0) n=1;
+//   n+=1;
+//   var s = (new Error()).stack
+//     , a=s.indexOf('\n',5);
+//   while(n--) {
+//     a=s.indexOf('\n',a+1);
+//     if( a<0 ) { a=s.lastIndexOf('\n',s.length); break;}
+//   }
+//   b=s.indexOf('\n',a+1); if( b<0 ) b=s.length;
+//   a=Math.max(s.lastIndexOf(' ',b), s.lastIndexOf('/',b));
+//   b=s.lastIndexOf(':',b);
+//   s=s.substring(a+1,b);
+//   return s;
+// }
+//
+// console.log = function(data1, data2, data3, data4) {
+//   logger.info(data1, data2, data3, data4);
+// }
+
 mongoose.Promise = bluebird
 
 import { dirname } from 'path';
@@ -30,11 +92,66 @@ const io = socketIO(server)
 dotenv.config()
 
 global.window = {}; // Temporarily define window for server-side
-import './clientSideEventMock.js'
+import './serverGame/clientSideEventMock.js'
 import './client/src/js/game/index.js'
+import './client/src/js/physics/index.js'
+import './client/src/js/utils/utils.js'
+import './client/src/js/page/loop.js'
+import './serverGame/index.js'
+import LocalStorage from 'node-localstorage'
 
+global.localStorage = new LocalStorage.LocalStorage('./scratch');
 if(process.env.ISHOST) {
-  console.log('IM HOSTING BABE')
+  global.PAGE = {
+    role: {
+      isHost: true,
+      isAdmin: true,
+    },
+    establishRoleFromQueryAndHero: () => {},
+    logRole: () => {
+      console.log(global.PAGE.role)
+    }
+  }
+
+  //BS FOR CLIENT CRAP
+  global.MAP = {
+    camera: {
+      setLimit: () => {}
+    }
+  }
+  global.user = {
+    isServer: true,
+    firstName: "Server",
+    lastName: "McServer",
+  }
+  global.addEventListener = () => {}
+  global.removeEventListener = () => {}
+
+
+  global.local.emit('onPlayerIdentified')
+  global.socket = {
+    emit: (eventName, arg1, arg2, arg3, arg4, arg5, arg6) => {
+      global.local.emit(eventName, arg1, arg2, arg3, arg4, arg5, arg6)
+    },
+    on: (eventName, arg1, arg2, arg3, arg4, arg5, arg6) => {
+      global.local.on(eventName, arg1, arg2, arg3, arg4, arg5, arg6)
+    }
+  }
+
+  socketEvents(fs,
+    {
+      emit: (eventName, arg1, arg2, arg3, arg4, arg5, arg6) => {
+        global.local.emit(eventName, arg1, arg2, arg3, arg4, arg5, arg6)
+        io.emit(eventName, arg1, arg2, arg3, arg4, arg5, arg6)
+      },
+      on: (eventName, arg1, arg2, arg3, arg4, arg5, arg6) => {
+        io.on(eventName, arg1, arg2, arg3, arg4, arg5, arg6)
+      }
+    },
+    global.local
+  )
+
+  global.isServerHost = true
 }
 
 const mongoOpts = {
@@ -203,7 +320,12 @@ const authenticate = async (socket, data, callback) => {
 
 const postAuthenticate = socket => {
   socket.emit('authenticated', {cookie: jwt.sign(socket.user.email, process.env.JWT_KEY), user: socket.user})
-  socketEvents(fs, io, socket)
+  socketEvents(fs, { emit: (eventName, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8) => {
+    if(global.isServerHost) {
+      global.local.emit(eventName, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8)
+    }
+    io.emit(eventName, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8)
+  }}, socket)
 }
 
 // Configure Authentication

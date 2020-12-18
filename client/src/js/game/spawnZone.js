@@ -67,16 +67,11 @@ global.getSubObjectFromChances = function(mainObject, guestObject, ownerObject) 
 
   const availableSubObjects = {...global.subObjectLibrary.addGameLibrary(), ...ownerObject.subObjects}
 
-  console.log(availableSubObjects)
-
   if(!availableSubObjects) return
 
   subObjectNames = subObjectNames.filter((name) => {
-    console.log(name, availableSubObjects[name])
     return availableSubObjects[name]
   })
-
-  console.log(subObjectNames)
 
   if(subObjectNames.length === 1) return availableSubObjects[subObjectNames[0]]
 

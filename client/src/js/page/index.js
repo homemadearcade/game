@@ -148,7 +148,7 @@ class Page{
       global.local.emit('onPlayerIdentified')
       PAGE.askCurrentGame((game, heroSummonType) => {
         GAME.loadGridWorldObjectsCompendiumState(game)
-        GAME.heros = []
+        GAME.heros = {}
         HERO.addHero(HERO.summonFromGameData({ id: HERO.id, heroSummonType }))
         global.local.emit('onGameLoaded')
       })
@@ -174,7 +174,7 @@ class Page{
       global.local.emit('onPlayerIdentified')
       PAGE.askCurrentGame((game, heroSummonType) => {
         GAME.loadGridWorldObjectsCompendiumState(game)
-        GAME.heros = []
+        GAME.heros = {}
         HERO.addHero(HERO.summonFromGameData({ id: HERO.id, heroSummonType }))
         global.local.emit('onGameLoaded')
       })

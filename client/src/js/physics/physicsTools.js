@@ -1,5 +1,5 @@
 import { Polygon } from 'collisions';
-import { testHookCondition } from '../game/hooks'
+import { testHookCondition } from '../game/hooks.js'
 
 function shouldCheckConstructPart(part) {
   if(PHYSICS.correctedConstructs[part.ownerId]) return false

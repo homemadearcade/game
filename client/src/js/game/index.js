@@ -91,7 +91,7 @@ class Game{
       }
 
       GAME.gameState._pausedByHost = false
-      if(GAME.heros[HERO.id].flags.paused) GAME.gameState._pausedByHost = true
+      if(GAME.heros[HERO.id] && GAME.heros[HERO.id].flags.paused) GAME.gameState._pausedByHost = true
       // remove second part when a player can host a multiplayer game
       if(!GAME.gameState.paused && !GAME.gameState._pausedByHost) {
         //// PREPARE ALL
@@ -287,8 +287,11 @@ class Game{
 
     GAME.loadGridWorldObjectsCompendiumState(game)
 
+    console.log(game)
     // if you are a player and you dont already have a hero from the server ask for one
+    console.log(GAME.heros)
     if(GAME.heros[HERO.id]) {
+      console.log('?why not')
       global.local.emit('onHeroFound', GAME.heros[HERO.id])
     } else {
       if(PAGE.role.isHost) global.user.isHost = true
@@ -302,6 +305,7 @@ class Game{
     if(GAME.grid.terrainData) {
       global.addTerrainDataToPhysics(GAME.grid.terrainData)
     }
+    if(!GAME.grid.nodeData) GAME.grid.nodeData = {}
     global.local.emit('onGridLoaded')
 
     if(game.theme) GAME.theme = game.theme
@@ -399,7 +403,7 @@ class Game{
 
     // global.local.emit('onWorldLoaded')
     // global.local.emit('onGameStateLoaded')
-    // global.local.emit('onCompendiumLoaded')
+    // // global.local.emit('onCompendiumLoaded')
     // global.local.emit('onObjectsLoaded')
     // global.local.emit('onGameHeroLoaded')
   }
