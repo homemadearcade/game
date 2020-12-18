@@ -40,10 +40,6 @@ COMBAT + GOALS + QUESTS
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 --
-
-Basically sprites should be able to be OVER TAGGED
-and object should be able to be UNDER TAGGED
-
 children is broken
 if you have a child descriptor, you can remove the parent descriptor
 If you have a descriptor on an object that has a withDescriptors property, do a strict look for a sprite that matches that
@@ -66,6 +62,10 @@ Simple select recommended sprite modal when we have the data...
 
 Green dot in corner if the current editing hero has this option...
   Allow right clikcing to add the option to the heros object
+
+advanced Hero physics for non platformer
+    perheps a decay when where is no input vs a decay when there IS input?
+
 
 ////////////////////////////////
 ////////////////////////////////
