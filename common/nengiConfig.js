@@ -1,6 +1,7 @@
 import n from 'nengi'
 let nengi = n
 if(nengi.default) nengi = nengi.default
+
 import PlayerCharacter from './entity/PlayerCharacter.js'
 import Identity from './message/Identity.js'
 import WeaponFired from './message/WeaponFired.js'

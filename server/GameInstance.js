@@ -14,15 +14,22 @@ import damagePlayer from './damagePlayer.js'
 
 class GameInstance {
     constructor() {
+        this.rawEntitiesByGameId = {}
+        this.smoothEntitiesByGameId = {}
         this.players = new Map()
         this.instance = new nengi.Instance(nengiConfig, { port: 8079 })
-        console.log('nengi waiting to connect')
         this.instance.onConnect((client, clientData, callback) => {
+            const hero = GAME.heros[clientData.fromClient.heroId]
 
+            let rawEntity = this.rawEntitiesByGameId[hero.id]
+            let smoothEntity = this.smoothEntitiesByGameId[hero.id]
+            if(!rawEntity) {
+              rawEntity = new PlayerCharacter()
+              smoothEntity = new PlayerCharacter()
+              this.rawEntitiesByGameId[hero.id] = rawEntity
+              this.smoothEntitiesByGameId[hero.id] = smoothEntity
+            }
             // create a entity for this client
-            const rawEntity = new PlayerCharacter()
-
-            console.log('nengi connected')
 
             // make the raw entity only visible to this client
             const channel = this.instance.createChannel()
@@ -32,7 +39,6 @@ class GameInstance {
             client.channel = channel
 
             // smooth entity is visible to everyone
-            const smoothEntity = new PlayerCharacter()
             smoothEntity.collidable = true
             this.instance.addEntity(smoothEntity)
 
@@ -60,8 +66,8 @@ class GameInstance {
         })
 
         this.instance.onDisconnect(client => {
-            this.instance.removeEntity(client.rawEntity)
-            this.instance.removeEntity(client.smoothEntity)
+            // this.instance.removeEntity(client.rawEntity)
+            // this.instance.removeEntity(client.smoothEntity)
             client.channel.destroy()
         })
 

@@ -434,7 +434,6 @@ import 'ace-builds/src-noconflict/mode-json';
 import './js/utils/utils.js'
 import './js/page/index.js'
 import './js/game/index.js'
-import './js/game/client.js'
 import './js/arcade/index.js'
 import './js/constructEditor/index.js'
 import './js/pathEditor/index.js'

@@ -149,9 +149,7 @@ class Simulator {
         this.input.releaseKeys()
 
         if (this.myRawEntity) {
-
             // movement
-            console.log(input)
             const moveCommand = new MoveCommand(input.w, input.a, input.s, input.d, rotation, delta)
             this.client.addCommand(moveCommand)
             this.myRawEntity.processMove(moveCommand, this.obstacles)

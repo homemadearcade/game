@@ -6,19 +6,28 @@ import nengiConfig from '../../../../common/nengiConfig.js'
 import Simulator from './Simulator.js'
 
 class GameClient {
-    constructor() {
-        this.client = new nengi.Client(nengiConfig, 100)
-        this.simulator = new Simulator(this.client)
+    onFirstPageGameLoaded = () => {
+      this.client = new nengi.Client(nengiConfig, 100)
+      this.simulator = new Simulator(this.client)
 
-        this.client.onConnect(res => {
-            console.log('onConnect response:', res)
-        })
+      this.client.onConnect(res => {
+          console.log('onConnect response:', res)
+      })
 
-        this.client.onClose(() => {
-            console.log('connection closed')
-        })
+      this.client.onClose(() => {
+          console.log('connection closed')
+      })
 
-        this.client.connect('ws://localhost:8079')
+      this.client.connect('ws://localhost:8079', { heroId: HERO.id })
+    }
+
+    onRender = () => {
+      let previous = performance.now()
+      let tick = 0
+      let now = performance.now()
+      let delta = (now - previous) / 1000
+      previous = now
+      this.update(delta, tick++, now)
     }
 
     update(delta, tick, now) {
