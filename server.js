@@ -103,7 +103,7 @@ import './client/src/js/utils/utils.js'
 import './client/src/js/page/loop.js'
 import './server/index.js'
 
-if(process.env.ISHOST) {
+if(process.env.ISHOST === 'true') {
   global.PAGE = {
     role: {
       isHost: true,
@@ -146,6 +146,7 @@ if(process.env.ISHOST) {
 
   global.local.emit('onPageLoaded')
   global.local.emit('onPlayerIdentified')
+  console.log('but somehow now..')
   global.socket = {
     emit: (eventName, arg1, arg2, arg3, arg4, arg5, arg6) => {
       global.local.emit(eventName, arg1, arg2, arg3, arg4, arg5, arg6)
