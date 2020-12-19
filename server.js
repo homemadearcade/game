@@ -132,6 +132,8 @@ if(process.env.ISHOST) {
   global.PIXIMAP = {
     deleteObject: () => {}
   }
+  global.CONSTRUCTEDITOR = {}
+  global.PATHEDITOR = {}
 
   global.popoverOpen = {},
   global.user = {

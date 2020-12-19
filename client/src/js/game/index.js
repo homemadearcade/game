@@ -697,7 +697,7 @@ class Game{
 
       GAME.heroList.forEach((hero) => {
         if(!options.dontRespawn) HERO.spawn(hero)
-        global.emitGameEvent('onHeroAwake', hero)
+        // if(PAGE.role.isHost)  global.emitGameEvent('onHeroAwake', hero)
         hero.questState = {}
         if(hero.quests) {
           Object.keys(hero.quests).forEach((questId) => {
@@ -710,14 +710,14 @@ class Game{
         }
         if(hero.subObjects) {
           Object.keys(hero.subObjects).forEach((subObjectName) => {
-            global.emitGameEvent('onObjectAwake', hero.subObjects[subObjectName])
+            // if(PAGE.role.isHost) global.emitGameEvent('onObjectAwake', hero.subObjects[subObjectName])
           })
         }
       })
 
       GAME.objects.forEach((object) => {
         if(!options.dontRespawn) OBJECTS.respawn(object)
-        global.emitGameEvent('onObjectAwake', object)
+        // if(PAGE.role.isHost) global.emitGameEvent('onObjectAwake', object)
         if(object.tags.talkOnStart) {
           GAME.heroList.forEach((hero) => {
             onTalk(hero, object, {}, [], [], { fromStart: true })
@@ -730,7 +730,7 @@ class Game{
         }
         if(object.subObjects) {
           Object.keys(object.subObjects).forEach((subObjectName) => {
-            global.emitGameEvent('onObjectAwake', object.subObjects[subObjectName])
+            // if(PAGE.role.isHost) global.emitGameEvent('onObjectAwake', object.subObjects[subObjectName])
           })
         }
       })
@@ -1279,6 +1279,7 @@ class Game{
       let cached = GAME.modCache[object.id]
       cached.x = object.x
       cached.y = object.y
+      return cached
     }
 
     let activeMods = GAME.gameState.activeMods[object.id]

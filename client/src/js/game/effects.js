@@ -612,7 +612,7 @@ function processEffect(effect, effected, effector, ownerObject) {
       })
 
       GAME.objects.forEach((object) => {
-        global.emitGameEvent('onObjectAwake', object)
+        // global.emitGameEvent('onObjectAwake', object)
         if(object.tags.talkOnStart) {
           GAME.heroList.forEach((hero) => {
             onTalk(hero, object, {}, [], [], { fromStart: true })
@@ -623,11 +623,11 @@ function processEffect(effect, effected, effector, ownerObject) {
             startQuest(hero, object.questGivingId)
           })
         }
-        if(object.subObjects) {
-          Object.keys(object.subObjects).forEach((subObjectName) => {
-            global.emitGameEvent('onObjectAwake', object.subObjects[subObjectName])
-          })
-        }
+        // if(object.subObjects) {
+        //   Object.keys(object.subObjects).forEach((subObjectName) => {
+        //     global.emitGameEvent('onObjectAwake', object.subObjects[subObjectName])
+        //   })
+        // }
       })
       global.emitGameEvent('onGameStarted')
     })

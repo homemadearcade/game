@@ -108,6 +108,7 @@ var mainLoop = function () {
 ///////////////////////////////
 ///////////////////////////////
 
+let ticks = 0
 function update(delta) {
   global.local.emit('onUpdate', delta)
 

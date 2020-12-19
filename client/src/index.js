@@ -1,4 +1,23 @@
 /*
+
+REALLY the main upgrade I need to take the engine any further is seperate the game client and the game server using nenji
+I can download and use the nenji boiler plate that was created and I can make this work 100%...
+OTher than that I can keep all my crappy pixi code and physics code it seems
+Thats a great way to get started on the v3 ...
+
+The main problem is that Nenji is OBJECT ORIENTED..vs functional
+
+Thats going to be the most difficult thing you encounter I believe
+
+However other than that I believe you can pretty much deep all your rendering stuff, editing stuff, physics, etc
+its that the core INFRASTUCTURE is going to start from scratch but thats a GREAT thing because this one is 100x better..
+
+I think its best to plug it into the current app stuff with the PAGE and the USER and PLAYER idenfitifying stuff AND THE PIXI MAP
+but when it comes to game objects themselves and editing them, do that one step at a time
+also user input, do that one step at a time...
+
+the only system I think is questionable is the PHYSICS system, im not sure if that will work with nenji...
+
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
