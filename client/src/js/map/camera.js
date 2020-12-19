@@ -58,7 +58,7 @@ function camera() {
   }
 
   this.set = function(hero) {
-    if(!hero) return 
+    if(!hero) return
     let editorZoom = EDITOR.preferences.zoomMultiplier
     if(GAME.gameState.started && !PAGE.role.isAdmin) editorZoom = 0
 

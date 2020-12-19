@@ -140,6 +140,8 @@ class Page{
 
     AUDIO.loadData()
 
+    global.local.emit('onPageLoaded')
+
     if(PAGE.getParameterByName('arcadeMode')) {
       events.establishALocalHost()
       PAGE.establishRoleFromQueryOnly()

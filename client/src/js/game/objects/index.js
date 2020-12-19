@@ -703,7 +703,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
       } else if(isPlatform) {
         newObject = {
           x: hero.x - (GAME.grid.nodeSize * 4),
-          y: gridUtil.getRandomGridWithinXY(hero.y + (GAME.grid.nodeSize * 8), hero.y + (GAME.grid.nodeSize * 2)),
+          y: gridUtil.getRandomGridWithinXY(hero.y + (GAME.grid.nodeSize * 8), hero.y + (GAME.grid.nodeSize * 6)),
           width: GAME.grid.nodeSize * 8,
           height: GAME.grid.nodeSize,
         }

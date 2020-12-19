@@ -265,15 +265,15 @@ function processSequence(sequence) {
       }
 
       const previousItem = sequence.itemMap[sequence.previousItemId]
-      if(previousItem.effectName && previousItem.effectName.indexOf('add') >= 0) {
-        if(!OBJECTS.anticipatedForAdd) {
-          sequence.currentItemId = previousItem.next
-        } else {
+      if(previousItem.effectName && (previousItem.effectName.indexOf('Add') > -1 || previousItem.effectName && previousItem.effectName.indexOf('add') > -1)) {
+        if(OBJECTS.anticipatedForAdd && OBJECTS.anticipatedForAdd.length) {
           const removeEventListener = global.local.on('onAnticipateCompleted', (mainObject) => {
             resolveWaiting()
             removeEventListener()
           })
           sequence.eventListeners.push(removeEventListener)
+        } else {
+          resolveWaiting()
         }
       }
 

@@ -1,4 +1,4 @@
-global.local.on('onUserIdentified', () => {
+global.local.on('onPageLoaded', () => {
   global.heroLibrary = {
     admin: {
       useGameDefault: false,

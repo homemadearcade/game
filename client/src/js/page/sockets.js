@@ -258,7 +258,7 @@ function init() {
   })
 
   // EVERYONE CALLS THIS
-  global.socket.on('onAddObjects', (objectsAdded) => {
+  global.socket.on('onNetworkAddObjects', (objectsAdded) => {
     global.local.emit('onNetworkAddObjects', objectsAdded)
   })
 

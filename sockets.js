@@ -117,12 +117,14 @@ function socketEvents(fs, io, socket, options = { arcadeMode: false }){
     getGame(id, (game) => {
       global.currentGame = JSON.parse(JSON.stringify(game))
       io.emit('onSetGame', game)
+      if(global.isServerHost) global.local.emit('onServerSetCurrentGame', game)
     })
   })
 
   socket.on('setGameJSON', (game) => {
     global.currentGame = JSON.parse(JSON.stringify(game))
     io.emit('onSetGameJSON', game)
+    if(global.isServerHost) global.local.emit('onServerSetCurrentGame', game)
   })
 
   // this is for when we are editing and we want to send this world to all people
@@ -249,10 +251,10 @@ function socketEvents(fs, io, socket, options = { arcadeMode: false }){
     io.emit('onDeleteObject', object)
   })
   socket.on('askObjects', () => {
-    socket.emit('onAddObjects', global.currentGame.objects)
+    socket.emit('onNetworkAddObjects', global.currentGame.objects)
   })
   socket.on('addObjects', (addedobjects) => {
-    io.emit('onAddObjects', addedobjects)
+    io.emit('onNetworkAddObjects', addedobjects)
   })
 
 

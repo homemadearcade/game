@@ -4,8 +4,20 @@ class GAME_HOST {
   onServerSetCurrentGame(game) {
     console.log(game.heros)
 
+    const prevGame = GAME.id
+    let prevHeros
+    if(prevGame) {
+      prevHeros = GAME.heros
+      GAME.unload()
+    }
+
     GAME.loadGridWorldObjectsCompendiumState(game)
-    GAME.heros = {}
+    if(!prevGame) GAME.heros = {}
+    if(prevHeros) {
+      GAME.heros = prevHeros
+      GAME.loadHeros(GAME)
+    }
+
     // HERO.addHero(HERO.summonFromGameData({ id: HERO.id,'default' }))
     global.local.emit('onGameLoaded')
     // console.log(GAME.heroList)
@@ -16,8 +28,6 @@ class GAME_HOST {
       global.startGameLoop()
       global.local.emit('onGameLoopStarted')
       PAGE.loopStarted = true
-    }
-    if(!PAGE.gameLoaded) {
       global.local.emit('onFirstPageGameLoaded')
     }
   }

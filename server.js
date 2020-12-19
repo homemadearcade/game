@@ -92,15 +92,17 @@ const io = socketIO(server)
 dotenv.config()
 
 global.window = {}; // Temporarily define window for server-side
+import LocalStorage from 'node-localstorage'
+global.localStorage = new LocalStorage.LocalStorage('./scratch');
+
 import './serverGame/clientSideEventMock.js'
 import './client/src/js/game/index.js'
+import './client/src/js/editorUI/editor.js'
 import './client/src/js/physics/index.js'
 import './client/src/js/utils/utils.js'
 import './client/src/js/page/loop.js'
 import './serverGame/index.js'
-import LocalStorage from 'node-localstorage'
 
-global.localStorage = new LocalStorage.LocalStorage('./scratch');
 if(process.env.ISHOST) {
   global.PAGE = {
     role: {
@@ -110,8 +112,12 @@ if(process.env.ISHOST) {
     establishRoleFromQueryAndHero: () => {},
     logRole: () => {
       console.log(global.PAGE.role)
+    },
+    closeLog: () => {
+
     }
   }
+  global.constellationDistance = 4000
 
   //BS FOR CLIENT CRAP
   global.MAP = {
@@ -122,7 +128,11 @@ if(process.env.ISHOST) {
     popoverInstances: [],
     closePopover: () => {}
   },
-  
+
+  global.PIXIMAP = {
+    deleteObject: () => {}
+  }
+
   global.popoverOpen = {},
   global.user = {
     isServer: true,
@@ -132,7 +142,7 @@ if(process.env.ISHOST) {
   global.addEventListener = () => {}
   global.removeEventListener = () => {}
 
-
+  global.local.emit('onPageLoaded')
   global.local.emit('onPlayerIdentified')
   global.socket = {
     emit: (eventName, arg1, arg2, arg3, arg4, arg5, arg6) => {
@@ -157,6 +167,8 @@ if(process.env.ISHOST) {
   )
 
   global.isServerHost = true
+
+  console.log(global.modLibrary)
 }
 
 const mongoOpts = {

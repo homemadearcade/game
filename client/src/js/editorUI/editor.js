@@ -1,30 +1,31 @@
-import gridUtil from '../utils/grid'
-import Swal from 'sweetalert2/src/sweetalert2.js';
+import gridUtil from '../utils/grid.js'
 import axios from 'axios';
 
 class Editor {
   constructor() {
-    this.preferences = {
-      zoomMultiplier: 0,
-      creatorColorSelected: null,
-      showAdminGrid: true,
-      selectable: {
-        invisible: false,
-        // darkness: false,
-        background: true,
-        foreground: true,
-        // hero: false,
-        // structure: false,
-        constructParts: true,
-        subObjects: true,
+    global.local.on('onPageLoaded', () => {
+      this.preferences = {
+        zoomMultiplier: 0,
+        creatorColorSelected: null,
+        showAdminGrid: true,
+        selectable: {
+          invisible: false,
+          // darkness: false,
+          background: true,
+          foreground: true,
+          // hero: false,
+          // structure: false,
+          constructParts: true,
+          subObjects: true,
+        }
       }
-    }
-    this.zoomDelta = .1250
+      this.zoomDelta = .1250
 
-    const storedPreferences = localStorage.getItem('editorPreferences')
-    if(storedPreferences && storedPreferences != 'undefined' && storedPreferences != 'null') {
-      Object.assign(this.preferences,JSON.parse(storedPreferences))
-    }
+      const storedPreferences = localStorage.getItem('editorPreferences')
+      if(storedPreferences && storedPreferences != 'undefined' && storedPreferences != 'null') {
+        Object.assign(this.preferences,JSON.parse(storedPreferences))
+      }
+    })
   }
 
   onPlayerIdentified() {
@@ -435,16 +436,19 @@ class Editor {
     }
 
     if(propName === 'larger') {
-      const hero = GAME.heros[HERO.editingId || HERO.id]
+      let hero = GAME.heros[HERO.editingId || HERO.id]
+      if(!hero) hero = GAME.heroList[0]
       sendHeroUpdate({ zoomMultiplier: hero.zoomMultiplier + EDITOR.zoomDelta })
     }
     if(propName === 'smaller') {
-      const hero = GAME.heros[HERO.editingId || HERO.id]
+      let hero = GAME.heros[HERO.editingId || HERO.id]
+      if(!hero) hero = GAME.heroList[0]
       sendHeroUpdate({ zoomMultiplier: hero.zoomMultiplier - EDITOR.zoomDelta })
     }
 
     if(propName === 'default') {
-      const hero = GAME.heros[HERO.editingId || HERO.id]
+      let hero = GAME.heros[HERO.editingId || HERO.id]
+      if(!hero) hero = GAME.heroList[0]
       sendHeroUpdate({ zoomMultiplier: 1.875 })
     }
   }
@@ -478,18 +482,21 @@ class Editor {
     }
 
     if(propName === 'larger') {
-      const hero = GAME.heros[HERO.editingId || HERO.id]
+      let hero = GAME.heros[HERO.editingId || HERO.id]
+      if(!hero) hero = GAME.heroList[0]
       hero.zoomMultiplier += EDITOR.zoomDelta
       sendHerosUpdate({ zoomMultiplier: hero.zoomMultiplier })
     }
     if(propName === 'smaller') {
-      const hero = GAME.heros[HERO.editingId || HERO.id]
+      let hero = GAME.heros[HERO.editingId || HERO.id]
+      if(!hero) hero = GAME.heroList[0]
       hero.zoomMultiplier -= EDITOR.zoomDelta
       sendHerosUpdate({ zoomMultiplier: hero.zoomMultiplier })
     }
 
     if(propName === 'default') {
-      const hero = GAME.heros[HERO.editingId || HERO.id]
+      let hero = GAME.heros[HERO.editingId || HERO.id]
+      if(!hero) hero = GAME.heroList[0]
       hero.zoomMultiplier = 1.875
       sendHerosUpdate({ zoomMultiplier: 1.875 })
     }
@@ -568,7 +575,8 @@ function expandGrid(newObject) {
 }
 
 function getHeroCameraValue() {
-  const hero = GAME.heros[HERO.editingId || HERO.id]
+  let hero = GAME.heros[HERO.editingId || HERO.id]
+  if(!hero) hero = GAME.heroList[0]
   const value = {
     width: HERO.cameraWidth * hero.zoomMultiplier,
     height: HERO.cameraHeight * hero.zoomMultiplier,

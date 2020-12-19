@@ -684,18 +684,24 @@ function processEffect(effect, effected, effector, ownerObject) {
     GAME.gameState.activeMods = {}
   }
 
-  if(effectName === 'stopPrologue') {
-    GAME.gameState.started = false
-    GAME.removeListeners()
-    GAME.gameState.sequenceQueue = []
-    GAME.gameState.activeModList = []
-    GAME.gameState.activeMods = {}
-    GAME.heroList.forEach((hero, i) => {
-      if(hero.triggers) hero.triggers = {}
-      hero.flags.editAllowedWhenGameStarted = false
-    });
-    GAME.library.sequences = {}
-  }
+  // if(effectName === 'stopPrologue') {
+  //   GAME.gameState.started = false
+  //   GAME.removeListeners()
+  //   GAME.gameState.sequenceQueue = []
+  //   GAME.gameState.activeModList = []
+  //   GAME.gameState.activeMods = {}
+  //   GAME.heroList.forEach((hero, i) => {
+  //     Object.keys(hero.triggers || {}).forEach((triggerName) => {
+  //       hero.triggers[triggerName] = null
+  //     })
+  //     hero.flags.editAllowedWhenGameStarted = false
+  //   });
+  //   GAME.library.sequences = {}
+  //   if(global.isServerHost) {
+  //     global.socket.emit('networkUpdateGameState', GAME.gameState)
+  //     global.socket.emit('networkUpdateHeros', GAME.heroList)
+  //   }
+  // }
 
   if(effectName === 'pathfindTo') {
     setPathTarget(effected, effectValue)

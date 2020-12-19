@@ -777,8 +777,10 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
     if(updatedHero.zoomMultiplier && updatedHero.zoomMultiplier !== GAME.heros[updatedHero.id].zoomMultiplier) {
       global.local.emit('onZoomChange', updatedHero.id)
     }
+    console.log(updatedHero)
     HERO.resetReachablePlatformArea(updatedHero)
     global.mergeDeep(GAME.heros[updatedHero.id], updatedHero)
+    console.log('target', GAME.heros[updatedHero.id].animationZoomMultiplier, GAME.heros[updatedHero.id].animationZoomTarget)
   }
 
   onResetHeroToDefault(hero) {

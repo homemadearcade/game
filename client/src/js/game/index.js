@@ -648,7 +648,12 @@ class Game{
           initialGameState.heros[heroId] = GAME.heros[heroId]
         }
       })
-      GAME.loadAndJoin(initialGameState)
+      if(!global.isServerHost) {
+        GAME.loadAndJoin(initialGameState)
+      } else {
+        GAME.loadGridWorldObjectsCompendiumState(initialGameState)
+        GAME.loadHeros(initialGameState)
+      }
       global.local.emit('onGameStopped')
     }, 100)
   }
