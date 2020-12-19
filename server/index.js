@@ -36,7 +36,7 @@ class GAME_HOST {
   }
 
   onUpdate(delta) {
-    // global.nengiGameInstance.update(delta, tick++, Date.now())
+    global.nengiGameInstance.update(delta, tick++, Date.now())
   }
 }
 

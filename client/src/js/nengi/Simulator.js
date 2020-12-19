@@ -33,7 +33,7 @@ class Simulator {
     }
 
     createEntity(entity) {
-        console.log('create entity', entity)
+        console.log('create entity', entity.nid, this.myRawId, entity)
 
         if (entity.protocol.name === 'PlayerCharacter') {
             let newEntity = new PlayerCharacter()
@@ -82,6 +82,10 @@ class Simulator {
             this.myRawId = message.rawId
             this.mySmoothId = message.smoothId
             console.log('identified as', message)
+            const myRawEntity = this.entities.get(this.myRawId)
+            if(myRawEntity) {
+              this.myRawEntity = myRawEntity
+            }
         }
     }
 
@@ -142,12 +146,12 @@ class Simulator {
             rotation = Math.atan2(dy, dx)
         }
 
-
         this.input.releaseKeys()
 
         if (this.myRawEntity) {
 
             // movement
+            console.log(input)
             const moveCommand = new MoveCommand(input.w, input.a, input.s, input.d, rotation, delta)
             this.client.addCommand(moveCommand)
             this.myRawEntity.processMove(moveCommand, this.obstacles)

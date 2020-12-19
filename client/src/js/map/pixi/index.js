@@ -24,7 +24,7 @@ global.PIXIMAP = {
 }
 
 
-PIXIMAP.onResetLiveParticle = function(objectId) {
+PIXIMAP.onResetLiveParticleX = function(objectId) {
   let object = OBJECTS.getObjectOrHeroById(objectId)
   const stage = getGameObjectStage(object)
   const pixiChild = stage.getChildByName(objectId)
@@ -40,7 +40,7 @@ PIXIMAP.onResetLiveParticle = function(objectId) {
   }
 }
 
-PIXIMAP.initializePixiObjectsFromGame = function() {
+PIXIMAP.initializePixiObjectsFromGameX = function() {
   PIXIMAP.shadowStage.removeChildren()
   PIXIMAP.emitterBackgroundStage.removeChildren()
   PIXIMAP.objectStage.removeChildren()
@@ -56,24 +56,24 @@ PIXIMAP.initializePixiObjectsFromGame = function() {
   GAME.objects.forEach((object) => {
     initPixiObject(object)
   })
-  //
-  // if(GAME.objectsById['globalConstructStationaryObstacle']) {
-  //   PIXIMAP.deleteObject(GAME.objectsById['globalConstructStationaryObstacle'])
-  //   initPixiObject(GAME.objectsById['globalConstructStationaryObstacle'])
-  // }
-  //
-  // if(GAME.objectsById['globalConstructStationaryForeground']) {
-  //   PIXIMAP.deleteObject(GAME.objectsById['globalConstructStationaryForeground'])
-  //   initPixiObject(GAME.objectsById['globalConstructStationaryForeground'])
-  // }
-  //
-  // if(GAME.objectsById['globalConstructStationaryBackground']) {
-  //   PIXIMAP.deleteObject(GAME.objectsById['globalConstructStationaryBackground'])
-  //   initPixiObject(GAME.objectsById['globalConstructStationaryBackground'])
-  // }
 
-  // const refFilter = new ShockwaveFilter()
-  // PIXIMAP.hero.filters = [refFilter]
+  if(GAME.objectsById['globalConstructStationaryObstacle']) {
+    PIXIMAP.deleteObject(GAME.objectsById['globalConstructStationaryObstacle'])
+    initPixiObject(GAME.objectsById['globalConstructStationaryObstacle'])
+  }
+
+  if(GAME.objectsById['globalConstructStationaryForeground']) {
+    PIXIMAP.deleteObject(GAME.objectsById['globalConstructStationaryForeground'])
+    initPixiObject(GAME.objectsById['globalConstructStationaryForeground'])
+  }
+
+  if(GAME.objectsById['globalConstructStationaryBackground']) {
+    PIXIMAP.deleteObject(GAME.objectsById['globalConstructStationaryBackground'])
+    initPixiObject(GAME.objectsById['globalConstructStationaryBackground'])
+  }
+
+  const refFilter = new ShockwaveFilter()
+  PIXIMAP.hero.filters = [refFilter]
 
   PIXIMAP.initialized = true
 }
@@ -88,20 +88,20 @@ PIXIMAP.onGameIdentified = function(game) {
     })
   } else if(PIXIMAP.assetsLoaded) {
     // PIXIMAP.initializeDarknessSprites()
-    PIXIMAP.initializePixiObjectsFromGame()
+    // PIXIMAP.initializePixiObjectsFromGame()
   }
 }
 
 
-PIXIMAP.onGameUnload = function() {
+PIXIMAP.onGameUnloadX = function() {
   PIXIMAP.onResetObjects()
 }
 
-PIXIMAP.onGameLoaded = function() {
+PIXIMAP.onGameLoadedX = function() {
   // PIXIMAP.grid = _.cloneDeep(GAME.grid)
 }
 
-PIXIMAP.onFirstPageGameLoaded = function() {
+PIXIMAP.onFirstPageGameLoadedX = function() {
   setInterval(() => {
     // PIXIMAP.initializeDarknessSprites()
     // PIXIMAP.resetDarkness()
@@ -109,26 +109,26 @@ PIXIMAP.onFirstPageGameLoaded = function() {
   }, 200)
 }
 
-PIXIMAP.onGameStarted = function() {
+PIXIMAP.onGameStartedX = function() {
   // PIXIMAP.initializeDarknessSprites()
   // PIXIMAP.resetDarkness()
 }
 
-PIXIMAP.onDeletedHero = function(hero) {
+PIXIMAP.onDeletedHeroX = function(hero) {
   PIXIMAP.deleteObject(hero)
 }
 
-PIXIMAP.onDeleteObject = function(object) {
+PIXIMAP.onDeleteObjectX = function(object) {
   PIXIMAP.deleteObject(object)
 }
 
-PIXIMAP.onDeleteSubObject = function(object, subObjectName) {
+PIXIMAP.onDeleteSubObjectX = function(object, subObjectName) {
   const subObject = object.subObjects[subObjectName]
   if(!subObject) return console.log('already removed subobject from map')
   PIXIMAP.deleteObject(subObject)
 }
 
-PIXIMAP.deleteObject = function(object, stage) {
+PIXIMAP.deleteObjectX = function(object, stage) {
   if(!stage) stage = getGameObjectStage(object)
 
   if(object.constructParts) {
@@ -177,7 +177,7 @@ PIXIMAP.deleteObject = function(object, stage) {
   stage.removeChild(pixiChild)
 }
 
-PIXIMAP.deleteEmitter = function(emitterToDelete) {
+PIXIMAP.deleteEmitterX = function(emitterToDelete) {
   PIXIMAP.objectStage.emitters = PIXIMAP.objectStage.emitters.filter((emitter) => {
     if(emitterToDelete === emitter) {
       return false
@@ -187,11 +187,11 @@ PIXIMAP.deleteEmitter = function(emitterToDelete) {
   emitterToDelete.destroy()
 }
 
-PIXIMAP.addObject = function(object) {
+PIXIMAP.addObjectX = function(object) {
   initPixiObject(object)
 }
 
-PIXIMAP.onResetObjects = function() {
+PIXIMAP.onResetObjectsX = function() {
   PIXIMAP.gridStage.removeChildren()
   PIXIMAP.emitterBackgroundStage.removeChildren()
   PIXIMAP.objectStage.removeChildren()
@@ -202,7 +202,7 @@ PIXIMAP.onResetObjects = function() {
   PIXIMAP.objectStage._reInitialize = true
 }
 
-PIXIMAP.onRender = function(force) {
+PIXIMAP.onRenderX = function(force) {
 
   if(!MAP._isOutOfDate) {
     // console.log('prevented extra render')
@@ -319,7 +319,7 @@ PIXIMAP.onRender = function(force) {
   }
 }
 
-PIXIMAP.resetDarkness = function() {
+PIXIMAP.resetDarknessX = function() {
   if(!PIXIMAP.grid) return
 
   const nodes = GAME.grid.nodes
@@ -337,7 +337,7 @@ PIXIMAP.resetDarkness = function() {
   }
 }
 
-PIXIMAP.updateDarknessSprites = function() {
+PIXIMAP.updateDarknessSpritesX = function() {
   if(!PIXIMAP.grid || !GAME.world.tags.blockLighting) return
 
   const nodes = GAME.grid.nodes
@@ -423,7 +423,7 @@ PIXIMAP.updateDarknessSprites = function() {
   }
 }
 
-PIXIMAP.initializeDarknessSprites = function() {
+PIXIMAP.initializeDarknessSpritesX = function() {
   if(!GAME.world.tags.blockLighting) return
 
   PIXIMAP.shadowStage.removeChildren()
@@ -453,7 +453,7 @@ PIXIMAP.initializeDarknessSprites = function() {
   }
 }
 
-PIXIMAP.initBackgroundSprite = function(node, nodeSprite) {
+PIXIMAP.initBackgroundSpriteX = function(node, nodeSprite) {
   if(!nodeSprite) {
     return
   }
@@ -469,7 +469,7 @@ PIXIMAP.initBackgroundSprite = function(node, nodeSprite) {
   return backgroundSprite
 }
 
-PIXIMAP.onUpdateGrid = function() {
+PIXIMAP.onUpdateGridX = function() {
   // PIXIMAP.grid = _.cloneDeep(GAME.grid)
 
 
@@ -487,7 +487,7 @@ PIXIMAP.onUpdateGrid = function() {
   PIXIMAP.updateGridSprites()
 }
 
-PIXIMAP.onUpdateGridNode = function(x, y, update) {
+PIXIMAP.onUpdateGridNodeX = function(x, y, update) {
   // const nodes = GAME.grid.nodes
   // if(nodes[x] && nodes[x][y]) {
   //   Object.assign(nodes[x][y], update)
@@ -495,7 +495,7 @@ PIXIMAP.onUpdateGridNode = function(x, y, update) {
   PIXIMAP.updateGridSprites()
 }
 
-PIXIMAP.setTerrainColor = function(nodeData, backgroundSprite) {
+PIXIMAP.setTerrainColorX = function(nodeData, backgroundSprite) {
   if(nodeData.elevationType) {
     // const prop = nodeData.elevation.toFixed(2)
 
@@ -508,7 +508,7 @@ PIXIMAP.setTerrainColor = function(nodeData, backgroundSprite) {
   }
 }
 
-PIXIMAP.updateGridSprites = function() {
+PIXIMAP.updateGridSpritesX = function() {
   // if(!PIXIMAP.grid) return
 
   const nodes = GAME.grid.nodes
@@ -588,7 +588,7 @@ PIXIMAP.updateGridSprites = function() {
 }
 
 // PIXIMAP.fakeObjectAnimations = []
-PIXIMAP.onFakeObjectAnimation = function (type, object) {
+PIXIMAP.onFakeObjectAnimationX = function (type, object) {
   if(type === 'groundDisturbanceRight') {
     const landEmitter = initEmitter(object, type, { matchObjectColor: true, useUpdateOwnerPos: true }, { hasNoOwner: true })
     setTimeout(() => {
@@ -603,7 +603,7 @@ PIXIMAP.onFakeObjectAnimation = function (type, object) {
   }
 }
 
-PIXIMAP.onObjectAnimation = function(type, objectId, options = {}) {
+PIXIMAP.onObjectAnimationX = function(type, objectId, options = {}) {
   let object = OBJECTS.getObjectOrHeroById(objectId)
 
   if(!options) options = {}
@@ -683,36 +683,36 @@ PIXIMAP.onObjectAnimation = function(type, objectId, options = {}) {
   // Fade to Color
 }
 
-PIXIMAP.onConstructEditorClose = function() {
+PIXIMAP.onConstructEditorCloseX = function() {
   setTimeout(() => {
     resetConstructParts()
   },  50)
 }
 
-PIXIMAP.onConstructEditorStart = function() {
+PIXIMAP.onConstructEditorStartX = function() {
   MAP.closeAllPopovers()
   resetConstructParts()
   PIXIMAP.deleteObject(OBJECTS.getObjectOrHeroById(CONSTRUCTEDITOR.objectId))
 }
-PIXIMAP.onPathEditorClose = function() {
+PIXIMAP.onPathEditorCloseX = function() {
   setTimeout(() => {
     resetConstructParts()
   },  50)
 }
 
-PIXIMAP.onPathEditorStart = function() {
+PIXIMAP.onPathEditorStartX = function() {
   MAP.closeAllPopovers()
   resetConstructParts()
 }
 
 PIXIMAP.cleanUpMapAndAskPixiToSendGameReady = function() {
   setTimeout(() => {
-    MAP.camera.set(GAME.heros[HERO.id])
-    // PIXIMAP.initializeDarknessSprites()
-    PIXIMAP.initializePixiObjectsFromGame()
-    PIXIMAP.updateGridSprites()
-    resetConstructParts()
-    PIXIMAP.onRender(true)
+    // MAP.camera.set(GAME.heros[HERO.id])
+    // // PIXIMAP.initializeDarknessSprites()
+    // PIXIMAP.initializePixiObjectsFromGame()
+    // PIXIMAP.updateGridSprites()
+    // resetConstructParts()
+    // PIXIMAP.onRender(true)
     global.local.emit('onGameReady')
   }, 100)
 }
@@ -741,16 +741,16 @@ function resetConstructParts() {
     }
   })
 }
-PIXIMAP.resetConstructParts = resetConstructParts
+PIXIMAP.resetConstructPartsX = resetConstructParts
 
-PIXIMAP.onConstellationAnimationStart = function() {
+PIXIMAP.onConstellationAnimationStartX = function() {
   PIXIMAP.backgroundOverlay.isAnimatingColor = true
   PIXIMAP.shadowStage.visible = false
   const example = ease.add(PIXIMAP.backgroundOverlay, { blend: 0x000000 }, { duration: 1000, ease: 'linear' })
   example.once('complete', () => PIXIMAP.backgroundOverlay.tint = 0x000000)
 }
 
-PIXIMAP.onConstellationAnimationEnd = function() {
+PIXIMAP.onConstellationAnimationEndX = function() {
   const example = ease.add(PIXIMAP.backgroundOverlay, { blend: getHexColor(GAME.world.backgroundColor) }, { duration: 1000, ease: 'linear' })
   example.once('complete', () => {
     PIXIMAP.backgroundOverlay.tint = getHexColor(GAME.world.backgroundColor)
@@ -761,7 +761,7 @@ PIXIMAP.onConstellationAnimationEnd = function() {
   })
 }
 
-PIXIMAP.downloadAsImage = function() {
+PIXIMAP.downloadAsImageX = function() {
   download_sprite_as_png(PIXIMAP.app.renderer, PIXIMAP.app.stage, 'mapimage.png')
 }
 
@@ -776,7 +776,7 @@ function download_sprite_as_png(renderer, sprite, fileName) {
   a.remove();
 }
 
-PIXIMAP.convertCanvasImageToFile = function(cb) {
+PIXIMAP.convertCanvasImageToFileX = function(cb) {
   const renderer = PIXIMAP.app.renderer
   const sprite = PIXIMAP.app.stage
   const name = `piximapimage-${global.uniqueID()}.png`
@@ -794,7 +794,7 @@ PIXIMAP.convertCanvasImageToFile = function(cb) {
   urltoFile(dataURI, name, 'image/png').then(function(file){ cb(file) });
 }
 
-PIXIMAP.snapCamera = function(name) {
+PIXIMAP.snapCameraX = function(name) {
   const prevTint = PIXIMAP.cameraOverlay.tint
   PIXIMAP.cameraOverlay.tint = 0xFFFFFF
   PIXIMAP.cameraOverlay.alpha = 1
@@ -808,7 +808,7 @@ PIXIMAP.snapCamera = function(name) {
 
 }
 
-PIXIMAP.getShadowBoundaries = function(hero) {
+PIXIMAP.getShadowBoundariesX = function(hero) {
   const { gridX, gridY, gridWidth, gridHeight } = HERO.getViewBoundaries(hero)
   const padding = GAME.world.chunkRenderPadding || 6
   let startX = gridX - padding
@@ -828,7 +828,7 @@ PIXIMAP.getShadowBoundaries = function(hero) {
   }
 }
 
-PIXIMAP.convertToPartObject = function(gameObject, part) {
+PIXIMAP.convertToPartObjectX = function(gameObject, part) {
   let sprite = part.sprite || 'solidcolorsprite'
   let color = part.color
   if(!sprite && !color) color = GAME.world.defaultObjectColor
@@ -843,7 +843,7 @@ PIXIMAP.convertToPartObject = function(gameObject, part) {
   return partObject
 }
 
-PIXIMAP.makeInvisibleIfRemoved = function(object) {
+PIXIMAP.makeInvisibleIfRemovedX = function(object) {
   if(object.mod().removed && PIXIMAP.childrenById[object.id]) {
     if(object.tags.showXWhenRemoved) {
       PIXIMAP.childrenById[object.id].filters = []

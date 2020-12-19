@@ -202,11 +202,19 @@ global.animateCSS = (element, animation, prefix = 'animate__') =>
   });
 
 global.convertToGameXY = function(event) {
-  var rect = PIXIMAP.app.view.getClientRects()[0];
-  return {
-    x: event.clientX - rect.left,
-    y: event.clientY - rect.top
+  if(PIXIMAP.app && PIXIMAP.app.view) {
+    var rect = PIXIMAP.app.view.getClientRects()[0];
+    return {
+      x: event.clientX - rect.left,
+      y: event.clientY - rect.top
+    }
+  } else {
+    return {
+      x: 0,
+      y: 0
+    }
   }
+
 }
 
 global.getAngle = function(cx, cy, ex, ey, degrees = false) {

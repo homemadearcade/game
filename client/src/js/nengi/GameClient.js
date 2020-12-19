@@ -7,7 +7,6 @@ import Simulator from './Simulator.js'
 
 class GameClient {
     constructor() {
-      console.log(nengi)
         this.client = new nengi.Client(nengiConfig, 100)
         this.simulator = new Simulator(this.client)
 

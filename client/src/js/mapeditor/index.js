@@ -192,7 +192,7 @@ class MapEditor {
 
   onRender() {
     MAP.updatePopovers()
-    render.update()
+    // render.update()
   }
 
   onSendHeroMapEditor(remoteState, heroId) {

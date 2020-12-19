@@ -5,7 +5,9 @@ import Obstacle from './Obstacle.js'
 
 class PIXIRenderer {
     constructor(input, sounds) {
-        this.canvas = document.getElementById('game-canvas')
+        this.canvas = document.createElement("canvas");
+        this.canvas.id = 'nengi-canvas'
+        document.getElementById('GameContainer').appendChild(this.canvas);
 
         this.masterScale = 1
         this.myEntity = null
@@ -13,7 +15,7 @@ class PIXIRenderer {
 
         this.renderer = PIXI.autoDetectRenderer({
             width: window.innerWidth,
-            height: window.innerHeight,
+            height: window.innerWidth/2,
             view: this.canvas,
             antialiasing: false,
             transparent: false,
