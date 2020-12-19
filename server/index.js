@@ -5,8 +5,6 @@ global.HERO.id = 'serverHero'
 let tick = 0
 class GAME_HOST {
   onServerSetCurrentGame(game) {
-    console.log(game.heros)
-
     const prevGame = GAME.id
     let prevHeros
     if(prevGame) {
@@ -35,9 +33,10 @@ class GAME_HOST {
     }
   }
 
-  onUpdate(delta) {
-    global.nengiGameInstance.update(delta, tick++, Date.now())
-  }
+  // // UNCOMMNENT FOR NENGI
+  // onUpdate(delta) {
+  //   // global.nengiGameInstance.update(delta * 1000, tick++, Date.now())
+  // }
 }
 
 global.GAME_HOST = new GAME_HOST()

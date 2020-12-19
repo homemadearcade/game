@@ -5,41 +5,42 @@ import Obstacle from './Obstacle.js'
 
 class PIXIRenderer {
     constructor(input, sounds) {
-        this.canvas = document.createElement("canvas");
-        this.canvas.id = 'nengi-canvas'
-        document.getElementById('GameContainer').appendChild(this.canvas);
-
-        this.masterScale = 1
-        this.myEntity = null
-        this.entities = new Map()
-
-        this.renderer = PIXI.autoDetectRenderer({
-            width: window.innerWidth,
-            height: window.innerWidth/2,
-            view: this.canvas,
-            antialiasing: false,
-            transparent: false,
-            resolution: 1
-        })
-
-        this.stage = new PIXI.Container()
-        this.camera = new PIXI.Container()
-        this.background = new PIXI.Container()
-        this.middleground = new PIXI.Container()
-        this.foreground = new PIXI.Container()
-
-        this.camera.addChild(this.background)
-        this.camera.addChild(this.middleground)
-        this.camera.addChild(this.foreground)
-        this.stage.addChild(this.camera)
-
-        this.background.addChild(new BackgroundGrid())
-
-        window.addEventListener('resize', () => {
-            this.resize()
-        })
-
-        this.resize()
+      // UNCOMMNENT FOR NENGI
+        // this.canvas = document.createElement("canvas");
+        // this.canvas.id = 'nengi-canvas'
+        // document.getElementById('GameContainer').appendChild(this.canvas);
+        //
+        // this.masterScale = 1
+        // this.myEntity = null
+        // this.entities = new Map()
+        //
+        // this.renderer = PIXI.autoDetectRenderer({
+        //     width: window.innerWidth,
+        //     height: window.innerWidth/2,
+        //     view: this.canvas,
+        //     antialiasing: false,
+        //     transparent: false,
+        //     resolution: 1
+        // })
+        //
+        // this.stage = new PIXI.Container()
+        // this.camera = new PIXI.Container()
+        // this.background = new PIXI.Container()
+        // this.middleground = new PIXI.Container()
+        // this.foreground = new PIXI.Container()
+        //
+        // this.camera.addChild(this.background)
+        // this.camera.addChild(this.middleground)
+        // this.camera.addChild(this.foreground)
+        // this.stage.addChild(this.camera)
+        //
+        // this.background.addChild(new BackgroundGrid())
+        //
+        // window.addEventListener('resize', () => {
+        //     this.resize()
+        // })
+        //
+        // this.resize()
     }
 
     drawBulletEnd(alreadyHitPlayer, x, y) {

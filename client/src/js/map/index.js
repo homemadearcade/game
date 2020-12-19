@@ -6,7 +6,7 @@ import constellation from './constellation.js'
 import './pixi/index'
 import { drawShadow } from './shadow.js'
 
-global.MAP = {
+window.MAP = {
   canvas: null,
   ctx: null,
   camera: new Camera()
@@ -19,10 +19,10 @@ MAP.onPlayerIdentified = function() {
 
     function onResize() {
       if(GAME.world.tags && GAME.world.tags.shadow) return
-      let gameElementWidth = global.innerWidth
+      let gameElementWidth = window.innerWidth
       if(PAGE.isLogOpen) gameElementWidth = gameElementWidth * .8
       MAP.canvasMultiplier = gameElementWidth/640;
-      if(MAP.canvasMultiplier > global.maxCanvasMultiplier) MAP.canvasMultiplier = global.maxCanvasMultiplier
+      if(MAP.canvasMultiplier > window.maxCanvasMultiplier) MAP.canvasMultiplier = window.maxCanvasMultiplier
       MAP.canvas.width = 640 * MAP.canvasMultiplier;
       MAP.canvas.height = 320 * MAP.canvasMultiplier;
       // const GC = document.getElementById('GameContainer')
@@ -31,9 +31,9 @@ MAP.onPlayerIdentified = function() {
       // console.log(GC.style)
       constellation.onResize(MAP.ctx)
     }
-    global.addEventListener("resize", onResize);
-    global.local.on('onOpenLog', onResize)
-    global.local.on('onCloseLog', onResize)
+    window.addEventListener("resize", onResize);
+    window.local.on('onOpenLog', onResize)
+    window.local.on('onCloseLog', onResize)
     onResize()
 
   MAP.canvas.id = 'game-canvas'

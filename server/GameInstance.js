@@ -14,6 +14,8 @@ import damagePlayer from './damagePlayer.js'
 
 class GameInstance {
     constructor() {
+      // UNCOMMNENT FOR NENGI
+        return
         this.rawEntitiesByGameId = {}
         this.smoothEntitiesByGameId = {}
         this.players = new Map()
@@ -24,8 +26,8 @@ class GameInstance {
             let rawEntity = this.rawEntitiesByGameId[hero.id]
             let smoothEntity = this.smoothEntitiesByGameId[hero.id]
             if(!rawEntity) {
-              rawEntity = new PlayerCharacter()
-              smoothEntity = new PlayerCharacter()
+              rawEntity = new PlayerCharacter({heroId: hero.id})
+              smoothEntity = new PlayerCharacter({heroId: hero.id})
               this.rawEntitiesByGameId[hero.id] = rawEntity
               this.smoothEntitiesByGameId[hero.id] = smoothEntity
             }

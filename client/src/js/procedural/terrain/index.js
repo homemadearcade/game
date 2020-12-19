@@ -1,6 +1,6 @@
-import { Noise } from 'noisejs'
-import { viewNoiseData } from './modals'
-import gridUtil from '../../utils/grid'
+import noise from 'noisejs'
+import { viewNoiseData } from './modals.js'
+import gridUtil from '../../utils/grid.js'
 
 // import Grid from './drid'
 

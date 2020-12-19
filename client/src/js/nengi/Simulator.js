@@ -35,8 +35,9 @@ class Simulator {
     createEntity(entity) {
         console.log('create entity', entity.nid, this.myRawId, entity)
 
+        console.log(entity.heroId)
         if (entity.protocol.name === 'PlayerCharacter') {
-            let newEntity = new PlayerCharacter()
+            let newEntity = new PlayerCharacter(entity)
             Object.assign(newEntity, entity)
             this.entities.set(newEntity.nid, newEntity)
 

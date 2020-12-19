@@ -5,30 +5,35 @@ if(nengi.default) nengi = nengi.default
 import nengiConfig from '../../../../common/nengiConfig.js'
 import Simulator from './Simulator.js'
 
+let previous = performance.now()
+let tick = 0
+
 class GameClient {
-    onFirstPageGameLoaded = () => {
-      this.client = new nengi.Client(nengiConfig, 100)
-      this.simulator = new Simulator(this.client)
+  // UNCOMMNENT FOR NENGI
 
-      this.client.onConnect(res => {
-          console.log('onConnect response:', res)
-      })
+    // onFirstPageGameLoaded = () => {
+    //   this.client = new nengi.Client(nengiConfig, 100)
+    //   this.simulator = new Simulator(this.client)
+    //
+    //   this.client.onConnect(res => {
+    //       console.log('onConnect response:', res)
+    //   })
+    //
+    //   this.client.onClose(() => {
+    //       console.log('connection closed')
+    //   })
+    //
+    //   this.client.connect('ws://localhost:8079', { heroId: HERO.id })
+    // }
 
-      this.client.onClose(() => {
-          console.log('connection closed')
-      })
+    // UNCOMMNENT FOR NENGI
 
-      this.client.connect('ws://localhost:8079', { heroId: HERO.id })
-    }
-
-    onRender = () => {
-      let previous = performance.now()
-      let tick = 0
-      let now = performance.now()
-      let delta = (now - previous) / 1000
-      previous = now
-      this.update(delta, tick++, now)
-    }
+    // onRender = () => {
+      // let now = performance.now()
+      // let delta = (now - previous) / 1000
+      // previous = now
+      // this.update(delta, tick++, now)
+    // }
 
     update(delta, tick, now) {
         const network = this.client.readNetwork()
