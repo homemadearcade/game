@@ -1,5 +1,8 @@
+import "./serverMain.js"
+
 global.HERO.id = 'serverHero'
 
+let tick = 0
 class GAME_HOST {
   onServerSetCurrentGame(game) {
     console.log(game.heros)
@@ -32,9 +35,9 @@ class GAME_HOST {
     }
   }
 
-  // onUpdate() {
-  //
-  // }
+  onUpdate(delta) {
+    global.nengiGameInstance.update(delta, tick++, Date.now())
+  }
 }
 
 global.GAME_HOST = new GAME_HOST()

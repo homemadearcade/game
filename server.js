@@ -95,13 +95,13 @@ global.window = {}; // Temporarily define window for server-side
 import LocalStorage from 'node-localstorage'
 global.localStorage = new LocalStorage.LocalStorage('./scratch');
 
-import './serverGame/clientSideEventMock.js'
+import './server/clientSideEventMock.js'
 import './client/src/js/game/index.js'
 import './client/src/js/editorUI/editor.js'
 import './client/src/js/physics/index.js'
 import './client/src/js/utils/utils.js'
 import './client/src/js/page/loop.js'
-import './serverGame/index.js'
+import './server/index.js'
 
 if(process.env.ISHOST) {
   global.PAGE = {

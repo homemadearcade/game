@@ -449,6 +449,8 @@ import './js/liveeditor/index.js'
 import './js/creator/index.js'
 import './js/audio/index.js'
 
+import './js/nengi/clientMain.js'
+
 import './js/procedural/index.js'
 
 import './styles/index.scss'
