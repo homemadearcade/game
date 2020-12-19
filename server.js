@@ -119,8 +119,11 @@ if(process.env.ISHOST) {
       setLimit: () => {},
       clearLimit: () => {}
     },
-    popoverInstances: []
-  }
+    popoverInstances: [],
+    closePopover: () => {}
+  },
+  
+  global.popoverOpen = {},
   global.user = {
     isServer: true,
     firstName: "Server",
