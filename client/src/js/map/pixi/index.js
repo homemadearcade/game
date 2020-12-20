@@ -241,7 +241,12 @@ PIXIMAP.onRender = function(force) {
     } else {
       let newCameraLock = null
       GAME.objects.forEach((object) => {
-        if(!PIXIMAP.makeInvisibleIfRemoved(object)) return
+        if(!PIXIMAP.makeInvisibleIfRemoved(object)) {
+          if(global.popoverOpen[object.id]) {
+            MAP.closePopover(object.id)
+          }
+          return
+        }
 
         if(object.tags.cameraLock && collisionsUtil.checkObject(object, GAME.heros[HERO.id])) {
           newCameraLock = object

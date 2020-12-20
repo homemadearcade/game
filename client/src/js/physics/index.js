@@ -434,7 +434,7 @@ function heroPhysics() {
 }
 
 
-window.collideTags = {
+global.collideTags = {
   monsterDestroyer: true,
   destroyOnCollideWithObstacle: true,
   monsterVictim: true,
@@ -446,7 +446,7 @@ window.collideTags = {
   heroInteractTriggerArea: true,
   collideEffects: true,
 }
-const collideTagsList = Object.keys(window.collideTags)
+const collideTagsList = Object.keys(global.collideTags)
 function shouldCheckCollisionEffects(gameObject, po) {
   if(!gameObject) console.log(po)
   const gameObjectTags = gameObject.mod().tags

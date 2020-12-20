@@ -159,12 +159,6 @@ class Game{
         ai.onUpdate(GAME.objects, delta)
         GAME.resetPaths = false
         GAME.objects.forEach((object) => {
-          if(object.mod().removed) {
-            if(global.popoverOpen[object.id]) {
-              MAP.closePopover(object.id)
-            }
-            return
-          }
           global.local.emit('onUpdateObject', object, delta)
         })
 

@@ -22,7 +22,7 @@ export default class Popover extends React.Component {
   }
 
   componentDidMount() {
-    this._popoverDataUpdate = window.local.on('onNetworkUpdateObjects', (objectsUpdated) => {
+    this._popoverDataUpdate = global.local.on('onNetworkUpdateObjects', (objectsUpdated) => {
 
       objectsUpdated.forEach((objectUpdated) => {
         if(objectUpdated.id === this.props.object.id) {

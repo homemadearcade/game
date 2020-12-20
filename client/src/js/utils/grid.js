@@ -197,7 +197,7 @@ function keepXYWithinBoundaries(object, options) {
 }
 
 function keepGridXYWithinBoundaries(attemptingX, attemptingY, options = { bypassGameBoundaries : false, pathfindingLimit: null }) {
-  let debug = true
+  let debug = false
   if(GAME.world.gameBoundaries && typeof GAME.world.gameBoundaries.x == 'number' && (GAME.world.gameBoundaries.behavior === 'boundaryAll' || GAME.world.gameBoundaries.behavior === 'pacmanFlip') && !options.bypassGameBoundaries) {
     const {gridX, gridY, gridWidth, gridHeight } = convertToGridXY(GAME.world.gameBoundaries)
     if(attemptingX > gridX + gridWidth - 1) {

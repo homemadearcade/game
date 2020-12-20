@@ -995,7 +995,12 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
   }
 
   onUpdateObject(object, delta) {
-    if(object.mod().removed) return
+    if(object.mod().removed) {
+      if(global.popoverOpen[object.id]) {
+        MAP.closePopover(object.id)
+      }
+      return
+    }
 
     if(object.mod().tags.realRotate) {
       if(typeof object.angle != 'number') object.angle = 0
