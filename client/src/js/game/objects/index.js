@@ -570,27 +570,27 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
     return interactions
   }
 
-
   isInteractable(hero, object) {
-    if((object.mod().tags['completeQuestOnHeroInteract'] && object.mod().tags['questCompleter'])) return true
+    object = object.mod()
+    if((object.tags['completeQuestOnHeroInteract'] && object.tags['questCompleter'])) return true
 
-    if((object.mod().tags['giveQuestOnHeroInteract'] && object.mod().tags['questGiver'])) return true
+    if((object.tags['giveQuestOnHeroInteract'] && object.tags['questGiver'])) return true
 
-    if(object.mod().tags['spawnOnHeroInteract'] && object.mod().tags.spawnZone && object.spawnPool !== 0) return true
+    if(object.tags['spawnOnHeroInteract'] && object.tags.spawnZone && object.spawnPool !== 0) return true
 
-    if(object.mod().tags['updateHeroOnHeroInteract'] && object.mod().tags.heroUpdate) return true
+    if(object.tags['updateHeroOnHeroInteract'] && object.tags.heroUpdate) return true
 
-    if(object.mod().tags['talkOnHeroInteract'] && object.mod().tags.talker) return true
+    if(object.tags['talkOnHeroInteract'] && object.tags.talker) return true
 
-    if(object.mod().tags['pickupOnHeroInteract'] && object.mod().tags.pickupable) return true
+    if(object.tags['pickupOnHeroInteract'] && object.tags.pickupable) return true
 
-    if(object.mod().tags['spawnAllInHeroInventoryOnHeroInteract'] && object.mod().tags.spawnZone && object.spawnPool !== 0) return true
+    if(object.tags['spawnAllInHeroInventoryOnHeroInteract'] && object.tags.spawnZone && object.spawnPool !== 0) return true
 
-    if(object.mod().tags['resourceWithdrawOnInteract'] && object.mod().tags.resourceZone) return true
+    if(object.tags['resourceWithdrawOnInteract'] && object.tags.resourceZone) return true
 
-    if(object.mod().tags['resourceDepositOnInteract'] && object.mod().tags.resourceZone) return true
+    if(object.tags['resourceDepositOnInteract'] && object.tags.resourceZone) return true
 
-    if(object.mod().tags['interactable']) return true
+    if(object.tags['interactable']) return true
 
     if(object.triggers) {
       let triggerFires

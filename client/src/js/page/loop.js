@@ -10,9 +10,9 @@ import axios from 'axios'
 /////// CORE LOOP
 ///////////////////////////////
 ///////////////////////////////
-let updateInterval = 1000/60
+let updateInterval = 1000/24
 let renderInterval = 1000/24
-let mapNetworkInterval = 1000/24
+let mapNetworkInterval = 1000/12
 let completeNetworkInterval = 1000/.1
 var frameCount = 0;
 var fps, startTime, now, deltaRender, deltaMapNetwork, deltaCompleteNetwork, thenRender, thenMapNetwork, thenCompleteNetwork, thenUpdate, deltaUpdate;

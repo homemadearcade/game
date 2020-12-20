@@ -249,7 +249,6 @@ function heroCorrection(hero) {
   return hero
 }
 
-
 /////////////////////////////////////////////////////
 /////////////////////////////////////////////////////
 /////////////////////////////////////////////////////
@@ -258,10 +257,10 @@ function heroCorrection(hero) {
 // OBJECTS COLLIDING WITH OTHER OBJECTS
 /////////////////////////////////////////////////////
 function objectCollisionEffects(po) {
-
   let potentials = po.potentials()
   let result = po.createResult()
   // po VS body. the po is the one you should EFFECT
+
   for(const body of potentials) {
     if(!body.gameObject) {
       if(PHYSICS.debug) console.log('missing game object on body', body)

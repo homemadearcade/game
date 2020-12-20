@@ -45,6 +45,9 @@ function setDefault() {
   }
 
   global.featureOptimizationTags = {
+    // if this objects gets effected from collisions..?
+    collideEffects: false,
+
     //no awareness, oncollide, interact, correction, anything, NOTHING. Most performant
     notInCollisions: false,
 

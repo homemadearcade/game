@@ -90,7 +90,6 @@ function updatePosition(object, delta) {
   if(!object.mod().tags['moving']) return
 
   const allowGravity = true
-
   // if(object.accX) {
   //   object.velocityX += ( object.accX )
   //     if(object.accX > 0) {
@@ -121,6 +120,7 @@ function updatePosition(object, delta) {
       else if(object.velocityX <= maxVelocityX * -1) object.velocityX = maxVelocityX * -1
     }
 
+    if(object.velocityX > 1200) object.velocityX = 1200
     object.x += object.velocityX * delta
   }
 
@@ -172,6 +172,7 @@ function updatePosition(object, delta) {
     }
 
     if(object.tags && !object.mod().tags.gravityY) {
+      if(object.velocityY > 1200) object.velocityY = 1200
       if(allowGravity) object.y += object.velocityY * delta
     }
   }
@@ -432,18 +433,42 @@ function heroPhysics() {
   })
 }
 
+
+window.collideTags = {
+  monsterDestroyer: true,
+  destroyOnCollideWithObstacle: true,
+  monsterVictim: true,
+  goombaSideways: true,
+  goomba: true,
+  trackObjectsTouching: true,
+  trackObjectsWithin: true,
+  awarenessTriggerArea: true,
+  heroInteractTriggerArea: true,
+  collideEffects: true,
+}
+const collideTagsList = Object.keys(window.collideTags)
+function shouldCheckCollisionEffects(gameObject, po) {
+  if(!gameObject) console.log(po)
+  const gameObjectTags = gameObject.mod().tags
+  return collideTagsList.some((tag) => {
+    if(gameObjectTags[tag]) {
+      return true
+    }
+  })
+}
+
 function objectPhysics() {
-  for(let id in PHYSICS.objects){
+  Object.keys(PHYSICS.objects).forEach((id) => {
     let po = PHYSICS.objects[id]
-    // console.log(po)
+    if(!shouldCheckCollisionEffects(po.gameObject, po)) return
     if(!po.gameObject) {
       if(PHYSICS.debug) console.log('no game object found for phyics object id: ' + id)
-      continue
+      return
     }
-    if(!checkIfShouldRunPhysics(po.gameObject) || (po.constructPart && po.constructPart.removed)) continue
-    if(po.gameObject.mod().tags.hero) continue
+    if(po.gameObject.mod().tags.hero) return
+    if(!checkIfShouldRunPhysics(po.gameObject) || (po.constructPart && po.constructPart.removed)) return
     objectCollisionEffects(po)
-  }
+  })
 
   correctionPhase()
   system.update()
@@ -462,7 +487,7 @@ function objectPhysics() {
       }
       if(!po.gameObject.mod().tags['moving']) continue
       if(po.constructPart && (po.constructPart.removed || !shouldCheckConstructPart(po.constructPart))) continue
-      objectCorrection(po, final)
+      if(po.gameObject.mod().tags.moving || po.gameObject.mod().tags.heroPushable) objectCorrection(po, final)
     }
   }
 }
