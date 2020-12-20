@@ -1,5 +1,6 @@
 import tinycolor from 'tinycolor2'
 import { updatePixiObject, initPixiObject, initEmitter, updatePixiEmitter } from './objects'
+import { updateFilters, updateAlpha } from './utils.js'
 import { initPixiApp } from './app'
 import gridUtil from '../../utils/grid'
 import collisionsUtil from '../../utils/collisions'
@@ -202,6 +203,10 @@ PIXIMAP.onResetObjects = function() {
   PIXIMAP.objectStage._reInitialize = true
 }
 
+PIXIMAP.updatePixiObject = function(object) {
+  updatePixiObject(object)
+}
+
 PIXIMAP.onRender = function(force) {
 
   if(!MAP._isOutOfDate) {
@@ -242,7 +247,17 @@ PIXIMAP.onRender = function(force) {
           newCameraLock = object
         }
 
-        updatePixiObject(object, PIXIMAP.stage)
+        if(PAGE.resizingMap) updatePixiObject(object)
+
+        const pixiChild = PIXIMAP.childrenById[object.id]
+        if(pixiChild) {
+          updateFilters(pixiChild, object)
+        }
+      })
+      const seeThrough = GAME.objectsByTag.seeThroughOnHeroCollide
+      if(seeThrough) seeThrough.forEach((o) => {
+        const pixiChild = PIXIMAP.childrenById[o.id]
+        updateAlpha(pixiChild, o)
       })
 
       if(newCameraLock) {
@@ -316,6 +331,10 @@ PIXIMAP.onRender = function(force) {
     PIXIMAP.renderId += .0001
 
     // PIXIMAP.renderUpdateGridSprites()
+
+    if(hero.zoomMultiplierTarget || hero.animationZoomMultiplier) {
+      PAGE.resizingMap = true
+    } else PAGE.resizingMap = false
   }
 }
 
@@ -739,6 +758,8 @@ function resetConstructParts() {
 
       return
     }
+
+    updatePixiObject(gameObject)
   })
 }
 PIXIMAP.resetConstructParts = resetConstructParts

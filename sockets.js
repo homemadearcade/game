@@ -525,6 +525,10 @@ function socketEvents(fs, io, socket, options = { arcadeMode: false }){
     io.emit('onEmitGameEvent', eventName, arg1, arg2, arg3, arg4)
   })
 
+  socket.on('emitEvent', (eventName, arg1, arg2, arg3, arg4) => {
+    io.emit('onEmitEvent', eventName, arg1, arg2, arg3, arg4)
+  })
+
   socket.on('addLog', (data) => {
     io.emit('onAddLog', data)
   })

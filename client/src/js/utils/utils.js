@@ -156,16 +156,13 @@ global.byteLength = function(str) {
 }
 
 global.emitGameEvent = function(gameEvent, arg1, arg2, arg3, arg4, arg5) {
-  if(arg1 && arg1.tags && arg1.tags.hero && arg1.interactableObjectId) {
-    arg1 = { ...arg1, interactableObjectId: null }
-  }
-  if(arg2 && arg2.tags && arg2.tags.hero && arg2.interactableObjectId) {
-    arg2 = { ...arg2, interactableObjectId: null }
-  }
   global.local.emit(gameEvent, arg1, arg2, arg3, arg4, arg5)
-
-
   global.socket.emit('emitGameEvent', gameEvent, arg1, arg2, arg3, arg4, arg5)
+}
+
+global.emitEvent = function(gameEvent, arg1, arg2, arg3, arg4, arg5) {
+  global.local.emit(gameEvent, arg1, arg2, arg3, arg4, arg5)
+  global.socket.emit('emitEvent', gameEvent, arg1, arg2, arg3, arg4, arg5)
 }
 
 global.getObjectDiff = function(object, base) {

@@ -3,7 +3,7 @@
 //
 // // initialize the library
 // const SI = new SnapshotInterpolation(60)
-
+import axios from 'axios'
 //////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////
@@ -37,18 +37,20 @@ global.startGameLoop = function() {
   // begin main loop
   mainLoop()
   if(!global.isServerHost && PAGE.role.isHost && !PAGE.role.isArcadeMode) setInterval(() => {
-    global.socket.emit('updateGameOnServerOnly', {
-      id: GAME.id,
-      metadata: GAME.metadata,
-      version: GAME.version,
-      heros: GAME.heros,
-      gameState: GAME.gameState,
-      objects: GAME.objects,
-      world: GAME.world,
-      // grid: {...GAME.grid, nodes: null, nodeData: {}},
-      defaultHero: GAME.defaultHero,
-      library: GAME.library,
-      theme: GAME.theme,
+    axios.post(global.HAGameServerUrl + '/updateGameOnServerOnly', {
+      game: {
+        id: GAME.id,
+        metadata: GAME.metadata,
+        version: GAME.version,
+        heros: GAME.heros,
+        gameState: GAME.gameState,
+        objects: GAME.objects,
+        world: GAME.world,
+        // grid: {...GAME.grid, nodes: null, nodeData: {}},
+        defaultHero: GAME.defaultHero,
+        library: GAME.library,
+        theme: GAME.theme,
+      }
     })
   }, 1000)
 }
@@ -113,7 +115,7 @@ function update(delta) {
   global.local.emit('onUpdate', delta)
 
   if(PAGE.role.isHost && !PAGE.role.isArcadeMode) {
-    global.socket.emit('networkUpdateHerosPos', GAME.heroList.map((hero) => {
+    global.emitEvent('onNetworkUpdateHerosPos', GAME.heroList.map((hero) => {
       const data = {
         id: hero.id,
         x: hero.x,
@@ -162,16 +164,21 @@ function getDiff(historyProp, nextUpdate) {
 let lastMapUpdate
 function mapNetworkUpdate() {
   if(PAGE.role.isArcadeMode) return
-  global.socket.emit('networkUpdateGameState', getDiff('gameState', GAME.gameState ))
-  global.socket.emit('networkUpdateObjects', getDiff('objectMap', GAME.objects.map(GAME.mod).map(OBJECTS.getMapState) ))
-  global.socket.emit('networkUpdateHeros', getDiff('heroMap', GAME.heroList.map(GAME.mod).map(HERO.getMapState) ))
+  const gameStateUpdate = getDiff('gameState', GAME.gameState )
+  const mapStateUpdate = getDiff('objectMap', GAME.objects.map(GAME.mod).map(OBJECTS.getMapState))
+  const heroStateUpdate = getDiff('heroMap', GAME.heroList.map(GAME.mod).map(HERO.getMapState))
+  if(Object.keys(gameStateUpdate).length) global.emitEvent('onNetworkUpdateGameState', gameStateUpdate)
+  if(mapStateUpdate.length) global.emitEvent('onNetworkUpdateObjects', mapStateUpdate)
+  if(heroStateUpdate.length) global.emitEvent('onNetworkUpdateHeros', heroStateUpdate)
 }
 
 function completeNetworkUpdate() {
   if(PAGE.role.isArcadeMode) return
-  global.socket.emit('networkUpdateObjects', getDiff('objectComplete', GAME.objects.map(GAME.mod) ))
+
+  const objectCompleteUpdate = getDiff('objectComplete', GAME.objects.map(GAME.mod) )
+  if(objectCompleteUpdate.length) global.emitEvent('onNetworkUpdateObjects', objectCompleteUpdate)
   const heroCompleteUpdate = getDiff('heroComplete', GAME.heroList.map(GAME.mod) )
-  global.socket.emit('networkUpdateHeros', heroCompleteUpdate)
+  if(heroCompleteUpdate.length) global.emitEvent('onNetworkUpdateHeros', heroCompleteUpdate)
   // if(GAME.gameState.started && GAME.world.tags.storeEntireGameState) {
   //   let storedGameState = localStorage.getItem('gameStates')
   //   localStorage.setItem('gameStates', JSON.stringify({...JSON.parse(storedGameState), [GAME.id]: {...GAME, grid: {...GAME.grid, nodes: null }}}))

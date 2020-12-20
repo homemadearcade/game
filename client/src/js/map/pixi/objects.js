@@ -22,25 +22,25 @@ const updatePixiObject = (gameObject) => {
   if(gameObject.constructParts) {
 
 //    just for these dumbass non updating SOBs
-    if(!global.isObjectSelectable(gameObject)) {
-      gameObject.constructParts.forEach((part) => {
-        if(PIXIMAP.childrenById[part.id]) PIXIMAP.childrenById[part.id].visible = false
-      })
-    } else {
-      gameObject.constructParts.forEach((part) => {
-        if(PIXIMAP.childrenById[part.id]) PIXIMAP.childrenById[part.id].visible = true
-      })
-    }
+    // if(!global.isObjectSelectable(gameObject)) {
+    //   gameObject.constructParts.forEach((part) => {
+    //     if(PIXIMAP.childrenById[part.id]) PIXIMAP.childrenById[part.id].visible = false
+    //   })
+    // } else {
+    //   gameObject.constructParts.forEach((part) => {
+    //     if(PIXIMAP.childrenById[part.id]) PIXIMAP.childrenById[part.id].visible = true
+    //   })
+    // }
 
-
-    if((PAGE.resizingMap && !PAGE.loadingScreen) || (gameObject.tags.moving || gameObject.tags.seperateParts)) {
+    //gameObject.tags.moving ||
+    // if(!PAGE.loadingScreen || (gameObject.tags.seperateParts)) {
       gameObject.constructParts.forEach((part) => {
         const partObject = PIXIMAP.convertToPartObject(gameObject, part)
         const partPixiChild = updatePixiObject(partObject)
         partPixiChild.ownerName = gameObject.id
         partPixiChild.name = part.id
       })
-    }
+    // }
 
     return
   }
@@ -364,16 +364,6 @@ function updateProperties(pixiChild, gameObject) {
     PIXIMAP.deleteObject(gameObject)
     return
   }
-
-
-  /////////////////////
-  /////////////////////
-  // INTERACT HIGHLIGHT
-  if(gameObject.tags.glowing || HERO.id && GAME.heros[HERO.id] && GAME.heros[HERO.id].interactableObjectId && gameObject.id === GAME.heros[HERO.id].interactableObjectId) {
-    pixiChild.filters = [new GlowFilter(12, 0xFFFFFF)];
-  } else {
-    removeFilter(pixiChild, GlowFilter)
-  }
 }
 
 const addGameObjectToStage = (gameObject, stage) => {
@@ -466,22 +456,6 @@ const initPixiObject = (gameObject) => {
   }
 
   return addGameObjectToStage(gameObject, stage)
-}
-
-function addFilter(pixiChild, filter) {
-  if(!pixiChild.filters) {
-    pixiChild.filters = []
-  }
-  pixiChild.filters.push(filter)
-}
-
-function removeFilter(pixiChild, filterClass) {
-  if(pixiChild.filters) {
-    pixiChild.filters = pixiChild.filters.filter((filter) => {
-      if(filter instanceof filterClass) return false
-      return true
-    })
-  }
 }
 
 export {

@@ -150,7 +150,6 @@ function onUpdate(objects, delta) {
     let readyForNextTarget = false
     if(object.pathId) {
       readyForNextTarget = (!object.path || (object.path && object.path.length === 0)) && !object.targetXY || (object.targetXY && object.targetXY.x == null && object.targetXY.y == null)
-      console.log('it thinks it has path', object.pathId, readyForNextTarget)
     }
 
     if(object.pathId && !object._pathWait && readyForNextTarget) {

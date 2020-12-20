@@ -155,7 +155,7 @@ class MapEditor {
   }
 
   onUpdate(delta) {
-    if(MAPEDITOR.objectHighlighted) global.socket.emit('sendHeroMapEditor', MAPEDITOR.objectHighlighted, HERO.id)
+    if(MAPEDITOR.objectHighlighted) global.socket.emit('sendHeroMapEditor', {x: MAPEDITOR.objectHighlighted.x, y: MAPEDITOR.objectHighlighted.y, width: MAPEDITOR.objectHighlighted.width, height: MAPEDITOR.objectHighlighted.height}, HERO.id)
   }
 
   startResize(object, options = { snapToGrid: true }) {

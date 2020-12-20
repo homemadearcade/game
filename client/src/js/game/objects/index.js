@@ -1282,6 +1282,9 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
         _.merge(objectById, obj)
       })
     }
+    objectsUpdated.forEach((obj) => {
+      PIXIMAP.updatePixiObject(GAME.objectsById[obj.id])
+    })
   }
 
   onNetworkUpdateObjectsComplete(objectsUpdated) {

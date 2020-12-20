@@ -14,8 +14,6 @@ import damagePlayer from './damagePlayer.js'
 
 class GameInstance {
     constructor() {
-      // UNCOMMNENT FOR NENGI
-        return
         this.rawEntitiesByGameId = {}
         this.smoothEntitiesByGameId = {}
         this.players = new Map()
@@ -122,57 +120,62 @@ class GameInstance {
         })
     }
 
-    update(delta, tick, now) {
-        let cmd = null
-        while (cmd = this.instance.getNextCommand()) {
-            const tick = cmd.tick
-            const client = cmd.client
+    onPhysicsUpdateStart(tick) {
+      this.tick = tick
+    }
 
-            for (let i = 0; i < cmd.commands.length; i++) {
-                const command = cmd.commands[i]
-                const rawEntity = client.rawEntity
-                const smoothEntity = client.smoothEntity
+    onPhysicsProcessHeroInput(delta, tick, now) {
+      let cmd = null
+      while (cmd = this.instance.getNextCommand()) {
+          const tick = cmd.tick
+          const client = cmd.client
 
-                if (command.protocol.name === 'MoveCommand') {
-                    rawEntity.processMove(command, this.obstacles)
-                    client.positions.push({
-                        x: rawEntity.x,
-                        y: rawEntity.y,
-                        rotation: rawEntity.rotation
-                    })
-                    rawEntity.weaponSystem.update(command.delta)
-                }
+          for (let i = 0; i < cmd.commands.length; i++) {
+              const command = cmd.commands[i]
+              const rawEntity = client.rawEntity
+              const smoothEntity = client.smoothEntity
 
-                if (command.protocol.name === 'FireCommand') {
+              if (command.protocol.name === 'MoveCommand') {
+                  rawEntity.processMove(command, this.obstacles)
+                  client.positions.push({
+                      x: rawEntity.x,
+                      y: rawEntity.y,
+                      rotation: rawEntity.rotation
+                  })
+                  rawEntity.weaponSystem.update(command.delta)
+              }
 
-                    if (rawEntity.fire()) {
-                        const timeAgo = client.latency + 100
+              if (command.protocol.name === 'FireCommand') {
 
-                        this.lagCompensatedHitscanCheck(rawEntity.x, rawEntity.y, command.x, command.y, timeAgo, (victim) => {
-                            if (victim.nid !== rawEntity.nid && victim.nid !== smoothEntity.nid) {
-                                damagePlayer(victim)
-                            }
-                        })
+                  if (rawEntity.fire()) {
+                      const timeAgo = client.latency + 100
 
-                        this.instance.addLocalMessage(new WeaponFired(smoothEntity.nid, smoothEntity.x, smoothEntity.y, command.x, command.y))
-                    }
-                }
-            }
-        }
+                      this.lagCompensatedHitscanCheck(rawEntity.x, rawEntity.y, command.x, command.y, timeAgo, (victim) => {
+                          if (victim.nid !== rawEntity.nid && victim.nid !== smoothEntity.nid) {
+                              damagePlayer(victim)
+                          }
+                      })
 
-        this.instance.clients.forEach(client => {
-            client.view.x = client.rawEntity.x
-            client.view.y = client.rawEntity.y
+                      this.instance.addLocalMessage(new WeaponFired(smoothEntity.nid, smoothEntity.x, smoothEntity.y, command.x, command.y))
+                  }
+              }
+          }
+      }
+    }
 
-            const smoothEntity = client.smoothEntity
-            if (smoothEntity) {
-                const maximumMovementPerFrameInPixels = 410 * delta
-                followPath(smoothEntity, client.positions, maximumMovementPerFrameInPixels)
-            }
-        })
+    onPhysicsUpdateComplete(delta) {
+      this.instance.clients.forEach(client => {
+          client.view.x = client.rawEntity.x
+          client.view.y = client.rawEntity.y
 
-        // when instance.updates, nengi sends out snapshots to every client
-        this.instance.update()
+          const smoothEntity = client.smoothEntity
+          if (smoothEntity) {
+              const maximumMovementPerFrameInPixels = 410 * delta
+              followPath(smoothEntity, client.positions, maximumMovementPerFrameInPixels)
+          }
+      })
+      // when instance.updates, nengi sends out snapshots to every client
+      this.instance.update()
     }
 }
 

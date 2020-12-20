@@ -188,7 +188,8 @@ app.use((req, res, next) => {
   next()
 })
 
-app.use(express.json());
+app.use(express.json({limit: '50mb'}));
+app.use(express.urlencoded({limit: '50mb'}));
 app.use(cors());
 
 // GET URL
@@ -217,6 +218,14 @@ app.get('/generate-put-url', (req,res)=>{
   .catch(err => {
     res.send(err);
   });
+});
+
+// PUT URL
+app.post('/updateGameOnServerOnly', (req,res)=>{
+  let prevGame = currentGame
+  global.currentGame = req.body.game
+  global.currentGame.grid = prevGame.grid
+  res.send()
 });
 
 

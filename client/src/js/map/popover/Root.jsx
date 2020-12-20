@@ -22,13 +22,27 @@ export default class Popover extends React.Component {
   }
 
   componentDidMount() {
-    this._popoverDataUpdate = setInterval(() => {
-      this.forceUpdate()
-    }, 60)
+    this._popoverDataUpdate = window.local.on('onNetworkUpdateObjects', (objectsUpdated) => {
+
+      objectsUpdated.forEach((objectUpdated) => {
+        if(objectUpdated.id === this.props.object.id) {
+          let shouldUpdatePopover = false
+          global.popoverProperties.forEach((prop) => {
+            if(prop.tag) {
+              if(objectUpdated[prop.prop] && objectUpdated.mod().tags[prop.tag]) shouldUpdatePopover = true
+            } else {
+              if(objectUpdated[prop]) shouldUpdatePopover = true
+            }
+          })
+          if(shouldUpdatePopover) this.forceUpdate()
+        }
+      })
+
+    })
   }
 
   componentWillUnmount() {
-    clearInterval(this._popoverDataUpdate)
+    this._popoverDataUpdate()
   }
 
   _getFormattedTime(time, micro) {

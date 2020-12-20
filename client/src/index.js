@@ -6,6 +6,23 @@ also you need to somehow plug the entity system into pixi as well
 Physics just needs to do a'movement with collisions' which nenji has
 that should be easy because its just updatePos + heroCorrections
 
+the belly of my current beast is TOO Big to be honest.. its bad, its bad. We cant do much more than what we are doing with homemade arcade 1..
+the belly needs to be cut out
+
+What ill do is Ill just replace the pixi system to be nengi friendly..
+I think right now it honestly might be the main culprit in lag...
+
+The bigger problem is in my engine itself..
+
+I mean, man you went nuts! lol
+
+Things to learn
+
+1) Dont scroll through all objects
+2) only update the render of objects when you need to
+3) You need a authoritative hosts that understands ticks and delta for perfect performance
+
+
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
@@ -400,6 +417,8 @@ https://github.com/Dannark/BWO
 
 SHADOW ON CANVAS
 https://codepen.io/mladen___/pen/gbvqBo
+
+https://www.npmjs.com/package/gameboy-sound
 */
 
 

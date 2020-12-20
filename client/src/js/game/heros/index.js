@@ -274,11 +274,10 @@ class Hero{
 
     if(hero.animationZoomTarget > hero.animationZoomMultiplier) {
       hero.animationZoomMultiplier = hero.animationZoomMultiplier/.97
-      PAGE.resizingMap = true
       if(hero.animationZoomTarget < hero.animationZoomMultiplier) {
         if(hero.endAnimation) {
           hero.animationZoomMultiplier = null
-          PAGE.resizingMap = false
+          hero.animationZoomTarget = null
         } else {
           hero.animationZoomMultiplier = hero.animationZoomTarget
         }
@@ -287,11 +286,10 @@ class Hero{
 
     if(hero.animationZoomTarget < hero.animationZoomMultiplier) {
       hero.animationZoomMultiplier = hero.animationZoomMultiplier/1.03
-      PAGE.resizingMap = true
       if(hero.animationZoomTarget > hero.animationZoomMultiplier) {
         if(hero.endAnimation) {
-          PAGE.resizingMap = false
           hero.animationZoomMultiplier = null
+          hero.animationZoomTarget = null
         } else {
           hero.animationZoomMultiplier = hero.animationZoomTarget
         }
@@ -859,18 +857,21 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
     PHYSICS.removeObject(GAME.heros[hero.id])
   }
 
-  onNetworkUpdateHero(updatedHero) {
+  onNetworkUpdateHeros(updatedHeros) {
     // delete updatedHero.x
     // delete updatedHero.y
     if(!PAGE.gameLoaded) return
-    if(updatedHero.subObjects) OBJECTS.forAllSubObjects(updatedHero.subObjects, (so) => {
-      global.mergeDeep(GAME.objectsById[so.id], so)
-    })
+
     if(!PAGE.role.isHost) {
-      global.mergeDeep(GAME.heros[updatedHero.id], updatedHero)
-      if(PAGE.role.isPlayer && HERO.id === updatedHero.id) {
-        global.mergeDeep(GAME.heros[HERO.id], updatedHero)
-      }
+      updatedHeros.forEach((updatedHero) => {
+        global.mergeDeep(GAME.heros[updatedHero.id], updatedHero)
+        if(PAGE.role.isPlayer && HERO.id === updatedHero.id) {
+          global.mergeDeep(GAME.heros[HERO.id], updatedHero)
+        }
+        if(updatedHero.subObjects) OBJECTS.forAllSubObjects(updatedHero.subObjects, (so) => {
+          global.mergeDeep(GAME.objectsById[so.id], so)
+        })
+      })
     }
   }
 

@@ -1,6 +1,7 @@
 import tinycolor from 'tinycolor2'
 import collisionsUtil from '../../utils/collisions'
 import { Ease, ease } from 'pixi-ease'
+import { GlowFilter, OutlineFilter, DropShadowFilter } from 'pixi-filters'
 
 function setColor(pixiChild, data) {
   if(pixiChild.animationColor) {
@@ -477,6 +478,33 @@ function createTriangle(xPos, yPos, i)
 //   TweenMax.set(img, {pixi:{rotation:180}}, 0);
 }
 
+function updateFilters(pixiChild, object) {
+  /////////////////////
+  /////////////////////
+  // INTERACT HIGHLIGHT
+  if(object.tags.glowing || HERO.id && GAME.heros[HERO.id] && GAME.heros[HERO.id].interactableObjectId && object.id === GAME.heros[HERO.id].interactableObjectId) {
+    pixiChild.filters = [new GlowFilter(12, 0xFFFFFF)];
+  } else {
+    removeFilter(pixiChild, GlowFilter)
+  }
+}
+
+function addFilter(pixiChild, filter) {
+  if(!pixiChild.filters) {
+    pixiChild.filters = []
+  }
+  pixiChild.filters.push(filter)
+}
+
+function removeFilter(pixiChild, filterClass) {
+  if(pixiChild.filters) {
+    pixiChild.filters = pixiChild.filters.filter((filter) => {
+      if(filter instanceof filterClass) return false
+      return true
+    })
+  }
+}
+
 export {
   darken,
   lighten,
@@ -495,4 +523,5 @@ export {
   getGameObjectStage,
   isColliding,
   updateChatBox,
+  updateFilters,
 }

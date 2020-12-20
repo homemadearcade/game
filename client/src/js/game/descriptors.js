@@ -113,6 +113,7 @@ function setDefault() {
     Plant: {
       children: ['Crop', 'Bush', 'Flower', 'Mushroom', 'Ivy', 'Grass Tuft'],
     },
+    'Venus Flytrap': {},
     Ivy: {},
     Cactus: {},
     Mushroom: {},
@@ -245,6 +246,9 @@ function setDefault() {
     Syringe: {},
     'Gas Can': {},
     Undescribed: {},
+    Circle: {},
+    Triangle: {},
+    Square: {},
   }
 
   global.weaponDescriptors = {
@@ -432,11 +436,14 @@ function setDefault() {
   global.humanDescriptors = {
     Human: {
       dontShowAdminsInSpriteSheetEditor: true,
-      children: ['Spaceman', 'Wizard', 'King', 'Archer', 'Thief', 'Athlete', 'Priest', 'Cop'],
+      children: ['Astronaut', 'Wizard', 'King', 'Archer', 'Thief', 'Athlete', 'Priest', 'Cop'],
     },
-    Spaceman: {},
+    Astronaut: {},
+    Soilder: {},
+    Space: {},
     Wizard: {},
     King: {},
+    Queen: {},
     Archer: {},
     Warrior: {},
     'Rogue': {
@@ -449,10 +456,12 @@ function setDefault() {
     Engineer: {},
     Athlete: {},
     Priest: {},
+    Nun: {},
     Cop: {},
     'Citizen': {},
     'Villager': {},
     Detective: {},
+    Knight: {},
   }
 
   global.animalDescriptors = {
@@ -559,7 +568,7 @@ function setDefault() {
     Worm: {},
 
     'Mythical Beast': {
-      children: ['Unicorn', 'Dragon', 'Mermaid', 'Vampire', 'Mermaid', 'Demon', 'Golem', 'Griffin', 'Ent', 'Hag', 'Harpie', 'Siren', 'Genie', 'Minotaur', 'Troll', 'Centaur'],
+      children: ['Cyclops', 'Unicorn', 'Dragon', 'Mermaid', 'Vampire', 'Mermaid', 'Demon', 'Golem', 'Griffin', 'Ent', 'Hag', 'Harpie', 'Siren', 'Genie', 'Minotaur', 'Troll', 'Centaur'],
     },
     /// mythical
     Unicorn: {},
@@ -571,6 +580,8 @@ function setDefault() {
     'Minotaur': {},
     Troll: {},
     Centaur: {},
+    Cyclops: {},
+
   }
 
   global.reptileDescriptors = {
@@ -697,6 +708,7 @@ function setDefault() {
     'Decorated': {},
     'Powered Up': {},
     'Elevated': {},
+    'Checkered': {},
     'Alt1': {},
     'Alt2': {},
     'Duplicate': {},

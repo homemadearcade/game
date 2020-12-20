@@ -425,7 +425,7 @@ class NotificationsControl{
   onHeroOptionComplete(hero) {
     if(hero.id === HERO.id) AUDIO.play(GAME.theme.audio.onHeroOptionComplete)
   }
-  onHeroCanInteract(hero) {
+  onHeroCanInteract(hero, object) {
     if(hero.id === HERO.id) AUDIO.play(GAME.theme.audio.onHeroCanInteract)
   }
 }

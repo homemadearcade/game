@@ -95,6 +95,11 @@ function init() {
     global.socket.on('onAddSubObject', (ownerId, subObject, subObjectName, options) => {
       global.local.emit('onAddSubObject', ownerId, subObject, subObjectName, options)
     })
+
+
+    global.socket.on('onAskRestoreCurrentGame', () => {
+      global.socket.emit('sendCurrentGame', GAME)
+    })
   }
 
   global.socket.on('onAddTrigger', (ownerId, trigger) => {
@@ -170,7 +175,7 @@ function init() {
   // UPDATING GAME STATE EVENTS, EDITOR UPDATES ITS OWN STATE IF SYNCED
   ///////////////////////////////
 
-  if(!PAGE.role.isHost) {
+  if(true) {
     // HOST CALLS THIS
     global.socket.on('onNetworkUpdateGameState', (gameState) => {
       global.local.emit('onNetworkUpdateGameState', gameState)
@@ -364,8 +369,11 @@ function init() {
     global.local.emit('onObjectAnimation', type, objectId, options)
   })
 
-  global.socket.on('onEmitGameEvent', (eventName, arg1, arg2, arg3, arg4) => {
-    if(!PAGE.role.isHost) global.local.emit(eventName, arg1, arg2, arg3, arg4)
+  if(!PAGE.role.isHost) global.socket.on('onEmitGameEvent', (eventName, arg1, arg2, arg3, arg4) => {
+    global.local.emit(eventName, arg1, arg2, arg3, arg4)
+  })
+  if(!PAGE.role.isHost) global.socket.on('onEmitEvent', (eventName, arg1, arg2, arg3, arg4) => {
+    global.local.emit(eventName, arg1, arg2, arg3, arg4)
   })
 
   global.socket.on('onAddLog', (data) => {
