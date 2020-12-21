@@ -47,8 +47,17 @@ export default class Root extends React.Component {
 
     this.onUpdateState = (heroOverride) => {
       const hero = GAME.heros[HERO.id]
+      if(heroOverride) {
+        this.setState({
+          hero: {...hero, ...heroOverride},
+          activeQuest: this._getActiveQuest(hero),
+          quests: hero.quests,
+        }, () => {
+          this._showActiveQuestGoalToast()
+        })
+      }
       this.setState({
-        hero: heroOverride || hero,
+        hero,
         activeQuest: this._getActiveQuest(hero),
         quests: hero.quests,
       }, () => {

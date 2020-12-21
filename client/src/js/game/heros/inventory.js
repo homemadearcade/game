@@ -41,7 +41,6 @@ function pickupObject(hero, collider) {
 
   subObject.inInventory = true
 
-  hero.interactableObjectId = null
   if(subObject.tags['equipOnPickup']) {
     equipSubObject(hero, subObject)
   }
@@ -91,7 +90,6 @@ function dropObject(hero, subObject, dropAmount = 1, snapToGrid = true) {
   // global.local.emit('onHeroDrop', hero, object)
 
   if(!subObjectStillHasCount) {
-    hero.interactableObjectId = null
     global.socket.emit('deleteSubObject', hero, subObject.subObjectName)
   }
 
@@ -132,7 +130,6 @@ function withdrawFromInventory(withdrawer, owner, subObjectName, withdrawAmount)
     if(owner.tags.resourceZone) {
       subObject.count = 0
     } else {
-      owner.interactableObjectId = null
       global.socket.emit('deleteSubObject', owner, subObjectName)
     }
   }

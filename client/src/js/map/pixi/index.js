@@ -130,6 +130,7 @@ PIXIMAP.onDeleteSubObject = function(object, subObjectName) {
 }
 
 PIXIMAP.deleteObject = function(object, stage) {
+  if(!object) console.log('pixi trying to delete but no object', object)
   if(!stage) stage = getGameObjectStage(object)
 
   if(object.constructParts) {
@@ -239,7 +240,7 @@ PIXIMAP.updateGridNodeVisibility = function() {
   }
 }
 
-PIXIMAP.onRender = function(force) {
+PIXIMAP.onRender = function(delta, force) {
 
   if(!MAP._isOutOfDate) {
     // console.log('prevented extra render')
@@ -352,8 +353,8 @@ PIXIMAP.onRender = function(force) {
       PIXIMAP.emitterObjectStage.pivot.y = camera.y
     }
 
-    PIXIMAP.renderer.render(PIXIMAP.stage)
-
+    // PIXIMAP.app.ticker.update()
+    // PIXIMAP.renderer.render(PIXIMAP.stage)
     // const gameEligibleForLoading = (GAME.grid.width > 80 || GAME.objects.length > 300)
     // const loadingState = (PAGE.resizingMap || PAGE.startingAndStoppingGame)
     // const pixiMapInvisible = gameEligibleForLoading && loadingState
@@ -411,7 +412,7 @@ PIXIMAP.updateDarknessSprites = function() {
   const lightObjects = [...lights, ...GAME.heroList]
   lightObjects.forEach((object) => {
     if(object.mod().removed) return
-    if(object.tags.potential) return
+    if(object.tags && object.tags.potential) return
 
     const { gridX, gridY } = gridUtil.convertToGridXY({x: object.x + PIXIMAP.grid.nodeSize/2, y: object.y + PIXIMAP.grid.nodeSize/2})
 
@@ -527,6 +528,8 @@ PIXIMAP.initBackgroundSprite = function(node, nodeSprite) {
   backgroundSprite.name = node.id
   PIXIMAP.childrenById[node.id] = backgroundSprite
   // console.log('just reset')
+  backgroundSprite.visible = false
+  backgroundSprite.renderable = false
   return backgroundSprite
 }
 
@@ -631,8 +634,7 @@ PIXIMAP.updateGridSprites = function() {
         // setColor(backgroundSprite, pixiNode)
       }
 
-      backgroundSprite.visible = false
-      backgroundSprite.renderable = false
+
       // if(node.darknessSprite) {
       //   if(Math.abs(gridX - x) > 32) {
       //     node.darknessSprite.visible = false
@@ -774,7 +776,7 @@ PIXIMAP.cleanUpMapAndAskPixiToSendGameReady = function() {
     PIXIMAP.initializePixiObjectsFromGame()
     PIXIMAP.updateGridSprites()
     resetConstructParts()
-    PIXIMAP.onRender(true)
+    PIXIMAP.onRender(0, true)
     global.local.emit('onGameReady')
   }, 100)
 }
@@ -807,14 +809,18 @@ function resetConstructParts() {
 }
 PIXIMAP.resetConstructParts = resetConstructParts
 
-PIXIMAP.onConstellationAnimationStart = function() {
+PIXIMAP.onConstellationAnimationStart = function(hero) {
+  if(hero.id !== HERO.id) return
+  MAP.hideAllPopovers()
   PIXIMAP.backgroundOverlay.isAnimatingColor = true
   PIXIMAP.shadowStage.visible = false
   const example = ease.add(PIXIMAP.backgroundOverlay, { blend: 0x000000 }, { duration: 1000, ease: 'linear' })
   example.once('complete', () => PIXIMAP.backgroundOverlay.tint = 0x000000)
 }
 
-PIXIMAP.onConstellationAnimationEnd = function() {
+PIXIMAP.onConstellationAnimationEnd = function(hero) {
+  if(hero.id !== HERO.id) return
+  MAP.showAllPopovers()
   const example = ease.add(PIXIMAP.backgroundOverlay, { blend: getHexColor(GAME.world.backgroundColor) }, { duration: 1000, ease: 'linear' })
   example.once('complete', () => {
     PIXIMAP.backgroundOverlay.tint = getHexColor(GAME.world.backgroundColor)

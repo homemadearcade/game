@@ -8,6 +8,32 @@ import KeySprite from './KeySprite.jsx';
 // object.id -dashable
 // object.id -floatable
 export default class ControlsHUD extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      hero: {}
+    }
+  }
+  componentDidMount() {
+    this.setState({
+      hero: GAME.heros[HERO.id]
+    })
+
+    global.local.on('onNetworkUpdateHeros', (heros) => {
+      const { hero } = this.state
+      heros.forEach((updatedHero) => {
+        if(updatedHero.id === HERO.id && GAME.heros[updatedHero.id]) {
+          const changed = updatedHero.interactableObjectId != hero.interactableObjectId || updatedHero.arrowKeysBehavior != hero.arrowKeysBehavior  || updatedHero.zButtonBehavior != hero.zButtonBehavior || updatedHero.xButtonBehavior != hero.xButtonBehavior || updatedHero.cButtonBehavior != hero.cButtonBehavior || updatedHero.spaceBarBehavior != hero.spaceBarBehavior
+          if(changed || updatedHero.interactableObjectId === null || updatedHero.arrowKeysBehavior === null || updatedHero.zButtonBehavior === null || updatedHero.xButtonBehavior === null || updatedHero.spaceBarBehavior === null || updatedHero.cButtonBehavior === null || updatedHero.interactableObjectId || updatedHero.arrowKeysBehavior || updatedHero.zButtonBehavior || updatedHero.xButtonBehavior || updatedHero.spaceBarBehavior || updatedHero.cButtonBehavior) {
+            this.setState({
+              hero: {...hero, ...updatedHero}
+            })
+          }
+        }
+      })
+    })
+  }
+
   _getKeyDataArray(behaviorPropName, hero, alt) {
     let actionNameFromSubObject;
     let actionName;
@@ -126,8 +152,9 @@ export default class ControlsHUD extends React.Component {
   }
 
   render() {
-    const hero = GAME.heros[HERO.id]
-    
+    const { hero } = this.state
+    // const hero = GAME.heros[HERO.id].mod()
+
     if(!hero.keysDown) return null
 
     return <div className="ControlsHUD">

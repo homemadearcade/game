@@ -41,15 +41,17 @@ export default class SpriteSheet extends React.Component {
 
   refCallback = (item) => {
     if (item) {
-      item.ondblclick = () => {
+      item.ondblclick = (e) => {
         const { textureIdsSelected } = this.state
         const useTextures = Object.keys(textureIdsSelected).length
-        console.log(textureIdsSelected, useTextures)
+        e.stopPropagation()
+        e.preventDefault()
         modals.openEditDescriptorsModal({}, ({value}) => {
           if(value) {
             global.local.emit('onEditSpriteData', useTextures ? textureIdsSelected : {[JSON.parse(item.dataset.spritejson).textureId]: true}, { descriptors: value })
           }
         }, useTextures ? textureIdsSelected : {[JSON.parse(item.dataset.spritejson).textureId]: true})
+        return false
       };
     }
   }

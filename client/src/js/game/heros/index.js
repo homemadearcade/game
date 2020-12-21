@@ -264,11 +264,11 @@ class Hero{
 
   zoomAnimation(hero) {
     if(hero.animationZoomMultiplier == hero.zoomMultiplier && hero.animationZoomTarget == global.constellationDistance) {
-      global.local.emit('onConstellationAnimationStart')
+      global.emitEvent('onConstellationAnimationStart', hero)
     }
     if(hero.animationZoomMultiplier == global.constellationDistance && hero.zoomMultiplier == hero.animationZoomTarget) {
       setTimeout(() => {
-        global.local.emit('onConstellationAnimationEnd')
+        global.emitEvent('onConstellationAnimationEnd', hero)
       }, 2500)
     }
 
@@ -861,13 +861,9 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
     // delete updatedHero.x
     // delete updatedHero.y
     if(!PAGE.gameLoaded) return
-
     if(!PAGE.role.isHost) {
       updatedHeros.forEach((updatedHero) => {
         global.mergeDeep(GAME.heros[updatedHero.id], updatedHero)
-        if(PAGE.role.isPlayer && HERO.id === updatedHero.id) {
-          global.mergeDeep(GAME.heros[HERO.id], updatedHero)
-        }
         if(updatedHero.subObjects) OBJECTS.forAllSubObjects(updatedHero.subObjects, (so) => {
           global.mergeDeep(GAME.objectsById[so.id], so)
         })
@@ -947,7 +943,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
     if(PAGE.role.isHost) return
 
     if(!PAGE.role.isHost && GAME.world.tags.predictNonHostPosition) {
-      PHYSICS.prepareObjectsAndHerosForMovementPhase()
+      // PHYSICS.prepareObjectsAndHerosForMovementPhase()
       // let heroPrediction = _.cloneDeep(GAME.heros[HERO.id])
 
       const hero = GAME.heros[HERO.id]

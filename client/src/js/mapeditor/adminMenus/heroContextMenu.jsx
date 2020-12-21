@@ -122,11 +122,11 @@ export default class HeroContextMenu extends React.Component {
       }
 
       if(key === 'start-mod-creation-flow') {
-        global.socket.emit('startDiffFlow', objectSelected.id)
+        global.local.emit('startDiffFlow', objectSelected.id)
       }
 
       if(key === 'end-mod-creation-flow') {
-        global.socket.emit('endDiffFlow', objectSelected.id)
+        global.local.emit('endDiffFlow', objectSelected.id)
       }
     }
 
@@ -268,8 +268,8 @@ export default class HeroContextMenu extends React.Component {
         <MenuItem key="reset-to-game-default">Reset To Game Default</MenuItem>
         <MenuItem key="reset-to-core-default">Reset To Core Default</MenuItem>
         <MenuItem key='add-new-subobject'>Add new sub object</MenuItem>
-        {!global.diffFlowId && <MenuItem key='start-mod-creation-flow'>Start Mod Creation Flow</MenuItem>}
-        {global.diffFlowId == objectSelected.id && <MenuItem key='end-mod-creation-flow'>End Mod Creation Flow</MenuItem>}
+        {!GAME.gameState.started && !global.diffFlowId && <MenuItem key='start-mod-creation-flow'>Start Mod Creation Flow</MenuItem>}
+        {!GAME.gameState.started && global.diffFlowId == objectSelected.id && <MenuItem key='end-mod-creation-flow'>End Mod Creation Flow</MenuItem>}
       </SubMenu>
       {GAME.gameState.started ? <MenuItem key="remove">Remove</MenuItem> : <MenuItem key="delete">Delete</MenuItem>}
     </Menu>

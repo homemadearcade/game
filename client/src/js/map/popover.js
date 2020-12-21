@@ -21,6 +21,18 @@ global.local.on('onFirstPageGameLoaded', () => {
     })
   }
 
+  MAP.hideAllPopovers = function() {
+    MAP.popoverInstances.forEach((instance) => {
+      instance.hide()
+    })
+  }
+
+  MAP.showAllPopovers = function() {
+    MAP.popoverInstances.forEach((instance) => {
+      instance.show()
+    })
+  }
+
   MAP.closeAllPopovers = function() {
     MAP.popoverInstances.forEach((instance) => {
       instance.hide()

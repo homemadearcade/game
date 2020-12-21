@@ -357,20 +357,29 @@ export default class Toolbar extends React.Component {
             EDITOR.preferences.selectable.invisible = !EDITOR.preferences.selectable.invisible
             this.forceUpdate()
           }}/>
+          <ToolbarButton text="Shadow" active={EDITOR.preferences.selectable.shadow} onClick={() => {
+            EDITOR.preferences.selectable.shadow = !EDITOR.preferences.selectable.shadow
+            // PIXIMAP.updateAllSprites()
+            this.forceUpdate()
+          }}/>
           <ToolbarButton text="Foreground" active={EDITOR.preferences.selectable.foreground} onClick={() => {
             EDITOR.preferences.selectable.foreground = !EDITOR.preferences.selectable.foreground
+            PIXIMAP.resetConstructParts()
             this.forceUpdate()
           }}/>
           <ToolbarButton text="Background" active={EDITOR.preferences.selectable.background} onClick={() => {
             EDITOR.preferences.selectable.background = !EDITOR.preferences.selectable.background
+            PIXIMAP.resetConstructParts()
             this.forceUpdate()
           }}/>
           <ToolbarButton text="Constructs" active={EDITOR.preferences.selectable.constructParts} onClick={() => {
             EDITOR.preferences.selectable.constructParts = !EDITOR.preferences.selectable.constructParts
+            PIXIMAP.resetConstructParts()
             this.forceUpdate()
           }}/>
           <ToolbarButton text="SubObjects" active={EDITOR.preferences.selectable.subObjects} onClick={() => {
               EDITOR.preferences.selectable.subObjects = !EDITOR.preferences.selectable.subObjects
+              PIXIMAP.resetConstructParts()
               this.forceUpdate()
             }}/>
         </ToolbarRow>

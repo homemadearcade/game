@@ -30,25 +30,13 @@ class PlayerUI {
   onResolveAdminApproval(id) {
     if(id === global.waitingForStart) {
       global.waitingForStart = null
-      PLAYERUI.ref.forceUpdate()
-    }
-  }
-
-  onKeyDown(key, hero) {
-    if(hero.id === HERO.id) {
-      PLAYERUI.ref.onUpdateState()
-    }
-  }
-
-  onKeyUp(key, hero) {
-    if(hero.id === HERO.id) {
       PLAYERUI.ref.onUpdateState()
     }
   }
 
   onUpdatePlayerUI(hero) {
     if(hero.id === HERO.id) {
-      PLAYERUI.ref.forceUpdate()
+      PLAYERUI.ref.onUpdateState(hero)
     }
   }
 
@@ -69,12 +57,14 @@ class PlayerUI {
     }
   }
 
-  onNetworkUpdateHero(hero) {
-    if(hero.id === HERO.id && GAME.heros[hero.id]) {
-      if(GAME.heros[hero.id].dialogue !== hero.dialogue) {
-        PLAYERUI.ref.onUpdateState()
+  onNetworkUpdateHeros(heros) {
+    heros.forEach((hero) => {
+      if(hero.id === HERO.id && GAME.heros[hero.id]) {
+        if(GAME.heros[hero.id].dialogue !== hero.dialogue) {
+          PLAYERUI.ref.onUpdateState(hero)
+        }
       }
-    }
+    })
   }
 
   onHeroStartQuest(heroId, questId) {

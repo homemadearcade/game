@@ -216,10 +216,10 @@ function processTriggerTags(object) {
     }, 100)
   }
   if(object.mod().tags.flashOnTrigger) {
-    let prevColor = object.color
+    const prevColor = object.color
     object.color = 'white'
     setTimeout(() => {
-      object.color = prevColor
+      object.color = prevColor || GAME.world.defaultObjectColor || window.defaultObjectColor
     }, 100)
   }
 }

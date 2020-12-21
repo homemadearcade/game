@@ -50,7 +50,7 @@ const updatePixiObject = (gameObject) => {
   // SUB OBJECTS
   if(gameObject.subObjects) {
     OBJECTS.forAllSubObjects(gameObject.subObjects, (subObject) => {
-      if(subObject.tags.potential) return
+      if(subObject.tags && subObject.tags.potential) return
       const subObjectPixiChild = updatePixiObject(subObject)
       subObjectPixiChild.name = subObject.id
       subObjectPixiChild.owerName = gameObject.id
@@ -448,7 +448,7 @@ const initPixiObject = (gameObject) => {
 
   if(gameObject.subObjects) {
     OBJECTS.forAllSubObjects(gameObject.subObjects, (subObject) => {
-      if(subObject.tags.potential) return
+      if(subObject.tags && subObject.tags.potential) return
       const pixiChild = addGameObjectToStage(subObject, stage)
       pixiChild.ownerName = gameObject.id
       pixiChild.name = subObject.id

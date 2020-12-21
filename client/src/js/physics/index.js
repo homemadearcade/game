@@ -449,7 +449,7 @@ global.collideTags = {
 }
 const collideTagsList = Object.keys(global.collideTags)
 function shouldCheckCollisionEffects(gameObject, po) {
-  if(!gameObject) console.log(po)
+  if(!gameObject) return
   const gameObjectTags = gameObject.mod().tags
   return collideTagsList.some((tag) => {
     if(gameObjectTags[tag]) {
@@ -714,7 +714,7 @@ function removeAndRespawn() {
       } else hero._remove = true
       hero._destroy = null
       hero._destroyedById = null
-      global.emitGameEvent('onHeroDestroyed', {...hero, interactableObjectId: null }, OBJECTS.getObjectOrHeroById(hero._destroyedById))
+      global.emitGameEvent('onHeroDestroyed', hero, OBJECTS.getObjectOrHeroById(hero._destroyedById))
     }
 
     if(hero._respawn) {

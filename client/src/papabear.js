@@ -1,5 +1,110 @@
 /*
+Im not sure what you were thinking before, but theres what you will be thinking now
+This is not the live editor gaming experience you thought you had. It will be more stand alone, but you may want to run it via
+This should be a node webkit app that someone can download on steam
 
+It will be multiplayer only. It will not be able to be run on the client
+
+There will be three parts
+1-Prologue mini papa bear
+2-Open narrative ends with papa bear again
+3-Narrative recalling and saving, allows for this map to be used again in a different context
+
+its really all about the maps!
+
+--
+Everyone has the SAME potential for combat if they have the tools for it
+
+You need to ask what is the loop of the player? I have this person... I do __ I die and -> whats next?
+
+----
+
+ROLES
+Terrain Control
+  Buildings
+  Nature
+Control over lighting
+Summoner - Auto generate objects based on spells
+Seers - Take screenshots of another persons screen and view it
+Some sort of control of nature combined with noise randomization?
+They should be able to tweak the various parts of nature using a tweaker, how many predators, how many
+Speed!
+Find a role someone can play on their phone??
+
+Think of more ULTIMATE powers.
+
+--
+
+TECHNICAL WISDOM
+--
+The event system needs to understand when an event starts and when an event ends
+  dont send tons of game events...only game events the client needs to know
+  send the ids with game events
+  you need a clear structure for creating vs deleting vs updating
+
+Beware of all object.forEach loops
+
+Dont add grid nodes to the physics system, just to pathfinding and also check for them when hero moves. The only things that need to be added to a 'physics system' are things that are REALLY moving in strange ways and need to be corrected, etc
+
+Always clamp whats visible! saves big time on the rendering...
+
+Decrease your packet size, data size, everything. Use a bitmask for things if you can.. its crucial for networking to keep packet size low as possible
+
+a 'general' piece of software can be an absolute nightmare, before you begin you need the game design prepared to start building...
+^^ every element of it!
+
+Dont fuck around, use nengi for networking, USE AUTHORITATIZE SERVER!
+
+--only allow certain properties to be modded!! Modding is really great though, it needs to be there from the start...
+
+Use touch start instead of collide for a lot of things
+
+Physics should be center point by default, in case you want to rotate in the future
+
+You need a map for everything, all tags of a game object
+
+The format I used for dialogue should be used for almost every interaction!
+
+///
+/////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+Types of objects
+
+Terrain
+Element
+Obstacle
+Equippable
+  Action Props is Good
+Pickupable
+Interactable
+  This is basic interaction
+  This is where home made arcade excels with its ability to manage many diferent interactables with triggers and stuff?
+
+Foreground
+  See Through
+Background
+
+Zone
+  Trigger
+  Spawn
+  Resource
+  Dark
+  Camera Lock
+  Camera Zoom
+  Awareness
+  Interact
+
+Light
+Emitter
+
+Magic Object ( this is the normal HA object... )
+
+
+
+/////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 
 //// PLANS FOR MULTIPLAYER LOBBIES
 Scenarios/BeginEnd

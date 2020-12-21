@@ -45,6 +45,8 @@ function setDefault() {
     'Bubbles': {},
     'Waterfall': {},
     'Whirlpool': {},
+    'Coral': {},
+    'Seaweed': {}
   }
 
   global.overworldMapDescriptors = {
@@ -162,6 +164,7 @@ function setDefault() {
     Bookshelf: {},
     Couch: {},
     Chair: {},
+    Bench: {},
     Table: {},
     Jewelry: {
       children: ['Necklace', 'Ring', 'Chalice']

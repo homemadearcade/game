@@ -919,7 +919,7 @@ class Game{
     global.mergeDeep(GAME.gameState, gameState)
   }
 
-  onUpdateGameState(gameState) {
+  onNetworkUpdateGameState(gameState) {
     if(!PAGE.gameLoaded) return
     delete gameState.logs
     if(!PAGE.role.isHost) global.mergeDeep(GAME.gameState, gameState)
@@ -1290,6 +1290,7 @@ class Game{
       let cached = GAME.modCache[object.id]
       cached.x = object.x
       cached.y = object.y
+      cached.interactableObjectId = object.interactableObjectId
       return cached
     }
 

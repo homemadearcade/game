@@ -68,19 +68,6 @@ var mainLoop = function () {
   deltaCompleteNetwork = now - thenCompleteNetwork;
   deltaUpdate = now - thenUpdate;
 
-  // if enough time has deltaRender, draw the next frame
-  if (deltaRender > renderInterval) {
-    if(deltaUpdate > 23) deltaRender = 23
-      // Get ready for next frame by setting then=now, but...
-      // Also, adjust for gameInterval not being multiple of 16.67
-      thenRender = now - (deltaRender % renderInterval);
-      render(deltaRender / 1000)
-  }
-
-  let totalTime1 = performance.now() - start1
-  if(debug) console.log('update length render', totalTime1)
-
-
 
   let start2 = performance.now()
 
@@ -102,6 +89,19 @@ var mainLoop = function () {
   }
   let totalTime2 = performance.now() - start2
   if(debug) console.log('update length update', totalTime2)
+
+
+  // if enough time has deltaRender, draw the next frame
+  if (deltaRender > renderInterval) {
+    if(deltaUpdate > 23) deltaRender = 23
+      // Get ready for next frame by setting then=now, but...
+      // Also, adjust for gameInterval not being multiple of 16.67
+      thenRender = now - (deltaRender % renderInterval);
+      render(deltaRender / 1000)
+  }
+
+  let totalTime1 = performance.now() - start1
+  if(debug) console.log('update length render', totalTime1)
 
 
   let start3 = performance.now()
@@ -188,8 +188,7 @@ function getDiff(historyProp, nextUpdate) {
 
 let lastMapUpdate
 function mapNetworkUpdate() {
-  if(PAGE.role.isArcadeMode) return
-  const gameStateUpdate = getDiff('gameState', GAME.gameState )
+  const gameStateUpdate = getDiff('gameState', _.cloneDeep(GAME.gameState) )
   const mapStateUpdate = getDiff('objectMap', GAME.objects.map(GAME.mod).map(OBJECTS.getMapState))
   const heroStateUpdate = getDiff('heroMap', GAME.heroList.map(GAME.mod).map(HERO.getMapState))
   if(Object.keys(gameStateUpdate).length) global.emitEvent('onNetworkUpdateGameState', gameStateUpdate)

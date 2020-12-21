@@ -93,7 +93,7 @@ const initPixiApp = (canvasRef, onLoad) => {
   ///////////////
   // INTIIALIZE
   const app = new PIXI.Application({
-    width: canvasRef.width, height: canvasRef.height, resizeTo: canvasRef, autoStart: false
+    width: canvasRef.width, height: canvasRef.height, resizeTo: canvasRef, autoStart: true
   });
 
   app.view.id = "pixi-canvas"
@@ -438,6 +438,12 @@ const initPixiApp = (canvasRef, onLoad) => {
     }
 
     lighting.clearColor = [GAME.gameState.ambientLight, GAME.gameState.ambientLight, GAME.gameState.ambientLight, 1]
+
+    if(PAGE.role.isAdmin && !EDITOR.preferences.selectable.shadow) {
+      PIXIMAP.worldLightingChild.alpha = 0
+      PIXIMAP.darkAreaStage.alpha = 0
+      return
+    }
   })
 }
 

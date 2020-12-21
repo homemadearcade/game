@@ -67,9 +67,9 @@ function findSmallestObjectInArea(area, objects) {
     collisions.checkObject(area, object, () => {
       if(object.tags && object.tags.potential) return
       if(!smallestObject.length) smallestObject = [object]
-      else if(object.width < smallestObject[0].width && object.height < smallestObject[0].height) {
+      else if(object.width < smallestObject[0].width || object.height < smallestObject[0].height) {
         smallestObject = [object]
-      } else if(object.width === smallestObject[0].width || object.height === smallestObject[0].height) {
+      } else if(object.width === smallestObject[0].width && object.height === smallestObject[0].height) {
         smallestObject.push(object)
       }
     })

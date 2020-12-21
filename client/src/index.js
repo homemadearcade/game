@@ -417,7 +417,11 @@ https://github.com/Dannark/BWO
 SHADOW ON CANVAS
 https://codepen.io/mladen___/pen/gbvqBo
 
+GREAT NICE SOUND, inspires me to make it a bit more retro
 https://www.npmjs.com/package/gameboy-sound
+
+AMAZING AUTOMOTON STUFF
+I might need to add this http://sanojian.github.io/cellauto/#about
 */
 
 

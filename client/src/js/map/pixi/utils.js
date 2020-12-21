@@ -295,7 +295,7 @@ function updateSprite(pixiChild, gameObject) {
 }
 
 function getVisibility(pixiChild, gameObject) {
-  if(gameObject.tags.potential) return true
+  if(gameObject.tags && gameObject.tags.potential) return true
 
   let invisible = gameObject.tags.outline || gameObject.tags.invisible || gameObject.removed || gameObject.constructParts
 

@@ -39,7 +39,7 @@ export default class DayNightLive extends React.Component {
         GAME.gameState.ambientLight = newData.initialAmbientLight
         GAME.gameState.ambientLightDelta = 0
       } else {
-        global.socket.emit('updateGameState', { ambientLight: newData.initialAmbientLight, ambientLightDelta: 0 })
+        global.emitEvent('onNetworkUpdateGameState', { ambientLight: newData.initialAmbientLight, ambientLightDelta: 0 })
       }
     }
 
@@ -61,7 +61,7 @@ export default class DayNightLive extends React.Component {
         GAME.gameState.ambientLight = updatedAmbientLight
         GAME.gameState.ambientLightDelta = 0
       } else {
-        global.socket.emit('updateGameState', { ambientLight: updatedAmbientLight, ambientLightDelta: 0 })
+        global.emitEvent('onNetworkUpdateGameState', { ambientLight: updatedAmbientLight, ambientLightDelta: 0 })
       }
     }
 

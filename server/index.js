@@ -33,10 +33,15 @@ class GAME_HOST {
     }
   }
 
-  // // UNCOMMNENT FOR NENGI
-  // onUpdate(delta) {
-  //   // global.nengiGameInstance.update(delta * 1000, tick++, Date.now())
-  // }
+  onPhysicsUpdateStart(delta) {
+    global.nengiGameInstance.onPhysicsUpdateStart(tick++)
+  }
+  onPhysicsProcessHeroInput(delta) {
+    global.nengiGameInstance.onPhysicsProcessHeroInput(delta * 1000)
+  }
+  onPhysicsUpdateComplete(delta) {
+    global.nengiGameInstance.onPhysicsUpdateComplete(delta * 1000)
+  }
 }
 
 global.GAME_HOST = new GAME_HOST()

@@ -4,61 +4,75 @@
 
 Remember that fullstack guys random theater generator - you're close
 
-I might need to add this http://sanojian.github.io/cellauto/#about
-////////////////////////////////////////////////////
-////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-TODO IMMEDIATE
+////////////
+FINISH LINE
+////////////
 
-Think about user flow for adding descriptors, is everything ok?
+RANDOMIZER + DATA
+PROCEDURAL + TERRAIN BRUSH
+PUZZLE INTERFACE
+FILL OUT SEQUENCE EDITOR, LIBRARY, EFFECTS, TAGS
+COMBAT + GOALS + QUESTS
 
-On the side platformer generation..
-add moisture, rivers, and biomes
-
---
-
+//////
 CASUAL WORK
+//////
 Make a particle effect - see list
 Add a sprite sheet
 Organize Audio files ( on Mac )
 relatedTags in descriptors
 tagDescriptions
 
------
-
-FINISH LINE
-
-FILL OUT SEQUENCE EDITOR, LIBRARY, EFFECTS, TAGS
-PUZZLE INTERFACES
-  this https://github.com/alexeyivanov94/combination-lock-react FOR NUMBERS
-  and a straight up password input for ALPHANUMERIC
-  tag -- destroyOnPuzzleComplete
-  tag -- spawnAllInHeroInventoryOnPuzzleComplete
-  and then ud need a basic -- combination variable. Puzzle type + puzzle combination...  two variables?
-COMBAT + GOALS + QUESTS
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
---
-children is broken
-if you have a child descriptor, you can remove the parent descriptor
-If you have a descriptor on an object that has a withDescriptors property, do a strict look for a sprite that matches that
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-becomeHostbutton which splices host=true from any player and refreshes their page
-refreshes your page as the host..
+advanced Hero physics for non platformer
+    perheps a decay when where is no input vs a decay when there IS input?
 
-mark something as moved or else dont add it to the physics?
-why physics objects for each?
-what physics objects need to be checked?
+////////////////////////////////////////
+////////////////////////////////////////
+PROCEDURAL
+////////////////////////////////////////
+Ok I need to
+1) Fix terrain with water..?
+2) Add mountains to PF grid
+3) Add the rest of the procedural..
+4) Terrain brush
+On the side platformer generation..
+add moisture, rivers, and biomes
+5) Generate a space field
+
+Terrain brush
+  - water, lava, grass, sand
+    - spaceship wall, wood wall, wood floor, fortified wall, etc, or perhaps Wood wall
+    - mountain, forest, ice
+  this is a different kind of brush, this is for objects that are very simple, they wont be selected.. or moved whatsoever, they wont be DESTROYED, they wont be taken apart
+
+////////////////////////////////////////
+////////////////////////////////////////
+HA TWEAKING
+////////////////////////////////////////
+Opening sequence
+
+Zoom out
+Title screen goes up
+They press enter and new fresh game is made
+They are in the star view
+We ask them a couple questions about gravity
+and they zoom back into a blank map with gravity or without gravity ..
+
+Fish to be gravity not slowed down
 
 Home made arcade music
-
-Game tint! Yeah just like, does this game have a little tint to it?
 
 experience password for ha-live.
 Have a random number based on the day, every will need to use that same number.
@@ -67,31 +81,36 @@ The first person that logs on with that number makes the server remember that nu
 STORY - Fade in/out to game (we will probably use this in HA opening animations..)
 //^^ take a look at animate.css which i think is already installed..
 
+////////////////////////////////////////
+////////////////////////////////////////
+RANDOMIZATION
+////////////////////////////////////////
+children is broken
+if you have a child descriptor, you can remove the parent descriptor
+If you have a descriptor on an object that has a withDescriptors property, do a strict look for a sprite that matches that
+Game tint! Yeah just like, does this game have a little tint to it?
+
 Simple select recommended sprite modal when we have the data...
+
+randomize hero physics
+Only allow the use of ONE descriptor for construct parts? Pre select a single descriptor before generating?
+and randomize perhaps the camera filter!! <--- yes on camera filter and also dont forget about camera shakes too, those are good animations, or EASE! remember ease..
+gameTheme: ’scifi vs fantasy vs retro vs fun vs horror vs modern’. This effects title selection randomization, sprite sheet selection?? and audio generation
+
+IMPROVE AESTHETIC AND GAME AESHTIC CUSTOMIZATION
+https://www.transparenttextures.com/
+
+////////////////////////////////////////
+////////////////////////////////////////
+EDITOR UPGRADES
+////////////////////////////////////////
+Resize off grid
+Animation Library in the bottom layer
+becomeHostbutton which splices host=true from any player and refreshes their page
+refreshes your page as the host..
 
 Green dot in corner if the current editing hero has this option...
   Allow right clikcing to add the option to the heros object
-
-advanced Hero physics for non platformer
-    perheps a decay when where is no input vs a decay when there IS input?
-
-
-////////////////////////////////
-////////////////////////////////
-ELEMENTS..
-////////////////////////////////
-Terrain brush
-  - water, lava, grass, sand
-    - spaceship wall, wood wall, wood floor, fortified wall, etc, or perhaps Wood wall
-    - mountain, forest, ice
-  this is a different kind of brush, this is for objects that are very simple, they wont be selected.. or moved whatsoever, they wont be DESTROYED, they wont be taken apart
-  can we just give terrain to background nodes?
-  it starts off blue, red, green, biege, etc, based on the element drawn until you add sprites. the generating system will ALWAYS have this stuff available so yeah, it just finds it and adds to it based on the author
-
-Easy draw its called
-  basically its the other end of the construct editor
-  the construct editor is for when you REALLY wanna draw anything you want
-  this is for when you want to draw something weve already decided
 
 ////////////////////////////////
 ////////////////////////////////
@@ -148,12 +167,10 @@ Game Over State
 
 ////////////////////////////////
 ////////////////////////////////
-SOUND AND PIXEL GENERATOR UPGRADE
+SOUND GENERATOR UPGRADE
 ////////////////////////////////
 
 audio right click -> set as ___ sound
-
-Only allow the use of ONE descriptor for construct parts? Pre select a single descriptor before generating?
 
 //FOR LIBRARY OBJECTS + OBJECTS ON MAP
 speak SFX, destroy SFX, pickup SFX, dropSFX
@@ -165,10 +182,16 @@ ACTIONS
 actionSFX
 
 pick random song
-randomize hero physics
-gameTheme: ’scifi vs fantasy vs retro vs fun vs horror vs modern’. This effects title selection randomization, sprite sheet selection?? and audio generation
 
-and randomize perhaps the camera filter!! <--- yes on camera filter and also dont forget about camera shakes too, those are good animations, or EASE! remember ease..
+////////////////////////////////
+////////////////////////////////
+PUZZLE INTERFACES
+////////////////////////////////
+this https://github.com/alexeyivanov94/combination-lock-react FOR NUMBERS
+and a straight up password input for ALPHANUMERIC
+tag -- destroyOnPuzzleComplete
+tag -- spawnAllInHeroInventoryOnPuzzleComplete
+and then ud need a basic -- combination variable. Puzzle type + puzzle combination...  two variables?
 
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
@@ -179,16 +202,13 @@ and randomize perhaps the camera filter!! <--- yes on camera filter and also don
 ////////////////////////////////////////////////////
 
 cacheing colors
-dont have ALL tags be moddable, I need to only support modding for certain properties...
 
 If an array changes we need to send the whole thing in the DIFF
 
-NON host
-Popover text remove after NOT destroyed for yellow
-White flash did not reset
+non-host dialogue really fucks up and also with the yellow murder mystery guy it fucks up..
 --
 
-Trigger pool not getting reset?
+Trigger pool not getting reset? Or for some reason on the first game load the trigger pool isnt set sometimes? idk
 
 If object is outside of its custom grid to start off, It will not be able to find the correct grid
 Theres needs to be a flag, perhaps the _fresh flag that allows it to use the other pathfinding grid to make its away to the new path
@@ -318,24 +338,4 @@ Maybe dual stick shooter potential?
   IMAGE MANIPULATION
   http://camanjs.com/examples/
   // aparently also FABRIC.js is good for that, I MEAN IDK MAN
-
-  IMPROVE AESTHETIC AND GAME AESHTIC CUSTOMIZATION
-  https://www.transparenttextures.com/
-
-  ////// Notes on performance
-
-  Basically
-
-  The cuprits are
-  Modding - the calling of the function itself, which apparently COSTS a lot more when mods are in place even if it doesn’t effect any of the objects…
-
-  Sending the Packet diff
-  Makes sense…
-
-
-  Both can be taken care of if we move the host off the browser …
-
-  Also for non hosts
-  Problem is - the updating of transform of objects which we should switch to be the layers job obviously… enough of this camera BS!
-
   */

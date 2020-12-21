@@ -71,11 +71,11 @@ export default class EditorActionMenu extends React.Component{
       }
 
       if(key === 'start-mod-creation-flow') {
-        global.socket.emit('startDiffFlow', objectSelected.id)
+        global.local.emit('startDiffFlow', objectSelected.id)
       }
 
       if(key === 'end-mod-creation-flow') {
-        global.socket.emit('endDiffFlow', objectSelected.id)
+        global.local.emit('endDiffFlow', objectSelected.id)
       }
 
       if (key === "add-to-creator-library") {
@@ -212,6 +212,8 @@ export default class EditorActionMenu extends React.Component{
       <MenuItem key='turn-into-spawn-zone'>Turn into spawn zone</MenuItem>
       <MenuItem key='turn-into-resource-zone'>Turn into resource zone</MenuItem>
       <MenuItem key='transform-into-library-object'>Transform into library object</MenuItem>
-    </Menu>
+      {!GAME.gameState.started && !global.diffFlowId && <MenuItem key='start-mod-creation-flow'>Start Mod Creation Flow</MenuItem>}
+      {!GAME.gameState.started && global.diffFlowId == objectSelected.id && <MenuItem key='end-mod-creation-flow'>End Mod Creation Flow</MenuItem>}
+  </Menu>
   }
 }
