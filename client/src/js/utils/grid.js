@@ -29,11 +29,9 @@ function generateGridNodes(gridProps) {
       const node = {x: gridProps.startX + (i * GAME.grid.nodeSize), y: gridProps.startY + (j * GAME.grid.nodeSize), width: GAME.grid.nodeSize, height: GAME.grid.nodeSize, gridX: i, gridY: j}
       const key = 'x:'+node.gridX+'y:'+node.gridY
       node.id = key
-      // if(nodeData && nodeData[key]) {
-      //   Object.assign(node, nodeData)
-      //   // node.sprite = nodeData[key].sprite
-      //   // node.color = nodeData[key].color
-      // }
+      if(nodeData && nodeData[key]) {
+        node.data = nodeData[key]
+      }
       grid[i].push(node)
     }
   }

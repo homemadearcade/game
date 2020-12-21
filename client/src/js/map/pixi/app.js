@@ -93,12 +93,13 @@ const initPixiApp = (canvasRef, onLoad) => {
   ///////////////
   // INTIIALIZE
   const app = new PIXI.Application({
-    width: canvasRef.width, height: canvasRef.height, resizeTo: canvasRef
+    width: canvasRef.width, height: canvasRef.height, resizeTo: canvasRef, autoStart: false
   });
 
   app.view.id = "pixi-canvas"
   document.getElementById('GameContainer').appendChild(app.view);
   PIXIMAP.app = app
+  PIXIMAP.renderer = app.renderer
   PIXIMAP.renderId = .0001
   if (PIXIMAP.app.renderer.type === 1){
      console.log('Using WebGL');

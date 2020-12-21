@@ -293,11 +293,6 @@ class Game{
   loadGridWorldObjectsCompendiumState(game){
     GAME.id = game.id
     GAME.grid = game.grid
-    if(GAME.grid.terrainData) {
-      global.addTerrainDataToPhysics(GAME.grid.terrainData)
-    }
-    if(!GAME.grid.nodeData) GAME.grid.nodeData = {}
-    global.local.emit('onGridLoaded')
 
     if(game.theme) GAME.theme = game.theme
     if(!GAME.theme) {
@@ -383,9 +378,21 @@ class Game{
     GAME.world = game.world
     if(!GAME.library.sequences) GAME.library.sequences = {}
     if(!GAME.library.animations) GAME.library.animations = {}
+
+
+
+    //GRID DATA STUFF
+    if(!GAME.grid.nodeData) GAME.grid.nodeData = {}
     GAME.grid.nodes = gridUtil.generateGridNodes(GAME.grid)
     GAME.updateGridObstacles()
     GAME.pfgrid = pathfinding.convertGridToPathfindingGrid(GAME.grid.nodes)
+
+    const terrainData = PROCEDURAL.getGameObjectDataFromNodes(GAME.grid.nodes)
+    global.addTerrainDataToPhysics(terrainData)
+    GAME.grid.terrainData = terrainData
+
+    global.local.emit('onGridLoaded')
+
     GAME.handleWorldUpdate(GAME.world)
 
     if(PAGE.role.isPlayEditor) {
@@ -882,6 +889,10 @@ class Game{
 
     if(gameCopy.grid && gameCopy.grid.nodes) {
       delete gameCopy.grid.nodes
+      delete gameCopy.terrainData
+    }
+    if(gameCopy.grid && gameCopy.grid.terrainData) {
+      delete gameCopy.grid.terrainData
     }
 
     gameCopy.objects = gameCopy.objects.map((object) => {
@@ -952,6 +963,12 @@ class Game{
     GAME.grid = grid
     GAME.grid.nodes = gridUtil.generateGridNodes(grid)
     GAME.updateGridObstacles()
+    if(GAME.grid.terrainData) {
+      global.removeTerrainDataFromPhysics(GAME.grid.terrainData)
+    }
+    const terrainData = PROCEDURAL.getGameObjectDataFromNodes(GAME.grid.nodes)
+    global.addTerrainDataToPhysics(terrainData)
+    GAME.grid.terrainData = terrainData
     if(PAGE.role.isHost) {
       GAME.pfgrid = pathfinding.convertGridToPathfindingGrid(GAME.grid.nodes)
     }

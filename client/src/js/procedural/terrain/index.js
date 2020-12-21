@@ -1,8 +1,28 @@
-import noise from 'noisejs'
+import { Noise }  from 'noisejs'
 import { viewNoiseData } from './modals.js'
 import gridUtil from '../../utils/grid.js'
 
 // import Grid from './drid'
+
+global.terrainTypeLookUp = {
+  1: 'Deep Water',
+  2: 'Water',
+  3: 'Sand',
+  4: 'Grass',
+  5: 'Forest',
+  6: 'Mountain',
+  7: 'Snow',
+}
+
+global.terrainIntLookUp = {
+  'Deep Water': 1,
+  "Water": 2,
+  "Sand": 3,
+  "Grass": 4,
+  "Forest": 5,
+  "Mountain": 6,
+  "Snow":7
+}
 
 global.addTerrainDataToPhysics = function (terrainData) {
   updateTerrainDataPhysics(terrainData)
@@ -106,7 +126,8 @@ function setHeatGradient(nodes) {
   })
 }
 
-function FloodFillAllNodes(nodes)
+window.getFloodFilledNodeData = floodFilledNodeData
+function floodFilledNodeData(nodes)
 {
     // Use a stack instead of recursion
     const stack = []
@@ -165,7 +186,7 @@ function FloodFillAllNodes(nodes)
                 })
             }
             // Water
-            else {
+            else if(node.isWater){
                 const group = [];
                 group.type = 'isWater'
                 stack.push(node);
@@ -222,14 +243,12 @@ function FloodFill(node, group, stack, nodes)
 function applyChangesToNodeData(nodes) {
   nodes.forEach((row, x) => {
     row.forEach((node, y) => {
-      let data = {}
-      if(GAME.grid.nodeData[node.id]) data = GAME.grid.nodeData[node.id]
-      else GAME.grid.nodeData[node.id] = data
+      let elevationInt = window.terrainIntLookUp[node.elevationType]
+      GAME.grid.nodeData[node.id] = elevationInt
       // nodeData.elevation = node.elevation
       // nodeData.elevationType = node.elevationType
-      data.elevationType = node.elevationType
       // data.elevationType = node.elevationType
-      data.heatType = node.heatType
+      // data.heatType = node.heatType
       // node.heatNoise = null
       // node.isLand = null
       // node.isWater = null
@@ -398,7 +417,7 @@ function updateTerrainDataPhysics(terrainData, remove) {
       constructParts: mountainRange,
       tags: {
         obstacle: true,
-        mountain: true,
+        Mountain: true,
         terrain: true,
       }
     }
@@ -411,7 +430,6 @@ function updateTerrainDataPhysics(terrainData, remove) {
       if(remove) PHYSICS.removeObject(part)
       else PHYSICS.addObject(part)
     })
-
   })
   Object.keys(terrainData.landMasses).forEach((id) => {
 
@@ -487,7 +505,7 @@ async function generateTerrainJSON(showModals) {
 
   if(showModals) await viewNoiseData({noiseNodes: nodes, title: 'perlin-terrain', type: 'terrain', terrainData})
 
-  let massData = FloodFillAllNodes(nodes)
+  let massData = floodFilledNodeData(nodes)
   terrainData.landMasses = massData.landMasses
   terrainData.waterMasses = massData.waterMasses
   terrainData.mountainRanges = massData.mountainRanges
@@ -511,7 +529,7 @@ async function generateTerrainJSON(showModals) {
 
   if(showModals) await viewNoiseData({noiseNodes: nodesCopy, title: 'simplex-terrain', type: 'terrain', terrainData})
 
-  massData = FloodFillAllNodes(nodesCopy)
+  massData = floodFilledNodeData(nodesCopy)
   terrainData.landMasses = massData.landMasses
   terrainData.waterMasses = massData.waterMasses
   terrainData.mountainRanges = massData.mountainRanges
@@ -525,16 +543,38 @@ async function generateTerrainJSON(showModals) {
 
   updateTerrainDataPhysics(massData, false)
 
-  GAME.grid.nodes = nodesCopy
-  GAME.grid.terrainData = massData
+  // GAME.grid.nodes = nodesCopy
+  // GAME.grid.terrainData = massData
   applyChangesToNodeData(nodesCopy)
   console.log('done w procedural map')
   global.socket.emit('updateGrid', GAME.grid)
-
 }
 
+function getGameObjectDataFromNodes(nodes) {
+  nodes.forEach((row, x) => {
+    row.forEach((node, y) => {
+      if(!node.data) return
+      const elevationType = global.terrainTypeLookUp[node.data]
+      if(elevationType === 'Deep Water' || elevationType === 'Water') {
+        node.isWater = true
+      }
+      if(elevationType === 'Grass' || elevationType === 'Forest' || elevationType === 'Sand') {
+        node.isLand = true
+      }
+      if(elevationType === 'Mountain' || elevationType === 'Snow') {
+        node.isMountain = true
+      }
 
+      node.elevationType = elevationType
+    })
+  })
+
+  // setAllNodesElevationBitmask(nodes)
+
+  return floodFilledNodeData(nodes)
+}
 
 export {
-  generateTerrainJSON
+  generateTerrainJSON,
+  getGameObjectDataFromNodes
 }

@@ -4,13 +4,16 @@ import './sprites.js'
 import './title.js'
 import './lighting.js'
 
-import { generateTerrainJSON } from './terrain/index.js'
+import { generateTerrainJSON, getGameObjectDataFromNodes } from './terrain/index.js'
 
 class Procedural{
   generateTerrain() {
     generateTerrainJSON()
   }
 
+  getGameObjectDataFromNodes(nodes) {
+    return getGameObjectDataFromNodes(nodes)
+  }
 
   // renderNoise(noiseGrid) {
   //

@@ -363,6 +363,7 @@ function prepareObjectsAndHerosForCollisionsPhase() {
   })
 
   everything.forEach((object, i) => {
+    const moddedObject = object.mod()
     if(!object.id) {
       console.log('OBJECT', object, 'WITHOUT ID')
       return
@@ -400,16 +401,16 @@ function prepareObjectsAndHerosForCollisionsPhase() {
       physicsObject.id = object.id
       physicsObject.gameObject = object
 
-      let width = object.mod().width
-      let height = object.mod().height
+      let width = moddedObject.width
+      let height = moddedObject.height
 
-      if(object.mod().tags.rotateable) {
+      if(moddedObject.tags.rotateable) {
         if(object.angle === 0 || physicsObject._angle !== object.angle) {
           physicsObject.setPoints([ [ -width/2, -height/2], [width/2, -height/2], [width/2, height/2] , [-width/2, height/2]])
         }
-        physicsObject.angle = object.mod().angle
-        physicsObject.x = object.mod().x + width/2
-        physicsObject.y = object.mod().y + height/2
+        physicsObject.angle = moddedObject.angle
+        physicsObject.x = moddedObject.x + width/2
+        physicsObject.y = moddedObject.y + height/2
       } else {
         if(physicsObject.angle) physicsObject.angle = null
         if(Math.floor(Math.abs(width)) !== Math.floor(Math.abs(physicsObject._max_x - physicsObject._min_x)) || Math.floor(Math.abs(height)) !== Math.floor(Math.abs(physicsObject._max_y - physicsObject._min_y))) {

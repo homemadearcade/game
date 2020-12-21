@@ -3,6 +3,8 @@
 // U CAN HAVE COOL GRAPHICS BUT IF THEY DONT MEAN ANYTHING MEANINGFUL TO THE GAMEPLAY IT DOESNT MATTER
 
 Remember that fullstack guys random theater generator - you're close
+
+I might need to add this http://sanojian.github.io/cellauto/#about
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
 

@@ -207,6 +207,38 @@ PIXIMAP.updatePixiObject = function(object) {
   updatePixiObject(object)
 }
 
+const visibleNodes = {}
+PIXIMAP.updateGridNodeVisibility = function() {
+  const nodes = GAME.grid.nodes
+  const textures = PIXIMAP.textures
+
+  const hero = GAME.heros[HERO.id]
+
+  if(hero) {
+    const { startX, endX, startY, endY } = PIXIMAP.getChunkBoundaries(hero)
+    for(var x = startX; x < endX; x++) {
+      for(var y = startY; y < endY; y++) {
+        const gridNode = GAME.grid.nodes[x][y]
+
+        const pixiSprite = PIXIMAP.childrenById[gridNode.id]
+
+        if(pixiSprite) {
+          pixiSprite.visible = true
+          pixiSprite.renderable = true
+          if(!visibleNodes[gridNode.id]) {
+            setTimeout(() => {
+              pixiSprite.visible = false
+              pixiSprite.renderable = false
+              visibleNodes[gridNode.id] = false
+            }, 5000)
+          }
+          visibleNodes[gridNode.id] = true
+        }
+      }
+    }
+  }
+}
+
 PIXIMAP.onRender = function(force) {
 
   if(!MAP._isOutOfDate) {
@@ -215,6 +247,8 @@ PIXIMAP.onRender = function(force) {
   }
 
   if(PAGE.loadingGame && !force) return
+
+  PIXIMAP.updateGridNodeVisibility()
 
   let camera = MAP.camera
   if(CONSTRUCTEDITOR.open) {
@@ -317,6 +351,8 @@ PIXIMAP.onRender = function(force) {
       PIXIMAP.emitterObjectStage.pivot.x = camera.x
       PIXIMAP.emitterObjectStage.pivot.y = camera.y
     }
+
+    PIXIMAP.renderer.render(PIXIMAP.stage)
 
     // const gameEligibleForLoading = (GAME.grid.width > 80 || GAME.objects.length > 300)
     // const loadingState = (PAGE.resizingMap || PAGE.startingAndStoppingGame)
@@ -546,26 +582,25 @@ PIXIMAP.updateGridSprites = function() {
 
   for(var x = 0; x < nodes.length; x++) {
     for(var y = 0; y < nodes[x].length; y++) {
-      const gridNode = GAME.grid.nodes[x][y]
-      const nodeData = GAME.grid.nodeData[gridNode.id]
+      const nodeData = GAME.grid.nodes[x][y]
 
-      let backgroundSprite = PIXIMAP.childrenById[gridNode.id]
+      let backgroundSprite = PIXIMAP.childrenById[nodeData.id]
       if(nodeData && nodeData.elevationType) {
-        gridNode.sprite = 'solidcolorsprite'
+        nodeData.sprite = 'solidcolorsprite'
       }
 
       // add
-      if(gridNode.sprite && !backgroundSprite) {
-        backgroundSprite = PIXIMAP.initBackgroundSprite(gridNode, gridNode.sprite)
+      if(nodeData.sprite && !backgroundSprite) {
+        backgroundSprite = PIXIMAP.initBackgroundSprite(nodeData, nodeData.sprite)
       }
 
       // delete
-      if((gridNode.sprite === 'none' || !gridNode.sprite) && backgroundSprite) {
+      if((nodeData.sprite === 'none' || !nodeData.sprite) && backgroundSprite) {
         PIXIMAP.gridStage.removeChild(backgroundSprite)
       }
 
       if(backgroundSprite) {
-        if(gridNode.disabled) {
+        if(nodeData.disabled) {
           backgroundSprite.visible = false
         } else {
           backgroundSprite.visible = true
@@ -582,20 +617,22 @@ PIXIMAP.updateGridSprites = function() {
           camera = PATHEDITOR.camera
         }
 
-        backgroundSprite.x = gridNode.x * camera.multiplier
-        backgroundSprite.y = gridNode.y * camera.multiplier
+        backgroundSprite.x = nodeData.x * camera.multiplier
+        backgroundSprite.y = nodeData.y * camera.multiplier
         backgroundSprite.transform.scale.x = (GAME.grid.nodeSize/backgroundSprite.texture._frame.width) * camera.multiplier
         backgroundSprite.transform.scale.y = (GAME.grid.nodeSize/backgroundSprite.texture._frame.width) * camera.multiplier
       }
 
       // change
       if(backgroundSprite) {
-        if(backgroundSprite.texture.id !== gridNode.sprite) {
-          backgroundSprite.texture = textures[gridNode.sprite]
+        if(backgroundSprite.texture.id !== nodeData.sprite) {
+          backgroundSprite.texture = textures[nodeData.sprite]
         }
         // setColor(backgroundSprite, pixiNode)
       }
 
+      backgroundSprite.visible = false
+      backgroundSprite.renderable = false
       // if(node.darknessSprite) {
       //   if(Math.abs(gridX - x) > 32) {
       //     node.darknessSprite.visible = false
@@ -835,6 +872,27 @@ PIXIMAP.snapCamera = function(name) {
 
 }
 
+
+PIXIMAP.getChunkBoundaries = function(hero) {
+  const { gridX, gridY, gridWidth, gridHeight } = HERO.getViewBoundaries(hero)
+  const padding = 10
+  let startX = gridX - padding
+  let endX = gridX + gridWidth + padding
+  let startY = gridY - padding
+  let endY = gridY + gridHeight + padding
+  if(startX < 0) startX = 0
+  if(endX > GAME.grid.width) endX = GAME.grid.width
+  if(startY < 0) startY = 0
+  if(endY > GAME.grid.height) endY = GAME.grid.height
+
+  return {
+    startX,
+    startY,
+    endX,
+    endY
+  }
+}
+
 PIXIMAP.getShadowBoundaries = function(hero) {
   const { gridX, gridY, gridWidth, gridHeight } = HERO.getViewBoundaries(hero)
   const padding = GAME.world.chunkRenderPadding || 6
@@ -843,9 +901,9 @@ PIXIMAP.getShadowBoundaries = function(hero) {
   let startY = gridY - padding
   let endY = gridY + gridHeight + padding
   if(startX < 0) startX = 0
-  if(endX > PIXIMAP.grid.width) endX = PIXIMAP.grid.width
+  if(endX > GAME.grid.width) endX = GAME.grid.width
   if(startY < 0) startY = 0
-  if(endY > PIXIMAP.grid.height) endY = PIXIMAP.grid.height
+  if(endY > GAME.grid.height) endY = GAME.grid.height
 
   return {
     startX,

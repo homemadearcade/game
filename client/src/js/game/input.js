@@ -184,22 +184,23 @@ function onPlayerIdentified(){
 }
 
 function onKeyUp(key, hero) {
+  const moddedHero = hero.mod()
   if(key === 'e' || key === 'v' || key === 'enter') {
     hero._cantInteract = false
   }
   GAME.heroInputs[hero.id][key] = false
 
-  if(key === 'z' && hero.mod().zButtonBehavior) {
-    handleActionEnd(hero, hero.mod().zButtonBehavior)
+  if(key === 'z' && moddedHero.zButtonBehavior) {
+    handleActionEnd(hero, moddedHero.zButtonBehavior)
   }
-  if(key === 'x' && hero.mod().xButtonBehavior) {
-    handleActionEnd(hero, hero.mod().xButtonBehavior)
+  if(key === 'x' && moddedHero.xButtonBehavior) {
+    handleActionEnd(hero, moddedHero.xButtonBehavior)
   }
-  if(key === 'c' && hero.mod().cButtonBehavior) {
-    handleActionEnd(hero, hero.mod().cButtonBehavior)
+  if(key === 'c' && moddedHero.cButtonBehavior) {
+    handleActionEnd(hero, moddedHero.cButtonBehavior)
   }
-  if(key === 'space' && hero.mod().spaceBarBehavior) {
-    handleActionEnd(hero, hero.mod().spaceBarBehavior)
+  if(key === 'space' && moddedHero.spaceBarBehavior) {
+    handleActionEnd(hero, moddedHero.spaceBarBehavior)
   }
 
   global.local.emit('onKeyUp', key, hero)
@@ -232,6 +233,8 @@ function handleActionEnd(hero, action) {
 }
 
 function handleActionButtonBehavior(hero, action, delta) {
+  const moddedHero = hero.mod()
+
   let subObject = false
   Object.keys(hero.subObjects).forEach((name) => {
     const so = hero.subObjects[name]
@@ -341,7 +344,7 @@ function handleActionButtonBehavior(hero, action, delta) {
   if(action === 'accelerate' && delta) {
     actionFired = true
 
-    hero.velocityAngle += (hero.mod().velocityDelta || 400) * delta
+    hero.velocityAngle += (moddedHero.velocityDelta || 400) * delta
   }
   if(action === 'deccelerateToZero' && delta) {
     actionFired = true
@@ -353,11 +356,11 @@ function handleActionButtonBehavior(hero, action, delta) {
       return
     }
     if(hero.velocityAngle > 0 && delta) {
-      hero.velocityAngle -= (hero.mod().velocityDelta || 400)  * delta
+      hero.velocityAngle -= (moddedHero.velocityDelta || 400)  * delta
       return
     }
     if(hero.velocityAngle < 0 && delta) {
-      hero.velocityAngle += (hero.mod().velocityDelta || 400)  * delta
+      hero.velocityAngle += (moddedHero.velocityDelta || 400)  * delta
       return
     }
   }
@@ -371,18 +374,18 @@ function handleActionButtonBehavior(hero, action, delta) {
       return
     }
     if(hero.velocityAngle > 0) {
-      hero.velocityAngle -= (hero.mod().velocityDelta || 400)  * delta * 4
+      hero.velocityAngle -= (moddedHero.velocityDelta || 400)  * delta * 4
       return
     }
     if(hero.velocityAngle < 0) {
-      hero.velocityAngle += (hero.mod().velocityDelta || 400)  * delta * 4
+      hero.velocityAngle += (moddedHero.velocityDelta || 400)  * delta * 4
       return
     }
   }
   if(action === 'accelerateBackwards' && delta) {
     actionFired = true
 
-    hero.velocityAngle -= (hero.mod().velocityDelta || 400)  * delta
+    hero.velocityAngle -= (moddedHero.velocityDelta || 400)  * delta
   }
 
   if((action === 'dash' || action === 'teleportDash') && !delta) {
@@ -413,10 +416,10 @@ function handleActionButtonBehavior(hero, action, delta) {
           global.emitGameEvent('onHeroTeleDash', hero)
         }
       } else {
-        let dashVelocity = hero.mod().dashVelocity
+        let dashVelocity = moddedHero.dashVelocity
         global.emitGameEvent('onHeroDash', hero)
         if(!dashVelocity) dashVelocity = 300
-        if(hero.mod().tags.rotateable && hero.angle) {
+        if(moddedHero.tags.rotateable && hero.angle) {
           hero.velocityAngle = dashVelocity
         } else {
           if(hero.inputDirection === 'up') {
@@ -430,7 +433,7 @@ function handleActionButtonBehavior(hero, action, delta) {
           }
         }
       }
-      GAME.addTimeout(hero.id + '-dashable', hero.mod().dashTimeout || .6, () => {
+      GAME.addTimeout(hero.id + '-dashable', moddedHero.dashTimeout || .6, () => {
         hero._dashable = true
       })
       hero._breakMaxVelocity = true
@@ -445,16 +448,16 @@ function handleActionButtonBehavior(hero, action, delta) {
   if(hero.onObstacle && action === 'groundJump' && !delta) {
     actionFired = true
 
-    hero.velocityY = hero.mod().jumpVelocity
+    hero.velocityY = moddedHero.jumpVelocity
     global.emitGameEvent('onHeroGroundJump', hero)
     // lastJump = Date.now();
   }
 
   if(action === 'wallJump' && !delta) {
-    const velocity = hero.mod().wallJumpVelocity || 400
+    const velocity = moddedHero.wallJumpVelocity || 400
 
     if(hero.onObstacle) {
-      hero.velocityY = hero.mod().jumpVelocity
+      hero.velocityY = moddedHero.jumpVelocity
       global.emitGameEvent('onHeroGroundJump', hero)
     }
     if(hero._canWallJumpLeft) {
@@ -481,9 +484,9 @@ function handleActionButtonBehavior(hero, action, delta) {
 
     if(hero._floatable === true) {
       actionFired = true
-      hero.velocityY = hero.mod().jumpVelocity
+      hero.velocityY = moddedHero.jumpVelocity
       global.emitGameEvent('onHeroFloatJump', hero)
-      GAME.addTimeout(hero.id + '-floatable', hero.mod().floatJumpTimeout || .6, () => {
+      GAME.addTimeout(hero.id + '-floatable', moddedHero.floatJumpTimeout || .6, () => {
         hero._floatable = true
       })
       hero._floatable = false
@@ -506,6 +509,8 @@ function handleActionButtonBehavior(hero, action, delta) {
 }
 
 function onUpdate(hero, keysDown, delta) {
+  const moddedHero = hero.mod()
+
   if(hero.flags.paused) return
 
   const upPressed = keysDown['w'] || keysDown['up']
@@ -552,47 +557,47 @@ function onUpdate(hero, keysDown, delta) {
   /// DEFAULT GAME FX
   if(hero.flags.paused || GAME.gameState.paused) return
 
-  const xSpeed = hero.mod().velocityInitial + (hero.mod().velocityInitialXExtra || 0)
-  const ySpeed = hero.mod().velocityInitial + (hero.mod().velocityInitialYExtra || 0)
+  const xSpeed = moddedHero.velocityInitial + (moddedHero.velocityInitialXExtra || 0)
+  const ySpeed = moddedHero.velocityInitial + (moddedHero.velocityInitialYExtra || 0)
 
-  if (upPressed && !hero.mod().tags.disableUpKeyMovement) {
-    if(hero.mod().arrowKeysBehavior === 'acc' || hero.mod().arrowKeysBehavior === 'acceleration') {
+  if (upPressed && !moddedHero.tags.disableUpKeyMovement) {
+    if(moddedHero.arrowKeysBehavior === 'acc' || moddedHero.arrowKeysBehavior === 'acceleration') {
       hero.accY -= (ySpeed) * delta;
-    } else if (hero.mod().arrowKeysBehavior === 'velocity') {
+    } else if (moddedHero.arrowKeysBehavior === 'velocity') {
       hero.velocityY -= (ySpeed) * delta;
     }
   }
-  if (downPressed && !hero.mod().tags.disableDownKeyMovement) {
-    if(hero.mod().arrowKeysBehavior === 'acc' || hero.mod().arrowKeysBehavior === 'acceleration') {
+  if (downPressed && !moddedHero.tags.disableDownKeyMovement) {
+    if(moddedHero.arrowKeysBehavior === 'acc' || moddedHero.arrowKeysBehavior === 'acceleration') {
       hero.accY += (ySpeed) * delta;
-    } else if (hero.mod().arrowKeysBehavior === 'velocity') {
+    } else if (moddedHero.arrowKeysBehavior === 'velocity') {
       hero.velocityY += (ySpeed) * delta;
     }
   }
   if (leftPressed) {
-    if(hero.mod().arrowKeysBehavior === 'acc' || hero.mod().arrowKeysBehavior === 'acceleration') {
+    if(moddedHero.arrowKeysBehavior === 'acc' || moddedHero.arrowKeysBehavior === 'acceleration') {
       hero.accX -= (xSpeed) * delta;
-    } else if (hero.mod().arrowKeysBehavior === 'velocity') {
+    } else if (moddedHero.arrowKeysBehavior === 'velocity') {
       hero.velocityX -= (xSpeed) * delta;
     }
   }
   if (rightPressed) {
-    if(hero.mod().arrowKeysBehavior === 'acc' || hero.mod().arrowKeysBehavior === 'acceleration') {
+    if(moddedHero.arrowKeysBehavior === 'acc' || moddedHero.arrowKeysBehavior === 'acceleration') {
       hero.accX += (xSpeed) * delta;
-    } else if (hero.mod().arrowKeysBehavior === 'velocity') {
+    } else if (moddedHero.arrowKeysBehavior === 'velocity') {
       hero.velocityX += (xSpeed) * delta;
     }
   }
 
-  if(hero.mod().arrowKeysBehavior === 'angleAndVelocity') {
+  if(moddedHero.arrowKeysBehavior === 'angleAndVelocity') {
     if(typeof hero.angle !== 'number') hero.angle = 0
     if(typeof hero.velocityAngle !== 'number') hero.velocityAngle = 0
 
-    if (upPressed && !hero.mod().tags.disableUpKeyMovement) {
-      hero.velocityAngle += (hero.mod().rotationSpeed || 100) * delta;
+    if (upPressed && !moddedHero.tags.disableUpKeyMovement) {
+      hero.velocityAngle += (moddedHero.rotationSpeed || 100) * delta;
     }
-    if (downPressed && !hero.mod().tags.disableDownKeyMovement) {
-      hero.velocityAngle -= (hero.mod().rotationSpeed || 100) * delta;
+    if (downPressed && !moddedHero.tags.disableDownKeyMovement) {
+      hero.velocityAngle -= (moddedHero.rotationSpeed || 100) * delta;
     }
     if (leftPressed) {
       hero.angle -= 1 * delta;
@@ -602,10 +607,10 @@ function onUpdate(hero, keysDown, delta) {
     }
   }
 
-  if(hero.mod().arrowKeysBehavior === 'skating') {
-    if(hero.inputDirection === 'up' && !hero.mod().tags.disableUpKeyMovement) {
+  if(moddedHero.arrowKeysBehavior === 'skating') {
+    if(hero.inputDirection === 'up' && !moddedHero.tags.disableUpKeyMovement) {
       hero.y -= Math.ceil(ySpeed * delta);
-    } else if(hero.inputDirection === 'down' && !hero.mod().tags.disableDownKeyMovement) {
+    } else if(hero.inputDirection === 'down' && !moddedHero.tags.disableDownKeyMovement) {
       hero.y += Math.ceil(ySpeed * delta);
     } else if(hero.inputDirection === 'left') {
       hero.x -= Math.ceil(xSpeed * delta);
@@ -614,7 +619,7 @@ function onUpdate(hero, keysDown, delta) {
     }
   }
 
-  if(hero.mod().arrowKeysBehavior === 'angle') {
+  if(moddedHero.arrowKeysBehavior === 'angle') {
     if(typeof hero.angle !== 'number') hero.angle = 0
     if(typeof hero.velocityAngle !== 'number') hero.velocityAngle = 0
 
@@ -640,10 +645,10 @@ function onUpdate(hero, keysDown, delta) {
 
   function positionInput() {
 
-    if(hero.mod().arrowKeysBehavior === 'flatDiagonal') {
-      if (upPressed && !hero.mod().tags.disableUpKeyMovement) {
+    if(moddedHero.arrowKeysBehavior === 'flatDiagonal') {
+      if (upPressed && !moddedHero.tags.disableUpKeyMovement) {
         hero._flatVelocityY = -ySpeed
-      } else if (downPressed && !hero.mod().tags.disableDownKeyMovement) {
+      } else if (downPressed && !moddedHero.tags.disableDownKeyMovement) {
         hero._flatVelocityY = ySpeed
       } else {
         hero._flatVelocityY = 0
@@ -658,13 +663,13 @@ function onUpdate(hero, keysDown, delta) {
       }
     }
 
-    if(hero.mod().arrowKeysBehavior === 'advancedPlatformer') {
+    if(moddedHero.arrowKeysBehavior === 'advancedPlatformer') {
       let lowestXVelocityAllowed = xSpeed
       let lowestYVelocityAllowed = ySpeed
-      let normalDelta = (hero.mod().velocityDelta || global.advancedPlatformerDefaults.velocityDelta) * delta
-      let goalVelocity = hero.mod().velocityInputGoal ||  global.advancedPlatformerDefaults.velocityInputGoal
+      let normalDelta = (moddedHero.velocityDelta || global.advancedPlatformerDefaults.velocityDelta) * delta
+      let goalVelocity = moddedHero.velocityInputGoal ||  global.advancedPlatformerDefaults.velocityInputGoal
 
-      if (upPressed && hero.inputDirection == 'up' && !hero.mod().tags.disableUpKeyMovement) {
+      if (upPressed && hero.inputDirection == 'up' && !moddedHero.tags.disableUpKeyMovement) {
         if(hero.velocityY > -lowestYVelocityAllowed) {
           if(hero.velocityY < lowestYVelocityAllowed && hero.velocityY > 0) {
             // moving in other direction
@@ -685,7 +690,7 @@ function onUpdate(hero, keysDown, delta) {
         return
       }
 
-      if (downPressed && hero.inputDirection == 'down' && !hero.mod().tags.disableDownKeyMovement) {
+      if (downPressed && hero.inputDirection == 'down' && !moddedHero.tags.disableDownKeyMovement) {
         if(hero.velocityY < lowestYVelocityAllowed) {
           if(hero.velocityY > -lowestYVelocityAllowed && hero.velocityY < 0) {
             // moving in other direction
@@ -757,18 +762,18 @@ function onUpdate(hero, keysDown, delta) {
       hero._turningRight = false
     }
 
-    if(hero.mod().arrowKeysBehavior === 'flatRecent') {
+    if(moddedHero.arrowKeysBehavior === 'flatRecent') {
       hero._flatVelocityX = 0
-      if(!hero.mod().tags.disableUpKeyMovement) {
+      if(!moddedHero.tags.disableUpKeyMovement) {
         hero._flatVelocityY = 0
       }
 
-      if (upPressed && hero.inputDirection == 'up' && !hero.mod().tags.disableUpKeyMovement) {
+      if (upPressed && hero.inputDirection == 'up' && !moddedHero.tags.disableUpKeyMovement) {
         hero._flatVelocityY = -Math.ceil(ySpeed * delta) * 100
         return
       }
 
-      if (downPressed && hero.inputDirection == 'down' && !hero.mod().tags.disableDownKeyMovement) {
+      if (downPressed && hero.inputDirection == 'down' && !moddedHero.tags.disableDownKeyMovement) {
         hero._flatVelocityY = Math.ceil(ySpeed * delta) * 100
         return
       }
@@ -783,11 +788,11 @@ function onUpdate(hero, keysDown, delta) {
         return
       }
 
-      if (upPressed && !hero.mod().tags.disableUpKeyMovement) {
+      if (upPressed && !moddedHero.tags.disableUpKeyMovement) {
         hero._flatVelocityY = -Math.ceil(ySpeed * delta) * 100
       }
 
-      if (downPressed && !hero.mod().tags.disableDownKeyMovement) {
+      if (downPressed && !moddedHero.tags.disableDownKeyMovement) {
         hero._flatVelocityY = Math.ceil(ySpeed * delta) * 100
       }
 
@@ -803,7 +808,7 @@ function onUpdate(hero, keysDown, delta) {
 
   positionInput()
 
-  // if(hero.mod().tags.allowCameraRotation) {
+  // if(moddedHero.tags.allowCameraRotation) {
   //   if ('right' in keysDown) {
   //     hero.cameraRotation += delta
   //   }
@@ -812,21 +817,23 @@ function onUpdate(hero, keysDown, delta) {
   //   }
   // }
 
-  if(keysDown['z'] && hero.mod().zButtonBehavior) {
-    handleActionButtonBehavior(hero, hero.mod().zButtonBehavior, delta)
+  if(keysDown['z'] && moddedHero.zButtonBehavior) {
+    handleActionButtonBehavior(hero, moddedHero.zButtonBehavior, delta)
   }
-  if(keysDown['x'] && hero.mod().xButtonBehavior) {
-    handleActionButtonBehavior(hero, hero.mod().xButtonBehavior, delta)
+  if(keysDown['x'] && moddedHero.xButtonBehavior) {
+    handleActionButtonBehavior(hero, moddedHero.xButtonBehavior, delta)
   }
-  if(keysDown['c'] && hero.mod().cButtonBehavior) {
-    handleActionButtonBehavior(hero, hero.mod().cButtonBehavior, delta)
+  if(keysDown['c'] && moddedHero.cButtonBehavior) {
+    handleActionButtonBehavior(hero, moddedHero.cButtonBehavior, delta)
   }
-  if(keysDown['space'] && hero.mod().tags.spaceBarHoldable == true && hero.mod().spaceBarBehavior) {
-    handleActionButtonBehavior(hero, hero.mod().spaceBarBehavior, delta)
+  if(keysDown['space'] && moddedHero.tags.spaceBarHoldable == true && moddedHero.spaceBarBehavior) {
+    handleActionButtonBehavior(hero, moddedHero.spaceBarBehavior, delta)
   }
 }
 
 function onKeyDown(key, hero) {
+  const moddedHero = hero.mod()
+
   if('e' === key || 'v' === key || 'enter' === key) {
     if(hero.dialogue && hero.dialogue.length) {
       let talkerId = hero.dialogueId
@@ -893,17 +900,17 @@ function onKeyDown(key, hero) {
   }
 
   //delta = , .018
-  if('z' === key && hero.mod().zButtonBehavior) {
-    handleActionButtonBehavior(hero, hero.mod().zButtonBehavior)
+  if('z' === key && moddedHero.zButtonBehavior) {
+    handleActionButtonBehavior(hero, moddedHero.zButtonBehavior)
   }
-  if('x' === key && hero.mod().xButtonBehavior) {
-    handleActionButtonBehavior(hero, hero.mod().xButtonBehavior)
+  if('x' === key && moddedHero.xButtonBehavior) {
+    handleActionButtonBehavior(hero, moddedHero.xButtonBehavior)
   }
-  if('c' === key && hero.mod().cButtonBehavior) {
-    handleActionButtonBehavior(hero, hero.mod().cButtonBehavior)
+  if('c' === key && moddedHero.cButtonBehavior) {
+    handleActionButtonBehavior(hero, moddedHero.cButtonBehavior)
   }
-  if('space' === key && hero.mod().tags.spaceBarHoldable != true && hero.mod().spaceBarBehavior) {
-    handleActionButtonBehavior(hero, hero.mod().spaceBarBehavior)
+  if('space' === key && moddedHero.tags.spaceBarHoldable != true && moddedHero.spaceBarBehavior) {
+    handleActionButtonBehavior(hero, moddedHero.spaceBarBehavior)
   }
 
   const upPressed = 'w' === key || 'up' === key
@@ -911,7 +918,7 @@ function onKeyDown(key, hero) {
   const downPressed = 's' === key || 'down' === key
   const leftPressed = 'a' === key || 'left' === key
 
-  if(hero.mod().arrowKeysBehavior === 'inch') {
+  if(moddedHero.arrowKeysBehavior === 'inch') {
     const power = hero.inchPower || GAME.grid.nodeSize
     if (upPressed) {
       hero.y -= power
