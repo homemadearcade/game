@@ -103,11 +103,11 @@ PIXIMAP.onGameLoaded = function() {
 }
 
 PIXIMAP.onFirstPageGameLoaded = function() {
-  setInterval(() => {
-    // PIXIMAP.initializeDarknessSprites()
-    // PIXIMAP.resetDarkness()
-    // PIXIMAP.updateDarknessSprites()
-  }, 200)
+  // setInterval(() => {
+  //   // PIXIMAP.initializeDarknessSprites()
+  //   // PIXIMAP.resetDarkness()
+  //   // PIXIMAP.updateDarknessSprites()
+  // }, 200)
 }
 
 PIXIMAP.onGameStarted = function() {
@@ -262,6 +262,7 @@ PIXIMAP.onRender = function(force) {
       const seeThrough = GAME.objectsByTag.seeThroughOnHeroCollide
       if(seeThrough) seeThrough.forEach((o) => {
         const pixiChild = PIXIMAP.childrenById[o.id]
+        if(!pixiChild) return
         updateAlpha(pixiChild, o)
       })
 

@@ -126,8 +126,8 @@ export default class ControlsHUD extends React.Component {
   }
 
   render() {
-    const hero = GAME.heros[HERO.id].mod()
-
+    const hero = GAME.heros[HERO.id]
+    
     if(!hero.keysDown) return null
 
     return <div className="ControlsHUD">

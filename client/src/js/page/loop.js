@@ -55,9 +55,11 @@ global.startGameLoop = function() {
   }, 1000)
 }
 
+let debug = false
 var mainLoop = function () {
-  // Request to do this again ASAP
-  requestAnimationFrame(mainLoop);
+  let startAll = performance.now()
+
+  let start1 = performance.now()
 
   // calc elapsed time since last loop
   now = Date.now();
@@ -75,6 +77,13 @@ var mainLoop = function () {
       render(deltaRender / 1000)
   }
 
+  let totalTime1 = performance.now() - start1
+  if(debug) console.log('update length render', totalTime1)
+
+
+
+  let start2 = performance.now()
+
   if (deltaUpdate > updateInterval) {
     if(deltaUpdate > 23) deltaUpdate = 23
     thenUpdate = now - (deltaUpdate % updateInterval);
@@ -91,16 +100,31 @@ var mainLoop = function () {
 
     update(deltaUpdate / 1000);
   }
+  let totalTime2 = performance.now() - start2
+  if(debug) console.log('update length update', totalTime2)
+
+
+  let start3 = performance.now()
 
   if (PAGE.role.isHost && deltaCompleteNetwork > completeNetworkInterval) {
     thenCompleteNetwork = now - (deltaCompleteNetwork % completeNetworkInterval);
     // reset mapNetworkUpdate as well
     thenMapNetwork = thenCompleteNetwork
+    // console.log('COMPLETE NETWORK UPDATE')
     completeNetworkUpdate()
   } else if (PAGE.role.isHost && deltaMapNetwork > mapNetworkInterval) {
     thenMapNetwork = now - (deltaMapNetwork % mapNetworkInterval);
     mapNetworkUpdate()
   }
+
+  let totalTime3 = performance.now() - start3
+  if(debug) console.log('update length network', totalTime3)
+
+  // Request to do this again ASAP
+  setTimeout(mainLoop, 0);
+
+  let totalTimeAll = performance.now() - startAll
+  if(debug) console.log('update length all', totalTimeAll)
 };
 
 //////////////////////////////////////////////////////////////
@@ -135,6 +159,7 @@ function update(delta) {
       return data
     }))
   }
+
 }
 
 function render(delta) {

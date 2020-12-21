@@ -25,10 +25,6 @@ class PlayerUI {
       React.createElement(Root, initialProps),
       container
     )
-
-    if(!PLAYERUI.updateStateInterval) {
-      PLAYERUI.updateStateInterval = setInterval(PLAYERUI.ref.forceUpdate.bind(PLAYERUI.ref), 1000)
-    }
   }
 
   onResolveAdminApproval(id) {
@@ -52,7 +48,7 @@ class PlayerUI {
 
   onUpdatePlayerUI(hero) {
     if(hero.id === HERO.id) {
-      PLAYERUI.ref.onUpdateState(hero)
+      PLAYERUI.ref.forceUpdate()
     }
   }
 
@@ -65,6 +61,7 @@ class PlayerUI {
   }
 
   onSendNotification(data) {
+    if(!PLAYERUI.ref) return
     if((data.toast || data.modal) && (!data.playerUIHeroId || data.playerUIHeroId === HERO.id)) {
       PLAYERUI.ref.onSendNotification(data)
     } else if(data.log) {
