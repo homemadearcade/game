@@ -1570,7 +1570,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
     // if this passes you are already pursuing something and shouldn't switch
     if(object._targetPursueId && !object.mod().tags.targetSwitchOnAware) return
 
-    if(awareOfObject.mod().tags.hero) {
+    if(awareOfObject.mod().tags.hero && !awareOfObject.flags.isAdmin) {
       if(object.mod().tags.targetHeroOnAware) {
         if(object.mod().tags.homing) {
           setPathTarget(object, awareOfObject, true)

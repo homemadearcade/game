@@ -23,7 +23,8 @@ export default class ControlsHUD extends React.Component {
       const { hero } = this.state
       heros.forEach((updatedHero) => {
         if(updatedHero.id === HERO.id && GAME.heros[updatedHero.id]) {
-          const changed = updatedHero.interactableObjectId != hero.interactableObjectId || updatedHero.arrowKeysBehavior != hero.arrowKeysBehavior  || updatedHero.zButtonBehavior != hero.zButtonBehavior || updatedHero.xButtonBehavior != hero.xButtonBehavior || updatedHero.cButtonBehavior != hero.cButtonBehavior || updatedHero.spaceBarBehavior != hero.spaceBarBehavior
+          console.log(hero.subObjects)
+          const changed = updatedHero.subObjects != hero.subObjects || updatedHero.interactableObjectId != hero.interactableObjectId || updatedHero.arrowKeysBehavior != hero.arrowKeysBehavior  || updatedHero.zButtonBehavior != hero.zButtonBehavior || updatedHero.xButtonBehavior != hero.xButtonBehavior || updatedHero.cButtonBehavior != hero.cButtonBehavior || updatedHero.spaceBarBehavior != hero.spaceBarBehavior
           if(changed || updatedHero.interactableObjectId === null || updatedHero.arrowKeysBehavior === null || updatedHero.zButtonBehavior === null || updatedHero.xButtonBehavior === null || updatedHero.spaceBarBehavior === null || updatedHero.cButtonBehavior === null || updatedHero.interactableObjectId || updatedHero.arrowKeysBehavior || updatedHero.zButtonBehavior || updatedHero.xButtonBehavior || updatedHero.spaceBarBehavior || updatedHero.cButtonBehavior) {
             this.setState({
               hero: {...hero, ...updatedHero}
@@ -46,7 +47,7 @@ export default class ControlsHUD extends React.Component {
 
     if(actionNameFromSubObject) {
       const key = behaviorPropName.charAt(0)
-      let so = hero.subObjects[actionNameFromSubObject]
+      let so = hero.subObjects[actionNameFromSubObject].mod()
 
       let timeoutId = 'debounce-action-' + so.id + so.actionButtonBehavior
       if(so.actionButtonBehavior === 'floatJump') {
@@ -124,7 +125,7 @@ export default class ControlsHUD extends React.Component {
   }
 
   _renderKeyData(hero, behavior, key) {
-    const data = this._getKeyDataArray(behavior, hero)
+    const data = this._getKeyDataArray(behavior, hero.mod())
 
     if(data) {
       let behavior = data.behavior

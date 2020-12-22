@@ -503,7 +503,7 @@ function postPhysics() {
       const interactableObject = OBJECTS.getObjectOrHeroById(hero.interactableObjectId)
       // INTERACT WITH SMALLEST OBJECT
       // global.emitGameEvent('onObjectInteractable', hero.interactableObjectId, hero)
-      if(interactableObject.mod().tags.autoTalkOnInteractable && !hero._cantInteract && !hero.flags.paused && !hero._cantautoTalk) {
+      if(interactableObject.mod().tags.autoTalkOnInteractable && !hero.flags.isAdmin && !hero._cantInteract && !hero.flags.paused && !hero._cantautoTalk) {
         // if(interactableObject.mod().tags.autoTalkOnce) {
           interactableObject.tags.autoTalkOnInteractable = false
           // interactableObject.tags.autoTalkOnce = false

@@ -2,16 +2,17 @@ import pathfinding from '../../utils/pathfinding.js'
 import gridUtil from '../../utils/grid.js'
 
 function pathfindingAI(object) {
-  let hero = GAME.heroList[0]
+  let hero = GAME.heroList.filter((({tags}) => tags.centerOfAttention))[0]
 
   if(!object.pathId && object.mod().tags.targetResetEveryRound || object.mod().tags.targetBehind) object.path = []
 
   const autoTarget = object.mod().tags['targetAuto'] && !object.mod().tags['targetHeroOnAware'] && !object.mod().tags['targetVictimOnAware']
-  if(object.tags && object.mod().tags['zombie'] && autoTarget) {
+  if(hero && object.tags && object.mod().tags['zombie'] && autoTarget) {
     setTarget(object, hero)
   }
 
-  if(object.tags && object.mod().tags['homing'] && autoTarget) {
+
+  if(hero && object.tags && object.mod().tags['homing'] && autoTarget) {
     if(!object.path || (object.path && !object.path.length)) {
       setPathTarget(object, hero)
     }

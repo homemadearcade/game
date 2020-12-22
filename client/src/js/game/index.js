@@ -936,10 +936,12 @@ class Game{
   }
 
   onLoadGameAsLevel(game) {
+
     const originalHeros = GAME.heros
     GAME.objects.forEach((object) => {
       OBJECTS.unloadObject(object)
     })
+    PIXIMAP.onResetObjects()
     GAME.removeListeners()
 
     GAME.objectsById = {}
@@ -982,6 +984,7 @@ class Game{
       if(hero.flags.isAdmin) newHero = hero
       newHero.tags.saveAsDefaultHero = oldTags.saveAsDefaultHero
       newHero.id = hero.id
+      newHero.tags.centerOfAttention = oldTags.centerOfAttention
       const target = originalHeros[hero.id].animationZoomTarget
       const multiplier = originalHeros[hero.id].animationZoomMultiplier
 
