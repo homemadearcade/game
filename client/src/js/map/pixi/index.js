@@ -218,11 +218,13 @@ PIXIMAP.updateGridNodeVisibility = function() {
   if(hero) {
     const { startX, endX, startY, endY } = PIXIMAP.getChunkBoundaries(hero)
     for(var x = startX; x < endX; x++) {
+      if(!GAME.grid.nodes[x]) return
       for(var y = startY; y < endY; y++) {
         const gridNode = GAME.grid.nodes[x][y]
-
+        if(!gridNode) return
         const pixiSprite = PIXIMAP.childrenById[gridNode.id]
 
+        if(!pixiSprite) return
         if(pixiSprite) {
           pixiSprite.visible = true
           pixiSprite.renderable = true
@@ -304,7 +306,7 @@ PIXIMAP.onRender = function(delta, force) {
       if(newCameraLock) {
         MAP.camera.setLimitRect(newCameraLock)
       } else if(GAME.world.lockCamera){
-        MAP.camera.setLimit(GAME.world.lockCamera)
+        MAP.camera.setLimit(GAME.world.lockCamera.limitX, GAME.world.lockCamera.limitY, GAME.world.lockCamera.centerX, GAME.world.lockCamera.centerY)
       } else {
         MAP.camera.clearLimit()
       }
@@ -320,8 +322,16 @@ PIXIMAP.onRender = function(delta, force) {
 
     if(PIXIMAP.gridStage) {
       // PIXIMAP.gridStage.rotation = hero.cameraRotation
-      PIXIMAP.gridStage.pivot.x = camera.x
-      PIXIMAP.gridStage.pivot.y = camera.y
+
+      Object.keys(visibleNodes).forEach((id) => {
+        if(visibleNodes[id]) {
+          // const pixiChild = PIXIMAP.childrenById[id]
+          // console.log(pixiChild)
+          // if(!pixiChild) return
+          // pixiChild.pivot.x = camera.x
+          // pixiChild.pivot.y = camera.y
+        }
+      })
     }
 
     PIXIMAP.objectStage.pivot.x = camera.x

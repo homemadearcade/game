@@ -92,12 +92,34 @@ Zone
   Camera Lock
   Camera Zoom
   Awareness
+  Player Camera
   Interact
 
 Light
 Emitter
 
 Magic Object ( this is the normal HA object... )
+
+'Living Object'. These are 10x more diverse
+
+Remember the point of all this is only.. performance. you dont need to reclass something if its just getting tagged differently
+
+Really it should look something like
+The phases are like ...
+
+When it comes to pathfinding. What objects
+
+Make a pf grid a square?
+
+Make the camera a square
+
+///
+/////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+Every object should be able to be 'playable'
+You need a default physics that allows you to not put the physics data on the objects themself
+I should be able to double click any object and say 'I want to play this tree' and maybe some basic operation will be available
+'Living object'
 
 
 

@@ -137,7 +137,7 @@ function camera() {
 
   this.update = function(hero, delta) {
     const cameraTweenSpeedX = hero.cameraTweenSpeed + hero.cameraTweenSpeedXExtra
-    if(hero.mod().cameraTweenToTargetX && typeof this.x == 'number') {
+    if(!hero.animationZoomMultiplier && hero.mod().cameraTweenToTargetX && typeof this.x == 'number') {
       const distanceX = this.targetX - this.x
       this.x += (distanceX) * delta * cameraTweenSpeedX
     } else {
@@ -145,7 +145,7 @@ function camera() {
     }
 
     const cameraTweenSpeedY = hero.cameraTweenSpeed + hero.cameraTweenSpeedYExtra
-    if(hero.mod().cameraTweenToTargetY && typeof this.y == 'number') {
+    if(!hero.animationZoomMultiplier && hero.mod().cameraTweenToTargetY && typeof this.y == 'number') {
       const distanceY = this.targetY - this.y
       this.y += (distanceY) * delta * cameraTweenSpeedY
     } else {

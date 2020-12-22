@@ -52,10 +52,10 @@ class Hero{
     	// accX: 0,
     	// accDecayX: 0,
     	// accDecayY: 0,
-    	velocityInitial: 250,
+    	velocityInitial: 125,
     	arrowKeysBehavior: 'flatDiagonal',
       // actionButtonBehavior: 'dropWall',
-    	jumpVelocity: -480,
+    	jumpVelocity: -440,
     	// spawnPointX: (40) * 20,
     	// spawnPointY: (40) * 20,
     	zoomMultiplier: 1.875,
@@ -775,10 +775,8 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
     if(updatedHero.zoomMultiplier && updatedHero.zoomMultiplier !== GAME.heros[updatedHero.id].zoomMultiplier) {
       global.local.emit('onZoomChange', updatedHero.id)
     }
-    console.log(updatedHero)
     HERO.resetReachablePlatformArea(updatedHero)
     global.mergeDeep(GAME.heros[updatedHero.id], updatedHero)
-    console.log('target', GAME.heros[updatedHero.id].animationZoomMultiplier, GAME.heros[updatedHero.id].animationZoomTarget)
   }
 
   onResetHeroToDefault(hero) {

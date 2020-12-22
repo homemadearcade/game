@@ -180,7 +180,7 @@ function onPlayerIdentified(){
         global.socket.emit('sendHeroKeyUp', key, HERO.id)
       }
     }
-    global.local.emit('onLocalKeyDown', GAME.heros[HERO.id], key)
+    global.local.emit('onLocalKeyUp', GAME.heros[HERO.id], key)
     // global.socket.emit('sendHeroKeyUp', key, HERO.id)
   }, false)
 }

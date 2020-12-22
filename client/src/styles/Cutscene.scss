@@ -72,7 +72,7 @@
       bottom: 100px;
       animation: blinker 1s step-start infinite;
       animation-delay: 1s;
-      
+
       @media only screen and (max-width: 1000px) {
         bottom: 60px;
       }

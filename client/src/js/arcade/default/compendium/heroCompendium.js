@@ -25,7 +25,7 @@ const heroCompendium = {
      tags: {
        gravity: true,
      },
-     jumpVelocity: -480,
+     jumpVelocity: -440,
      velocityMax: 480,
    },
    chatter: {

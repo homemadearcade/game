@@ -13,7 +13,8 @@ global.local.on('onFirstPageGameLoaded', () => {
     MAP.popoverInstances =  MAP.popoverInstances.filter((instance) => {
       if(objectId === instance.objectId) {
         instance.hide()
-        ReactDOM.unmountComponentAtNode(document.getElementById(instance.domId))
+        let domNode = document.getElementById(instance.domId)
+        if(domNode) ReactDOM.unmountComponentAtNode(domNode)
         instance.destroy()
         global.popoverOpen[objectId] = false
         return false

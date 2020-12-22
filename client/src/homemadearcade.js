@@ -61,15 +61,6 @@ Terrain brush
 ////////////////////////////////////////
 HA TWEAKING
 ////////////////////////////////////////
-Opening sequence
-
-Zoom out
-Title screen goes up
-They press enter and new fresh game is made
-They are in the star view
-We ask them a couple questions about gravity
-and they zoom back into a blank map with gravity or without gravity ..
-
 Fish to be gravity not slowed down
 
 Home made arcade music
@@ -77,9 +68,6 @@ Home made arcade music
 experience password for ha-live.
 Have a random number based on the day, every will need to use that same number.
 The first person that logs on with that number makes the server remember that number and only allows connections with that number
-
-STORY - Fade in/out to game (we will probably use this in HA opening animations..)
-//^^ take a look at animate.css which i think is already installed..
 
 ////////////////////////////////////////
 ////////////////////////////////////////

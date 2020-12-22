@@ -707,7 +707,6 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
           width: GAME.grid.nodeSize * 8,
           height: GAME.grid.nodeSize,
         }
-        console.log(newObject.y)
       } else {
         newObject = {
           x: gridUtil.getRandomGridWithinXY(minX, maxX),
@@ -722,7 +721,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
         let newObject = {
           x: hero.x - (GAME.grid.nodeSize * 4),
           // honestly this + is just so we dont add a platform where nothing can be added above it
-          y: maxY + (GAME.grid.nodeSize * 4),
+          y: maxY + (GAME.grid.nodeSize * 6),
           width: GAME.grid.nodeSize * 9,
           height: GAME.grid.nodeSize,
         }

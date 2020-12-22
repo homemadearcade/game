@@ -305,6 +305,7 @@ function setDefault() {
     ...global.combatBehaviorTags,
     ...global.triggerTags,
     ...global.heroUpdateTags,
+    ...global.heroTags,
     ...global.dialogueTags,
     ...global.questTags,
     ...global.movementTags,

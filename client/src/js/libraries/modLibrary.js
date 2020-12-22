@@ -57,7 +57,7 @@ global.local.on('onFirstPageGameLoaded', () => {
         tags: {
           gravityY: true,
         },
-        jumpVelocity: -480,
+        jumpVelocity: -440,
         velocityMax: 480,
       }
     },
@@ -71,7 +71,7 @@ global.local.on('onFirstPageGameLoaded', () => {
         tags: {
           gravityY: true,
         },
-        jumpVelocity: -480,
+        jumpVelocity: -440,
         velocityMax: 480,
       }
     },

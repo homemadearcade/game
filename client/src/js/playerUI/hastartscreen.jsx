@@ -4,7 +4,7 @@ import PixiMapSprite from '../components/PixiMapSprite.jsx'
 import classnames from 'classnames';
 import Arrow from '@elsdoerfer/react-arrow';
 
-export default class Goals extends React.Component{
+export default class Hastartscreen extends React.Component{
   constructor(props) {
     super(props)
   }
@@ -12,7 +12,7 @@ export default class Goals extends React.Component{
   render() {
     const { children } = this.props;
 
-    return <React.Fragment>
+    return <div className="">
       <div className="stars"></div>
       {children}
       <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
@@ -68,6 +68,6 @@ export default class Goals extends React.Component{
         </filter>
         </defs>
       </svg>
-    </React.Fragment>
+    </div>
   }
 }

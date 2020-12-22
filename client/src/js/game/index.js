@@ -299,12 +299,14 @@ class Game{
       GAME.theme = {
         audio: {},
         ss: {},
-        particles: {}
+        particles: {},
       }
     }
     if(!GAME.theme.audio) GAME.theme.audio = {}
     if(!GAME.theme.ss) GAME.theme.ss = {}
     if(!GAME.theme.particles) GAME.theme.particles = {}
+    if(!GAME.theme.title) GAME.theme.title = {}
+    if(!GAME.theme.title.font) GAME.theme.title.font = {}
 
     tags.setDefault()
     if(game.library) GAME.library = game.library
@@ -931,6 +933,75 @@ class Game{
     }
     GAME.loadAndJoin(game)
     ARCADE.changeGame(game.id)
+  }
+
+  onLoadGameAsLevel(game) {
+    const originalHeros = GAME.heros
+    GAME.objects.forEach((object) => {
+      OBJECTS.unloadObject(object)
+    })
+    GAME.removeListeners()
+
+    GAME.objectsById = {}
+    GAME.objects = game.objects.map((object) => {
+      OBJECTS.addObject(object)
+      OBJECTS.respawn(object)
+      return object
+    })
+
+    // grid
+    GAME.grid = game.grid
+    GAME.world = game.world
+    if(game.library) GAME.library = game.library
+    if(game.theme) GAME.theme = game.theme
+    GAME.grid.nodes = gridUtil.generateGridNodes(GAME.grid)
+    GAME.updateGridObstacles()
+    GAME.pfgrid = pathfinding.convertGridToPathfindingGrid(GAME.grid.nodes)
+    GAME.handleWorldUpdate(GAME.world)
+
+    GAME.defaultHero = game.defaultHero || global.defaultHero
+
+    GAME.objects.forEach((object) => {
+      // global.emitGameEvent('onObjectAwake', object)
+      if(object.tags.talkOnStart) {
+        GAME.heroList.forEach((hero) => {
+          onTalk(hero, object, {}, [], [], { fromStart: true })
+        })
+      }
+      if(object.tags.giveQuestOnStart) {
+        GAME.heroList.forEach((hero) => {
+          startQuest(hero, object.questGivingId)
+        })
+      }
+    })
+
+    GAME.heroList = GAME.heroList.map((hero) => {
+      const oldTags = hero.tags
+
+      let newHero = _.cloneDeep(GAME.defaultHero)
+      if(hero.flags.isAdmin) newHero = hero
+      newHero.tags.saveAsDefaultHero = oldTags.saveAsDefaultHero
+      newHero.id = hero.id
+      const target = originalHeros[hero.id].animationZoomTarget
+      const multiplier = originalHeros[hero.id].animationZoomMultiplier
+
+      newHero.animationZoomTarget = target
+      newHero.animationZoomMultiplier = multiplier
+      newHero.x = newHero.spawnPointX
+      newHero.y = newHero.spawnPointY
+      return newHero
+    })
+
+    GAME.gameState.activeMods = {}
+    GAME.gameState.activeModList = []
+
+    GAME.heroList.forEach((hero) => {
+      HERO.addHero(hero)
+    })
+
+    if(game.metadata) GAME.metadata = game.metadata
+
+    global.local.emit('onGameStarted')
   }
 
   onReloadGame(game) {

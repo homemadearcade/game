@@ -575,61 +575,7 @@ function processEffect(effect, effected, effector, ownerObject) {
         gameId: effect.effectValue
       }
     }).then((res) => {
-      const game = res.data.game
-      GAME.objects.forEach((object) => {
-        OBJECTS.unloadObject(object)
-      })
-      GAME.removeListeners()
-
-      GAME.objectsById = {}
-      GAME.objects = game.objects.map((object) => {
-        OBJECTS.addObject(object)
-        OBJECTS.respawn(object)
-        return object
-      })
-
-      // grid
-      GAME.world = game.world
-      GAME.grid.nodes = gridUtil.generateGridNodes(GAME.grid)
-      GAME.updateGridObstacles()
-      GAME.pfgrid = pathfinding.convertGridToPathfindingGrid(GAME.grid.nodes)
-      GAME.handleWorldUpdate(GAME.world)
-
-      GAME.defaultHero = game.defaultHero || global.defaultHero
-
-      GAME.heroList.forEach((hero) => {
-        const oldTags = hero.tags
-        GAME.heros[hero.id] = HERO.summonFromGameData(hero)
-        GAME.heros[hero.id].tags.saveAsDefaultHero = oldTags.saveAsDefaultHero
-        GAME.heros[hero.id].id = hero.id
-        HERO.spawn(hero)
-      })
-
-      GAME.heroList = []
-      HERO.forAll((hero) => {
-        GAME.heroList.push(hero)
-        HERO.addHero(hero)
-      })
-
-      GAME.objects.forEach((object) => {
-        // global.emitGameEvent('onObjectAwake', object)
-        if(object.tags.talkOnStart) {
-          GAME.heroList.forEach((hero) => {
-            onTalk(hero, object, {}, [], [], { fromStart: true })
-          })
-        }
-        if(object.tags.giveQuestOnStart) {
-          GAME.heroList.forEach((hero) => {
-            startQuest(hero, object.questGivingId)
-          })
-        }
-        // if(object.subObjects) {
-        //   Object.keys(object.subObjects).forEach((subObjectName) => {
-        //     global.emitGameEvent('onObjectAwake', object.subObjects[subObjectName])
-        //   })
-        // }
-      })
-      global.emitGameEvent('onGameStarted')
+      global.emitEvent('onLoadGameAsLevel', res.data.game)
     })
   }
 
@@ -684,24 +630,24 @@ function processEffect(effect, effected, effector, ownerObject) {
     GAME.gameState.activeMods = {}
   }
 
-  // if(effectName === 'stopPrologue') {
-  //   GAME.gameState.started = false
-  //   GAME.removeListeners()
-  //   GAME.gameState.sequenceQueue = []
-  //   GAME.gameState.activeModList = []
-  //   GAME.gameState.activeMods = {}
-  //   GAME.heroList.forEach((hero, i) => {
-  //     Object.keys(hero.triggers || {}).forEach((triggerName) => {
-  //       hero.triggers[triggerName] = null
-  //     })
-  //     hero.flags.editAllowedWhenGameStarted = false
-  //   });
-  //   GAME.library.sequences = {}
-  //   if(global.isServerHost) {
-  //     global.socket.emit('networkUpdateGameState', GAME.gameState)
-  //     global.socket.emit('networkUpdateHeros', GAME.heroList)
-  //   }
-  // }
+  if(effectName === 'stopPrologue') {
+    console.log('X')
+    GAME.gameState.started = false
+    GAME.removeListeners()
+    GAME.gameState.sequenceQueue = []
+    GAME.gameState.activeModList = []
+    GAME.gameState.activeMods = {}
+    GAME.heroList.forEach((hero, i) => {
+      Object.keys(hero.triggers || {}).forEach((triggerName) => {
+        hero.triggers[triggerName] = null
+      })
+      hero.flags.editAllowedWhenGameStarted = false
+    });
+    GAME.library.sequences = {}
+    global.emitEvent('onNetworkUpdateGameState', GAME.gameState)
+    global.emitEvent('onNetworkUpdateHeros', GAME.heroList)
+    global.emitEvent('onGameStopped')
+  }
 
   if(effectName === 'pathfindTo') {
     setPathTarget(effected, effectValue)
