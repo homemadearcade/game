@@ -32,6 +32,35 @@ global.removeTerrainDataFromPhysics = function (terrainData) {
   updateTerrainDataPhysics(terrainData, true)
 }
 
+global.moistureIntegers = {
+  Dryest: 0.27,
+  Dryer: 0.4,
+  Dry: 0.6,
+  Wet: 0.8,
+  Wetter: 0.9,
+  Wettest: 1
+}
+
+global.moistureIntegerLookup = {}
+
+for(let i = 0; i <= 100; i+= 1) {
+  const key = (i/100).toFixed(2)
+  if(i <= global.moistureIntegers['Dryest'] * 100) {
+    global.moistureIntegerLookup[key] = 'Dryest'
+  } else if(i <= global.moistureIntegers['Dryer'] * 100) {
+    global.moistureIntegerLookup[key] = 'Dryer'
+  } else if(i <= global.moistureIntegers['Dry'] * 100) {
+    global.moistureIntegerLookup[key] = 'Dry'
+  } else if(i <= global.moistureIntegers['Wet'] * 100) {
+    global.moistureIntegerLookup[key] = 'Wet'
+  } else if(i <= global.moistureIntegers['Wetter'] * 100) {
+    global.moistureIntegerLookup[key] = 'Wetter'
+  } else if(i <= global.moistureIntegers['Wettest'] * 100) {
+    global.moistureIntegerLookup[key] = 'Wettest'
+  }
+}
+
+
 global.heatIntegers = {
   Coldest: 0.05,
   Colder:0.15,
@@ -88,6 +117,317 @@ for(let i = 0; i <= 100; i+= 1) {
   } else if(i <= global.elevationIntegers['Snow'] * 100) {
     global.elevationIntegerLookup[key] = 'Snow'
   }
+}
+
+function getRiverNeighborCount(node, nodes, river, options) {
+  const { top, left, right, bottom } = getNeighbors(node, nodes)
+
+  let count = 0;
+  //left.rivers.length > 0 ||
+  //right.rivers.length > 0 ||
+  //top.rivers.length > 0 ||
+  //bottom.rivers.length > 0 ||
+
+
+  if(options.forceEndInWater) {
+    // DONT let it touch its own river
+    if (left != null && (river.nodes.some(({id}) => id == left.id) ) ) count++;
+    if (right != null && (river.nodes.some(({id}) => id == right.id) ) ) count++;
+    if (top != null && (river.nodes.some(({id}) => id == top.id) ) ) count++;
+    if (bottom != null && (river.nodes.some(({id}) => id == bottom.id) ) ) count++;
+  } else {
+    // LET IT touch its own river, this will create a pool in anything that has a lower height than the original node
+    if (left != null && left.rivers.length > 0 && left.rivers.some(({id}) => id == river.id)) count++;
+    if (right != null && right.rivers.length > 0 && right.rivers.some(({id}) => id == river.id)) count++;
+    if (top != null && top.rivers.length > 0 && top.rivers.some(({id}) => id == river.id)) count++;
+    if (bottom != null && bottom.rivers.length > 0 && bottom.rivers.some(({id}) => id == river.id)) count++;
+  }
+
+  return count;
+}
+
+function getLowestNeighbor(node, nodes) {
+  const { top, left, right, bottom } = getNeighbors(node, nodes)
+
+  let leftElevation = 1
+  let rightElevation = 1
+  let bottomElevation = 1
+  let topElevation = 1
+
+  if(left) leftElevation = left.elevation;
+  if(right) rightElevation = right.elevation;
+  if(bottom) bottomElevation = bottom.elevation;
+  if(top) topElevation = top.elevation;
+
+  if (leftElevation < rightElevation && leftElevation < topElevation && leftElevation < bottomElevation)
+    return 'left';
+  else if (rightElevation < leftElevation && rightElevation < topElevation && rightElevation < bottomElevation)
+    return 'right';
+  else if (topElevation < leftElevation && topElevation < rightElevation && topElevation < bottomElevation)
+    return 'top';
+  else if (bottomElevation < topElevation && bottomElevation < rightElevation && bottomElevation < leftElevation)
+    return 'bottom'
+  else
+    return 'bottom'
+}
+
+function GenerateRivers(nodes) {
+  let attempts = 0
+  let maxRiverAttempts = 1000
+  let riverCount = 100
+  let rivers = []
+  let minRiverHeight = .6
+  let minRiverTurns = 18
+  let maxRiverIntersections = 2
+  let minRiverLength = 20
+  let forceEndInWater = true
+
+   // Generate some rivers
+   while (riverCount > 0 && attempts < maxRiverAttempts) {
+     let x = global.getRandomInt(0, nodes.length - 1)
+     let y = global.getRandomInt(0, nodes[0].length - 1)
+
+     let node = nodes[x][y]
+
+     if(node.isWater) {
+       continue
+     }
+     if(node.rivers.length) {
+       continue
+     }
+
+     if(node.elevation > minRiverHeight) {
+       const river = {
+         id: global.uniqueID(),
+         nodes: [],
+         turnCount: 0,
+         intersections: 0,
+       }
+       river.currentDirection = getLowestNeighbor(node, nodes)
+       // Recursively find a path to water
+       const foundWater = FindPathToWater(node, nodes, river.currentDirection, river, { forceEndInWater });
+
+       if(forceEndInWater && !foundWater) {
+         continue
+       }
+
+       // Validate the generated river
+       if (river.turnCount < minRiverTurns || river.nodes.length < minRiverLength || river.intersections > maxRiverIntersections)
+       {
+          console.log('CANCALLED RIVER')
+           //Validation failed - remove this river
+           // for (let i = 0; i < river.nodes.length; i++)
+           // {
+           //     n = river.nodes[i];
+           //     rivers = node.rivers.filter((r) => r != n)
+           // }
+       }
+       else if (river.nodes.length >= minRiverLength)
+       {
+           //Validation passed - Add river to list
+           rivers.push(river);
+           node.rivers.push(river);
+           riverCount--;
+       }
+     }
+
+
+     attempts++;
+   }
+
+   return rivers
+}
+
+function FindPathToWater(node, nodes, direction, river, options)
+{
+    if (node.rivers.some(({id}) => id == river.id)) {
+      return;
+    }
+
+    // check if there is already a river on this tile
+    if (node.rivers.length > 0) {
+      console.log('X')
+      river.intersections++;
+    }
+
+    river.nodes.push(node)
+
+    // get neighbors
+    const { top, left, right, bottom } = getNeighbors(node, nodes)
+
+    if(direction === 'left' && !left) {
+      console.log('cant find left')
+      return
+    }
+    if(direction === 'right' && !right) {
+      console.log('cant find right')
+      return
+    }
+    if(direction === 'top' && !top) {
+      console.log('cant find top')
+      return
+    }
+    if(direction === 'bottom' && !bottom) {
+      console.log('cant find bottom')
+      return
+    }
+
+    let leftValue = Number.MAX_SAFE_INTEGER;
+    let rightValue = Number.MAX_SAFE_INTEGER;
+    let topValue = Number.MAX_SAFE_INTEGER;
+    let bottomValue = Number.MAX_SAFE_INTEGER;
+
+    // query height values of neighbors
+    // if(left && river.nodes.some(({id}) => id == left.id)) console.log('hasleft already')
+    if (left && getRiverNeighborCount(left, nodes, river, options) < 2 && !river.nodes.some(({id}) => id == left.id)) {
+      leftValue = left.elevation;
+    }
+    //else console.log('preventing left add')
+    if (right && getRiverNeighborCount(right, nodes, river, options) < 2 && !river.nodes.some(({id}) => id == right.id)) {
+      rightValue = right.elevation;
+    }
+    //else console.log('preventing right add')
+    if (top && getRiverNeighborCount(top, nodes, river, options) < 2 && !river.nodes.some(({id}) => id == top.id)) {
+      topValue = top.elevation;
+    }
+    //else console.log('preventing top add')
+    if (bottom && getRiverNeighborCount(bottom, nodes, river, options) < 2 && !river.nodes.some(({id}) => id == bottom.id)) {
+      bottomValue = bottom.elevation;
+    }
+    //else console.log('preventing bottom add')
+
+    // if neighbor is existing river that is not this one, flow into it
+    // && (!bottom.isLand && !bottom.isMountain)
+    if (bottom && bottom.rivers.length) {
+      // console.log('force joining other river to the bottom')
+      bottomValue = 0;
+    }
+
+    // && (!top.isLand && !top.isMountain)
+    if (top && top.rivers.length) {
+      // console.log('force joining other river to the top')
+      topValue = 0;
+    }
+
+// && (!left.isLand && !left.isMountain)
+    if (left && left.rivers.length) {
+      // console.log('force joining other river to the left')
+      leftValue = 0;
+    }
+
+// && (!right.isLand && !right.isMountain)
+    if (right && right.rivers.length) {
+      // console.log('force joining other river to the right')
+      rightValue = 0;
+    }
+
+    //override flow direction if a tile is significantly lower
+    if (direction == 'left') {
+        if (Math.abs (rightValue - leftValue) < 0.1) {
+          // console.log('force turning right', rightValue, leftValue, (rightValue - leftValue))
+            rightValue = Number.MAX_SAFE_INTEGER;
+        }
+    }
+    if (direction == 'right') {
+        if (Math.abs (rightValue - leftValue) < 0.1) {
+          // console.log('force turning left', rightValue, leftValue, (rightValue - leftValue))
+            leftValue = Number.MAX_SAFE_INTEGER;
+        }
+    }
+    if (direction == 'top') {
+        if (Math.abs (topValue - bottomValue) < 0.1) {
+          // console.log('force turning up', topValue, bottomValue, (topValue - bottomValue))
+            bottomValue = Number.MAX_SAFE_INTEGER;
+        }
+    }
+    if (direction == 'bottom') {
+        if (Math.abs (topValue - bottomValue) < 0.1) {
+          // console.log('force turning ', topValue, bottomValue, (topValue - bottomValue))
+            topValue = Number.MAX_SAFE_INTEGER;
+        }
+    }
+
+
+    // find mininum
+    let min = Math.min(leftValue, rightValue, topValue, bottomValue);
+    // console.log(leftValue, rightValue, topValue, bottomValue)
+    // if no minimum found - exit
+    if (min == Number.MAX_SAFE_INTEGER) {
+      console.log('cant find water')
+      if(options.forceEndInWater) return false
+      return true;
+    }
+
+    //Move to next neighbor
+    if (min == leftValue) {
+        if (left.isLand || left.isMountain)
+        {
+            if (river.currentDirection != 'left'){
+                river.turnCount++;
+                river.currentDirection = 'left';
+            }
+            // console.log('LEFT')
+
+            return FindPathToWater (left, nodes, river.currentDirection, river, options);
+        }
+    } else if (min == rightValue) {
+        if (right.isLand || right.isMountain)
+        {
+            if (river.currentDirection != 'right'){
+                river.turnCount++;
+                river.currentDirection = 'right';
+            }
+            // console.log('RIGHT')
+
+            return FindPathToWater (right, nodes, river.currentDirection, river, options);
+        }
+    } else if (min == bottomValue) {
+        if (bottom.isLand || bottom.isMountain)
+        {
+            if (river.currentDirection != 'bottom'){
+                river.turnCount++;
+                river.currentDirection = 'bottom';
+            }
+            // console.log('DOWN')
+
+            return FindPathToWater (bottom, nodes, river.currentDirection, river, options);
+        }
+    } else if (min == topValue) {
+        if (top.isLand || top.isMountain)
+        {
+            if (river.currentDirection != 'top'){
+                river.turnCount++;
+                river.currentDirection = 'top';
+            }
+            // console.log('UP')
+
+            return FindPathToWater (top, nodes, river.currentDirection, river, options);
+        }
+    }
+
+    return true
+}
+
+function setMoisture(nodes) {
+  nodes.forEach((row, x) => {
+    row.forEach((node, y) => {
+      node.moisture = node.moistureNoise
+      //adjust moisture based on height
+      if (node.elevationType == 'Deep Water') {
+          node.moisture += 0.8 * node.elevation;
+      }
+      else if (node.elevationType == 'Water') {
+          node.moisture += 0.3 * node.elevation;
+      }
+      else if (node.elevationType == 'Sand') {
+          node.moisture += 0.1 * node.elevation;
+      }
+
+      if(node.moisture > 1) node.moisture = 1
+
+      node.moistureType = global.moistureIntegerLookup[node.moisture]
+    })
+  })
 }
 
 function setHeatGradient(nodes) {
@@ -311,9 +651,12 @@ function prepareNodesForGeneration(nodes) {
       // node.down = null
       node.elevation = null
       node.heat = null
+      node.moisture = null
+      node.moistureNoise = null
       node.heatNoise = null
       node.isLand = null
       node.isWater = null
+      node.rivers = []
       node.isFloodFilled = null
       node.elevationBitmask = null
     })
@@ -483,42 +826,57 @@ function updateTerrainDataPhysics(terrainData, remove) {
   })
 }
 
-async function generateTerrainJSON(showModals) {
-  const nodesToUse = GAME.grid.nodes
-  // const nodesToUse = gridUtil.generateGridNodes({width: 100, height: 100, startX: 0, startY: 0})
+async function generateTerrainJSON(showModals = true) {
+  // const nodesToUse = GAME.grid.nodes
+  const nodesToUse = gridUtil.generateGridNodes({width: 500, height: 500, startX: 0, startY: 0})
 
   if(GAME.grid.terrainData) {
-    updateTerrainDataPhysics(GAME.grid.terrainData, true)
+    // updateTerrainDataPhysics(GAME.grid.terrainData, true)
   }
-
-  prepareNodesForGeneration(nodesToUse)
 
   const nodes = nodesToUse
   const nodesCopy = nodesToUse
 
   const terrainData = {}
+  let rivers
+
+  prepareNodesForGeneration(nodes)
 
   generateNoiseMap({type: 'perlin', seed: Math.random(), nodes: nodes, property: 'elevation'})
   // updateAllNodesNeighbors(nodes)
   setAllNodesElevationTypes(nodes)
   setAllNodesElevationBitmask(nodes)
 
-  if(showModals) await viewNoiseData({noiseNodes: nodes, title: 'perlin-terrain', type: 'terrain', terrainData})
+  // if(showModals) await viewNoiseData({noiseNodes: nodes, title: 'perlin-terrain', type: 'terrain', terrainData})
 
   let massData = floodFilledNodeData(nodes)
   terrainData.landMasses = massData.landMasses
   terrainData.waterMasses = massData.waterMasses
   terrainData.mountainRanges = massData.mountainRanges
 
-  if(showModals) await viewNoiseData({noiseNodes: nodes, title: 'perlin-landwater', type: 'landwatergroups', terrainData})
+  // if(showModals) await viewNoiseData({noiseNodes: nodes, title: 'perlin-landwater', type: 'landwatergroups', terrainData})
 
   generateNoiseMap({type: 'perlin', seed: Math.random(), nodes: nodes, property: 'heatNoise'})
   setHeatGradient(nodes)
 
-  if(showModals) await viewNoiseData({noiseNodes: nodes, title: 'perlin-heat', type: 'heat', terrainData})
+  // if(showModals) await viewNoiseData({noiseNodes: nodes, title: 'perlin-heat', type: 'heat', terrainData})
 
-  prepareNodesForGeneration(nodesToUse)
+  generateNoiseMap({type: 'perlin', seed: Math.random(), nodes: nodes, property: 'moistureNoise'})
+  setMoisture(nodes)
 
+  // if(showModals) await viewNoiseData({noiseNodes: nodes, title: 'perlin-moisture', type: 'moisture', terrainData})
+
+  rivers = GenerateRivers(nodes)
+  console.log(rivers)
+
+  if(showModals) await viewNoiseData({noiseNodes: nodes, title: 'perlin-rivers', type: 'terrain', rivers, terrainData})
+
+
+
+
+
+
+  prepareNodesForGeneration(nodesCopy)
 
   if(!GAME.grid.terrainSeed) GAME.grid.terrainSeed = Math.random()
 
@@ -527,27 +885,37 @@ async function generateTerrainJSON(showModals) {
   setAllNodesElevationTypes(nodesCopy)
   setAllNodesElevationBitmask(nodesCopy)
 
-  if(showModals) await viewNoiseData({noiseNodes: nodesCopy, title: 'simplex-terrain', type: 'terrain', terrainData})
+  // if(showModals) await viewNoiseData({noiseNodes: nodesCopy, title: 'simplex-terrain', type: 'terrain', terrainData})
 
   massData = floodFilledNodeData(nodesCopy)
   terrainData.landMasses = massData.landMasses
   terrainData.waterMasses = massData.waterMasses
   terrainData.mountainRanges = massData.mountainRanges
 
-  if(showModals) await viewNoiseData({noiseNodes: nodesCopy, title: 'simplex-landwater', type: 'landwatergroups', terrainData})
+  // if(showModals) await viewNoiseData({noiseNodes: nodesCopy, title: 'simplex-landwater', type: 'landwatergroups', terrainData})
 
   generateNoiseMap({type: 'simplex', seed: Math.random(), nodes: nodesCopy, property: 'heatNoise'})
   setHeatGradient(nodesCopy)
 
-  if(showModals) await viewNoiseData({noiseNodes: nodesCopy, title: 'simplex-heat', type: 'heat', terrainData})
+  // if(showModals) await viewNoiseData({noiseNodes: nodesCopy, title: 'simplex-heat', type: 'heat', terrainData})
 
-  updateTerrainDataPhysics(massData, false)
+  generateNoiseMap({type: 'simplex', seed: Math.random(), nodes: nodesCopy, property: 'moistureNoise'})
+  setMoisture(nodesCopy)
+
+  // if(showModals) await viewNoiseData({noiseNodes: nodesCopy, title: 'simplex-moisture', type: 'moisture', terrainData})
+
+  rivers = GenerateRivers(nodesCopy)
+
+  console.log(rivers)
+  if(showModals) await viewNoiseData({noiseNodes: nodesCopy, title: 'simplex-rivers', type: 'terrain', rivers, terrainData})
+
+  // updateTerrainDataPhysics(massData, false)
 
   // GAME.grid.nodes = nodesCopy
   // GAME.grid.terrainData = massData
   applyChangesToNodeData(nodesCopy)
   console.log('done w procedural map')
-  global.socket.emit('updateGrid', GAME.grid)
+  // global.socket.emit('updateGrid', GAME.grid)
 }
 
 function getGameObjectDataFromNodes(nodes) {

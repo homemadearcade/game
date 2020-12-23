@@ -43,8 +43,6 @@ advanced Hero physics for non platformer
 PROCEDURAL
 ////////////////////////////////////////
 Ok I need to
-1) Fix terrain with water..?
-2) Add mountains to PF grid
 3) Add the rest of the procedural..
 4) Terrain brush
 On the side platformer generation..
@@ -109,7 +107,6 @@ Editor
 Animate
 Sound
 Mod honestly needs its own...
-add object needs to be its own thing with effect, wait, condition, etc.
 Its getting really complicated. For now im going to cheat it. It should have its own service and its own sequence type, feel me?
 // onGameStart or onHeroLand sequences === automatically trigger on those events
 Visalize sequences

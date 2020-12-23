@@ -29,7 +29,7 @@ function convertGridToPathfindingGrid(grid, saveToWindow = true) {
 
   for (let x = 0; x < grid.length; x++) {
     for (let y = 0; y < grid[x].length; y++) {
-      if(grid[x][y].hasObstacle) {
+      if(grid[x][y].hasObstacle || grid[x][y].isMountain) {
         pfgrid.setWalkableAt(x, y, false);
         // GAME.resetPaths = true
       }

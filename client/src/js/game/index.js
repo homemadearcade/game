@@ -386,12 +386,11 @@ class Game{
     //GRID DATA STUFF
     if(!GAME.grid.nodeData) GAME.grid.nodeData = {}
     GAME.grid.nodes = gridUtil.generateGridNodes(GAME.grid)
-    GAME.updateGridObstacles()
-    GAME.pfgrid = pathfinding.convertGridToPathfindingGrid(GAME.grid.nodes)
-
     const terrainData = PROCEDURAL.getGameObjectDataFromNodes(GAME.grid.nodes)
     global.addTerrainDataToPhysics(terrainData)
     GAME.grid.terrainData = terrainData
+    GAME.updateGridObstacles()
+    GAME.pfgrid = pathfinding.convertGridToPathfindingGrid(GAME.grid.nodes)
 
     global.local.emit('onGridLoaded')
 

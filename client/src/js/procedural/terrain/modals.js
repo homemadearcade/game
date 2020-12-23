@@ -21,8 +21,16 @@ global.heatColors = {
   'Warmest': parseInt(tinycolor('#EE1100').toHex(), 16),
 }
 
+global.moistureColors = {
+  'Dryest': parseInt(tinycolor('#FF8811').toHex(), 16),
+  'Dryer': parseInt(tinycolor('#EEEE11').toHex(), 16),
+  'Dry': parseInt(tinycolor('#55FF00').toHex(), 16),
+  'Wet': parseInt(tinycolor('#55FFFF').toHex(), 16),
+  'Wetter': parseInt(tinycolor('#3355FF').toHex(), 16),
+  'Wettest': parseInt(tinycolor('#000066').toHex(), 16),
+}
 
-function viewNoiseData({noiseNodes, nodeProperty, title, type, terrainData}) {
+function viewNoiseData({noiseNodes, nodeProperty, title, type, terrainData, rivers}) {
 
   const colorData = Object.keys(global.elevationColors).map((name) => {
 
@@ -51,8 +59,18 @@ function viewNoiseData({noiseNodes, nodeProperty, title, type, terrainData}) {
       const sprite = new PIXI.Sprite(PIXI.Texture.WHITE)
       // console.log(noise, (noise + 1)/2)
 
+      if(type == 'moisture') {
+        const prop = node.moisture.toFixed(2)
 
-      if(type == 'heat') {
+        let moistureType = global.moistureIntegerLookup[prop]
+        if(node.elevationBitmask != 15) {
+          sprite.tint = 0x333
+        } else {
+          // console.log(moistureType)
+          if(!moistureType) console.log(node.moisture)
+          sprite.tint = global.moistureColors[moistureType]
+        }
+      } else if(type == 'heat') {
         const prop = node.heat.toFixed(2)
 
         let heatType = global.heatIntegerLookup[prop]
@@ -108,6 +126,24 @@ function viewNoiseData({noiseNodes, nodeProperty, title, type, terrainData}) {
       app.stage.addChild(sprite);
     })
   })
+
+  if(rivers) {
+    rivers.forEach(({nodes}) => {
+      nodes.forEach((node) => {
+        const sprite = new PIXI.Sprite(PIXI.Texture.WHITE)
+
+
+        sprite.x = node.gridX
+        sprite.y = node.gridY
+        sprite.width = 1
+        sprite.height = 1
+        //parseInt(tinycolor(color).toHex(), 16)
+        sprite.tint = 0xFF0000
+        
+        app.stage.addChild(sprite);
+      })
+    })
+  }
 
   return promise
 }

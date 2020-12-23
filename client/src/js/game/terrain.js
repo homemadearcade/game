@@ -16,10 +16,9 @@ function getTerrainGridNode(object) {
   // const gridX = Math.floor(x/this.nodeSize)
   // const gridY = Math.floor(y/this.nodeSize)
 
-  let nodeData = GAME.grid.nodeData
-  if(GAME.grid.nodeData && GAME.grid.nodeData['x:'+gridX+'y:'+gridY]) {
-    nodeData = GAME.grid.nodeData['x:'+gridX+'y:'+gridY]
-  }
+  if(!GAME.grid.nodes[gridX]) return
+
+  let nodeData = GAME.grid.nodes[gridX][gridY]
   return nodeData
 }
 

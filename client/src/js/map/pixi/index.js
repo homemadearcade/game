@@ -215,7 +215,7 @@ PIXIMAP.updateGridNodeVisibility = function() {
 
   const hero = GAME.heros[HERO.id]
 
-  if(hero) {
+  if(false && hero) {
     const { startX, endX, startY, endY } = PIXIMAP.getChunkBoundaries(hero)
     for(var x = startX; x < endX; x++) {
       if(!GAME.grid.nodes[x]) return
@@ -229,7 +229,7 @@ PIXIMAP.updateGridNodeVisibility = function() {
           pixiSprite.visible = true
           pixiSprite.renderable = true
           if(!visibleNodes[gridNode.id]) {
-            setTimeout(() => {
+            visibleNodes[gridNode.id] = setTimeout(() => {
               pixiSprite.visible = false
               pixiSprite.renderable = false
               visibleNodes[gridNode.id] = false
@@ -322,7 +322,8 @@ PIXIMAP.onRender = function(delta, force) {
 
     if(PIXIMAP.gridStage) {
       // PIXIMAP.gridStage.rotation = hero.cameraRotation
-
+      PIXIMAP.gridStage.pivot.x = camera.x
+      PIXIMAP.gridStage.pivot.y = camera.y
       Object.keys(visibleNodes).forEach((id) => {
         if(visibleNodes[id]) {
           // const pixiChild = PIXIMAP.childrenById[id]
@@ -538,8 +539,8 @@ PIXIMAP.initBackgroundSprite = function(node, nodeSprite) {
   backgroundSprite.name = node.id
   PIXIMAP.childrenById[node.id] = backgroundSprite
   // console.log('just reset')
-  backgroundSprite.visible = false
-  backgroundSprite.renderable = false
+  // backgroundSprite.visible = false
+  // backgroundSprite.renderable = false
   return backgroundSprite
 }
 
@@ -599,6 +600,7 @@ PIXIMAP.updateGridSprites = function() {
 
       let backgroundSprite = PIXIMAP.childrenById[nodeData.id]
       if(nodeData && nodeData.elevationType) {
+        console.log(nodeData.elevationType)
         nodeData.sprite = 'solidcolorsprite'
       }
 
