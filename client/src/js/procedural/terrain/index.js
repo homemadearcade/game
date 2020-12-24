@@ -1,7 +1,8 @@
 import { Noise }  from 'noisejs'
 import { viewNoiseData } from './modals.js'
 import gridUtil from '../../utils/grid.js'
-
+import SimplexNoise from 'simplex-noise'
+import radialGradient from './radialGradient.js'
 // import Grid from './drid'
 
 global.terrainTypeLookUp = {
@@ -1152,6 +1153,63 @@ function generateNoiseMap({type, seed, nodes, property, width, height}) {
     }
     return nodes
   }
+
+  if(type === 'clouds') {
+    const simplex = new SimplexNoise(() => { return seed })
+    // initialize a grid
+    // generate clouds in the grid using the noise generator
+    const start = Date.now()
+    let min = Number.MAX_VALUE
+    let max = Number.MIN_VALUE
+    for (var x = 0; x < width; x++) {
+      for (var y = 0; y < height; y++) {
+            // 8 octaves typed by hand
+            let value = simplex.noise2D(x, y) * 1/256
+            value += simplex.noise2D(x / 2, y / 2) * 1/128
+            value += simplex.noise2D(x / 4, y / 4) * 1/64
+            value += simplex.noise2D(x / 8, y / 8) * 1/32
+            value += simplex.noise2D(x / 16, y / 16) * 1/16
+            value += simplex.noise2D(x / 32, y / 32) * 1/8
+            value += simplex.noise2D(x / 64, y / 64) * 1/4
+            value += simplex.noise2D(x / 128, y / 128) * 1/2
+
+            // track the upper and lower ranges, for debugging
+            if (min > value) { min = value }
+            if (max < value) { max = value }
+
+            nodes[x][y][property] = value
+        }
+    }
+
+    let adjustedMin = Number.MAX_VALUE
+    let adjustedMax = Number.MIN_VALUE
+    let absoluteMin = Math.abs(min)
+    let highestPossible = (absoluteMin + max)
+    for (var x = 0; x < width; x++) {
+      for (var y = 0; y < height; y++) {
+          const value = nodes[x][y][property]
+          const newValue = (value + absoluteMin)/highestPossible
+          nodes[x][y][property] = newValue
+          if (adjustedMin > newValue) { adjustedMin = newValue }
+          if (adjustedMax < newValue) {
+            adjustedMax = newValue
+           }
+        }
+    }
+
+
+    // // general phase to create continent shapes..
+    // for (var x = 0; x < width; x++) {
+    //   for (var y = 0; y < height; y++) {
+    //
+    //     //Math.abs(value) * 256; // Or whatever. Open demo.html to see it used with canvas.
+    //   }
+    // }
+
+    const elapsed  = Date.now() - start
+    //adjusted range ${ adjustedMin }, ${ adjustedMax}
+    console.log(`generation complete, range ${ min }, ${ max},  in ${ elapsed } ms`)
+  }
 }
 
 function updateTerrainDataPhysics(terrainData, remove) {
@@ -1237,9 +1295,48 @@ function updateTerrainDataPhysics(terrainData, remove) {
   })
 }
 
+async function generateWorld(nodes, noiseType, showModals) {
+  const terrainData = {}
+  let rivers
+  let riverGroups
+
+  prepareNodesForGeneration(nodes)
+
+  generateNoiseMap({type: noiseType, seed: Math.random(), nodes: nodes, property: 'elevation'})
+  // updateAllNodesNeighbors(nodes)
+  setAllNodesElevationTypes(nodes)
+  setAllNodesElevationBitmask(nodes)
+
+  // if(showModals) await viewNoiseData({noiseNodes: nodes, title: noiseType + '-terrain', type: 'terrain', terrainData})
+
+  let massData = floodFilledNodeData(nodes)
+  terrainData.landMasses = massData.landMasses
+  terrainData.waterMasses = massData.waterMasses
+  terrainData.mountainRanges = massData.mountainRanges
+
+  // if(showModals) await viewNoiseData({noiseNodes: nodes, title: noiseType + '-landwater', type: 'landwatergroups', terrainData})
+
+  generateNoiseMap({type: noiseType, seed: Math.random(), nodes: nodes, property: 'heatNoise'})
+  setHeatGradient(nodes)
+
+  // if(showModals) await viewNoiseData({noiseNodes: nodes, title: noiseType + '-heat', type: 'heat', terrainData})
+
+  generateNoiseMap({type: noiseType, seed: Math.random(), nodes: nodes, property: 'moistureNoise'})
+  setMoisture(nodes)
+
+  // if(showModals) await viewNoiseData({noiseNodes: nodes, title: noiseType + '-moisture', type: 'moisture', terrainData})
+
+  rivers = GenerateRivers(nodes)
+  riverGroups = BuildRiverGroups(nodes)
+  console.log(riverGroups)
+  DigRiverGroups(riverGroups, nodes)
+
+  if(showModals) await viewNoiseData({noiseNodes: nodes, title: noiseType + '-rivers', type: 'terrain', terrainData})
+}
+
 async function generateTerrainJSON(showModals = true) {
   // const nodesToUse = GAME.grid.nodes
-  const nodesToUse = gridUtil.generateGridNodes({width: 200, height: 200, startX: 0, startY: 0})
+  const nodesToUse = gridUtil.generateGridNodes({width: 1000, height: 1000, startX: 0, startY: 0})
 
   if(GAME.grid.terrainData) {
     // updateTerrainDataPhysics(GAME.grid.terrainData, true)
@@ -1247,89 +1344,26 @@ async function generateTerrainJSON(showModals = true) {
 
   const nodes = nodesToUse
   const nodesCopy = nodesToUse
-
-  const terrainData = {}
-  let rivers
-  let riverGroups
-
-  prepareNodesForGeneration(nodes)
-
-  generateNoiseMap({type: 'perlin', seed: Math.random(), nodes: nodes, property: 'elevation'})
-  // updateAllNodesNeighbors(nodes)
-  setAllNodesElevationTypes(nodes)
-  setAllNodesElevationBitmask(nodes)
-
-  // if(showModals) await viewNoiseData({noiseNodes: nodes, title: 'perlin-terrain', type: 'terrain', terrainData})
-
-  let massData = floodFilledNodeData(nodes)
-  terrainData.landMasses = massData.landMasses
-  terrainData.waterMasses = massData.waterMasses
-  terrainData.mountainRanges = massData.mountainRanges
-
-  // if(showModals) await viewNoiseData({noiseNodes: nodes, title: 'perlin-landwater', type: 'landwatergroups', terrainData})
-
-  generateNoiseMap({type: 'perlin', seed: Math.random(), nodes: nodes, property: 'heatNoise'})
-  setHeatGradient(nodes)
-
-  // if(showModals) await viewNoiseData({noiseNodes: nodes, title: 'perlin-heat', type: 'heat', terrainData})
-
-  generateNoiseMap({type: 'perlin', seed: Math.random(), nodes: nodes, property: 'moistureNoise'})
-  setMoisture(nodes)
-
-  // if(showModals) await viewNoiseData({noiseNodes: nodes, title: 'perlin-moisture', type: 'moisture', terrainData})
-
-  rivers = GenerateRivers(nodes)
-  riverGroups = BuildRiverGroups(nodes)
-  console.log(riverGroups)
-  DigRiverGroups(riverGroups, nodesCopy)
-
-  if(showModals) await viewNoiseData({noiseNodes: nodes, title: 'perlin-rivers', type: 'terrain', rivers, terrainData})
-
-
-
-
-
-
-  prepareNodesForGeneration(nodesCopy)
+  const nodesCopy2 = nodesToUse
 
   if(!GAME.grid.terrainSeed) GAME.grid.terrainSeed = Math.random()
 
-  generateNoiseMap({type: 'simplex', seed: GAME.grid.terrainSeed, nodes: nodesCopy, property: 'elevation'})
-  // updateAllNodesNeighbors(nodesCopy)
-  setAllNodesElevationTypes(nodesCopy)
-  setAllNodesElevationBitmask(nodesCopy)
+  // await generateWorld(nodes,'perlin', showModals)
 
-  // if(showModals) await viewNoiseData({noiseNodes: nodesCopy, title: 'simplex-terrain', type: 'terrain', terrainData})
 
-  massData = floodFilledNodeData(nodesCopy)
-  terrainData.landMasses = massData.landMasses
-  terrainData.waterMasses = massData.waterMasses
-  terrainData.mountainRanges = massData.mountainRanges
+  // await generateWorld(nodesCopy,'simplex', showModals)
 
-  // if(showModals) await viewNoiseData({noiseNodes: nodesCopy, title: 'simplex-landwater', type: 'landwatergroups', terrainData})
 
-  generateNoiseMap({type: 'simplex', seed: Math.random(), nodes: nodesCopy, property: 'heatNoise'})
-  setHeatGradient(nodesCopy)
+  await generateWorld(nodesCopy2,'clouds', showModals)
 
-  // if(showModals) await viewNoiseData({noiseNodes: nodesCopy, title: 'simplex-heat', type: 'heat', terrainData})
 
-  generateNoiseMap({type: 'simplex', seed: Math.random(), nodes: nodesCopy, property: 'moistureNoise'})
-  setMoisture(nodesCopy)
 
-  // if(showModals) await viewNoiseData({noiseNodes: nodesCopy, title: 'simplex-moisture', type: 'moisture', terrainData})
-
-  rivers = GenerateRivers(nodesCopy)
-  riverGroups = BuildRiverGroups(nodesCopy)
-  console.log(riverGroups)
-  DigRiverGroups(riverGroups, nodesCopy)
-
-  if(showModals) await viewNoiseData({noiseNodes: nodesCopy, title: 'simplex-rivers', type: 'terrain', rivers, terrainData})
 
   // updateTerrainDataPhysics(massData, false)
 
   // GAME.grid.nodes = nodesCopy
   // GAME.grid.terrainData = massData
-  applyChangesToNodeData(nodesCopy)
+  // applyChangesToNodeData(nodesCopy)
   console.log('done w procedural map')
   // global.socket.emit('updateGrid', GAME.grid)
 }
