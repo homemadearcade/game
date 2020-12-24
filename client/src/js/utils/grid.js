@@ -1,5 +1,61 @@
 import collisions from './collisions.js'
 
+class GridNode {
+  bottomNeighbor(nodes) {
+    let bottom
+    if(nodes[this.gridX]) {
+      bottom = nodes[this.gridX][this.gridY+1]
+    }
+    if(!bottom) return new GridNode()
+    return bottom
+  }
+
+  leftNeighbor(nodes) {
+    let left
+    if(this.gridX >= 0 && nodes[this.gridX-1]) {
+      left = nodes[this.gridX-1][this.gridY]
+    }
+    if(!left) return new GridNode()
+    return left
+  }
+
+  rightNeighbor(nodes) {
+    let right
+    if(this.gridX >= 0 && nodes[this.gridX+1]) {
+      right = nodes[this.gridX+1][this.gridY]
+    }
+    if(!right) return new GridNode()
+    return right
+  }
+
+  topNeighbor(nodes) {
+    let top
+    if(nodes[this.gridX]) {
+      top = nodes[this.gridX][this.gridY-1]
+    }
+    if(!top) return new GridNode()
+    return top
+  }
+
+  // getNeighbors() {
+  //
+  // }
+
+  setAsRiver(river, size) {
+    if(this.isWater) return
+    this.riverSize = size;
+
+    if(!river.nodes.some(({id}) => id === this.id)) river.nodes.push(this)
+
+    this.elevationType === 'Water';
+    this.elevation = 0.3
+    this.isLand = false
+    this.isMountain = false
+    this.isWater = true
+  }
+}
+
+
 function convertToGridXY(object, options = { }) {
   // pretend we are dealing with a 0,0 plane
   let x = object.x - (options.startX || GAME.grid.nodes[0][0].x)
@@ -26,13 +82,15 @@ function generateGridNodes(gridProps) {
   for(var i = 0; i < gridProps.width; i++) {
     grid.push([])
     for(var j = 0; j < gridProps.height; j++) {
+      const gridNode = new GridNode()
       const node = {x: gridProps.startX + (i * GAME.grid.nodeSize), y: gridProps.startY + (j * GAME.grid.nodeSize), width: GAME.grid.nodeSize, height: GAME.grid.nodeSize, gridX: i, gridY: j}
       const key = 'x:'+node.gridX+'y:'+node.gridY
       node.id = key
       if(nodeData && nodeData[key]) {
         node.data = nodeData[key]
       }
-      grid[i].push(node)
+      Object.assign(gridNode, node)
+      grid[i].push(gridNode)
     }
   }
 

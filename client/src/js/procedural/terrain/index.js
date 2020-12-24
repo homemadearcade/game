@@ -177,7 +177,7 @@ function GenerateRivers(nodes) {
   let riverCount = 100
   let rivers = []
   let minRiverHeight = .6
-  let minRiverTurns = 18
+  let minRiverTurns = 2
   let maxRiverIntersections = 2
   let minRiverLength = 20
   let forceEndInWater = true
@@ -201,7 +201,7 @@ function GenerateRivers(nodes) {
          id: global.uniqueID(),
          nodes: [],
          turnCount: 0,
-         intersections: 0,
+         intersectionIds: {},
        }
        river.currentDirection = getLowestNeighbor(node, nodes)
        // Recursively find a path to water
@@ -212,10 +212,13 @@ function GenerateRivers(nodes) {
        }
 
        // Validate the generated river
-       if (river.turnCount < minRiverTurns || river.nodes.length < minRiverLength || river.intersections > maxRiverIntersections)
+       if (river.turnCount < minRiverTurns || river.nodes.length < minRiverLength || Object.keys(river.intersectionIds).length > maxRiverIntersections)
        {
-          console.log('CANCALLED RIVER')
-           //Validation failed - remove this river
+          // console.log('CANCALLED RIVER', river.nodes.length < minRiverLength )
+          // if(river.turnCount < minRiverTurns) console.log('not enough turns', river.turnCount)
+          // if(Object.keys(river.intersectionIds).length > maxRiverIntersections) console.log('too many intersections', river.intersections)
+          // if(river.nodes.length < minRiverLength) console.log('not long enough', river.nodes.length)
+          //  //Validation failed - remove this river
            // for (let i = 0; i < river.nodes.length; i++)
            // {
            //     n = river.nodes[i];
@@ -226,7 +229,9 @@ function GenerateRivers(nodes) {
        {
            //Validation passed - Add river to list
            rivers.push(river);
-           node.rivers.push(river);
+           river.nodes.forEach((nodeInRiver) => {
+             nodeInRiver.rivers.push(river)
+           })
            riverCount--;
        }
      }
@@ -246,8 +251,9 @@ function FindPathToWater(node, nodes, direction, river, options)
 
     // check if there is already a river on this tile
     if (node.rivers.length > 0) {
-      console.log('X')
-      river.intersections++;
+      node.rivers.forEach(({id}) => {
+        river.intersectionIds[id] = true
+      })
     }
 
     river.nodes.push(node)
@@ -256,19 +262,19 @@ function FindPathToWater(node, nodes, direction, river, options)
     const { top, left, right, bottom } = getNeighbors(node, nodes)
 
     if(direction === 'left' && !left) {
-      console.log('cant find left')
+      // console.log('cant find left')
       return
     }
     if(direction === 'right' && !right) {
-      console.log('cant find right')
+      // console.log('cant find right')
       return
     }
     if(direction === 'top' && !top) {
-      console.log('cant find top')
+      // console.log('cant find top')
       return
     }
     if(direction === 'bottom' && !bottom) {
-      console.log('cant find bottom')
+      // console.log('cant find bottom')
       return
     }
 
@@ -296,30 +302,30 @@ function FindPathToWater(node, nodes, direction, river, options)
     }
     //else console.log('preventing bottom add')
 
-    // if neighbor is existing river that is not this one, flow into it
-    // && (!bottom.isLand && !bottom.isMountain)
-    if (bottom && bottom.rivers.length) {
-      // console.log('force joining other river to the bottom')
-      bottomValue = 0;
-    }
-
-    // && (!top.isLand && !top.isMountain)
-    if (top && top.rivers.length) {
-      // console.log('force joining other river to the top')
-      topValue = 0;
-    }
-
-// && (!left.isLand && !left.isMountain)
-    if (left && left.rivers.length) {
-      // console.log('force joining other river to the left')
-      leftValue = 0;
-    }
-
-// && (!right.isLand && !right.isMountain)
-    if (right && right.rivers.length) {
-      // console.log('force joining other river to the right')
-      rightValue = 0;
-    }
+//     // if neighbor is existing river that is not this one, flow into it
+//     // && (!bottom.isLand && !bottom.isMountain)
+//     if (bottom && bottom.rivers.length) {
+//       // console.log('force joining other river to the bottom')
+//       bottomValue = 0;
+//     }
+//
+//     // && (!top.isLand && !top.isMountain)
+//     if (top && top.rivers.length) {
+//       // console.log('force joining other river to the top')
+//       topValue = 0;
+//     }
+//
+// // && (!left.isLand && !left.isMountain)
+//     if (left && left.rivers.length) {
+//       // console.log('force joining other river to the left')
+//       leftValue = 0;
+//     }
+//
+// // && (!right.isLand && !right.isMountain)
+//     if (right && right.rivers.length) {
+//       // console.log('force joining other river to the right')
+//       rightValue = 0;
+//     }
 
     //override flow direction if a tile is significantly lower
     if (direction == 'left') {
@@ -353,7 +359,7 @@ function FindPathToWater(node, nodes, direction, river, options)
     // console.log(leftValue, rightValue, topValue, bottomValue)
     // if no minimum found - exit
     if (min == Number.MAX_SAFE_INTEGER) {
-      console.log('cant find water')
+      // console.log('cant find water')
       if(options.forceEndInWater) return false
       return true;
     }
@@ -368,7 +374,7 @@ function FindPathToWater(node, nodes, direction, river, options)
             }
             // console.log('LEFT')
 
-            return FindPathToWater (left, nodes, river.currentDirection, river, options);
+            return FindPathToWater (left, nodes, direction, river, options);
         }
     } else if (min == rightValue) {
         if (right.isLand || right.isMountain)
@@ -379,7 +385,7 @@ function FindPathToWater(node, nodes, direction, river, options)
             }
             // console.log('RIGHT')
 
-            return FindPathToWater (right, nodes, river.currentDirection, river, options);
+            return FindPathToWater (right, nodes, direction, river, options);
         }
     } else if (min == bottomValue) {
         if (bottom.isLand || bottom.isMountain)
@@ -390,7 +396,7 @@ function FindPathToWater(node, nodes, direction, river, options)
             }
             // console.log('DOWN')
 
-            return FindPathToWater (bottom, nodes, river.currentDirection, river, options);
+            return FindPathToWater (bottom, nodes, direction, river, options);
         }
     } else if (min == topValue) {
         if (top.isLand || top.isMountain)
@@ -401,11 +407,410 @@ function FindPathToWater(node, nodes, direction, river, options)
             }
             // console.log('UP')
 
-            return FindPathToWater (top, nodes, river.currentDirection, river, options);
+            return FindPathToWater (top, nodes, direction, river, options);
         }
     }
 
     return true
+}
+
+function BuildRiverGroups(nodes)
+{
+  const riverGroups = []
+
+  nodes.forEach((row, x) => {
+    row.forEach((node, y) => {
+    //loop each tile, checking if it belongs to multiple rivers
+            // console.log(node.rivers)
+            // multiple rivers == intersection
+            if (node.rivers.length > 1)
+            {
+                let riverGroup = null;
+                // Does a rivergroup already exist for this group?
+                for (let n=0; n < node.rivers.length; n++)
+                {
+                    let nodeRiver = node.rivers[n];
+                    for (let i = 0; i < riverGroups.length; i++)
+                    {
+                        for (let j = 0; j < riverGroups[i].rivers.length; j++)
+                        {
+                            let river = riverGroups[i].rivers[j];
+                            if (river.id == nodeRiver.id)
+                            {
+                                riverGroup = riverGroups[i];
+                            }
+                            if (riverGroup != null) break;
+                        }
+                        if (riverGroup != null) break;
+                    }
+                    if (riverGroup != null) break;
+                }
+ 
+                // existing group found -- add to it
+                if (riverGroup != null)
+                {
+                    for (let n=0; n < node.rivers.length; n++)
+                    {
+                        if (!riverGroup.rivers.some((({id}) => id != node.rivers[n].id))) {
+                          riverGroup.rivers.push(node.rivers[n]);
+                        }
+                    }
+                }
+                else   //No existing group found - create a new one
+                {
+                    const riverGroup = {
+                      id: global.uniqueID(),
+                      rivers: [],
+                    }
+                    for (let n=0; n < node.rivers.length; n++)
+                    {
+                        riverGroup.rivers.push(node.rivers[n]);
+                    }
+                    riverGroups.push (riverGroup);
+                }
+            }
+        })
+    })
+
+  return riverGroups
+}
+
+function DigRiverGroups(riverGroups, nodes)
+{
+    for (let i = 0; i < riverGroups.length; i++) {
+
+        let group = riverGroups[i];
+        let longest = null;
+
+        //Find longest river in this group
+        for (let j = 0; j < group.rivers.length; j++)
+        {
+            let river = group.rivers[j];
+            if (longest == null) {
+              longest = river;
+            } else if (longest.nodes.length < river.nodes.length) {
+              longest = river;
+            }
+        }
+
+        if (longest != null)
+        {
+            //Dig out longest path first
+            DigRiver (longest, nodes);
+
+            for (let j = 0; j < group.rivers.length; j++)
+            {
+                let river = group.rivers[j];
+                if (river != longest)
+                {
+                    DigRiverWithParent (river, longest, nodes);
+                }
+            }
+        }
+    }
+}
+
+function DigRiver(river, nodes)
+{
+    let counter = 0;
+
+    // How wide are we digging this river?
+    const size = global.getRandomInt(1,5);
+    river.length = river.nodes.length;
+
+    // randomize size change
+    const two = river.length / 2;
+    const three = two / 2;
+    const four = three / 2;
+    const five = four / 2;
+
+    const twomin = two / 3;
+    const threemin = three / 3;
+    const fourmin = four / 3;
+    const fivemin = five / 3;
+
+    // randomize lenght of each size
+    let count1 = global.getRandomInt (fivemin, five);
+    if (size < 4) {
+        count1 = 0;
+    }
+    let count2 = count1 + global.getRandomInt(fourmin, four);
+    if (size < 3) {
+        count2 = 0;
+        count1 = 0;
+    }
+    let count3 = count2 + global.getRandomInt(threemin, three);
+    if (size < 2) {
+        count3 = 0;
+        count2 = 0;
+        count1 = 0;
+    }
+    let count4 = count3 + global.getRandomInt (twomin, two);
+
+    // Make sure we are not digging past the river path
+    if (count4 > river.length) {
+        const extra = count4 - river.length;
+        while (extra > 0)
+        {
+            if (count1 > 0) { count1--; count2--; count3--; count4--; extra--; }
+            else if (count2 > 0) { count2--; count3--; count4--; extra--; }
+            else if (count3 > 0) { count3--; count4--; extra--; }
+            else if (count4 > 0) { count4--; extra--; }
+        }
+    }
+
+    // Dig it out
+    for (let i = river.nodes.length - 1; i >= 0 ; i--)
+    {
+        const node = river.nodes[i];
+
+        if (counter < count1) {
+            DigRiverForNode(node, river, 4, nodes);
+        }
+        else if (counter < count2) {
+            DigRiverForNode(node, river, 3, nodes);
+        }
+        else if (counter < count3) {
+            DigRiverForNode(node, river, 2, nodes);
+        }
+        else if ( counter < count4) {
+            DigRiverForNode(node, river, 1, nodes);
+        }
+        else {
+            DigRiverForNode(node, river, 0, nodes);
+        }
+        counter++;
+    }
+}
+
+function DigRiverWithParent(river, parent, nodes)
+{
+    let intersectionIndex = 0;
+		let intersectionSize = 0;
+
+    // determine point of intersection
+    for (let i = 0; i < river.nodes.length; i++) {
+      let node1 = river.nodes[i];
+      for (let j = 0; j < parent.nodes.length; j++) {
+        let node2 = parent.nodes[j];
+        if (node1.id == node2.id)
+        {
+          intersectionIndex = i;
+          intersectionSize = node2.riverSize;
+        }
+      }
+    }
+
+    let intersectionCount = river.nodes.length - intersectionIndex;
+
+    // How wide are we digging this river?
+    const size = global.getRandomInt(intersectionSize,5);
+    river.length = river.nodes.length;
+
+    let counter = 0;
+
+    // randomize size change
+    const two = river.length / 2;
+    const three = two / 2;
+    const four = three / 2;
+    const five = four / 2;
+
+    const twomin = two / 3;
+    const threemin = three / 3;
+    const fourmin = four / 3;
+    const fivemin = five / 3;
+
+
+    // randomize lenght of each size
+    let count1 = global.getRandomInt (fivemin, five);
+    if (size < 4) {
+        count1 = 0;
+    }
+    let count2 = count1 + global.getRandomInt(fourmin, four);
+    if (size < 3) {
+        count2 = 0;
+        count1 = 0;
+    }
+    let count3 = count2 + global.getRandomInt(threemin, three);
+    if (size < 2) {
+        count3 = 0;
+        count2 = 0;
+        count1 = 0;
+    }
+    let count4 = count3 + global.getRandomInt (twomin, two);
+
+    // Make sure we are not digging past the river path
+    if (count4 > river.length) {
+        const extra = count4 - river.length;
+        while (extra > 0)
+        {
+            if (count1 > 0) { count1--; count2--; count3--; count4--; extra--; }
+            else if (count2 > 0) { count2--; count3--; count4--; extra--; }
+            else if (count3 > 0) { count3--; count4--; extra--; }
+            else if (count4 > 0) { count4--; extra--; }
+        }
+    }
+
+    // adjust size of river at intersection point
+    if (intersectionSize == 1) {
+      count4 = intersectionCount;
+      count1 = 0;
+      count2 = 0;
+      count3 = 0;
+    } else if (intersectionSize == 2) {
+      count3 = intersectionCount;
+      count1 = 0;
+      count2 = 0;
+    } else if (intersectionSize == 3) {
+      count2 = intersectionCount;
+      count1 = 0;
+    } else if (intersectionSize == 4) {
+      count1 = intersectionCount;
+    } else {
+      count1 = 0;
+      count2 = 0;
+      count3 = 0;
+      count4 = 0;
+    }
+
+    // Dig it out
+    for (let i = river.nodes.length - 1; i >= 0 ; i--)
+    {
+        const node = river.nodes[i];
+
+        if (counter < count1) {
+            DigRiverForNode(node, river, 4, nodes);
+        }
+        else if (counter < count2) {
+            DigRiverForNode(node, river, 3, nodes);
+        }
+        else if (counter < count3) {
+            DigRiverForNode(node, river, 2, nodes);
+        }
+        else if ( counter < count4) {
+            DigRiverForNode(node, river, 1, nodes);
+        }
+        else {
+            DigRiverForNode(node, river, 0, nodes);
+        }
+        counter++;
+    }
+}
+
+function DigRiverForNode(node, river, size, nodes) {
+  node.setAsRiver (river);
+  node.riverSize = size
+
+  const {top, bottom, right, left} = getNeighbors(node, nodes)
+
+  if (size == 1) {
+    if (bottom != null)
+    {
+      bottom.setAsRiver (river);
+      if (bottom.rightNeighbor(nodes) != null) bottom.rightNeighbor(nodes).setAsRiver (river);
+    }
+    if (right != null) right.setAsRiver (river);
+  }
+
+  if (size == 2) {
+    if (bottom != null) {
+      bottom.setAsRiver (river);
+      if (bottom.rightNeighbor(nodes) != null) bottom.rightNeighbor(nodes).setAsRiver (river);
+    }
+    if (right != null) {
+      right.setAsRiver (river);
+    }
+    if (top != null) {
+      top.setAsRiver (river);
+      if (top.leftNeighbor(nodes) != null) top.leftNeighbor(nodes).setAsRiver (river);
+      if (top.rightNeighbor(nodes) != null) top.rightNeighbor(nodes).setAsRiver (river);
+    }
+    if (left != null) {
+      left.setAsRiver (river);
+      if (left.bottomNeighbor(nodes) != null) left.bottomNeighbor(nodes).setAsRiver (river);
+    }
+  }
+
+  if (size == 3) {
+    if (bottom != null) {
+      bottom.setAsRiver (river);
+      if (bottom.rightNeighbor(nodes) != null) bottom.rightNeighbor(nodes).setAsRiver (river);
+      if (bottom.bottomNeighbor(nodes) != null)
+      {
+        bottom.bottomNeighbor(nodes).setAsRiver (river);
+        if (bottom.bottomNeighbor(nodes).rightNeighbor(nodes) != null) bottom.bottomNeighbor(nodes).rightNeighbor(nodes).setAsRiver (river);
+      }
+    }
+    if (right != null) {
+      right.setAsRiver (river);
+      if (right.rightNeighbor(nodes) != null)
+      {
+        right.rightNeighbor(nodes).setAsRiver (river);
+        if (right.rightNeighbor(nodes).bottomNeighbor(nodes) != null) right.rightNeighbor(nodes).bottomNeighbor(nodes).setAsRiver (river);
+      }
+    }
+    if (top != null) {
+      top.setAsRiver (river);
+      if (top.leftNeighbor(nodes) != null) top.leftNeighbor(nodes).setAsRiver (river);
+      if (top.rightNeighbor(nodes) != null)top.rightNeighbor(nodes).setAsRiver (river);
+    }
+    if (left != null) {
+      left.setAsRiver (river);
+      if (left.bottomNeighbor(nodes) != null) left.bottomNeighbor(nodes).setAsRiver (river);
+    }
+  }
+
+  if (size == 4) {
+
+    if (bottom != null) {
+      bottom.setAsRiver (river);
+      if (bottom.rightNeighbor(nodes) != null) bottom.rightNeighbor(nodes).setAsRiver (river);
+      if (bottom.bottomNeighbor(nodes) != null)
+      {
+        bottom.bottomNeighbor(nodes).setAsRiver (river);
+        if (bottom.bottomNeighbor(nodes).rightNeighbor(nodes) != null) bottom.bottomNeighbor(nodes).rightNeighbor(nodes).setAsRiver (river);
+      }
+    }
+    if (right != null) {
+      right.setAsRiver (river);
+      if (right.rightNeighbor(nodes) != null)
+      {
+        right.rightNeighbor(nodes).setAsRiver (river);
+        if (right.rightNeighbor(nodes).bottomNeighbor(nodes) != null) right.bottomNeighbor(nodes).setAsRiver (river);
+      }
+    }
+    if (top != null) {
+      top.setAsRiver (river);
+      if (top.rightNeighbor(nodes) != null) {
+        top.rightNeighbor(nodes).setAsRiver (river);
+        if (top.rightNeighbor(nodes).rightNeighbor(nodes) != null) top.rightNeighbor(nodes).rightNeighbor(nodes).setAsRiver (river);
+      }
+      if (top.topNeighbor(nodes) != null)
+      {
+        top.topNeighbor(nodes).setAsRiver (river);
+        if (top.topNeighbor(nodes).rightNeighbor(nodes) != null) top.topNeighbor(nodes).rightNeighbor(nodes).setAsRiver (river);
+      }
+    }
+    if (left != null) {
+      left.setAsRiver (river);
+      if (left.bottomNeighbor(nodes) != null) {
+        left.bottomNeighbor(nodes).setAsRiver (river);
+        if (left.bottomNeighbor(nodes).bottomNeighbor(nodes) != null) left.bottomNeighbor(nodes).bottomNeighbor(nodes).setAsRiver (river);
+      }
+
+      if (left.leftNeighbor(nodes) != null) {
+        left.leftNeighbor(nodes).setAsRiver (river);
+        if (left.leftNeighbor(nodes).bottomNeighbor(nodes) != null) left.leftNeighbor(nodes).bottomNeighbor(nodes).setAsRiver (river);
+        if (left.leftNeighbor(nodes).topNeighbor(nodes) != null) left.leftNeighbor(nodes).topNeighbor(nodes).setAsRiver (river);
+      }
+
+      if (left.topNeighbor(nodes) != null)
+      {
+        left.topNeighbor(nodes).setAsRiver (river);
+        if (left.topNeighbor(nodes) != null) left.topNeighbor(nodes).setAsRiver (river);
+      }
+    }
+  }
 }
 
 function setMoisture(nodes) {
@@ -670,15 +1075,21 @@ function getNeighbors(node, nodes)
   let right
   let left
 
-  top = nodes[node.gridX][node.gridY-1]
-  bottom = nodes[node.gridX][node.gridY+1]
+  try {
+      if(node.gridX >= 0) top = nodes[node.gridX][node.gridY-1]
+      if(node.gridX >= 0) bottom = nodes[node.gridX][node.gridY+1]
 
-  if(nodes[node.gridX-1]) {
-    left = nodes[node.gridX-1][node.gridY]
+      if(nodes[node.gridX-1]) {
+        left = nodes[node.gridX-1][node.gridY]
+      }
+      if(nodes[node.gridX+1]) {
+        right = nodes[node.gridX+1][node.gridY]
+      }
+  } catch(e) {
+    console.trace(node.gridX, node.gridY)
+    if(!nodes) console.log('no nodes')
   }
-  if(nodes[node.gridX+1]) {
-    right = nodes[node.gridX+1][node.gridY]
-  }
+
 
   return {
     top,
@@ -828,7 +1239,7 @@ function updateTerrainDataPhysics(terrainData, remove) {
 
 async function generateTerrainJSON(showModals = true) {
   // const nodesToUse = GAME.grid.nodes
-  const nodesToUse = gridUtil.generateGridNodes({width: 500, height: 500, startX: 0, startY: 0})
+  const nodesToUse = gridUtil.generateGridNodes({width: 200, height: 200, startX: 0, startY: 0})
 
   if(GAME.grid.terrainData) {
     // updateTerrainDataPhysics(GAME.grid.terrainData, true)
@@ -839,6 +1250,7 @@ async function generateTerrainJSON(showModals = true) {
 
   const terrainData = {}
   let rivers
+  let riverGroups
 
   prepareNodesForGeneration(nodes)
 
@@ -867,7 +1279,9 @@ async function generateTerrainJSON(showModals = true) {
   // if(showModals) await viewNoiseData({noiseNodes: nodes, title: 'perlin-moisture', type: 'moisture', terrainData})
 
   rivers = GenerateRivers(nodes)
-  console.log(rivers)
+  riverGroups = BuildRiverGroups(nodes)
+  console.log(riverGroups)
+  DigRiverGroups(riverGroups, nodesCopy)
 
   if(showModals) await viewNoiseData({noiseNodes: nodes, title: 'perlin-rivers', type: 'terrain', rivers, terrainData})
 
@@ -905,8 +1319,10 @@ async function generateTerrainJSON(showModals = true) {
   // if(showModals) await viewNoiseData({noiseNodes: nodesCopy, title: 'simplex-moisture', type: 'moisture', terrainData})
 
   rivers = GenerateRivers(nodesCopy)
+  riverGroups = BuildRiverGroups(nodesCopy)
+  console.log(riverGroups)
+  DigRiverGroups(riverGroups, nodesCopy)
 
-  console.log(rivers)
   if(showModals) await viewNoiseData({noiseNodes: nodesCopy, title: 'simplex-rivers', type: 'terrain', rivers, terrainData})
 
   // updateTerrainDataPhysics(massData, false)

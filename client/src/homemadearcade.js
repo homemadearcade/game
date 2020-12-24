@@ -43,11 +43,10 @@ advanced Hero physics for non platformer
 PROCEDURAL
 ////////////////////////////////////////
 Ok I need to
-3) Add the rest of the procedural..
-4) Terrain brush
-On the side platformer generation..
-add moisture, rivers, and biomes
-5) Generate a space field
+- River Digging + Biomes
+- Terrain brush
+- the side platformer generation..
+- Generate a space field
 
 Terrain brush
   - water, lava, grass, sand

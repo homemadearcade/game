@@ -1,3 +1,39 @@
+class GridNode() {
+
+  bottomNeighbor() {
+
+  }
+
+  leftNeighbor() {
+
+  }
+
+  rightNeighbor() {
+
+  }
+
+  topNeighbor() {
+
+  }
+
+  getNeighbors() {
+
+  }
+
+  SetAsRiver(river) {
+    if(this.isWater) return
+
+    if(!river.nodes.some(({id}) => id === this.id)) river.nodes.add(node)
+
+    this.elevationType === 'Water';
+    this.elevation = 0.3
+    this.isLand = false
+    this.isMountain = false
+    this.isWater = true
+  }
+}
+
+
 class Grid {
   constructor({startX, startY, width, height}) {
     this.startX = startX

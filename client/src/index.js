@@ -22,6 +22,10 @@ Things to learn
 2) only update the render of objects when you need to
 3) You need a authoritative hosts that understands ticks and delta for perfect performance
 
+
+https://github.com/davidfig/pixi-cull
+^^ fuck yeah
+
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
