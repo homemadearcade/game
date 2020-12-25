@@ -47,8 +47,8 @@ class GridNode {
 
     if(!river.nodes.some(({id}) => id === this.id)) river.nodes.push(this)
 
-    this.elevationType === 'Water';
-    this.elevation = 0.3
+    this.elevationType = 'Water';
+    // this.elevation = 0.3
     this.isLand = false
     this.isMountain = false
     this.isWater = true

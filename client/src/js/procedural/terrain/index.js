@@ -1300,6 +1300,43 @@ function updateTerrainDataPhysics(terrainData, remove) {
   })
 }
 
+function adjustMoistureMap(nodes) {
+  nodes.forEach((row, x) => {
+    row.forEach((node, y) => {
+      if (node.riverSize)
+      {
+        addMoistureToNode(node, nodes, 60);
+      }
+    })
+  })
+}
+
+function addMoistureToNode(node, nodes, radius) {
+    let startx = MathHelper.Mod (node.gridX - radius, nodes.length);
+    let endx = MathHelper.Mod (node.gridX + radius, nodes.length);
+    let center = new Vector2(node.gridX, node.gridY);
+    let curr = radius;
+
+    while (curr > 0) {
+
+        let x1 = MathHelper.Mod (node.gridX - curr, nodes.length);
+        let x2 = MathHelper.Mod (node.gridX + curr, nodes.length);
+        let y = node.gridY;
+
+        addMoistureToNode(nodes[x1, y], nodes, 0.025 / (center - new Vector2(x1, y)).magnitude);
+
+        for (let i = 0; i < curr; i++)
+        {
+            addMoistureToNode (nodes[x1][MathHelper.Mod (y + i + 1, nodes[0].length)], nodes, 0.025 / (center - new Vector2(x1, MathHelper.Mod (y + i + 1, nodes[0].length))).magnitude);
+            addMoistureToNode (nodes[x1][MathHelper.Mod (y - (i + 1), nodes[0].length)], nodes, 0.025 / (center - new Vector2(x1, MathHelper.Mod (y - (i + 1), nodes[0].length))).magnitude);
+
+            addMoistureToNode (nodes[x2][MathHelper.Mod (y + i + 1, nodes[0].length)], nodes, 0.025 / (center - new Vector2(x2, MathHelper.Mod (y + i + 1, nodes[0].length))).magnitude);
+            addMoistureToNode (nodes[x2][MathHelper.Mod (y - (i + 1), nodes[0].length)], nodes, 0.025 / (center - new Vector2(x2, MathHelper.Mod (y - (i + 1), nodes[0].length))).magnitude);
+        }
+        curr--;
+    }
+}
+
 async function generateWorld(nodes, noiseType, showModals) {
   const terrainData = {}
   let rivers
@@ -1310,7 +1347,6 @@ async function generateWorld(nodes, noiseType, showModals) {
   generateNoiseMap({type: noiseType, seed: Math.random(), nodes: nodes, property: 'elevation', useCenterRadialGradient: true})
   // updateAllNodesNeighbors(nodes)
   setAllNodesElevationTypes(nodes)
-  setAllNodesElevationBitmask(nodes)
 
   // if(showModals) await viewNoiseData({noiseNodes: nodes, title: noiseType + '-terrain', type: 'terrain', terrainData})
 
@@ -1335,6 +1371,8 @@ async function generateWorld(nodes, noiseType, showModals) {
   riverGroups = BuildRiverGroups(nodes)
   console.log(riverGroups)
   DigRiverGroups(riverGroups, nodes)
+
+  setAllNodesElevationBitmask(nodes)
 
   if(showModals) await viewNoiseData({noiseNodes: nodes, title: noiseType + '-rivers', type: 'terrain', terrainData})
 }

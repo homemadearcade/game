@@ -96,14 +96,14 @@ function viewNoiseData({noiseNodes, nodeProperty, title, type, terrainData, rive
           }
         }
       } else if(type == 'terrain') {
-        const prop = node.elevation.toFixed(2)
 
-        let terrainType = global.elevationIntegerLookup[prop]
+        // using this made things look REALLY cool
+        // let terrainType = global.elevationIntegerLookup[node.elevationType]
         if(node.elevationBitmask != 15) {
           sprite.tint = 0x333
         } else {
           // console.log(terrainType)
-          sprite.tint = global.elevationColors[terrainType]
+          sprite.tint = global.elevationColors[node.elevationType]
         }
       } else if(type == 'water'){
         const prop = node.elevation.toFixed(2)
@@ -139,7 +139,7 @@ function viewNoiseData({noiseNodes, nodeProperty, title, type, terrainData, rive
         sprite.height = 1
         //parseInt(tinycolor(color).toHex(), 16)
         sprite.tint = 0xFF0000
-        
+
         app.stage.addChild(sprite);
       })
     })
