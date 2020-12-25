@@ -1,6 +1,7 @@
-var ChunkMap = require('./ChunkMap')
-var MathEx = require('./MathEx')
+var ChunkMap = require('./ChunkMap').default
+var MathEx = require('./MathEx').default
 
+console.log(ChunkMap)
 /**
 * Generates a radial gradient in a circle (not an oval, yet)
 * @param {Integer} dim The dimension of the map (it's a mandatory square atm)
@@ -25,19 +26,20 @@ export default function(dim, cx, cy, radius,	rv, cv) {
 
 			// default for any given tile, as most tiles are not actually within
 			// 	the relevant circle for any given gradient
-			map.setTile(i, j, { value: 0 })
+      map.setTile(i, j, { value: -1 })
 
 			// distance from i,j to the center of the circle
 	        var radialDist = Math.floor(MathEx.distance(cx, cy, i, j))
 
 	        // if we're not dealing with a point within the gradiet, skip this
 	        // 	iteration
-	        if (radialDist > radius)
-	        	continue
+	        if (radialDist > radius) {
+            continue
+          }
 
 	        // scale from cv to rv, as we go from center to radius
 	        var value = MathEx.scale(radialDist, 0, radius, cv, rv)
-			map.setTile(i, j, { value: value })
+			    map.setTile(i, j, { value: value })
 		}
 	}
 	var stop = Date.now()

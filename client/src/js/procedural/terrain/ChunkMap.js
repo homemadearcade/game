@@ -1,4 +1,4 @@
-var Chunk = require('./Chunk')
+var Chunk = require('./Chunk').default
 /**
 * Map describes a physical world
 * provides interaction with ground, surface, and (later) air blocks

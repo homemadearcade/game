@@ -1,5 +1,5 @@
-var ChunkMap = require('./ChunkMap')
-var MathEx = require('./MathEx')
+var ChunkMap = require('./ChunkMap').default
+var MathEx = require('./MathEx').default
 
 /**
 * Generates a radial gradient in a circle (not an oval, yet)

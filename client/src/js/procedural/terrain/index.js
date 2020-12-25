@@ -1108,7 +1108,7 @@ function getNeighbors(node, nodes)
   // node.right = right
 }
 
-function generateNoiseMap({type, seed, nodes, property, width, height}) {
+function generateNoiseMap({type, seed, nodes, property, width, height, useCenterRadialGradient}) {
   if(typeof seed != 'number') seed = Math.random()
 
   var noise = new Noise(seed);
@@ -1155,6 +1155,10 @@ function generateNoiseMap({type, seed, nodes, property, width, height}) {
   }
 
   if(type === 'clouds') {
+    let gradientMap
+    if(useCenterRadialGradient) {
+      gradientMap = radialGradient(width, width/2, height/2, width/2)
+    }
     const simplex = new SimplexNoise(() => { return seed })
     // initialize a grid
     // generate clouds in the grid using the noise generator
@@ -1163,8 +1167,16 @@ function generateNoiseMap({type, seed, nodes, property, width, height}) {
     let max = Number.MIN_VALUE
     for (var x = 0; x < width; x++) {
       for (var y = 0; y < height; y++) {
+            let value = 0
+
+            if(gradientMap) {
+              value = gradientMap.getTile(x, y).value
+              if(value != 0 && !value) {
+                value = -1
+              }
+            }
             // 8 octaves typed by hand
-            let value = simplex.noise2D(x, y) * 1/256
+            value += simplex.noise2D(x, y) * 1/256
             value += simplex.noise2D(x / 2, y / 2) * 1/128
             value += simplex.noise2D(x / 4, y / 4) * 1/64
             value += simplex.noise2D(x / 8, y / 8) * 1/32
@@ -1198,18 +1210,11 @@ function generateNoiseMap({type, seed, nodes, property, width, height}) {
     }
 
 
-    // // general phase to create continent shapes..
-    // for (var x = 0; x < width; x++) {
-    //   for (var y = 0; y < height; y++) {
-    //
-    //     //Math.abs(value) * 256; // Or whatever. Open demo.html to see it used with canvas.
-    //   }
-    // }
-
     const elapsed  = Date.now() - start
     //adjusted range ${ adjustedMin }, ${ adjustedMax}
     console.log(`generation complete, range ${ min }, ${ max},  in ${ elapsed } ms`)
   }
+
 }
 
 function updateTerrainDataPhysics(terrainData, remove) {
@@ -1302,7 +1307,7 @@ async function generateWorld(nodes, noiseType, showModals) {
 
   prepareNodesForGeneration(nodes)
 
-  generateNoiseMap({type: noiseType, seed: Math.random(), nodes: nodes, property: 'elevation'})
+  generateNoiseMap({type: noiseType, seed: Math.random(), nodes: nodes, property: 'elevation', useCenterRadialGradient: true})
   // updateAllNodesNeighbors(nodes)
   setAllNodesElevationTypes(nodes)
   setAllNodesElevationBitmask(nodes)
