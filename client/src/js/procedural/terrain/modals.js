@@ -2,12 +2,33 @@ import * as PIXI from 'pixi.js'
 import Swal from 'sweetalert2/src/sweetalert2.js';
 import tinycolor from 'tinycolor2';
 
+global.biomeColors = {
+  'Deep Water': parseInt(tinycolor('#00008b').toHex(), 16),
+  'Water': parseInt(tinycolor('#4F42B5').toHex(), 16),
+  'Colder Water': parseInt(tinycolor('#7777B5').toHex(), 16),
+  'Coldest Water': parseInt(tinycolor('#9999B5').toHex(), 16),
+  'Ice Water': parseInt(tinycolor('#bbbbB5').toHex(), 16),
+
+  "Ice": parseInt(tinycolor('#FFFFFF').toHex(), 16),
+  "Desert": parseInt(tinycolor('#eedd88').toHex(), 16),
+  "Savanna": parseInt(tinycolor('#aacc77').toHex(), 16),
+  "Tropical Rainforest": parseInt(tinycolor('#448822').toHex(), 16),
+  "Tundra": parseInt(tinycolor('#668877').toHex(), 16),
+  "Temperate Rainforest": parseInt(tinycolor('#225533').toHex(), 16),
+  "Grassland": parseInt(tinycolor('#99dd66').toHex(), 16),
+  "Seasonal Forest": parseInt(tinycolor('#556622').toHex(), 16),
+  "Boreal Forest": parseInt(tinycolor('#667744').toHex(), 16),
+  "Woodland": parseInt(tinycolor('#88aa66').toHex(), 16),
+}
+
+// Ice Water, Cold Water, Shallow Water/River, Deep Water
+
 global.elevationColors = {
   'Deep Water': parseInt(tinycolor('#00008b').toHex(), 16),
   'Water': parseInt(tinycolor('#4F42B5').toHex(), 16),
-  Sand: parseInt(tinycolor('#ffe29c').toHex(), 16),
-  Grass: parseInt(tinycolor('#567d46').toHex(), 16),
-  Forest: parseInt(tinycolor('#1F3D0C').toHex(), 16),
+  Shore: parseInt(tinycolor('#ffe29c').toHex(), 16),
+  Mainland: parseInt(tinycolor('#567d46').toHex(), 16),
+  Highland: parseInt(tinycolor('#1F3D0C').toHex(), 16),
   Mountain: parseInt(tinycolor('#5b5036').toHex(), 16),
   Snow: parseInt(tinycolor('#eee').toHex(), 16)
 }
@@ -59,7 +80,42 @@ function viewNoiseData({noiseNodes, nodeProperty, title, type, terrainData, rive
       const sprite = new PIXI.Sprite(PIXI.Texture.WHITE)
       // console.log(noise, (noise + 1)/2)
 
-      if(type == 'moisture') {
+      if(type == 'biomes') {
+
+        sprite.tint = global.biomeColors[node.biomeType]
+
+        if(!global.biomeColors[node.biomeType]) console.log(node.biomeType, node.heatType, node.moistureType)
+
+        // Water tiles
+        if (node.elevationType == 'Deep Water') {
+          sprite.tint = global.biomeColors['Deep Water'];
+        } else if (node.elevationType == 'Water') {
+          sprite.tint = global.biomeColors['Water'];
+        }
+
+        // draw rivers
+        if (node.riverSize)
+        {
+            if (node.heatType == 'Coldest') {
+              sprite.tint = global.biomeColors['Ice Water'];
+            } else if (node.heatType == 'Colder') {
+              sprite.tint = global.biomeColors['Colder Water'];
+            } else if (node.HeatType == 'Cold') {
+              sprite.tint = global.biomeColors['Cold Water'];
+            } else {
+              sprite.tint = global.biomeColors['Water'];
+            }
+        }
+
+        // if () {
+        // }
+
+        // add a outline
+        if (node.biomeBitmask != 15 && node.elevation >= .5 && !node.riverSize)
+        {
+          sprite.tint = 0x000000
+        }
+      } else if(type == 'moisture') {
         const prop = node.moisture.toFixed(2)
 
         let moistureType = global.moistureIntegerLookup[prop]
@@ -91,7 +147,7 @@ function viewNoiseData({noiseNodes, nodeProperty, title, type, terrainData, rive
             if(terrainData.landMasses[node.landMassId].length < 10) {
               sprite.tint = global.elevationColors.Snow
             } else {
-              sprite.tint = global.elevationColors.Grass
+              sprite.tint = global.elevationColors.Mainland
             }
           }
         }

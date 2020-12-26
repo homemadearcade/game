@@ -5,12 +5,64 @@ import SimplexNoise from 'simplex-noise'
 import radialGradient from './radialGradient.js'
 // import Grid from './drid'
 
+const biomeLookup = {
+    //COLDEST        //COLDER          //COLD                  //HOT                          //HOTTER                       //HOTTEST
+    Dryest: {
+      Coldest: 'Ice',
+      Colder: 'Tundra',
+      Cold: 'Grassland',
+      Warm: 'Desert',
+      Warmer: 'Desert',
+      Warmest: 'Desert',
+    },
+    Dryer: {
+      Coldest: 'Ice',
+      Colder: 'Tundra',
+      Cold: 'Grassland',
+      Warm: 'Desert',
+      Warmer: 'Desert',
+      Warmest: 'Desert'
+    },
+    Dry: {
+      Coldest: 'Ice',
+      Colder: 'Tundra',
+      Cold: 'Woodland',
+      Warm: 'Woodland',
+      Warmer: 'Savanna',
+      Warmest: 'Savanna'
+    },
+    Wet: {
+      Coldest: 'Ice',
+      Colder: 'Tundra',
+      Cold: 'Boreal Forest',
+      Warm: 'Woodland',
+      Warmer: 'Savanna',
+      Warmest: 'Savanna'
+    },
+    Wetter: {
+      Coldest: 'Ice',
+      Colder: 'Tundra',
+      Cold: 'Boreal Forest',
+      Warm: 'Seasonal Forest',
+      Warmer: 'Tropical Rainforest',
+      Warmest: 'Tropical Rainforest'
+    },
+    Wettest: {
+      Coldest: 'Ice',
+      Colder: 'Tundra',
+      Cold: 'Boreal Forest',
+      Warm: 'Temperate Rainforest',
+      Warmer: 'Tropical Rainforest',
+      Warmest: 'Tropical Rainforest'
+    },
+};
+
 global.terrainTypeLookUp = {
   1: 'Deep Water',
   2: 'Water',
-  3: 'Sand',
-  4: 'Grass',
-  5: 'Forest',
+  3: 'Shore',
+  4: 'Mainland',
+  5: 'Highland',
   6: 'Mountain',
   7: 'Snow',
 }
@@ -18,9 +70,9 @@ global.terrainTypeLookUp = {
 global.terrainIntLookUp = {
   'Deep Water': 1,
   "Water": 2,
-  "Sand": 3,
-  "Grass": 4,
-  "Forest": 5,
+  "Shore": 3,
+  "Mainland": 4,
+  "Highland": 5,
   "Mountain": 6,
   "Snow":7
 }
@@ -93,9 +145,9 @@ for(let i = 0; i <= 100; i+= 1) {
 global.elevationIntegers = {
   'Deep Water': 0.2,
   'Water': 0.4,
-  Sand: 0.5,
-  Grass: 0.7,
-  Forest: 0.8,
+  Shore: 0.5,
+  Mainland: 0.7,
+  Highland: 0.8,
   Mountain: 0.9,
   Snow: 1
 }
@@ -107,12 +159,12 @@ for(let i = 0; i <= 100; i+= 1) {
     global.elevationIntegerLookup[key] = 'Deep Water'
   } else if(i <= global.elevationIntegers['Water'] * 100) {
     global.elevationIntegerLookup[key] = 'Water'
-  } else if(i <= global.elevationIntegers['Sand'] * 100) {
-    global.elevationIntegerLookup[key] = 'Sand'
-  } else if(i <= global.elevationIntegers['Grass'] * 100) {
-    global.elevationIntegerLookup[key] = 'Grass'
-  } else if(i <= global.elevationIntegers['Forest'] * 100) {
-    global.elevationIntegerLookup[key] = 'Forest'
+  } else if(i <= global.elevationIntegers['Shore'] * 100) {
+    global.elevationIntegerLookup[key] = 'Shore'
+  } else if(i <= global.elevationIntegers['Mainland'] * 100) {
+    global.elevationIntegerLookup[key] = 'Mainland'
+  } else if(i <= global.elevationIntegers['Highland'] * 100) {
+    global.elevationIntegerLookup[key] = 'Highland'
   } else if(i <= global.elevationIntegers['Mountain'] * 100) {
     global.elevationIntegerLookup[key] = 'Mountain'
   } else if(i <= global.elevationIntegers['Snow'] * 100) {
@@ -825,13 +877,13 @@ function setMoisture(nodes) {
       else if (node.elevationType == 'Water') {
           node.moisture += 0.3 * node.elevation;
       }
-      else if (node.elevationType == 'Sand') {
+      else if (node.elevationType == 'Shore') {
           node.moisture += 0.1 * node.elevation;
       }
 
       if(node.moisture > 1) node.moisture = 1
 
-      node.moistureType = global.moistureIntegerLookup[node.moisture]
+      node.moistureType = global.moistureIntegerLookup[node.moisture.toFixed(2)]
     })
   })
 }
@@ -849,11 +901,11 @@ function setHeatGradient(nodes) {
         node.heat = gradientValue * node.heatNoise
       }
 
-      if(node.elevationType === 'Grass') {
+      if(node.elevationType === 'Mainland') {
         node.heat -= 0.1 * node.elevation
       }
 
-      if(node.elevationType === 'Forest') {
+      if(node.elevationType === 'Highland') {
         node.heat -= 0.2 * node.elevation
       }
 
@@ -867,7 +919,7 @@ function setHeatGradient(nodes) {
 
       if(node.heat < 0) node.heat = 0
 
-      node.heatType = global.heatIntegerLookup[node.heat]
+      node.heatType = global.heatIntegerLookup[node.heat.toFixed(2)]
     })
   })
 }
@@ -1021,6 +1073,23 @@ function setAllNodesElevationBitmask(nodes) {
   })
 }
 
+function setAllNodesBiomeBitmask(nodes) {
+  nodes.forEach((row, x) => {
+    row.forEach((node, y) => {
+      let count = 0;
+
+      const { top, left, right, bottom } = getNeighbors(node, nodes)
+
+      if (top && node.biomeType == top.biomeType) count += 1;
+      if (right && node.biomeType == right.biomeType) count += 2;
+      if (bottom && node.biomeType == bottom.biomeType) count += 4;
+      if (left && node.biomeType == left.biomeType) count += 8;
+
+      node.biomeBitmask = count;
+    })
+  })
+}
+
 function setAllNodesElevationTypes(nodes) {
   nodes.forEach((row, x) => {
     row.forEach((node, y) => {
@@ -1029,13 +1098,28 @@ function setAllNodesElevationTypes(nodes) {
       if(elevationType === 'Deep Water' || elevationType === 'Water') {
         node.isWater = true
       }
-      if(elevationType === 'Grass' || elevationType === 'Forest' || elevationType === 'Sand') {
+      if(elevationType === 'Mainland' || elevationType === 'Highland' || elevationType === 'Shore') {
         node.isLand = true
       }
       if(elevationType === 'Mountain' || elevationType === 'Snow') {
         node.isMountain = true
       }
       node.elevationType = elevationType
+    })
+  })
+}
+
+function setAllNodesBiomeType(nodes) {
+  nodes.forEach((row, x) => {
+    row.forEach((node, y) => {
+      try {
+        const biomeType = biomeLookup[node.moistureType][node.heatType]
+
+        node.biomeType = biomeType
+      } catch(e) {
+        console.log('no moisture', node.moistureType)
+        console.log('no heat', node.heatType)
+      }
     })
   })
 }
@@ -1065,6 +1149,8 @@ function prepareNodesForGeneration(nodes) {
       node.rivers = []
       node.isFloodFilled = null
       node.elevationBitmask = null
+      node.biomeBitmask = null
+      node.biomeType = null
     })
   })
 }
@@ -1357,12 +1443,12 @@ async function generateWorld(nodes, noiseType, showModals) {
 
   // if(showModals) await viewNoiseData({noiseNodes: nodes, title: noiseType + '-landwater', type: 'landwatergroups', terrainData})
 
-  generateNoiseMap({type: noiseType, seed: Math.random(), nodes: nodes, property: 'heatNoise'})
+  generateNoiseMap({type: 'perlin', seed: Math.random(), nodes: nodes, property: 'heatNoise'})
   setHeatGradient(nodes)
 
   // if(showModals) await viewNoiseData({noiseNodes: nodes, title: noiseType + '-heat', type: 'heat', terrainData})
 
-  generateNoiseMap({type: noiseType, seed: Math.random(), nodes: nodes, property: 'moistureNoise'})
+  generateNoiseMap({type: 'perlin', seed: Math.random(), nodes: nodes, property: 'moistureNoise'})
   setMoisture(nodes)
 
   // if(showModals) await viewNoiseData({noiseNodes: nodes, title: noiseType + '-moisture', type: 'moisture', terrainData})
@@ -1375,11 +1461,16 @@ async function generateWorld(nodes, noiseType, showModals) {
   setAllNodesElevationBitmask(nodes)
 
   if(showModals) await viewNoiseData({noiseNodes: nodes, title: noiseType + '-rivers', type: 'terrain', terrainData})
+
+  setAllNodesBiomeType(nodes)
+  setAllNodesBiomeBitmask(nodes)
+
+  if(showModals) await viewNoiseData({noiseNodes: nodes, title: noiseType + '-biome', type: 'biomes', terrainData})
 }
 
 async function generateTerrainJSON(showModals = true) {
   // const nodesToUse = GAME.grid.nodes
-  const nodesToUse = gridUtil.generateGridNodes({width: 1000, height: 1000, startX: 0, startY: 0})
+  const nodesToUse = gridUtil.generateGridNodes({width: 200, height: 200, startX: 0, startY: 0})
 
   if(GAME.grid.terrainData) {
     // updateTerrainDataPhysics(GAME.grid.terrainData, true)
@@ -1419,7 +1510,7 @@ function getGameObjectDataFromNodes(nodes) {
       if(elevationType === 'Deep Water' || elevationType === 'Water') {
         node.isWater = true
       }
-      if(elevationType === 'Grass' || elevationType === 'Forest' || elevationType === 'Sand') {
+      if(elevationType === 'Mainland' || elevationType === 'Highland' || elevationType === 'Shore') {
         node.isLand = true
       }
       if(elevationType === 'Mountain' || elevationType === 'Snow') {
