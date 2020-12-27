@@ -59,7 +59,9 @@ function camera() {
 
   this.set = function(hero) {
     if(!hero) return
+
     let editorZoom = EDITOR.preferences.zoomMultiplier
+
     if(GAME.gameState.started && !PAGE.role.isAdmin) editorZoom = 0
 
     let multiplier = (editorZoom + hero.mod().zoomMultiplier)
@@ -80,6 +82,14 @@ function camera() {
 
     this.multiplier = 1/this.multiplier
     this.hasHitLimit = false
+
+    // if(SPRITEEDITOR.objectSelected) {
+    //   // this.multiplier = 1
+    //   const hero = SPRITEEDITOR.objectSelected
+    //   this.x = (((hero.x + hero.width/2)*this.multiplier)) - MAP.canvas.width/2
+    //   this.y = (((hero.y + hero.height/2)*this.multiplier)) - MAP.canvas.height/2
+    //   return
+    // }
 
     if(editorZoom > 0 || editorZoom < 0){
       this.setHeroX(hero)

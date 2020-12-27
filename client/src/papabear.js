@@ -65,6 +65,8 @@ You need a map for everything, all tags of a game object
 
 The format I used for dialogue should be used for almost every interaction!
 
+We CAN use mods but dont support every property PLEEASE especailyl dont support every tag, we cant do that
+
 ///
 /////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////

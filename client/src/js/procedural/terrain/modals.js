@@ -144,11 +144,11 @@ function viewNoiseData({noiseNodes, nodeProperty, title, type, terrainData, rive
           }
 
           if(node.isLand) {
-            if(terrainData.landMasses[node.landMassId].length < 10) {
-              sprite.tint = global.elevationColors.Snow
-            } else {
+            // if(terrainData.landMasses[node.landMassId].length < 10) {
+            //   sprite.tint = global.elevationColors.Snow
+            // } else {
               sprite.tint = global.elevationColors.Mainland
-            }
+            // }
           }
         }
       } else if(type == 'terrain') {

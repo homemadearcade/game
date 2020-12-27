@@ -280,6 +280,7 @@ export default class GeneratedMenu extends React.Component {
         {<MenuItem key="edit-all-json">Edit JSON</MenuItem>}
         <MenuItem key="edit-descriptors">Edit Descriptors</MenuItem>
         <MenuItem key="open-tag-search-modal">Edit Tags</MenuItem>
+        <MenuItem key="open-edit-sprite">Edit Sprite</MenuItem>
         {objectSelected.tags.emitter && <MenuItem key="open-live-particle">Edit Emitter</MenuItem>}
         {objectSelected.tags.moving && <MenuItem key="open-live-physics">Edit Physics</MenuItem>}
         {objectSelected.tags.light && <MenuItem key="open-live-light">Edit Light</MenuItem>}

@@ -13,6 +13,10 @@ export async function handleExtraMenuClicks(key, objectSelected, openColorPicker
     const { resourceLimit, resourceWithdrawAmount } = objectSelected
     const { spawnLimit, spawnPoolInitial, spawnWaitTimer } = objectSelected
 
+    if(key === 'open-edit-sprite') {
+      SPRITEEDITOR.open(objectSelected)
+    }
+
     if (key === 'select-color') {
         openColorPicker(objectSelected)
         return

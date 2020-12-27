@@ -1601,9 +1601,10 @@ async function generateWorld(nodes, noiseType, showModals) {
   terrainData.waterMasses = massData.waterMasses
   terrainData.mountainRanges = massData.mountainRanges
 
-  if(showModals) await viewNoiseData({noiseNodes: nodes, title: noiseType + '-landwater', type: 'landwatergroups', terrainData})
+  // if(showModals) await viewNoiseData({noiseNodes: nodes, title: noiseType + '-landwater', type: 'landwatergroups', terrainData})
 
   generateNoiseMap({type: 'perlin', seed: Math.random(), nodes: nodes, property: 'heat', useVerticalGradient: false})
+  setHeatGradient(nodes)
   setHeatType(nodes)
 
   if(showModals) await viewNoiseData({noiseNodes: nodes, title: noiseType + '-heat', type: 'heat', terrainData})
@@ -1619,7 +1620,7 @@ async function generateWorld(nodes, noiseType, showModals) {
   generateNoiseMap({type: 'perlin', seed: Math.random(), nodes: nodes, property: 'moistureNoise'})
 
   setMoisture(nodes)
-  // adjustMoistureMapFromRivers(nodes)
+  adjustMoistureMapFromRivers(nodes)
   nodes.forEach((row, x) => {
     row.forEach((node, y) => {
       if(node.moistureOld) {
