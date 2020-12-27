@@ -465,6 +465,20 @@ export default class Toolbar extends React.Component {
                 BELOWMANAGER.open({ selectedManager: 'MediaManager' })
             }}>
           </ToolbarButton>
+          <ToolbarButton iconName="fa-window-restore" className="haDraggable" onDragStart={(e) => {
+            if(e.target.className.indexOf('haDraggable') == -1) return e.preventDefault()
+            if(CONSTRUCTEDITOR.open || PATHEDITOR.open || !PAGE.role.isAdmin) return
+
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.type = 'game'
+            console.log('no need to log anything else')
+
+            e.dataTransfer.setData('text/plain', JSON.stringify(GAME));
+          }}
+          onClick={() => {
+                BELOWMANAGER.open({ selectedManager: 'MediaManager' })
+            }}>
+          </ToolbarButton>
         </ToolbarRow>
 
       </div>

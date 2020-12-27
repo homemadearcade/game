@@ -101,7 +101,7 @@ export default class SequenceListItem extends React.Component {
     return (
       <div
         key={id}
-        className="SequenceList__sequence"
+        className="SequenceList__sequence haDraggable"
         draggable="true"
         onDragStart={this.handleDragStart}
         onDragOver={(event) => {

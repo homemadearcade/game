@@ -8,10 +8,12 @@ export default class ToolbarButton extends React.Component {
   }
 
   render() {
-    const { active, iconName, text, cursorIcon, onClick, onShiftClick, children, backgroundColor } = this.props
+    const { active, iconName, className, text, cursorIcon, onClick, onShiftClick, children, backgroundColor } = this.props
     return (
       <i
-        className={classnames("Toolbar__tool-selector fa fas ", iconName, { "Toolbar__tool-selector--normal-cursor": !cursorIcon, "Toolbar__tool-selector--text": text, "Toolbar__tool-selector--shift": onShiftClick && EDITOR.shiftPressed, "Toolbar__tool-selector--active": active })}
+        className={classnames("Toolbar__tool-selector fa fas ", iconName, className, { "Toolbar__tool-selector--normal-cursor": !cursorIcon, "Toolbar__tool-selector--text": text, "Toolbar__tool-selector--shift": onShiftClick && EDITOR.shiftPressed, "Toolbar__tool-selector--active": active })}
+        draggable={this.props.onDragStart ? "true" : null}
+        onDragStart={this.props.onDragStart}
         onClick={() => {
           if(typeof onShiftClick == 'function' && EDITOR.shiftPressed) {
             onShiftClick()

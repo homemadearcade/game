@@ -550,28 +550,16 @@ class Page{
   }
 
   initializeGameDragAndDrop() {
-    document.body.addEventListener('dragstart', handleDragStart)
+    // document.body.addEventListener('dragstart', handleDragStart)
     document.body.addEventListener('dragover', (e) => e.preventDefault())
 
     document.body.addEventListener('drop', handleDrop)
-    document.body.draggable=PAGE.role.isAdmin
+    // document.body.draggable=PAGE.role.isAdmin
     // document.body.droppable=true
-
-    let dragSrcEl
-    function handleDragStart(e) {
-      console.log(e.target.className, e.target.id)
-      if(e.target.id !== 'drag') return e.preventDefault()
-      if(CONSTRUCTEDITOR.open || PATHEDITOR.open || !PAGE.role.isAdmin) return
-      dragSrcEl = this;
-
-      e.dataTransfer.effectAllowed = 'move';
-      e.dataTransfer.type = 'game'
-      e.dataTransfer.setData('text/plain', JSON.stringify(GAME));
-    }
 
     async function handleDrop(e) {
       const draggedGame = JSON.parse(e.dataTransfer.getData('text/plain'))
-      if (dragSrcEl !== this && draggedGame.heros) {
+      if (draggedGame.heros) {
         const integrationOptions = [
           'cancel',
           'addNewObjects',
