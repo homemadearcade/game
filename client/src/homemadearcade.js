@@ -43,7 +43,6 @@ advanced Hero physics for non platformer
 PROCEDURAL
 ////////////////////////////////////////
 Ok I need to
-- River Digging + Biomes
 - Terrain brush
 - the side platformer generation..
 - Generate a space field

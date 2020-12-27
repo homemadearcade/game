@@ -1,9 +1,23 @@
 import { Noise }  from 'noisejs'
 import { viewNoiseData } from './modals.js'
 import gridUtil from '../../utils/grid.js'
+import MathEx from './mathEx.js'
 import SimplexNoise from 'simplex-noise'
 import radialGradient from './radialGradient.js'
-// import Grid from './drid'
+import './Vector.js'
+
+global.biomeTypes = {
+  'Ice': true,
+  'Tundra': true,
+  "Grassland": true,
+  "Desert": true,
+  "Savanna": true,
+  "Woodland": true,
+  "Boreal Forest": true,
+  "Seasonal Forest": true,
+  "Tropical Rainforest": true,
+  "Temperate Rainforest": true,
+}
 
 const biomeLookup = {
     //COLDEST        //COLDER          //COLD                  //HOT                          //HOTTER                       //HOTTEST
@@ -227,7 +241,7 @@ function getLowestNeighbor(node, nodes) {
 function GenerateRivers(nodes) {
   let attempts = 0
   let maxRiverAttempts = 1000
-  let riverCount = 100
+  let riverCount = 500
   let rivers = []
   let minRiverHeight = .6
   let minRiverTurns = 2
@@ -881,6 +895,10 @@ function setMoisture(nodes) {
           node.moisture += 0.1 * node.elevation;
       }
 
+      if(node.riverSize) {
+        node.moisture += .05;
+      }
+
       if(node.moisture > 1) node.moisture = 1
 
       node.moistureType = global.moistureIntegerLookup[node.moisture.toFixed(2)]
@@ -1038,6 +1056,66 @@ function FloodFill(node, group, stack, nodes)
     if (right && !right.isFloodFilled && node.terrainType == right.terrainType) stack.push (right);
 }
 
+function floodFillBiomeData(nodes)
+{
+    // Use a stack instead of recursion
+    const stack = []
+
+    const biomes = {}
+
+    nodes.forEach((row, x) => {
+      row.forEach((node, y) => {
+        //Tile already flood filled, skip
+        if (node.isBiomeFloodFilled) return;
+
+        if(!biomes[node.biomeType]) {
+          biomes[node.biomeType] = {}
+        }
+
+        const group = [];
+        group.biomeType = node.biomeType
+        stack.push(node);
+
+        while(stack.length > 0) {
+          FloodFillBiome(stack.pop(), group, stack, nodes);
+        }
+
+        let id = global.uniqueID()
+        biomes[node.biomeType][id] = group
+
+        group.forEach((groupNode) => {
+          groupNode.biomeId = id
+        })
+    })
+
+  })
+
+  return biomes
+}
+
+
+function FloodFillBiome(node, group, stack, nodes)
+{
+    // Validate
+    if (node.isBiomeFloodFilled) return;
+    if (group.biomeType !== node.biomeType) return;
+
+    // Add to TileGroup
+    group.push(node);
+    node.isBiomeFloodFilled = true;
+
+    // floodfill into neighbors
+    const { top, left, right, bottom } = getNeighbors(node, nodes)
+
+    if (top && !top.isBiomeFloodFilled && node.biomeType == top.biomeType) stack.push (top);
+
+    if (bottom && !bottom.isBiomeFloodFilled && node.biomeType == bottom.biomeType) stack.push (bottom);
+
+    if (left && !left.isBiomeFloodFilled && node.biomeType == left.biomeType) stack.push (left);
+
+    if (right && !right.isBiomeFloodFilled && node.biomeType == right.biomeType) stack.push (right);
+}
+
 function applyChangesToNodeData(nodes) {
   nodes.forEach((row, x) => {
     row.forEach((node, y) => {
@@ -1140,10 +1218,13 @@ function prepareNodesForGeneration(nodes) {
       // node.up = null
       // node.down = null
       node.elevation = null
+      node.elevationType = null
       node.heat = null
+      node.heatNoise = null
+      node.heatType = null
       node.moisture = null
       node.moistureNoise = null
-      node.heatNoise = null
+      node.moistureType = null
       node.isLand = null
       node.isWater = null
       node.rivers = []
@@ -1151,6 +1232,7 @@ function prepareNodesForGeneration(nodes) {
       node.elevationBitmask = null
       node.biomeBitmask = null
       node.biomeType = null
+      node.isBiomeFloodFilled = null
     })
   })
 }
@@ -1386,53 +1468,76 @@ function updateTerrainDataPhysics(terrainData, remove) {
   })
 }
 
-function adjustMoistureMap(nodes) {
+function adjustMoistureMapFromRivers(nodes) {
   nodes.forEach((row, x) => {
     row.forEach((node, y) => {
       if (node.riverSize)
       {
-        addMoistureToNode(node, nodes, 60);
+        addMoistureToNodes(node, nodes, 60, x, y);
       }
     })
   })
 }
 
-function addMoistureToNode(node, nodes, radius) {
-    let startx = MathHelper.Mod (node.gridX - radius, nodes.length);
-    let endx = MathHelper.Mod (node.gridX + radius, nodes.length);
-    let center = new Vector2(node.gridX, node.gridY);
+function addMoistureToNodes(node, nodes, radius, x, y) {
+  if(!node) return
+    let center = new Vector(x, y);
     let curr = radius;
 
     while (curr > 0) {
 
-        let x1 = MathHelper.Mod (node.gridX - curr, nodes.length);
-        let x2 = MathHelper.Mod (node.gridX + curr, nodes.length);
-        let y = node.gridY;
+        let x1 = x - curr
+        let x2 = x + curr
 
-        addMoistureToNode(nodes[x1, y], nodes, 0.025 / (center - new Vector2(x1, y)).magnitude);
+        // if(curr == 1) console.log(10 / (center.subtractAndCopy(new Vector(x1, y))).magnitude, (center.subtractAndCopy(new Vector(x1, y))).magnitude)
+
+        if(nodes[x1]) addMoistureToNode(nodes[x1][y], .25 / (center.subtractAndCopy(new Vector(x1, y))).magnitude);
+        if(nodes[x2]) addMoistureToNode(nodes[x2][y], .25 / (center.subtractAndCopy(new Vector(x2, y))).magnitude);
 
         for (let i = 0; i < curr; i++)
         {
-            addMoistureToNode (nodes[x1][MathHelper.Mod (y + i + 1, nodes[0].length)], nodes, 0.025 / (center - new Vector2(x1, MathHelper.Mod (y + i + 1, nodes[0].length))).magnitude);
-            addMoistureToNode (nodes[x1][MathHelper.Mod (y - (i + 1), nodes[0].length)], nodes, 0.025 / (center - new Vector2(x1, MathHelper.Mod (y - (i + 1), nodes[0].length))).magnitude);
+            // console.log('next y', MathEx.Mod (y + i + 1, nodes[0].length))
+            if(nodes[x1]) {
+              addMoistureToNode (nodes[x1][y + i + 1], .25 / (center.subtractAndCopy(new Vector(x1, y + i + 1))).magnitude);
+              addMoistureToNode (nodes[x1][y - (i + 1)], .25 / (center.subtractAndCopy(new Vector(x1, y - (i + 1)))).magnitude);
+            }
 
-            addMoistureToNode (nodes[x2][MathHelper.Mod (y + i + 1, nodes[0].length)], nodes, 0.025 / (center - new Vector2(x2, MathHelper.Mod (y + i + 1, nodes[0].length))).magnitude);
-            addMoistureToNode (nodes[x2][MathHelper.Mod (y - (i + 1), nodes[0].length)], nodes, 0.025 / (center - new Vector2(x2, MathHelper.Mod (y - (i + 1), nodes[0].length))).magnitude);
+            if(nodes[x2]) {
+              addMoistureToNode (nodes[x2][y + i + 1], .25 / (center.subtractAndCopy(new Vector(x2, y + i + 1))).magnitude);
+              addMoistureToNode (nodes[x2][y - (i + 1)], .25 / (center.subtractAndCopy(new Vector(x2, y - (i + 1)))).magnitude);
+            }
         }
         curr--;
     }
 }
 
+function addMoistureToNode(node, amount)
+{
+  if(!node) return
+  // console.log(amount)
+
+  if(!node.moistureOld) node.moistureOld = node.moisture
+  node.moisture += amount;
+  if (node.moisture > 1) node.moisture = 1;
+
+
+  //set moisture type
+  node.moistureType = global.moistureIntegerLookup[node.moisture.toFixed(2)]
+}
+
+
 async function generateWorld(nodes, noiseType, showModals) {
   const terrainData = {}
   let rivers
   let riverGroups
+  let biomeGroups = {}
 
   prepareNodesForGeneration(nodes)
 
-  generateNoiseMap({type: noiseType, seed: Math.random(), nodes: nodes, property: 'elevation', useCenterRadialGradient: true})
+  generateNoiseMap({type: noiseType, seed: Math.random(), nodes: nodes, property: 'elevation', useCenterRadialGradient: false})
   // updateAllNodesNeighbors(nodes)
   setAllNodesElevationTypes(nodes)
+  setAllNodesElevationBitmask(nodes)
 
   // if(showModals) await viewNoiseData({noiseNodes: nodes, title: noiseType + '-terrain', type: 'terrain', terrainData})
 
@@ -1448,11 +1553,6 @@ async function generateWorld(nodes, noiseType, showModals) {
 
   // if(showModals) await viewNoiseData({noiseNodes: nodes, title: noiseType + '-heat', type: 'heat', terrainData})
 
-  generateNoiseMap({type: 'perlin', seed: Math.random(), nodes: nodes, property: 'moistureNoise'})
-  setMoisture(nodes)
-
-  // if(showModals) await viewNoiseData({noiseNodes: nodes, title: noiseType + '-moisture', type: 'moisture', terrainData})
-
   rivers = GenerateRivers(nodes)
   riverGroups = BuildRiverGroups(nodes)
   console.log(riverGroups)
@@ -1460,17 +1560,37 @@ async function generateWorld(nodes, noiseType, showModals) {
 
   setAllNodesElevationBitmask(nodes)
 
-  if(showModals) await viewNoiseData({noiseNodes: nodes, title: noiseType + '-rivers', type: 'terrain', terrainData})
+
+  generateNoiseMap({type: 'perlin', seed: Math.random(), nodes: nodes, property: 'moistureNoise'})
+
+  setMoisture(nodes)
+  adjustMoistureMapFromRivers(nodes)
+  nodes.forEach((row, x) => {
+    row.forEach((node, y) => {
+      if(node.moistureOld) {
+        if(node.moisture - node.moistureOld > .05) {
+          // console.log('diff', node.moisture - node.moistureOld)
+        }
+      }
+    })
+  })
+
+  if(showModals) await viewNoiseData({noiseNodes: nodes, title: noiseType + '-moisture', type: 'moisture', terrainData})
+
+
+  // if(showModals) await viewNoiseData({noiseNodes: nodes, title: noiseType + '-rivers', type: 'terrain', terrainData})
 
   setAllNodesBiomeType(nodes)
   setAllNodesBiomeBitmask(nodes)
+  biomeGroups = floodFillBiomeData(nodes)
+  console.log(biomeGroups)
 
-  if(showModals) await viewNoiseData({noiseNodes: nodes, title: noiseType + '-biome', type: 'biomes', terrainData})
+  if(showModals) await viewNoiseData({noiseNodes: nodes, title: noiseType + '-biome', type: 'biomes', terrainData, biomeGroups})
 }
 
 async function generateTerrainJSON(showModals = true) {
   // const nodesToUse = GAME.grid.nodes
-  const nodesToUse = gridUtil.generateGridNodes({width: 200, height: 200, startX: 0, startY: 0})
+  const nodesToUse = gridUtil.generateGridNodes({width: 1000, height: 1000, startX: 0, startY: 0})
 
   if(GAME.grid.terrainData) {
     // updateTerrainDataPhysics(GAME.grid.terrainData, true)

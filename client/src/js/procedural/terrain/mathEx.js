@@ -111,4 +111,8 @@ exports.lerpColor = function(colorA, colorB, portion) {
     }
 }
 
+exports.Mod = function(littleNumber, bigNumber) {
+  return ((littleNumber % bigNumber ) + bigNumber ) % bigNumber
+}
+
 export default exports

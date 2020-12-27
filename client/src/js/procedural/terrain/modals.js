@@ -111,10 +111,10 @@ function viewNoiseData({noiseNodes, nodeProperty, title, type, terrainData, rive
         // }
 
         // add a outline
-        if (node.biomeBitmask != 15 && node.elevation >= .5 && !node.riverSize)
-        {
-          sprite.tint = 0x000000
-        }
+        // if (node.biomeBitmask != 15 && node.elevation >= .5 && !node.riverSize)
+        // {
+        //   sprite.tint = 0x333
+        // }
       } else if(type == 'moisture') {
         const prop = node.moisture.toFixed(2)
 
@@ -124,7 +124,7 @@ function viewNoiseData({noiseNodes, nodeProperty, title, type, terrainData, rive
         } else {
           // console.log(moistureType)
           if(!moistureType) console.log(node.moisture)
-          sprite.tint = global.moistureColors[moistureType]
+          sprite.tint = global.moistureColors[node.moistureType]
         }
       } else if(type == 'heat') {
         const prop = node.heat.toFixed(2)
@@ -135,7 +135,7 @@ function viewNoiseData({noiseNodes, nodeProperty, title, type, terrainData, rive
         } else {
           // console.log(heatType)
           if(!heatType) console.log(node.heat)
-          sprite.tint = global.heatColors[heatType]
+          sprite.tint = global.heatColors[node.heatType]
         }
       } else if(type == 'landwatergroups' && terrainData) {
         if(node.isFloodFilled) {
@@ -152,13 +152,13 @@ function viewNoiseData({noiseNodes, nodeProperty, title, type, terrainData, rive
           }
         }
       } else if(type == 'terrain') {
-
         // using this made things look REALLY cool
         // let terrainType = global.elevationIntegerLookup[node.elevationType]
         if(node.elevationBitmask != 15) {
           sprite.tint = 0x333
         } else {
           // console.log(terrainType)
+          if(!node.elevationType) console.log('no type')
           sprite.tint = global.elevationColors[node.elevationType]
         }
       } else if(type == 'water'){

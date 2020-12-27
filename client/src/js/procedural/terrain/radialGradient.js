@@ -1,7 +1,5 @@
 var ChunkMap = require('./ChunkMap').default
-var MathEx = require('./MathEx').default
-
-console.log(ChunkMap)
+var MathEx = require('./mathEx').default
 /**
 * Generates a radial gradient in a circle (not an oval, yet)
 * @param {Integer} dim The dimension of the map (it's a mandatory square atm)
