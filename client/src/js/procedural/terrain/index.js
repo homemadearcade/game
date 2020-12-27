@@ -4,6 +4,8 @@ import gridUtil from '../../utils/grid.js'
 import MathEx from './mathEx.js'
 import SimplexNoise from 'simplex-noise'
 import radialGradient from './radialGradient.js'
+import verticalGradient from './verticalGradient.js'
+
 import './Vector.js'
 
 global.biomeTypes = {
@@ -128,6 +130,14 @@ for(let i = 0; i <= 100; i+= 1) {
 }
 
 
+// global.heatIntegers = {
+//   Coldest: 0.1,
+//   Colder:0.21,
+//   Cold: 0.42,
+//   Warm: 0.57,
+//   Warmer: 0.80,
+//   Warmest: 1
+// }
 global.heatIntegers = {
   Coldest: 0.05,
   Colder:0.15,
@@ -136,6 +146,14 @@ global.heatIntegers = {
   Warmer: 0.70,
   Warmest: 1
 }
+// global.heatIntegers = {
+//   Coldest: 0.3,
+//   Colder:0.40,
+//   Cold: 0.50,
+//   Warm: 0.60,
+//   Warmer: 0.70,
+//   Warmest: 1
+// }
 
 global.heatIntegerLookup = {}
 
@@ -919,6 +937,15 @@ function setHeatGradient(nodes) {
         node.heat = gradientValue * node.heatNoise
       }
 
+    })
+  })
+}
+
+function setHeatType(nodes) {
+  nodes.forEach((row, x) => {
+    const center = nodes.length/2
+    const total = nodes.length
+    row.forEach((node, y) => {
       if(node.elevationType === 'Mainland') {
         node.heat -= 0.1 * node.elevation
       }
@@ -936,7 +963,6 @@ function setHeatGradient(nodes) {
       }
 
       if(node.heat < 0) node.heat = 0
-
       node.heatType = global.heatIntegerLookup[node.heat.toFixed(2)]
     })
   })
@@ -1276,13 +1302,24 @@ function getNeighbors(node, nodes)
   // node.right = right
 }
 
-function generateNoiseMap({type, seed, nodes, property, width, height, useCenterRadialGradient}) {
+function generateNoiseMap({type, seed, nodes, property, width, height, useCenterRadialGradient, useVerticalGradient}) {
   if(typeof seed != 'number') seed = Math.random()
 
   var noise = new Noise(seed);
 
   if(nodes && nodes.length) width = nodes.length
   if(nodes && nodes[0].length) height = nodes[0].length
+
+  let gradientMap
+  if(useCenterRadialGradient) {
+    gradientMap = radialGradient(width, width/2, height/2, width/2)
+  } else if(useVerticalGradient) {
+    gradientMap = verticalGradient(height, 0, width, 0, 1)
+  }
+
+  const start = Date.now()
+  let min = Number.MAX_VALUE
+  let max = Number.MIN_VALUE
 
   if(type == 'perlin') {
     if(!nodes) {
@@ -1292,15 +1329,27 @@ function generateNoiseMap({type, seed, nodes, property, width, height, useCenter
 
     for (var x = 0; x < width; x++) {
       for (var y = 0; y < height; y++) {
+        let value = 0
+
+        if(gradientMap) {
+          value += gradientMap.getTile(x, y).value
+          if(value != 0 && !value) {
+            value = -1
+          }
+        }
+
         // noise.simplex2 and noise.perlin2 return values between -1 and 1.
-        var value = noise.perlin2(x / 100, y / 100);
+        value += noise.perlin2(x / 100, y / 100);
 
         // here I convert it to 0-1 and save it
-        nodes[x][y][property] = (value + 1)/2
+        nodes[x][y][property] = value
+
+        if (min > value) { min = value }
+        if (max < value) { max = value }
         //Math.abs(value) * 256; // Or whatever. Open demo.html to see it used with canvas.
+
       }
     }
-    return nodes
   }
 
   if(type == 'simplex') {
@@ -1311,28 +1360,33 @@ function generateNoiseMap({type, seed, nodes, property, width, height, useCenter
 
     for (var x = 0; x < width; x++) {
       for (var y = 0; y < height; y++) {
+
+        let value = 0
+
+        if(gradientMap) {
+          value += gradientMap.getTile(x, y).value
+          if(value != 0 && !value) {
+            value = -1
+          }
+        }
+
         // noise.simplex2 and noise.simplex2 return values between -1 and 1.
-        var value = noise.simplex2(x / 100, y / 100);
+        value += noise.simplex2(x / 100, y / 100);
 
         // here I convert it to 0-1 and save it
-        nodes[x][y][property] = (value + 1)/2
+        nodes[x][y][property] = value
         //Math.abs(value) * 256; // Or whatever. Open demo.html to see it used with canvas.
+
+        if (min > value) { min = value }
+        if (max < value) { max = value }
       }
     }
-    return nodes
   }
 
   if(type === 'clouds') {
-    let gradientMap
-    if(useCenterRadialGradient) {
-      gradientMap = radialGradient(width, width/2, height/2, width/2)
-    }
     const simplex = new SimplexNoise(() => { return seed })
     // initialize a grid
     // generate clouds in the grid using the noise generator
-    const start = Date.now()
-    let min = Number.MAX_VALUE
-    let max = Number.MIN_VALUE
     for (var x = 0; x < width; x++) {
       for (var y = 0; y < height; y++) {
             let value = 0
@@ -1361,28 +1415,29 @@ function generateNoiseMap({type, seed, nodes, property, width, height, useCenter
         }
     }
 
-    let adjustedMin = Number.MAX_VALUE
-    let adjustedMax = Number.MIN_VALUE
-    let absoluteMin = Math.abs(min)
-    let highestPossible = (absoluteMin + max)
-    for (var x = 0; x < width; x++) {
-      for (var y = 0; y < height; y++) {
-          const value = nodes[x][y][property]
-          const newValue = (value + absoluteMin)/highestPossible
-          nodes[x][y][property] = newValue
-          if (adjustedMin > newValue) { adjustedMin = newValue }
-          if (adjustedMax < newValue) {
-            adjustedMax = newValue
-           }
-        }
-    }
-
-
-    const elapsed  = Date.now() - start
-    //adjusted range ${ adjustedMin }, ${ adjustedMax}
-    console.log(`generation complete, range ${ min }, ${ max},  in ${ elapsed } ms`)
   }
 
+  let adjustedMin = Number.MAX_VALUE
+  let adjustedMax = Number.MIN_VALUE
+  let absoluteMin = Math.abs(min)
+  let highestPossible = (absoluteMin + max)
+  for (var x = 0; x < width; x++) {
+    for (var y = 0; y < height; y++) {
+        const value = nodes[x][y][property]
+        const newValue = (value + absoluteMin)/highestPossible
+        nodes[x][y][property] = newValue
+        if (adjustedMin > newValue) { adjustedMin = newValue }
+        if (adjustedMax < newValue) {
+          adjustedMax = newValue
+         }
+      }
+  }
+
+  const elapsed  = Date.now() - start
+  //adjusted range ${ adjustedMin }, ${ adjustedMax}
+  console.log(`generation complete, range ${ min }, ${ max}, ajusted ${ adjustedMin }, ${ adjustedMax} in ${ elapsed } ms`)
+
+  return nodes
 }
 
 function updateTerrainDataPhysics(terrainData, remove) {
@@ -1534,24 +1589,24 @@ async function generateWorld(nodes, noiseType, showModals) {
 
   prepareNodesForGeneration(nodes)
 
-  generateNoiseMap({type: noiseType, seed: Math.random(), nodes: nodes, property: 'elevation', useCenterRadialGradient: false})
+  generateNoiseMap({type: noiseType, seed: Math.random(), nodes: nodes, property: 'elevation', useCenterRadialGradient: true})
   // updateAllNodesNeighbors(nodes)
   setAllNodesElevationTypes(nodes)
   setAllNodesElevationBitmask(nodes)
 
-  // if(showModals) await viewNoiseData({noiseNodes: nodes, title: noiseType + '-terrain', type: 'terrain', terrainData})
+  if(showModals) await viewNoiseData({noiseNodes: nodes, title: noiseType + '-terrain', type: 'terrain', terrainData})
 
   let massData = floodFilledNodeData(nodes)
   terrainData.landMasses = massData.landMasses
   terrainData.waterMasses = massData.waterMasses
   terrainData.mountainRanges = massData.mountainRanges
 
-  // if(showModals) await viewNoiseData({noiseNodes: nodes, title: noiseType + '-landwater', type: 'landwatergroups', terrainData})
+  if(showModals) await viewNoiseData({noiseNodes: nodes, title: noiseType + '-landwater', type: 'landwatergroups', terrainData})
 
-  generateNoiseMap({type: 'perlin', seed: Math.random(), nodes: nodes, property: 'heatNoise'})
-  setHeatGradient(nodes)
+  generateNoiseMap({type: 'perlin', seed: Math.random(), nodes: nodes, property: 'heat', useVerticalGradient: false})
+  setHeatType(nodes)
 
-  // if(showModals) await viewNoiseData({noiseNodes: nodes, title: noiseType + '-heat', type: 'heat', terrainData})
+  if(showModals) await viewNoiseData({noiseNodes: nodes, title: noiseType + '-heat', type: 'heat', terrainData})
 
   rivers = GenerateRivers(nodes)
   riverGroups = BuildRiverGroups(nodes)
@@ -1564,7 +1619,7 @@ async function generateWorld(nodes, noiseType, showModals) {
   generateNoiseMap({type: 'perlin', seed: Math.random(), nodes: nodes, property: 'moistureNoise'})
 
   setMoisture(nodes)
-  adjustMoistureMapFromRivers(nodes)
+  // adjustMoistureMapFromRivers(nodes)
   nodes.forEach((row, x) => {
     row.forEach((node, y) => {
       if(node.moistureOld) {

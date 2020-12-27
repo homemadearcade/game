@@ -1,5 +1,5 @@
 var ChunkMap = require('./ChunkMap').default
-var MathEx = require('./MathEx').default
+var MathEx = require('./mathEx').default
 
 /**
 * Generates a radial gradient in a circle (not an oval, yet)
@@ -7,16 +7,16 @@ var MathEx = require('./MathEx').default
 * @param {Integer} cx The center point's x
 * @param {Integer} cy The center point's y
 * @param {Integer} radius The radius of the radial gradient's circle
-* @param {Integer} rv [Optional, default: -1.0] The value the gradient reaches
+* @param {Integer} value1 [Optional, default: -1.0] The value the gradient reaches
 *	at its radius (aka edge)
-* @param {Integer} cv [Optional, default: 1.0] The value the gradient reaches at
+* @param {Integer} value2 [Optional, default: 1.0] The value the gradient reaches at
 *	 its center
 * @return {Object} Returns a ChunkMap cotaining the radial gradient
 */
 export default function(dim, x1, x2, value1, value2) {
 	// defaults
-	rv = typeof rv !== 'undefined' ? rv : -1.0
-	cv = typeof cv !== 'undefined' ? cv : 1.0
+	value1 = typeof value1 !== 'undefined' ? value1 : -1.0
+	value2 = typeof value2 !== 'undefined' ? value2 : 1.0
 
 	var start = Date.now()
 	var map = new ChunkMap()
