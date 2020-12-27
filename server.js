@@ -300,9 +300,9 @@ server.listen(process.env.PORT || 4000, function(){
 
 // Authenticate!
 const authenticate = async (socket, data, callback) => {
-  socket.user = { email: 'pedigojon@gmail.com'}
-  callback(null, socket.user)
-  return
+  // socket.user = { email: 'pedigojon@gmail.com'}
+  // callback(null, socket.user)
+  // return
   const { email, password, signup } = data
 
   try {
