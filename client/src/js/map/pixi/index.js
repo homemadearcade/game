@@ -828,7 +828,11 @@ PIXIMAP.loadImageAssets = function(cb) {
   }, loader).load((loaded) => {
     Object.keys(GAME.library.images).forEach((name) => {
       const imageData = GAME.library.images[name]
-      if(!PIXIMAP.textures[imageData.name]) PIXIMAP.textures[name] = PIXI.Texture.from(imageData.url)
+      if(!PIXIMAP.textures[imageData.name]) {
+        PIXIMAP.textures[name] = PIXI.Texture.from(imageData.url)
+        // console.log(PIXI.Texture.from(imageData.url))
+        global.tileMap[name] = PIXI.Texture.from(imageData.url).frame
+      }
     })
     if(cb) cb()
   })

@@ -253,7 +253,7 @@ function drawPFGrid(ctx, camera, pfGrid, props, options = {}) {
 
 function drawSprite(ctx, camera, textureId, object) {
   ctx.save()
-  const texture = global.textureMap[textureId]
+  const texture = global.tileMap[textureId]
   const pixiImage = PIXIMAP.textures[textureId].baseTexture.resource.source
 
   if(object.color && object.color !== global.defaultObjectColor && object.color !== GAME.world.defaultObjectColor && object.color !== '#ffffff' && object.color !== '#FFFFFF' && object.color !== 'white' && object.color !== '#FFF' && object.color !== '#fff') {

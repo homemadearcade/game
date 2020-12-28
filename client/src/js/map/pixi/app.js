@@ -353,7 +353,7 @@ const initPixiApp = (canvasRef, onLoad) => {
   ///////////////
   // SPRITES
 
-  global.textureMap = {}
+  global.tileMap = {}
   function startLoadingAssets(spriteSheets) {
     spriteSheets.reduce((prev, next) => {
       return prev.add(next.serverImageUrl)
@@ -366,8 +366,8 @@ const initPixiApp = (canvasRef, onLoad) => {
           if(tile.id) texture.id = ss.id + '-' + tile.id
           if(tile.name) texture.id = ss.id + '-' +  tile.name
           tile.textureId = texture.id
-          global.textureMap[texture.id] = tile
-          global.textureMap[texture.id].ss = ss.id
+          global.tileMap[texture.id] = tile
+          global.tileMap[texture.id].ss = ss.id
           textures[texture.id] = texture
           texture.ssauthor = ss.author
           texture.ssId = ss.id
