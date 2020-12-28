@@ -297,6 +297,12 @@ function setDefault() {
     potential: false, //cant change
   }
 
+  global.effectTags = {
+    // increaseCurrentVelocityOnTouchStart: false,
+    // decreaseCurrentVelocityOnTouchStart: false,
+    // slowDownWithin: false,
+  }
+
   global.defaultTags = {
     ...global.physicsTags,
     ...global.spawnZoneTags,
@@ -320,6 +326,7 @@ function setDefault() {
     ...global.popoverTags,
     ...global.targetTags,
     ...global.subObjectTags,
+    ...global.effectTags,
   }
 
 

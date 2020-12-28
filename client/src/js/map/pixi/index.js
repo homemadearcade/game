@@ -29,7 +29,7 @@ PIXIMAP.onResetLiveParticle = function(objectId) {
   let object = OBJECTS.getObjectOrHeroById(objectId)
   const stage = getGameObjectStage(object)
   const pixiChild = stage.getChildByName(objectId)
-  if(!pixiChild) return 
+  if(!pixiChild) return
   if(pixiChild.emitter) {
     PIXIMAP.deleteEmitter(pixiChild.emitter)
     delete pixiChild.emitter
@@ -99,8 +99,22 @@ PIXIMAP.onGameUnload = function() {
 }
 
 PIXIMAP.onGameLoaded = function() {
+
   // PIXIMAP.grid = _.cloneDeep(GAME.grid)
 }
+
+// PIXIMAP.addTexture = async function(imageData) {
+//   var img = document.createElement('img');
+//   img.crossOrigin = "anonymous"
+//   img.src = imageData.url;
+//   img.onload = function() {
+//     console.log(imageData.name)
+//     resetConstructParts()
+//   }
+// //'https://cors-anywhere.herokuapp.com/'
+//      // console.log('https://cors-anywhere.herokuapp.com/' + imageData.url)
+//   PIXIMAP.textures[imageData.name] = await PIXI.Texture.from(img)
+// }
 
 PIXIMAP.onFirstPageGameLoaded = function() {
   // setInterval(() => {
@@ -679,6 +693,30 @@ PIXIMAP.onFakeObjectAnimation = function (type, object) {
   }
 }
 
+PIXIMAP.onUpdateLibrary = function(updatedLibrary) {
+  for(let key in updatedLibrary) {
+    const value= updatedLibrary[key]
+
+    if(key === 'images') {
+      let requireLoad = false
+      Object.keys(value).forEach((property) => {
+        const image = value[property]
+        if(!image) return
+        if(image.texture) {
+          if(!PIXIMAP.textures[image.name]) {
+            requireLoad = true
+          }
+        }
+      })
+      if(requireLoad) {
+        PIXIMAP.loadImageAssets(() => {
+          resetConstructParts()
+        })
+      }
+    }
+  }
+}
+
 PIXIMAP.onObjectAnimation = function(type, objectId, options = {}) {
   let object = OBJECTS.getObjectOrHeroById(objectId)
 
@@ -781,15 +819,32 @@ PIXIMAP.onPathEditorStart = function() {
   resetConstructParts()
 }
 
+PIXIMAP.loadImageAssets = function(cb) {
+  const loader = new PIXI.Loader()
+  Object.keys(GAME.library.images).reduce((prev, next) => {
+    const imageData = GAME.library.images[next]
+    if(!PIXIMAP.textures[imageData.name]) return prev.add(imageData.url)
+    else return prev
+  }, loader).load((loaded) => {
+    Object.keys(GAME.library.images).forEach((name) => {
+      const imageData = GAME.library.images[name]
+      if(!PIXIMAP.textures[imageData.name]) PIXIMAP.textures[name] = PIXI.Texture.from(imageData.url)
+    })
+    if(cb) cb()
+  })
+}
+
 PIXIMAP.cleanUpMapAndAskPixiToSendGameReady = function() {
   setTimeout(() => {
-    MAP.camera.set(GAME.heros[HERO.id])
-    // PIXIMAP.initializeDarknessSprites()
-    PIXIMAP.initializePixiObjectsFromGame()
-    PIXIMAP.updateGridSprites()
-    resetConstructParts()
-    PIXIMAP.onRender(0, true)
-    global.local.emit('onGameReady')
+    PIXIMAP.loadImageAssets(() => {
+      MAP.camera.set(GAME.heros[HERO.id])
+      // PIXIMAP.initializeDarknessSprites()
+      PIXIMAP.initializePixiObjectsFromGame()
+      PIXIMAP.updateGridSprites()
+      resetConstructParts()
+      PIXIMAP.onRender(0, true)
+      global.local.emit('onGameReady')
+    })
   }, 100)
 }
 

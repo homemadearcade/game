@@ -1,0 +1,50 @@
+// #sprite-editor-tools {
+//
+// }
+// #sprite-editor-color-selector {
+//   width: 100%;
+//   height: 40px;
+//   background: none;
+//   cursor:pointer;
+// }
+
+.crispSprite {
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-crisp-edges;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+.SpriteEditor {
+  .sketch-picker {
+    // background-color: none;
+    display: inline-block;
+  }
+
+  .swatches-picker {
+    // background-color: none;
+    display: inline-block;
+    margin-left: 20px;
+  }
+
+  &Tools {
+    margin-bottom: 10px;
+  }
+  &Tool {
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    margin-right: 20px;
+    border: 2px solid #eee;
+    font-size:30px;
+    vertical-align: middle;
+    padding: 10px;
+    &:before {
+      vertical-align: middle;
+    }
+    &--selected {
+      border: 2px solid #0A0
+    }
+  }
+
+}

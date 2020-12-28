@@ -512,7 +512,7 @@ class Page{
     return true
   }
 
-  uploadToAws(file, name) {
+  uploadToAws(file, name, cb) {
     const contentType = file.type; // eg. image/jpeg or image/svg+xml
 
     const generatePutUrl = global.socket.io.uri + '/generate-put-url';
@@ -534,13 +534,17 @@ class Page{
           let url = global.awsURL + file.name
           console.log('Upload Successful', url)
           if(!name) name = url
-          if(!GAME.library.images) GAME.library.images = {}
-          GAME.library.images[name] = {
-            name,
-            url
+          if(cb) {
+            cb(name, url)
+          } else {
+            if(!GAME.library.images) GAME.library.images = {}
+            GAME.library.images[name] = {
+              name,
+              url
+            }
+            global.local.emit('onSendNotification', { playerUIHeroId: HERO.id, toast: true, text: 'Image saved'})
+            global.socket.emit('updateLibrary', { images: GAME.library.images })
           }
-          global.local.emit('onSendNotification', { playerUIHeroId: HERO.id, toast: true, text: 'Image saved'})
-          global.socket.emit('updateLibrary', { images: GAME.library.images })
         })
         .catch(err => {
           console.log('Sorry, something went wrong')

@@ -14,7 +14,7 @@ FINISH LINE
 ////////////
 
 RANDOMIZER + DATA
-PROCEDURAL + TERRAIN BRUSH
+PIXEL EDITOR
 PUZZLE INTERFACE
 FILL OUT SEQUENCE EDITOR, LIBRARY, EFFECTS, TAGS
 COMBAT + GOALS + QUESTS
@@ -40,25 +40,8 @@ advanced Hero physics for non platformer
 
 ////////////////////////////////////////
 ////////////////////////////////////////
-PROCEDURAL
-////////////////////////////////////////
-Ok I need to
-- Terrain brush
-- the side platformer generation..
-- Generate a space field
-
-Terrain brush
-  - water, lava, grass, sand
-    - spaceship wall, wood wall, wood floor, fortified wall, etc, or perhaps Wood wall
-    - mountain, forest, ice
-  this is a different kind of brush, this is for objects that are very simple, they wont be selected.. or moved whatsoever, they wont be DESTROYED, they wont be taken apart
-
-////////////////////////////////////////
-////////////////////////////////////////
 HA TWEAKING
 ////////////////////////////////////////
-Fish to be gravity not slowed down
-
 Home made arcade music
 
 experience password for ha-live.
@@ -88,7 +71,6 @@ https://www.transparenttextures.com/
 ////////////////////////////////////////
 EDITOR UPGRADES
 ////////////////////////////////////////
-Resize off grid
 Animation Library in the bottom layer
 becomeHostbutton which splices host=true from any player and refreshes their page
 refreshes your page as the host..
@@ -176,6 +158,21 @@ tag -- destroyOnPuzzleComplete
 tag -- spawnAllInHeroInventoryOnPuzzleComplete
 and then ud need a basic -- combination variable. Puzzle type + puzzle combination...  two variables?
 
+////////////////////////////////////////
+////////////////////////////////////////
+PROCEDURAL
+////////////////////////////////////////
+Ok I need to
+- Terrain brush
+- the side platformer generation..
+- Generate a space field
+
+Terrain brush
+  - water, lava, grass, sand
+    - spaceship wall, wood wall, wood floor, fortified wall, etc, or perhaps Wood wall
+    - mountain, forest, ice
+  this is a different kind of brush, this is for objects that are very simple, they wont be selected.. or moved whatsoever, they wont be DESTROYED, they wont be taken apart
+
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
@@ -197,11 +194,6 @@ If object is outside of its custom grid to start off, It will not be able to fin
 Theres needs to be a flag, perhaps the _fresh flag that allows it to use the other pathfinding grid to make its away to the new path
 
 Try uploading game JSON on non host
-
-Construct Editor on ha-demo bug?
-  bug - it seems if a world is too wide or something??
-  theres a problem with the construct editor camera not being able
-  to go far enough right or down
 
 Bombs need to be able to spawn the explosion onto real objects
 

@@ -239,6 +239,7 @@ export default class GeneratedMenu extends React.Component {
         {<MenuItem key="drag">Drag</MenuItem>}
         {<MenuItem key="respawn">Respawn</MenuItem>}
         {<MenuItem key="edit-all-json">Edit JSON</MenuItem>}
+        <MenuItem key="open-edit-sprite">Edit Sprite</MenuItem>
         <MenuItem key="open-hero-live-edit">Live Edit</MenuItem>
         <SubMenu title="Current Tags">
           <CurrentTagsMenu objectSelected={objectSelected} currentTags={objectSelected.tags}></CurrentTagsMenu>
@@ -281,7 +282,7 @@ export default class GeneratedMenu extends React.Component {
         {<MenuItem key="edit-all-json">Edit JSON</MenuItem>}
         <MenuItem key="edit-descriptors">Edit Descriptors</MenuItem>
         <MenuItem key="open-tag-search-modal">Edit Tags</MenuItem>
-        <MenuItem key="open-edit-sprite">Edit Sprite</MenuItem>
+        {!objectSelected.constructParts && <MenuItem key="open-edit-sprite">Edit Sprite</MenuItem>}
         {objectSelected.tags.emitter && <MenuItem key="open-live-particle">Edit Emitter</MenuItem>}
         {objectSelected.tags.moving && <MenuItem key="open-live-physics">Edit Physics</MenuItem>}
         {objectSelected.tags.light && <MenuItem key="open-live-light">Edit Light</MenuItem>}
