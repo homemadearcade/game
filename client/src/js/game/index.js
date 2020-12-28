@@ -1336,6 +1336,9 @@ class Game{
 
       if(!prevDisabled && mod._disabled) {
         global.emitGameEvent('onModDisabled', mod)
+        if(mod.modResetPhysicsEnd) {
+          OBJECTS.resetPhysicsProperties(modOwnerObject)
+        }
       }
 
       return keepInActiveMods

@@ -32,6 +32,10 @@ export default class HeroContextMenu extends React.Component {
         startResize(objectSelected)
       }
 
+      if(key === 'resize-off-grid') {
+        startResize(objectSelected, { snapToGrid: false })
+      }
+
       if(key === 'drag') {
         onStartDrag(objectSelected)
       }
@@ -218,6 +222,7 @@ export default class HeroContextMenu extends React.Component {
     return <Menu onClick={this._handleHeroMenuClick}>
       <MenuItem key='copy-id' className="bold-menu-item">{objectSelected.name || objectSelected.id}</MenuItem>
       <MenuItem key='resize'>Resize</MenuItem>
+      <MenuItem key="resize-off-grid">Resize Off Grid</MenuItem>
       <SubMenu title='Sprite'><SpriteMenu objectSelected={objectSelected}/></SubMenu>
       <SubMenu title="Name">
         <NameMenu objectSelected={objectSelected}/>
@@ -271,7 +276,6 @@ export default class HeroContextMenu extends React.Component {
         {!GAME.gameState.started && !global.diffFlowId && <MenuItem key='start-mod-creation-flow'>Start Mod Creation Flow</MenuItem>}
         {!GAME.gameState.started && global.diffFlowId == objectSelected.id && <MenuItem key='end-mod-creation-flow'>End Mod Creation Flow</MenuItem>}
       </SubMenu>
-      {GAME.gameState.started ? <MenuItem key="remove">Remove</MenuItem> : <MenuItem key="delete">Delete</MenuItem>}
     </Menu>
   }
 }

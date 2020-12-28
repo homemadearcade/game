@@ -70,6 +70,7 @@ export async function handleExtraMenuClicks(key, objectSelected, openColorPicker
       })
       modals.openEditDescriptorsModal(objectSelected.descriptors || {}, ({value}) => {
         if(value) {
+          console.log(value)
           networkEditObject(objectSelected, {descriptors: value})
         }
       })

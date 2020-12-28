@@ -284,7 +284,8 @@ export default class MediaManager extends React.Component {
       }
       return <div className="Manager">
         <div className="Manager__list">
-          <div className="Manager__button">Select Default Sprite</div>
+          <div className="Manager__button" onClick={() => this._onSelectSprite({textureId: 'solidcolorsprite'})}>Select Default Sprite</div><br></br>
+          <div className="Manager__button" onClick={() => this._onSelectSprite({textureId: 'invisible'})}>Select Invisible Sprite</div>
           {recommendedTextures && <div className="Manager__recommended">
             Recommended:
             <SpriteSheet onClick={this._onSelectSprite} spriteSheet={{sprites: recommendedTextures}}></SpriteSheet>

@@ -16,8 +16,17 @@ export default class DescriptorSelect extends React.Component{
   }
 
   _onChange = (data) => {
+    const newKeys = Object.keys(this.state.descriptors).reduce((prev, curr) => {
+      prev[curr] = false
+      return prev
+    }, {})
 
-    const newKeys = {}
+    if(!data) {
+      this.setState({
+        descriptors: newKeys
+      })
+      return
+    }
 
     data.forEach((item, i) => {
       newKeys[item.label] = true
@@ -31,7 +40,6 @@ export default class DescriptorSelect extends React.Component{
   render() {
     const { descriptors } = this.state
 
-    console.log(this.props.textureIds)
     return <div className="ModalMultiSelect">
       <div className="SpriteSheet">{this.props.textureIds && Object.keys(this.props.textureIds).map((textureId) => {
         return <div className="SpriteContainer">
@@ -40,7 +48,10 @@ export default class DescriptorSelect extends React.Component{
       })}</div>
       <Select
         isMulti
-        value={Object.keys(descriptors).map((desc) => { return { value: desc, label: desc} })}
+        value={Object.keys(descriptors).map((desc) => {
+          if(!descriptors[desc]) return null
+          return { value: desc, label: desc}
+        })}
         onChange={this._onChange}
         options={Object.keys(global.allDescriptors).map(eventName => { return { value: eventName, label: eventName}})}
         styles={global.reactSelectStyle}

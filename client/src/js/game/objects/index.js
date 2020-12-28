@@ -336,6 +336,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
                   modId,
                   modPriority,
                   modResetPhysics,
+                  modResetPhysicsEnd,
                   triggerDestroyAfter,
                  } = object.triggers[triggerId]
 
@@ -383,7 +384,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
           modId,
           modPriority,
           modResetPhysics,
-
+          modResetPhysicsEnd,
           notificationLog,
           notificationChat,
           notificationToast,

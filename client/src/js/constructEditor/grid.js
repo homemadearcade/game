@@ -10,7 +10,7 @@ class Grid {
     this.x = startX
     this.y = startY
     this.width = startX + (gridWidth * nodeSize)
-    this.height = startX + (gridHeight * nodeSize)
+    this.height = startY + (gridHeight * nodeSize)
     this.nodes = this.generateNodes(gridWidth, gridHeight)
   }
 

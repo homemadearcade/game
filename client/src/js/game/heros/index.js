@@ -626,6 +626,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
               modId,
               modPriority,
               modResetPhysics,
+              modResetPhysicsEnd,
               triggerDestroyAfter,
             } = hero.triggers[triggerId]
 
@@ -658,6 +659,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
           modId,
           modPriority,
           modResetPhysics,
+          modResetPhysicsEnd,
           // just for mods right now, not actual Condition
           testAndModOwnerWhenEquipped,
           testFailDestroyMod,

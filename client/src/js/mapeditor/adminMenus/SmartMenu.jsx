@@ -247,6 +247,7 @@ export default class GeneratedMenu extends React.Component {
           <SelectSubObjectMenu objectSelected={objectSelected} selectSubObject={selectSubObject} />
         </SubMenu>}
         <MenuItem className='dont-close-menu' key="open-advanced-menu">Open Advanced Menu</MenuItem>
+        {(GAME.gameState.started || GAME.gameState.branch) ? <MenuItem key="remove">Remove</MenuItem> : <MenuItem key="delete">Delete</MenuItem>}
       </Menu>
     } else {
       return <Menu onClick={this._handleMenuClick}>

@@ -15,8 +15,17 @@ export default class TagSelect extends React.Component{
   }
 
   _onChange = (data) => {
+    const newKeys = Object.keys(this.state.tags).reduce((prev, curr) => {
+      prev[curr] = false
+      return prev
+    }, {})
 
-    const newKeys = {}
+    if(!data) {
+      this.setState({
+        tags: newKeys
+      })
+      return
+    }
 
     data.forEach((item, i) => {
       newKeys[item.label] = true
@@ -33,7 +42,10 @@ export default class TagSelect extends React.Component{
     return <div className="ModalMultiSelect">
       <Select
         isMulti
-        value={Object.keys(tags).map((desc) => { return { value: desc, label: desc} })}
+        value={Object.keys(tags).map((desc) => {
+          if(!tags[desc]) return null
+          return { value: desc, label: desc}
+        })}
         onChange={this._onChange}
         options={Object.keys(global.allTags).map(eventName => { return { value: eventName, label: eventName}})}
         styles={global.reactSelectStyle}

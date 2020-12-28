@@ -59,9 +59,9 @@ class NotificationsControl{
     if(hero.id === HERO.id) AUDIO.play(GAME.theme.audio.onHeroDrop)
 
     // if(PAGE.role.isHost) {
-      let message =  'You deposited ' + newObject.subObjectName
+      let message =  'You deposited ' + (newObject.name || newObject.subObjectName)
       if(newObject.count > 1) {
-        message = 'You deposited ' + newObject.count + ' ' + newObject.subObjectName
+        message = 'You deposited ' + newObject.count + ' ' + (newObject.name || newObject.subObjectName)
       }
       global.local.emit('onSendNotification', { playerUIHeroId: hero.id, logRecipientId: hero.id, toast: true, log: true, text: message})
     // }
@@ -72,9 +72,9 @@ class NotificationsControl{
 
     // if(PAGE.role.isHost) {
 
-      let message =  'You withdrew ' + newObject.subObjectName
+      let message =  'You withdrew ' + (newObject.name || newObject.subObjectName)
       if(newObject.count > 1) {
-        message = 'You withdrew ' + newObject.count + ' ' + newObject.subObjectName
+        message = 'You withdrew ' + newObject.count + ' ' + (newObject.name || newObject.subObjectName)
       }
       global.local.emit('onSendNotification', { playerUIHeroId: hero.id, logRecipientId: hero.id, toast: true, log: true, text: message})
     // }
@@ -332,16 +332,16 @@ class NotificationsControl{
     // if(PAGE.role.isHost) {
       global.local.emit('onSendNotification', { playerUIHeroId: hero.id, logRecipientId: hero.id, toast: true, log: true, text: message})
       if(hero.id === HERO.id) AUDIO.play(GAME.theme.audio.onHeroDrop)
-      let message =  'You dropped ' + object.subObjectName
+      let message =  'You dropped ' + (object.name || object.subObjectName)
       if(object.count > 1) {
-        message = 'You dropped ' + object.count + ' ' + object.subObjectName
+        message = 'You dropped ' + object.count + ' ' + (object.name || object.subObjectName)
       }
     // }
   }
 
   onHeroPowerLand(hero, landingObject) {
-    PIXIMAP.onFakeObjectAnimation('groundDisturbanceRight', { ...hero, y: hero.y + (hero.height/2), color: landingObject.color || GAME.world.defaultObjectColor })
-    PIXIMAP.onFakeObjectAnimation('groundDisturbanceLeft', { ...hero, y: hero.y + (hero.height/2), color: landingObject.color || GAME.world.defaultObjectColor })
+    // PIXIMAP.onFakeObjectAnimation('groundDisturbanceRight', { ...hero, y: hero.y + (hero.height/2), color: landingObject.color || GAME.world.defaultObjectColor })
+    // PIXIMAP.onFakeObjectAnimation('groundDisturbanceLeft', { ...hero, y: hero.y + (hero.height/2), color: landingObject.color || GAME.world.defaultObjectColor })
   }
 
   onHeroPickup(hero, subObject) {
@@ -356,16 +356,17 @@ class NotificationsControl{
     }
 
     // if(PAGE.role.isHost) {
-      let message = 'You picked up ' + subObject.subObjectName
+      let message = 'You picked up ' + (subObject.name || subObject.subObjectName)
       if(subObject.count > 1) {
-        message = 'You picked up ' + subObject.count + ' ' + subObject.subObjectName
+        message = 'You picked up ' + subObject.count + ' ' + (subObject.name || subObject.subObjectName)
       }
       global.local.emit('onSendNotification', { playerUIHeroId: hero.id, logRecipientId: hero.id, toast: true, log: true, text: message})
     // }
   }
 
   onHeroPickupFail(hero, subObject) {
-    global.local.emit('onSendNotification', { playerUIHeroId: hero.id, logRecipientId: hero.id, toast: true, log: true, text: 'You can\'t pick this up. You already have a ' + subObject.subObjectName})
+    // You already have a ' + subObject.subObjectName
+    global.local.emit('onSendNotification', { playerUIHeroId: hero.id, logRecipientId: hero.id, toast: true, log: true, text: 'You can\'t pick this up'})
   }
 
   onEditHero(updatedHero) {

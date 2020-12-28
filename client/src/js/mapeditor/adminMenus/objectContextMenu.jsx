@@ -58,6 +58,10 @@ export default class ObjectContextMenu extends React.Component{
         PAGE.copyToClipBoard(objectSelected.id)
       }
 
+      if(key === 'resize-off-grid') {
+        startResize(objectSelected, { snapToGrid: false })
+      }
+
       if(key === 'resize') {
         if(subObject || objectSelected.tags.subObject) {
           startResize(objectSelected, { snapToGrid: false })
@@ -136,6 +140,7 @@ export default class ObjectContextMenu extends React.Component{
     return <Menu onClick={this._handleObjectMenuClick}>
       <MenuItem key='copy-id' className="bold-menu-item">{objectSelected.subObjectName || objectSelected.name || objectSelected.id}</MenuItem>
       {!subObject && <MenuItem key="drag-off-grid">Drag Off Grid</MenuItem>}
+      {!subObject && <MenuItem key="resize-off-grid">Resize Off Grid</MenuItem>}
       {subObject && <MenuItem key="rename-sub-object">Rename Sub Object</MenuItem>}
       <SubMenu title="Name">
         <NameMenu objectSelected={objectSelected} subObject={subObject}/>
