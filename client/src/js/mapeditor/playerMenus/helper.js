@@ -1,4 +1,5 @@
 import modals from '../modals.js'
+import spriteChooser from '../SpriteChooser.js'
 
 const selectSubObjectPrefix = 'select-subobject-'
 const deleteSubObjectPrefix = 'delete-subobject-'
@@ -64,6 +65,18 @@ export async function handleExtraMenuClicks(key, objectSelected, openColorPicker
       global.socket.emit('equipObject', objectSelected.ownerId, objectSelected.subObjectName, 'available')
     }
 
+    if(key === 'choose-from-recommended-sprites') {
+      spriteChooser.openType(objectSelected, 'defaultSprite', 'recommended')
+    }
+
+    if(key === 'choose-from-my-sprites') {
+      spriteChooser.openType(objectSelected, 'defaultSprite', 'mysprites')
+    }
+
+    if(key === 'randomize-from-descriptors') {
+      global.findSpritesForDescribedObjects([objectSelected])
+    }
+
     if(key === 'edit-descriptors') {
       Object.keys(objectSelected.descriptors || {}).forEach((tag) => {
         if(!objectSelected.descriptors[tag]) delete objectSelected.descriptors[tag]
@@ -72,7 +85,7 @@ export async function handleExtraMenuClicks(key, objectSelected, openColorPicker
         if(value) {
           networkEditObject(objectSelected, {descriptors: value})
         }
-      })
+      }, {}, true)
     }
 
     if (key === 'toggle-outline') {

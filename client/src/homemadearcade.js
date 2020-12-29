@@ -11,14 +11,11 @@ Remember that fullstack guys random theater generator - you're close
 
 Go back to randomization
   there one sprite sheet that got messed up, fix it
-  Recommended Sprite Sheet selector modal
   Fill out more descriptors for sprites
-  Make sure randomization for sprites works..
 
   and these notes?
   if you have a child descriptor, you can remove the parent descriptor
   If you have a descriptor on an object that has a withDescriptors property, do a strict look for a sprite that matches that
-
 
 ----
 

@@ -21,7 +21,7 @@ export default class EditorOpen extends React.Component{
           if(value) {
             networkEditObject(objectSelected, {descriptors: value})
           }
-        })
+        }, {}, true)
       }
 
       if(key === 'open-live-particle') {

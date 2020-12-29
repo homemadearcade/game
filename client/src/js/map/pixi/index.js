@@ -830,6 +830,7 @@ PIXIMAP.loadImageAssets = function(cb) {
       const imageData = GAME.library.images[name]
       if(!PIXIMAP.textures[imageData.name]) {
         PIXIMAP.textures[name] = PIXI.Texture.from(imageData.url)
+        PIXIMAP.textures[name].id = name
         // console.log(PIXI.Texture.from(imageData.url))
         global.tileMap[name] = PIXI.Texture.from(imageData.url).frame
       }

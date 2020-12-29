@@ -122,7 +122,7 @@ export default class HeroContextMenu extends React.Component {
           if(value) {
             MAPEDITOR.networkEditObject(objectSelected, {descriptors: value})
           }
-        })
+        }, {}, true)
       }
 
       if(key === 'start-mod-creation-flow') {

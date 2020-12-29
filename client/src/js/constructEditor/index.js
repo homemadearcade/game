@@ -157,7 +157,7 @@ class ConstructEditor {
       const hero = GAME.heros[HERO.id]
       this.cameraController = {x: hero.x, width: hero.mod().width, y: hero.y, height: hero.mod().height, zoomMultiplier}
     } else {
-      this.cameraController = {x: object.x, width: object.mod().width, y: object.y, height: object.mod().height, zoomMultiplier}
+      this.cameraController = {x: object.x, width: 32, y: object.y, height: 32, zoomMultiplier}
     }
 
     this.camera.set(this.cameraController)

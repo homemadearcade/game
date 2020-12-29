@@ -282,6 +282,10 @@ export default class MediaManager extends React.Component {
       if(this.props.objectSelected.descriptors) {
         recommendedTextures = global.findTexturesForDescriptors(this.props.objectSelected.descriptors, { alwaysSearchchildren: true })
       }
+      if(this.props.objectSelected === 'constructEditor') {
+        const object = OBJECTS.getObjectOrHeroById(CONSTRUCTEDITOR.objectId)
+        if(object.descriptors) recommendedTextures = global.findTexturesForDescriptors(object.descriptors, { alwaysSearchchildren: true })
+      }
 
       const customTextures = Object.keys(GAME.library.images).map((name) => {
         const imageData = GAME.library.images[name]

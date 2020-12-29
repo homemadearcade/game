@@ -233,14 +233,30 @@ export default class GeneratedMenu extends React.Component {
     const subObject = objectSelected.tags.subObject
     const isInvisible = objectSelected.tags.invisible || objectSelected.defaultSprite == 'invisible' || objectSelected.opacity == 0
 
+    let sprite = null
+    if(!isInvisible) {
+      if(objectSelected.constructParts && objectSelected.descriptors) {
+        sprite = <MenuItem key="randomize-from-descriptors">Randomize Sprites</MenuItem>
+      } else {
+        sprite = <SubMenu title="Sprite">
+          {objectSelected.descriptors && <MenuItem key="choose-from-recommended-sprites">Select From Recommended</MenuItem>}
+          <MenuItem key="choose-from-my-sprites">Select From My Sprites</MenuItem>
+          <MenuItem key="open-media-manager-sprite-selector">Select From All</MenuItem>
+          {objectSelected.width <= 64 && objectSelected.height <= 320 && !objectSelected.constructParts && <MenuItem key="open-edit-sprite">Edit Sprite</MenuItem>}
+          {objectSelected.descriptors && <MenuItem key="randomize-from-descriptors">Randomize</MenuItem>}
+        </SubMenu>
+      }
+
+    }
+
     if(objectSelected.tags.hero) {
       return <Menu onClick={this._handleMenuClick}>
         <MenuItem key='copy-id' className="bold-menu-item">{objectSelected.subObjectName || objectSelected.name || objectSelected.id}</MenuItem>
         {<MenuItem key="drag">Drag</MenuItem>}
         {<MenuItem key="respawn">Respawn</MenuItem>}
         {<MenuItem key="edit-all-json">Edit JSON</MenuItem>}
-        <MenuItem key="open-edit-sprite">Edit Sprite</MenuItem>
         <MenuItem key="open-hero-live-edit">Live Edit</MenuItem>
+        {sprite}
         <SubMenu title="Current Tags">
           <CurrentTagsMenu objectSelected={objectSelected} currentTags={objectSelected.tags}></CurrentTagsMenu>
         </SubMenu>
@@ -261,7 +277,7 @@ export default class GeneratedMenu extends React.Component {
           <RelativeMenu objectSelected={objectSelected} subObject={subObject}/>
         </SubMenu>}
         {!isInvisible && !objectSelected.contructParts && <MenuItem key="select-color" className='dont-close-menu'>Color</MenuItem>}
-        {!isInvisible && !objectSelected.contructParts && <MenuItem key="open-media-manager-sprite-selector">Sprite</MenuItem>}
+        {sprite}
         <SubMenu title="Current Tags">
           <CurrentTagsMenu objectSelected={objectSelected} currentTags={objectSelected.tags}></CurrentTagsMenu>
         </SubMenu>
@@ -282,7 +298,6 @@ export default class GeneratedMenu extends React.Component {
         {<MenuItem key="edit-all-json">Edit JSON</MenuItem>}
         <MenuItem key="edit-descriptors">Edit Descriptors</MenuItem>
         <MenuItem key="open-tag-search-modal">Edit Tags</MenuItem>
-        {!objectSelected.constructParts && <MenuItem key="open-edit-sprite">Edit Sprite</MenuItem>}
         {objectSelected.tags.emitter && <MenuItem key="open-live-particle">Edit Emitter</MenuItem>}
         {objectSelected.tags.moving && <MenuItem key="open-live-physics">Edit Physics</MenuItem>}
         {objectSelected.tags.light && <MenuItem key="open-live-light">Edit Light</MenuItem>}
