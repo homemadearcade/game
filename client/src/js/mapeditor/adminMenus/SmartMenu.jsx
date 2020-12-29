@@ -220,11 +220,22 @@ export default class GeneratedMenu extends React.Component {
 
   _renderObjectEmitterMenu() {
     const { objectSelected, subObject } = this.props
-    // if(objectSelected.tags.emitter) {
-      return <SubMenu title="Emitters">
-        <EmitterMenu objectSelected={objectSelected} subObject={subObject}></EmitterMenu>
+    const action = objectSelected.actionButtonBehavior
+    const hasLaser = action === 'shrink' || action === 'grow' || action === 'vacuum' && objectSelected.actionProps && objectSelected.actionProps && objectSelected.actionProps.emitterTypeAction == 'random-laser'
+    const hasBullet = action === 'shoot' && objectSelected.actionProps && objectSelected.actionProps.bulletJSON && objectSelected.actionProps.bulletJSON.emitterType == 'random-projectile'
+    if(objectSelected.tags.emitter || objectSelected.tags.explodeOnDestroy || objectSelected.tags.poweredUp || hasBullet || hasLaser) {
+      return <SubMenu title="Emitter">
+        {objectSelected.tags.emitter && <MenuItem key="open-live-particle">Live Edit Emitter</MenuItem>}
+        {objectSelected.tags.explodeOnDestroy && <MenuItem key="randomize-explosion-emitter">Randomize Explosion</MenuItem>}
+        {objectSelected.tags.explodeOnDestroy && <MenuItem key="play-explosion-emitter">Play Explosion</MenuItem>}
+        {objectSelected.tags.poweredUp && <MenuItem key="randomize-powerup-emitter">Randomize Power Up</MenuItem>}
+        {objectSelected.tags.emitter && <MenuItem key="randomize-area-glow-emitter">Randomize Area Glow</MenuItem>}
+        {hasLaser && <MenuItem key="randomize-laser-emitter">Randomize Laser</MenuItem>}
+        {hasBullet && <MenuItem key="randomize-projectile-emitter">Randomize Projectile</MenuItem>}
       </SubMenu>
-    // }
+    }
+
+    //        <EmitterMenu objectSelected={objectSelected} subObject={subObject}></EmitterMenu>
   }
 
   render() {
@@ -239,6 +250,7 @@ export default class GeneratedMenu extends React.Component {
         sprite = <MenuItem key="randomize-from-descriptors">Randomize Sprites</MenuItem>
       } else {
         sprite = <SubMenu title="Sprite">
+          {!isInvisible && !objectSelected.contructParts && <MenuItem key="select-color" className='dont-close-menu'>Color</MenuItem>}
           {objectSelected.descriptors && <MenuItem key="choose-from-recommended-sprites">Select From Recommended</MenuItem>}
           <MenuItem key="choose-from-my-sprites">Select From My Sprites</MenuItem>
           <MenuItem key="open-media-manager-sprite-selector">Select From All</MenuItem>
@@ -246,8 +258,9 @@ export default class GeneratedMenu extends React.Component {
           {objectSelected.descriptors && <MenuItem key="randomize-from-descriptors">Randomize</MenuItem>}
         </SubMenu>
       }
-
     }
+
+//        <MenuItem key="open-tag-search-modal">Edit Tags</MenuItem>
 
     if(objectSelected.tags.hero) {
       return <Menu onClick={this._handleMenuClick}>
@@ -257,7 +270,8 @@ export default class GeneratedMenu extends React.Component {
         {<MenuItem key="edit-all-json">Edit JSON</MenuItem>}
         <MenuItem key="open-hero-live-edit">Live Edit</MenuItem>
         {sprite}
-        <SubMenu title="Current Tags">
+        {this._renderObjectEmitterMenu()}
+        <SubMenu title="Tags">
           <CurrentTagsMenu objectSelected={objectSelected} currentTags={objectSelected.tags}></CurrentTagsMenu>
         </SubMenu>
         {Object.keys(objectSelected.subObjects || {}).length && <SubMenu title="Sub Objects">
@@ -276,19 +290,16 @@ export default class GeneratedMenu extends React.Component {
         {(objectSelected.ownerId || objectSelected.relativeId) && <SubMenu title="Relative">
           <RelativeMenu objectSelected={objectSelected} subObject={subObject}/>
         </SubMenu>}
-        {!isInvisible && !objectSelected.contructParts && <MenuItem key="select-color" className='dont-close-menu'>Color</MenuItem>}
         {sprite}
-        <SubMenu title="Current Tags">
+        <SubMenu title="Tags">
           <CurrentTagsMenu objectSelected={objectSelected} currentTags={objectSelected.tags}></CurrentTagsMenu>
-        </SubMenu>
-        <SubMenu title="Suggested Tags">
-          <RelatedTagsMenu objectSelected={objectSelected}></RelatedTagsMenu>
         </SubMenu>
         {objectSelected.tags.talker && <SubMenu title="Dialogue Sets">
           <DialogueSetsMenu objectSelected={objectSelected} subObject={subObject}/>
         </SubMenu>}
         {this._renderObjectSpawnZoneMenu()}
         {this._renderObjectResourceZoneMenu()}
+        {this._renderObjectEmitterMenu()}
         {Object.keys(objectSelected.triggers || {}).length && <SubMenu title="Triggers">
           <TriggerMenu objectSelected={objectSelected} subObject={subObject}/>
         </SubMenu>}
@@ -297,8 +308,6 @@ export default class GeneratedMenu extends React.Component {
         </SubMenu>}
         {<MenuItem key="edit-all-json">Edit JSON</MenuItem>}
         <MenuItem key="edit-descriptors">Edit Descriptors</MenuItem>
-        <MenuItem key="open-tag-search-modal">Edit Tags</MenuItem>
-        {objectSelected.tags.emitter && <MenuItem key="open-live-particle">Edit Emitter</MenuItem>}
         {objectSelected.tags.moving && <MenuItem key="open-live-physics">Edit Physics</MenuItem>}
         {objectSelected.tags.light && <MenuItem key="open-live-light">Edit Light</MenuItem>}
         {objectSelected.tags.path && <MenuItem key="open-path-editor">Open Path Editor</MenuItem>}

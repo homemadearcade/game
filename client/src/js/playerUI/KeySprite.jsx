@@ -12,9 +12,7 @@ export default class KeySprite extends React.Component {
     const { keySprite, span } = this.props
     let key = keySprite
 
-    const hero = GAME.heros[HERO.id]
-
-    if(hero.keysDown[key]) {
+    if(GAME.keysDown[key]) {
       key+= '--pressed'
     }
 

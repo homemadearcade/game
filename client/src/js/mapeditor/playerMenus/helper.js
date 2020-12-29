@@ -470,6 +470,39 @@ export async function handleExtraMenuClicks(key, objectSelected, openColorPicker
       return
     }
 
+    if(key === 'randomize-area-glow') {
+      global._generateRandomEmitter('area-glow')
+      networkEditObject(objectSelected, {emitterType: 'random-area-glow' })
+      return
+    }
+
+    if(key === 'randomize-explosion-emitter') {
+      global._generateRandomEmitter('explosion')
+      networkEditObject(objectSelected, {emitterTypeExplosion: 'random-explosion' })
+      return
+    }
+
+    if(key === 'play-explosion-emitter') {
+      global.local.emit('onObjectAnimation', 'explode', objectSelected.id)
+      return
+    }
+
+    if(key === 'randomize-laser-emitter') {
+      global._generateRandomEmitter('laser')
+      // networkEditObject(objectSelected, {emitterTypeAction: 'random-laser' })
+      return
+    }
+
+    if(key === 'randomize-projectile-emitter') {
+      global._generateRandomEmitter('projectile')
+      return
+    }
+
+    if(key === 'randomize-powerup-emitter') {
+      global._generateRandomEmitter('powerup')
+      networkEditObject(objectSelected, {emitterTypePoweredUp: 'random-powerup' })
+      return
+    }
 
     if(key.charAt(0) !== '{') return
 

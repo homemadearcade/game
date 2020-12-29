@@ -13,6 +13,10 @@ export default class EditorActionMenu extends React.Component{
       const { objectSelected, subObject } = this.props
       const { onStartSetPathfindingLimit, networkEditObject, openConstructEditor } = MAPEDITOR
 
+      if(key === 'randomize-from-descriptors') {
+        global.findSpritesForDescribedObjects([objectSelected])
+      }
+
       if(key === 'transform-into-library-object') {
         const library = global.objectLibrary.addGameLibrary()
         modals.openSelectFromList('Select an object', Object.keys(library), async (result) => {

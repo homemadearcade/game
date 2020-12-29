@@ -19,19 +19,34 @@ export default class ControlsHUD extends React.Component {
       hero: GAME.heros[HERO.id]
     })
 
-    global.local.on('onNetworkUpdateHeros', (heros) => {
+    this._listenToHeroUpdates = global.local.on('onNetworkUpdateHeros', (heros) => {
       const { hero } = this.state
       heros.forEach((updatedHero) => {
         if(updatedHero.id === HERO.id && GAME.heros[updatedHero.id]) {
           const changed = updatedHero.subObjects != hero.subObjects || updatedHero.interactableObjectId != hero.interactableObjectId || updatedHero.arrowKeysBehavior != hero.arrowKeysBehavior  || updatedHero.zButtonBehavior != hero.zButtonBehavior || updatedHero.xButtonBehavior != hero.xButtonBehavior || updatedHero.cButtonBehavior != hero.cButtonBehavior || updatedHero.spaceBarBehavior != hero.spaceBarBehavior
           if(changed || updatedHero.interactableObjectId === null || updatedHero.arrowKeysBehavior === null || updatedHero.zButtonBehavior === null || updatedHero.xButtonBehavior === null || updatedHero.spaceBarBehavior === null || updatedHero.cButtonBehavior === null || updatedHero.interactableObjectId || updatedHero.arrowKeysBehavior || updatedHero.zButtonBehavior || updatedHero.xButtonBehavior || updatedHero.spaceBarBehavior || updatedHero.cButtonBehavior) {
-            this.setState({
-              hero: {...hero, ...updatedHero}
+            setTimeout(() => {
+              this.setState({
+                hero: GAME.heros[HERO.id]
+              })
             })
           }
         }
       })
     })
+
+    global.addEventListener('keydown', this._forceUpdate)
+    global.addEventListener('keyup', this._forceUpdate)
+  }
+
+  componentWillUnmount() {
+    this._listenToHeroUpdates()
+    global.removeEventListener('keydown', this._forceUpdate)
+    global.removeEventListener('keyup', this._forceUpdate)
+  }
+
+  _forceUpdate = () => {
+    this.forceUpdate()
   }
 
   _getKeyDataArray(behaviorPropName, hero, alt) {

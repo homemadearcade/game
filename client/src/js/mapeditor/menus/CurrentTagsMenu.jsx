@@ -49,8 +49,52 @@ export default class CurrentTagsMenu extends React.Component {
     }
 
     render() {
-        const { subObject, currentTags } = this.props
-        const tagsToRender = Object.keys(currentTags)
+        const { subObject, currentTags, objectSelected } = this.props
+
+        let tagsToRender = Object.keys(objectSelected.tags).reduce((prev, next) => {
+          if(global.allTags[next] && global.allTags[next].relatedTags) {
+            prev.push(...global.allTags[next].relatedTags)
+          }
+          prev.push(next)
+          return prev
+        }, [])
+
+        tagsToRender = Object.keys(objectSelected.descriptors || {}).reduce((prev, next) => {
+          if(global.allTags[next] && global.allTags[next].relatedTags) {
+            prev.push(...global.allTags[next].relatedTags)
+          }
+          return prev
+        }, tagsToRender)
+
+        if(objectSelected.pathId) {
+          tagsToRender.push(
+            'pathfindLoop',
+            'pathfindPatrol',
+            'pathfindDumb',
+            'pathfindWait',
+            'pathfindAvoidUp',
+          )
+        }
+
+        if(objectSelected.width > GAME.grid.nodeSize || objectSelected.height > GAME.grid.nodeSize) {
+          tagsToRender.push(
+            'tilingSprite',
+          )
+        }
+
+        if(Object.keys(objectSelected.triggers || {}).length) {
+          tagsToRender.push(
+            'glowing',
+            'stopGlowingOnTrigger',
+            'shakeOnTrigger',
+            'flashOnTrigger',
+          )
+        }
+
+        tagsToRender = tagsToRender.filter((tag, i) => {
+          if(tagsToRender.indexOf(tag) != i) return false
+          else return true
+        })
 
         return <Menu onClick={this._handleTagMenuClick}>
             <MenuItem key='open-search-modal'>Open Search Modal</MenuItem>

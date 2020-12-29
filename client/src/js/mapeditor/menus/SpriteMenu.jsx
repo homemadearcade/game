@@ -11,6 +11,14 @@ export default class SpriteMenu extends React.Component{
       const { objectSelected } = this.props
       const { networkEditObject } = MAPEDITOR
 
+      if(key === 'randomize-from-descriptors') {
+        global.findSpritesForDescribedObjects([objectSelected])
+      }
+
+      if(key === 'open-edit-sprite') {
+        SPRITEEDITOR.open(objectSelected)
+      }
+
       if(key === 'open-media-manager-sprite-selector') {
         BELOWMANAGER.open({ selectedManager: 'MediaManager', selectedMenu: 'SpriteSelector', objectSelected, spriteValue: 'default'})
         return
@@ -77,6 +85,8 @@ export default class SpriteMenu extends React.Component{
       <MenuItem key='select-sprite-equipped'>Select Equipped Sprite</MenuItem>
       <MenuItem key='select-sprite-UI'>Select UI Sprite</MenuItem>
       {objectSelected.tags.spawnZone && <MenuItem key='select-sprite-empty'>Select Empty Sprite</MenuItem>}
+      <MenuItem key='randomize-from-descriptors'>Randomize Map Sprite</MenuItem>
+      {objectSelected.width <= 64 && objectSelected.height <= 320 && !objectSelected.constructParts && <MenuItem key="open-edit-sprite">Edit Sprite</MenuItem>}
       {objectSelected.sprite && <MenuItem key='apply-sprite-to-all-of-color'>Apply to sprite to all with same color</MenuItem>}
       {objectSelected.tags.inputDirectionSprites && <MenuItem key={JSON.stringify({action: 'chooseSprite', spriteName: 'leftSprite'})}>Select Left Sprite</MenuItem>}
       {objectSelected.tags.inputDirectionSprites &&<MenuItem key={JSON.stringify({action: 'chooseSprite', spriteName: 'rightSprite'})}>Select Right Sprite</MenuItem>}

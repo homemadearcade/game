@@ -116,17 +116,7 @@ export default class RandomizeLive extends React.Component {
   }
 
   _generateRandomEmitter(name) {
-    const emitterData = global.generateRandomEmitter(name)
-
-    GAME.library.animations['random-'+name] = emitterData
-    GAME.library.animations['random-'+name+'-'+global.getRandomInt(0, 99)] = emitterData
-
-    global.socket.emit('updateLibrary', {animations: GAME.library.animations})
-
-    if(name == 'powerup') {
-      global.socket.emit('resetLiveParticle', HERO.id)
-      if(HERO.editingId) global.socket.emit('resetLiveParticle', HERO.editingId)
-    }
+    global._generateRandomEmitter(name)
   }
 
   _generateRandomLighting() {

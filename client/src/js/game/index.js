@@ -118,9 +118,6 @@ class Game{
           PHYSICS.postPhysics([], [])
 
           GAME.objects.forEach((object) => {
-            if(object.mod().tags.destroySoon || object.mod().tags.destroyQuickly || object.mod().tags.destroyEventually) {
-              OBJECTS.deleteObject(object)
-            }
             global.local.emit('onUpdateObject', object, delta)
           })
           timeouts.onUpdate(delta)
@@ -315,6 +312,7 @@ class Game{
     if(!GAME.library.creator) GAME.library.creator = {}
     if(!GAME.library.object) GAME.library.object = {}
     if(!GAME.library.subObject) GAME.library.subObject = {}
+    if(!GAME.library.images) GAME.library.images = {}
 
     if(GAME.library.tags) {
       tags.addGameTags(GAME.library.tags)
@@ -454,7 +452,7 @@ class Game{
 
   removeListeners() {
     GAME.gameState.sequenceQueue.forEach((sequence) => {
-      if(sequence.eventListeners) {
+      if(sequence && sequence.eventListeners) {
         sequence.eventListeners.forEach((remove) => {
           if(remove) remove()
         })
@@ -681,6 +679,14 @@ class Game{
 
   onGameStart(options) {
     if(!options) options = {}
+
+    GAME.objects.forEach((object) => {
+      if(object.mod().tags.destroySoon || object.mod().tags.destroyQuickly || object.mod().tags.destroyEventually) {
+        OBJECTS.deleteObject(object)
+        PIXIMAP.deleteObject(object)
+        return
+      }
+    })
 
     if(GAME.gameState.started) {
       return console.log('trying to start game that has already started')

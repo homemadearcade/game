@@ -9,9 +9,17 @@ Remember that fullstack guys random theater generator - you're close
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-Go back to randomization
-  there one sprite sheet that got messed up, fix it
+TODO - ALMOST THERE!
+  Add some Time Fantasy Sprites
   Fill out more descriptors for sprites
+
+  RANDOMIZE PARTICLEs
+    EXPLOSIONS
+    AREA GLOWS
+
+  //
+  IDK I THINK IM JUST GONNA KEEP IT SIMPLE FUCK CHILDREN AND FUCK WITH DESCRIPTORS AND FUCK MODIFIERS? MAYBE FUCK MODIFIERS..
+  make sure that artists part is working cuz for constructs it didnt seem it was picking only one artist all the time...
 
   and these notes?
   if you have a child descriptor, you can remove the parent descriptor
@@ -68,12 +76,10 @@ refreshes your page as the host..
 Green dot in corner if the current editing hero has this option...
   Allow right clikcing to add the option to the heros object
 
-
 ////////////////////////////////////////
 ////////////////////////////////////////
 RANDOMIZATION
 ////////////////////////////////////////
-children is broken
 Game tint! Yeah just like, does this game have a little tint to it?
 
 randomize hero physics

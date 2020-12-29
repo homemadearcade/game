@@ -22,6 +22,7 @@ import TriggerMenu from '../menus/TriggerMenu.jsx';
 import HookMenu from '../menus/HookMenu.jsx';
 import LiveMenu from '../menus/LiveMenu.jsx';
 import SpriteMenu from '../menus/SpriteMenu.jsx';
+import SpriteChooseMenu from '../menus/SpriteChooseMenu.jsx';
 import PropertiesMenu from '../menus/PropertiesMenu.jsx';
 import modals from '../modals.js'
 import { handleExtraMenuClicks } from './helper.js'
@@ -189,9 +190,8 @@ export default class GeneratedMenu extends React.Component {
       case 'Live':
         return (<LiveMenu key={key} objectSelected={objectSelected} subObject={subObject}></LiveMenu>
         )
-      case 'Sprite':
-        return (<SpriteMenu key={key} objectSelected={objectSelected} ></SpriteMenu>
-        )
+      case 'SpriteChoose':
+        return (<SpriteChooseMenu key={key} openColorPicker={openColorPicker} objectSelected={objectSelected} subObject={subObject}></SpriteChooseMenu>)
       case 'Properties':
         return (<PropertiesMenu key={key} objectSelected={objectSelected} ></PropertiesMenu>
         )

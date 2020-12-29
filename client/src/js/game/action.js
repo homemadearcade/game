@@ -145,6 +145,7 @@ function createBullet({ shooter, actionProps, direction }) {
     shot.tags = {
       destroyEventually: true,
       destroyOnCollideWithObstacle: true,
+      emitter: !!shot.emitterType,
     }
   }
 

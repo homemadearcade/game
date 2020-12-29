@@ -52,8 +52,8 @@ global.local.on('onGameReady', () => {
       action: 'edit-descriptors',
       title: 'Edit Descriptors'
     },
-    spriteChooser: {
-      useExistingMenu: 'Sprite',
+    spriteChoose: {
+      useExistingMenu: 'SpriteChoose',
       title: 'Sprite'
     },
     physicsLive: {
@@ -106,7 +106,7 @@ global.local.on('onGameReady', () => {
     respawn: false,
     // properties: false,
     descriptors: false,
-    spriteChooser: false,
+    spriteChoose: false,
     physicsLive: false,
     dialogue: false,
     dialogueName: false,
@@ -125,7 +125,7 @@ global.local.on('onGameReady', () => {
     popover: false,
     group: false,
     // properties: false,
-    spriteChooser: false,
+    spriteChoose: false,
     physicsLive: false,
 
     // pathEditor: false,

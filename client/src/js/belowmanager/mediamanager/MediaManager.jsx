@@ -155,7 +155,8 @@ export default class MediaManager extends React.Component {
     const byTag = {}
 
     global.spriteSheets.forEach((ss) => {
-      if(PAGE.role.isAdmin || (GAME.heros[HERO.id].spriteSheets && GAME.heros[HERO.id].spriteSheets[ss.id])) {
+      // for controlled spritesheet selection I guess?
+      if(PAGE.role.isAdmin || true || (GAME.heros[HERO.id].spriteSheets && GAME.heros[HERO.id].spriteSheets[ss.id])) {
         if(ss.tags) ss.tags.forEach((tag) => {
           if(!byTag[tag]) byTag[tag] = []
           byTag[tag].push(ss)

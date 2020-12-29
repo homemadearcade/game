@@ -49,6 +49,20 @@ walkMetalAnimation1/2/3
 // startRotation: {min: 0, max: 360},
 // useUpdateOwnerPos: true,
 
+global._generateRandomEmitter = function(name) {
+  const emitterData = global.generateRandomEmitter(name)
+
+  GAME.library.animations['random-'+name] = emitterData
+  GAME.library.animations['random-'+name+'-'+global.getRandomInt(0, 99)] = emitterData
+
+  global.socket.emit('updateLibrary', {animations: GAME.library.animations})
+
+  if(name == 'powerup') {
+    global.socket.emit('resetLiveParticle', HERO.id)
+    if(HERO.editingId) global.socket.emit('resetLiveParticle', HERO.editingId)
+  }
+}
+
 global.generateRandomColor = function () {
   return '#' + Math.floor(Math.random()*16777215).toString(16);
 }

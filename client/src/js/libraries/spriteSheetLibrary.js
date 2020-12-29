@@ -24,6 +24,7 @@
 
     'dawnlike-characters': true,
     'dawnlike-creatures2': true,
+    'dawnlike-creatures3': true,
     'dawnlike-creatures': true,
     // 'dawnlike-items': true,
     // 'dawnlike-environment': true,
