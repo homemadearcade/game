@@ -9,12 +9,24 @@ Remember that fullstack guys random theater generator - you're close
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+Go back to randomization
+  there one sprite sheet that got messed up, fix it
+  Recommended Sprite Sheet selector modal
+  Fill out more descriptors for sprites
+  Make sure randomization for sprites works..
+
+  and these notes?
+  if you have a child descriptor, you can remove the parent descriptor
+  If you have a descriptor on an object that has a withDescriptors property, do a strict look for a sprite that matches that
+
+
+----
+
 ////////////
 FINISH LINE
 ////////////
 
 RANDOMIZER + DATA
-PIXEL EDITOR
 PUZZLE INTERFACE
 FILL OUT SEQUENCE EDITOR, LIBRARY, EFFECTS, TAGS
 COMBAT + GOALS + QUESTS
@@ -50,25 +62,6 @@ The first person that logs on with that number makes the server remember that nu
 
 ////////////////////////////////////////
 ////////////////////////////////////////
-RANDOMIZATION
-////////////////////////////////////////
-children is broken
-if you have a child descriptor, you can remove the parent descriptor
-If you have a descriptor on an object that has a withDescriptors property, do a strict look for a sprite that matches that
-Game tint! Yeah just like, does this game have a little tint to it?
-
-Simple select recommended sprite modal when we have the data...
-
-randomize hero physics
-Only allow the use of ONE descriptor for construct parts? Pre select a single descriptor before generating?
-and randomize perhaps the camera filter!! <--- yes on camera filter and also dont forget about camera shakes too, those are good animations, or EASE! remember ease..
-gameTheme: ’scifi vs fantasy vs retro vs fun vs horror vs modern’. This effects title selection randomization, sprite sheet selection?? and audio generation
-
-IMPROVE AESTHETIC AND GAME AESHTIC CUSTOMIZATION
-https://www.transparenttextures.com/
-
-////////////////////////////////////////
-////////////////////////////////////////
 EDITOR UPGRADES
 ////////////////////////////////////////
 Animation Library in the bottom layer
@@ -77,6 +70,22 @@ refreshes your page as the host..
 
 Green dot in corner if the current editing hero has this option...
   Allow right clikcing to add the option to the heros object
+
+
+////////////////////////////////////////
+////////////////////////////////////////
+RANDOMIZATION
+////////////////////////////////////////
+children is broken
+Game tint! Yeah just like, does this game have a little tint to it?
+
+randomize hero physics
+Only allow the use of ONE descriptor for construct parts? Pre select a single descriptor before generating?
+and randomize perhaps the camera filter!! <--- yes on camera filter and also dont forget about camera shakes too, those are good animations, or EASE! remember ease..
+gameTheme: ’scifi vs fantasy vs retro vs fun vs horror vs modern’. This effects title selection randomization, sprite sheet selection?? and audio generation
+
+IMPROVE AESTHETIC AND GAME AESHTIC CUSTOMIZATION
+https://www.transparenttextures.com/
 
 ////////////////////////////////
 ////////////////////////////////
@@ -158,21 +167,6 @@ tag -- destroyOnPuzzleComplete
 tag -- spawnAllInHeroInventoryOnPuzzleComplete
 and then ud need a basic -- combination variable. Puzzle type + puzzle combination...  two variables?
 
-////////////////////////////////////////
-////////////////////////////////////////
-PROCEDURAL
-////////////////////////////////////////
-Ok I need to
-- Terrain brush
-- the side platformer generation..
-- Generate a space field
-
-Terrain brush
-  - water, lava, grass, sand
-    - spaceship wall, wood wall, wood floor, fortified wall, etc, or perhaps Wood wall
-    - mountain, forest, ice
-  this is a different kind of brush, this is for objects that are very simple, they wont be selected.. or moved whatsoever, they wont be DESTROYED, they wont be taken apart
-
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
@@ -184,6 +178,8 @@ Terrain brush
 cacheing colors
 
 If an array changes we need to send the whole thing in the DIFF
+
+non host talks to object with the dialogue id maybe something fucks up??
 
 non-host dialogue really fucks up and also with the yellow murder mystery guy it fucks up..
 --

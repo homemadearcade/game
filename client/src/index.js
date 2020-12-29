@@ -163,6 +163,21 @@ INVENTORY UPGRADE
 // drop last object when full ( boolean )
 // prevent add when full ( boolean )
 
+////////////////////////////////////////
+////////////////////////////////////////
+PROCEDURAL
+////////////////////////////////////////
+Ok I need to
+- Terrain brush
+- the side platformer generation..
+- Generate a space field
+
+Terrain brush
+  - water, lava, grass, sand
+    - spaceship wall, wood wall, wood floor, fortified wall, etc, or perhaps Wood wall
+    - mountain, forest, ice
+  this is a different kind of brush, this is for objects that are very simple, they wont be selected.. or moved whatsoever, they wont be DESTROYED, they wont be taken apart
+
 ////////////////////////////////
 ////////////////////////////////
 POPOVER UPGRADE

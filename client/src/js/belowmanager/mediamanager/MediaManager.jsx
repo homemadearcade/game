@@ -282,14 +282,38 @@ export default class MediaManager extends React.Component {
       if(this.props.objectSelected.descriptors) {
         recommendedTextures = global.findTexturesForDescriptors(this.props.objectSelected.descriptors, { alwaysSearchchildren: true })
       }
+
+      const customTextures = Object.keys(GAME.library.images).map((name) => {
+        const imageData = GAME.library.images[name]
+        if(imageData.texture) {
+          return {
+            id: name,
+            textureId: imageData.name,
+            ...global.tileMap[imageData.name],
+            descriptors: {
+              custom: true
+            }
+          }
+        }
+      }).filter((sprite) => {
+        return !!sprite
+      })
+
       return <div className="Manager">
         <div className="Manager__list">
           <div className="Manager__button" onClick={() => this._onSelectSprite({textureId: 'solidcolorsprite'})}>Select Default Sprite</div><br></br>
-          <div className="Manager__button" onClick={() => this._onSelectSprite({textureId: 'invisible'})}>Select Invisible Sprite</div>
+          <br></br>
+          <div className="Manager__button" onClick={() => this._onSelectSprite({textureId: 'invisible'})}>Select Invisible Sprite</div><br></br><br></br>
+
           {recommendedTextures && <div className="Manager__recommended">
             Recommended:
             <SpriteSheet onClick={this._onSelectSprite} spriteSheet={{sprites: recommendedTextures}}></SpriteSheet>
           </div>}
+          {customTextures.length && <Collapsible trigger={'Your Sprites'}>
+              <div className="Manager__recommended">
+                <SpriteSheet onClick={this._onSelectSprite} actualSize spriteSheet={{sprites: customTextures}}></SpriteSheet>
+              </div>
+          </Collapsible>}
           {this._renderSpriteSheets()}
         </div>
       </div>

@@ -72,7 +72,7 @@ export default class SpriteSheet extends React.Component {
     }
 
     return <div
-      className={classnames("SpriteContainer", {"SpriteContainer--selected": this.state.textureIdSelected === textureId || this.state.textureIdsSelected[textureId] })}
+      className={classnames("SpriteContainer", {"SpriteContainer--actual-size": this.props.actualSize, "SpriteContainer--selected": this.state.textureIdSelected === textureId || this.state.textureIdsSelected[textureId] })}
       ref={this.refCallback}
       data-spritejson={JSON.stringify(sprite)}
       onClick={() => {
@@ -96,8 +96,27 @@ export default class SpriteSheet extends React.Component {
         if(this.props.onClick) this.props.onClick(sprite, index)
       }}
       style={{backgroundColor: GAME.world.backgroundColor || 'black'}}>
-        <PixiMapSprite width="40" height="40" textureId={textureId} textureIdsSelected={this.state.textureIdsSelected} spriteData={sprite}/>
+        {this._renderPixiMapSprite(sprite)}
     </div>
+  }
+
+  _renderPixiMapSprite(sprite) {
+    const { actualSize } = this.props
+
+    if(actualSize) {
+      let newHeight
+
+      const height = sprite.width
+      const width = sprite.height
+      const aspectRatio = width/height
+
+      newHeight = 80 * aspectRatio
+      // console.log(newHeight)
+
+      return <PixiMapSprite width="80" height={newHeight} textureId={sprite.textureId} textureIdsSelected={this.state.textureIdsSelected} spriteData={sprite}/>
+    } else {
+      return <PixiMapSprite width="40" height="40" textureId={sprite.textureId} textureIdsSelected={this.state.textureIdsSelected} spriteData={sprite}/>
+    }
   }
 
   render() {
