@@ -5,7 +5,7 @@ import modals from '../../mapeditor/modals.js'
 
 global.getModifierDescriptors = function(descriptors) {
   return Object.keys(descriptors).reduce((prev, descriptor) => {
-    if(descriptors[descriptor] && global.descriptionModifiers[descriptor]) {
+    if(descriptors[descriptor] && global.complexityModifiers[descriptor]) {
       prev.push(descriptor)
     }
     return prev

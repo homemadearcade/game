@@ -52,6 +52,7 @@ global.getListOfAllSetsAndSequences = function() {
   })]
 
   items.forEach((item) => {
+    if(!item) return
     if(item.subObjects) {
       Object.keys(item.subObjects).forEach((name) => {
         items.push(item.subObjects[name])
@@ -65,7 +66,7 @@ global.getListOfAllSetsAndSequences = function() {
   })
 
   return items.reduce((prev, next) => {
-
+    if(!next) return prev
     if(next.actionProps && next.actionProps.bulletJSON && next.actionProps.bulletJSON.monsterEffectValue) {
       prev.push(next.actionProps.bulletJSON.monsterEffectValue)
     }
@@ -128,6 +129,8 @@ export default class DialogueSetMenu extends React.Component{
     this._handleDialogueSetMenuClick = async ({ key }) => {
       const { objectSelected } = this.props
       const { networkEditObject } = MAPEDITOR
+
+      if(!objectSelected.heroDialogueSets) objectSelected.heroDialogueSets = {}
 
       if(key === "add-dialogue-set") {
         if(!objectSelected.heroDialogueSets) {

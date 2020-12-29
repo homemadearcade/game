@@ -43,7 +43,6 @@ export default class DescriptorSelect extends React.Component{
 
     let descriptorsAvailable = global.allDescriptors
     if(onlyAvailable) descriptorsAvailable = global.textureIdsByDescriptor
-    console.log(descriptors)
 
     return <div className="ModalMultiSelect">
       <div className="SpriteSheet">{this.props.textureIds && Object.keys(this.props.textureIds).map((textureId) => {

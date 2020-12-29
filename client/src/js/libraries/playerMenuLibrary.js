@@ -24,9 +24,22 @@ global.local.on('onGameReady', () => {
       action: 'respawn',
       title: 'Respawn',
     },
-    color: {
-      useExistingMenu: 'Color',
-      title: 'Color'
+    chooseColor: {
+      title: 'Choose Color',
+      action: 'select-color',
+      dontCloseMenu: true,
+    },
+    randomizeSprite: {
+      title: 'Randomize Sprite',
+      action: 'randomize-from-descriptors'
+    },
+    chooseSprite: {
+      title: 'Choose Sprite',
+      action: 'choose-from-recommended-sprites',
+    },
+    drawSprite: {
+      title: 'Draw Sprite',
+      action: 'open-edit-sprite',
     },
     name: {
       useExistingMenu: 'Name',
@@ -50,9 +63,9 @@ global.local.on('onGameReady', () => {
     // },
     descriptors: {
       action: 'edit-descriptors',
-      title: 'Edit Descriptors'
+      title: 'Describe'
     },
-    spriteChoose: {
+    spriteMenu: {
       useExistingMenu: 'SpriteChoose',
       title: 'Sprite'
     },
@@ -66,7 +79,7 @@ global.local.on('onGameReady', () => {
     },
     constructEditor: {
       action: 'open-construct-editor',
-      title: 'Draw'
+      title: 'Draw Structure'
     },
     group: {
       useExistingMenu: 'GameTag',
@@ -101,22 +114,27 @@ global.local.on('onGameReady', () => {
   global.heroMenuLibrary = {
     move: false,
     resize: false,
-    color: false,
+    // color: false,
     name: false,
     respawn: false,
     // properties: false,
     descriptors: false,
-    spriteChoose: false,
+    spriteMenu: false,
     physicsLive: false,
     dialogue: false,
     dialogueName: false,
+
+    chooseColor: false,
+    randomizeSprite: false,
+    chooseSprite: false,
+    drawSprite: false,
   }
 
   global.objectMenuLibrary = {
     move: false,
     resize: false,
     copy: false,
-    color: false,
+    // color: false,
     descriptors: false,
     name: false,
     constructEditor: false,
@@ -125,8 +143,13 @@ global.local.on('onGameReady', () => {
     popover: false,
     group: false,
     // properties: false,
-    spriteChoose: false,
+    spriteMenu: false,
     physicsLive: false,
+
+    chooseColor: false,
+    randomizeSprite: false,
+    chooseSprite: false,
+    drawSprite: false,
 
     // pathEditor: false,
     delete: false,

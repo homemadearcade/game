@@ -16,15 +16,6 @@ TODO - ALMOST THERE!
   RANDOMIZE PARTICLEs
     EXPLOSIONS
     AREA GLOWS
-
-  //
-  IDK I THINK IM JUST GONNA KEEP IT SIMPLE FUCK CHILDREN AND FUCK WITH DESCRIPTORS AND FUCK MODIFIERS? MAYBE FUCK MODIFIERS..
-  make sure that artists part is working cuz for constructs it didnt seem it was picking only one artist all the time...
-
-  and these notes?
-  if you have a child descriptor, you can remove the parent descriptor
-  If you have a descriptor on an object that has a withDescriptors property, do a strict look for a sprite that matches that
-
 ----
 
 ////////////

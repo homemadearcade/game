@@ -41,17 +41,17 @@ export default class EmitterMenu extends React.Component{
       //   networkEditObject(objectSelected, { emitterTypePoweredUp: null })
       // }
 
-      if(key === 'select-particle-type-jump') {
-        modals.openSelectParticleAnimation((particle) => {
-          networkEditObject(objectSelected, { emitterTypeJump: particle.value.type })
-        })
-      }
+      // if(key === 'select-particle-type-jump') {
+      //   modals.openSelectParticleAnimation((particle) => {
+      //     networkEditObject(objectSelected, { emitterTypeJump: particle.value.type })
+      //   })
+      // }
 
-      if(key === 'select-particle-type-dash') {
-        modals.openSelectParticleAnimation((particle) => {
-          networkEditObject(objectSelected, { emitterTypeDash: particle.value.type })
-        })
-      }
+      // if(key === 'select-particle-type-dash') {
+      //   modals.openSelectParticleAnimation((particle) => {
+      //     networkEditObject(objectSelected, { emitterTypeDash: particle.value.type })
+      //   })
+      // }
 
       if(key === 'select-particle-type-action') {
         modals.openSelectParticleAnimation((particle) => {

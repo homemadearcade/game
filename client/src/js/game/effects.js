@@ -259,6 +259,8 @@ import pathfinding from '../utils/pathfinding.js'
     // 'triggerDisable',
     // 'triggerEnable',
     // 'triggerToggleEnable',
+
+    // randomize sprite
   }
 
   // apply mod from library
@@ -631,7 +633,6 @@ function processEffect(effect, effected, effector, ownerObject) {
   }
 
   if(effectName === 'stopPrologue') {
-    console.log('X')
     GAME.gameState.started = false
     GAME.removeListeners()
     GAME.gameState.sequenceQueue = []
@@ -643,6 +644,8 @@ function processEffect(effect, effected, effector, ownerObject) {
       })
       hero.flags.editAllowedWhenGameStarted = false
     });
+    GAME.library.tags = {}
+    global.allTags = _.cloneDeep(global.tags)
     GAME.library.sequences = {}
     global.emitEvent('onNetworkUpdateGameState', GAME.gameState)
     global.emitEvent('onNetworkUpdateHeros', GAME.heroList)

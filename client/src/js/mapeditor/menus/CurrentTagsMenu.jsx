@@ -59,12 +59,25 @@ export default class CurrentTagsMenu extends React.Component {
           return prev
         }, [])
 
+        let withDescriptors = []
         tagsToRender = Object.keys(objectSelected.descriptors || {}).reduce((prev, next) => {
-          if(global.allTags[next] && global.allTags[next].relatedTags) {
-            prev.push(...global.allTags[next].relatedTags)
+          if(!global.allDescriptors[next]) return prev
+
+          if(global.allDescriptors[next].withDescriptors) {
+            withDescriptors.push(next)
+          }
+
+          if(global.allDescriptors[next].relatedDescriptors) {
+            prev.push(...global.allDescriptors[next].relatedDescriptors)
           }
           return prev
         }, tagsToRender)
+
+        withDescriptors.forEach((desc) => {
+          if(global.allDescriptors[desc].relatedDescriptors) {
+            tagsToRender.push(...global.allDescriptors[desc].relatedDescriptors)
+          }
+        })
 
         if(objectSelected.pathId) {
           tagsToRender.push(

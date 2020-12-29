@@ -255,10 +255,10 @@ function setDefault() {
   }
 
   global.weaponDescriptors = {
-    Weapon: {
-      dontShowAdminsInSpriteSheetEditor: true,
-      children: ['Waraxe', 'Staff', 'Mace', 'Gun', 'Sword','Bow', 'Crossbow', 'Laser', 'Spear', 'Halbierd', 'Scythe', 'Bomb', 'Scimitar', 'Rapier'],
-    },
+    // Weapon: {
+    //   dontShowAdminsInSpriteSheetEditor: true,
+    //   children: ['Waraxe', 'Staff', 'Mace', 'Gun', 'Sword','Bow', 'Crossbow', 'Laser', 'Spear', 'Halbierd', 'Scythe', 'Bomb', 'Scimitar', 'Rapier'],
+    // },
     'Melee Weapon': {
       dontShowAdminsInSpriteSheetEditor: true,
       children: ['Waraxe','Mace', 'Sword','Spear', 'Whip', 'Scimitar', 'Rapier', 'Scythe', 'Halbierd', 'Dagger'],
@@ -715,7 +715,7 @@ function setDefault() {
     'Alt1': {},
     'Alt2': {},
     'Duplicate': {},
-      Small: {
+    Small: {
       audioRelated: true,
       dontShowAdminsInSpriteSheetEditor: true,},
     Large: {
@@ -915,6 +915,18 @@ function setDefault() {
         Open: true
       }
     },
+    'Door (Open)' : {
+      withDescriptors: {
+        Door: true,
+        Open: true
+      }
+    },
+    'Barrel (Open)' : {
+      withDescriptors: {
+        Barrel: true,
+        Open: true
+      }
+    },
     'Lumber' : {
       withDescriptors: {
         Wood: true,
@@ -924,13 +936,13 @@ function setDefault() {
     'Carpeted Stairs' : {
       withDescriptors: {
         Stairs: true,
-        carpeted: true
+        Carpeted: true
       }
     },
     'Carpeted Tile' : {
       withDescriptors: {
         'Building Floor Tile': true,
-        carpeted: true
+        Carpeted: true
       }
     },
     'Torch (On)': {
@@ -959,6 +971,31 @@ function setDefault() {
     Head: {}
   }
 
+  // basically its just that these ones are ignored from sprite slection and randomization right now
+  global.directionalModifiers = {
+    ...global.pathModifiers,
+    // ...global.facingModifiers,
+    ...global.edgeModifiers,
+  }
+
+  // this ones will auto group if there is no matching complexity descriptor
+  global.complexityModifiers = {
+    // ...global.colorModifiers,
+    ...global.audioModifierDescriptors,
+    ...global.modifierDescriptors,
+    ...global.elementalModifiers,
+    ...global.livingCreatureModifiers,
+    ...global.facingModifiers,
+    ...global.colorModifiers,
+    // ...global.directionalModifiers,
+  }
+
+  global.allModifiers = {
+    ...global.colorModifiers,
+    ...global.complexityModifiers,
+    ...global.directionalModifiers,
+  }
+
   global.allDescriptors = {
     ...global.generalDescriptors,
     ...global.elementDescriptors,
@@ -978,29 +1015,17 @@ function setDefault() {
     ...global.lawnAnimalDescriptors,
     ...global.reptileDescriptors,
     ...global.birdDescriptors,
-    ...global.edgeModifiers,
-    ...global.pathModifiers,
     ...global.audioModifierDescriptors,
     ...global.modifierDescriptors,
     ...global.weaponDescriptors,
     // ...global.complexDescriptors,
     ...global.goreDescriptors,
-    ...global.colorModifiers,
+    // ...global.colorModifiers,
     ...global.dungeonItemDescriptors,
-    ...global.elementalModifiers,
-    ...global.livingCreatureModifiers,
-    ...global.facingModifiers,
-  }
-
-  global.descriptionModifiers = {
-    ...global.colorModifiers,
-    ...global.edgeModifiers,
-    ...global.pathModifiers,
-    ...global.audioModifierDescriptors,
-    ...global.modifierDescriptors,
-    ...global.elementalModifiers,
-    ...global.livingCreatureModifiers,
-    ...global.facingModifiers,
+    // ...global.elementalModifiers,
+    // ...global.livingCreatureModifiers,
+    ...global.allModifiers,
+    // ...global.directionalModifiers,
   }
 
 }

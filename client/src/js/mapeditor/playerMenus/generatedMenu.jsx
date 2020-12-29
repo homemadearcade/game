@@ -88,6 +88,7 @@ export default class GeneratedMenu extends React.Component {
     Object.keys(objectMenuItems).forEach(itemName => {
       if(objectMenuItems[itemName] == false) return
       const item = global.playerMenuLibrary[itemName]
+      if(!item) return console.log(itemName)
       if (item.hasOwnProperty('subMenu')) {
         if (!objectMenuObj[item.subMenu]) {
           objectMenuObj[item.subMenu] = { submenuKey: item.subMenu, subMenuItems: [] }
@@ -102,6 +103,7 @@ export default class GeneratedMenu extends React.Component {
     Object.keys(heroMenuItems).forEach(itemName => {
       if(heroMenuItems[itemName] == false) return
       const item = global.playerMenuLibrary[itemName]
+      if(!item) return console.log(itemName)
 
       if (item.hasOwnProperty('subMenu')) {
         if (!heroMenuObj[item.subMenu]) {
