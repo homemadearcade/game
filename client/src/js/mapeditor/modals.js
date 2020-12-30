@@ -725,7 +725,8 @@ function openEditSequenceModal(id, cb) {
   }
 }
 
-function openEditDescriptorsModal(initialDescriptors, cb, textureIds, onlyAvailable) {
+function openEditDescriptorsModal(initialDescriptors, cb, textureIds, options) {
+  if(!options) options = {}
   Swal.fire({
     title: 'Edit Descriptors',
     showClass: {
@@ -743,7 +744,7 @@ function openEditDescriptorsModal(initialDescriptors, cb, textureIds, onlyAvaila
   // Mount React App
   const ref = React.createRef()
   ReactDOM.render(
-    React.createElement(DescriptorSelect, { ref, onlyAvailable, initialDescriptors, textureIds }),
+    React.createElement(DescriptorSelect, { ref, options, initialDescriptors, textureIds }),
     document.getElementById('edit-descriptors-container')
   )
 }

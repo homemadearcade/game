@@ -86,6 +86,7 @@ class MapEditor {
     })
     document.body.addEventListener("dblclick", (e) => {
       if(!global.isClickingMap(e.target.className)) return
+      if(!GAME.heros[HERO.id].flags.allowObjectSelection) return
       if(MAPEDITOR.objectHighlighted && MAPEDITOR.objectHighlighted.id) {
         OBJECTS.editingId = MAPEDITOR.objectHighlighted.id
         BELOWMANAGER.open({ objectSelected: MAPEDITOR.objectHighlighted, selectedManager: 'ObjectManager', selectedMenu: 'detail', selectedId: OBJECTS.editingId })
@@ -268,7 +269,10 @@ function handleMouseDown(event) {
   MAPEDITOR.clickStart.x = ((x + camera.x) / camera.multiplier)
   MAPEDITOR.clickStart.y = ((y + camera.y) / camera.multiplier)
 
-  let selectionAllowed = (PAGE.role.isAdmin || GAME.heros[HERO.id].flags.allowObjectSelection) && global.isClickingMap(event.target.className)
+  let selectionAllowed = false
+  if(global.isClickingMap(event.target.className)) {
+    selectionAllowed = PAGE.role.isAdmin || GAME.heros[HERO.id].flags.allowObjectSelection
+  }
 
   if(event.target.className.indexOf('dont-close-menu') >= 0) {
     selectionAllowed = false

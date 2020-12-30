@@ -344,8 +344,8 @@ global.local.on('onFirstPageGameLoaded', () => {
   global.objectLibrary.addGameLibrary = function() {
     if(GAME.library.object) {
       return {
-        ...GAME.library.object,
         ...global.objectLibrary,
+        ...GAME.library.object,
         addGameLibrary: null
       }
     } else {

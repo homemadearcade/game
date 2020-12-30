@@ -14,8 +14,8 @@ global.local.on('onFirstPageGameLoaded', () => {
   global.spriteAnimationLibrary.addGameLibrary = function() {
     if(GAME.library.spriteAnimations) {
       return {
-        ...GAME.library.spriteAnimations,
         ...global.spriteAnimationLibrary,
+        ...GAME.library.spriteAnimations,
         addGameLibrary: null
       }
     } else {

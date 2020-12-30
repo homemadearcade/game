@@ -8,7 +8,10 @@ import DialogueMenu from '../menus/DialogueMenu.jsx';
 import PopoverMenu from '../menus/PopoverMenu.jsx';
 import DialogueSetsMenu from '../menus/DialogueSetsMenu.jsx';
 import PlayerCreateObjectMenu from '../menus/PlayerCreateObjectMenu.jsx';
-
+import SequencesMenu from '../menus/SequencesMenu.jsx';
+import CurrentTagsMenu from '../menus/CurrentTagsMenu.jsx';
+import EmitterMenu from '../menus/EmitterMenu.jsx';
+import EmitterRandomizeMenu from '../menus/EmitterRandomizeMenu.jsx';
 // import DescriptorsMenu from '../menus/DescriptorsMenu.jsx';
 
 import QuestMenu from '../menus/QuestMenu.jsx';
@@ -208,6 +211,9 @@ export default class GeneratedMenu extends React.Component {
         )
       case 'PlayerCreateObject':
         return (<PlayerCreateObjectMenu key={key} objectSelected={objectSelected} ></PlayerCreateObjectMenu>
+        )
+      case 'EmitterRandomizeMenu':
+        return (<EmitterRandomizeMenu key={key} objectSelected={objectSelected} ></EmitterRandomizeMenu>
         )
       default:
         return (<MenuItem className={classnames({'dont-close-menu': menuData.dontCloseMenu})} key={menuData.action}>{menuData.title}</MenuItem>)

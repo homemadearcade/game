@@ -85,7 +85,7 @@ export async function handleExtraMenuClicks(key, objectSelected, openColorPicker
         if(value) {
           networkEditObject(objectSelected, {descriptors: value})
         }
-      }, {}, true)
+      }, {}, {onlyWithTextures: true})
     }
 
     if (key === 'toggle-outline') {
@@ -470,9 +470,9 @@ export async function handleExtraMenuClicks(key, objectSelected, openColorPicker
       return
     }
 
-    if(key === 'randomize-area-glow') {
-      global._generateRandomEmitter('area-glow')
-      networkEditObject(objectSelected, {emitterType: 'random-area-glow' })
+    if(key === 'randomize-areaGlow') {
+      global._generateRandomEmitter('areaGlow')
+      networkEditObject(objectSelected, {emitterType: 'random-areaGlow' })
       return
     }
 

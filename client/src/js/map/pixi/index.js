@@ -39,6 +39,8 @@ PIXIMAP.onResetLiveParticle = function(objectId) {
     PIXIMAP.deleteEmitter(pixiChild.poweredUpEmitter)
     delete pixiChild.poweredUpEmitter
   }
+
+  updatePixiObject(object)
 }
 
 PIXIMAP.initializePixiObjectsFromGame = function() {

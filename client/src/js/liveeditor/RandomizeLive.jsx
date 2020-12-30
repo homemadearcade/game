@@ -55,7 +55,11 @@ export default class RandomizeLive extends React.Component {
   _renderEmitters(libraryProp, libraryObjectNames) {
     return Object.keys(libraryObjectNames).map((name) => {
       return <DatButton label={'Generate - ' + name} onClick={() => {
-          this._generateRandomEmitter(name)
+        if(HERO.editingId) {
+          this._generateRandomEmitter(name, GAME.heros[HERO.editingId])
+        } else {
+          this._generateRandomEmitter(name, GAME.heros[HERO.id])
+        }
         }}/>
     })
   }
@@ -102,7 +106,11 @@ export default class RandomizeLive extends React.Component {
 // </DatFolder>
 
   _generateAll = () => {
-    this._generateRandomEmitters()
+    if(HERO.editingId) {
+      this._generateRandomEmitter(name, GAME.heros[HERO.editingId])
+    } else {
+      this._generateRandomEmitter(name, GAME.heros[HERO.id])
+    }
     global.generateTitleTheme()
     global.generateAudioTheme()
     global._randomizeLightPower()
@@ -111,12 +119,12 @@ export default class RandomizeLive extends React.Component {
 
   _generateRandomEmitters = () => {
     ['powerup', 'projectile', 'laser'].forEach((name) => {
-      this._generateRandomEmitter(name)
+      this._generateRandomEmitter(name, )
     })
   }
 
-  _generateRandomEmitter(name) {
-    global._generateRandomEmitter(name)
+  _generateRandomEmitter(name, hero) {
+    global._generateRandomEmitter(name, hero)
   }
 
   _generateRandomLighting() {

@@ -11,6 +11,7 @@ import PlayerCreateObjectMenu from '../menus/PlayerCreateObjectMenu.jsx';
 import SequencesMenu from '../menus/SequencesMenu.jsx';
 import CurrentTagsMenu from '../menus/CurrentTagsMenu.jsx';
 import EmitterMenu from '../menus/EmitterMenu.jsx';
+import EmitterRandomizeMenu from '../menus/EmitterRandomizeMenu.jsx';
 import RelatedTagsMenu from '../menus/RelatedTagsMenu.jsx';
 
 // import DescriptorsMenu from '../menus/DescriptorMenu.jsx';
@@ -29,7 +30,7 @@ import PropertiesMenu from '../menus/PropertiesMenu.jsx';
 import modals from '../modals.js'
 import { handleExtraMenuClicks } from '../playerMenus/helper.js'
 
-export default class GeneratedMenu extends React.Component {
+export default class SmartMenu extends React.Component {
   constructor(props) {
     super(props)
 
@@ -44,156 +45,6 @@ export default class GeneratedMenu extends React.Component {
 
       handleExtraMenuClicks(key, objectSelected, this.props.openColorPicker, objectSelected.tags.subObject)
     }
-  }
-
-  _generateContextMenuItems(objectMenuItems, heroMenuItems, worldMenuItems = {}) {
-    // <MenuItem> key=action </MenuItem>
-    const objectMenuObj = { baseLevelMenu: [] }
-    const heroMenuObj = { baseLevelMenu: [] }
-    const worldMenuObj = { baseLevelMenu: [] }
-
-    Object.keys(objectMenuItems).forEach(itemName => {
-      if(objectMenuItems[itemName] == false) return
-      const item = global.playerMenuLibrary[itemName]
-      if (item.hasOwnProperty('subMenu')) {
-        if (!objectMenuObj[item.subMenu]) {
-          objectMenuObj[item.subMenu] = { submenuKey: item.subMenu, subMenuItems: [] }
-          objectMenuObj['baseLevelMenu'].push({ subMenuKey: item.subMenu })
-        }
-        objectMenuObj[item.subMenu].subMenuItems.push(item)
-      } else {
-        objectMenuObj['baseLevelMenu'].push(item)
-      }
-    })
-
-    Object.keys(heroMenuItems).forEach(itemName => {
-      if(heroMenuItems[itemName] == false) return
-      const item = global.playerMenuLibrary[itemName]
-
-      if (item.hasOwnProperty('subMenu')) {
-        if (!heroMenuObj[item.subMenu]) {
-          heroMenuObj[item.subMenu] = { submenuKey: item.subMenu, subMenuItems: [] }
-          heroMenuObj['baseLevelMenu'].push({ subMenuKey: item.subMenu })
-        }
-        heroMenuObj[item.subMenu].subMenuItems.push(item)
-      } else {
-        heroMenuObj['baseLevelMenu'].push(item)
-      }
-    })
-
-    Object.keys(worldMenuItems).forEach(itemName => {
-      if(worldMenuItems[itemName] == false) return
-      const item = global.playerMenuLibrary[itemName]
-
-      if (item.hasOwnProperty('subMenu')) {
-        if (!worldMenuObj[item.subMenu]) {
-          worldMenuObj[item.subMenu] = { submenuKey: item.subMenu, subMenuItems: [] }
-          worldMenuObj['baseLevelMenu'].push({ subMenuKey: item.subMenu })
-        }
-        worldMenuObj[item.subMenu].subMenuItems.push(item)
-      } else {
-        worldMenuObj['baseLevelMenu'].push(item)
-      }
-    })
-
-    return {
-      heroMenuObj,
-      worldMenuObj,
-      objectMenuObj
-    }
-  }
-
-  _renderSubMenu(subMenuItems, key) {
-    return (
-      <SubMenu title={key}>
-        {subMenuItems.map(item => {
-          return this._fetchMenu(item)
-        })}
-      </SubMenu>
-    )
-  }
-
-  _fetchMenu(menuData, key) {
-    const { objectSelected, subObject, openColorPicker } = this.props
-    switch (menuData.useExistingMenu) {
-      case 'Dialogue':
-        return (<DialogueMenu key={key} objectSelected={objectSelected} subObject={subObject} />)
-      case 'Color':
-        return (<ColorMenu key={key} objectSelected={objectSelected} openColorPicker={openColorPicker} subObject={subObject}></ColorMenu>
-        )
-      case 'Tag':
-        return (<TagMenu key={key} objectSelected={objectSelected}></TagMenu>
-        )
-      case 'GameTag':
-        return (<GameTagMenu key={key} objectSelected={objectSelected} subObject={subObject}></GameTagMenu>
-        )
-      case 'Quest':
-        return (<QuestMenu key={key} objectSelected={objectSelected} subObject={subObject}></QuestMenu>
-        )
-      case 'SpawnZone':
-        return (<SpawnZoneMenu key={key} objectSelected={objectSelected} subObject={subObject}></SpawnZoneMenu>
-        )
-      case 'ResourceZone':
-        return (<ResourceZoneMenu key={key} objectSelected={objectSelected} subObject={subObject}></ResourceZoneMenu>
-        )
-      case 'Name':
-        return (<NameMenu key={key} objectSelected={objectSelected} subObject={subObject}></NameMenu>
-        )
-      case 'EditorActionMenu':
-        return (<EditorActionMenu key={key} objectSelected={objectSelected} subObject={subObject}></EditorActionMenu>
-        )
-      case 'SelectSubObject':
-        return (<SelectSubObjectMenu key={key} objectSelected={objectSelected} subObject={subObject}></SelectSubObjectMenu>
-        )
-      case 'Relative':
-        return (<RelativeMenu key={key} objectSelected={objectSelected} subObject={subObject}></RelativeMenu>
-        )
-      case 'Trigger':
-        return (<TriggerMenu key={key} objectSelected={objectSelected} ></TriggerMenu>
-        )
-      case 'Hook':
-        return (<HookMenu key={key} objectSelected={objectSelected}></HookMenu>
-        )
-      case 'Live':
-        return (<LiveMenu key={key} objectSelected={objectSelected} subObject={subObject}></LiveMenu>
-        )
-      case 'Sprite':
-        return (<SpriteMenu key={key} objectSelected={objectSelected} ></SpriteMenu>
-        )
-      case 'Properties':
-        return (<PropertiesMenu key={key} objectSelected={objectSelected} ></PropertiesMenu>
-        )
-      case 'Descriptors':
-        return (<DescriptorsMenu key={key} objectSelected={objectSelected} ></DescriptorsMenu>
-        )
-      case 'DialogueSets':
-        return (<DialogueSetsMenu key={key} objectSelected={objectSelected} ></DialogueSetsMenu>
-        )
-      case 'Popover':
-        return (<PopoverMenu key={key} objectSelected={objectSelected} ></PopoverMenu>
-        )
-      case 'PlayerCreateObject':
-        return (<PlayerCreateObjectMenu key={key} objectSelected={objectSelected} ></PlayerCreateObjectMenu>
-        )
-      default:
-        return (<MenuItem className={classnames({'dont-close-menu': menuData.dontCloseMenu})} key={menuData.action}>{menuData.title}</MenuItem>)
-    }
-  }
-
-
-  _renderGeneratedMenu(menuObj) {
-    return menuObj.baseLevelMenu.map((item, index) => {
-      if (item.subMenuKey) {
-        return this._renderSubMenu(menuObj[item.subMenuKey].subMenuItems, item.subMenuKey)
-      } else if (item.useExistingMenu) {
-        return (<SubMenu title={item.title}>
-          {this._fetchMenu(item, index)}
-        </SubMenu>)
-      }
-      else {
-        return this._fetchMenu(item)
-      }
-    })
   }
 
   _renderObjectSpawnZoneMenu() {
@@ -225,16 +76,9 @@ export default class GeneratedMenu extends React.Component {
     const hasBullet = action === 'shoot' && objectSelected.actionProps && objectSelected.actionProps.bulletJSON && objectSelected.actionProps.bulletJSON.emitterType == 'random-projectile'
     if(objectSelected.tags.emitter || objectSelected.tags.explodeOnDestroy || objectSelected.tags.poweredUp || hasBullet || hasLaser) {
       return <SubMenu title="Emitter">
-        {objectSelected.tags.emitter && <MenuItem key="open-live-particle">Live Edit Emitter</MenuItem>}
-        {objectSelected.tags.explodeOnDestroy && <MenuItem key="randomize-explosion-emitter">Randomize Explosion</MenuItem>}
-        {objectSelected.tags.explodeOnDestroy && <MenuItem key="play-explosion-emitter">Play Explosion</MenuItem>}
-        {objectSelected.tags.poweredUp && <MenuItem key="randomize-powerup-emitter">Randomize Power Up</MenuItem>}
-        {objectSelected.tags.emitter && <MenuItem key="randomize-area-glow-emitter">Randomize Area Glow</MenuItem>}
-        {hasLaser && <MenuItem key="randomize-laser-emitter">Randomize Laser</MenuItem>}
-        {hasBullet && <MenuItem key="randomize-projectile-emitter">Randomize Projectile</MenuItem>}
+        <EmitterRandomizeMenu objectSelected={objectSelected}></EmitterRandomizeMenu>
       </SubMenu>
     }
-
     //        <EmitterMenu objectSelected={objectSelected} subObject={subObject}></EmitterMenu>
   }
 

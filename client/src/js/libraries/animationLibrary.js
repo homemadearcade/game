@@ -930,11 +930,17 @@ global.local.on('onFirstPageGameLoaded', () => {
     laser:{"alpha":{"start":0.3,"end":1},"scale":{"start":0.6,"end":0.3,"minimumScaleMultiplier":0.5},"color":{"start":"#ffffff","end":"#001cff"},"speed":{"start":13543,"end":14394,"minimumSpeedMultiplier":1},"acceleration":{"x":0,"y":0},"maxSpeed":0,"startRotation":{"min":270,"max":270},"noRotation":false,"rotationSpeed":{"min":0,"max":0},"lifetime":{"min":5,"max":1},"blendMode":"normal","frequency":0.01,"emitterLifetime":-1,"maxParticles":1000,"pos":{"x":0,"y":0},"addAtBack":false,"spawnType":"point","speedType":"fast","spawnWaitTime":93,"images":{"HardRain":true},"animationType":"particle",},
   }
 
+  global.particleEmitterLibrary['random-laser'] = global.particleEmitterLibrary.laser
+  global.particleEmitterLibrary['random-particle'] = global.particleEmitterLibrary.fireBall
+  global.particleEmitterLibrary['random-areaGlow'] = global.particleEmitterLibrary.areaGlow
+  global.particleEmitterLibrary['random-explosion'] = global.particleEmitterLibrary.isolatedExplosion
+  global.particleEmitterLibrary['random-powerup'] = global.particleEmitterLibrary.powerRingSubtle
+
   global.particleEmitterLibrary.addGameLibrary = function() {
     if(GAME.library.animations) {
       return {
-        ...GAME.library.animations,
         ...global.particleEmitterLibrary,
+        ...GAME.library.animations,
         addGameLibrary: null
       }
     } else {

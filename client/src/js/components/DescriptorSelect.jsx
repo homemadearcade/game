@@ -39,10 +39,12 @@ export default class DescriptorSelect extends React.Component{
 
   render() {
     const { descriptors } = this.state
-    const { onlyAvailable } = this.props
+    const { options } = this.props
 
+    let filterAdmin = false
     let descriptorsAvailable = global.allDescriptors
-    if(onlyAvailable) descriptorsAvailable = global.textureIdsByDescriptor
+    if(options.onlyWithTextures) descriptorsAvailable = global.textureIdsByDescriptor
+    else filterAdmin = true
 
     return <div className="ModalMultiSelect">
       <div className="SpriteSheet">{this.props.textureIds && Object.keys(this.props.textureIds).map((textureId) => {
@@ -57,7 +59,10 @@ export default class DescriptorSelect extends React.Component{
           return { value: desc, label: desc}
         })}
         onChange={this._onChange}
-        options={Object.keys(descriptorsAvailable).map(eventName => { return { value: eventName, label: eventName}})}
+        options={Object.keys(descriptorsAvailable).map(desc => {
+          if(filterAdmin && descriptorsAvailable[desc].dontShowAdminsInSpriteSheetEditor) return
+          return { value: desc, label: desc}
+        }).filter((opt) => !!opt)}
         styles={global.reactSelectStyle}
         theme={global.reactSelectTheme}/>
     </div>

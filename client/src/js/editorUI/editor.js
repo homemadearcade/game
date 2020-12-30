@@ -21,9 +21,11 @@ class Editor {
       }
       this.zoomDelta = .1250
 
-      const storedPreferences = localStorage.getItem('editorPreferences')
-      if(storedPreferences && storedPreferences != 'undefined' && storedPreferences != 'null') {
-        Object.assign(this.preferences,JSON.parse(storedPreferences))
+      if(PAGE.role.isAdmin) {
+        const storedPreferences = localStorage.getItem('editorPreferences')
+        if(storedPreferences && storedPreferences != 'undefined' && storedPreferences != 'null') {
+          Object.assign(this.preferences,JSON.parse(storedPreferences))
+        }
       }
     })
   }

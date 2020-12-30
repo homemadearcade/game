@@ -10,6 +10,8 @@ export default class DialogueMenu extends React.Component{
       const { objectSelected } = this.props
       const { networkEditObject } = MAPEDITOR
 
+      if(!objectSelected.heroDialogueSets) objectSelected.heroDialogueSets = {}
+      
       if(key === "add-dialogue") {
         if(!objectSelected.heroDialogueSets['default']) {
           objectSelected.heroDialogueSets['default'] = {}

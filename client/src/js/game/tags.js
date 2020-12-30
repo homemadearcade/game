@@ -422,7 +422,7 @@ function setDefault() {
 }
 
 function addGameTags(tags) {
-  Object.assign(global.tags, tags)
+  // Object.assign(global.tags, tags)
   Object.assign(global.allTags, tags)
 }
 

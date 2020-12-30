@@ -49,17 +49,17 @@ walkMetalAnimation1/2/3
 // startRotation: {min: 0, max: 360},
 // useUpdateOwnerPos: true,
 
-global._generateRandomEmitter = function(name) {
+global._generateRandomEmitter = function(name, object) {
+  console.log(name)
   const emitterData = global.generateRandomEmitter(name)
 
   GAME.library.animations['random-'+name] = emitterData
-  GAME.library.animations['random-'+name+'-'+global.getRandomInt(0, 99)] = emitterData
+  const newName = 'random-'+name+'-'+global.getRandomInt(0, 99)
+  GAME.library.animations[newName] = emitterData
 
   global.socket.emit('updateLibrary', {animations: GAME.library.animations})
-
-  if(name == 'powerup') {
-    global.socket.emit('resetLiveParticle', HERO.id)
-    if(HERO.editingId) global.socket.emit('resetLiveParticle', HERO.editingId)
+  if(name == 'powerup' || name === 'areaGlow') {
+    global.socket.emit('resetLiveParticle', object.id)
   }
 }
 
@@ -103,6 +103,12 @@ global.generateRandomEmitter = function(name) {
       if(randomizeName === 'rotationSpeedMax') emitterData.rotationSpeed.max = global.getRandomFloat(value.min, value.max)
     }
 
+    if(randomizeName === 'lifetimeMin' || randomizeName === 'lifetimeMax') {
+      if(!emitterData.lifetime) emitterData.lifetime = {}
+      if(randomizeName === 'lifetimeMin') emitterData.lifetime.min = global.getRandomFloat(value.min, value.max)
+      if(randomizeName === 'lifetimeMax') emitterData.lifetime.max = global.getRandomFloat(value.min, value.max)
+    }
+
     if(randomizeName === 'rotationSpeed') {
       if(!emitterData.rotationSpeed) emitterData.rotationSpeed = {}
       const val = global.getRandomFloat(value.min, value.max)
@@ -126,6 +132,11 @@ global.generateRandomEmitter = function(name) {
     if(randomizeName === 'frequency') {
       const val = global.getRandomFloat(value.min, value.max)
       emitterData.frequency = val
+    }
+
+    if(randomizeName === 'maxParticles') {
+      const val = global.getRandomInt(value.min, value.max)
+      emitterData.maxParticles = val
     }
 
     if(randomizeName === 'images') {
@@ -153,14 +164,101 @@ global.generateRandomEmitter = function(name) {
     if(emitterData.images) delete clone.images
     return global.mergeDeep(clone, emitterData)
   }
+  if(name == 'areaGlow') {
+    const clone = _.clone(global.particleEmitterLibrary.areaGlow)
+    if(emitterData.images) delete clone.images
+    return global.mergeDeep(clone, emitterData)
+  }
+  if(name == 'explosion') {
+    let clone
+    if(Math.random() > .5) {
+      clone = _.clone(global.particleEmitterLibrary.explosionCloud)
+    } else {
+      clone = _.clone(global.particleEmitterLibrary.explode)
+    }
+    const newEmitter = global.mergeDeep(clone, emitterData)
+
+    newEmitter.matchObjectColor = false
+    if(Math.random() > .9) {
+      newEmitter.useOwnerSprite = true
+    }
+    if(newEmitter.images) delete newEmitter.images
+    return newEmitter
+  }
 }
 
 global.generateEmitterData = {
   'explosion': {
-
+    scaleStart: {
+      min: .2,
+      max: 8
+    },
+    scaleEnd: {
+      min: .2,
+      max: 5
+    },
+    alphaStart: {
+      min: 0,
+      max: 1,
+    },
+    alphaEnd: {
+      min: 0,
+      max: 1,
+    },
+    rotationSpeed: {
+      min: 0,
+      max: 120
+    },
+    maxParticles: {
+      max: 200,
+      min: 5,
+    },
+    colorStart: true,
+    colorEnd: true,
+    images: ['default', 'Bubbles', 'Pixel', 'Sparks', 'Fire', 'smokeparticle', 'particle', 'particleSmallStar', 'particleCartoonStar', 'HardCircle', 'burst']
   },
   areaGlow: {
-
+    scaleStart: {
+      min: .2,
+      max: 8
+    },
+    scaleEnd: {
+      min: .2,
+      max: 5
+    },
+    alphaStart: {
+      min: 0,
+      max: 1,
+    },
+    alphaEnd: {
+      min: 0,
+      max: 1,
+    },
+    rotationSpeed: {
+      min: 0,
+      max: 120
+    },
+    frequency: {
+      //slower
+      max: 1,
+      //faster
+      min: 0.01,
+    },
+    maxParticles: {
+      max: 200,
+      min: 5,
+    },
+    lifetimeMin: {
+      min: 1,
+      max: 50
+    },
+    lifetimeMax: {
+      min: 10,
+      max: 100
+    },
+    colorStart: true,
+    colorEnd: true,
+    images: ['default', 'Bubbles', 'Pixel', 'Sparks', 'Fire', 'smokeparticle', 'particle', 'particleSmallStar', 'particleCartoonStar', 'HardCircle', 'burst']
   },
   'projectile': {
     colorStart: true,
@@ -181,7 +279,9 @@ global.generateEmitterData = {
       min: 0,
       max: .7
     },
-    images: ['particle', 'smokeparticle']
+    images: ['default', 'smokeparticle', 'particle', 'particleSmallStar', 'HardCircle', 'burst']
+
+    // images: ['particle', 'smokeparticle']
     // 'smokeparticle'
   },
   'powerup': {
@@ -217,14 +317,9 @@ global.generateEmitterData = {
       //faster
       min: 0.08,
     },
-    // lifetimeMin: {
-    //
-    // },
-    // lifetimeMax: {
-    //
-    // },
+
     // spawnRect vs ring
-    images: ['smokeparticle', 'particle', 'particleSmallStar', 'particleStar', 'particleCartoonStar', 'HardCircle', 'burst']
+    images: ['default', 'smokeparticle', 'particle', 'particleSmallStar', 'particleCartoonStar', 'HardCircle', 'burst']
   },
   'laser': {
     colorStart: true,
@@ -244,6 +339,7 @@ global.generateEmitterData = {
     speedEnd: {
       min: 1000,
       max: 2000
-    }
+    },
+    images: ['Bubbles', 'HardRain', 'smokeparticle', 'particleCartoonStar']
   }
 }

@@ -488,8 +488,8 @@ function onFirstPageGameLoaded() {
   global.creatorLibrary.addGameLibrary = function() {
     if(GAME.library.creator) {
       return {
-        ...GAME.library.creator,
         ...global.creatorLibrary,
+        ...GAME.library.creator,
         addGameLibrary: null
       }
     } else {

@@ -24,6 +24,10 @@ global.local.on('onGameReady', () => {
       action: 'respawn',
       title: 'Respawn',
     },
+    particleEmitterRandomize: {
+      useExistingMenu: 'EmitterRandomizeMenu',
+      title: 'Particle Emitter'
+    },
     chooseColor: {
       title: 'Choose Color',
       action: 'select-color',
@@ -150,6 +154,8 @@ global.local.on('onGameReady', () => {
     randomizeSprite: false,
     chooseSprite: false,
     drawSprite: false,
+
+    particleEmitterRandomize: false,
 
     // pathEditor: false,
     delete: false,

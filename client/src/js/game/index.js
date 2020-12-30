@@ -1059,7 +1059,14 @@ class Game{
 
       if(value instanceof Object) {
         GAME.library[key] = {}
-        global.mergeDeep(GAME.library[key], value)
+        // if(key === 'animations') {
+        //   for(let animation in updatedLibrary[key]) {
+        //     console.log(animation)
+        //     GAME.library.animations[animation] = updatedLibrary[key][animation]
+        //   }
+        // } else {
+          global.mergeDeep(GAME.library[key], value)
+        // }
       } else {
         GAME.library[key] = value
       }
@@ -1483,7 +1490,7 @@ class Game{
   }
 
   addLog({ logAuthorId, logRecipientId, playerUIHeroId, text, involvedIds, animation, type, heroId, teamId, dateMilliseconds }) {
-    GAME.gameState.logs.push({
+    if(GAME.gameState.logs) GAME.gameState.logs.push({
       playerUIHeroId,
       teamId,
       logRecipientId,
