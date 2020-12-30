@@ -15,6 +15,8 @@ experience password for ha-live.
 Have a random number based on the day, every will need to use that same number.
 The first person that logs on with that number makes the server remember that number and only allows connections with that number
 
+Change id of game to the user that is the center of attention, figure out what we want the game title at the beginning and end to be called
+
 ////////////////////////////////
 SEQUENCE EDITOR UPGRADE
 ////////////////////////////////

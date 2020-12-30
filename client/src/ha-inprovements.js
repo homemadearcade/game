@@ -4,6 +4,9 @@
 
 Remember that fullstack guys random theater generator - you're close
 
+// MARKETING IDEA
+// Make a game for their birthday
+
 //////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////
@@ -16,6 +19,9 @@ Remember that fullstack guys random theater generator - you're close
 //////////////////////////////////////////////////////////////////////////////////
 SMALL TASKS
 //////////////////////////////////////////////////////////////////////////////////
+
+View information popup. Tells the user what is going on behind this object, kind of satisfying a way to see what is going on
+  also helps with debugging
 
 Visalize sequences
 
@@ -187,4 +193,88 @@ https://www.npmjs.com/package/gameboy-sound
 
 AMAZING AUTOMOTON STUFF
 I might need to add this http://sanojian.github.io/cellauto/#about
+*/
+
+
+/*
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+// DEFINITIONS
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+IN ORDER OF COMPLEXITY THE MORE I CAN PUSH TO THE DEFAULT COMPENDIUM AND INTO THE TAGS SYSTEM THE BETTER THIS SOFTWARE IS
+
+DEFAULT COMPENDIUM
+Has objects with preset -> triggers, tags, hooks
+Has preset sequences
+Has preset scenarios
+Has preset worlds
+
+TAG
+Tag is Event + Effect with ONE CLICK! Easy to add. Common Triggers should become Tags
+
+HOOK
+rejects or modifies effects or game functionality via events
+
+--
+
+TRIGGER
+Event -> Condition = Effect
+
+SEQUENCE
+Sequence is ( Condition, Effect, Wait, Choice, UI ) in any order you want
+
+SCENARIO
+Scenario is the setup for the game
+
+--
+
+MORPH is permanent and transformative
+MUTATE is permanent and transitionary
+MOD is temporary with a condition
+*/
+
+// ENGINE -> Events, Conditions, Effects
+// UI -> Tags, Triggers, Hooks, Sequences, Descriptors
+// GAME DATA -> Objects, Heros, World, Grid
+// SCENARIOS..?
+
+/*
+HOMEMADE ARCADE TOOL MAP
+
+CLASS 1 - Basic
+----------
+Creator
+- Time: lowest, Specificity: highest
+
+Tags
+- Time: low, Specificity: high
+
+
+CLASS 2 - Intermediate
+----------
+RightClickMenu Modals
+- Time: medium, Specificity: medium ( Name, Dialogue, Color, CRUD operations )
+
+Detail View
+- Same possibilities as RightClickMenu Modals except bigger and at the bottom of the screen, has an added layer of convenience
+
+
+CLASS 3 - Advanced
+----------
+SimpleSequence
+( Stories, Branching Dialogue )
+- Time: high, Specificity: medium
+
+Sequence
+( Animations, Stories, All Effects, Branching Dialogue, Conditions, Notifications, Adding Objects )
+- Time: highest, Specificity: lowest
+
+
+SPECIALIZED
+----------
+Sprite Selector
+Path Editor
+Construct Editor
+Live Menu ( Physics, Day/Night, Particles )
 */

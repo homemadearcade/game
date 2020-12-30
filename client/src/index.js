@@ -197,7 +197,6 @@ ADMIN to reselect sprites, remove sprites, combine sprites into animations
 ////////////////////////////////
 MAP UPGRADE
 ////////////////////////////////
-Camera filters ??? Yeah? Like the pixie demo? Let them customize the LOOK and feel of it all
 mini-map
 map rotation having problems 1) object stage already pivoted for camera reason 2) admin canvas is not rotating with
 maybe the key to rendering optimization is switching thigns like scale and position to the layers...?
@@ -393,7 +392,6 @@ I need to feel like I have CONTROL over effects and causes, right now I feel lik
 If object is outside of its custom grid to start off, It will not be able to find the correct grid
 Theres needs to be a flag, perhaps the _fresh flag that allows it to use the other pathfinding grid to make its away to the new path
 
-
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
@@ -433,30 +431,9 @@ SpriteSheet
 https://pixanna.nl/products/ancient-dungeons-base-pack/
 https://craftpix.net/
 
-THINGS COULD GET FUCKIN NUTS WITH THIS HERE
-https://www.iwm-tuebingen.de/iwmbrowser/lib/pixi/flippable.html
-
-PROCEDURAL
-https://github.com/sequitur/improv
-https://github.com/redblobgames/mapgen2
-https://github.com/BrianMacIntosh/icon-machine
-https://github.com/redblobgames/mapgen4
-https://github.com/kchapelier/procedural-generation
-https://github.com/Dannark/BWO
-
 SHADOW ON CANVAS
 https://codepen.io/mladen___/pen/gbvqBo
-
-GREAT NICE SOUND, inspires me to make it a bit more retro
-https://www.npmjs.com/package/gameboy-sound
-
-AMAZING AUTOMOTON STUFF
-I might need to add this http://sanojian.github.io/cellauto/#about
 */
-
-
-// MARKETING IDEA
-// Make a game for their birthday
 
 window.global = window
 
@@ -523,86 +500,3 @@ setTimeout(() => {
 // } else {
 //   global.onfocus = PAGE.load
 // }
-
-/*
-////////////////////////////////////////////////////
-////////////////////////////////////////////////////
-// DEFINITIONS
-////////////////////////////////////////////////////
-////////////////////////////////////////////////////
-IN ORDER OF COMPLEXITY THE MORE I CAN PUSH TO THE DEFAULT COMPENDIUM AND INTO THE TAGS SYSTEM THE BETTER THIS SOFTWARE IS
-
-DEFAULT COMPENDIUM
-Has objects with preset -> triggers, tags, hooks
-Has preset sequences
-Has preset scenarios
-Has preset worlds
-
-TAG
-Tag is Event + Effect with ONE CLICK! Easy to add. Common Triggers should become Tags
-
-HOOK
-rejects or modifies effects or game functionality via events
-
---
-
-TRIGGER
-Event -> Condition = Effect
-
-SEQUENCE
-Sequence is ( Condition, Effect, Wait, Choice, UI ) in any order you want
-
-SCENARIO
-Scenario is the setup for the game
-
---
-
-MORPH is permanent and transformative
-MUTATE is permanent and transitionary
-MOD is temporary with a condition
-*/
-
-// ENGINE -> Events, Conditions, Effects
-// UI -> Tags, Triggers, Hooks, Sequences, Descriptors
-// GAME DATA -> Objects, Heros, World, Grid
-// SCENARIOS..?
-
-/*
-HOMEMADE ARCADE TOOL MAP
-
-CLASS 1 - Basic
-----------
-Creator
-- Time: lowest, Specificity: highest
-
-Tags
-- Time: low, Specificity: high
-
-
-CLASS 2 - Intermediate
-----------
-RightClickMenu Modals
-- Time: medium, Specificity: medium ( Name, Dialogue, Color, CRUD operations )
-
-Detail View
-- Same possibilities as RightClickMenu Modals except bigger and at the bottom of the screen, has an added layer of convenience
-
-
-CLASS 3 - Advanced
-----------
-SimpleSequence
-( Stories, Branching Dialogue )
-- Time: high, Specificity: medium
-
-Sequence
-( Animations, Stories, All Effects, Branching Dialogue, Conditions, Notifications, Adding Objects )
-- Time: highest, Specificity: lowest
-
-
-SPECIALIZED
-----------
-Sprite Selector
-Path Editor
-Construct Editor
-Live Menu ( Physics, Day/Night, Particles )
-*/
