@@ -1017,6 +1017,10 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
       object.tags.lastAnticipatedObject = false
     }
 
+    OBJECTS.destroyIfTimerIsUp(object)
+  }
+
+  destroyIfTimerIsUp(object) {
     if(object.mod().tags.destroyQuickly) {
       // console.log(object.id, object.createdTime + 3000, Date.now())
       object._timeUntilDestroyed = (object.createdTime + 3000) - Date.now()

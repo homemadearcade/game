@@ -61,6 +61,9 @@ export default class DescriptorSelect extends React.Component{
         onChange={this._onChange}
         options={Object.keys(descriptorsAvailable).map(desc => {
           if(filterAdmin && descriptorsAvailable[desc].dontShowAdminsInSpriteSheetEditor) return
+          if(global.allModifiers[desc]) {
+            return { value: desc, label: desc + "*"}
+          }
           return { value: desc, label: desc}
         }).filter((opt) => !!opt)}
         styles={global.reactSelectStyle}

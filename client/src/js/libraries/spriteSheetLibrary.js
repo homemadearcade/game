@@ -11,6 +11,7 @@
     'kenney-roguelike-characters-16px': true,
     'kenney-roguelike-city-16px': true,
 
+    'kenney-retro': true,
     // 'kenney-tanks': true,
     // 'kenney-sports-characters-equipment': true,
     // 'kenney-racing-vehicles': true,
@@ -18,31 +19,33 @@
     // 'kenney-racing-characters': true,
     // 'kenney-road': true,
     // 'kenney-racing-stadium': true,
-    // 'lordofthebling-1-16px': true,
+    'lordofthebling-1-16px': true,
 
     'timefantasy-animations': true,
+    'timefantasy-animals': true,
+    // 'timefantasy-monsters': true,
+    'timefantasy-modern-tiles': true,
+    'timefantasy-modern-environment': true,
 
     'dawnlike-characters': true,
     'dawnlike-creatures2': true,
     'dawnlike-creatures3': true,
     'dawnlike-creatures': true,
-    // 'dawnlike-items': true,
-    // 'dawnlike-environment': true,
+    'dawnlike-items': true,
+    'dawnlike-environment': true,
 
-    // 'whtdragon-fish': true,
-    // 'whtdragon-birds': true,
-    // 'whtdragon-mythological': true,
-    // 'whtdragon-predators': true,
-    // 'whtdragon-farm': true,
-    // 'whtdragon-woodland': true,
-    // 'whtdragon-dragons': true,
-    // 'whtdragon-horses': true,
-    // 'whtdragon-pets': true,
-    // 'whtdragon-other': true,
-    // 'whtdragon-lawn': true,
-    // 'whtdragon-reptiles': true,
-
-
+    'whtdragon-fish': true,
+    'whtdragon-birds': true,
+    'whtdragon-mythological': true,
+    'whtdragon-predators': true,
+    'whtdragon-farm': true,
+    'whtdragon-woodland': true,
+    'whtdragon-dragons': true,
+    'whtdragon-horses': true,
+    'whtdragon-pets': true,
+    'whtdragon-other': true,
+    'whtdragon-lawn': true,
+    'whtdragon-reptiles': true,
 
     // Really we need 3 authors
     // oryx 8px ( 8 bit bundle )
@@ -66,7 +69,7 @@
     'oryx-lofi-fantasy-creatures-8px': true,
     'oryx-lofi-fantasy-creatures-long-8px': true,
     'oryx-lofi-fantasy-characters-creatures-8px': true,
-    // 'oryx-lofi-fantasy-halls-8px': true,
+    'oryx-lofi-fantasy-halls-8px': true,
     'oryx-lofi-fantasy-items-8px': true,
     'oryx-lofi-fantasy-extras-8px': true,
     'oryx-lofi-fantasy-environment-8px': true,
@@ -97,17 +100,17 @@
     // 'has-terrain2': true,
     // 'has-terrain-other': true,
     //
-    // 'candy-1': true,
-    // 'retro-1': true,
-    // 'retro-2-30px': true,
-    // 'retro-3-16px': true,
-    // 'retro-4': true,
+    'candy-1': true,
+    'retro-1': true,
+    'retro-2-30px': true,
+    'retro-3-16px': true,
+    'retro-4': true,
 
     'unknownMonsters-1': true,
     //
-    // 'overworld-1-16px': true,
-    // // 'platformer-1': true,
-    // 'minecraft-1-48px': true,
+    'overworld-1-16px': true,
+    // 'platformer-1': true,
+    'minecraft-1-48px': true,
   }
 
   global.spriteSheetAuthors = {
@@ -122,6 +125,7 @@
     // amsimuz: false,
     // tylerwarren: false,
     kenney: true,
+    kenneyRetro: true,
     // shackal: false,
     // unknown: false,
     unknownFromGame: false,

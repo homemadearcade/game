@@ -109,6 +109,7 @@ export default class Root extends React.Component {
     if(data.toast) {
       let currentToast
       global.currentToasts.forEach((toast) => {
+        if(!toast.text) return
         const text = getToastTextData(toast.text)
         if(data.text === text) currentToast = toast
       })

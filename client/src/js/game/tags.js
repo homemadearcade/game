@@ -308,7 +308,7 @@ function setDefault() {
     ...global.spawnZoneTags,
     ...global.resourceZoneTags,
     ...global.behaviorTags,
-    ...global.combatBehaviorTags,
+    ...global.combatTags,
     ...global.triggerTags,
     ...global.heroUpdateTags,
     ...global.heroTags,

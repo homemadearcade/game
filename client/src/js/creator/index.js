@@ -28,9 +28,14 @@ class Creator {
     )
   }
 
+  onChangeGame() {
+    CREATOR.ref.setCreatorObjects(GAME.heros[HERO.id].creator)
+    CREATOR.ref.onUpdateLibrary()
+  }
+
   onEditHero(hero) {
     if(!PAGE.role.isAdmin && hero.id === HERO.id && (hero.creator || hero.flags)) {
-      CREATOR.ref.setCreatorObjects(hero.creator)
+      CREATOR.ref.setCreatorObjects(GAME.heros[HERO.id].creator)
     }
   }
 
@@ -56,13 +61,15 @@ class Creator {
 
   onGameStart() {
     setTimeout(() => {
-      CREATOR.ref.forceUpdate()
+      CREATOR.ref.setCreatorObjects(GAME.heros[HERO.id].creator)
+      CREATOR.ref.onUpdateLibrary()
     }, 100)
   }
 
   onStopGame() {
     setTimeout(() => {
-      CREATOR.ref.forceUpdate()
+      CREATOR.ref.setCreatorObjects(GAME.heros[HERO.id].creator)
+      CREATOR.ref.onUpdateLibrary()
     }, 100)
   }
 

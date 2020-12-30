@@ -19,8 +19,11 @@ function setColor(pixiChild, data) {
   }
 }
 
+global.hexMap = {}
 function getHexColor(color) {
-  return parseInt(tinycolor(color).toHex(), 16)
+  if(global.hexMap[color]) return global.hexMap[color]
+  global.hexMap[color] = parseInt(tinycolor(color).toHex(), 16)
+  return global.hexMap[color]
 }
 
 function darken(color, amount = 30) {

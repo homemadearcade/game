@@ -169,7 +169,13 @@ global.getObjectDiff = function(object, base) {
 	function changes(object, base) {
 		let diff = _.transform(object, function(result, value, key) {
 			if (!_.isEqual(value, base[key])) {
-				result[key] = (_.isObject(value) && _.isObject(base[key])) ? changes(value, base[key]) : value;
+
+        //arrays are terrible with diffs so we just send the whole thing if its different
+        if(Array.isArray(base[key])) {
+          result[key] = value
+        } else {
+          result[key] = (_.isObject(value) && _.isObject(base[key])) ? changes(value, base[key]) : value;
+        }
 			}
 		});
     if(!diff) diff = {}

@@ -110,10 +110,10 @@ export default class SpriteSheet extends React.Component {
       const width = sprite.height
       const aspectRatio = width/height
 
-      newHeight = 80 * aspectRatio
+      newHeight = 40 * aspectRatio
       // console.log(newHeight)
 
-      return <PixiMapSprite width="80" height={newHeight} textureId={sprite.textureId} textureIdsSelected={this.state.textureIdsSelected} spriteData={sprite}/>
+      return <PixiMapSprite width="40" height={newHeight} textureId={sprite.textureId} textureIdsSelected={this.state.textureIdsSelected} spriteData={sprite}/>
     } else {
       return <PixiMapSprite width="40" height="40" textureId={sprite.textureId} textureIdsSelected={this.state.textureIdsSelected} spriteData={sprite}/>
     }

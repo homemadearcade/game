@@ -248,6 +248,11 @@ function dropAndModify({ dropper, dropping, actionProps, direction }) {
 
   let newObject = _.cloneDeep(dropping)
 
+  if(!GAME.gameState.started) {
+    dropping.count++
+  }
+
+  // newObject.id = 'dropped' + window.uniqueID()
   newObject.tags.rotateable = true
 
   Object.assign(newObject.tags, actionProps.tags)
@@ -260,12 +265,13 @@ function dropAndModify({ dropper, dropping, actionProps, direction }) {
         width: dropper.width * 3,
         relativeY: 0,
         height: dropper.height * 3,
+        ...actionProps.explosionProps,
         tags: {
           ...actionProps.explosionProps.tags,
           potential: true,
         },
-        opacity: actionProps.explosionProps.opacity,
-        color: actionProps.explosionProps.color,
+        // opacity: actionProps.explosionProps.opacity,
+        // color: actionProps.explosionProps.color,
       }
     }
     if(!GAME.gameState.started) {
@@ -278,6 +284,7 @@ function dropAndModify({ dropper, dropping, actionProps, direction }) {
     newObject.spawnPoolInitial = 1
     newObject.tags.spawnAllOnDestroy = true
   }
+
 
   let angle
   if(dropper.angle === 0 || dropper.angle) {

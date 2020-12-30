@@ -745,6 +745,7 @@ PIXIMAP.onObjectAnimation = function(type, objectId, options = {}) {
     if(object.emitterTypeExplosion) {
       options = global.particleEmitterLibrary.addGameLibrary()[object.emitterTypeExplosion]
     }
+
     pixiChild.explodeEmitter = initEmitter(object, object.emitterTypeExplosion || 'explode', options, { hasNoOwner: true })
     setTimeout(() => {
       PIXIMAP.deleteEmitter(pixiChild.explodeEmitter)

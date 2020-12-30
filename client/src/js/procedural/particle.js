@@ -50,12 +50,18 @@ walkMetalAnimation1/2/3
 // useUpdateOwnerPos: true,
 
 global._generateRandomEmitter = function(name, object) {
-  console.log(name)
+  let index = 0
+  Object.keys(GAME.library.animations).forEach((animName) => {
+    const anim = GAME.library.animations[animName]
+    if(anim.randomIndex > index) index = randomIndex+1
+  })
+
   const emitterData = global.generateRandomEmitter(name)
 
   GAME.library.animations['random-'+name] = emitterData
-  const newName = 'random-'+name+'-'+global.getRandomInt(0, 99)
+  const newName = 'random-'+name+'-'+index
   GAME.library.animations[newName] = emitterData
+  GAME.library.randomIndex = index
 
   global.socket.emit('updateLibrary', {animations: GAME.library.animations})
   if(name == 'powerup' || name === 'areaGlow') {
@@ -182,6 +188,7 @@ global.generateRandomEmitter = function(name) {
 
     newEmitter.matchObjectColor = false
     if(Math.random() > .5) {
+      if(Math.random() > .5) newEmitter.matchObjectColor = true
       newEmitter.useOwnerSprite = true
       newEmitter.color.start = '#FFF'
     }

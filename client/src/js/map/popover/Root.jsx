@@ -22,14 +22,20 @@ export default class Popover extends React.Component {
   }
 
   componentDidMount() {
+    const { object } = this.props
+
+    if(object._timeUntilDestroyed && object.mod().tags.popCountDownTimer) {
+      this._timerUpdateInterval = setInterval(() => this.forceUpdate(), 60)
+    }
+
     this._popoverDataUpdate = global.local.on('onNetworkUpdateObjects', (objectsUpdated) => {
 
       objectsUpdated.forEach((objectUpdated) => {
-        if(objectUpdated.id === this.props.object.id) {
+        if(objectUpdated.id === object.id) {
           let shouldUpdatePopover = false
           global.popoverProperties.forEach((prop) => {
             if(prop.tag) {
-              if(objectUpdated[prop.prop] && objectUpdated.mod().tags[prop.tag]) shouldUpdatePopover = true
+              if(objectUpdated[prop.prop] && objectUpdated.mod().tags && objectUpdated.mod().tags[prop.tag]) shouldUpdatePopover = true
             } else {
               if(objectUpdated[prop]) shouldUpdatePopover = true
             }
@@ -42,6 +48,7 @@ export default class Popover extends React.Component {
   }
 
   componentWillUnmount() {
+    if(this._timerUpdateInterval) clearInterval(this._timerUpdateInterval)
     this._popoverDataUpdate()
   }
 

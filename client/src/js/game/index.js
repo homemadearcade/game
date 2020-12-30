@@ -119,6 +119,7 @@ class Game{
 
           GAME.objects.forEach((object) => {
             global.local.emit('onUpdateObject', object, delta)
+            if(object._destroy) global.socket.emit('deleteObject', object)
           })
           timeouts.onUpdate(delta)
           GAME.loadActiveMods()

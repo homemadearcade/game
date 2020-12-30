@@ -156,6 +156,8 @@ global.findTexturesForDescriptors = function(descriptors, options) {
   descriptorList.forEach((desc) => {
     if(!descriptors[desc]) return
     if(desc && global.textureIdsByDescriptor[desc]) {
+      const sprite = global.textureIdsByDescriptor[desc]
+      // have stricter matches be prioritized here?
       possibleTextures.push(...global.textureIdsByDescriptor[desc])
     }
   })

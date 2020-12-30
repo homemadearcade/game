@@ -18,7 +18,7 @@ export default class SpriteSheetEditor extends React.Component {
       hideUncategorized: false,
       hideDescribed: false,
       dontSepereteModified: false,
-
+      showActualSize: true,
     }
   }
 
@@ -127,8 +127,20 @@ export default class SpriteSheetEditor extends React.Component {
             checked={this.state.hideDescribed}
           />
         </div>
+        <div className="ManagerInput__text">
+          Show Actual Sprite Size
+          <input type="checkbox"
+            onClick={() => {
+              const state = this.state
+              state.showActualSize = !state.showActualSize
+              this.setState(state)
+              global.local.emit('onClearTextureIdsSelection')
+            }}
+            checked={this.state.showActualSize}
+          />
+        </div>
       </div>
-      <SpriteSheet selectMultiple dontSepereteModified={dontSepereteModified} hideDescribed={this.state.hideDescribed} hideUncategorized={this.state.hideUncategorized} spriteSheet={spriteSheet}
+      <SpriteSheet selectMultiple actualSize={this.state.showActualSize} dontSepereteModified={dontSepereteModified} hideDescribed={this.state.hideDescribed} hideUncategorized={this.state.hideUncategorized} spriteSheet={spriteSheet}
         onClick={(sprite) => {
 
         }}/>

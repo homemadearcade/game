@@ -197,6 +197,7 @@ function setDefault() {
     'Display Case': {},
     'Weapon/Armor Stand': {},
     'Liquid Tank': {},
+    Tent: {},
   }
 
   global.otherDescriptors = {

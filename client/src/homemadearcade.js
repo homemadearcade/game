@@ -37,27 +37,6 @@ tag -- destroyOnPuzzleComplete
 tag -- spawnAllInHeroInventoryOnPuzzleComplete
 and then ud need a basic -- combination variable. Puzzle type + puzzle combination...  two variables?
 
-
-////////////////////////////////////////////////////
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-###### BUGS
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-////////////////////////////////////////////////////
-
-cacheing colors
-
-If an array changes we need to send the whole thing in the DIFF
-
-non host talks to object with the dialogue id maybe something fucks up??
-^^ non-host dialogue really fucks up and also with the yellow murder mystery guy it fucks up..
---
-
-Trigger pool not getting reset? Or for some reason on the first game load the trigger pool isnt set sometimes? idk
-
-Try uploading game JSON on non host
-
-Bombs need to be able to spawn the explosion onto real objects
-
 ////////////////////////////////////////////////////
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 LIBRARY IDEAS
