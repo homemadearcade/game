@@ -176,13 +176,15 @@ global.generateRandomEmitter = function(name) {
     } else {
       clone = _.clone(global.particleEmitterLibrary.explode)
     }
+    if(emitterData.images) delete clone.images
+
     const newEmitter = global.mergeDeep(clone, emitterData)
 
     newEmitter.matchObjectColor = false
-    if(Math.random() > .9) {
+    if(Math.random() > .5) {
       newEmitter.useOwnerSprite = true
+      newEmitter.color.start = '#FFF'
     }
-    if(newEmitter.images) delete newEmitter.images
     return newEmitter
   }
 }
@@ -215,7 +217,7 @@ global.generateEmitterData = {
     },
     colorStart: true,
     colorEnd: true,
-    images: ['default', 'Bubbles', 'Pixel', 'Sparks', 'Fire', 'smokeparticle', 'particle', 'particleSmallStar', 'particleCartoonStar', 'HardCircle', 'burst']
+    images: ['default', 'Bubbles', 'Sparks', 'Fire', 'smokeparticle', 'particle', 'particleSmallStar', 'particleCartoonStar', 'HardCircle', 'burst']
   },
   areaGlow: {
     scaleStart: {

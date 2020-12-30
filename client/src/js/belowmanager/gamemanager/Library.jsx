@@ -36,11 +36,17 @@ export default class Library extends React.Component {
         <Collapsible trigger={'Sub Objects (Core)'}>
           {this._renderLibrary('subObjectLibrary', global.subObjectLibrary)}
         </Collapsible>
+        {GAME.library.animations && <Collapsible trigger={'Particle Emitters (Core)'}>
+          {this._renderLibrary('particleEmitterLibrary', global.particleEmitterLibrary)}
+        </Collapsible>}
         {GAME.library.object && <Collapsible trigger={'Objects (Game)'}>
           {this._renderLibrary('objectLibrary', GAME.library.object)}
         </Collapsible>}
         {GAME.library.subObject && <Collapsible trigger={'Sub Objects (Game)'}>
           {this._renderLibrary('subObjectLibrary', GAME.library.subObject)}
+        </Collapsible>}
+        {GAME.library.animations && <Collapsible trigger={'Particle Emitters (Game)'}>
+          {this._renderLibrary('particleEmitterLibrary', GAME.library.animations)}
         </Collapsible>}
       </div>
   }

@@ -22,7 +22,6 @@ Things to learn
 2) only update the render of objects when you need to
 3) You need a authoritative hosts that understands ticks and delta for perfect performance
 
-
 https://github.com/davidfig/pixi-cull
 ^^ fuck yeah
 
@@ -34,18 +33,16 @@ https://github.com/davidfig/pixi-cull
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ////////////////////////////////////////////////////
 
-PIXEL EDITOR
 DETAIL VIEW
 
 SIMPLE SEQUENCE
-(ELEMENTAL SYSTEM and BIOMES) Lava, water, tree (?), fire, mountain, sand, ice, ROCK ( FIRST WEAPONS )-> Trees. ( ROBOT PARTS TOO)
+(ELEMENTAL SYSTEM) Lava, water, tree (?), fire, mountain, sand, ice, ROCK ( FIRST WEAPONS )-> Trees. ( ROBOT PARTS TOO)
 LEVEL UP SYSTEM
 
 LOBBY - HERO SELECTION + CUSTOMIZATION.
   Might want to put this inside of PREGAME
   Basically get the game data and then BEFORE loading it, you can ask what hero they are, and then load the game
 TEAMS
-PROCEDURAL LARGE SCALE
 FOG OF WAR
 LEVELS ( sub worlds )
 
@@ -131,7 +128,6 @@ MOD UPGRADE
 ////////////////////////////////
 local mods? ( client only mods for specific players/situations ) --- essentially this is a visibility mod for a player?
 global mods -- all heros, or ANY object
-optimize modding...
 MODDING BROKE some crazy thing happened when I replaced a sub object? the modding just really broke, it was using an old version of the mod?? yeah idk maybe cuz the values were so nested. I hated it
 // ^^ I think thishad to do with shift+stop
 Team mods
@@ -386,6 +382,18 @@ I need to feel like I have CONTROL over effects and causes, right now I feel lik
 
 // admin vs player code much better seperated
 
+
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+###### BUGS
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+////////////////////////////////////////////////////
+If object is outside of its custom grid to start off, It will not be able to find the correct grid
+Theres needs to be a flag, perhaps the _fresh flag that allows it to use the other pathfinding grid to make its away to the new path
+
+
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
@@ -393,6 +401,9 @@ I need to feel like I have CONTROL over effects and causes, right now I feel lik
 ###### LINKS FOR INSPIRATION
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ////////////////////////////////////////////////////
+
+EXTRA SPRITES REMOVE BG
+ImageMagick + http://www.imagemagick.org/discourse-server/viewtopic.php?t=29224
 
 // HONESTLY USING BOX 2D PHYSICS WOULD BE INCREDIBLE
 // https://www.codeandweb.com/texturepacker/tutorials/how-to-create-sprite-sheets-and-animations-with-pixijs5

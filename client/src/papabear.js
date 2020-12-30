@@ -1,4 +1,10 @@
 /*
+
+ITS ABOUT HISTORY
+and spying is about having information
+so the real game is your character understanding HISTORY and PRESENT
+
+///
 Im not sure what you were thinking before, but theres what you will be thinking now
 This is not the live editor gaming experience you thought you had. It will be more stand alone, but you may want to run it via
 This should be a node webkit app that someone can download on steam

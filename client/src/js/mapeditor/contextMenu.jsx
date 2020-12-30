@@ -271,6 +271,15 @@ class contextMenuEl extends React.Component{
       />
     }
 
+    if(specialMenuType === 'particleEmitterLibrary') {
+      return <LibraryObjectContextMenu
+        libraryName={libraryName}
+        libraryId={libraryId}
+        creatorLibraryId={creatorLibraryId}
+        objectSelected={item}
+      />
+    }
+
     if(specialMenuType === 'inventory') {
       return <InventoryMenu
         item={item}

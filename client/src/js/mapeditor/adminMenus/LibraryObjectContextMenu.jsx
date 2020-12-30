@@ -159,6 +159,12 @@ export default class LibraryObjectContextMenu extends React.Component{
               GAME.library.subObject[libraryId] = editedCode
               global.socket.emit('updateLibrary', { subObject: GAME.library.subObject })
             }
+
+            if(GAME.library.animations[libraryId]) {
+              const editedCode = JSON.parse(result.value)
+              GAME.library.animations[libraryId] = editedCode
+              global.socket.emit('updateLibrary', { animations: GAME.library.animations })
+            }
           }
         })
       }
@@ -268,6 +274,16 @@ export default class LibraryObjectContextMenu extends React.Component{
     // </SubMenu>}
 
     const isCore = window[libraryName][libraryId]
+
+    if(libraryName === 'particleEmitterLibrary') {
+      const editingHero = GAME.heros[HERO.editingId]
+      return <Menu onClick={this._handleLibraryObjectMenuClick}>
+        {libraryName && <MenuItem className="bold-menu-item">{libraryName}</MenuItem>}
+        {libraryId && <MenuItem className="bold-menu-item">{libraryId}</MenuItem>}
+        {isCore && <MenuItem key='view-library-object-json'>View JSON</MenuItem>}
+        {!isCore && <MenuItem key='edit-library-object-json'>Edit JSON</MenuItem>}
+      </Menu>
+    }
 
     const editingHero = GAME.heros[HERO.editingId]
     return <Menu onClick={this._handleLibraryObjectMenuClick}>
