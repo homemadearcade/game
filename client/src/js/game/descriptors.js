@@ -36,7 +36,11 @@ function setDefault() {
   }
 
   global.waterElementDescriptors = {
-    Water: {},
+    Water: {
+      relatedTags: [
+        'water'
+      ]
+    },
     'Water Element': {
       dontShowAdminsInSpriteSheetEditor: true,
       children: ['Bubbles', 'Waterfall', 'Whirlpool', 'Lily Pad'],
@@ -222,7 +226,6 @@ function setDefault() {
     'Security Camera': {},
     Toilet: {},
     Sink: {},
-    Statue: {},
     'Jail Cell Bars': {},
     'Church Item': {
       children: ['Candlelabra','Candle', 'Altar'],
@@ -253,7 +256,7 @@ function setDefault() {
     Feather: {},
     Syringe: {},
     'Gas Can': {},
-    Undescribed: {},
+    // Undescribed: {},
     Circle: {},
     Triangle: {},
     Square: {},
@@ -480,10 +483,10 @@ function setDefault() {
   }
 
   global.animalDescriptors = {
-    Animal: {
-      dontShowAdminsInSpriteSheetEditor: true,
-      children: ['Cat', 'Bird', 'Dog', 'Mouse', 'Chicken', 'Bug', 'Fish', 'Reptile', 'Deer', 'Bear'],
-    },
+    // Animal: {
+    //   dontShowAdminsInSpriteSheetEditor: true,
+    //   children: ['Cat', 'Bird', 'Dog', 'Mouse', 'Chicken', 'Bug', 'Fish', 'Reptile', 'Deer', 'Bear'],
+    // },
     /// sound oriented
     Bird: {
       children: ['Goose', 'Chicken', 'Crow', 'Bat', 'Duck', 'Ostrich', 'Owl', 'Penguin', 'Seagull',],
@@ -513,7 +516,7 @@ function setDefault() {
 
     // fish
     Fish: {
-      children: ['Mola Mola', 'Stingray', 'Anglerfish', 'Shark', 'Eel', 'Jellyfish', 'Crayfish', 'Whale', 'Squid', 'Seahorse']
+      children: ['Anglerfish','Mola Mola', 'Stingray', 'Anglerfish', 'Shark', 'Eel', 'Jellyfish', 'Crayfish', 'Whale', 'Squid', 'Seahorse']
     },
     'Anglerfish': {},
     'Mola Mola': {},
@@ -582,7 +585,6 @@ function setDefault() {
     Beetle: {},
     Grasshopper: {},
     Worm: {},
-
     'Mythical Beast': {
       children: ['Manticore', 'Cockatrice', 'Cyclops', 'Unicorn', 'Dragon', 'Mermaid', 'Vampire', 'Mermaid', 'Demon', 'Golem', 'Griffin', 'Ent', 'Hag', 'Harpie', 'Siren', 'Genie', 'Minotaur', 'Troll', 'Centaur'],
     },
@@ -599,7 +601,6 @@ function setDefault() {
     Cyclops: {},
     Manticore: {},
     Cockatrice: {},
-
     'Werewolf': {},
     'Frogman': {},
     'Sabretooth Tiger': {},
@@ -653,11 +654,9 @@ function setDefault() {
   global.monsterDescriptors = {
     Monster: {
       dontShowAdminsInSpriteSheetEditor: true,
-      children: ['Bug', 'Ghost', 'Goblin', 'Undead', 'Zombie', 'Alien', 'Mythical Beast', 'Machine'],
+      children: ['Mummy', 'ElementalMonster', 'Evil Eyeball', 'Skeleton Monster', 'Slime Monster','Bug', 'Ghost', 'Goblin', 'Undead', 'Zombie', 'Machine', 'Mythical Beast', ...global.animalDescriptors['Mythical Beast'].children],
     },
     // Pest: {},
-    Ghost: {},
-    Goblin: {},
     'Skeleton Monster': {},
     Mummy: {},
     'Slime Monster': {},
@@ -747,6 +746,9 @@ function setDefault() {
 
   global.livingCreatureModifiers = {
     'Holding Weapon': {},
+    Ghost: {
+      searchable: true,
+    },
     'Elf': {
       searchable: true,
     },
@@ -765,6 +767,9 @@ function setDefault() {
     'Dead': {},
     'With Face': {},
     Zombie: {
+      searchable: true,
+    },
+    Statue: {
       searchable: true,
     },
   }
@@ -896,18 +901,18 @@ function setDefault() {
         'With Snow': true
       }
     },
-    'Tree (Frozen)' : {
-      withDescriptors: {
-        Tree: true,
-        Blue: true
-      }
-    },
-    'Tree (Hot)' : {
-      withDescriptors: {
-        Tree: true,
-        Red: true
-      }
-    },
+    // 'Tree (Frozen)' : {
+    //   withDescriptors: {
+    //     Tree: true,
+    //     Blue: true
+    //   }
+    // },
+    // 'Tree (Hot)' : {
+    //   withDescriptors: {
+    //     Tree: true,
+    //     Red: true
+    //   }
+    // },
     'Tree (Dark)' : {
       withDescriptors: {
         Tree: true,

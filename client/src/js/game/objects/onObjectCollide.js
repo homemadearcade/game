@@ -1,6 +1,6 @@
 import effects from '../effects.js'
 
-export default function onObjectCollide(agent, collider, result) {
+export default function onObjectCollide(agent, collider, result, agentPO) {
   if(agent.mod().tags['monsterDestroyer'] && collider.mod().tags['monster']) {
     if(agent.monsterEffect) {
       effects.processEffect({ effectName: agent.monsterEffect, effectValue: agent.monsterEffectValue }, collider, agent, null)
@@ -61,7 +61,16 @@ export default function onObjectCollide(agent, collider, result) {
     }
   }
 
-  if(collider.mod().tags['Water']) {
+  if(agent.tags && agent.mod().tags['goDownOnCollideWithObstacle'] && collider.tags && (collider.mod().tags['obstacle'] || collider.mod().tags['noMonsterAllowed'])) {
+    if(result.overlap_x === 1) {
+      agentPO.y+= GAME.grid.nodeSize
+    }
+    if(result.overlap_x === -1) {
+      agentPO.y+= GAME.grid.nodeSize
+    }
+  }
+
+  if(collider.mod().tags['water']) {
     agent._collidingWithWater = true
   }
 }

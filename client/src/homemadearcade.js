@@ -34,12 +34,6 @@ LIBRARY IDEAS
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ////////////////////////////////////////////////////
 
-// PARTICLES
-// funny thing with particle landing... LOL even if you land on a LIVE DUDE ASS u skim off some of his particles. Ill need a quality tag for 'earth' vs 'human' or something like. 'scrapeable?'
-Random Spout
-Random Disturbance
-Disturbance when leaving and entering something?
-
 // MODS
 Vanish cap ( lets you walk through walls? )
 Fast fast cap..? Like mario racoon essentially, gives you better soaring and speed?
@@ -50,12 +44,6 @@ JETPACK!!!
 Shoot bouncing ball
 
 //TAGS
-  destroyOnHeroLand
-  cameraZoomToFit
-  go down when hit obstacle ( mainly for goombas you feel me? )
-  one way platform ( can land on but can jump through from below)
-  Show grave when removed
+  groundDisturbanceOnHeroEnterLeave
   shrink down and shake until destroyed ( shrink other directions maybe too?)
-  groundDisturbanceOnParticleLand
-  groundDisturbanceOnJump
 */

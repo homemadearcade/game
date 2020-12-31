@@ -123,6 +123,9 @@ bullets that stop short before they are destroyed, so its like a limited range b
 Maybe dual stick shooter potential?
 
 //PARTICLES
+Random Spout ( think chimney smoke and maybe like a flamethrower type weapon )
+Random Disturbance
+
   After TeleDash
   object jump squeeze thing, ( with and height anim )
 

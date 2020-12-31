@@ -260,10 +260,17 @@ function updateSprite(pixiChild, gameObject) {
   /////////////////////
   /////////////////////
   // CHANGE SPRITE
+
+
+
   if(gameObject.tags.solidColor) {
     pixiChild.texture = PIXIMAP.textures['solidcolorsprite']
   } else {
-    if(gameObject.sprites && gameObject.sprites.spawnPoolEmpty && gameObject.spawnPool == 0) {
+    if(gameObject.removed && gameObject.tags.showGraveWhenRemoved) {
+      gameObject.sprite = 'oryx-lofi-fantasy-items-8px-sprite29'
+    } else if(gameObject.removed && gameObject.sprites && gameObject.sprites.removed) {
+      gameObject.sprite = gameObject.sprites.removed
+    } else if(gameObject.sprites && gameObject.sprites.spawnPoolEmpty && gameObject.spawnPool == 0) {
       gameObject.sprite = gameObject.sprites.spawnPoolEmpty
     } else if(gameObject.isEquipped && gameObject.sprites && gameObject.sprites.equipped) {
       gameObject.sprite = gameObject.sprites.equipped
@@ -305,10 +312,11 @@ function getVisibility(pixiChild, gameObject) {
 
   let invisible = gameObject.tags.outline || gameObject.tags.invisible || gameObject.removed || gameObject.constructParts
 
-  // if(gameObject.removed && gameObject.tags.showXWhenRemoved) {
-  //   // && !gameObject.tags.invisible && !gameObject.constructParts
-  //   invisible = false
-  // }
+  if(gameObject.removed && (gameObject.tags.showXWhenRemoved || gameObject.tags.showGraveWhenRemoved)) {
+    // && !gameObject.tags.invisible && !gameObject.constructParts
+    invisible = false
+    console.log('visible')
+  }
 
   if(gameObject.tags.subObject && gameObject.tags.onMapWhenEquipped) {
     if(gameObject.isEquipped && (gameObject.actionButtonBehavior !== 'toggle' || !gameObject._toggledOff)) invisible = false

@@ -451,6 +451,7 @@ class Hero{
       _flipY: hero._flipY,
       // conditionTestCounts: hero.conditionTestCounts,
       emitterData: hero.emitterData,
+      _prevZoomMultiplier: hero._prevZoomMultiplier,
 
       _pathIdIndex: hero._pathIdIndex,
       _pathWait: hero._pathWait,
@@ -857,7 +858,16 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
     PHYSICS.removeObject(GAME.heros[hero.id])
   }
 
+  onHeroLand(hero, object) {
+    if(object.mod().tags.destroyOnHeroLand) {
+      object._destroy = true
+      object._destroyedById = hero.id
+    }
+  }
+
   onHeroTouchStart(hero, object) {
+
+
     let moddedTags = object.mod().tags
     if(moddedTags.increaseHeroCurrentVelocityOnTouchStart) {
       if(hero.velocityX < 0 || hero._flatVelocityX < 0) {
@@ -890,6 +900,23 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
     if(moddedTags.stopHeroOnTouchStart) {
       hero.velocityY = 0
       hero.velocityX = 0
+    }
+  }
+
+  onHeroTouchEnd(hero, object) {
+    if(object.tags.cameraZoomToFit) {
+      hero.zoomMultiplier = hero._prevZoomMultiplier
+    }
+  }
+
+  onHeroTouchStart(hero, object) {
+    if(object.tags.cameraZoomToFit) {
+      hero._prevZoomMultiplier = hero.zoomMultiplier
+      if(object.height < object.width) {
+        hero.zoomMultiplier = object.height/HERO.cameraHeight
+      } else {
+        hero.zoomMultiplier = object.width/HERO.cameraWidth
+      }
     }
   }
 

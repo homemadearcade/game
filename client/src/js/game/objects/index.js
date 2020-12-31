@@ -43,8 +43,8 @@ class Objects{
     // global.mergeDeep(global.defaultObject.tags, global.plainObjectTags)
   }
 
-  onObjectCollide(agent, collider, result) {
-    onObjectCollide(agent, collider, result)
+  onObjectCollide(agent, collider, result, agentPO) {
+    onObjectCollide(agent, collider, result, agentPO)
   }
 
   forAllSubObjects(subObjects, fx) {
@@ -252,7 +252,7 @@ class Objects{
 
       increaseHeroCurrentVelocityAmount: object.increaseHeroCurrentVelocityAmount,
       heroTempMod: object.heroTempMod,
-      
+
       // equipment
       actionButtonBehavior: object.actionButtonBehavior,
       actionProps: object.actionProps,

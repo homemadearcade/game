@@ -62,7 +62,11 @@ export default class DescriptorSelect extends React.Component{
         options={Object.keys(descriptorsAvailable).map(desc => {
           if(filterAdmin && descriptorsAvailable[desc].dontShowAdminsInSpriteSheetEditor) return
           if(global.allModifiers[desc]) {
-            return { value: desc, label: desc + "*"}
+            if(global.allModifiers[desc].searchable) {
+              if(PAGE.role.isAdmin) return { value: desc, label: desc + "**"}
+            } else {
+              return { value: desc, label: desc + "*"}
+            }
           }
           return { value: desc, label: desc}
         }).filter((opt) => !!opt)}

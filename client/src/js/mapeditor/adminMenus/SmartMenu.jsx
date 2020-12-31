@@ -104,7 +104,6 @@ export default class SmartMenu extends React.Component {
       }
     }
 
-//        <MenuItem key="open-tag-search-modal">Edit Tags</MenuItem>
 //        {objectSelected.tags.tempModOnHeroCollide && <MenuItem key="open-edit-heroTempMod">Edit Hero Temp Mod</MenuItem>
 
     if(objectSelected.tags.hero) {
@@ -116,9 +115,10 @@ export default class SmartMenu extends React.Component {
         <MenuItem key="open-hero-live-edit">Live Edit</MenuItem>
         {sprite}
         {this._renderObjectEmitterMenu()}
-        <SubMenu title="Tags">
+        <SubMenu title="Recommended Tags">
           <CurrentTagsMenu objectSelected={objectSelected} currentTags={objectSelected.tags}></CurrentTagsMenu>
         </SubMenu>
+        <MenuItem key="open-tag-search-modal">Edit Tags</MenuItem>
         {Object.keys(objectSelected.subObjects || {}).length && <SubMenu title="Sub Objects">
           <SelectSubObjectMenu objectSelected={objectSelected} selectSubObject={selectSubObject} />
         </SubMenu>}
@@ -137,7 +137,7 @@ export default class SmartMenu extends React.Component {
         </SubMenu>}
         {sprite}
         <SubMenu title="Tags">
-          <CurrentTagsMenu objectSelected={objectSelected} currentTags={objectSelected.tags}></CurrentTagsMenu>
+          <CurrentTagsMenu objectSelected={objectSelected} showRecommended={false} currentTags={objectSelected.tags}></CurrentTagsMenu>
         </SubMenu>
         {objectSelected.tags.talker && <SubMenu title="Dialogue Sets">
           <DialogueSetsMenu objectSelected={objectSelected} subObject={subObject}/>

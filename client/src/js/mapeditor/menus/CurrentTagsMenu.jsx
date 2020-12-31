@@ -104,11 +104,6 @@ export default class CurrentTagsMenu extends React.Component {
           )
         }
 
-        tagsToRender = tagsToRender.filter((tag, i) => {
-          if(tagsToRender.indexOf(tag) != i) return false
-          else return true
-        })
-
         tagsToRender.push(
           'obstacle',
           'moving',
@@ -117,6 +112,11 @@ export default class CurrentTagsMenu extends React.Component {
           'spawnZone',
           'pickupable',
         )
+
+        tagsToRender = tagsToRender.filter((tag, i) => {
+          if(tagsToRender.indexOf(tag) != i) return false
+          else return true
+        })
 
         return <Menu onClick={this._handleTagMenuClick}>
             <MenuItem key='open-search-modal'>Open Search Modal</MenuItem>

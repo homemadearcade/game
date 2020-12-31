@@ -94,6 +94,7 @@ function dropObject(hero, subObject, dropAmount = 1, snapToGrid = true) {
   }
 
   global.emitGameEvent('onHeroDrop', hero, object)
+
   OBJECTS.create(object)
 }
 

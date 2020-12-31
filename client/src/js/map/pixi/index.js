@@ -302,6 +302,9 @@ PIXIMAP.onRender = function(delta, force) {
         PIXIMAP.cameraOverlay.tint = getHexColor(GAME.world.overlayColor)
         PIXIMAP.cameraOverlay.alpha = .4
       }
+    } else {
+      PIXIMAP.cameraOverlay.tint = null
+      PIXIMAP.cameraOverlay.alpha = 0
     }
 
     if(PIXIMAP.objectStage._reInitialize) {
@@ -1028,7 +1031,7 @@ PIXIMAP.convertToPartObject = function(gameObject, part) {
 
 PIXIMAP.makeInvisibleIfRemoved = function(object) {
   if(object.mod().removed && PIXIMAP.childrenById[object.id]) {
-    if(object.tags.showXWhenRemoved) {
+    if(object.tags.showXWhenRemoved || object.tags.showGraveWhenRemoved || (object.sprites && object.sprites.removed)) {
       PIXIMAP.childrenById[object.id].filters = []
     } else {
       PIXIMAP.childrenById[object.id].visible = false

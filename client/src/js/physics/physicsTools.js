@@ -123,7 +123,14 @@ function heroCorrection(hero) {
       if(heroPO.collides(body, result)) {
         const heroCanCollide = (body.gameObject.mod().tags['obstacle'] && !body.gameObject.mod().tags['heroPushable']) || body.gameObject.mod().tags['noHeroAllowed']
         if(heroCanCollide) {
-          illegal = true
+
+          if(body.gameObject.mod().tags.oneWayPlatform) {
+            if(result.overlap_y === 1 && (hero.velocityY > 0 || hero._flatVelocityY > 0)) {
+              illegal = true
+            }
+          } else {
+            illegal = true
+          }
           // console.log(result.collision, result.overlap, result.overlap_x, result.overlap_y)
           corrections.push(result)
           if(result.overlap_y === 1) {
@@ -320,7 +327,7 @@ function objectCollisionEffects(po) {
 
       const isSafeZone = agent.mod().tags['monster'] && collider.mod().tags && collider.mod().tags['noMonsterAllowed']
       const bothAreObstacles = agent.tags && agent.mod().tags['obstacle'] && collider.tags && collider.mod().tags['obstacle']
-      if(agent.mod().tags.trackObjectsWithin) {
+      if(collider.mod().tags.noticeable && agent.mod().tags.trackObjectsWithin) {
         if(!isSafeZone && !bothAreObstacles) {
           agent._objectsWithinNext.push(collider.id)
         }
@@ -336,11 +343,11 @@ function objectCollisionEffects(po) {
       if(body.constructPart && collider.mod().tags['seperateParts']) {
         const tags = collider.mod().tags
         body.constructPart.tags = tags
-        global.local.emit('onObjectCollide', agent, body.constructPart, result)
+        global.local.emit('onObjectCollide', agent, body.constructPart, result, po)
         delete body.constructPart.tags
       } else {
         // this will only not get called if you set ( notInCollisions )
-        global.local.emit('onObjectCollide', agent, collider, result)
+        global.local.emit('onObjectCollide', agent, collider, result, po)
       }
     }
   }

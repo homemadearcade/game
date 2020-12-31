@@ -9,6 +9,7 @@ function setDefault() {
     wander: false,
     goomba: false,
     goombaSideways: false,
+    goDownOnCollideWithObstacle: false,
   }
 
   global.targetTags = {
@@ -38,6 +39,7 @@ function setDefault() {
     noHeroAllowed: false,
     movingPlatform: false,
     heroPushable: false,
+    oneWayPlatform: false,
     rotateable: {
       relatedTags: ['realRotate', 'realRotateFast', 'realRotateBackAndForth', 'realRotateBackAndForthFast']
     },
@@ -93,6 +95,7 @@ function setDefault() {
       relatedTags: ['respawn']
     },
     respawn: false,
+    destroyOnHeroLand: false,
     // knockBackOnHit,
     // explodeOnDestroy: false,
     // fadeOutOnDestroy,
@@ -187,7 +190,7 @@ function setDefault() {
     },
     outline: false,
     invisible: {
-      relatedTags: ['cameraLock', 'darkArea']
+      relatedTags: ['cameraLock', 'darkArea', 'cameraZoomToFit']
     },
     tilingSprite: false, //cant change
     inputDirectionSprites: false,
@@ -196,6 +199,7 @@ function setDefault() {
     },
     darkArea: false,
     showXWhenRemoved: false,
+    showGraveWhenRemoved: false,
     showX: false,
     stopGlowingOnTrigger: false,
     // invisibleOnHeroCollide: false
@@ -222,6 +226,7 @@ function setDefault() {
     cameraShakeOnCollide_short: false,
     cameraShakeOnCollide_long: false,
     cameraLock: false,
+    cameraZoomToFit: false,
     hidden: false,
     seeThroughOnHeroCollide: false,
     background: false,
@@ -324,6 +329,10 @@ function setDefault() {
     skipHeroGravityOnCollide: false,
   }
 
+  global.elementalTags = {
+    water: false,
+  }
+
   global.defaultTags = {
     ...global.physicsTags,
     ...global.spawnZoneTags,
@@ -348,6 +357,7 @@ function setDefault() {
     ...global.targetTags,
     ...global.subObjectTags,
     ...global.effectTags,
+    ...global.elementalTags,
   }
 
 
@@ -384,6 +394,10 @@ function setDefault() {
     moving: true,
     noticeable: true,
 
+    groundDisturbanceOnHeroPowerLand: false,
+    groundDisturbanceOnHeroGroundJump: false,
+    groundDisturbanceOnHeroFloatJump: false,
+
     inputDirectionSprites: false,
 
     trackObjectsWithin: false,
@@ -414,8 +428,9 @@ function setDefault() {
     ...global.descriptiveTags,
     ...global.generatedTags,
     ...global.audioQualityTags,
-    ...global.allDescriptors,
+    // ...global.allDescriptors,
   }
+
 
   global.propertyTags = {
     ...global.combatTags,

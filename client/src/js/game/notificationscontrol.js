@@ -94,6 +94,10 @@ class NotificationsControl{
   // }
 
   onHeroFloatJump(hero) {
+    if(hero.tags.groundDisturbanceOnHeroFloatJump) {
+      PIXIMAP.onFakeObjectAnimation('groundDisturbanceRight', { ...hero, y: hero.y + (hero.height/2), color: hero.color })
+      PIXIMAP.onFakeObjectAnimation('groundDisturbanceLeft', { ...hero, y: hero.y + (hero.height/2), color: hero.color })
+    }
     if(hero.id === HERO.id) AUDIO.play(GAME.theme.audio.onHeroFloatJump)
   }
 
@@ -106,6 +110,10 @@ class NotificationsControl{
   }
 
   onHeroGroundJump(hero) {
+    if(hero.tags.groundDisturbanceOnHeroGroundJump) {
+      PIXIMAP.onFakeObjectAnimation('groundDisturbanceRight', { ...hero, y: hero.y + (hero.height/2), color: hero.color })
+      PIXIMAP.onFakeObjectAnimation('groundDisturbanceLeft', { ...hero, y: hero.y + (hero.height/2), color: hero.color })
+    }
     if(hero.id === HERO.id) AUDIO.play(GAME.theme.audio.onHeroGroundJump)
   }
 
@@ -340,8 +348,10 @@ class NotificationsControl{
   }
 
   onHeroPowerLand(hero, landingObject) {
-    // PIXIMAP.onFakeObjectAnimation('groundDisturbanceRight', { ...hero, y: hero.y + (hero.height/2), color: landingObject.color || GAME.world.defaultObjectColor })
-    // PIXIMAP.onFakeObjectAnimation('groundDisturbanceLeft', { ...hero, y: hero.y + (hero.height/2), color: landingObject.color || GAME.world.defaultObjectColor })
+    if(hero.tags.groundDisturbanceOnHeroPowerLand && landingObject.width > GAME.grid.nodeSize) {
+      PIXIMAP.onFakeObjectAnimation('groundDisturbanceRight', { ...hero, y: hero.y + (hero.height/2), color: landingObject.color || GAME.world.defaultObjectColor })
+      PIXIMAP.onFakeObjectAnimation('groundDisturbanceLeft', { ...hero, y: hero.y + (hero.height/2), color: landingObject.color || GAME.world.defaultObjectColor })
+    }
   }
 
   onHeroPickup(hero, subObject) {
