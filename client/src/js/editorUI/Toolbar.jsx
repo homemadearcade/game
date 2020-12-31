@@ -158,6 +158,10 @@ export default class Toolbar extends React.Component {
             LIVEEDITOR.open(GAME.world, 'world')
           }}/>
 
+        <ToolbarButton iconName="fa-palette" onClick={() => {
+            LIVEEDITOR.open(GAME.world, 'worldFilter')
+          }}/>
+
           {/* Clear All Objects -> Map Action */}
           <ToolbarButton iconName="fa-trash-alt"
             onShiftClick={() => {
@@ -357,8 +361,8 @@ export default class Toolbar extends React.Component {
             EDITOR.preferences.selectable.invisible = !EDITOR.preferences.selectable.invisible
             this.forceUpdate()
           }}/>
-          <ToolbarButton text="Shadow" active={EDITOR.preferences.selectable.shadow} onClick={() => {
-            EDITOR.preferences.selectable.shadow = !EDITOR.preferences.selectable.shadow
+        <ToolbarButton text="Darkness" active={EDITOR.preferences.selectable.darkness} onClick={() => {
+            EDITOR.preferences.selectable.darkness = !EDITOR.preferences.selectable.darkness
             // PIXIMAP.updateAllSprites()
             this.forceUpdate()
           }}/>

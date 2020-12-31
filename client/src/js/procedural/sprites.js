@@ -65,7 +65,14 @@ global.generateTextureIdsByDescriptors = function() {
             }
             global.missingComplexDescriptors[desc].push({...s, author: ss.author})
             hasModifer = true
-            return
+            if(!global.complexityModifiers[desc].searchable) {
+              return
+            } else {
+              if(!global.textureIdsByDescriptor[desc]) {
+                global.textureIdsByDescriptor[desc] = []
+              }
+              global.textureIdsByDescriptor[desc].push({...s, author: ss.author})
+            }
           }
 
           // directional modfiers dont get a generated descriptor

@@ -41,6 +41,7 @@ INSTEAD OF GUIDANCE - Green dot in corner of tools if the current editing hero h
 RANDOMIZATION
 ////////////////////////////////////////
 Game tint! Yeah just like, does this game have a little tint to it?
+Change all objects tint
 and randomize perhaps the camera filter!! <--- yes on camera filter and also dont forget about camera shakes too, those are good animations, or EASE! remember ease..
 
 ////////////////////////////////

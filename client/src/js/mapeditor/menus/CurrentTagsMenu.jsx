@@ -109,6 +109,15 @@ export default class CurrentTagsMenu extends React.Component {
           else return true
         })
 
+        tagsToRender.push(
+          'obstacle',
+          'moving',
+          'rotateable',
+          'talker',
+          'spawnZone',
+          'pickupable',
+        )
+
         return <Menu onClick={this._handleTagMenuClick}>
             <MenuItem key='open-search-modal'>Open Search Modal</MenuItem>
             {tagsToRender.map((tag, index) => {

@@ -7,6 +7,9 @@ Add some Time Fantasy Sprites, Fill out more descriptors for sprites
 Game Over State
 	specifically allow a hero to be destroyed and have the game run still?
 
+Take a look at MonsterEffect
+  Maybe just add like a variable choice of what something destorys 
+
 Randomize hero physics
 
 Home made arcade music
@@ -61,22 +64,14 @@ Shoot bouncing ball
 //TAGS
   destroyOnHeroLand
   cameraZoomToFit
-  speed boost tile
   go down when hit obstacle ( mainly for goombas you feel me? )
   slow down tag ( MOD lowers speed of anything inside of it )
   water tag ( MOD lowers gravity of anything inside of it )
     _tempMods Array! Perfect
     -- temp mods !! so these would be tags that use the mod system essentially... the mod only lasts one loop, but it will keep getting reset
   one way platform ( can land on but can jump through from below)
-  // 'increaseInputDirectionVelocity', <<--- better as tags probably
-  // 'increaseMovementDirectionVelocity',
   Show grave when removed
   shrink down and shake until destroyed ( shrink other directions maybe too?)
-  randomLightColorChange
-  randomLightPowerChange
-  randomLightOpacityChange
-  randomColorChanges
   groundDisturbanceOnParticleLand
   groundDisturbanceOnJump
-  RealRotateBackAndForth -  HAve an object twist to the left and the right, its common cheap animation for games it seems
 */

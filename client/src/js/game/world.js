@@ -38,7 +38,10 @@ function setDefault() {
     chunkGamePadding: 6,
     chunkRenderPadding: 6,
     sequences: {},
-    animations: {}
+    animations: {},
+    backgroundColor: '#000000',
+    overlayColor: '#ffffff',
+    objectColorTint: '#ffffff'
   }
 
   global.local.on('onGridLoaded', () => {

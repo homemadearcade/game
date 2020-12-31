@@ -40,7 +40,7 @@ function setDefault() {
     heroPushable: false,
     skipHeroGravityOnCollide: false,
     rotateable: {
-      relatedTags: ['realRotate', 'realRotateFast']
+      relatedTags: ['realRotate', 'realRotateFast', 'realRotateBackAndForth', 'realRotateBackAndForthFast']
     },
   }
 
@@ -192,13 +192,27 @@ function setDefault() {
     },
     tilingSprite: false, //cant change
     inputDirectionSprites: false,
-    light: false,
+    light: {
+      relatedTags: ['randomLightColorChange', 'randomLightPowerChange', 'randomLightOpacityChange']
+    },
     darkArea: false,
     showXWhenRemoved: false,
     showX: false,
     stopGlowingOnTrigger: false,
     // invisibleOnHeroCollide: false
-
+    randomLightColorChange: {
+      relatedTags: ['randomizeQuickly']
+    },
+    randomLightPowerChange: {
+      relatedTags: ['randomizeQuickly']
+    },
+    randomLightOpacityChange: {
+      relatedTags: ['randomizeQuickly']
+    },
+    randomColorChange: {
+      relatedTags: ['randomizeQuickly']
+    },
+    randomizeQuickly: false,
     // randomColor: false,
   }
 
@@ -248,6 +262,9 @@ function setDefault() {
     shake: false,
     realRotate: false,
     realRotateFast: false,
+    realRotateBackAndForth: false,
+    realRotateBackAndForthFast: false,
+
     pulseAlpha: false,
     pulseDarken: false,
     pulseLighten: false,

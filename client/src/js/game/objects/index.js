@@ -131,6 +131,12 @@ class Objects{
       _objectsAwareOf: object._objectsAwareOf,
       _flipY: object._flipY,
 
+      _lastLightColorChangeTime: object._lastLightColorChangeTime,
+      _lastLightOpacityChangeTime: object._lastLightOpacityChangeTime,
+      _lastLightPowerChangeTime: object._lastLightPowerChangeTime,
+      _lastColorChangeTime: object._lastColorChangeTime,
+      _rotateDirection: object._rotateDirection,
+
       targetXY: object.targetXY,
       path: object.path,
       _targetPursueId: object._targetPursueId,
@@ -418,6 +424,10 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
       name: object.name,
       sprite: object.sprite,
       defaultSprite: object.defaultSprite,
+
+      lightPower: object.lightPower,
+      lightColor: object.lightColor,
+      lightOpacity: object.lightOpacity,
 
       popoverText: object.popoverText,
       namePos: object.namePos,
@@ -995,6 +1005,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
   }
 
   onUpdateObject(object, delta) {
+    const moddedTags = object.mod().tags
     if(object.mod().removed) {
       if(global.popoverOpen[object.id]) {
         MAP.closePopover(object.id)
@@ -1002,19 +1013,82 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
       return
     }
 
-    if(object.mod().tags.realRotate) {
+    if(moddedTags.realRotate) {
       if(typeof object.angle != 'number') object.angle = 0
       object.angle += 1 * delta
     }
-    if(object.mod().tags.realRotateFast) {
+    if(moddedTags.realRotateFast) {
       if(typeof object.angle != 'number') object.angle = 0
       object.angle += 7 * delta
+    }
+
+    if(moddedTags.realRotateBackAndForth || moddedTags.realRotateBackAndForthFast) {
+      if(typeof object.angle != 'number') object.angle = 0
+
+      if(object.angle > 1) {
+        object._rotateDirection = 'negative'
+      } else if(object.angle < -1) {
+        object._rotateDirection = 'positive'
+      } else if(!object._rotateDirection){
+        object._rotateDirection = 'positive'
+      }
+      if(moddedTags.realRotateBackAndForth) {
+        if(object._rotateDirection === 'negative') {
+          object.angle -= 3 * delta
+        }
+        if(object._rotateDirection === 'positive') {
+          object.angle += 3 * delta
+        }
+      }
+      if(moddedTags.realRotateBackAndForthFast) {
+        if(object._rotateDirection === 'negative') {
+          object.angle -= 7 * delta
+        }
+        if(object._rotateDirection === 'positive') {
+          object.angle += 7 * delta
+        }
+      }
     }
 
     if(object.id === GAME.lastAnticipatedObjectId) {
       object.tags.lastAnticipatedObject = true
     } else {
       object.tags.lastAnticipatedObject = false
+    }
+
+    let randomDelta = 2000
+    if(moddedTags.randomizeQuickly) randomDelta = 100
+    if(moddedTags.randomLightColorChange) {
+      if(!object._lastLightColorChangeTime) object._lastLightColorChangeTime = Date.now()
+      if(object._lastLightColorChangeTime + randomDelta < Date.now()) {
+        object._lastLightColorChangeTime = Date.now() //+ window.getRandomInt(0, 2000)
+        object.lightColor = window.generateRandomColor()
+      }
+    }
+
+    if(moddedTags.randomLightPowerChange) {
+      if(!object._lastLightPowerChangeTime) object._lastLightPowerChangeTime = Date.now()
+      if(object._lastLightPowerChangeTime + randomDelta < Date.now()) {
+        object._lastLightPowerChangeTime = Date.now() //+ window.getRandomInt(0, 2000)
+        object.lightPower = window.getRandomInt(10, 30)
+      }
+    }
+
+
+    if(moddedTags.randomLightOpacityChange) {
+      if(!object._lastLightOpacityChangeTime) object._lastLightOpacityChangeTime = Date.now()
+      if(object._lastLightOpacityChangeTime + randomDelta < Date.now()) {
+        object._lastLightOpacityChangeTime = Date.now() //+ window.getRandomInt(0, 2000)
+        object.lightOpacity = window.getRandomFloat(0, 1)
+      }
+    }
+
+    if(moddedTags.randomColorChange) {
+      if(!object._lastColorChangeTime) object._lastColorChangeTime = Date.now()
+      if(object._lastColorChangeTime + randomDelta < Date.now()) {
+        object._lastColorChangeTime = Date.now() //+ window.getRandomInt(0, 2000)
+        object.color = window.generateRandomColor()
+      }
     }
 
     OBJECTS.destroyIfTimerIsUp(object)

@@ -203,10 +203,10 @@ function update(camera) {
       // ctx.fillText(text, MAP.canvas.width/2, MAP.canvas.height - (36 * MAP.canvasMultiplier))
     // }
 
-    if(interactableObject.tags.outline) {
-      let thickness = 3
-      drawTools.drawBorder(ctx, {color: 'white', x: interactableObject.x-thickness, y: interactableObject.y - thickness, width: interactableObject.width + (thickness*2), height: interactableObject.height + (thickness*2)}, camera, { thickness })
-    }
+    // if(interactableObject.tags.outline) {
+      let thickness = 5
+      drawTools.drawBorder(ctx, {color: 'white', x: interactableObject.x-(thickness/2), y: interactableObject.y - (thickness/2), width: interactableObject.width + (thickness), height: interactableObject.height + (thickness)}, camera, { thickness })
+    // }
   }
 
   if(PAGE.role.isAdmin) {

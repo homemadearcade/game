@@ -258,6 +258,12 @@ PIXIMAP.updateGridNodeVisibility = function() {
   }
 }
 
+PIXIMAP.onUpdateWorld = function(updatedWorld) {
+  if(updatedWorld.objectColorTint) {
+    resetConstructParts()
+  }
+}
+
 PIXIMAP.onRender = function(delta, force) {
 
   if(!MAP._isOutOfDate) {
@@ -285,6 +291,16 @@ PIXIMAP.onRender = function(delta, force) {
         PIXIMAP.backgroundOverlay.tint = 0x000000
       } else {
         PIXIMAP.backgroundOverlay.tint = getHexColor(GAME.world.backgroundColor)
+      }
+    }
+
+    if(GAME.world.overlayColor) {
+      if(GAME.world.overlayColor === '#ffffff') {
+        PIXIMAP.cameraOverlay.tint = null
+        PIXIMAP.cameraOverlay.alpha = 0
+      } else {
+        PIXIMAP.cameraOverlay.tint = getHexColor(GAME.world.overlayColor)
+        PIXIMAP.cameraOverlay.alpha = .4
       }
     }
 
@@ -942,10 +958,11 @@ PIXIMAP.convertCanvasImageToFile = function(cb) {
 PIXIMAP.snapCamera = function(name) {
   const prevTint = PIXIMAP.cameraOverlay.tint
   PIXIMAP.cameraOverlay.tint = 0xFFFFFF
+  let prevAlpha = PIXIMAP.cameraOverlay.alpha
   PIXIMAP.cameraOverlay.alpha = 1
   setTimeout(() => {
     PIXIMAP.cameraOverlay.tint = prevTint
-    PIXIMAP.cameraOverlay.alpha = 0
+    PIXIMAP.cameraOverlay.alpha = prevAlpha
     PIXIMAP.convertCanvasImageToFile((file) => {
       PAGE.uploadToAws(file, name)
     })

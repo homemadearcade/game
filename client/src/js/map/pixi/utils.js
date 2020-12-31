@@ -4,7 +4,9 @@ import { Ease, ease } from 'pixi-ease'
 import { GlowFilter, OutlineFilter, DropShadowFilter } from 'pixi-filters'
 
 function setColor(pixiChild, data) {
-  if(pixiChild.animationColor) {
+  if(GAME.world.objectColorTint && GAME.world.objectColorTint != '#ffffff') {
+    pixiChild.tint = getHexColor(GAME.world.objectColorTint)
+  } else if(pixiChild.animationColor) {
     pixiChild.tint = getHexColor(pixiChild.animationColor)
   } else if(data.color) {
     pixiChild.tint = getHexColor(data.color)
@@ -485,11 +487,11 @@ function updateFilters(pixiChild, object) {
   /////////////////////
   /////////////////////
   // INTERACT HIGHLIGHT
-  if(object.tags.glowing || HERO.id && GAME.heros[HERO.id] && GAME.heros[HERO.id].interactableObjectId && object.id === GAME.heros[HERO.id].interactableObjectId) {
-    pixiChild.filters = [new GlowFilter(12, 0xFFFFFF)];
-  } else {
-    removeFilter(pixiChild, GlowFilter)
-  }
+  // if(object.tags.glowing || HERO.id && GAME.heros[HERO.id] && GAME.heros[HERO.id].interactableObjectId && object.id === GAME.heros[HERO.id].interactableObjectId) {
+  //   pixiChild.filters = [new GlowFilter(12, 0xFFFFFF)];
+  // } else {
+  //   removeFilter(pixiChild, GlowFilter)
+  // }
 }
 
 function addFilter(pixiChild, filter) {

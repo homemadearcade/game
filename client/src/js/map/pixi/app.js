@@ -220,8 +220,7 @@ const initPixiApp = (canvasRef, onLoad) => {
   PIXIMAP.cameraOverlay = new PIXI.Sprite(PIXI.Texture.from('assets/images/solidcolorsprite.png'))
   PIXIMAP.cameraOverlay.transform.scale.x = (PIXIMAP.app.view.width/PIXIMAP.cameraOverlay.texture._frame.width)
   PIXIMAP.cameraOverlay.transform.scale.y = (PIXIMAP.app.view.width/PIXIMAP.cameraOverlay.texture._frame.width)
-  PIXIMAP.cameraOverlay.alpha = 0
-  PIXIMAP.cameraOverlay.tint = parseInt(tinycolor("rgb(0, 0, 100)").toHex(), 16)
+  // PIXIMAP.cameraOverlay.tint = parseInt(tinycolor("rgb(0, 0, 255)").toHex(), 16)
   PIXIMAP.cameraStage.addChild(PIXIMAP.cameraOverlay)
 
   ///////////////
@@ -439,7 +438,7 @@ const initPixiApp = (canvasRef, onLoad) => {
 
     lighting.clearColor = [GAME.gameState.ambientLight, GAME.gameState.ambientLight, GAME.gameState.ambientLight, 1]
 
-    if(PAGE.role.isAdmin && !EDITOR.preferences.selectable.shadow) {
+    if(PAGE.role.isAdmin && !EDITOR.preferences.selectable.darkness) {
       PIXIMAP.worldLightingChild.alpha = 0
       PIXIMAP.darkAreaStage.alpha = 0
       return

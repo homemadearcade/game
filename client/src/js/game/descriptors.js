@@ -31,6 +31,7 @@ function setDefault() {
     Ore: {},
 
     Fire: {},
+    Lava: {},
     Electricity: {},
   }
 
@@ -115,6 +116,7 @@ function setDefault() {
     Plant: {
       children: ['Crop', 'Bush', 'Flower', 'Mushroom', 'Ivy', 'Grass Tuft'],
     },
+    Hedge: {},
     'Venus Flytrap': {},
     Ivy: {},
     Cactus: {},
@@ -160,6 +162,7 @@ function setDefault() {
     Furniture: {
       children: ['Chair', 'Desk', 'Table', 'Fireplace', 'Couch', 'Bookshelf', 'Stove', 'Oven'],
     },
+    Rug: {},
     Desk: {},
     Bookshelf: {},
     Couch: {},
@@ -201,6 +204,7 @@ function setDefault() {
   }
 
   global.otherDescriptors = {
+    Symbol: {},
     Stick: {},
     Rock: {},
     Stalagmite: {},
@@ -262,12 +266,15 @@ function setDefault() {
     // },
     'Melee Weapon': {
       dontShowAdminsInSpriteSheetEditor: true,
-      children: ['Waraxe','Mace', 'Sword','Spear', 'Whip', 'Scimitar', 'Rapier', 'Scythe', 'Halbierd', 'Dagger'],
+      children: ['Warhammer', 'Club', 'Waraxe','Mace', 'Sword','Spear', 'Whip', 'Scimitar', 'Rapier', 'Scythe', 'Halbierd', 'Dagger'],
     },
     'Ranged Weapon': {
       dontShowAdminsInSpriteSheetEditor: true,
-      children: ['Staff','Gun','Bow','Crossbow', 'Laser','Spear', 'Wand', 'Sling', 'Boomerang'],
+      children: ['Throwing Stars','Staff','Gun','Bow','Crossbow', 'Laser','Spear', 'Wand', 'Sling', 'Boomerang'],
     },
+    'Throwing Stars': {},
+    Warhammer: {},
+    Club: {},
     Waraxe: {},
     Crossbow: {},
     Scythe: {},
@@ -440,10 +447,12 @@ function setDefault() {
   global.humanDescriptors = {
     Human: {
       dontShowAdminsInSpriteSheetEditor: true,
-      children: ['Astronaut', 'Wizard', 'King', 'Archer', 'Thief', 'Athlete', 'Priest', 'Cop'],
+      children: ['Pirate', 'Barbarian','Baby','Astronaut','Soldier','Space','Wizard','King','Queen','Archer','Warrior','Rogue','Angel','Thief','Ninja','Musician','Engineer','Athlete','Priest','Nun','Cop','Citizen','Villager','Detective','Knight',
+      ],
     },
+    Baby: {},
     Astronaut: {},
-    Soilder: {},
+    Soldier: {},
     Space: {},
     Wizard: {},
     King: {},
@@ -466,6 +475,8 @@ function setDefault() {
     'Villager': {},
     Detective: {},
     Knight: {},
+    Pirate: {},
+    Barbarian: {},
   }
 
   global.animalDescriptors = {
@@ -475,11 +486,11 @@ function setDefault() {
     },
     /// sound oriented
     Bird: {
-      children: [ 'Chicken', 'Crow', 'Bat', 'Duck', 'Ostrich', 'Owl', 'Penguin', 'Seagull',],
+      children: ['Goose', 'Chicken', 'Crow', 'Bat', 'Duck', 'Ostrich', 'Owl', 'Penguin', 'Seagull',],
     },
     'Farm Animal': {
       dontShowAdminsInSpriteSheetEditor: true,
-      children: [ 'Donkey', 'Horse', 'Chicken', 'Cow', 'Goat', 'Bull', 'Pig', 'Yak']
+      children: [ 'Sheep','Donkey', 'Horse', 'Chicken', 'Cow', 'Goat', 'Bull', 'Pig', 'Yak']
     },
     'Saddle Animal': {
       dontShowAdminsInSpriteSheetEditor: true,
@@ -507,6 +518,7 @@ function setDefault() {
     'Anglerfish': {},
     'Mola Mola': {},
     Shark: {},
+    'Shark Fin': {},
     Eel: {},
     Jellyfish: {},
     Crayfish: {},
@@ -572,7 +584,7 @@ function setDefault() {
     Worm: {},
 
     'Mythical Beast': {
-      children: ['Cyclops', 'Unicorn', 'Dragon', 'Mermaid', 'Vampire', 'Mermaid', 'Demon', 'Golem', 'Griffin', 'Ent', 'Hag', 'Harpie', 'Siren', 'Genie', 'Minotaur', 'Troll', 'Centaur'],
+      children: ['Manticore', 'Cockatrice', 'Cyclops', 'Unicorn', 'Dragon', 'Mermaid', 'Vampire', 'Mermaid', 'Demon', 'Golem', 'Griffin', 'Ent', 'Hag', 'Harpie', 'Siren', 'Genie', 'Minotaur', 'Troll', 'Centaur'],
     },
     /// mythical
     Unicorn: {},
@@ -585,7 +597,13 @@ function setDefault() {
     Troll: {},
     Centaur: {},
     Cyclops: {},
+    Manticore: {},
+    Cockatrice: {},
 
+    'Werewolf': {},
+    'Frogman': {},
+    'Sabretooth Tiger': {},
+    "Will o' The Wisp": {},
   }
 
   global.reptileDescriptors = {
@@ -615,7 +633,8 @@ function setDefault() {
     'Bull': {},
     'Pig': {},
     'Yak': {},
-    'Turkey': {}
+    'Turkey': {},
+    Sheep: {},
   }
 
   global.birdDescriptors = {
@@ -628,6 +647,7 @@ function setDefault() {
     Penguin: {},
     Seagull: {},
     Egg: {},
+    Goose: {}
   }
 
   global.monsterDescriptors = {
@@ -639,7 +659,6 @@ function setDefault() {
     Ghost: {},
     Goblin: {},
     'Skeleton Monster': {},
-    Zombie: {},
     Mummy: {},
     'Slime Monster': {},
     Alien: {},
@@ -718,16 +737,22 @@ function setDefault() {
     'Duplicate': {},
     Small: {
       audioRelated: true,
-      dontShowAdminsInSpriteSheetEditor: true,},
+      dontShowAdminsInSpriteSheetEditor: true,
+    },
     Large: {
       audioRelated: true,
-      dontShowAdminsInSpriteSheetEditor: true,},
+      dontShowAdminsInSpriteSheetEditor: true,
+    },
   }
 
   global.livingCreatureModifiers = {
     'Holding Weapon': {},
-    'Elf': {},
-    'Goblin': {},
+    'Elf': {
+      searchable: true,
+    },
+    'Goblin': {
+      searchable: true,
+    },
     'Two Headed': {},
     'Mounted': {},
     'Mythical': {},
@@ -739,6 +764,9 @@ function setDefault() {
     'Evil': {},
     'Dead': {},
     'With Face': {},
+    Zombie: {
+      searchable: true,
+    },
   }
 
   global.elementalModifiers = {

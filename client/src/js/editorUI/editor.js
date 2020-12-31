@@ -10,7 +10,7 @@ class Editor {
         showAdminGrid: true,
         selectable: {
           invisible: false,
-          // darkness: false,
+          darkness: true,
           background: true,
           foreground: true,
           // hero: false,
