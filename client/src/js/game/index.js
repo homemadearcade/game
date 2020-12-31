@@ -1391,6 +1391,13 @@ class Game{
       activeMods.push({ effectJSON: object._tempModOnMap})
     }
 
+    if(object._tempMods) {
+      object._tempMods.forEach((json) => {
+        activeMods.push({ effectJSON: json})
+      })
+      object._tempMods = null
+    }
+
     if(!activeMods.length) {
       return object
     } else if(activeMods.length) {

@@ -7,6 +7,9 @@ Remember that fullstack guys random theater generator - you're close
 // MARKETING IDEA
 // Make a game for their birthday
 
+and randomize perhaps the camera filter!! <--- yes on camera filter and also dont forget about camera shakes too, those are good animations,
+RANDOMIZE EASE! remember ease..
+
 //////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////
@@ -28,21 +31,12 @@ Visalize sequences
 advanced Hero physics for non platformer
     perheps a decay when where is no input vs a decay when there IS input?
 
-
 ////////////////////////////////////////
 ////////////////////////////////////////
 EDITOR UPGRADES
 ////////////////////////////////////////
 INSTEAD OF GUIDANCE - Green dot in corner of tools if the current editing hero has this option...
                       Allow right clikcing to add the option to the heros object
-
-////////////////////////////////////////
-////////////////////////////////////////
-RANDOMIZATION
-////////////////////////////////////////
-Game tint! Yeah just like, does this game have a little tint to it?
-Change all objects tint
-and randomize perhaps the camera filter!! <--- yes on camera filter and also dont forget about camera shakes too, those are good animations, or EASE! remember ease..
 
 ////////////////////////////////
 ////////////////////////////////
@@ -66,8 +60,6 @@ Win/Lose States that can connect to the meta of the engine ( picking new game or
 ////////////////////////////////
 COMBAT UPGRADE
 ////////////////////////////////
-WHAT DID I LEARN FROM DIALOGUE SETS THAT I CAN APPLY TO HIS, like DestroysTags, DestroyedByTags, WeakTo, ResistantTo
-
 Main questions for this upgrade is
   -- How to detect the destroyer! Thats key... how does _destroyedById work -- by weapon, by bullet, by player?
   -- How much damage does it do?
@@ -85,7 +77,6 @@ level system, ranged attacks, etc
 ////////////////////////////////
 SOUND GENERATOR UPGRADE
 ////////////////////////////////
-
 audio right click -> set as ___ sound
 
 //FOR LIBRARY OBJECTS + OBJECTS ON MAP
@@ -99,6 +90,18 @@ actionSFX
 
 pick random song
 
+////////////////////////////////
+SEQUENCE EDITOR UPGRADE
+////////////////////////////////
+Create
+Editor
+Animate
+Sound
+Mod honestly needs its own...
+Its getting really complicated. For now im going to cheat it. It should have its own service and its own sequence type, feel me?
+// onGameStart or onHeroLand sequences === automatically trigger on those events
+
+
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
@@ -111,7 +114,6 @@ pick random song
 LIBRARY IDEAS
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ////////////////////////////////////////////////////
-
 // WEAPONS
 various guns
   - BOOMERANG
@@ -141,7 +143,6 @@ Parallax scroller faster
   special camera relation, 0, .5, 2, 10, etc. might wanna encapsulale the camera changing logic into a function?
 VISIBLE TO - select tags its visible to, ( visible to is an object with tags: true )
 Background animation tag ( perhaps background stage and everything…)
-
 
 // ANIMATIONS
 Pulsing size and rotating

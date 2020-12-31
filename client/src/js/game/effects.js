@@ -217,9 +217,6 @@ import pathfinding from '../utils/pathfinding.js'
 
     // 'mutateOwner'
 
-    // 'increaseInputDirectionVelocity', <<--- better as tags probably
-    // 'increaseMovementDirectionVelocity',
-
     // 'attachToEffectorAsParent'
     // 'attachToEffectorAsRelative'
     // 'emitCustomEvent',

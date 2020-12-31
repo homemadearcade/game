@@ -73,85 +73,93 @@ export function onHeroTrigger(hero, collider, result, options = { fromInteractBu
     onCombat(hero, collider, result, options)
     let triggered
 
-    if(collider.mod().tags['skipHeroGravityOnCollide']) {
+    let moddedTags = collider.mod().tags
+
+    if(moddedTags['skipHeroGravityOnCollide']) {
       hero._skipNextGravity = true
     }
 
-    if(collider.mod().tags['behaviorOnHeroCollide']) {
+    if(moddedTags['behaviorOnHeroCollide']) {
       onBehavior(hero, collider, result, options)
       triggered = true
     }
 
-    if(collider.mod().tags['updateHeroOnHeroCollide']) {
+    if(moddedTags['updateHeroOnHeroCollide']) {
       onHeroUpdate(hero, collider, result, options)
       triggered = true
     }
 
-    if(collider.tags && collider.mod().tags['talker'] && collider.heroDialogueSet && collider.heroDialogueSets && collider.heroDialogueSets[collider.heroDialogueSet] && collider.heroDialogueSets[collider.heroDialogueSet].dialogue && collider.heroDialogueSet && collider.heroDialogueSets && collider.heroDialogueSets[collider.heroDialogueSet] && collider.heroDialogueSets[collider.heroDialogueSet].dialogue.length) {
-      if(collider.mod().tags['talkOnHeroCollide']) {
+    if(collider.tags && moddedTags['talker'] && collider.heroDialogueSet && collider.heroDialogueSets && collider.heroDialogueSets[collider.heroDialogueSet] && collider.heroDialogueSets[collider.heroDialogueSet].dialogue && collider.heroDialogueSet && collider.heroDialogueSets && collider.heroDialogueSets[collider.heroDialogueSet] && collider.heroDialogueSets[collider.heroDialogueSet].dialogue.length) {
+      if(moddedTags['talkOnHeroCollide']) {
         onTalk(hero, collider, result, options)
         triggered = true
       }
     }
 
-    if(collider.tags && collider.mod().tags['questGiver'] && collider.questGivingId && hero.quests && hero.questState && hero.questState[collider.questGivingId] && !hero.questState[collider.questGivingId].started && !hero.questState[collider.questGivingId].completed) {
-      if(collider.mod().tags['giveQuestOnHeroCollide']) {
+    if(collider.tags && moddedTags['questGiver'] && collider.questGivingId && hero.quests && hero.questState && hero.questState[collider.questGivingId] && !hero.questState[collider.questGivingId].started && !hero.questState[collider.questGivingId].completed) {
+      if(moddedTags['giveQuestOnHeroCollide']) {
         startQuest(hero, collider.mod().questGivingId)
         triggered = true
       }
     }
 
-    if(collider.tags && collider.mod().tags['questCompleter'] && collider.questCompleterId && hero.quests && hero.questState && hero.questState[collider.questCompleterId] && hero.questState[collider.questCompleterId].started && !hero.questState[collider.questCompleterId].completed) {
-      if(collider.mod().tags['completeQuestOnHeroCollide']) {
+    if(collider.tags && moddedTags['questCompleter'] && collider.questCompleterId && hero.quests && hero.questState && hero.questState[collider.questCompleterId] && hero.questState[collider.questCompleterId].started && !hero.questState[collider.questCompleterId].completed) {
+      if(moddedTags['completeQuestOnHeroCollide']) {
         completeQuest(hero, collider.mod().questCompleterId)
         triggered = true
       }
     }
 
-    if(collider.tags && collider.mod().tags['cameraShakeOnCollide_quickrumble']) {
+    if(collider.tags && moddedTags['cameraShakeOnCollide_quickrumble']) {
       global.socket.emit('heroCameraEffect', 'cameraShake', hero.id, { duration: 50, frequency: 10, amplitude: 5})
       triggered = true
     }
 
-    if(collider.tags && collider.mod().tags['cameraShakeOnCollide_longrumble']) {
+    if(collider.tags && moddedTags['cameraShakeOnCollide_longrumble']) {
       global.socket.emit('heroCameraEffect', 'cameraShake', hero.id, { duration: 3000, frequency: 10, amplitude: 8 })
       triggered = true
     }
 
-    if(collider.tags && collider.mod().tags['cameraShakeOnCollide_quick']) {
+    if(collider.tags && moddedTags['cameraShakeOnCollide_quick']) {
       global.socket.emit('heroCameraEffect', 'cameraShake', hero.id, { duration: 50, frequency: 10, amplitude: 24})
       triggered = true
     }
 
-    if(collider.tags && collider.mod().tags['cameraShakeOnCollide_short']) {
+    if(collider.tags && moddedTags['cameraShakeOnCollide_short']) {
       global.socket.emit('heroCameraEffect', 'cameraShake', hero.id, { duration: 500, frequency: 20, amplitude: 36 })
       triggered = true
     }
 
-    if(collider.tags && collider.mod().tags['cameraShakeOnCollide_long']) {
+    if(collider.tags && moddedTags['cameraShakeOnCollide_long']) {
       global.socket.emit('heroCameraEffect', 'cameraShake', hero.id, { duration: 2000, frequency: 40, amplitude: 36 })
       triggered = true
     }
 
-    if(collider.tags && collider.mod().tags['pickupable'] && collider.mod().tags['pickupOnHeroCollide']) {
+    if(collider.tags && moddedTags['pickupable'] && moddedTags['pickupOnHeroCollide']) {
       pickupObject(hero, collider)
       triggered = true
     }
 
-    if(collider.tags && collider.mod().tags['resourceZone'] && collider.mod().tags['resourceWithdrawOnCollide']) {
+    if(collider.tags && moddedTags['resourceZone'] && moddedTags['resourceWithdrawOnCollide']) {
       let subObjectNameToWithdraw = global.getResourceSubObjectNames(collider, collider)
 
       if(subObjectNameToWithdraw) withdrawFromInventory(hero, collider, subObjectNameToWithdraw, collider.resourceWithdrawAmount)
       triggered = true
     }
 
-    if(collider.tags && collider.mod().tags['resourceZone'] && collider.mod().tags['resourceDepositAllOnCollide']) {
+    if(collider.tags && moddedTags['resourceZone'] && moddedTags['resourceDepositAllOnCollide']) {
       let subObjectNameToWithdraw = global.getResourceSubObjectNames(hero, collider)
 
       if(subObjectNameToWithdraw) {
         const so = hero.subObjects[subObjectNameToWithdraw]
         withdrawFromInventory(collider, hero, subObjectNameToWithdraw, so.count)
       }
+      triggered = true
+    }
+
+    if(moddedTags.tempModOnHeroCollide) {
+      if(!hero._tempMods) hero._tempMods = []
+      hero._tempMods.push(collider.heroTempMod)
       triggered = true
     }
 

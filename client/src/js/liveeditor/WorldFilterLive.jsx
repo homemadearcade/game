@@ -22,13 +22,15 @@ export default class WorldLive extends React.Component {
   }
 
   render() {
+
+    //          <DatColor label="Object Tint" path="world.objectColorTint"/>
+
     return (
       <div className='WorldFilterLive'>
           <DatGui data={this.state} onUpdate={this.handleUpdate}>
           <div className="LiveEditor__title">{'World Filters'}</div>
           <DatColor label="Background Color" path="world.backgroundColor"/>
           <DatColor label="Overlay Color" path="world.overlayColor"/>
-          <DatColor label="Object Tint" path="world.objectColorTint"/>
         </DatGui>
       </div>
     )

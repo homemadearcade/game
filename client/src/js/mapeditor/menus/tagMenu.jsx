@@ -116,6 +116,9 @@ export default class TagMenu extends React.Component{
       <SubMenu title="Popover">
         {this._renderTagMenuItems(global.popoverTags)}
       </SubMenu>
+      <SubMenu title="Effect">
+        {this._renderTagMenuItems(global.effectTags)}
+      </SubMenu>
     </Menu>
   }
 }

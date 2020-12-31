@@ -38,7 +38,6 @@ function setDefault() {
     noHeroAllowed: false,
     movingPlatform: false,
     heroPushable: false,
-    skipHeroGravityOnCollide: false,
     rotateable: {
       relatedTags: ['realRotate', 'realRotateFast', 'realRotateBackAndForth', 'realRotateBackAndForthFast']
     },
@@ -315,9 +314,14 @@ function setDefault() {
   }
 
   global.effectTags = {
-    // increaseCurrentVelocityOnTouchStart: false,
-    // decreaseCurrentVelocityOnTouchStart: false,
-    // slowDownWithin: false,
+    increaseHeroCurrentVelocityOnTouchStart: false,
+    increaseHeroLeftVelocityOnTouchStart: false,
+    increaseHeroRightVelocityOnTouchStart: false,
+    increaseHeroUpVelocityOnTouchStart: false,
+    increaseHeroDownVelocityOnTouchStart: false,
+    stopHeroOnTouchStart: false,
+    tempModOnHeroCollide: false,
+    skipHeroGravityOnCollide: false,
   }
 
   global.defaultTags = {

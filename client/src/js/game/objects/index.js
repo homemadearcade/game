@@ -131,6 +131,8 @@ class Objects{
       _objectsAwareOf: object._objectsAwareOf,
       _flipY: object._flipY,
 
+      _tempMods: object._tempMods,
+
       _lastLightColorChangeTime: object._lastLightColorChangeTime,
       _lastLightOpacityChangeTime: object._lastLightOpacityChangeTime,
       _lastLightPowerChangeTime: object._lastLightPowerChangeTime,
@@ -248,6 +250,9 @@ class Objects{
       emitterTypeJump: object.emitterTypeJump,
       emitterTypeDash: object.emitterTypeDash,
 
+      increaseHeroCurrentVelocityAmount: object.increaseHeroCurrentVelocityAmount,
+      heroTempMod: object.heroTempMod,
+      
       // equipment
       actionButtonBehavior: object.actionButtonBehavior,
       actionProps: object.actionProps,
@@ -990,6 +995,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
       if(!CONSTRUCTEDITOR.open && (obj.constructParts || objectById.constructParts)) {
         PIXIMAP.addObject(objectById)
       }
+      PIXIMAP.updatePixiObject(objectById)
     })
 
     global.local.emit('onUpdatePFgrid', 'edit', editedObjects)

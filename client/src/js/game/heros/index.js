@@ -857,6 +857,42 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
     PHYSICS.removeObject(GAME.heros[hero.id])
   }
 
+  onHeroTouchStart(hero, object) {
+    let moddedTags = object.mod().tags
+    if(moddedTags.increaseHeroCurrentVelocityOnTouchStart) {
+      if(hero.velocityX < 0 || hero._flatVelocityX < 0) {
+        hero.velocityX-= object.increaseHeroCurrentVelocityAmount || 400
+      } else if(hero.velocityX > 0 || hero._flatVelocityX > 0){
+        hero.velocityX+= object.increaseHeroCurrentVelocityAmount || 400
+      }
+      if(hero.velocityY < 0 || hero._flatVelocityY < 0) {
+        hero.velocityY-= object.increaseHeroCurrentVelocityAmount || 400
+      } else if(hero.velocityY > 0 || hero._flatVelocityY > 0){
+        hero.velocityY+= object.increaseHeroCurrentVelocityAmount || 400
+      }
+    }
+    if(moddedTags.increaseHeroLeftVelocityOnTouchStart) {
+      hero.velocityX-= object.increaseHeroCurrentVelocityAmount || 400
+    }
+
+    if(moddedTags.increaseHeroRightVelocityOnTouchStart) {
+      hero.velocityX+= object.increaseHeroCurrentVelocityAmount || 400
+    }
+
+    if(moddedTags.increaseHeroUpVelocityOnTouchStart) {
+      hero.velocityY-= object.increaseHeroCurrentVelocityAmount || 400
+    }
+
+    if(moddedTags.increaseHeroDownVelocityOnTouchStart) {
+      hero.velocityY+= object.increaseHeroCurrentVelocityAmount || 400
+    }
+
+    if(moddedTags.stopHeroOnTouchStart) {
+      hero.velocityY = 0
+      hero.velocityX = 0
+    }
+  }
+
   onNetworkUpdateHeros(updatedHeros) {
     // delete updatedHero.x
     // delete updatedHero.y

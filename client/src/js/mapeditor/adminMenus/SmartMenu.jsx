@@ -105,6 +105,7 @@ export default class SmartMenu extends React.Component {
     }
 
 //        <MenuItem key="open-tag-search-modal">Edit Tags</MenuItem>
+//        {objectSelected.tags.tempModOnHeroCollide && <MenuItem key="open-edit-heroTempMod">Edit Hero Temp Mod</MenuItem>
 
     if(objectSelected.tags.hero) {
       return <Menu onClick={this._handleMenuClick}>

@@ -385,7 +385,9 @@ class contextMenuEl extends React.Component{
       return <SwatchesPicker
         color={ coloringObject.color }
         onChange={ (color) => {
-          if(coloringObject == 'worldBackground') {
+          if(coloringObject == 'worldOverlay') {
+            global.socket.emit('updateWorld', {overlayColor: color.hex})
+          } else if(coloringObject == 'worldBackground') {
             global.socket.emit('updateWorld', {backgroundColor: color.hex})
           } else if(coloringObject == 'defaultObject') {
             global.socket.emit('updateWorld', {defaultObjectColor: color.hex})

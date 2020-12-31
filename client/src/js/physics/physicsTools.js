@@ -73,7 +73,7 @@ function heroCollisionEffects(hero) {
         heroPO.gameObject._objectsWithinNext.push(body.gameObject.id)
       }
 
-      if(heroObstacle && heroPO.gameObject.mod().tags['trackObjectsTouching']) {
+      if(heroPO.gameObject.mod().tags['trackObjectsTouching']) {
         heroPO.gameObject._objectsTouchingNext.push(body.gameObject.id)
       }
     }

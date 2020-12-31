@@ -4,9 +4,10 @@ import { Ease, ease } from 'pixi-ease'
 import { GlowFilter, OutlineFilter, DropShadowFilter } from 'pixi-filters'
 
 function setColor(pixiChild, data) {
-  if(GAME.world.objectColorTint && GAME.world.objectColorTint != '#ffffff') {
-    pixiChild.tint = getHexColor(GAME.world.objectColorTint)
-  } else if(pixiChild.animationColor) {
+  // if(GAME.world.objectColorTint && GAME.world.objectColorTint != '#ffffff') {
+  //   pixiChild.tint = getHexColor(GAME.world.objectColorTint)
+  // } else
+  if(pixiChild.animationColor) {
     pixiChild.tint = getHexColor(pixiChild.animationColor)
   } else if(data.color) {
     pixiChild.tint = getHexColor(data.color)

@@ -20,17 +20,19 @@ class Editor {
         }
       }
       this.zoomDelta = .1250
-
-      if(PAGE.role.isAdmin) {
-        const storedPreferences = localStorage.getItem('editorPreferences')
-        if(storedPreferences && storedPreferences != 'undefined' && storedPreferences != 'null') {
-          Object.assign(this.preferences,JSON.parse(storedPreferences))
-        }
-      }
     })
   }
 
-  onPlayerIdentified() {
+  onGameLoaded = () => {
+    if(PAGE.role.isAdmin) {
+      const storedPreferences = localStorage.getItem('editorPreferences')
+      if(storedPreferences && storedPreferences != 'undefined' && storedPreferences != 'null') {
+        Object.assign(this.preferences,JSON.parse(storedPreferences))
+      }
+    }
+  }
+
+  onPlayerIdentified = () => {
     global.addEventListener("keydown", function (e) {
       if(e.keyCode === 16) {
         EDITOR.shiftPressed = true
