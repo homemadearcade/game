@@ -29,7 +29,7 @@ export default class DescriptorSelect extends React.Component{
     }
 
     data.forEach((item, i) => {
-      newKeys[item.label] = true
+      newKeys[item.value] = true
     });
 
     this.setState({
