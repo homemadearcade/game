@@ -46,6 +46,7 @@ export default class Root extends React.Component{
     this.setState({
       open: true,
       selectedColor: initialColor,
+      isMapVisible: CONSTRUCTEDITOR.mapVisible,
     })
     this._paintBrushClick()
   }
@@ -121,6 +122,15 @@ export default class Root extends React.Component{
     const spriteSelection = PAGE.role.isAdmin || GAME.heros[HERO.id].flags.constructEditorSprite
     //<div className="ConstructEditor__menu-item ConstructEditor__menu-item--text" onClick={this._cancelClick}>Cancel</div>
 
+    // <ToolbarButton text="terrain"
+    //   active={this.state.isMapVisible.terrain}
+    //   onClick={() => {
+    //     CONSTRUCTEDITOR.toggleMapVisibility('terrain')
+    //     this.setState({
+    //       isMapVisible: CONSTRUCTEDITOR.mapVisible
+    //     })
+    //   }}
+    // />
     return <div className="ConstructEditor__menu-list">
       {colorSelection && !isColorPickerOpen && <ToolbarRow iconName="fa-palette" rowButtonBackgroundColor={CONSTRUCTEDITOR.selectedColor} onClick={this._openColorPicker}>
         <ToolbarButton iconName="fa-times" onClick={() => {
@@ -218,15 +228,7 @@ export default class Root extends React.Component{
             })
           }}
         />
-        <ToolbarButton text="terrain"
-          active={this.state.isMapVisible.terrain}
-          onClick={() => {
-            CONSTRUCTEDITOR.toggleMapVisibility('terrain')
-            this.setState({
-              isMapVisible: CONSTRUCTEDITOR.mapVisible
-            })
-          }}
-        />
+
         <ToolbarButton text="drawing"
           active={this.state.isMapVisible.drawing}
           onClick={() => {

@@ -83,7 +83,7 @@ global.local.on('onGameReady', () => {
     },
     constructEditor: {
       action: 'open-construct-editor',
-      title: 'Draw Structure'
+      title: 'Draw On Structure'
     },
     group: {
       useExistingMenu: 'GameTag',

@@ -204,7 +204,7 @@ function update(camera) {
     // }
 
     // if(interactableObject.tags.outline) {
-      let thickness = 5
+      let thickness = 8
       drawTools.drawBorder(ctx, {color: 'white', x: interactableObject.x-(thickness/2), y: interactableObject.y - (thickness/2), width: interactableObject.width + (thickness), height: interactableObject.height + (thickness)}, camera, { thickness })
     // }
   }

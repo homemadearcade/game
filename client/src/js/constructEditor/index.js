@@ -69,11 +69,11 @@ class ConstructEditor {
     this.mapVisible = {
       all: true,
       drawing: true,
-      objects: true,
-      background: true,
-      foreground: true,
-      structure: true,
-      hero: true
+      objects: false,
+      background: false,
+      foreground: false,
+      structure: false,
+      hero: false
     }
   }
 

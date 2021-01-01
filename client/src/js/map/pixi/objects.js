@@ -6,6 +6,7 @@ import { setColor, startAnimation, startPulse, stopPulse, updateSprite, updateCh
 import { Ease, ease } from 'pixi-ease'
 
 const updatePixiObject = (gameObject) => {
+  if(!gameObject) return console.trace('yo no game object wtf')
   if(PAGE.role.isHost) gameObject = gameObject.mod()
 
   let camera = MAP.camera

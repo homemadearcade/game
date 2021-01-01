@@ -51,8 +51,16 @@ function update() {
       drawTools.drawObject(ctx, {...objectHighlighted, tags: {...objectHighlighted.tags, invisible: false }, color}, camera)
       drawTools.drawBorder(ctx, {...objectHighlighted, color: 'white'}, camera)
     } else {
-      let color = 'white'
-      drawTools.drawBorder(ctx, {...objectHighlighted, color}, camera)
+      if(objectHighlighted.constructParts) {
+        objectHighlighted.constructParts.forEach((part) => {
+          let color = 'white'
+          drawTools.drawBorder(ctx, {...objectHighlighted, ...part, color}, camera)
+        })
+      } else {
+        let color = 'white'
+        drawTools.drawBorder(ctx, {...objectHighlighted, color}, camera)
+      }
+
     }
 
     const {x, y} = HERO.getSpawnCoords(objectHighlighted)

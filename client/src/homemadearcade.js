@@ -2,6 +2,8 @@
 ////////////////////////////////
 TODO - ALMOST THERE!
 /////////////////////////////////
+Game Over/Game Win states
+
 Game Over State
 	specifically allow a hero to be destroyed and have the game run still?
 

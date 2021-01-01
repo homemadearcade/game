@@ -866,7 +866,15 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
   }
 
   onHeroTouchStart(hero, object) {
-
+    if(!object) return
+    if(object.tags.cameraZoomToFit) {
+      hero._prevZoomMultiplier = hero.zoomMultiplier
+      if(object.height < object.width) {
+        hero.zoomMultiplier = object.height/HERO.cameraHeight
+      } else {
+        hero.zoomMultiplier = object.width/HERO.cameraWidth
+      }
+    }
 
     let moddedTags = object.mod().tags
     if(moddedTags.increaseHeroCurrentVelocityOnTouchStart) {
@@ -904,19 +912,9 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
   }
 
   onHeroTouchEnd(hero, object) {
+    if(!object) return 
     if(object.tags.cameraZoomToFit) {
       hero.zoomMultiplier = hero._prevZoomMultiplier
-    }
-  }
-
-  onHeroTouchStart(hero, object) {
-    if(object.tags.cameraZoomToFit) {
-      hero._prevZoomMultiplier = hero.zoomMultiplier
-      if(object.height < object.width) {
-        hero.zoomMultiplier = object.height/HERO.cameraHeight
-      } else {
-        hero.zoomMultiplier = object.width/HERO.cameraWidth
-      }
     }
   }
 

@@ -18,8 +18,11 @@ export default class EditorOpen extends React.Component{
           if(!objectSelected.descriptors[tag]) delete objectSelected.descriptors[tag]
         })
         modals.openEditDescriptorsModal(objectSelected.descriptors || {}, ({value}) => {
-          if(value) {
-            networkEditObject(objectSelected, {descriptors: value})
+          if(!objectSelected.name) {
+            let name  = Object.keys(value)[0]
+            MAPEDITOR.networkEditObject(objectSelected, {descriptors: value, name})
+          } else {
+            MAPEDITOR.networkEditObject(objectSelected, {descriptors: value})
           }
         }, {}, { onlyWithTextures: true })
       }

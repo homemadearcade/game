@@ -243,12 +243,14 @@ export default class GeneratedMenu extends React.Component {
 
     if (objectSelected.tags && objectSelected.tags.hero) {
       return <Menu onClick={this._handleMenuClick}>
+        <MenuItem>{objectSelected.name ? objectSelected.name : null}</MenuItem>
         {this._renderGeneratedMenu(heroMenuObj)}
       </Menu>
     }
 
     if (objectSelected.id) {
       return <Menu onClick={this._handleMenuClick}>
+        <MenuItem>{objectSelected.name ? objectSelected.name : null}</MenuItem>
         {this._renderGeneratedMenu(objectMenuObj)}
       </Menu>
     }
