@@ -701,16 +701,28 @@ PIXIMAP.updateGridSprites = function() {
 // PIXIMAP.fakeObjectAnimations = []
 PIXIMAP.onFakeObjectAnimation = function (type, object) {
   if(type === 'groundDisturbanceRight') {
-    const landEmitter = initEmitter(object, type, { matchObjectColor: true, useUpdateOwnerPos: true }, { hasNoOwner: true })
+    const landEmitter = initEmitter(object, type, { matchObjectColor: true, useUpdateOwnerPos: false }, { hasNoOwner: true })
     setTimeout(() => {
       PIXIMAP.deleteEmitter(landEmitter)
     }, 10000)
   }
   if(type === 'groundDisturbanceLeft') {
-    const landEmitter = initEmitter(object, type, { matchObjectColor: true, useUpdateOwnerPos: true }, { hasNoOwner: true })
+    const landEmitter = initEmitter(object, type, { matchObjectColor: true, useUpdateOwnerPos: false }, { hasNoOwner: true })
     setTimeout(() => {
       PIXIMAP.deleteEmitter(landEmitter)
     }, 10000)
+  }
+  if(type === 'groundDisturbanceRight2') {
+    const landEmitter = initEmitter(object, type, { matchObjectColor: true, useUpdateOwnerPos: false }, { hasNoOwner: true })
+    setTimeout(() => {
+      PIXIMAP.deleteEmitter(landEmitter)
+    }, 1000)
+  }
+  if(type === 'groundDisturbanceLeft2') {
+    const landEmitter = initEmitter(object, type, { matchObjectColor: true, useUpdateOwnerPos: false }, { hasNoOwner: true })
+    setTimeout(() => {
+      PIXIMAP.deleteEmitter(landEmitter)
+    }, 1000)
   }
 }
 
