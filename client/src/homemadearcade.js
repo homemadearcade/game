@@ -46,6 +46,5 @@ JETPACK!!!
 Shoot bouncing ball
 
 //TAGS
-  groundDisturbanceOnHeroEnterLeave
   shrink down and shake until destroyed ( shrink other directions maybe too?)
 */

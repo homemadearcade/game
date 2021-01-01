@@ -81,8 +81,49 @@ class NotificationsControl{
   }
 
   onHeroTouchStart(hero, object) {
-    // console.log(object)
-    // AUDIO.play('')
+    if(!object) return
+    if(object.tags.groundDisturbanceOnHeroTouchStart || object.tags.water) {
+      if(hero.velocityX > hero.velocityY) {
+        if(hero.velocityX > 0) {
+          PIXIMAP.onFakeObjectAnimation('groundDisturbanceRight', { ...hero, angle: global.degreesToRadians(90), x: hero.x + (hero.width/2), color: object.color || GAME.world.defaultObjectColor })
+          PIXIMAP.onFakeObjectAnimation('groundDisturbanceLeft', { ...hero, angle: global.degreesToRadians(90), x: hero.x + (hero.width/2), color: object.color || GAME.world.defaultObjectColor })
+        } else {
+          PIXIMAP.onFakeObjectAnimation('groundDisturbanceRight', { ...hero, angle: global.degreesToRadians(270), x: hero.x + (hero.width/2), color: object.color || GAME.world.defaultObjectColor })
+          PIXIMAP.onFakeObjectAnimation('groundDisturbanceLeft', { ...hero, angle: global.degreesToRadians(270), x: hero.x + (hero.width/2), color: object.color || GAME.world.defaultObjectColor })
+        }
+      } else {
+        if(hero.velocityY > 0) {
+          PIXIMAP.onFakeObjectAnimation('groundDisturbanceRight', { ...hero, angle: global.degreesToRadians(180), y: hero.y + (hero.height/2), color: object.color || GAME.world.defaultObjectColor })
+          PIXIMAP.onFakeObjectAnimation('groundDisturbanceLeft', { ...hero, angle: global.degreesToRadians(180), y: hero.y + (hero.height/2), color: object.color || GAME.world.defaultObjectColor })
+        } else {
+          PIXIMAP.onFakeObjectAnimation('groundDisturbanceRight', { ...hero, y: hero.y + (hero.height/2), color: object.color || GAME.world.defaultObjectColor })
+          PIXIMAP.onFakeObjectAnimation('groundDisturbanceLeft', { ...hero, y: hero.y + (hero.height/2), color: object.color || GAME.world.defaultObjectColor })
+        }
+      }
+    }
+  }
+
+  onHeroTouchEnd(hero, object) {
+    if(!object) return
+    if(object.tags.groundDisturbanceOnHeroTouchEnd || object.tags.water) {
+      if(hero.velocityX > hero.velocityY) {
+        if(hero.velocityX > 0) {
+          PIXIMAP.onFakeObjectAnimation('groundDisturbanceRight', { ...hero, angle: global.degreesToRadians(90), x: hero.x + (hero.width/2), color: object.color || GAME.world.defaultObjectColor })
+          PIXIMAP.onFakeObjectAnimation('groundDisturbanceLeft', { ...hero, angle: global.degreesToRadians(90), x: hero.x + (hero.width/2), color: object.color || GAME.world.defaultObjectColor })
+        } else {
+          PIXIMAP.onFakeObjectAnimation('groundDisturbanceRight', { ...hero, angle: global.degreesToRadians(270), x: hero.x + (hero.width/2), color: object.color || GAME.world.defaultObjectColor })
+          PIXIMAP.onFakeObjectAnimation('groundDisturbanceLeft', { ...hero, angle: global.degreesToRadians(270), x: hero.x + (hero.width/2), color: object.color || GAME.world.defaultObjectColor })
+        }
+      } else {
+        if(hero.velocityY > 0) {
+          PIXIMAP.onFakeObjectAnimation('groundDisturbanceRight', { ...hero, angle: global.degreesToRadians(180), y: hero.y + (hero.height/2), color: object.color || GAME.world.defaultObjectColor })
+          PIXIMAP.onFakeObjectAnimation('groundDisturbanceLeft', { ...hero, angle: global.degreesToRadians(180), y: hero.y + (hero.height/2), color: object.color || GAME.world.defaultObjectColor })
+        } else {
+          PIXIMAP.onFakeObjectAnimation('groundDisturbanceRight', { ...hero, y: hero.y + (hero.height/2), color: object.color || GAME.world.defaultObjectColor })
+          PIXIMAP.onFakeObjectAnimation('groundDisturbanceLeft', { ...hero, y: hero.y + (hero.height/2), color: object.color || GAME.world.defaultObjectColor })
+        }
+      }
+    }
   }
 
   onHeroShootBullet(hero) {

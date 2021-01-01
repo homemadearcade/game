@@ -260,6 +260,8 @@ function setDefault() {
     explodeOnDestroy: false,
     spinOffOnDestroy: false,
     poweredUp: false,
+    groundDisturbanceOnHeroTouchStart: false,
+    groundDisturbanceOnHeroTouchEnd: false,
   }
 
   global.animationTags = {
