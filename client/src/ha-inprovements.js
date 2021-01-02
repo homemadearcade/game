@@ -10,6 +10,9 @@ Remember that fullstack guys random theater generator - you're close
 and randomize perhaps the camera filter!! <--- yes on camera filter and also dont forget about camera shakes too, those are good animations,
 RANDOMIZE EASE! remember ease..
 
+Randomize hero physics
+
+
 //////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////
@@ -60,6 +63,8 @@ Win/Lose States that can connect to the meta of the engine ( picking new game or
 ////////////////////////////////
 COMBAT UPGRADE
 ////////////////////////////////
+Magic bar for MODS and for bullets and what not, how to REFRESH certain sub object powers you feel me?
+
 Main questions for this upgrade is
   -- How to detect the destroyer! Thats key... how does _destroyedById work -- by weapon, by bullet, by player?
   -- How much damage does it do?
@@ -165,6 +170,7 @@ send clones power like that one game I made
 
 //MODS
 Metal mario! How did I not think of this. Sink and don't drown
+Fast fast cap..? Like mario racoon essentially, gives you better soaring and speed?
 
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////

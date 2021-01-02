@@ -246,7 +246,36 @@ global.local.on('onFirstPageGameLoaded', () => {
             emitter: true,
           },
           opacity: 0,
-          emitterType: 'fireball'
+          emitterType: 'fireBall'
+        }
+      },
+      actionState: {}
+    },
+    richochetGun: {
+      "relativeX": 5.311320754717144,
+      "relativeY": -19.329999815742894,
+      "relativeWidth": -28,
+      "relativeHeight": -20,
+      "width": 4,
+      "height": 12,
+      tags: { rotateable: true, relativeToAngle: true, relativeToDirection: true, pickupable: true, pickupOnHeroInteract: true, equipOnPickup: true, onMapWhenEquipped: true },
+      actionButtonBehavior: 'shoot',
+      actionProps: {
+        debounceTime: 1.2,
+        shootVelocity: 600,
+        // shootRadius: global.radianCircle,
+        shootBulletsPerRound: 1,
+        bulletJSON: {
+          tags: {
+            monsterDestroyer: true,
+            moving: true,
+            emitter: true,
+            gravityY: true,
+            richochet: true,
+          },
+          bouncyness: 20,
+          opacity: 0,
+          emitterType: 'fireBall'
         }
       },
       actionState: {}

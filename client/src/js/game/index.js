@@ -282,6 +282,7 @@ class Game{
     // if you are a player and you dont already have a hero from the server ask for one
     if(GAME.heros[HERO.id]) {
       global.local.emit('onHeroFound', GAME.heros[HERO.id])
+      global.socket.emit('editHero', {id: HERO.id, user: global.user})
     } else {
       if(PAGE.role.isHost) global.user.isHost = true
       global.socket.emit('askJoinGame', HERO.id, heroName, global.user)

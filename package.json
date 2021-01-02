@@ -41,6 +41,7 @@
     "classnames": "^2.2.6",
     "clean-webpack-plugin": "^3.0.0",
     "collisions": "^2.0.13",
+    "combination-lock-react": "^1.0.3",
     "cookie": "0.4.0",
     "cookie-parser": "1.4.4",
     "copy-webpack-plugin": "^5.0.4",

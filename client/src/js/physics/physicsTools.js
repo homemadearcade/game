@@ -99,6 +99,11 @@ function heroCorrection(hero) {
     heroPO.y = hero.y
   }
 
+  if(hero.mod().tags['skipCorrectionPhase']) {
+    applyCorrection(hero, heroPO)
+    return
+  }
+
   PHYSICS.system.update()
   heroCorrectionPhase(false, 1)
   PHYSICS.system.update()
@@ -424,33 +429,46 @@ function objectCorrection(po, final) {
     let prevVelocityY = po.gameObject.velocityY
     let prevVelocityX = po.gameObject.velocityX
 
-    if(result.overlap_y === 1) {
-      // if(po.gameObject.velocityY > 0) {
-        po.gameObject.velocityY = 0
-        po.gameObject.onObstacle = true
-      // }
-    } else if(result.overlap_y === -1){
-      // if(po.gameObject.velocityY < 0)
-       po.gameObject.velocityY = 0
-    }
-    if(result.overlap_x === 1) {
-      // if(po.gameObject.velocityX > 0)
-      po.gameObject.velocityX = 0
-    } else if(result.overlap_x === -1){
-      // if(po.gameObject.velocityX < 0)
-      po.gameObject.velocityX = 0
+
+    if(po.gameObject.mod().bouncyness) {
+      if(po.gameObject.tags.rotateable) {
+        if(po.gameObject.tags.richochet) {
+          po.gameObject.angle+=global.degreesToRadians(global.getRandomInt(0, 180))
+        } else {
+          po.gameObject.angle+=global.degreesToRadians(180)
+        }
+        po.gameObject.velocityAngle = (po.gameObject.velocityAngle * po.gameObject.mod().bouncyness)
+
+      } else {
+        if(result.overlap_y === 1 || result.overlap_y === -1) {
+          po.gameObject.velocityY = (prevVelocityY * po.gameObject.mod().bouncyness * -1)
+        }
+        if(result.overlap_x === 1 || result.overlap_x === -1) {
+          po.gameObject.velocityX = (prevVelocityX * po.gameObject.mod().bouncyness * -1)
+        }
+      }
+    } else {
+      if(result.overlap_y === 1) {
+        // if(po.gameObject.velocityY > 0) {
+          po.gameObject.velocityY = 0
+          po.gameObject.onObstacle = true
+        // }
+      } else if(result.overlap_y === -1){
+        // if(po.gameObject.velocityY < 0)
+         po.gameObject.velocityY = 0
+      }
+      if(result.overlap_x === 1) {
+        // if(po.gameObject.velocityX > 0)
+        po.gameObject.velocityX = 0
+      } else if(result.overlap_x === -1){
+        // if(po.gameObject.velocityX < 0)
+        po.gameObject.velocityX = 0
+      }
     }
     po.x = correction.x
     po.y = correction.y
 
-    if(po.gameObject.mod().bouncyness) {
-      if(result.overlap_y === 1 || result.overlap_y === -1) {
-        po.gameObject.velocityY = (prevVelocityY * po.gameObject.mod().bouncyness * -1)
-      }
-      if(result.overlap_x === 1 || result.overlap_x === -1) {
-        po.gameObject.velocityX = (prevVelocityY * po.gameObject.mod().bouncyness * -1)
-      }
-    }
+
   }
 
   if(final) {

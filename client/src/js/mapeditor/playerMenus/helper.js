@@ -134,6 +134,11 @@ export async function handleExtraMenuClicks(key, objectSelected, openColorPicker
         LIVEEDITOR.open({}, 'daynightcycle')
         return
     }
+
+    if (key === "name-game") {
+        modals.nameGame(objectSelected)
+        return
+    }
     if (key === "name-object") {
         modals.nameObject(objectSelected)
         return
@@ -243,6 +248,21 @@ export async function handleExtraMenuClicks(key, objectSelected, openColorPicker
     if (key === 'position-grid') {
         startRelativeDrag(objectSelected, { snapToGrid: true })
         return
+    }
+
+    if(key === 'edit-puzzle-password') {
+      const { value: puzzlePassword } = await Swal.fire({
+        title: 'Edit Puzzle Password',
+        input: 'text',
+        inputAttributes: {
+          autocapitalize: 'off'
+        },
+        inputValue: objectSelected.puzzlePassword || "",
+        showCancelButton: true,
+        confirmButtonText: 'Next',
+      })
+
+      if(puzzlePassword) MAPEDITOR.networkEditObject(objectSelected, { puzzlePassword })
     }
 
     if(key === 'rename-sub-object') {

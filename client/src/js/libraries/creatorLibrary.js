@@ -183,6 +183,15 @@ function onFirstPageGameLoaded() {
       libraryId:'mario',
       ...toggleMod('mario')
     },
+    jetpack: {
+      label: 'Jetpack',
+      columnName: 'Hero',
+      columnExclusiveToggle: true,
+      toggleId: 'jetpack',
+      libraryName:'modLibrary',
+      libraryId:'jetpack',
+      ...toggleMod('jetpack')
+    },
     kirby: {
       label: 'Kirby',
       columnName: 'Hero',
@@ -284,6 +293,14 @@ function onFirstPageGameLoaded() {
       libraryName:'subObjectLibrary',
       libraryId:'fireballGun',
       ...toggleSubObject('fireballGun')
+    },
+    richochetGun: {
+      label: 'Richochet Gun',
+      columnName: 'Equip',
+      toggleId: 'richochetGun',
+      libraryName:'subObjectLibrary',
+      libraryId:'richochetGun',
+      ...toggleSubObject('richochetGun')
     },
     randomGun: {
       label: 'Random Gun',
@@ -452,6 +469,8 @@ function onFirstPageGameLoaded() {
     welcomer: true,
     spin: true,
     mario: true,
+    richochetGun: true,
+    jetpack: true,
     zelda: true,
     asteroids: true,
     car: true,

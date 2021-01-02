@@ -18,12 +18,20 @@ global.local.on('onFirstPageGameLoaded', () => {
     },
     standingNPC: {
       objectType: 'plainObject',
-      heroDialogue: [{...global.defaultDialogue}],
+      heroDialogueSets: {
+        "default": {
+          "dialogue": [{...global.defaultDialogue}]
+        }
+      },
       tags: { obstacle: true, talker: true, talkOnHeroInteract: true },
     },
     wanderingNPC: {
       objectType: 'plainObject',
-      heroDialogue: [{...global.defaultDialogue}],
+      heroDialogueSets: {
+        "default": {
+          "dialogue": [{...global.defaultDialogue}]
+        }
+      },
       tags: { obstacle: true, wander: true, moving: true, talker: true, talkOnHeroInteract: true },
     },
     light: {
@@ -124,7 +132,11 @@ global.local.on('onFirstPageGameLoaded', () => {
     		"targetResetEveryRound": true,
     		"autoTalkOnInteractable": true
     	},
-      heroDialogue: [{...global.defaultDialogue}],
+      heroDialogueSets: {
+        "default": {
+          "dialogue": [{...global.defaultDialogue}]
+        }
+      },
     	"subObjects": {
     		"awarenessTriggerArea": {
     			"objectType": "subObject",

@@ -55,6 +55,10 @@ function setHeroWalkingSound (hero) {
 }
 
 class NotificationsControl{
+  onPuzzleSolved(object, hero) {
+    global.local.emit('onSendNotification', { playerUIHeroId: hero.id, logRecipientId: hero.id, toast: true, log: true, text: 'Puzzle Solved'})
+  }
+
   onHeroDeposit(hero, newObject) {
     if(hero.id === HERO.id) AUDIO.play(GAME.theme.audio.onHeroDrop)
 
@@ -83,7 +87,7 @@ class NotificationsControl{
   onHeroTouchStart(hero, object) {
     if(!object) return
     if(object.tags.groundDisturbanceOnHeroTouchStart || object.tags.water) {
-      let suffix = ''
+      let suffix = '2'
       // if(hero.mod().tags.gravityY || GAME.world.tags.allMovingObjectsHaveGravityY) suffix = '2'
       if(Math.abs(hero.velocityX) > Math.abs(hero.velocityY) || Math.abs(hero._flatVelocityX) > Math.abs(hero._flatVelocityY)) {
         if(hero.velocityX > 0 || hero._flatVelocityX > 0) {
@@ -108,7 +112,7 @@ class NotificationsControl{
   onHeroTouchEnd(hero, object) {
     if(!object) return
     if(object.tags.groundDisturbanceOnHeroTouchEnd || object.tags.water) {
-      let suffix = ''
+      let suffix = '2'
       // if(hero.mod().tags.gravityY || GAME.world.tags.allMovingObjectsHaveGravityY) suffix = '2'
       if(Math.abs(hero.velocityX) > Math.abs(hero.velocityY) || Math.abs(hero._flatVelocityX) > Math.abs(hero._flatVelocityY)) {
         if(hero.velocityX > 0 || hero._flatVelocityX > 0) {

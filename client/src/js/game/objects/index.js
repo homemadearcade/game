@@ -21,8 +21,8 @@ class Objects{
     global.defaultObject = {
       velocityX: 0,
       velocityY: 0,
-      velocityMax: 100,
-      velocityInitial: 100,
+      velocityMax: 700,
+      velocityInitial: 120,
       subObjects: {},
       objectType: 'plainObject',
       defaultSprite: 'solidcolorsprite',
@@ -195,6 +195,9 @@ class Objects{
     let properties = {
       id: object.id,
       objectType: object.objectType,
+
+      puzzleCombination: object.puzzleCombination,
+      puzzlePassword: object.puzzlePassword,
 
       velocityMax: object.velocityMax,
       gravityVelocityY: object.gravityVelocityY,
@@ -493,6 +496,10 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
       interactions.push({text: 'Complete Quest', tag: 'completeQuestOnHeroInteract', interaction: 'completeQuest'})
     }
 
+    if(object.mod().tags['puzzleStartOnHeroInteract']) {
+      interactions.push({text: 'Solve Puzzle', tag: 'puzzleStartOnHeroInteract', interaction: 'puzzleStart'})
+    }
+
     if((object.mod().tags['giveQuestOnHeroInteract'] && object.mod().tags['questGiver'])) {
       interactions.push({text: 'Get Quest', tag: 'giveQuestOnHeroInteract', interaction: 'giveQuest'})
     }
@@ -597,6 +604,8 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
     if(object.tags['updateHeroOnHeroInteract'] && object.tags.heroUpdate) return true
 
     if(object.tags['talkOnHeroInteract'] && object.tags.talker) return true
+
+    if(object.tags['puzzleStartOnHeroInteract']) return true
 
     if(object.tags['pickupOnHeroInteract'] && object.tags.pickupable) return true
 
@@ -1433,6 +1442,13 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
   onDestroySpawnIds(objectId) {
     const object = OBJECTS.getObjectOrHeroById(objectId)
     destroySpawnIds(object)
+  }
+  onPuzzleSolved(object, hero) {
+    if(object.mod().tags.spawnAllInHeroInventoryOnPuzzleSolved && hero) spawnAllNow(object, hero)
+    if(object.mod().tags.destroyOnPuzzleSolved) {
+      object._destroy = true
+      object._destroyedById = hero.id
+    }
   }
 
 

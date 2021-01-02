@@ -105,6 +105,25 @@ function updatePosition(object, delta) {
   //   }
   // }
 
+
+  // needs to be here so it can be calcualte into set
+  let gravityVelocityY = object.gravityVelocityY
+  if(!gravityVelocityY) gravityVelocityY = GAME.world.gravityVelocityY
+  if(!gravityVelocityY) gravityVelocityY = 1000
+
+  let applyWorldGravity = false
+  if(GAME.world.tags.allMovingObjectsHaveGravityY && object.mod().tags.moving && !object.mod().tags.ignoreWorldGravity) {
+    applyWorldGravity = true
+  }
+
+  if(object._skipNextGravity) {
+    object._skipNextGravity = false
+  } else if(object.tags && object.mod().tags.gravityY || applyWorldGravity) {
+    let distance = (object.velocityY * delta) +  ((gravityVelocityY * (delta * delta))/2)
+    object.y += distance
+    if(allowGravity) object.velocityY += (gravityVelocityY * delta)
+  }
+
   if(object.mod().tags.rotateable && typeof object.velocityAngle === 'number') setAngleVelocity(object)
 
   let isXWithinMaxVelocity = false
@@ -140,22 +159,6 @@ function updatePosition(object, delta) {
   //   }
   // }
 
-  let gravityVelocityY = object.gravityVelocityY
-  if(!gravityVelocityY) gravityVelocityY = GAME.world.gravityVelocityY
-  if(!gravityVelocityY) gravityVelocityY = 1000
-
-  let applyWorldGravity = false
-  if(GAME.world.tags.allMovingObjectsHaveGravityY && object.mod().tags.moving && !object.mod().tags.ignoreWorldGravity) {
-    applyWorldGravity = true
-  }
-
-  if(object._skipNextGravity) {
-    object._skipNextGravity = false
-  } else if(object.tags && object.mod().tags.gravityY || applyWorldGravity) {
-    let distance = (object.velocityY * delta) +  ((gravityVelocityY * (delta * delta))/2)
-    object.y += distance
-    if(allowGravity) object.velocityY += (gravityVelocityY * delta)
-  }
 
   const maxVelocityY = object.mod().velocityMax + (object.mod().velocityMaxYExtra || 0)
   if(object.velocityY) {

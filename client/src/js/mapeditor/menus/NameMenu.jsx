@@ -27,7 +27,7 @@ export default class NameMenu extends React.Component{
 
   render() {
     return <Menu onClick={this._handleNameMenuClick}>
-      <MenuItem key="name-object">Give Name</MenuItem>
+      <MenuItem key="name-object">Change Name</MenuItem>
       <MenuItem key="name-position-center">Position Name in Center</MenuItem>
       <MenuItem key="name-position-above">Position Name above</MenuItem>
       <MenuItem key="name-position-none">Dont show name on map</MenuItem>

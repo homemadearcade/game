@@ -152,6 +152,7 @@ export default class SmartMenu extends React.Component {
           <SequencesMenu objectSelected={objectSelected} subObject={subObject}/>
         </SubMenu>}
         {<MenuItem key="edit-all-json">Edit JSON</MenuItem>}
+        {objectSelected.tags.puzzleStartOnHeroInteract && <MenuItem key="edit-puzzle-password">Edit Puzzle Password</MenuItem>}
         <MenuItem key="edit-descriptors">Edit Descriptors</MenuItem>
         {objectSelected.tags.moving && <MenuItem key="open-live-physics">Edit Physics</MenuItem>}
         {objectSelected.tags.light && <MenuItem key="open-live-light">Edit Light</MenuItem>}

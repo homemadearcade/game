@@ -75,6 +75,26 @@ global.local.on('onFirstPageGameLoaded', () => {
         velocityMax: 480,
       }
     },
+    jetpack: {
+      modId: 'jetpack',
+      effectJSON: {
+        zButtonBehavior: 'accelerateUp',
+        tags: {
+          gravityY: true,
+          disableUpKeyMovement: true,
+        },
+        velocityMax: 480,
+        velocityDelta: 800,
+        gravityVelocityY: 300,
+      }
+    },
+    shrink: {
+      modId: 'shrink',
+      effectJSON: {
+        width: 16,
+        height: 16,
+      }
+    },
     snake: {
       modId: 'snake',
       modEndOthers: true,

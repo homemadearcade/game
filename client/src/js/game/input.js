@@ -113,7 +113,8 @@ function setDefault() {
     'teleportDash': 'Dash ( Teleport )',
     'groundJump': 'Jump ( On Ground )',
     'floatJump': 'Jump ( On Ground or In Air )',
-    'wallJump': 'Jump ( on Ground or On Wall )'
+    'wallJump': 'Jump ( on Ground or On Wall )',
+    'accelerateUp': 'Jet Pack'
   }
 }
 
@@ -348,6 +349,10 @@ function handleActionButtonBehavior(hero, action, delta) {
 
     hero.velocityAngle += (moddedHero.velocityDelta || 400) * delta
   }
+
+  if(action === 'accelerateUp' && delta) {
+    hero.velocityY -= (moddedHero.velocityDelta || 400) * delta
+  }
   if(action === 'deccelerateToZero' && delta) {
     actionFired = true
 
@@ -376,11 +381,11 @@ function handleActionButtonBehavior(hero, action, delta) {
       return
     }
     if(hero.velocityAngle > 0) {
-      hero.velocityAngle -= (moddedHero.velocityDelta || 400)  * delta * 4
+      hero.velocityAngle -= (moddedHero.velocityDelta || 400)  * delta * 8
       return
     }
     if(hero.velocityAngle < 0) {
-      hero.velocityAngle += (moddedHero.velocityDelta || 400)  * delta * 4
+      hero.velocityAngle += (moddedHero.velocityDelta || 400)  * delta * 8
       return
     }
   }

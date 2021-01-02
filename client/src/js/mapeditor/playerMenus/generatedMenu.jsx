@@ -84,23 +84,105 @@ export default class GeneratedMenu extends React.Component {
 
   _generateContextMenuItems(objectMenuItems, heroMenuItems, worldMenuItems = {}) {
     // <MenuItem> key=action </MenuItem>
+    const { objectSelected } = this.props
     const objectMenuObj = { baseLevelMenu: [] }
     const heroMenuObj = { baseLevelMenu: [] }
     const worldMenuObj = { baseLevelMenu: [] }
+
+    Object.keys(global.playerMenuLibrary).forEach(itemName => {
+      const item = global.playerMenuLibrary[itemName]
+      item.addThisItem = false
+    })
 
     Object.keys(objectMenuItems).forEach(itemName => {
       if(objectMenuItems[itemName] == false) return
       const item = global.playerMenuLibrary[itemName]
       if(!item) return console.log(itemName)
-      if (item.hasOwnProperty('subMenu')) {
-        if (!objectMenuObj[item.subMenu]) {
-          objectMenuObj[item.subMenu] = { submenuKey: item.subMenu, subMenuItems: [] }
-          objectMenuObj['baseLevelMenu'].push({ subMenuKey: item.subMenu })
-        }
-        objectMenuObj[item.subMenu].subMenuItems.push(item)
-      } else {
-        objectMenuObj['baseLevelMenu'].push(item)
+
+      item.addThisItem = true
+    })
+
+    Object.keys(global.playerMenuLibrary).forEach(itemName => {
+      const item = global.playerMenuLibrary[itemName]
+      const baseLevelMenu = objectMenuObj['baseLevelMenu']
+
+      let addThisItem = item.addThisItem
+      if(item.propertiesRelated) {
+        item.propertiesRelated.forEach((prop) => {
+          let val = objectSelected[prop]
+          if(val) {
+            if(typeof val === 'string' && val.length) addThisItem = true
+            if(typeof val === 'object' && Object.keys(val).length) addThisItem = true
+          }
+        })
       }
+
+      if(item.tagsRelated) {
+        item.tagsRelated.forEach((tag) => {
+          if(objectSelected.tags && objectSelected.tags[tag]) addThisItem = true
+        })
+      }
+
+      if(item.tagsNeeded) {
+        item.tagsNeeded.forEach((tag) => {
+          if(objectSelected.tags && !objectSelected.tags[tag]) addThisItem = false
+        })
+      }
+
+      if(item.propertiesRelated) {
+        item.propertiesRelated.forEach((prop) => {
+          let val = objectSelected[prop]
+          if(val) {
+            if(typeof val === 'string' && val.length) addThisItem = true
+            if(typeof val === 'object' && Object.keys(val).length) addThisItem = true
+            if(Array.isArray(val) && val.length) addThisItem = true
+
+          }
+        })
+      }
+
+      if(item.propertiesNeeded) {
+        item.propertiesNeeded.forEach((prop) => {
+          let val = objectSelected[prop]
+          if(val) {
+            if(typeof val === 'string' && !val.length) addThisItem = false
+            if(typeof val === 'object' && !Object.keys(val).length) addThisItem = false
+            if(Array.isArray(val) && !val.length) addThisItem = false
+
+          }
+        })
+      }
+
+      if(item.propertiesNegating) {
+        item.propertiesNegating.forEach((prop) => {
+          let val = objectSelected[prop]
+          if(val) {
+            if(typeof val === 'string' && val.length) addThisItem = false
+            if(typeof val === 'object' && Object.keys(val).length) addThisItem = false
+            if(Array.isArray(val) && val.length) addThisItem = false
+
+          }
+        })
+      }
+
+      item.addThisItem = addThisItem
+    })
+
+    Object.keys(global.playerMenuLibrary).forEach(itemName => {
+      const item = global.playerMenuLibrary[itemName]
+
+      if(item.addThisItem) {
+        if (item.hasOwnProperty('subMenu')) {
+          if (!objectMenuObj[item.subMenu]) {
+            objectMenuObj[item.subMenu] = { submenuKey: item.subMenu, subMenuItems: [] }
+            objectMenuObj['baseLevelMenu'].push({ subMenuKey: item.subMenu })
+          }
+          objectMenuObj[item.subMenu].subMenuItems.push(item)
+        } else {
+          objectMenuObj['baseLevelMenu'].push(item)
+        }
+      }
+
     })
 
     Object.keys(heroMenuItems).forEach(itemName => {
@@ -243,19 +325,20 @@ export default class GeneratedMenu extends React.Component {
 
     if (objectSelected.tags && objectSelected.tags.hero) {
       return <Menu onClick={this._handleMenuClick}>
-        <MenuItem>{objectSelected.name ? objectSelected.name : null}</MenuItem>
+        {objectSelected.name && <MenuItem className="bold-menu-item" key="name-object">{objectSelected.name}</MenuItem>}
         {this._renderGeneratedMenu(heroMenuObj)}
       </Menu>
     }
 
     if (objectSelected.id) {
       return <Menu onClick={this._handleMenuClick}>
-        <MenuItem>{objectSelected.name ? objectSelected.name : null}</MenuItem>
+        {objectSelected.name && <MenuItem className="bold-menu-item" key="name-object">{objectSelected.name}</MenuItem>}
         {this._renderGeneratedMenu(objectMenuObj)}
       </Menu>
     }
 
     return <Menu onClick={this._handleMenuClick}>
+      <MenuItem className="bold-menu-item" key="name-game">{GAME.metadata.name ? GAME.metadata.name : null}</MenuItem>
       {this._renderGeneratedMenu(worldMenuObj)}
     </Menu>
 

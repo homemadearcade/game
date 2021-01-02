@@ -264,6 +264,14 @@ function setDefault() {
     groundDisturbanceOnHeroTouchEnd: false,
   }
 
+  global.puzzleTags = {
+    puzzleStartOnHeroInteract: {
+      relatedTags: ['destroyOnPuzzleSolved', 'spawnAllInHeroInventory']
+    },
+    destroyOnPuzzleSolved: false,
+    spawnAllInHeroInventoryOnPuzzleSolved: false,
+  }
+
   global.animationTags = {
     shake: false,
     realRotate: false,
@@ -336,6 +344,7 @@ function setDefault() {
   }
 
   global.defaultTags = {
+    ...global.puzzleTags,
     ...global.physicsTags,
     ...global.spawnZoneTags,
     ...global.resourceZoneTags,

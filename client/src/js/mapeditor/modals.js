@@ -211,6 +211,17 @@ function nameObject(object, cb) {
   })
 }
 
+function nameGame(object, cb) {
+  PAGE.typingMode = true
+  openNameGameModal(object, (result) => {
+    if(result && result.value[0] && result.value[0].length) {
+      GAME.metadata.name = result.value[0]
+      global.socket.emit('editMetadata', GAME.metadata)
+    }
+    PAGE.typingMode = false
+  })
+}
+
 function editQuest(hero, quest, cb) {
   PAGE.typingMode = true
   openQuestModal(quest, ({value}) => {
@@ -521,6 +532,29 @@ function openEditCodeModal(title, code, cb) {
   });
 }
 
+
+function openNameGameModal(object, cb) {
+  Swal.fire({
+    title: 'Name this game',
+    showClass: {
+      popup: 'animated fadeInDown faster'
+    },
+    hideClass: {
+      popup: 'animated fadeOutUp faster'
+    },
+    // html:'<canvas id="swal-canvas" width="200" height="200"></canvas>',
+    input: 'text',
+    inputValue: GAME.metadata.name,
+    inputAttributes: {
+      autocapitalize: 'off'
+    },
+    preConfirm: (result) => {
+      return [
+        result,
+      ]
+    }
+  }).then(cb)
+}
 function openNameObjectModal(object, cb) {
   Swal.fire({
     title: 'Name object',
@@ -532,6 +566,7 @@ function openNameObjectModal(object, cb) {
     },
     // html:'<canvas id="swal-canvas" width="200" height="200"></canvas>',
     input: 'text',
+    inputValue: object.name,
     inputAttributes: {
       autocapitalize: 'off'
     },
@@ -873,6 +908,7 @@ export default {
   editEffectJSON,
   writeDialogue,
   nameObject,
+  nameGame,
   openEditDescriptorsModal,
   openEditTagsModal,
 

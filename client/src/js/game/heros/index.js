@@ -912,7 +912,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
   }
 
   onHeroTouchEnd(hero, object) {
-    if(!object) return 
+    if(!object) return
     if(object.tags.cameraZoomToFit) {
       hero.zoomMultiplier = hero._prevZoomMultiplier
     }
@@ -955,6 +955,8 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
   }
 
   onUpdateHero(hero, keysDown, delta) {
+
+
     const zoomTarget = hero.mod().zoomMultiplierTarget
     if(zoomTarget) {
       if(zoomTarget > hero.zoomMultiplier) {
@@ -976,6 +978,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
 
     if(!hero.tags) console.log('REAL ROTATE', hero)
     if(!hero.tags) return
+
     if(hero.mod().tags.realRotate) {
       if(typeof hero.angle != 'number') hero.angle = 0
       hero.angle += 1 * delta

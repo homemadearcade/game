@@ -26,40 +26,50 @@ global.local.on('onGameReady', () => {
     },
     particleEmitterRandomize: {
       useExistingMenu: 'EmitterRandomizeMenu',
-      title: 'Particle Emitter'
+      title: 'Particle Emitter',
+      tagsRelated: ['emitter', 'poweredUp', 'explodeOnDestroy'],
+      propertiesRelated: ['emitterTypeAction', 'emitterTypeExplosion']
     },
     chooseColor: {
       title: 'Choose Color',
       action: 'select-color',
       dontCloseMenu: true,
+      propertiesNegating: ['constructParts']
     },
     randomizeSprite: {
       title: 'Randomize Sprite',
-      action: 'randomize-from-descriptors'
+      action: 'randomize-from-descriptors',
+      propertiesNeeded: ['descriptors']
     },
     chooseSprite: {
       title: 'Choose Sprite',
       action: 'choose-from-recommended-sprites',
+      propertiesNegating: ['constructParts']
     },
     drawSprite: {
       title: 'Draw Sprite',
       action: 'open-edit-sprite',
+      propertiesNegating: ['constructParts']
     },
     name: {
       useExistingMenu: 'Name',
-      title: 'Name'
+      title: 'Name',
     },
     dialogue: {
       useExistingMenu: 'Dialogue',
-      title: 'Dialogue'
+      title: 'Dialogue',
+      tagsRelated: ['talker'],
+      tagsNeeded: ['talker']
     },
     dialogueSets: {
       useExistingMenu: 'DialogueSets',
-      title: 'Dialogue Sets'
+      title: 'Dialogue Sets',
+      tagsNeeded: ['talker']
     },
     popover: {
       useExistingMenu: 'Popover',
-      title: 'Popover'
+      title: 'Popover',
+      propertiesRelated: ['popoverText']
     },
     // properties: {
     //   useExistingMenu: 'Properties',
@@ -71,7 +81,13 @@ global.local.on('onGameReady', () => {
     },
     spriteMenu: {
       useExistingMenu: 'SpriteChoose',
-      title: 'Sprite'
+      title: 'Sprite',
+      propertiesNegating: ['constructParts']
+    },
+    puzzlePassword: {
+      action: 'edit-puzzle-password',
+      title: 'Edit Puzzle Password',
+      tagsRelated: ['puzzleStartOnHeroInteract']
     },
     physicsLive: {
       action: 'open-physics-live-menu',

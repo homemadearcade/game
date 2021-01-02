@@ -1,3 +1,8 @@
+import React from "react";
+import ReactDOM from "react-dom";
+import CombinationLock from "combination-lock-react";
+import 'combination-lock-react/dist/index.css'
+
 import render from './render'
 import Camera from './camera.js'
 import Shake from './cameraShake.js'
@@ -6,11 +11,73 @@ import constellation from './constellation.js'
 import './pixi/index'
 import { drawShadow } from './shadow.js'
 
+// import "./styles.css";
 global.MAP = {
   canvas: null,
   ctx: null,
   camera: new Camera()
 }
+
+MAP.onHeroStartPuzzle = function(hero, object) {
+  if(hero.id === HERO.id) {
+    if(object.mod().puzzleCombination) {
+      Swal.fire({
+        title: 'Solve Number Combination',
+        showClass: {
+          popup: 'animated fadeInDown faster'
+        },
+        hideClass: {
+          popup: 'animated fadeOutUp faster'
+        },
+        html:`<div id='ask-solve-number-combination'></div>`,
+      })
+
+      function App() {
+        return (
+          <div className="combinationlockapp">
+            <CombinationLock
+              combination={object.mod().puzzleCombination}
+              height={80}
+              onMatch={() => {
+                global.emitEvent('onPuzzleSolved', object, hero)
+                setTimeout(() => {
+                  Swal.close()
+                }, 100)
+              }}
+            />
+          </div>
+        );
+      }
+
+      const rootElement = document.getElementById("ask-solve-number-combination");
+      ReactDOM.render(<App/>, rootElement);
+    } else if(object.mod().puzzlePassword){
+      Swal.fire({
+        title: 'Enter Password',
+        showClass: {
+          popup: 'animated fadeInDown faster'
+        },
+        hideClass: {
+          popup: 'animated fadeOutUp faster'
+        },
+        input: 'text',
+        // inputLabel: 'Password',
+        // inputPlaceholder: 'Enter your password',
+        // inputAttributes: {
+        //   maxlength: 10,
+        //   autocapitalize: 'off',
+        //   autocorrect: 'off'
+        // },
+
+      }).then((result) => {
+        if(result.value === object.mod().puzzlePassword) {
+          global.emitEvent('onPuzzleSolved', object, hero)
+        }
+      })
+    }
+  }
+}
+
 
 MAP.onPlayerIdentified = function() {
   // Canvas SETUP

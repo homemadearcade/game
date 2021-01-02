@@ -324,7 +324,9 @@ PIXIMAP.onRender = function(delta, force) {
           newCameraLock = object
         }
 
-        if(PAGE.resizingMap) updatePixiObject(object)
+        if(PAGE.resizingMap) {
+          updatePixiObject(object)
+        }
 
         const pixiChild = PIXIMAP.childrenById[object.id]
         if(pixiChild) {

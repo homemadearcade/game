@@ -261,6 +261,10 @@ export function triggerInteraction(interaction, hero, collider, result, options)
     triggered = true
   }
 
+  if(interactionName === 'puzzleStart') {
+    global.emitEvent('onHeroStartPuzzle', hero, collider)
+  }
+
   if(collider.tags && triggered && collider.mod().tags['destroyAfterTrigger']) {
     collider._remove = true
   }
