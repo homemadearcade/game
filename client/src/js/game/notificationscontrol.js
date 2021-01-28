@@ -488,6 +488,44 @@ class NotificationsControl{
   onHeroCanInteract(hero, object) {
     if(hero.id === HERO.id) AUDIO.play(GAME.theme.audio.onHeroCanInteract)
   }
+
+  onEditObjects(objects) {
+    // PIXIMAP.onObjectAnimation = function(type, objectId, options = {}) {
+    //
+    // if(options.animationType === 'particle') {
+    //   const customEmitter = initEmitter(object, options.libraryAnimationName, options, { hasNoOwner: true })
+    //   setTimeout(() => {
+    //     PIXIMAP.deleteEmitter(customEmitter)
+    //   }, 10000)
+    // }
+    if(objects.length == 1) {
+      PIXIMAP.onObjectAnimation('editObject', objects[0].id)
+    }
+  }
+
+  onAddSubObject(owner) {
+    PIXIMAP.onObjectAnimation('editObject', owner.id)
+  }
+  onRemoveSubObject(owner) {
+    PIXIMAP.onObjectAnimation('editObject', owner.id)
+  }
+  onEditSubObject(ownerId) {
+    PIXIMAP.onObjectAnimation('editObject', ownerId)
+  }
+
+  onEditHero(hero) {
+    PIXIMAP.onObjectAnimation('editObject', hero.id)
+  }
+
+  onEditTrigger(ownerId) {
+    PIXIMAP.onObjectAnimation('editObject', ownerId)
+  }
+  onAddTrigger(ownerId) {
+    PIXIMAP.onObjectAnimation('editObject', ownerId)
+  }
+  onDeleteTrigger(ownerId) {
+    PIXIMAP.onObjectAnimation('editObject', ownerId)
+  }
 }
 
 global.NOTIFICATIONSCONTROL = new NotificationsControl()

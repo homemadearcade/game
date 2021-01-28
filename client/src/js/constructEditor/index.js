@@ -75,6 +75,7 @@ class ConstructEditor {
       structure: false,
       hero: false
     }
+    this.nodesHistory = []
   }
 
   cancel() {

@@ -298,6 +298,8 @@ export default class GeneratedMenu extends React.Component {
         return (<EmitterRandomizeMenu key={key} objectSelected={objectSelected} ></EmitterRandomizeMenu>
         )
       default:
+        if(key === 'open-edit-sprite' && (objectSelected.width >= 64 || objectSelected.height >= 320 || objectSelected.constructParts)) return null
+
         return (<MenuItem className={classnames({'dont-close-menu': menuData.dontCloseMenu})} key={menuData.action}>{menuData.title}</MenuItem>)
     }
   }

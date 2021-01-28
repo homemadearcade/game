@@ -253,6 +253,9 @@ global.isObjectSelectable = function(gameObject) {
   if(PAGE.role.isAdmin && (gameObject.tags.invisible || gameObject.defaultSprite === 'invisible' || gameObject.opacity === 0) && (EDITOR.preferences.selectable.invisible === false)) {
     return false
   }
+  if(!PAGE.role.isAdmin && (gameObject.tags.invisible || gameObject.defaultSprite === 'invisible' || gameObject.opacity === 0)) {
+    return false
+  }
   // if(gameObject.id !== 'globalConstructStationaryBackground' && gameObject.tags.background && (!PAGE.role.isAdmin || EDITOR.preferences.selectable.background === false)) return false
   // if(gameObject.id !== 'globalConstructStationaryForeground' && gameObject.tags.foreground && (!PAGE.role.isAdmin || EDITOR.preferences.selectable.foreground === false)) return false
   // if(gameObject.id === 'globalConstructStationaryObstacle' && (!PAGE.role.isAdmin || EDITOR.preferences.selectable.structure === false)) return false

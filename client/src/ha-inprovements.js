@@ -12,7 +12,6 @@ RANDOMIZE EASE! remember ease..
 
 Randomize hero physics
 
-
 //////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////
@@ -40,24 +39,6 @@ EDITOR UPGRADES
 ////////////////////////////////////////
 INSTEAD OF GUIDANCE - Green dot in corner of tools if the current editing hero has this option...
                       Allow right clikcing to add the option to the heros object
-
-////////////////////////////////
-////////////////////////////////
-QUESTS UPGRADE
-////////////////////////////////
-Add Quest starting, completing, and succeeding to effects
-Auto Complete/Fail quest based on goals the quest has
-View Quests UI in player menu
-onSucceedSequence, onFailSequence
-
-////////////////////////////////
-////////////////////////////////
-GOALS UPGRADE
-////////////////////////////////
-Goal number -> as many as possible ( so its just tracking basically )
-Chances -> fail on death
-a Score parameter on heros and objects? ( score holding vs score giving )
-Win/Lose States that can connect to the meta of the engine ( picking new game or replaying current game )
 
 ////////////////////////////////
 ////////////////////////////////
@@ -122,8 +103,6 @@ LIBRARY IDEAS
 // WEAPONS
 various guns
   - BOOMERANG
-  Bouncing ball action - mario fireball
-bullets that ping around!
 bullets that stop short before they are destroyed, so its like a limited range bullet. you can basically make a stopVelocityBeforeDestroyTimerComplete tag
 Maybe dual stick shooter potential?
 

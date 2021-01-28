@@ -54,7 +54,7 @@ export function onHeroTrigger(hero, collider, result, options = { fromInteractBu
           hero.choiceOptions.forEach((interaction) => {
             if(interaction.id !== choiceId) return
             removeEventListener()
-            hero.flags.showDialogue = false
+            hero.flags.showChoices = false
             hero.flags.paused = false
             hero.dialogueName = null
             hero.dialogueId = null

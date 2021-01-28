@@ -86,6 +86,11 @@ class MapEditor {
     })
     document.body.addEventListener("dblclick", (e) => {
       if(!global.isClickingMap(e.target.className)) return
+      if(!PAGE.role.isAdmin && MAPEDITOR.objectHighlighted && MAPEDITOR.objectHighlighted.id) {
+        MAPEDITOR.openConstructEditor(MAPEDITOR.objectHighlighted)
+        return
+      }
+
       if(!GAME.heros[HERO.id].flags.allowObjectSelection) return
       if(MAPEDITOR.objectHighlighted && MAPEDITOR.objectHighlighted.id) {
         OBJECTS.editingId = MAPEDITOR.objectHighlighted.id
@@ -115,7 +120,11 @@ class MapEditor {
 
     const removeSaveListener = global.local.on('onConstructEditorSave', ({ constructParts, x, y, width, height }) => {
       if (constructParts) {
-        global.socket.emit('editObjects', [{ id: object.id, constructParts, spawnPointX: x, spawnPointY: y, x, y, width, height }])
+        if(constructParts.length == 1) {
+          global.socket.emit('editObjects', [{ id: object.id, constructParts: null, spawnPointX: x, spawnPointY: y, x, y, width, height }])
+        } else {
+          global.socket.emit('editObjects', [{ id: object.id, constructParts, spawnPointX: x, spawnPointY: y, x, y, width, height }])
+        }
       }
     })
     const removeListener = global.local.on('onConstructEditorClose', () => {

@@ -57,6 +57,19 @@ export default class GuidanceLive extends React.Component {
   render() {
     const { objectSelected } = this.state
 
+    // <DatFolder title='Sprite Sheets'>
+    //   <DatFolder title='Kenney'>
+    //     {this._renderLibraryArray('spriteSheets', Object.keys(global.spriteSheetLibrary).filter(name => name.indexOf('kenney') >= 0))}
+    //   </DatFolder>
+    //   <DatFolder title='Oryx'>
+    //     {this._renderLibraryArray('spriteSheets', Object.keys(global.spriteSheetLibrary).filter(name => name.indexOf('oryx') >= 0))}
+    //   </DatFolder>
+    //   <DatFolder title='Other'>
+    //     {this._renderLibraryArray('spriteSheets', Object.keys(global.spriteSheetLibrary).filter(name => {
+    //       return name.indexOf('kenney') == -1 && name.indexOf('oryx') == -1
+    //     }))}
+    //   </DatFolder>
+    // </DatFolder>
     return (
       <div className='GuidanceLive'>
         <DatGui labelWidth="64%" data={this.state} onUpdate={this.handleUpdate}>
@@ -73,19 +86,6 @@ export default class GuidanceLive extends React.Component {
             </DatFolder>
             <DatFolder title='World'>
               {this._renderLibrary('worldMenu', global.worldMenuLibrary)}
-            </DatFolder>
-          </DatFolder>
-          <DatFolder title='Sprite Sheets'>
-            <DatFolder title='Kenney'>
-              {this._renderLibraryArray('spriteSheets', Object.keys(global.spriteSheetLibrary).filter(name => name.indexOf('kenney') >= 0))}
-            </DatFolder>
-            <DatFolder title='Oryx'>
-              {this._renderLibraryArray('spriteSheets', Object.keys(global.spriteSheetLibrary).filter(name => name.indexOf('oryx') >= 0))}
-            </DatFolder>
-            <DatFolder title='Other'>
-              {this._renderLibraryArray('spriteSheets', Object.keys(global.spriteSheetLibrary).filter(name => {
-                return name.indexOf('kenney') == -1 && name.indexOf('oryx') == -1
-              }))}
             </DatFolder>
           </DatFolder>
           <DatFolder title='Other'>

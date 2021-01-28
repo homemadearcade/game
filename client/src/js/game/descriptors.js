@@ -144,7 +144,7 @@ function setDefault() {
     Pot: {},
     Cauldron: {},
     Box: {},
-    Fountain: {}
+    Fountain: {},
     "Weather Vane": {},
   }
 

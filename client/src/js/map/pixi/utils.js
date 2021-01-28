@@ -501,7 +501,14 @@ function updateFilters(pixiChild, object) {
   // } else {
   //   removeFilter(pixiChild, GlowFilter)
   // }
+
+  if(object.tags.glowing) {
+    pixiChild.filters = [new GlowFilter(12, 0xFFFFFF)];
+  } else {
+    removeFilter(pixiChild, GlowFilter)
+  }
 }
+
 
 function addFilter(pixiChild, filter) {
   if(!pixiChild.filters) {

@@ -246,6 +246,18 @@ class Game{
   onAskJoinGame(heroId, role, user) {
     let hero = GAME.heros[heroId]
     if(!hero) {
+      let blockJoin = false
+      if(role === 'homemadeArcade') {
+        Object.keys(GAME.heros).forEach((heroId) => {
+          let hero = GAME.heros[heroId]
+          if(hero.heroSummonType === 'homemadeArcade') blockJoin = true
+        })
+      }
+      if(blockJoin) {
+        alert ('There is already a homemadeArcade player')
+        return false
+      }
+
       hero = HERO.summonFromGameData({id: heroId, heroSummonType: role })
       hero.id = heroId
       hero.user = user

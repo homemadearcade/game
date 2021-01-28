@@ -757,9 +757,7 @@ PIXIMAP.onObjectAnimation = function(type, objectId, options = {}) {
 
   if(!options) options = {}
 
-  const stage = getGameObjectStage(object)
-
-  let pixiChild = stage.getChildByName(object.id)
+  let pixiChild = PIXIMAP.childrenById[objectId]
   if(!pixiChild) return
 
   if(type === 'flash' && !pixiChild.animationFlashColor) {
@@ -796,6 +794,15 @@ PIXIMAP.onObjectAnimation = function(type, objectId, options = {}) {
   // fail safe animate the rest
   if(options.animationType === 'particle') {
     const customEmitter = initEmitter(object, options.libraryAnimationName, options, { hasNoOwner: true })
+    setTimeout(() => {
+      PIXIMAP.deleteEmitter(customEmitter)
+    }, 10000)
+  }
+
+  if(type) {
+    options = global.particleEmitterLibrary.addGameLibrary()[type]
+    console.log(options, type)
+    const customEmitter = initEmitter(object,type, options, { hasNoOwner: true })
     setTimeout(() => {
       PIXIMAP.deleteEmitter(customEmitter)
     }, 10000)

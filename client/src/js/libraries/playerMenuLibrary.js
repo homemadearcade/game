@@ -122,7 +122,7 @@ global.local.on('onGameReady', () => {
     showOtherUsersMapHighlight: false,
     constructEditorColor: false,
     constructEditorSprite: false,
-    allowObjectSelection: false,
+    // allowObjectSelection: false,
     canStartStopGame: false,
     canTakeMapSnapshots: false,
     hasManagementToolbar: false,
