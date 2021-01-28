@@ -915,10 +915,10 @@
     lodash "^4.17.19"
     to-fast-properties "^2.0.0"
 
-"@clusterws/cws@0.17.2":
-  version "0.17.2"
-  resolved "https://registry.yarnpkg.com/@clusterws/cws/-/cws-0.17.2.tgz#a1bccec8aabfd5a10840862cba4a0f11f0640a71"
-  integrity sha512-uqXbye9zWPy02J5VNzoWseg+WXSVtv7Kr5N1O2L13EfKhMYevGFeNHoksg90wgYUmHrUYduP2BkQceX5Rz3nzw==
+"@clusterws/cws@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@clusterws/cws/-/cws-3.0.0.tgz#518fc8e7d9066e220f6f6aef3158cc14d5a1e98e"
+  integrity sha512-6RO7IUbSlTO3l8XPN/9g21YGPF4HjfkidDzchkP0h6iwq5jYtji+KUCgyxcSYiuN7aWu8nGJDjBer7XJilPnOg==
 
 "@csstools/convert-colors@^1.4.0":
   version "1.4.0"
@@ -6735,12 +6735,12 @@ negotiator@0.6.2:
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.2.tgz#feacf7ccf525a77ae9634436a64883ffeca346fb"
   integrity sha512-hZXc7K2e+PgeI1eDBe/10Ard4ekbfrrqG8Ep+8Jmf4JID2bNg7NvCPOZN+kfF574pFQI7mum2AUqDidoKqcTOw==
 
-nengi@1.13.1:
-  version "1.13.1"
-  resolved "https://registry.yarnpkg.com/nengi/-/nengi-1.13.1.tgz#00ff18fb9cecfa82005b250516778d3abb16a44d"
-  integrity sha512-YrSCSBUKjpqJI2m0wzvReGHCsJqiFZeLHvze8LuhHnxWjlGosZpwECzuH/Rv4CvQL+XlOq6kym4DsV0zceOXHw==
+nengi@^1.18.0:
+  version "1.18.0"
+  resolved "https://registry.yarnpkg.com/nengi/-/nengi-1.18.0.tgz#6232d639eafd47efa378e0bc60251133c5cb578d"
+  integrity sha512-Wn+aDj9IV+8HP6mLf0oO/H8bfXSN7xItDj8SVbY+kbbblia/YkaRN3s9beAEFaOBFl+8z6gyhFbKW3vDSQ2Rcg==
   dependencies:
-    "@clusterws/cws" "0.17.2"
+    "@clusterws/cws" "^3.0.0"
     esm "^3.2.22"
     utf8 "^3.0.0"
 

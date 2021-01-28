@@ -125,6 +125,7 @@ function setDefault() {
 
   global.projectileTags = {
     destroyOnCollideWithObstacle: false,
+    richochet: false,
   }
 
   global.spawnZoneTags = {
@@ -363,6 +364,7 @@ function setDefault() {
     ...global.animationTags,
     ...global.featureOptimizationTags,
     ...global.proceduralTags,
+    ...global.projectileTags,
     ...global.pathTags,
     ...global.popoverTags,
     ...global.targetTags,

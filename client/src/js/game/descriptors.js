@@ -59,6 +59,9 @@ function setDefault() {
     Tree : {
       children: ['Dead Tree', 'Colored Tree', 'Forest'],
     },
+    'Tree Stump': {},
+    "Campfire": {},
+    "Stone Structure": {},
     'Hill' : {},
     House : {
       children: ['Village'],
@@ -142,12 +145,14 @@ function setDefault() {
     Cauldron: {},
     Box: {},
     Fountain: {}
+    "Weather Vane": {},
   }
 
   global.insideBuildingDescriptors = {
     'Musical Instrument': {
       children: ['Harp', 'Guitar','Drum', 'Flute', 'Piano']
     },
+    "Curtain": {},
     Harp: {},
     Guitar: {},
     Drum: {},
@@ -173,6 +178,9 @@ function setDefault() {
     Chair: {},
     Bench: {},
     Table: {},
+    Bathtub: {},
+    Lamp: {},
+    Lightswitch: {},
     Jewelry: {
       children: ['Necklace', 'Ring', 'Chalice']
     },
@@ -182,6 +190,7 @@ function setDefault() {
     'Kitchen Utensil': {
       children: ['Fork', 'Knife', 'Spoon']
     },
+    "Kitchen Ware": {},
     Fork: {},
     Knife: {},
     Spoon: {},
@@ -208,6 +217,7 @@ function setDefault() {
   }
 
   global.otherDescriptors = {
+    "Animal Trough": {},
     Symbol: {},
     Stick: {},
     Rock: {},
@@ -221,6 +231,9 @@ function setDefault() {
     'Bathroom Item': {
       children: ['Toilet', 'Sink'],
     },
+    Horn: {},
+    Tire: {},
+    Vine: {},
     'Weight': {},
     'Alarm Light': {},
     'Security Camera': {},
@@ -260,6 +273,20 @@ function setDefault() {
     Circle: {},
     Triangle: {},
     Square: {},
+    Poop: {},
+    "Tunnel Entrance": {},
+    Stardust: {},
+    Portal: {},
+    Galaxy: {},
+    Marionette: {},
+    Dumpster: {},
+    Dollar: {},
+    Microscrope: {},
+    Vial: {},
+    Mask: {},
+    Locker: {},
+    Microphone: {},
+    Log: {},
   }
 
   global.weaponDescriptors = {
@@ -290,6 +317,7 @@ function setDefault() {
     Staff: {},
     Wand: {},
     Mace: {},
+    Lance: {},
     Gun: {
       dontShowAdminsInSpriteSheetEditor: true,
       children: ['Cannon', 'Shotgun', 'Pistol', 'Rocket Launcher', 'Rifle', 'Machine Gun'],
@@ -418,6 +446,8 @@ function setDefault() {
     'Arrow Tile': {},
     'Warp Tile': {},
     'Button Tile': {},
+    Rope: {},
+    Tentacles: {},
   }
 
   global.transportDescriptors = {
@@ -453,6 +483,7 @@ function setDefault() {
       children: ['Pirate', 'Barbarian','Baby','Astronaut','Soldier','Space','Wizard','King','Queen','Archer','Warrior','Rogue','Angel','Thief','Ninja','Musician','Engineer','Athlete','Priest','Nun','Cop','Citizen','Villager','Detective','Knight',
       ],
     },
+    Dancer: {},
     Baby: {},
     Astronaut: {},
     Soldier: {},
@@ -489,8 +520,10 @@ function setDefault() {
     // },
     /// sound oriented
     Bird: {
-      children: ['Goose', 'Chicken', 'Crow', 'Bat', 'Duck', 'Ostrich', 'Owl', 'Penguin', 'Seagull',],
+      children: ['Vulture', 'Flamingo', 'Swan', 'Goose', 'Chicken', 'Crow', 'Bat', 'Duck', 'Ostrich', 'Owl', 'Penguin', 'Seagull',],
     },
+
+
     'Farm Animal': {
       dontShowAdminsInSpriteSheetEditor: true,
       children: [ 'Sheep','Donkey', 'Horse', 'Chicken', 'Cow', 'Goat', 'Bull', 'Pig', 'Yak']
@@ -509,15 +542,17 @@ function setDefault() {
         'Cobra',
         'Crocodile',
         'Frog',
-        'Turtles',
+        'Turtle',
         'Snake'
       ]
     },
 
     // fish
     Fish: {
-      children: ['Anglerfish','Mola Mola', 'Stingray', 'Anglerfish', 'Shark', 'Eel', 'Jellyfish', 'Crayfish', 'Whale', 'Squid', 'Seahorse']
+      children: ['Starfish', 'Piranha', 'Anglerfish','Mola Mola', 'Stingray', 'Anglerfish', 'Shark', 'Eel', 'Jellyfish', 'Crayfish', 'Whale', 'Squid', 'Seahorse']
     },
+    "Piranha": {},
+
     'Anglerfish': {},
     'Mola Mola': {},
     Shark: {},
@@ -529,8 +564,9 @@ function setDefault() {
     Squid: {},
     Seahorse: {},
     Stingray: {},
-
+    Starfish: {},
     // other
+    Rhino: {},
     'Musk Ox': {},
     Hippo: {},
     Bison: {},
@@ -538,6 +574,9 @@ function setDefault() {
     Panda: {},
     Elephant: {},
     Gorilla: {},
+    Hog: {},
+
+
 
     // pets
     Cat: {},
@@ -557,6 +596,11 @@ function setDefault() {
     Badger: {},
     Fox: {},
     Boar: {},
+    Porcupine: {},
+    Snail: {},
+    Beaver: {},
+    Reindeer: {},
+    Beehive: {},
 
     // Bugs
     Bug: {
@@ -571,7 +615,8 @@ function setDefault() {
         'Leech',
         'Beetle',
         'Grasshopper',
-        'Worm'
+        'Worm',
+        'Praying Mantis'
       ]
     },
     Ant: {},
@@ -585,9 +630,12 @@ function setDefault() {
     Beetle: {},
     Grasshopper: {},
     Worm: {},
+    "Praying Mantis": {},
+
     'Mythical Beast': {
       children: ['Manticore', 'Cockatrice', 'Cyclops', 'Unicorn', 'Dragon', 'Mermaid', 'Vampire', 'Mermaid', 'Demon', 'Golem', 'Griffin', 'Ent', 'Hag', 'Harpie', 'Siren', 'Genie', 'Minotaur', 'Troll', 'Centaur'],
     },
+
     /// mythical
     Unicorn: {},
     Dragon: {},
@@ -605,6 +653,9 @@ function setDefault() {
     'Frogman': {},
     'Sabretooth Tiger': {},
     "Will o' The Wisp": {},
+    "Lizard Person": {},
+    "Chupacabra": {},
+
   }
 
   global.reptileDescriptors = {
@@ -612,7 +663,7 @@ function setDefault() {
     Cobra: {},
     Crocodile: {},
     Frog: {},
-    Turtles: {},
+    Turtle: {},
     Snake: {},
   }
 
@@ -648,7 +699,10 @@ function setDefault() {
     Penguin: {},
     Seagull: {},
     Egg: {},
-    Goose: {}
+    Goose: {},
+    Flamingo: {},
+    Swan: {},
+    Vulture: {},
   }
 
   global.monsterDescriptors = {
@@ -656,6 +710,7 @@ function setDefault() {
       dontShowAdminsInSpriteSheetEditor: true,
       children: ['Mummy', 'ElementalMonster', 'Evil Eyeball', 'Skeleton Monster', 'Slime Monster','Bug', 'Ghost', 'Goblin', 'Undead', 'Zombie', 'Machine', 'Mythical Beast', ...global.animalDescriptors['Mythical Beast'].children],
     },
+    "Hooded Ghost": {},
     // Pest: {},
     'Skeleton Monster': {},
     Mummy: {},
@@ -734,6 +789,10 @@ function setDefault() {
     'Alt1': {},
     'Alt2': {},
     'Duplicate': {},
+    "Platform": {},
+    "Locked": {},
+    Barred: {},
+    Radioactive: {},
     Small: {
       audioRelated: true,
       dontShowAdminsInSpriteSheetEditor: true,
@@ -745,6 +804,7 @@ function setDefault() {
   }
 
   global.livingCreatureModifiers = {
+    'With Saddle': {},
     'Holding Weapon': {},
     Ghost: {
       searchable: true,

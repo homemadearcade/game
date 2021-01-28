@@ -179,6 +179,7 @@ const mongoOpts = {
   keepAlive: 1, connectTimeoutMS: 30000,
 }
 const mongoUrl = process.env.DATABASE
+
 mongoose
   .connect(mongoUrl, mongoOpts)
   .catch(e => console.log(e))
