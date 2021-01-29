@@ -11,7 +11,7 @@ export default class GameTagMenu extends React.Component{
       const { networkEditObject } = MAPEDITOR
 
       if(key === 'create-game-tag') {
-        modals.addGameTag()
+        modals.addGameTag(objectSelected)
         return
       }
 

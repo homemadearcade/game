@@ -427,7 +427,7 @@ function openAddHook(cb) {
 }
 
 
-function addGameTag() {
+function addGameTag(objectSelected) {
   Swal.fire({
     title: 'What is the name of the new group?',
     showClass: {
@@ -443,6 +443,7 @@ function addGameTag() {
   }).then((result) => {
     if(result && result.value && result.value.length) {
       global.socket.emit('addGameTag', result.value)
+      MAPEDITOR.networkEditObject(objectSelected, {tags: { [result.value]: true }})
     }
   })
 }

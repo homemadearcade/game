@@ -385,8 +385,16 @@ PIXIMAP.onRender = function(delta, force) {
       PIXIMAP.foregroundStage.pivot.y = camera.y
     }
     if(PIXIMAP.backgroundStage) {
-      PIXIMAP.backgroundOverlay.transform.scale.x = (PIXIMAP.app.view.width/PIXIMAP.backgroundOverlay.texture._frame.width)
-      PIXIMAP.backgroundOverlay.transform.scale.y = (PIXIMAP.app.view.width/PIXIMAP.backgroundOverlay.texture._frame.width)
+      PIXIMAP.backgroundOverlay.x = GAME.grid.startX * camera.multiplier
+      PIXIMAP.backgroundOverlay.y = GAME.grid.startY * camera.multiplier
+
+      PIXIMAP.backgroundStage.pivot.x = camera.x
+      PIXIMAP.backgroundStage.pivot.y = camera.y
+
+      let width = GAME.grid.width * GAME.grid.nodeSize
+      let height = GAME.grid.height * GAME.grid.nodeSize
+      PIXIMAP.backgroundOverlay.transform.scale.x = (width/PIXIMAP.backgroundOverlay.texture._frame.width) * camera.multiplier
+      PIXIMAP.backgroundOverlay.transform.scale.y = (height/PIXIMAP.backgroundOverlay.texture._frame.width)  * camera.multiplier
     }
     if(PIXIMAP.emitterBackgroundStage) {
       PIXIMAP.emitterBackgroundStage.pivot.x = camera.x

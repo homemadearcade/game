@@ -45,6 +45,21 @@ export default class Popover extends React.Component {
       })
 
     })
+
+    this._popoverDataUpdate = global.local.on('onNetworkUpdateHero', (objectUpdated) => {
+      console.log(objectUpdated)
+      if(objectUpdated.id === object.id) {
+        let shouldUpdatePopover = false
+        global.popoverProperties.forEach((prop) => {
+          if(prop.tag) {
+            if(objectUpdated[prop.prop] && objectUpdated.mod().tags && objectUpdated.mod().tags[prop.tag]) shouldUpdatePopover = true
+          } else {
+            if(objectUpdated[prop]) shouldUpdatePopover = true
+          }
+        })
+        if(shouldUpdatePopover) this.forceUpdate()
+      }
+    })
   }
 
   componentWillUnmount() {
@@ -104,6 +119,7 @@ export default class Popover extends React.Component {
     }
 
     if(object.popoverText) {
+      console.log(object.popoverText)
       render.push(object.popoverText)
     }
 

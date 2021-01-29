@@ -75,6 +75,7 @@ export default class CreateObject extends React.Component {
   render() {
     return <Menu onClick={this._handleCreateObjectClick}>
       <MenuItem key={'select-from-library'}>Select from Library</MenuItem>
+      <MenuItem key={'create-object'}>Object</MenuItem>
       <MenuItem key={'create-obstacle'}>Obstacle</MenuItem>
       <MenuItem key={'create-invisible'}>Invisible</MenuItem>
       <MenuItem key={'create-emitter'}>Emitter</MenuItem>

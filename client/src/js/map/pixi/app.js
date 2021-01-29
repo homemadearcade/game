@@ -123,8 +123,8 @@ const initPixiApp = (canvasRef, onLoad) => {
   PIXIMAP.backgroundStage = new PIXI.display.Layer()
   world.addChild(PIXIMAP.backgroundStage);
   PIXIMAP.backgroundOverlay = new PIXI.Sprite(PIXI.Texture.WHITE)
-  PIXIMAP.backgroundOverlay.transform.scale.x = (PIXIMAP.app.view.width/PIXIMAP.backgroundOverlay.texture._frame.width)
-  PIXIMAP.backgroundOverlay.transform.scale.y = (PIXIMAP.app.view.width/PIXIMAP.backgroundOverlay.texture._frame.width)
+  // PIXIMAP.backgroundOverlay.transform.scale.x = (PIXIMAP.app.view.width/PIXIMAP.backgroundOverlay.texture._frame.width)
+  // PIXIMAP.backgroundOverlay.transform.scale.y = (PIXIMAP.app.view.width/PIXIMAP.backgroundOverlay.texture._frame.width)
   PIXIMAP.backgroundOverlay.tint = parseInt(tinycolor(GAME.world.backgroundColor).toHex(), 16)
   PIXIMAP.backgroundStage.addChild(PIXIMAP.backgroundOverlay)
 

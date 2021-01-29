@@ -27,7 +27,7 @@ function update() {
     ctx.setLineDash([5, 15]);
     [...GAME.heroList, ...GAME.objects].forEach((object) => {
       if(object.removed) return
-      if(object.defaultSprite == 'invisible' || object.tags.invisible || object.tags.hidden || object.opacity == 0) {
+      if(object.defaultSprite == 'invisible' || object.tags.invisible || (PAGE.role.isAdmin && object.tags.hidden) || object.opacity == 0) {
         drawTools.drawObject(ctx, {...object, tags: {  ...object.tags, invisible: false, outline: true }, color: 'rgba(255,255,255,1)'}, camera)
       }
       if(PAGE.role.isAdmin && object.subObjects && EDITOR.preferences.selectable.subObjects) {

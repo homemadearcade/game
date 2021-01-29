@@ -340,7 +340,7 @@ export default class GeneratedMenu extends React.Component {
     }
 
     return <Menu onClick={this._handleMenuClick}>
-      <MenuItem className="bold-menu-item" key="name-game">{GAME.metadata.name ? GAME.metadata.name : null}</MenuItem>
+      {GAME.metadata.name && <MenuItem className="bold-menu-item" key="name-game">{GAME.metadata.name}</MenuItem>}
       {this._renderGeneratedMenu(worldMenuObj)}
     </Menu>
 
