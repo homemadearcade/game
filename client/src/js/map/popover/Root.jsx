@@ -21,6 +21,11 @@ export default class Popover extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    this._popoverDataUpdate()
+    this._popoverDataUpdate2()
+  }
+
   componentDidMount() {
     const { object } = this.props
 
@@ -46,8 +51,7 @@ export default class Popover extends React.Component {
 
     })
 
-    this._popoverDataUpdate = global.local.on('onNetworkUpdateHero', (objectUpdated) => {
-      console.log(objectUpdated)
+    this._popoverDataUpdate2 = global.local.on('onNetworkUpdateHero', (objectUpdated) => {
       if(objectUpdated.id === object.id) {
         let shouldUpdatePopover = false
         global.popoverProperties.forEach((prop) => {

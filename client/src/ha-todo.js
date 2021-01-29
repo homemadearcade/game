@@ -15,6 +15,8 @@ View information popup. Tells the user what is going on behind this object, kind
 
 construct parts animations
 
+win/lose states
+
 ////////////////////////////////
 ////////////////////////////////
 QUESTS UPGRADE
