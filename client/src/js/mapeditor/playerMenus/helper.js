@@ -16,6 +16,7 @@ export async function handleExtraMenuClicks(key, objectSelected, openColorPicker
 
     if(key === 'open-edit-sprite') {
       SPRITEEDITOR.open(objectSelected)
+      networkEditObject(objectSelected, {color: null})
     }
 
     if (key === 'select-color') {

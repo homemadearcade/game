@@ -103,6 +103,11 @@ export default class Creator extends React.Component {
         if(creatorObjectSelected.onCreateObject) {
           creatorObjectSelected.onCreateObject(newObject)
         }
+
+        this.setState({
+          creatorObjectSelected: {},
+          columnsOpen: {},
+        })
       }
 
       if(creatorObjectSelected.onClick) {

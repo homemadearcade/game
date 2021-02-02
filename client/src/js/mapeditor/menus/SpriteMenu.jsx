@@ -17,6 +17,7 @@ export default class SpriteMenu extends React.Component{
 
       if(key === 'open-edit-sprite') {
         SPRITEEDITOR.open(objectSelected)
+        networkEditObject(objectSelected, {color: null})
       }
 
       if(key === 'open-media-manager-sprite-selector') {

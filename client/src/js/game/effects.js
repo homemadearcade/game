@@ -645,6 +645,10 @@ function processEffect(effect, effected, effector, ownerObject) {
       Object.keys(hero.triggers || {}).forEach((triggerName) => {
         hero.triggers[triggerName] = null
       })
+      Object.keys(hero.subObjects || {}).forEach((soName) => {
+        if(soName == 'awarenessTriggerArea' || soName == 'heroInteractTriggerArea') return
+        global.emitEvent('onDeleteSubObject', hero, soName)
+      })
       hero.flags.editAllowedWhenGameStarted = false
     });
     GAME.library.tags = {}

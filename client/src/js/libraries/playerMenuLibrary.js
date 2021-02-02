@@ -157,7 +157,7 @@ global.local.on('onGameReady', () => {
     // color: false,
     descriptors: false,
     name: false,
-    constructEditor: false,
+    // constructEditor: false,
     dialogue: false,
     dialogueSets: false,
     popover: false,

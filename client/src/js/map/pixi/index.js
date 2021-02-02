@@ -777,6 +777,8 @@ PIXIMAP.onObjectAnimation = function(type, objectId, options = {}) {
     setTimeout(() => {
       delete pixiChild.animationColor
     }, options.duration || 50)
+
+    return
   }
 
   if(type === 'explode') {
@@ -790,6 +792,8 @@ PIXIMAP.onObjectAnimation = function(type, objectId, options = {}) {
       PIXIMAP.deleteEmitter(pixiChild.explodeEmitter)
       delete pixiChild.explodeEmitter
     }, 10000)
+
+    return
   }
 
   if(type === 'spinOff') {
@@ -797,6 +801,8 @@ PIXIMAP.onObjectAnimation = function(type, objectId, options = {}) {
     setTimeout(() => {
       PIXIMAP.deleteEmitter(explosionEmitter)
     }, 1000)
+
+    return
   }
 
   // fail safe animate the rest
@@ -805,11 +811,12 @@ PIXIMAP.onObjectAnimation = function(type, objectId, options = {}) {
     setTimeout(() => {
       PIXIMAP.deleteEmitter(customEmitter)
     }, 10000)
+
+    return
   }
 
   if(type) {
     options = global.particleEmitterLibrary.addGameLibrary()[type]
-    console.log(options, type)
     const customEmitter = initEmitter(object,type, options, { hasNoOwner: true })
     setTimeout(() => {
       PIXIMAP.deleteEmitter(customEmitter)
