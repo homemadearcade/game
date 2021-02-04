@@ -123,7 +123,6 @@ export default class Popover extends React.Component {
     }
 
     if(object.popoverText) {
-      console.log(object.popoverText)
       render.push(object.popoverText)
     }
 

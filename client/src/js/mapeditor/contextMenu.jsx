@@ -383,7 +383,7 @@ class contextMenuEl extends React.Component{
 
     if(coloringObject) {
       return <SwatchesPicker
-        color={ coloringObject.color }
+        color={ coloringObject.color ? coloringObject.color : 'white' }
         onChange={ (color) => {
           if(coloringObject == 'worldOverlay') {
             global.socket.emit('updateWorld', {overlayColor: color.hex})
@@ -393,7 +393,14 @@ class contextMenuEl extends React.Component{
             global.socket.emit('updateWorld', {defaultObjectColor: color.hex})
           } else {
             coloringObject.tags.outline = false
-            networkEditObject(coloringObject, {color: color.hex})
+            if(coloringObject.constructParts) {
+              coloringObject.constructParts.forEach((part) => {
+                part.color = color.hex
+              })
+              networkEditObject(coloringObject, {color: color.hex, constructParts: coloringObject.constructParts })
+            } else {
+              networkEditObject(coloringObject, {color: color.hex})
+            }
           }
           this.setState({
             coloringObject: null,

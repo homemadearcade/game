@@ -17,6 +17,10 @@ construct parts animations
 
 win/lose states
 
+TAGS
+Change Hero Spawn Point On Collide
+over one directional collision tags
+
 ////////////////////////////////
 ////////////////////////////////
 QUESTS UPGRADE

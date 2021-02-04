@@ -90,11 +90,14 @@ export default class SmartMenu extends React.Component {
 
     let sprite = null
     if(!isInvisible) {
-      if(objectSelected.constructParts && objectSelected.descriptors) {
-        sprite = <MenuItem key="randomize-from-descriptors">Randomize Sprites</MenuItem>
+      if(objectSelected.constructParts) {
+        sprite = <SubMenu title="Sprite">
+            {objectSelected.descriptors && <MenuItem key="randomize-from-descriptors">Randomize Sprites</MenuItem>}
+            {!isInvisible && <MenuItem key="select-color" className='dont-close-menu'>Color</MenuItem>}
+          </SubMenu>
       } else {
         sprite = <SubMenu title="Sprite">
-          {!isInvisible && !objectSelected.contructParts && <MenuItem key="select-color" className='dont-close-menu'>Color</MenuItem>}
+          {!isInvisible && <MenuItem key="select-color" className='dont-close-menu'>Color</MenuItem>}
           {objectSelected.descriptors && <MenuItem key="choose-from-recommended-sprites">Select From Recommended</MenuItem>}
           <MenuItem key="choose-from-my-sprites">Select From My Sprites</MenuItem>
           <MenuItem key="open-media-manager-sprite-selector">Select From All</MenuItem>

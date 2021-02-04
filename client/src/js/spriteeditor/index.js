@@ -198,6 +198,7 @@ function effectSprite(sprite) {
     sprite.tint = parseInt(tinycolor(SPRITEEDITOR.colorSelected).toHex(), 16)
     sprite.alpha = 1
     sprite.erased = false
+		sprite.prevTint = sprite.tint
   } else if(SPRITEEDITOR.toolSelected == 'eraser') {
     sprite.alpha = 0
     sprite.erased = true
@@ -288,7 +289,7 @@ function allNodesWithinBrush(node, size, fx) {
         // console.log('x2', x2)
         fx(spritesGrid[x2][y])
       }
-      for (let i = 0; i < curr; i++)
+      for (let i = 0; i < size; i++)
       {
           if(spritesGrid[x1]) {
             // console.log('y1', y + i + 1)
