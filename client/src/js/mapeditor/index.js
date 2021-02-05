@@ -120,7 +120,9 @@ class MapEditor {
 
     const removeSaveListener = global.local.on('onConstructEditorSave', ({ constructParts, x, y, width, height }) => {
       if (constructParts) {
-        if(constructParts.length == 1) {
+        if(constructParts.length == 0) {
+          global.socket.emit('deleteObject', object)
+        } else if(constructParts.length == 1) {
           global.socket.emit('editObjects', [{ id: object.id, constructParts: null, spawnPointX: x, spawnPointY: y, x, y, width, height }])
         } else {
           global.socket.emit('editObjects', [{ id: object.id, constructParts, spawnPointX: x, spawnPointY: y, x, y, width, height }])
@@ -165,7 +167,7 @@ class MapEditor {
   }
 
   onUpdate(delta) {
-    if(MAPEDITOR.objectHighlighted) global.socket.emit('sendHeroMapEditor', {x: MAPEDITOR.objectHighlighted.x, y: MAPEDITOR.objectHighlighted.y, width: MAPEDITOR.objectHighlighted.width, height: MAPEDITOR.objectHighlighted.height}, HERO.id)
+    if(MAPEDITOR.objectHighlighted) global.socket.emit('sendHeroMapEditor', {x: MAPEDITOR.objectHighlighted.x, y: MAPEDITOR.objectHighlighted.y, width: MAPEDITOR.objectHighlighted.width, height: MAPEDITOR.objectHighlighted.height, constructParts:MAPEDITOR.objectHighlighted.constructParts }, HERO.id)
   }
 
   startResize(object, options = { snapToGrid: true }) {

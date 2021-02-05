@@ -49,16 +49,17 @@ function update() {
     if(objectHighlighted.tags && (objectHighlighted.defaultSprite === 'invisible' || objectHighlighted.tags.invisible) && objectHighlightedChildren.length === 0 && (!resizingObject || objectHighlighted.id !== resizingObject.id)) {
       let color = 'rgba(255,255,255,0.2)'
       drawTools.drawObject(ctx, {...objectHighlighted, tags: {...objectHighlighted.tags, invisible: false }, color}, camera)
-      drawTools.drawBorder(ctx, {...objectHighlighted, color: 'white'}, camera)
+      drawTools.drawBorder(ctx, {...objectHighlighted, color: 'rgba(200,255,200,1)'}, camera, { thickness: 5})
     } else {
       if(objectHighlighted.constructParts) {
         objectHighlighted.constructParts.forEach((part) => {
           let color = 'white'
-          drawTools.drawBorder(ctx, {...objectHighlighted, ...part, color}, camera)
+          drawTools.drawBorder(ctx, {...objectHighlighted, ...part, color: 'rgba(200,255,200,1)'}, camera, { thickness: 5})
+          // drawTools.drawBorder(ctx, {...objectHighlighted, ...part, color}, camera)
         })
       } else {
         let color = 'white'
-        drawTools.drawBorder(ctx, {...objectHighlighted, color}, camera)
+        drawTools.drawBorder(ctx, {...objectHighlighted, color: 'rgba(200,255,200,1)'}, camera, { thickness: 5})
       }
 
     }
@@ -135,8 +136,16 @@ function update() {
     Object.keys(MAPEDITOR.groupGridHighlights).forEach((heroId) => {
       const highlight = MAPEDITOR.groupGridHighlights[heroId]
       if(heroId !== HERO.originalId) {
-        if(highlight.initials) drawTextCenter(ctx, {...highlight, x: highlight.x + 5 }, 'rgba(200,255,200,1)', highlight.initials, camera)
-        drawTools.drawBorder(ctx, {...highlight, color: 'rgba(200,255,200,1)'}, camera, { thickness: 5})
+          if(highlight.initials) drawTextCenter(ctx, {...highlight, x: highlight.x + 5 }, 'rgba(200,255,200,1)', highlight.initials, camera)
+
+         if(highlight.constructParts) {
+           highlight.constructParts.forEach((part) => {
+             drawTools.drawBorder(ctx, {...highlight, ...part, color: 'rgba(200,255,200,1)'}, camera, { thickness: 5})
+             // drawTools.drawBorder(ctx, {...objectHighlighted, ...part, color}, camera)
+           })
+         } else {
+           drawTools.drawBorder(ctx, {...highlight, color: 'rgba(200,255,200,1)'}, camera, { thickness: 5})
+         }
       }
     });
   }

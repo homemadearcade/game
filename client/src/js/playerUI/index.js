@@ -34,6 +34,12 @@ class PlayerUI {
     }
   }
 
+  onEditHero(hero) {
+    if(hero.id === HERO.id && hero.flags) {
+      setTimeout(() => PLAYERUI.ref.onUpdateState())
+    }
+  }
+
   onUpdatePlayerUI(hero) {
     if(hero.id === HERO.id) {
       PLAYERUI.ref.onUpdateState(hero)

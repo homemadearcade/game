@@ -488,6 +488,10 @@ var onLocalStorageEvent = function(e){
 global.addEventListener('storage', onLocalStorageEvent, false);
 
 setTimeout(() => {
+  if(PAGE.getParameterByName('arcadeMode')) {
+    return
+  }
+
   if(otherPageOpen) {
     alert("Another tab has Homemade Arcade open");
   } else {

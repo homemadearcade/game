@@ -499,31 +499,44 @@ class NotificationsControl{
     //   }, 10000)
     // }
     if(objects.length == 1) {
+      const object = OBJECTS.getObjectOrHeroById(objects[0].id)
+      if(object.tags.invisible) return
       PIXIMAP.onObjectAnimation('editObject', objects[0].id)
     }
   }
 
   onAddSubObject(owner) {
+    if(owner.tags.invisible) return
     PIXIMAP.onObjectAnimation('editObject', owner.id)
   }
   onRemoveSubObject(owner) {
+    if(owner.tags.invisible) return
     PIXIMAP.onObjectAnimation('editObject', owner.id)
   }
   onEditSubObject(ownerId) {
+    const owner = OBJECTS.getObjectOrHeroById(ownerId)
+    if(owner.tags.invisible) return
     PIXIMAP.onObjectAnimation('editObject', ownerId)
   }
 
   onEditHero(hero) {
+    if(hero.tags && hero.tags.invisible) return
     PIXIMAP.onObjectAnimation('editObject', hero.id)
   }
 
   onEditTrigger(ownerId) {
+    const owner = OBJECTS.getObjectOrHeroById(ownerId)
+    if(owner.tags.invisible) return
     PIXIMAP.onObjectAnimation('editObject', ownerId)
   }
   onAddTrigger(ownerId) {
+    const owner = OBJECTS.getObjectOrHeroById(ownerId)
+    if(owner.tags.invisible) return
     PIXIMAP.onObjectAnimation('editObject', ownerId)
   }
   onDeleteTrigger(ownerId) {
+    const owner = OBJECTS.getObjectOrHeroById(ownerId)
+    if(owner.tags.invisible) return
     PIXIMAP.onObjectAnimation('editObject', ownerId)
   }
 }

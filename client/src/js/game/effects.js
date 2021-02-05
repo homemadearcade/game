@@ -653,7 +653,7 @@ function processEffect(effect, effected, effector, ownerObject) {
     });
     GAME.library.tags = {}
     global.allTags = _.cloneDeep(global.tags)
-    GAME.library.sequences = {}
+    GAME.library.sequences = {"items":[{"id":"a","sequenceType":"sequenceCutscene","notificationAllHeros":true,"effectedMainObject":false,"effectedGuestObject":false,"effectedIds":[],"effectedTags":[],"scenes":[{"duration":-1,"text":"","imageUrl":null,"startScreen":true}],"next":"sequential"}],"pauseGame":false,"id":"pregame"}
     global.emitEvent('onNetworkUpdateGameState', GAME.gameState)
     global.emitEvent('onNetworkUpdateHeros', GAME.heroList)
     global.emitEvent('onGameStopped')

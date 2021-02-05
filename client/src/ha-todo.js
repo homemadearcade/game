@@ -13,13 +13,19 @@ autoInteractOnCanHeroInteract for tree and angel
 View information popup. Tells the user what is going on behind this object, kind of satisfying a way to see what is going on
   also helps with debugging
 
-construct parts animations
-
 win/lose states
+
+--
+Allow object library additions to spawn zone
+
+Spawn now effect
+--
 
 TAGS
 Change Hero Spawn Point On Collide
 over one directional collision tags
+Drop equippable items on death
+Drops on death tag
 
 ////////////////////////////////
 ////////////////////////////////

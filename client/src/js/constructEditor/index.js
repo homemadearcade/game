@@ -85,7 +85,7 @@ class ConstructEditor {
   }
 
   close() {
-    document.body.draggable=true
+    // document.body.draggable=true
     clearInterval(this._autoSave)
     // document.body.style.cursor = 'default';
     this.canvas.removeEventListener('mousedown', this._mouseDownListener)
@@ -121,7 +121,7 @@ class ConstructEditor {
   }
 
   start(object, startColor, startAtHero = false) {
-    document.body.draggable=false
+    // document.body.draggable=false
     this._autoSave = setInterval(() => {
       // global.local.emit('onSendNotification', { playerUIHeroId: HERO.id, toast: true, text: 'Drawing Autosaved'})
       this.save()
@@ -186,7 +186,7 @@ class ConstructEditor {
     this.ref.open(color)
     this.selectColor(color)
 
-    if(object.defaultSprite) {
+    if(object.defaultSprite && object.defaultSprite != 'solidcolorsprite') {
       this.ref.setTextureId(object.defaultSprite)
       this.selectedTextureId = object.defaultSprite
     }
