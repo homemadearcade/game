@@ -91,6 +91,7 @@ export default class Toolbar extends React.Component {
             popup: 'animated fadeOutUp faster'
           },
           input: 'text',
+          initialValue: GAME.metadata.name,
           showCancelButton: true,
           confirmButtonText: 'Next',
         })
@@ -108,19 +109,22 @@ export default class Toolbar extends React.Component {
         })
 
         sequenceEditorModals.openImageSelectModal(async (image) => {
-          const { value: yes } = await Swal.fire({
-            title: "Are you sure you want to publish? This will create a post in the Homemade Arcade",
-            showClass: {
-              popup: 'animated fadeInDown faster'
-            },
-            hideClass: {
-              popup: 'animated fadeOutUp faster'
-            },
-            showCancelButton: true,
-            confirmButtonText: 'Publish',
-          })
+          // const { value: yes } = await Swal.fire({
+          //   title: "Are you sure you want to publish? This will create a post in the Homemade Arcade",
+          //   showClass: {
+          //     popup: 'animated fadeInDown faster'
+          //   },
+          //   hideClass: {
+          //     popup: 'animated fadeOutUp faster'
+          //   },
+          //   showCancelButton: true,
+          //   confirmButtonText: 'Publish',
+          // })
 
           if(name && description && yes && image) {
+            GAME.metadata.name = name
+            global.socket.emit('editMetadata', GAME.metadata)
+
             PAGE.publishGame({ name, description, imageUrl: image.url })
           }
         })
@@ -186,7 +190,6 @@ export default class Toolbar extends React.Component {
             } else {
               global.socket.emit('editHero', { id: hero.id, tags: { adminInch: true } })
             }
-            global.socket.emit()
           }}
         ></ToolbarButton>
           <ToolbarButton iconName="fa-eye-slash"
@@ -195,9 +198,8 @@ export default class Toolbar extends React.Component {
               if(hero.tags.invisible) {
                 global.socket.emit('editHero', { id: hero.id, tags: { invisible: false } })
               } else {
-                global.socket.emit('editHero', { id: hero.id, tags: { invisible: true, obstacle: false } })
+                global.socket.emit('editHero', { id: hero.id, tags: { invisible: true } })
               }
-              global.socket.emit()
             }}
           ></ToolbarButton>
           {this._renderZoomTools()}
