@@ -182,9 +182,14 @@ class ConstructEditor {
     }
     document.body.addEventListener("mouseup", this._mouseUpListener)
 
-    let color = startColor || EDITOR.preferences.creatorColorSelected || object.color || GAME.world.defaultObjectColor || global.defaultObjectColor
+    let color = startColor || object.color || EDITOR.preferences.creatorColorSelected || GAME.world.defaultObjectColor || global.defaultObjectColor
     this.ref.open(color)
     this.selectColor(color)
+
+    if(object.defaultSprite) {
+      this.ref.setTextureId(object.defaultSprite)
+      this.selectedTextureId = object.defaultSprite
+    }
 
     this.nodesHistory = []
     global.local.emit('onConstructEditorStart', object)

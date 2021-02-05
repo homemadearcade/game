@@ -144,7 +144,7 @@ export default class Root extends React.Component{
       {spriteSelection && this._renderSpriteSelector()}
       <br/>
       <ToolbarButton active={toolSelected === 'paintBrush'} iconName="fa-paint-brush" onClick={this._paintBrushClick}/>
-      <ToolbarButton active={toolSelected === 'eyeDropper'} iconName="fa-eye-dropper" onClick={this._eyeDropperClick}/>
+      {PAGE.role.isAdmin && <ToolbarButton active={toolSelected === 'eyeDropper'} iconName="fa-eye-dropper" onClick={this._eyeDropperClick}/>}
       <ToolbarButton active={toolSelected === 'eraser'} iconName="fas fa-eraser" onClick={this._eraserClick}/>
       <ToolbarRow active={toolSelected.indexOf('fill') >= 0} iconName='fa-fill'>
         <ToolbarButton active={toolSelected === 'fill-area'} iconName="fa-fill-drip" onClick={() => {

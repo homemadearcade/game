@@ -34,7 +34,6 @@ global.local.on('onGameReady', () => {
       title: 'Choose Color',
       action: 'select-color',
       dontCloseMenu: true,
-      // propertiesNegating: ['constructParts']
     },
     randomizeSprite: {
       title: 'Randomize Sprite',
@@ -49,7 +48,7 @@ global.local.on('onGameReady', () => {
     drawSprite: {
       title: 'Draw Sprite',
       action: 'open-edit-sprite',
-      propertiesNegating: ['constructParts']
+      // propertiesNegating: ['constructParts']
     },
     name: {
       useExistingMenu: 'Name',

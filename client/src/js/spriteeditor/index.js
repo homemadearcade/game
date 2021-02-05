@@ -34,8 +34,12 @@ class HMap {
 }
 
 class SpriteEditor{
-  open(gameObject) {
+  open(gameObject, cb) {
     this.objectSelected = gameObject
+
+		if(gameObject.constructParts) {
+			gameObject = gameObject.constructParts[0]
+		}
 
     this.toolSelected = 'color'
     this.colorSelected = '#FFFFFF'
@@ -57,6 +61,7 @@ class SpriteEditor{
       if(!result || !result.value) return
       this.saveAndUploadAppStage(() => {
         app.stage.removeChildren()
+				cb()
       })
     })
 
@@ -72,10 +77,10 @@ class SpriteEditor{
 
     app.renderer.preserveDrawingBuffer = true
 
-    const texture = PIXIMAP.textures[gameObject.sprite]
+    const texture = PIXIMAP.textures[gameObject.defaultSprite]
     let pixiSprite = new PIXI.Sprite(texture)
     if(gameObject.color) pixiSprite.tint = parseInt(tinycolor(gameObject.color).toHex(), 16)
-    if(!gameObject.color && gameObject.sprite === 'solidcolorpixiSprite') pixiSprite.tint = parseInt(tinycolor(GAME.world.defaultObjectColor || window.defaultObjectColor).toHex(), 16)
+    if(!gameObject.color && gameObject.defaultSprite === 'solidcolorpixiSprite') pixiSprite.tint = parseInt(tinycolor(GAME.world.defaultObjectColor || window.defaultObjectColor).toHex(), 16)
     pixiSprite.transform.scale.x = (gameObject.width/pixiSprite.texture._frame.width)
     pixiSprite.transform.scale.y = (gameObject.height/pixiSprite.texture._frame.height)
     app.stage.addChild(pixiSprite)
@@ -181,7 +186,14 @@ class SpriteEditor{
         }
         // global.local.emit('onSendNotification', { playerUIHeroId: HERO.id, toast: true, text: 'Image saved'})
         global.socket.emit('updateLibrary', { images: GAME.library.images })
-        global.socket.emit('editObjects', [{id: SPRITEEDITOR.objectSelected.id, defaultSprite: name}])
+				if(SPRITEEDITOR.objectSelected.constructParts) {
+					SPRITEEDITOR.objectSelected.constructParts.forEach((part) => {
+						part.defaultSprite = name
+					})
+					global.socket.emit('editObjects', [{id: SPRITEEDITOR.objectSelected.id, defaultSprite: name}])
+				} else {
+					global.socket.emit('editObjects', [{id: SPRITEEDITOR.objectSelected.id, defaultSprite: name}])
+				}
         cb()
         // console.log(name, url)
       })

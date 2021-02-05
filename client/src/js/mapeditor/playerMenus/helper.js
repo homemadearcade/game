@@ -15,8 +15,15 @@ export async function handleExtraMenuClicks(key, objectSelected, openColorPicker
     const { spawnLimit, spawnPoolInitial, spawnWaitTimer } = objectSelected
 
     if(key === 'open-edit-sprite') {
-      SPRITEEDITOR.open(objectSelected)
-      networkEditObject(objectSelected, {color: null})
+      SPRITEEDITOR.open(objectSelected, () => {
+        if(objectSelected.constructParts) {
+          objectSelected.constructParts.forEach((part) => {
+            part.color = null
+          })
+        }
+        networkEditObject(objectSelected, {color: null})
+      })
+
     }
 
     if (key === 'select-color') {
