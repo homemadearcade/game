@@ -3,6 +3,8 @@ import Toolbar from './Toolbar.jsx'
 import DialogueBox from './DialogueBox.jsx'
 import Cutscene from './Cutscene.jsx'
 import Goals from './Goals.jsx'
+import GameOver from './GameOver.jsx'
+
 import InventoryModal from './InventoryModal.jsx'
 import MainMenuModal from './MainMenuModal.jsx'
 import HeroMenuModal from './HeroMenuModal.jsx'
@@ -211,9 +213,11 @@ export default class Root extends React.Component {
     // </div>
 
     const hasDialogue = hero.dialogue && hero.dialogue.length > 0
+
     return (
       <div className="PlayerUI">
         {this._renderFontPreLoad()}
+        {GAME.gameState.gameOver && !GAME.gameState.started && <GameOver/>}
         {hero.flags && hero.flags.showDialogue && hasDialogue && <DialogueBox verticleMiddle dialogue={hero.dialogue} name={hero.dialogueName} id={hero.dialogueId} />}
         {hero.flags && hero.flags.showChoices && !hasDialogue && hero.choiceOptions && <DialogueBox verticleMiddle options={hero.choiceOptions} name={hero.dialogueName} id={hero.dialogueId}/>}
         {hero.flags && hero.flags.showCutscene && hero.cutscenes && <Cutscene scenes={hero.cutscenes} />}

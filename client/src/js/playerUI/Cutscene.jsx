@@ -16,6 +16,7 @@ export default class Cutscene extends React.Component{
   }
 
   render() {
+
     const { scenes } = this.props
 
     const scene = scenes[0]
@@ -27,12 +28,13 @@ export default class Cutscene extends React.Component{
 //            <div className="TextThreeD Cutscene__game-title">{GAME.id}</div>
 
     const height = PIXIMAP.app.screen.height + 45 + 'px'
+
     if(scene.startScreen) {
       return <div style={{height}} className="Cutscene Cutscene--stars">
           <Hastartscreen>
           <div className="Cutscene__game-start-screen" style={{backgroundImage }}>
             <div className="Cutscene__game-presents">{"Homemade Arcade Presents"}</div>
-            <TitleAnimation className="Cutscene__game-title" style={GAME.theme.title.animation} font={GAME.theme.title.font} title={GAME.id}
+            <TitleAnimation className="Cutscene__game-title" style={GAME.theme.title.animation} font={GAME.theme.title.font} title={GAME.metadata.name ? GAME.metadata.name : GAME.id}
               onComplete={() => {
                 this.setState({
                   showAuthorDetails: true

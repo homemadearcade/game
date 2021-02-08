@@ -74,6 +74,13 @@ class Game{
     input.onPlayerIdentified()
   }
 
+  onGameOver() {
+    GAME.onStopGame()
+    setTimeout(() => {
+      GAME.gameState.gameOver = true
+    }, 101)
+  }
+
   onUpdate(delta) {
     GAME.heroList = []
     HERO.forAll((hero) => {

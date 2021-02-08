@@ -737,6 +737,10 @@ function processEffect(effect, effected, effector, ownerObject) {
       console.log('cannot start goal effect non hero')
     }
   }
+
+  if(effectName === "gameOver") {
+    global.emitGameEvent('onGameOver')
+  }
 }
 
 function getEffectedObjects(effect, mainObject, guestObject, ownerObject) {

@@ -14,7 +14,13 @@ export default function onCombat(hero, collider, result, options) {
       }
 
     } else if(hero.mod().tags['monsterVictim']) {
-      // hero.lives--
+
+        if(hero.lives != 'number') hero.lives = 1
+        hero.lives--
+
+        if(hero.lives <= 0) {
+          global.emitGameEvent('onGameOver')
+        }
       // I think heros should almost always respawn
       // if(hero.mod().tags.respawn) {
         hero._respawn = true
