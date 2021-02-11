@@ -74,10 +74,12 @@ class Game{
     input.onPlayerIdentified()
   }
 
-  onGameOver() {
+  onGameOver(reason, customText) {
     GAME.onStopGame()
     setTimeout(() => {
       GAME.gameState.gameOver = true
+      GAME.gameState.gameOverReason = reason
+      if(customText) GAME.gameState.customGameOverHeader = customText
     }, 101)
   }
 

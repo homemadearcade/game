@@ -62,7 +62,7 @@
       animation: fadeIn ease 5s;
       font-size:90px;
     }
-    &__game-start {
+    &__game-start, &__game-options {
       display: flex;
       animation: fadeInLate ease 1s;
       font-size: 30px;
@@ -85,6 +85,34 @@
         bottom: 10px;
       }
     }
+
+    text-align: center;
+    &__game-options {
+      animation: none;
+      bottom: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      button {
+        background: none;
+        padding: 20px;
+        font-size: 20px;
+        color: white;
+        font-family: 'Press Start 2P', sans-serif
+      }
+    }
+
+    &__game-over-reason {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: none;
+      padding: 20px;
+      font-size: 20px;
+      color: white;
+      font-family: 'Press Start 2P', sans-serif
+    }
+
     &__game-presents {
       position: relative;
       top: 38px;

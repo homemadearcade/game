@@ -198,6 +198,14 @@ import pathfinding from '../utils/pathfinding.js'
       smallText: true,
       label: 'Local SequenceName',
       effectorObject: true,
+    },
+
+    gameOver: {
+      smallText: true,
+    },
+
+    youWin: {
+      smallText: true,
     }
 
     // 'animation',
@@ -739,7 +747,11 @@ function processEffect(effect, effected, effector, ownerObject) {
   }
 
   if(effectName === "gameOver") {
-    global.emitGameEvent('onGameOver')
+    global.emitGameEvent('onGameOver', effectValue)
+  }
+
+  if(effectName === "youWin") {
+    global.emitGameEvent('onGameOver', effectValue, "You Win")
   }
 }
 

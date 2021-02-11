@@ -13,8 +13,6 @@ autoInteractOnCanHeroInteract for tree and angel
 View information popup. Tells the user what is going on behind this object, kind of satisfying a way to see what is going on
   also helps with debugging
 
-win/lose states
-
 maybe allow the code editor, copy and paste code that im building locally
 --
 Allow object library additions to spawn zone
@@ -55,6 +53,5 @@ GOALS UPGRADE
 Goal number -> as many as possible ( so its just tracking basically )
 Chances -> fail on death
 a Score parameter on heros and objects? ( score holding vs score giving )
-Win/Lose States that can connect to the meta of the engine ( picking new game or replaying current game )
 
 */

@@ -37,13 +37,17 @@ class PlayerUI {
   onGameOver() {
     setTimeout(() => {
       PLAYERUI.ref.forceUpdate()
-    }, 1000)
+    }, 102)
   }
 
   onEditHero(hero) {
     if(hero.id === HERO.id) {
       setTimeout(() => PLAYERUI.ref.onUpdateState())
     }
+  }
+
+  onGameStarted() {
+    PLAYERUI.ref.forceUpdate()
   }
 
   onUpdatePlayerUI(hero) {
