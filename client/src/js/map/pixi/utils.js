@@ -315,7 +315,6 @@ function getVisibility(pixiChild, gameObject) {
   if(gameObject.removed && (gameObject.tags.showXWhenRemoved || gameObject.tags.showGraveWhenRemoved)) {
     // && !gameObject.tags.invisible && !gameObject.constructParts
     invisible = false
-    console.log('visible')
   }
 
   if(gameObject.tags.subObject && gameObject.tags.onMapWhenEquipped) {
@@ -330,6 +329,7 @@ function getVisibility(pixiChild, gameObject) {
     if(gameObject.tags.hero && CONSTRUCTEDITOR.mapVisible.hero === false) invisible = true
     if(gameObject.id === 'globalConstructStationaryObstacle' && CONSTRUCTEDITOR.mapVisible.structure === false) invisible = true
     if(!gameObject.tags.background && !gameObject.tags.foreground && !gameObject.tags.hero && CONSTRUCTEDITOR.mapVisible.objects === false) invisible = true
+    if(gameObject.currentEditingConstruct) invisible = false
   }
 
   if(PAGE.role.isAdmin) {

@@ -317,7 +317,9 @@ global.findSpritesForDescribedObjects = function(objects, options) {
 
   console.log('UPDATED SPRITES FOR', editedObjects)
 
-  if(editedObjects.length) {
+  if(editedObjects.length === 1 && objects[0].tags.hero) {
+    global.socket.emit('editHero', editedObjects[0])
+  } else if(editedObjects.length) {
     global.socket.emit('editObjects', editedObjects)
   }
 }

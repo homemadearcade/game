@@ -165,6 +165,12 @@ export default class GeneratedMenu extends React.Component {
         })
       }
 
+      if(item.menusNegating) {
+        item.menusNegating.forEach((prop) => {
+          if(prop === 'spriteMenu' && GAME.heros[HERO.id].objectMenu && GAME.heros[HERO.id].objectMenu.spriteMenu) addThisItem = false
+        })
+      }
+
       item.addThisItem = addThisItem
     })
 
@@ -189,6 +195,17 @@ export default class GeneratedMenu extends React.Component {
       if(heroMenuItems[itemName] == false) return
       const item = global.playerMenuLibrary[itemName]
       if(!item) return console.log(itemName)
+
+
+      let cancel
+      if(item.menusNegating) {
+        item.menusNegating.forEach((prop) => {
+          console.log(prop === 'spriteMenu' && GAME.heros[HERO.id].heroMenu && GAME.heros[HERO.id].heroMenu.spriteMenu)
+          if(prop === 'spriteMenu' && GAME.heros[HERO.id].heroMenu && GAME.heros[HERO.id].heroMenu.spriteMenu) cancel = true
+        })
+      }
+
+      if(cancel) return
 
       if (item.hasOwnProperty('subMenu')) {
         if (!heroMenuObj[item.subMenu]) {
@@ -298,8 +315,7 @@ export default class GeneratedMenu extends React.Component {
         return (<EmitterRandomizeMenu key={key} objectSelected={objectSelected} ></EmitterRandomizeMenu>
         )
       default:
-        if(key === 'open-edit-sprite' && (objectSelected.width >= 64 || objectSelected.height >= 320 || objectSelected.constructParts)) return null
-
+        if(menuData.action === 'open-edit-sprite' && (objectSelected.width >= 64 || objectSelected.height >= 320 || objectSelected.constructParts)) return null
         return (<MenuItem className={classnames({'dont-close-menu': menuData.dontCloseMenu})} key={menuData.action}>{menuData.title}</MenuItem>)
     }
   }

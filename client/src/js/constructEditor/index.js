@@ -80,6 +80,7 @@ class ConstructEditor {
 
   cancel() {
     this.open = false
+    PIXIMAP.updateConstructEditor()
     this.close()
     global.local.emit('onConstructEditorClose', false)
   }
@@ -94,6 +95,7 @@ class ConstructEditor {
     this.ref.close()
     this.nodesHistory = []
     this.initState()
+    PIXIMAP.updateConstructEditor()
 
     // if(object.tags.background) {
     //   PIXIMAP.app.view.style.zIndex = null
@@ -128,6 +130,7 @@ class ConstructEditor {
     }, 10000)
     this.initState()
     this.objectId = object.id
+    this.object = object
     this.open = true
     this.tags = object.tags
     if(PAGE.isLogOpen) PAGE.closeLog()
@@ -193,6 +196,9 @@ class ConstructEditor {
 
     this.nodesHistory = []
     global.local.emit('onConstructEditorStart', object)
+
+
+    PIXIMAP.updateConstructEditor()
   }
 
   handleMouseUp() {
@@ -200,33 +206,45 @@ class ConstructEditor {
     this.erasing = false
   }
 
+  addNodeHistory(nodes) {
+    nodes = _.cloneDeep(nodes)
+    if(this.nodesHistory.length >= 5) {
+      this.nodesHistory.pop()
+    }
+    this.nodesHistory.unshift(nodes)
+  }
+
   handleMouseDown(event) {
     const { camera, grid, tool } = this
     if(event.target.className=== '' && event.target.id.length == 0) return
     if(tool === 'paintBrush') {
-      this.nodesHistory.unshift(_.cloneDeep(this.grid.nodes))
+      this.addNodeHistory(this.grid.nodes)
       this.painting = true
       this.paintNodeXY(this.mousePos.x, this.mousePos.y)
       this.ref.closeColorPicker()
+      PIXIMAP.updateConstructEditor()
     } else if(tool === 'eraser') {
-      this.nodesHistory.unshift(_.cloneDeep(this.grid.nodes))
+      this.addNodeHistory(this.grid.nodes)
       this.erasing = true
       this.unfillNodeXY(this.mousePos.x, this.mousePos.y)
       this.ref.closeColorPicker()
+      PIXIMAP.updateConstructEditor()
     } else if(tool === 'eyeDropper') {
       const { color, defaultSprite } = this.getDataFromNodeXY(this.mousePos.x, this.mousePos.y)
       this.selectedColor = color || GAME.world.defaultObjectColor || global.defaultObjectColor
       this.selectedTextureId = defaultSprite
       this.ref.setColor(this.selectedColor)
       this.ref.setTextureId(this.selectedTextureId)
+      PIXIMAP.updateConstructEditor()
     } else if(tool === 'fill-area') {
-      this.nodesHistory.unshift(_.cloneDeep(this.grid.nodes))
+      this.addNodeHistory(this.grid.nodes)
       this.bucketFill()
       this.ref.closeColorPicker()
+      PIXIMAP.updateConstructEditor()
     } else if(tool === 'fill-same-images') {
       const { gridX, gridY } = grid.getGridXYfromXY(this.mousePos.x, this.mousePos.y, { closest: false })
       const originalNode = _.cloneDeep(grid.nodes[gridX][gridY])
-      this.nodesHistory.unshift(_.cloneDeep(this.grid.nodes))
+      this.addNodeHistory(this.grid.nodes)
       this.grid.forEachNode((node) => {
         if(node.data.filled && node.data.defaultSprite === originalNode.data.defaultSprite) {
           node.data.defaultSprite = this.selectedTextureId
@@ -234,10 +252,11 @@ class ConstructEditor {
         }
       })
       this.ref.closeColorPicker()
+      PIXIMAP.updateConstructEditor()
     } else if(tool === 'fill-same-color') {
       const { gridX, gridY } = grid.getGridXYfromXY(this.mousePos.x, this.mousePos.y, { closest: false })
       const originalNode = _.cloneDeep(grid.nodes[gridX][gridY])
-      this.nodesHistory.unshift(_.cloneDeep(this.grid.nodes))
+      this.addNodeHistory(this.grid.nodes)
       this.grid.forEachNode((node) => {
         if(node.data.filled && node.data.color === originalNode.data.color) {
           node.data.color = this.selectedColor
@@ -245,10 +264,12 @@ class ConstructEditor {
         }
       })
       this.ref.closeColorPicker()
+      PIXIMAP.updateConstructEditor()
     } else if(tool === 'fill-empty') {
-      this.nodesHistory.unshift(_.cloneDeep(this.grid.nodes))
+      this.addNodeHistory(this.grid.nodes)
       this.bucketFill(true)
       this.ref.closeColorPicker()
+      PIXIMAP.updateConstructEditor()
     }
 
     CONSTRUCTEDITOR.ref.forceUpdate()
@@ -264,8 +285,14 @@ class ConstructEditor {
       return
     }
 
-    if(this.painting) this.paintNodeXY(this.mousePos.x, this.mousePos.y)
-    if(this.erasing) this.unfillNodeXY(this.mousePos.x, this.mousePos.y)
+    if(this.painting) {
+      this.paintNodeXY(this.mousePos.x, this.mousePos.y)
+      PIXIMAP.updateConstructEditorNodes()
+    }
+    if(this.erasing) {
+      this.unfillNodeXY(this.mousePos.x, this.mousePos.y)
+      PIXIMAP.updateConstructEditorNodes()
+    }
 
     const { x, y } = global.convertToGameXY(event)
 
@@ -273,6 +300,7 @@ class ConstructEditor {
     this.mousePos.y = ((y + camera.y) / camera.multiplier)
 
     this.updateNodeHighlight(this.mousePos)
+
   }
 
   onSelectTextureId = (id, service) => {
@@ -508,16 +536,16 @@ class ConstructEditor {
 
     if(!this.mapVisible.drawing) return
 
-    grid.forEachNode((node) => {
-      if(node.data.filled) {
-        if(node.data.defaultSprite && node.data.defaultSprite !== 'solidcolorsprite') {
-          drawTools.drawSprite(ctx, camera, node.data.defaultSprite, {x: node.x, y: node.y, height: node.height, width: node.width, color: node.data.color, tags })
-          // drawTools.drawObject(ctx, {x: node.x, y: node.y, height: node.height, width: node.width, color: node.data.color, tags }, camera)
-        } else {
-          drawTools.drawObject(ctx, {x: node.x, y: node.y, height: node.height, width: node.width, color: node.data.color, tags }, camera)
-        }
-      }
-    })
+    // grid.forEachNode((node) => {
+    //   if(node.data.filled) {
+    //     if(node.data.defaultSprite && node.data.defaultSprite !== 'solidcolorsprite') {
+    //       drawTools.drawSprite(ctx, camera, node.data.defaultSprite, {x: node.x, y: node.y, height: node.height, width: node.width, color: node.data.color, tags })
+    //       // drawTools.drawObject(ctx, {x: node.x, y: node.y, height: node.height, width: node.width, color: node.data.color, tags }, camera)
+    //     } else {
+    //       drawTools.drawObject(ctx, {x: node.x, y: node.y, height: node.height, width: node.width, color: node.data.color, tags }, camera)
+    //     }
+    //   }
+    // })
 
     if(tags.outline) {
       ctx.globalCompositeOperation='destination-out';

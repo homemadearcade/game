@@ -187,8 +187,14 @@ function openType(object, spriteName, type = 'recommended') {
       const { networkEditObject } = MAPEDITOR
       app.destroy(true)
       Swal.close()
-      console.log(this.texture)
-      networkEditObject(object, { [spriteName]: this.texture.id })
+      if(object.constructParts && spriteName == 'defaultSprite') {
+        object.constructParts.forEach((part) => {
+          part.defaultSprite = this.texture.id
+        })
+        networkEditObject(object, { [spriteName]: this.texture.id, constructParts: object.constructParts })
+      } else {
+        networkEditObject(object, { [spriteName]: this.texture.id })
+      }
       // document.getElementById('pixi-sprite-chosen').value = this.texture.id
     })
 

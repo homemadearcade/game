@@ -708,6 +708,30 @@ PIXIMAP.updateGridSprites = function() {
   }
 }
 
+PIXIMAP.updateConstructEditor = function() {
+  PIXIMAP.initializePixiObjectsFromGame()
+  resetConstructParts()
+  PIXIMAP.updateConstructEditorNodes()
+}
+PIXIMAP.updateConstructEditorNodes = function() {
+  if(CONSTRUCTEDITOR.open) {
+    let nodes = CONSTRUCTEDITOR.grid.nodes
+
+    nodes.forEach((row) => {
+      row.forEach((node) => {
+        if(node.data.filled) {
+          const fakeObject = { tags: CONSTRUCTEDITOR.object.tags, defaultSprite: node.data.defaultSprite, color: node.data.color, ...node}
+          fakeObject.currentEditingConstruct = true
+          initPixiObject(fakeObject)
+          updatePixiObject(fakeObject)
+        } else if(PIXIMAP.childrenById[node.id]) {
+          PIXIMAP.childrenById[node.id].visible = false
+        }
+      })
+    })
+  }
+}
+
 // PIXIMAP.fakeObjectAnimations = []
 PIXIMAP.onFakeObjectAnimation = function (type, object) {
   if(type === 'groundDisturbanceRight') {

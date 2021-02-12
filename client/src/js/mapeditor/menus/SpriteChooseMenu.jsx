@@ -52,6 +52,21 @@ export default class SpriteChooseMenu extends React.Component{
       if(key === 'randomize-from-descriptors') {
         global.findSpritesForDescribedObjects([objectSelected])
       }
+
+
+      if(key === 'edit-descriptors') {
+        Object.keys(objectSelected.descriptors || {}).forEach((tag) => {
+          if(!objectSelected.descriptors[tag]) delete objectSelected.descriptors[tag]
+        })
+        modals.openEditDescriptorsModal(objectSelected.descriptors || {}, ({value}) => {
+          if(!objectSelected.name) {
+            let name  = Object.keys(value)[0]
+            MAPEDITOR.networkEditObject(objectSelected, {descriptors: value, name})
+          } else {
+            MAPEDITOR.networkEditObject(objectSelected, {descriptors: value})
+          }
+        }, {}, { onlyWithTextures: true })
+      }
     }
   }
 
@@ -59,19 +74,22 @@ export default class SpriteChooseMenu extends React.Component{
     const { objectSelected } = this.props
     const isInvisible = objectSelected.tags.invisible || objectSelected.defaultSprite == 'invisible' || objectSelected.opacity == 0
 
-    let sprite
-    if(objectSelected.constructParts && objectSelected.descriptors) {
-      sprite = <MenuItem key="randomize-from-descriptors">Randomize Sprites</MenuItem>
-    } else {
-      return <Menu onClick={this._handleSpriteMenuClick}>
-        {!isInvisible && !objectSelected.contructParts && <MenuItem key="select-color" className='dont-close-menu'>Color</MenuItem>}
+    // if(objectSelected.constructParts && objectSelected.descriptors) {
+    //   sprite = <SubMenu title="Sprite">
+    //       {objectSelected.descriptors && <MenuItem key="randomize-from-descriptors">Randomize Sprites</MenuItem>}
+    //       {!isInvisible && <MenuItem key="select-color" className='dont-close-menu'>Color</MenuItem>}
+    //     </SubMenu>
+    // } else {
+    let  sprite = <Menu onClick={this._handleSpriteMenuClick}>
+        <MenuItem key="edit-descriptors">Describe</MenuItem>
+        {!isInvisible && <MenuItem key="select-color" className='dont-close-menu'>{(objectSelected.defaultSprite === "solidcolorsprite" || objectSelected.defaultSprite == undefined) ? "Color" : "Tint"}</MenuItem>}
         {objectSelected.descriptors && <MenuItem key="choose-from-recommended-sprites">Select From Recommended</MenuItem>}
         <MenuItem key="choose-from-my-sprites">Select From My Sprites</MenuItem>
         <MenuItem key="open-media-manager-sprite-selector">Select From All</MenuItem>
         {objectSelected.width <= 64 && objectSelected.height <= 320 && !objectSelected.constructParts && <MenuItem key="open-edit-sprite">Edit Sprite</MenuItem>}
         {objectSelected.descriptors && <MenuItem key="randomize-from-descriptors">Randomize</MenuItem>}
       </Menu>
-    }
+    // }
 
     return <Menu onClick={this._handleSpriteMenuClick}>
       {sprite}

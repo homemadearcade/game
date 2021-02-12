@@ -190,9 +190,9 @@ class SpriteEditor{
 					SPRITEEDITOR.objectSelected.constructParts.forEach((part) => {
 						part.defaultSprite = name
 					})
-					global.socket.emit('editObjects', [{id: SPRITEEDITOR.objectSelected.id, defaultSprite: name}])
+					MAPEDITOR.networkEditObject(SPRITEEDITOR.objectSelected, {id: SPRITEEDITOR.objectSelected.id, defaultSprite: name})
 				} else {
-					global.socket.emit('editObjects', [{id: SPRITEEDITOR.objectSelected.id, defaultSprite: name}])
+					MAPEDITOR.networkEditObject(SPRITEEDITOR.objectSelected, {id: SPRITEEDITOR.objectSelected.id, defaultSprite: name})
 				}
         cb()
         // console.log(name, url)

@@ -425,6 +425,7 @@ const addGameObjectToStage = (gameObject, stage) => {
   }
 
   updatePixiObject(gameObject)
+  if(gameObject.id[0] == "x") console.log(gameObject)
 
   if(gameObject.tags.fadeInOnInit) {
     startAnimation('fadeIn', addedChild, gameObject)
@@ -433,7 +434,7 @@ const addGameObjectToStage = (gameObject, stage) => {
   return addedChild
 }
 
-const initPixiObject = (gameObject) => {
+const initPixiObject = (gameObject, isConstructEditor) => {
   const stage = getGameObjectStage(gameObject)
   if(PAGE.role.isHost) gameObject = gameObject.mod()
 

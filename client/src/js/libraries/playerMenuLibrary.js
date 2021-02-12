@@ -31,23 +31,27 @@ global.local.on('onGameReady', () => {
       propertiesRelated: ['emitterTypeAction', 'emitterTypeExplosion']
     },
     chooseColor: {
-      title: 'Choose Color',
+      title: 'Tint',
       action: 'select-color',
       dontCloseMenu: true,
+      menusNegating: ['spriteMenu']
     },
     randomizeSprite: {
       title: 'Randomize Sprite',
       action: 'randomize-from-descriptors',
-      propertiesNeeded: ['descriptors']
+      propertiesNeeded: ['descriptors'],
+      menusNegating: ['spriteMenu']
     },
     chooseSprite: {
-      title: 'Choose Sprite',
+      title: 'Select From Recommended Sprites',
       action: 'choose-from-recommended-sprites',
-      propertiesNegating: ['constructParts']
+      // propertiesNegating: ['constructParts'],
+      menusNegating: ['spriteMenu']
     },
     drawSprite: {
-      title: 'Draw Sprite',
+      title: 'Edit Sprite',
       action: 'open-edit-sprite',
+      menusNegating: ['spriteMenu'],
       // propertiesNegating: ['constructParts']
     },
     name: {
@@ -76,12 +80,13 @@ global.local.on('onGameReady', () => {
     // },
     descriptors: {
       action: 'edit-descriptors',
-      title: 'Describe'
+      title: 'Describe',
+      menusNegating: ['spriteMenu']
     },
     spriteMenu: {
       useExistingMenu: 'SpriteChoose',
       title: 'Sprite',
-      propertiesNegating: ['constructParts']
+      // propertiesNegating: ['constructParts']
     },
     puzzlePassword: {
       action: 'edit-puzzle-password',
@@ -140,8 +145,8 @@ global.local.on('onGameReady', () => {
     descriptors: false,
     spriteMenu: false,
     physicsLive: false,
-    dialogue: false,
-    dialogueName: false,
+    // dialogue: false,
+    // dialogueName: false,
 
     chooseColor: false,
     randomizeSprite: false,

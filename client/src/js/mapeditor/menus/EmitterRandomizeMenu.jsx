@@ -23,6 +23,9 @@ export default class EmitterMenu extends React.Component{
       if(key === 'randomize-explosion-emitter') {
         global._generateRandomEmitter('explosion', objectSelected)
         networkEditObject(objectSelected, {emitterTypeExplosion: 'random-explosion' })
+        setTimeout(() => {
+          global.local.emit('onObjectAnimation', 'explode', objectSelected.id)
+        }, 400)
         return
       }
 

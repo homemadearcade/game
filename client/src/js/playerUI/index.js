@@ -9,6 +9,13 @@ class PlayerUI {
     this.updateStateInterval = null
   }
 
+  onConstructEditorClose() {
+    PLAYERUI.ref.forceUpdate()
+  }
+  onConstructEditorStart() {
+    PLAYERUI.ref.forceUpdate()
+  }
+
   onFirstPageGameLoaded() {
     // this.container = container
     const initialProps = {
