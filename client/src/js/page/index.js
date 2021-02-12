@@ -523,13 +523,14 @@ class Page{
       },
       headers: {
         'Content-Type': contentType,
-        // 'Access-Control-Allow-Origin': '*'
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods' : 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
       }
     };
 
     axios.get(generatePutUrl, options).then(res => {
       axios
-        .put("https://cors-anywhere.herokuapp.com/" + res.data.url, file, options)
+        .put(res.data.url, file, options)
         .then(res => {
           let url = global.awsURL + file.name
           console.log('Upload Successful', url)

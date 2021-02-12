@@ -501,9 +501,10 @@ class NotificationsControl{
     if(objects.length == 1) {
       const object = OBJECTS.getObjectOrHeroById(objects[0].id)
       if(object.tags.invisible) return
+      
       // idk for some edit sprite shit..
-      if(objects[0].color || objects[0].color == null) return
-      // console.log(objects[0].color)
+      if(objects[0].color === null) return
+
       PIXIMAP.onObjectAnimation('editObject', objects[0].id)
     }
   }

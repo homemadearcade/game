@@ -20,13 +20,13 @@ export default class GameOver extends React.Component{
 
     return <div style={{height}} className="Cutscene Cutscene--stars">
         <Hastartscreen>
-        <TitleAnimation className="Cutscene__game-title" style={GAME.theme.title.animation} font={GAME.theme.title.font} title={GAME.gameState.customGameOverHeader ? GAME.gameState.customGameOverHeader : "Game Over"}
+        <div className="Cutscene__game-title-over"><TitleAnimation style={GAME.theme.title.animation} font={GAME.theme.title.font} title={GAME.gameState.customGameOverHeader ? GAME.gameState.customGameOverHeader : "Game Over"}
           onComplete={() => {
             this.setState({
               showStartOverButtons: true
             })
           }}
-        ></TitleAnimation>
+        ></TitleAnimation></div>
         <div className="Cutscene__game-over-reason">{GAME.gameState.gameOverReason}</div>
         {<div className="Cutscene__game-options">
           <button onClick={() => {

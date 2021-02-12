@@ -62,6 +62,16 @@
       animation: fadeIn ease 5s;
       font-size:90px;
     }
+    &__game-title-over {
+      font-family: 'Press Start 2P', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: none;
+      animation: fadeIn ease 5s;
+      font-size: 90px;
+      padding-top:5%;
+    }
     &__game-start, &__game-options {
       display: flex;
       animation: fadeInLate ease 1s;
@@ -110,7 +120,8 @@
       padding: 20px;
       font-size: 20px;
       color: white;
-      font-family: 'Press Start 2P', sans-serif
+      font-family: 'Press Start 2P', sans-serif;
+      padding-bottom: 50px;
     }
 
     &__game-presents {

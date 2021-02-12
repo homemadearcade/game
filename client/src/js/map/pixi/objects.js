@@ -425,7 +425,6 @@ const addGameObjectToStage = (gameObject, stage) => {
   }
 
   updatePixiObject(gameObject)
-  if(gameObject.id[0] == "x") console.log(gameObject)
 
   if(gameObject.tags.fadeInOnInit) {
     startAnimation('fadeIn', addedChild, gameObject)

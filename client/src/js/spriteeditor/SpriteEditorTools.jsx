@@ -20,6 +20,13 @@ export default class SpriteEditorTools extends React.Component {
     SPRITEEDITOR.colorSelected = hex
   }
 
+
+  // <div className={classnames("fa fas fa-fill-drip SpriteEditorTool", {"SpriteEditorTool--selected": toolSelected === 'bucket'})} onClick={() => {
+  //     this.setState({
+  //       toolSelected: 'bucket'
+  //     })
+  //     SPRITEEDITOR.toolSelected = 'bucket'
+  // }}></div>
   render() {
     const { colorSelected, toolSelected } = this.state
     return <div className="SpriteEditor">
@@ -32,6 +39,7 @@ export default class SpriteEditorTools extends React.Component {
               SPRITEEDITOR.toolSelected = 'color'
           }}
         ></div>
+
         <div className={classnames("fa fas fa-eye-dropper SpriteEditorTool", {"SpriteEditorTool--selected": toolSelected === 'select'})}
           onClick={() => {
               this.setState({

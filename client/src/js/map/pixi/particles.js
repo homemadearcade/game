@@ -159,7 +159,7 @@ function createDefaultEmitter(stage, gameObject, emitterDataName, options) {
     } else particles = [PIXIMAP.textures.solidcolorsprite]
   } else particles = [PIXIMAP.textures.solidcolorsprite]
 
-  if(options.scaleToGameObject) {
+  if(options.scaleToGameObject || options.useOwnerSprite) {
     const modifyScaleX = (gameObject.width/particles[0]._frame.width * MAP.camera.multiplier)
     // const modifyScaleY = (gameObject.height/particles[0]._frame.height)
     particleData.scale.start = modifyScaleX

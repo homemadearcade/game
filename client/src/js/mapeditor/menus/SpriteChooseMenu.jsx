@@ -85,7 +85,7 @@ export default class SpriteChooseMenu extends React.Component{
         {!isInvisible && <MenuItem key="select-color" className='dont-close-menu'>{(objectSelected.defaultSprite === "solidcolorsprite" || objectSelected.defaultSprite == undefined) ? "Color" : "Tint"}</MenuItem>}
         {objectSelected.descriptors && <MenuItem key="choose-from-recommended-sprites">Select From Recommended</MenuItem>}
         <MenuItem key="choose-from-my-sprites">Select From My Sprites</MenuItem>
-        <MenuItem key="open-media-manager-sprite-selector">Select From All</MenuItem>
+        {PAGE.role.isAdmin && <MenuItem key="open-media-manager-sprite-selector">Select From All</MenuItem>}
         {objectSelected.width <= 64 && objectSelected.height <= 320 && !objectSelected.constructParts && <MenuItem key="open-edit-sprite">Edit Sprite</MenuItem>}
         {objectSelected.descriptors && <MenuItem key="randomize-from-descriptors">Randomize</MenuItem>}
       </Menu>

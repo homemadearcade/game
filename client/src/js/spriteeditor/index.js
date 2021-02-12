@@ -65,7 +65,6 @@ class SpriteEditor{
       })
     })
 
-
     const size = 10
     this.brushSize = 0
 
@@ -131,6 +130,7 @@ class SpriteEditor{
         nodeSprite.width = size
         nodeSprite.height = size
         nodeSprite.interactive = true;
+				nodeSprite.id = 'x:' + x + 'y:' + y
         nodeSprite
             .on('pointerdown', onButtonDown)
             .on('pointerup', onButtonUp)
@@ -229,7 +229,7 @@ function highlightSprite(sprite) {
 
   sprite.prevTint = sprite.tint
   sprite.highlighted = true
-  if(SPRITEEDITOR.toolSelected == 'color') {
+  if(SPRITEEDITOR.toolSelected == 'color' || SPRITEEDITOR.toolSelected == 'bucket') {
     sprite.tint = parseInt(tinycolor(SPRITEEDITOR.colorSelected).toHex(), 16)
   } else if(SPRITEEDITOR.toolSelected == 'eraser') {
     // sprite.alpha = 0
@@ -244,7 +244,16 @@ function highlightSprite(sprite) {
 function onButtonDown() {
   SPRITEEDITOR.isMouseDown = true;
   if (this.isOver) {
-    allNodesWithinBrush(this, SPRITEEDITOR.brushSize, effectSprite)
+		if(SPRITEEDITOR.toolSelected == 'bucket') {
+			allNodesInArea(this, (sprite) => {
+				sprite.tint = parseInt(tinycolor(SPRITEEDITOR.colorSelected).toHex(), 16)
+				sprite.alpha = 1
+				sprite.erased = false
+				sprite.prevTint = sprite.tint
+			})
+		} else {
+			allNodesWithinBrush(this, SPRITEEDITOR.brushSize + 4, effectSprite)
+		}
     this.prevTint = this.tint
   }
 }
@@ -256,10 +265,10 @@ function onButtonUp() {
 function onButtonOver() {
   this.isOver = true;
   if(SPRITEEDITOR.isMouseDown) {
-    allNodesWithinBrush(this, SPRITEEDITOR.brushSize, effectSprite)
+    allNodesWithinBrush(this, SPRITEEDITOR.brushSize + 4, effectSprite)
   }
   // console.log('highlighting')
-  allNodesWithinBrush(this, SPRITEEDITOR.brushSize, highlightSprite)
+  allNodesWithinBrush(this, SPRITEEDITOR.toolSelected == 'bucket' ? 1 : SPRITEEDITOR.brushSize + 4, highlightSprite)
 }
 
 function onButtonOut() {
@@ -270,7 +279,7 @@ function onButtonOut() {
 
   //   })
   // })
-  allNodesWithinBrush(this, SPRITEEDITOR.brushSize, (sprite) => {
+  allNodesWithinBrush(this, SPRITEEDITOR.brushSize + 4, (sprite) => {
     if(!sprite) {
       // console.log('no sprite unhighlight')
       return
@@ -282,6 +291,95 @@ function onButtonOut() {
   this.isOver = false;
 }
 
+
+// this doesnt work because of BS sizing stuff we do...
+function allNodesInArea(node, fx) {
+	const { spritesGrid } = SPRITEEDITOR
+
+	let nodesToCheck = [node]
+	let nodesToChange = [node]
+	let nodesChecked = {}
+
+	while (nodesToCheck.length) {
+			let currentNode = nodesToCheck.pop()
+
+			let x = currentNode.x
+			let y = currentNode.y
+
+			let x1 = x - 1
+			let x2 = x + 1
+
+			console.log(currentNode)
+
+			if(spritesGrid[x1]) {
+				// console.log('x1', x1)
+
+				let n = spritesGrid[x1][y]
+				if(n.prevTint == node.prevTint && !nodesChecked[n.displayOrder]) {
+					nodesToChange.push(n)
+					nodesToCheck.push(n)
+					console.log('!')
+					nodesChecked[n.displayOrder] = true
+				}
+			}
+
+			if(spritesGrid[x2]) {
+				// console.log('x2', x2)
+				let n = spritesGrid[x2][y]
+				if(n.prevTint == node.prevTint && !nodesChecked[n.displayOrder]) {
+					nodesToChange.push(n)
+					nodesToCheck.push(n)
+					console.log('!!')
+
+					nodesChecked[n.displayOrder] = true
+				}
+			}
+
+			//
+			// if(spritesGrid[x1]) {
+			//
+				let n = spritesGrid[x1][y + 1]
+				if(n && n.prevTint == node.prevTint && !nodesChecked[n.displayOrder]) {
+					nodesToChange.push(n)
+					nodesToCheck.push(n)
+					console.log('!y')
+
+					nodesChecked[n.displayOrder] = true
+				}
+
+				let n2 = spritesGrid[x1][y - 1]
+				if(n2 && n2.prevTint == node.prevTint && !nodesChecked[n2.displayOrder]) {
+					nodesToChange.push(n2)
+					nodesToCheck.push(n2)
+					console.log('!!y')
+
+					nodesChecked[n2.displayOrder] = true
+				}
+
+			// }
+
+
+			// if(spritesGrid[x2]) {
+			//
+			// 	let n = spritesGrid[x2][y + 1]
+			// 	if(n.prevTint == node.prevTint && !nodesChecked[n.displayOrder]) {
+			// 		nodesToChange.push(n)
+			// 		nodesToCheck.push(n)
+			// 		nodesChecked[n.displayOrder] = true
+			// 	}
+			//
+			// 	let n2 = spritesGrid[x2][y - 1]
+			// 	if(n2.prevTint == node.tint && !nodesChecked[n2.displayOrder]) {
+			// 		nodesToChange.push(n2)
+			// 		nodesToCheck.push(n2)
+			// 		nodesChecked[n2.displayOrder] = true
+			// 	}
+			// }
+	}
+
+	console.log(nodesToChange.length, nodesToCheck.length, nodesChecked)
+	nodesToChange.forEach(fx)
+}
 
 function allNodesWithinBrush(node, size, fx) {
   let curr = size

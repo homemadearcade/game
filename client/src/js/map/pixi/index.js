@@ -840,6 +840,7 @@ PIXIMAP.onObjectAnimation = function(type, objectId, options = {}) {
   }
 
   if(type) {
+    console.log(type)
     options = global.particleEmitterLibrary.addGameLibrary()[type]
     const customEmitter = initEmitter(object,type, options, { hasNoOwner: true })
     setTimeout(() => {
