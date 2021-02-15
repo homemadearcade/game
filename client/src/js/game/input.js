@@ -138,6 +138,11 @@ function onPlayerIdentified(){
   global.addEventListener("keydown", function (e) {
     const key = keycode(e.keyCode)
 
+    if(key === 'esc') {
+      document.getElementById('editor').style.display="none"
+      if(e.shiftKey) global.saveCodeEditor()
+    }
+
     if(global.isTargetTextInput(e)) return
 
     if(key === 'space' || key === 'left' || key === 'right' || key === 'up' || key === 'down') {

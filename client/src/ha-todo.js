@@ -14,10 +14,9 @@ View information popup. Tells the user what is going on behind this object, kind
   also helps with debugging
 
 maybe allow the code editor, copy and paste code that im building locally
+
 --
 Allow object library additions to spawn zone
-
-Spawn now effect
 --
 
 ////////////////////////////////

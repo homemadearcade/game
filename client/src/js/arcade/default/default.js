@@ -5,41 +5,7 @@ import pathfinding from '../../utils/pathfinding.js'
 import particles from '../../map/particles.js'
 
 export default class CustomGame{
-  onGameLoaded() {
-
-  }
-
-  onGameUnload() {
-
-  }
-
-  onGameStart() {
-
-  }
-
-  onKeyDown(key, hero) {
-    if(hero.flags.paused || GAME.gameState.paused) return
-    // for key 88 ( x ) can conflict with interact engine - && !hero.interactableObjectId
-
-    if(key === 'z') {
-      if(hero.actionButtonBehavior === 'shootBullet') {
-        action.shootBullet(hero)
-      }
-      if(hero.actionButtonBehavior === 'dropWall') {
-        action.dropWall(hero)
-      }
-    }
-  }
-
-  onUpdateHero(hero, keysDown, delta) {
-    if(hero.flags.paused || GAME.gameState.paused) return
-  }
-
-  onUpdateObject(object, delta) {
-
-  }
-
-  onObjectCollide(agent, collider, result) {
+  onGameStarted() {
 
   }
 
@@ -47,64 +13,13 @@ export default class CustomGame{
 
   }
 
-  onRender(ctx) {
-    if(GAME.heros[HERO.id]) {
+  onUpdateHero(hero, keysDown, delta) {
+    if(hero.flags.paused || GAME.gameState.paused) return
 
-      // got some gradients to work..
-      // let startx = (GAME.heros[HERO.id].x + 20)/global.camera.multiplier - global.camera.x
-      // let starty = (GAME.heros[HERO.id].y - 40)/global.camera.multiplier - global.camera.y
-      // let endx = (GAME.heros[HERO.id].x + 20)/global.camera.multiplier - global.camera.x
-      // let endy = (GAME.heros[HERO.id].y - 20)/global.camera.multiplier - global.camera.y
-      // var cx=250;
-      // var cy=250;
-      // var r=30;
-      // var PI2=Math.PI*2;
-      //
-      // var gradient=ctx.createLinearGradient(startx,starty, endx, endy);
-      // gradient.addColorStop(0.00,"transparent");
-      // gradient.addColorStop(1.00,"white");
-      //
-      // ctx.lineWidth=40/global.camera.multiplier
-      // ctx.lineCap="square";
-      // ctx.beginPath();
-      // ctx.moveTo(startx,starty);
-      // ctx.lineTo(endx,endy);
-      // ctx.strokeStyle=gradient;
-      // ctx.stroke();
+  }
 
-      // ctx.beginPath();
-      // ctx.arc(75,75,20,0,PI2);
-      // ctx.closePath();
-      // ctx.fillStyle="gold";
-      // ctx.globalAlpha=0.50;
-      // ctx.fill();
-      // ctx.globalAlpha=1.00;
-      //
-      // ctx.beginPath();
-      // ctx.arc(75,75,20,0,PI2);
-      // ctx.closePath();
-      // ctx.fillStyle="gold";
-      // ctx.shadowColor="gold";
-      // ctx.shadowBlur=5;
-      // ctx.fill();
+  onUpdateObject(object, delta) {
 
-      // ctx.strokeStyle = 'white'
-      // ctx.lineWidth=1;
-      //
-      // if(GAME.heros[HERO.id].directions.down) {
-      //   let sWidth = 17.5;
-      //   let sHeight = 20;
-      //   var path=new Path2D();
-      //   let x = GAME.heros[HERO.id].x/global.camera.multiplier - global.camera.x
-      //   let y = (GAME.heros[HERO.id].y-20)/global.camera.multiplier - global.camera.y
-      //   path.moveTo(x + (sWidth/2) +5, y+ sHeight/2);
-      //   path.lineTo(x + (sWidth/2), y+ (sHeight/2)-10);
-      //   path.lineTo(x + (sWidth/2)-5, y + sHeight/2);
-      //   ctx.fill(path);
-      // } else {
-      //
-      // }
-    }
   }
 
   onHeroCollide(hero, collider, result) {
@@ -112,6 +27,10 @@ export default class CustomGame{
   }
 
   onHeroInteract(hero, collider, result) {
+
+  }
+
+  onObjectCollide(agent, collider, result) {
 
   }
 }

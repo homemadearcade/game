@@ -465,6 +465,7 @@ import './js/game/notificationscontrol.js'
 import './js/liveeditor/index.js'
 import './js/creator/index.js'
 import './js/audio/index.js'
+import './js/codeeditor/index.js'
 
 import './js/nengi/clientMain.js'
 

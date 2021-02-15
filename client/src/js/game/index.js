@@ -364,6 +364,8 @@ class Game{
     //   GAME.gameState = storedGameState.gameState
     // } else {
 
+    if(game.customFx) GAME.customFx = game.customFx
+
     // game state
     if(game.gameState && game.gameState.loaded) {
       GAME.gameState = game.gameState
@@ -890,6 +892,7 @@ class Game{
       library: game.library,
       metadata: game.metadata,
       theme: game.theme,
+      customFx: game.customFx
     }))
 
     if(game.heros) {

@@ -50,6 +50,7 @@ global.startGameLoop = function() {
         defaultHero: GAME.defaultHero,
         library: GAME.library,
         theme: GAME.theme,
+        customFx: GAME.customFx,
       }
     })
   }, 1000)

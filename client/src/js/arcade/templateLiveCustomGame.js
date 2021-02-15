@@ -1,15 +1,26 @@
 // the more events we have hardcoded in the less we have to UNLOAD
+
+//  onKeyDown(key, hero) {
+  //   if(hero.flags.paused || GAME.gameState.paused) return
+  //
+  // }
+
+  //  onGameLoaded() {
+
+  //  }
+
+  /*
+
+    onRender(ctx) {
+
+    }
+
+    onGameUnload() {
+
+    }
+  */
 global.templateGameString = `class CustomGame{
-  onGameLoaded() {
-
-  }
-
-  onGameStart() {
-
-  }
-
-  onKeyDown(key, hero) {
-    if(hero.flags.paused || GAME.gameState.paused) return
+  onGameStarted() {
 
   }
 
@@ -35,15 +46,6 @@ global.templateGameString = `class CustomGame{
   }
 
   onObjectCollide(agent, collider, result) {
-
-  }
-
-
-  onRender(ctx) {
-
-  }
-
-  onGameUnload() {
 
   }
 }

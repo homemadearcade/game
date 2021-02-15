@@ -55,12 +55,20 @@ class Arcade{
     ARCADE.setLiveCustomFx(customFx)
   }
 
+  onGameLoaded() {
+    if(GAME.customFx) {
+      console.log('XX')
+      ARCADE.setLiveCustomFx(GAME.customFx)
+    }
+  }
+
   onUpdateCustomGameFx(customFx) {
     if(PAGE.role.isHost) {
       try {
         ARCADE.setLiveCustomFx(customFx)
+        GAME.customFx = customFx
       } catch (e) {
-        PAGE.removeLog(e)
+        // PAGE.removeLog(e)
       }
     }
 

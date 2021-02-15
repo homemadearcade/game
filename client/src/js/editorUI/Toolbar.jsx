@@ -449,6 +449,12 @@ export default class Toolbar extends React.Component {
         <br/>
 
         <ToolbarRow iconName='fa-cog'>
+          <ToolbarButton iconName="fa-code" onClick={() => {
+            document.getElementById('editor').style.display="block"
+          }} onShiftClick={() => {
+            global.saveCodeEditor()
+          }} />
+
           <ToolbarButton iconName="fa-save" onClick={EDITOR.saveGame}/>
           <ToolbarButton iconName="fa-folder-open" onClick={EDITOR.loadGame}/>
           <ToolbarButton iconName="fa-file" onClick={EDITOR.newGame}/>
