@@ -12,9 +12,13 @@ import gridUtil from '../utils/grid.js'
 import collisionsUtil from '../utils/collisions.js'
 import { testCondition } from './conditions.js'
 
-function spawnObject(object) {
-  if(object.tags && object.mod().tags['spawnZone'] && object.mod().tags['spawnOnInterval']) {
+function spawnObject(object, bypassInterval) {
+  if(bypassInterval) console.log('X')
+  if(object.tags && object.mod().tags['spawnZone'] && (bypassInterval || object.mod().tags['spawnOnInterval']) ) {
     if(!object.spawnedIds) object.spawnedIds = []
+
+
+    if(bypassInterval) console.log('XX')
 
     object.spawnedIds = object.spawnedIds.filter((id) => {
       if(GAME.objectsById[id] && !GAME.objectsById[id].mod().removed) {
@@ -28,7 +32,7 @@ function spawnObject(object) {
       object.spawnPool = object.spawnPoolInitial
     }
 
-    if((object.spawnedIds.length < object.spawnLimit || object.spawnLimit < 0) && !object.spawnWait && (object.spawnPool === undefined || object.spawnPool === null || object.spawnPool > 0 || object.spawnPool < 0)) {
+    if((object.spawnedIds.length < object.spawnLimit || object.spawnLimit < 0) && (!object.spawnWait || bypassInterval) && (object.spawnPool === undefined || object.spawnPool === null || object.spawnPool > 0 || object.spawnPool < 0)) {
       extraSpawnFunctionality(object)
 
       const spawnSubObject = global.getSubObjectFromChances(null, null, object)

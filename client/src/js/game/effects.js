@@ -2,6 +2,7 @@ import onTalk from './heros/onTalk.js'
 import { startSequence } from './sequence.js'
 import { setPathTarget, setTarget } from './ai/pathfinders.js'
 import { equipSubObject, unequipSubObject, pickupObject, dropObject } from './heros/inventory.js'
+import { spawnAllNow, spawnObject, destroySpawnIds,  } from './spawnZone.js'
 
 import axios from 'axios';
 import gridUtil from '../utils/grid.js'
@@ -206,7 +207,13 @@ import pathfinding from '../utils/pathfinding.js'
 
     youWin: {
       smallText: true,
-    }
+    },
+
+    spawnNow: {
+      number: true,
+    },
+
+    spawnAllNow: {}
 
     // 'animation',
     // notification -> chat, private chat, log, toast, modal
@@ -752,6 +759,23 @@ function processEffect(effect, effected, effector, ownerObject) {
 
   if(effectName === "youWin") {
     global.emitGameEvent('onGameOver', effectValue, "You Win")
+  }
+
+  if(effectName == "spawnNow") {
+    if(typeof effectValue == "string") {
+      effectValue = Number(effectValue)
+    }
+
+    console.log('XXX')
+
+    for(let i = 0; i < effectValue; i++) {
+      console.log('i', i)
+      spawnObject(effected, true)
+    }
+  }
+
+  if(effectName == "spawnAllNow") {
+    spawnAllNow(effected)
   }
 }
 
