@@ -11,12 +11,66 @@ export default class GameOver extends React.Component{
     super(props)
 
     this.state = {
-      showStartOverButtons: false
+      showStartOverButtons: false,
+      showOtherGames: false,
     }
   }
 
   render() {
     const height = PIXIMAP.app.screen.height + 45 + 'px'
+
+    let games = window.gameSaves.filter((gameSave) => {
+      if(this.state.searchGameTerm && this.state.searchGameTerm.length) {
+        if(gameSave.data.metadata && gameSave.data.metadata.name && gameSave.data.metadata.author) {
+          if(gameSave.data.metadata.name.toLowerCase().indexOf(this.state.searchGameTerm.toLowerCase()) >= 0) return true
+          if(gameSave.data.metadata.author.toLowerCase().indexOf(this.state.searchGameTerm.toLowerCase()) >= 0) return true
+        }
+      } else {
+        return true
+      }
+    }).map((gameSave) => {
+      if(gameSave.data.metadata && gameSave.data.metadata.name && gameSave.data.metadata.author) {
+        return <div className="Cutscene__games-container__game" onClick={() => {
+          let removeEventListener = window.local.on('onGameLoaded', () => {
+            window.emitGameEvent('onStartPregame')
+            removeEventListener()
+          })
+          window.emitGameEvent('onChangeGame', gameSave.data)
+        }}>
+          <div className="Cutscene__games-container__date">{new Date(gameSave.createdAt).toLocaleDateString("en-US")}</div>
+          <div className="Cutscene__games-container__author">{gameSave.data.metadata.author}</div>
+          <div className="Cutscene__games-container__title">{gameSave.data.metadata.name}</div>
+          {gameSave.data.metadata.featuredImage && gameSave.data.metadata.featuredImage.url && <img className="Cutscene__games-container__image" src={gameSave.data.metadata.featuredImage.url}/>}
+        </div>
+      }
+    })
+
+    if(this.state.reverseDate) {
+      console.log('?')
+      games = games.reverse()
+    }
+
+    if(this.state.showOtherGames) {
+      return <div style={{height}} className="Cutscene Cutscene--stars">
+        <Hastartscreen>
+        <div className="Cutscene__games-container">
+        <div className="Cutscene__games-container__form">
+          <button className={this.state.reverseDate ? "Cutscene__games-container__sort fa fa-chevron-up" : "Cutscene__games-container__sort fa fa-chevron-down"} onClick={() => {
+            this.setState({
+              reverseDate: !this.state.reverseDate
+            })
+          }}></button>
+          <input placeholder="Search by name" className="Cutscene__games-container__search" type="text" value={this.state.searchGameTerm} onChange={(event) => {
+            this.setState({
+              searchGameTerm: event.target.value
+            })
+          }}></input>
+        </div>
+        {games}
+        </div>
+        </Hastartscreen>
+      </div>
+    }
 
     return <div style={{height}} className="Cutscene Cutscene--stars">
         <Hastartscreen>
@@ -40,7 +94,11 @@ export default class GameOver extends React.Component{
               }, 200)
             }
           }}>Restart Game</button>
-          <button>Play Other Games</button>
+          <button onClick={() => {
+            this.setState({
+              showOtherGames: true
+            })
+          }}>Play Other Games</button>
         </div>}
         </Hastartscreen>
     </div>

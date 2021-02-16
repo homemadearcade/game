@@ -108,6 +108,8 @@ class Page{
   ///////////////////////////////
   ///////////////////////////////
   load() {
+
+
     let gameServerUrl = 'http://ha-game.herokuapp.com'
     if(global.location.hostname.indexOf('localhost') >= 0) {
       gameServerUrl = 'http://localhost:4000'
@@ -164,6 +166,13 @@ class Page{
         container
       )
     }
+
+    axios.get(global.HAGameServerUrl + '/gameSaves').then(res => {
+      global.gameSaves = res.data.gameSaves.map((gameSave) => {
+        gameSave.data = gameSave.data = JSON.parse(gameSave.data)
+        return gameSave
+      })
+    })
   }
 
   async userIdentified() {

@@ -8,13 +8,8 @@ SMALL TASKS
 
 Total refresh of all heros and the server and the world
 
-autoInteractOnCanHeroInteract for tree and angel
-
 View information popup. Tells the user what is going on behind this object, kind of satisfying a way to see what is going on
   also helps with debugging
-
-maybe allow the code editor, copy and paste code that im building locally
-
 --
 Allow object library additions to spawn zone
 --
@@ -34,7 +29,6 @@ ARCADE VIEW
 ////////////////////////////////
 Escape open meta menu when you are in arcade mode
 Go to new screen after publish with list of games
-
 
 ////////////////////////////////
 ////////////////////////////////

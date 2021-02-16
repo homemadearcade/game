@@ -57,8 +57,9 @@ class Arcade{
 
   onGameLoaded() {
     if(GAME.customFx) {
-      console.log('XX')
       ARCADE.setLiveCustomFx(GAME.customFx)
+    } else {
+      ARCADE.liveCustomGame = null
     }
   }
 

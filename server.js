@@ -15,6 +15,7 @@ import mongoose from "mongoose"
 import bluebird from 'bluebird'
 
 import User from "./db/User.js"
+import GameSave from "./db/GameSave.js"
 
 // import winston from 'winston';
 //
@@ -228,6 +229,26 @@ app.post('/updateGameOnServerOnly', (req,res)=>{
   global.currentGame.grid = prevGame.grid
   res.send()
 });
+
+
+app.get('/gameSaves', (req,res)=>{
+  // let query;
+   //
+   // query = {
+   //   $match: { author: mongoose.Types.ObjectId(req.userData.userId) },
+   // };
+   GameSave.aggregate([
+     { $sort: { createdAt: -1 } },
+     { $limit: 10000 },
+   ])
+     .then(gameSaves => {
+       res.status(200).json({ gameSaves });
+     })
+     .catch(err => {
+       console.log(err);
+       res.status(400).json({ message: err.message });
+     });
+})
 
 
 app.get('/game', (req,res)=>{

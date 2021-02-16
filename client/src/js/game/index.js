@@ -365,7 +365,8 @@ class Game{
     // } else {
 
     if(game.customFx) GAME.customFx = game.customFx
-
+    else GAME.customFx = null
+    
     // game state
     if(game.gameState && game.gameState.loaded) {
       GAME.gameState = game.gameState

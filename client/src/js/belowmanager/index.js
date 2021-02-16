@@ -50,7 +50,7 @@ class BelowManager {
       container
     )
 
-    if(PAGE.role.isArcadeMode) BELOWMANAGER.container.style="display:none"
+    if(PAGE.role.isArcadeMode || !PAGE.role.isAdmin) BELOWMANAGER.container.style="display:none"
   }
 }
 

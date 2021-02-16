@@ -13,21 +13,25 @@
   //   global.socket.emit('updateWorld', { overrideCustomGameCode: e.target.checked})
   // })
 
-window.local.on('onGameLoaded', () => {
+window.local.on('onGameUnload', () => {
+  if(!GAME.customFx) global.customGameEditor.setValue(global.templateGameString);
+})
 
-
+window.local.on('onPageLoaded', () => {
   var editor = ace.edit("editor");
   editor.setTheme("ace/theme/monokai");
   editor.session.setMode("ace/mode/javascript");
-  // editor.resize()
-  if(!GAME.customFx) editor.setValue(global.templateGameString);
-  else editor.setValue(GAME.customFx)
-  
   editor.setOptions({
     fontSize: "20pt",
   });
-
   global.customGameEditor = editor
+
+})
+window.local.on('onGameLoaded', () => {
+  // editor.resize()
+  if(!GAME.customFx) global.customGameEditor.setValue(global.templateGameString);
+  else global.customGameEditor.setValue(GAME.customFx)
+
   // global.customGameEditor.session.on('change', function(delta) {
   //   if(document.getElementById("is-code-editor-saved").innerHTML) document.getElementById("is-code-editor-saved").innerHTML = "Not saved"
   // });
@@ -40,26 +44,25 @@ window.local.on('onGameLoaded', () => {
   //   }, 1000)
   // }
 
-  global.saveCodeEditor = function() {
-    try {
-      let customFx = global.customGameEditor.getValue()
-      global.ARCADE.evalLiveCustomFx(customFx)()
-      global.socket.emit('updateCustomGameFx', customFx)
-      localStorage.setItem('codeEditor', customFx)
-    } catch (e) {
-      console.log(e)
-      document.getElementById("is-code-editor-saved").innerHTML = "THERE WAS AN ERROR IN FX CODE"
-    }
-  }
-
-  global.resetCodeEditor = function() {
-    global.customGameEditor.setValue(global.templateGameString);
-    localStorage.setItem('codeEditor', null)
-  }
-
-
 })
 
+
+global.saveCodeEditor = function() {
+  try {
+    let customFx = global.customGameEditor.getValue()
+    global.ARCADE.evalLiveCustomFx(customFx)()
+    global.socket.emit('updateCustomGameFx', customFx)
+    localStorage.setItem('codeEditor', customFx)
+  } catch (e) {
+    console.log(e)
+    document.getElementById("is-code-editor-saved").innerHTML = "THERE WAS AN ERROR IN FX CODE"
+  }
+}
+
+global.resetCodeEditor = function() {
+  global.customGameEditor.setValue(global.templateGameString);
+  localStorage.setItem('codeEditor', null)
+}
 
   // document.body.addEventListener('click', function(e) {
   //   if(!e.target) return
