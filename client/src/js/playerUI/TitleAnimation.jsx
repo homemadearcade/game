@@ -55,35 +55,38 @@ export default class TitleAnimation extends React.Component{
   render() {
     const { style, title, font } = this.props
 
+    let ff = font.fontFamily
+    if(!ff) ff = "'Press Start 2P', sans-serif"
+
     if(!style || style === 'sunny mornings') {
-      return <h1 className="TitleAnimation ml2" style={{fontFamily: font.fontFamily}}>{title}</h1>
+      return <h1 className="TitleAnimation ml2" style={{fontFamily: ff}}>{title}</h1>
     }
 
     if(style === 'great thinkers') {
-      return <h1 className="TitleAnimation ml3" style={{fontFamily: font.fontFamily}}>{title}</h1>
+      return <h1 className="TitleAnimation ml3" style={{fontFamily: ff}}>{title}</h1>
     }
 
     if(style === 'beautiful questions') {
       return <h1 class="TitleAnimation ml6">
         <span class="text-wrapper">
-          <span class="letters" style={{fontFamily: font.fontFamily}}>{title}</span>
+          <span class="letters" style={{fontFamily: ff}}>{title}</span>
         </span>
       </h1>
     }
 
     if(style === 'made with love') {
-      return <h1 class="TitleAnimation ml16" style={{fontFamily: font.fontFamily}}>{title}</h1>
+      return <h1 class="TitleAnimation ml16" style={{fontFamily: ff}}>{title}</h1>
     }
 
     if(style === 'a new production') {
-      return <h1 class="TitleAnimation ml12" style={{fontFamily: font.fontFamily}}>{title}</h1>
+      return <h1 class="TitleAnimation ml12" style={{fontFamily: ff}}>{title}</h1>
     }
 
     if(style === 'hello goodbye') {
       return <h1 class="TitleAnimation ml11">
         <span class="text-wrapper">
           <span class="line line1"></span>
-          <span class="letters" style={{fontFamily: font.fontFamily}}>{title}</span>
+          <span class="letters" style={{fontFamily: ff}}>{title}</span>
         </span>
       </h1>
     }
@@ -92,7 +95,7 @@ export default class TitleAnimation extends React.Component{
       return <h1 class="TitleAnimation ml1">
         <span class="text-wrapper">
           <span class="line line1"></span>
-          <span style={{fontFamily: font.fontFamily}} class="letters">{title}</span>
+          <span style={{fontFamily: ff}} class="letters">{title}</span>
           <span class="line line2"></span>
         </span>
       </h1>
@@ -107,7 +110,7 @@ export default class TitleAnimation extends React.Component{
       return <h1 class="TitleAnimation ml5">
         <span class="text-wrapper">
           <span class="line line1"></span>
-          <span style={{fontFamily: font.fontFamily}} class="letters ampersand">{title}</span>
+          <span style={{fontFamily: ff}} class="letters ampersand">{title}</span>
           <span class="line line2"></span>
         </span>
       </h1>

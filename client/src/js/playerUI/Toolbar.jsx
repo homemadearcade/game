@@ -66,6 +66,63 @@ export default class Toolbar extends React.Component {
   }
 
   _renderManagementToolBar() {
+    return <ToolbarRow
+    onClick={async () => {
+      const { value: name } = await Swal.fire({
+        title: "What is the name of this game?",
+        showClass: {
+          popup: 'animated fadeInDown faster'
+        },
+        hideClass: {
+          popup: 'animated fadeOutUp faster'
+        },
+        input: 'text',
+        initialValue: GAME.metadata.name,
+        showCancelButton: true,
+        confirmButtonText: 'Next',
+      })
+      const { value: description } = await Swal.fire({
+        title: "What is the description of this game?",
+        showClass: {
+          popup: 'animated fadeInDown faster'
+        },
+        hideClass: {
+          popup: 'animated fadeOutUp faster'
+        },
+        input: 'text',
+        showCancelButton: true,
+        confirmButtonText: 'Next',
+      })
+
+      sequenceEditorModals.openImageSelectModal(async (image) => {
+        // const { value: yes } = await Swal.fire({
+        //   title: "Are you sure you want to publish? This will create a post in the Homemade Arcade",
+        //   showClass: {
+        //     popup: 'animated fadeInDown faster'
+        //   },
+        //   hideClass: {
+        //     popup: 'animated fadeOutUp faster'
+        //   },
+        //   showCancelButton: true,
+        //   confirmButtonText: 'Publish',
+        // })
+
+        if(name && description && image) {
+          GAME.metadata.name = name
+          GAME.metadata.featuredImage = image
+          GAME.metadata.description = description
+          global.emitGameEvent('onEditMetadata', GAME.metadata)
+
+          PAGE.publishGame({ name, description, imageUrl: image.url })
+        }
+      })
+    }}
+    iconName="fa-rocket"
+    >
+
+    </ToolbarRow>
+
+
     return <ToolbarRow iconName='fa-cog'>
       <ToolbarButton iconName="fa-file" onClick={EDITOR.newGame}/>
       <ToolbarButton iconName="fa-download" onClick={() => {
@@ -82,52 +139,7 @@ export default class Toolbar extends React.Component {
         })
       }}/>
     <ToolbarButton iconName="fa-rocket" onClick={async () => {
-        const { value: name } = await Swal.fire({
-          title: "What is the name of this game?",
-          showClass: {
-            popup: 'animated fadeInDown faster'
-          },
-          hideClass: {
-            popup: 'animated fadeOutUp faster'
-          },
-          input: 'text',
-          initialValue: GAME.metadata.name,
-          showCancelButton: true,
-          confirmButtonText: 'Next',
-        })
-        const { value: description } = await Swal.fire({
-          title: "What is the description of this game?",
-          showClass: {
-            popup: 'animated fadeInDown faster'
-          },
-          hideClass: {
-            popup: 'animated fadeOutUp faster'
-          },
-          input: 'text',
-          showCancelButton: true,
-          confirmButtonText: 'Next',
-        })
 
-        sequenceEditorModals.openImageSelectModal(async (image) => {
-          // const { value: yes } = await Swal.fire({
-          //   title: "Are you sure you want to publish? This will create a post in the Homemade Arcade",
-          //   showClass: {
-          //     popup: 'animated fadeInDown faster'
-          //   },
-          //   hideClass: {
-          //     popup: 'animated fadeOutUp faster'
-          //   },
-          //   showCancelButton: true,
-          //   confirmButtonText: 'Publish',
-          // })
-
-          if(name && description && image) {
-            GAME.metadata.name = name
-            global.socket.emit('editMetadata', GAME.metadata)
-
-            PAGE.publishGame({ name, description, imageUrl: image.url })
-          }
-        })
       }}/>
     </ToolbarRow>
   }
@@ -154,6 +166,12 @@ export default class Toolbar extends React.Component {
     const { open } = this.state
 
     const hero = GAME.heros[HERO.id]
+
+    if(GAME.gameState.started && hero.flags.canStartStopGame) {
+      return <div className="Toolbar">
+        {this._renderStartStop()}
+      </div>
+    }
 
     if(!hero || !open || CONSTRUCTEDITOR.open || PATHEDITOR.open) return null
 

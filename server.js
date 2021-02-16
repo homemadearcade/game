@@ -222,6 +222,42 @@ app.get('/generate-put-url', (req,res)=>{
   });
 });
 
+
+app.post('/gameSave', (req,res)=>{
+   let q;
+    q = [
+      { $match: { _id: mongoose.Types.ObjectId(req.body.gameSaveId) } },
+      {
+        $lookup: {
+          from: "users",
+          localField: "author",
+          foreignField: "_id",
+          as: "author"
+        }
+      },
+      {
+        $project: {
+          data: 1,
+          createdAt: 1,
+        },
+      },
+    ];
+
+    GameSave.findOne({ _id: mongoose.Types.ObjectId(req.body.gameSaveId) })
+      .select("data")
+      .then(({ data }) => {
+        res.status(200).json({ gameSave: data })
+      });
+})
+
+
+// function getUserData(req, res, next) {
+//   console.log(req.path)
+//   next()
+// };
+//
+// app.use(getUserData)
+
 // PUT URL
 app.post('/updateGameOnServerOnly', (req,res)=>{
   let prevGame = currentGame
@@ -230,6 +266,21 @@ app.post('/updateGameOnServerOnly', (req,res)=>{
   res.send()
 });
 
+
+app.post('/addGameSave', (req, res) => {
+  new GameSave({
+    author: req.body.userData._id,
+    data: req.body.gameSave
+  })
+    .save()
+    .then(gameSave => {
+      res.status(200).json({ gameSaveId: gameSave._id });
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(400).json({ message: err.message });
+    });
+})
 
 app.get('/gameSaves', (req,res)=>{
   // let query;

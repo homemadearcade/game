@@ -164,6 +164,9 @@
     div {
       transform: scale(2);
     }
+    &--enter {
+      right: 21px;
+    }
   }
 
   &__option {

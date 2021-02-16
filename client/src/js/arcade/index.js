@@ -46,8 +46,9 @@ class Arcade{
   }
 
   onGameReady() {
-    if(PAGE.role.isArcadeMode) {
-      global.local.emit('onGameStart', { started: true })
+    if(PAGE.role.isArcadeMode && !ARCADE.started) {
+      ARCADE.started = true
+      global.local.emit('onStartPregame', { started: true })
     }
   }
 

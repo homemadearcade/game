@@ -57,6 +57,10 @@ class PlayerUI {
     PLAYERUI.ref.forceUpdate()
   }
 
+  onGameStopped() {
+    PLAYERUI.ref.forceUpdate()
+  }
+
   onUpdatePlayerUI(hero) {
     if(hero.id === HERO.id) {
       PLAYERUI.ref.onUpdateState(hero)

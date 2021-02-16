@@ -10,44 +10,47 @@ class Creator {
     this.ref = null
   }
 
-  onFirstPageGameLoaded() {
-    creatorLibrary.onFirstPageGameLoaded()
+  onGameReady() {
+    setTimeout(() => {
+      creatorLibrary.onFirstPageGameLoaded()
 
-    // this.container = container
-    const initialProps = {
-      ref: ref => CREATOR.ref = ref
-    }
+      // this.container = container
+      const initialProps = {
+        ref: ref => CREATOR.ref = ref
+      }
 
-    const container = document.getElementById('Creator')
-    CREATOR.container = container
+      const container = document.getElementById('Creator')
+      CREATOR.container = container
 
-    // Mount React App
-    ReactDOM.render(
-      React.createElement(Root, initialProps),
-      container
-    )
+      // Mount React App
+      ReactDOM.render(
+        React.createElement(Root, initialProps),
+        container
+      )
+    })
   }
 
   onChangeGame() {
+    if(!CREATOR.ref) return
     if(!PAGE.role.isAdmin) CREATOR.ref.setCreatorObjects(GAME.heros[HERO.id].creator)
     CREATOR.ref.onUpdateLibrary()
   }
 
   onEditHero(hero) {
     if(!PAGE.role.isAdmin && hero.id === HERO.id && (hero.creator || hero.flags)) {
-      CREATOR.ref.setCreatorObjects(GAME.heros[HERO.id].creator)
+      if(CREATOR.ref) CREATOR.ref.setCreatorObjects(GAME.heros[HERO.id].creator)
     }
   }
 
   onUpdatePlayerUI(hero) {
     if(!PAGE.role.isAdmin && hero.id === HERO.id) {
-      CREATOR.ref.setCreatorObjects(hero.creator)
+      if(CREATOR.ref) CREATOR.ref.setCreatorObjects(hero.creator)
     }
   }
 
   onUpdateLibrary(update) {
     if(update.creator) {
-      CREATOR.ref.onUpdateLibrary()
+      if(CREATOR.ref) CREATOR.ref.onUpdateLibrary()
     }
   }
 

@@ -124,7 +124,7 @@ export default class DialogueBox extends React.Component{
   }
 
   render() {
-    const { dialogue, options, hideV, verticleMiddle } = this.props
+    const { dialogue, options, enterKey, verticleMiddle } = this.props
 
     // <i className="DialogueBox__arrow fa fas fa-sort-down"></i>
 
@@ -134,7 +134,7 @@ export default class DialogueBox extends React.Component{
         <Textfit className="DialogueBox__content" id='fitty' min={14} max={20}>
           {dialogue[0].text}
         </Textfit>
-        {!hideV && <KeySprite className="DialogueBox__key blink" keySprite={'v'}></KeySprite>}
+        <KeySprite className={classnames("DialogueBox__key blink", {'DialogueBox__key--enter': enterKey})} keySprite={enterKey ? 'enter':'v'}></KeySprite>
       </div>
     }
 

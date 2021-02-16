@@ -200,7 +200,6 @@ export default class GeneratedMenu extends React.Component {
       let cancel
       if(item.menusNegating) {
         item.menusNegating.forEach((prop) => {
-          console.log(prop === 'spriteMenu' && GAME.heros[HERO.id].heroMenu && GAME.heros[HERO.id].heroMenu.spriteMenu)
           if(prop === 'spriteMenu' && GAME.heros[HERO.id].heroMenu && GAME.heros[HERO.id].heroMenu.spriteMenu) cancel = true
         })
       }

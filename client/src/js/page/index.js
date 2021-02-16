@@ -144,7 +144,7 @@ class Page{
 
     global.local.emit('onPageLoaded')
 
-    if(PAGE.getParameterByName('arcadeMode')) {
+    if(PAGE.getParameterByName('arcadeMode') && PAGE.getParameterByName('shareMode')) {
       events.establishALocalHost()
       PAGE.establishRoleFromQueryOnly()
       HERO.getHeroId()
@@ -166,13 +166,6 @@ class Page{
         container
       )
     }
-
-    axios.get(global.HAGameServerUrl + '/gameSaves').then(res => {
-      global.gameSaves = res.data.gameSaves.map((gameSave) => {
-        gameSave.data = gameSave.data = JSON.parse(gameSave.data)
-        return gameSave
-      })
-    })
   }
 
   async userIdentified() {
@@ -182,6 +175,21 @@ class Page{
       events.establishALocalHost()
       PAGE.establishRoleFromQueryOnly()
       HERO.getHeroId()
+      global.local.emit('onPlayerIdentified')
+      PAGE.askCurrentGame((game, heroSummonType) => {
+        GAME.loadGridWorldObjectsCompendiumState(game)
+        GAME.heros = {}
+        HERO.addHero(HERO.summonFromGameData({ id: HERO.id, heroSummonType }))
+        global.local.emit('onGameLoaded')
+      })
+      return
+    }
+
+    if(PAGE.getParameterByName('arcadeMode') && !PAGE.getParameterByName('shareMode')) {
+      events.establishALocalHost()
+      PAGE.establishRoleFromQueryOnly()
+      HERO.getHeroId()
+      global.local.emit('onUserIdentified')
       global.local.emit('onPlayerIdentified')
       PAGE.askCurrentGame((game, heroSummonType) => {
         GAME.loadGridWorldObjectsCompendiumState(game)
@@ -262,6 +270,12 @@ class Page{
       });
     }
 
+    // window.gameSaves.forEach((gameSave) => {
+    //   if(gameSave._id == gameSaveId) {
+    //     cb(gameSave.data)
+    //   }
+    // })
+
     const gameSaveRequestOptions = {
      method: "POST",
      mode: 'cors',
@@ -273,8 +287,9 @@ class Page{
        'Access-Control-Allow-Origin': '*',
      }
     };
-    fetch(global.HASocialServerUrl + "/api/game/getGameSave/", gameSaveRequestOptions).then(handleResponse).then(res => {
-      cb(res)
+
+    fetch(global.HAGameServerUrl + "/gameSave", gameSaveRequestOptions).then(handleResponse).then(res => {
+      cb(res.gameSave)
     })
   }
 
@@ -313,8 +328,8 @@ class Page{
       if(PAGE.role.isHomeEditor) heroSummonType = 'homeEditor'
 
       if(PAGE.getParameterByName('gameSaveId')) {
-        PAGE.loadGameSave(PAGE.getParameterByName('gameSaveId'), (res) => {
-          PAGE.askMediaToLoad(cb, JSON.parse(res.gameSave), heroSummonType)
+        PAGE.loadGameSave(PAGE.getParameterByName('gameSaveId'), (gameSave) => {
+          PAGE.askMediaToLoad(cb, JSON.parse(gameSave), heroSummonType)
         })
         return
       }
@@ -671,7 +686,7 @@ class Page{
        Authorization: 'Bearer ' + global.getUserCookie()
      }
     };
-    fetch(global.HASocialServerUrl + "/api/game/addGameSave", gameSaveRequestOptions).then(handleResponse).then(res => {
+    fetch(global.HAGameServerUrl + "/addGameSave", gameSaveRequestOptions).then(handleResponse).then(res => {
       const requestOptions = {
         method: "POST",
         mode: 'cors',
@@ -689,10 +704,12 @@ class Page{
         }
       };
 
-      return fetch(global.HASocialServerUrl + "/api/post/addPost/", requestOptions)
-        .then(res => {
-          global.local.emit('onSendNotification', { playerUIHeroId: HERO.id, toast: true, text: 'Game Published!'})
-        });
+      global.local.emit('onSendNotification', { playerUIHeroId: HERO.id, toast: true, text: 'Game Published!'})
+
+      // return fetch(global.HASocialServerUrl + "/api/post/addPost/", requestOptions)
+      //   .then(res => {
+      //     global.local.emit('onSendNotification', { playerUIHeroId: HERO.id, toast: true, text: 'Game Published!'})
+      //   });
     })
   }
 

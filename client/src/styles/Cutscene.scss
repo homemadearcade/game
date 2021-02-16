@@ -60,7 +60,18 @@
       }
     }
 
+
+
     &__games-container {
+
+      a {
+        // color:inherit;
+        // text-decoration: none;
+        margin-left: 10px;
+        color: white;
+        font-size: 12px;
+      }
+
       margin: 0 auto;
       background: #111;
       padding: 10px;
@@ -93,10 +104,14 @@
 
       &__description {
         text-overflow: ellipsis;
+        line-clamp: 3;
+        margin-top: 10px;
+        font-size:12px;
       }
 
       &__author {
         padding-right: 20px;
+        font-size:12px;
       }
 
       &__date {
@@ -142,6 +157,11 @@
       animation: fadeIn ease 5s;
       font-size: 90px;
       padding-top:5%;
+
+      &--ha {
+        position: relative;
+        top: -100px;
+      }
     }
     &__game-start, &__game-options {
       display: flex;
@@ -150,7 +170,8 @@
       width: 200px;
       position: absolute;
       left: calc(50% - 90px);
-      bottom: 100px;
+      margin-top: 20px;
+      // bottom: 100px;
       animation: blinker 1s step-start infinite;
       animation-delay: 1s;
 

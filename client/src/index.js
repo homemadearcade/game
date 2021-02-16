@@ -474,22 +474,24 @@ import './js/procedural/index.js'
 import './styles/index.scss'
 import './styles/jsoneditor.css'
 
-// Broadcast that you're opening a page.
 let otherPageOpen = false
-localStorage.openpages = Date.now();
-var onLocalStorageEvent = function(e){
-  if(e.key == "openpages"){
-      // Listen if anybody else is opening the same page!
-    localStorage.page_available = Date.now();
-  }
-  if(e.key == "page_available"){
-    otherPageOpen = true
-  }
-};
-global.addEventListener('storage', onLocalStorageEvent, false);
+if(!PAGE.getParameterByName('arcadeMode') && !PAGE.getParameterByName('homeEditor')) {
+  // Broadcast that you're opening a page.
+  localStorage.openpages = Date.now();
+  var onLocalStorageEvent = function(e){
+    if(e.key == "openpages"){
+        // Listen if anybody else is opening the same page!
+      localStorage.page_available = Date.now();
+    }
+    if(e.key == "page_available"){
+      otherPageOpen = true
+    }
+  };
+  global.addEventListener('storage', onLocalStorageEvent, false);
+}
 
 setTimeout(() => {
-  if(PAGE.getParameterByName('arcadeMode')) {
+  if(PAGE.getParameterByName('arcadeMode') || PAGE.getParameterByName('homeEditor')) {
     return PAGE.load()
   }
 
