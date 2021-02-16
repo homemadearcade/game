@@ -121,7 +121,7 @@ export default class Toolbar extends React.Component {
           //   confirmButtonText: 'Publish',
           // })
 
-          if(name && description && yes && image) {
+          if(name && description && image) {
             GAME.metadata.name = name
             global.socket.emit('editMetadata', GAME.metadata)
 

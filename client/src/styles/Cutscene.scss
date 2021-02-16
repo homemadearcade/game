@@ -88,12 +88,15 @@
       }
 
       &__title {
+        font-weight: 700;
+      }
 
+      &__description {
+        text-overflow: ellipsis;
       }
 
       &__author {
         padding-right: 20px;
-        font-weight: 700;
       }
 
       &__date {

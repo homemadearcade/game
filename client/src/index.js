@@ -490,7 +490,7 @@ global.addEventListener('storage', onLocalStorageEvent, false);
 
 setTimeout(() => {
   if(PAGE.getParameterByName('arcadeMode')) {
-    return
+    return PAGE.load()
   }
 
   if(otherPageOpen) {

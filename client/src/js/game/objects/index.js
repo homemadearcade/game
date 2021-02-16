@@ -208,6 +208,8 @@ class Objects{
       lightColor: object.lightColor,
       lightOpacity: object.lightOpacity,
 
+      gameOverReason: object.gameOverReason,
+
       sprites: object.sprites,
 
       _tempModOnMap: object._tempModOnMap,

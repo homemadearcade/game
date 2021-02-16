@@ -29,9 +29,8 @@ export default class GameOver extends React.Component{
         return true
       }
     }).map((gameSave) => {
-      //<a target="_blank" href={"http://ha-game.herokuapp.com/?arcadeMode=true&gameSaveId="+gameSave._id}>
       if(gameSave.data.metadata && gameSave.data.metadata.name && gameSave.data.metadata.author) {
-        return <div className="Cutscene__games-container__game" onClick={() => {
+        return <a target="_blank" href={"http://ha-game.herokuapp.com/?arcadeMode=true&gameSaveId="+gameSave._id}><div className="Cutscene__games-container__game" onClick={() => {
           let removeEventListener = window.local.on('onGameLoaded', () => {
             window.emitGameEvent('onStartPregame')
             removeEventListener()
@@ -39,10 +38,15 @@ export default class GameOver extends React.Component{
           window.emitGameEvent('onChangeGame', gameSave.data)
         }}>
           <div className="Cutscene__games-container__date">{new Date(gameSave.createdAt).toLocaleDateString("en-US")}</div>
-          <div className="Cutscene__games-container__author">{gameSave.data.metadata.author}</div>
-          <div className="Cutscene__games-container__title">{gameSave.data.metadata.name}</div>
+
+          <div>
+            <div className="Cutscene__games-container__title">{gameSave.data.metadata.name}</div>
+            <div className="Cutscene__games-container__author">{gameSave.data.metadata.author}</div>
+            <div className="Cutscene__games-container__description" title={gameSave.data.metadata.description}>{gameSave.data.metadata.description}</div>
+          </div>
+
           {gameSave.data.metadata.featuredImage && gameSave.data.metadata.featuredImage.url && <img className="Cutscene__games-container__image" src={gameSave.data.metadata.featuredImage.url}/>}
-        </div>
+        </div></a>
       }
     })
 
@@ -86,7 +90,7 @@ export default class GameOver extends React.Component{
         {<div className="Cutscene__game-options">
           <button onClick={() => {
             if(this.state.showStartOverButtons) {
-              global.socket.emit('startGame')
+              global.socket.emit('startPregame')
               PLAYERUI.ref.forceUpdate()
             } else {
               setTimeout(() => {

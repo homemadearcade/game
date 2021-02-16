@@ -758,7 +758,7 @@ function processEffect(effect, effected, effector, ownerObject) {
   }
 
   if(effectName === "youWin") {
-    global.emitGameEvent('onGameOver', effectValue, "You Win")
+    global.emitGameEvent('onGameOver', effectValue, "Homemade Arcade")
   }
 
   if(effectName == "spawnNow") {
@@ -766,10 +766,7 @@ function processEffect(effect, effected, effector, ownerObject) {
       effectValue = Number(effectValue)
     }
 
-    console.log('XXX')
-
     for(let i = 0; i < effectValue; i++) {
-      console.log('i', i)
       spawnObject(effected, true)
     }
   }

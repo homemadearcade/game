@@ -21,6 +21,7 @@ export default function onCombat(hero, collider, result, options) {
         if(hero.lives <= 0) {
           let reason = 'You got hit by a '
           reason += collider.name ? collider.name : collider.id
+          if(collider.gameOverReason) reason = collider.gameOverReason
           global.emitGameEvent('onGameOver', reason)
         }
       // I think heros should almost always respawn
