@@ -65,8 +65,9 @@ export default class Cutscene extends React.Component{
     let backgroundImage = null
     if(scene.image) backgroundImage = "url('"+scene.image.url+"')"
 
-    return <div style={{height}} className="Cutscene" style={{backgroundImage }}>
-      {scene.text && <DialogueBox dialogue={[scene.text]} hideV/>}
+    console.log(scene.text)
+    return <div style={{height}} className="Cutscene Cutscene--height100" style={{backgroundImage }}>
+      {scene.text && <DialogueBox dialogue={[{text: scene.text}]} hideV/>}
       <KeySprite className="Cutscene__corner-key blink" keySprite={'enter'}></KeySprite>
     </div>
   }
