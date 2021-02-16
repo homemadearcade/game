@@ -715,7 +715,7 @@ class Page{
         text: name + ' has been published! Click ok to view it on the Arcade',
       })
 
-      window.location = 'http://ha-game.herokuapp.com/?arcadeMode=true'
+      window.location = global.HAGameClientUrl + '?arcadeMode=true'
 
       // global.local.emit('onSendNotification', { playerUIHeroId: HERO.id, toast: true, text: 'Game Published!'})
 

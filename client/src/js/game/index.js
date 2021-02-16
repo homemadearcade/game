@@ -75,11 +75,35 @@ class Game{
   }
 
   onGameOver(reason, customText) {
+
     GAME.onStopGame()
     setTimeout(() => {
+      GAME.gameState.cutscene = true
       GAME.gameState.gameOver = true
       GAME.gameState.gameOverReason = reason
       if(customText) GAME.gameState.customGameOverHeader = customText
+
+      if(customText && GAME.library.sequences.youWin) {
+        if(GAME.library.sequences.youWin) {
+          startSequence('youWin', {})
+          const removeEventListener = global.local.on('onSequenceComplete', (id) => {
+            if(id === 'youWin') {
+              removeEventListener()
+              GAME.gameState.cutscene = false
+            }
+          })
+        }
+      } else {
+        if(GAME.library.sequences.gameOver) {
+          startSequence('gameOver', {})
+          const removeEventListener = global.local.on('onSequenceComplete', (id) => {
+            if(id === 'gameOver') {
+              removeEventListener()
+              GAME.gameState.cutscene = false
+            }
+          })
+        }
+      }
     }, 101)
   }
 
@@ -91,9 +115,9 @@ class Game{
     GAME.getObjectsByTag()
 
     if(PAGE.role.isHost) {
-      if(GAME.gameState.pregame) {
+      if(GAME.gameState.cutscene) {
         GAME.gameState.sequenceQueue.forEach((sequence) => {
-          if(sequence.id == 'pregame') {
+          if(sequence.id == 'pregame' || sequence.id == 'gameOver' || sequence.id == 'youWin') {
             processSequence(sequence)
           }
         })
@@ -366,7 +390,7 @@ class Game{
 
     if(game.customFx) GAME.customFx = game.customFx
     else GAME.customFx = null
-    
+
     // game state
     if(game.gameState && game.gameState.loaded) {
       GAME.gameState = game.gameState
@@ -688,7 +712,7 @@ class Game{
     GAME.onGameStart({...options, silent: true})
 
     if(GAME.library.sequences.pregame) {
-      GAME.gameState.pregame = true
+      GAME.gameState.cutscene = true
       GAME.gameState.paused = true
 
       startSequence('pregame', {})
@@ -696,7 +720,7 @@ class Game{
         if(id === 'pregame') {
           removeEventListener()
           global.local.emit('onGameStarted')
-          GAME.gameState.pregame = false
+          GAME.gameState.cutscene = false
           GAME.gameState.paused = false
         }
       })

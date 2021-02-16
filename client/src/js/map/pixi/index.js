@@ -806,7 +806,10 @@ PIXIMAP.onObjectAnimation = function(type, objectId, options = {}) {
   }
 
   if(type === 'explode') {
-    let options = { persistAfterRemoved: true, matchObjectColor: true, useUpdateOwnerPos: true }
+    let useOwnerSprite = false
+    if(object.defaultSprite && object.defaultSprite != 'solidcolorsprite') useOwnerSprite = true
+
+    let options = { persistAfterRemoved: true, matchObjectColor: true, useUpdateOwnerPos: true, useOwnerSprite }
     if(object.emitterTypeExplosion) {
       options = global.particleEmitterLibrary.addGameLibrary()[object.emitterTypeExplosion]
     }
@@ -820,8 +823,29 @@ PIXIMAP.onObjectAnimation = function(type, objectId, options = {}) {
     return
   }
 
+
+    if(type === 'isolatedExplosion') {
+      let useOwnerSprite = false
+      if(object.defaultSprite && object.defaultSprite != 'solidcolorsprite') useOwnerSprite = true
+
+      let options = { persistAfterRemoved: true, matchObjectColor: true, useUpdateOwnerPos: true, useOwnerSprite }
+      if(object.emitterTypeExplosion) {
+        options = global.particleEmitterLibrary.addGameLibrary()[object.emitterTypeExplosion]
+      }
+
+      pixiChild.explodeEmitter = initEmitter(object, 'isolatedExplosion', options, { hasNoOwner: true })
+      setTimeout(() => {
+        PIXIMAP.deleteEmitter(pixiChild.explodeEmitter)
+        delete pixiChild.explodeEmitter
+      }, 10000)
+
+      return
+    }
+
   if(type === 'spinOff') {
-    const explosionEmitter = initEmitter(object, 'spinOff', { persistAfterRemoved: true, scaleToGameObject: true, matchObjectColor: true, useUpdateOwnerPos: true }, { hasNoOwner: true })
+    let useOwnerSprite = false
+    if(object.defaultSprite && object.defaultSprite != 'solidcolorsprite') useOwnerSprite = true
+    const explosionEmitter = initEmitter(object, 'spinOff', { persistAfterRemoved: true, scaleToGameObject: true, matchObjectColor: true, useUpdateOwnerPos: true, useOwnerSprite }, { hasNoOwner: true })
     setTimeout(() => {
       PIXIMAP.deleteEmitter(explosionEmitter)
     }, 1000)
@@ -840,7 +864,6 @@ PIXIMAP.onObjectAnimation = function(type, objectId, options = {}) {
   }
 
   if(type) {
-    console.log(type)
     options = global.particleEmitterLibrary.addGameLibrary()[type]
     const customEmitter = initEmitter(object,type, options, { hasNoOwner: true })
     setTimeout(() => {

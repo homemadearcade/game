@@ -152,6 +152,8 @@ global.local.on('onGameReady', () => {
     randomizeSprite: false,
     chooseSprite: false,
     drawSprite: false,
+
+    particleEmitterRandomize: false,
   }
 
   global.objectMenuLibrary = {

@@ -406,6 +406,7 @@ function processSequence(sequence) {
   }
 
   if(!item.waiting && item.next === 'end') {
+    console.log('end', sequence)
     endSequence(sequence)
   } else if(!item.waiting && item.next) {
     sequence.previousItemId = sequence.currentItemId

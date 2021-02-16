@@ -259,6 +259,7 @@ function setDefault() {
     hasTrail: false,
     hasEngineTrail: false,
     explodeOnDestroy: false,
+    implodeOnDestroy: false,
     spinOffOnDestroy: false,
     poweredUp: false,
     groundDisturbanceOnHeroTouchStart: false,

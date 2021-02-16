@@ -20,7 +20,7 @@ export default class GameList extends React.Component{
   componentDidMount() {
     axios.get(global.HAGameServerUrl + '/gameSaves').then(res => {
       global.gameSaves = res.data.gameSaves.map((gameSave) => {
-        gameSave.data = gameSave.data = JSON.parse(gameSave.data)
+        // gameSave.data = gameSave.data = JSON.parse(gameSave.data)
         return gameSave
       })
       this.setState({

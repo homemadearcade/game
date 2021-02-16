@@ -92,6 +92,8 @@ const io = socketIO(server)
 
 dotenv.config()
 
+global.gameSaveCache = null
+
 global.window = {}; // Temporarily define window for server-side
 import LocalStorage from 'node-localstorage'
 global.localStorage = new LocalStorage.LocalStorage('./scratch');
@@ -269,6 +271,9 @@ app.post('/updateGameOnServerOnly', (req,res)=>{
 
 
 app.post('/addGameSave', (req, res) => {
+
+  global.gameSaveCache = null
+
   new GameSave({
     author: req.body.userData._id,
     data: req.body.gameSave
@@ -285,6 +290,11 @@ app.post('/addGameSave', (req, res) => {
 
 app.get('/gameSaves', (req,res)=>{
   // let query;
+
+  if(global.gameSaveCache) {
+    res.status(200).json({ gameSaves: global.gameSaveCache });
+    return
+  }
    //
    // query = {
    //   $match: { author: mongoose.Types.ObjectId(req.userData.userId) },
@@ -294,6 +304,20 @@ app.get('/gameSaves', (req,res)=>{
      { $limit: 10000 },
    ])
      .then(gameSaves => {
+
+       let gameIdMap = {}
+       gameSaves = gameSaves.map((gs) => {
+         gs.data = JSON.parse(gs.data)
+         return gs
+       }).filter((gs) => {
+         if(gameIdMap[gs.data.id]) return null
+         gameIdMap[gs.data.id] = true
+         return true
+       })
+
+       global.gameSaveCache = gameSaves
+
+
        res.status(200).json({ gameSaves });
      })
      .catch(err => {

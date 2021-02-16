@@ -215,14 +215,17 @@ export default class Root extends React.Component {
 
     const hasDialogue = hero.dialogue && hero.dialogue.length > 0
 
+
+    const cutscene = hero.flags && hero.flags.showCutscene && hero.cutscenes
+
     return (
       <div className="PlayerUI">
         {this._renderFontPreLoad()}
+        {cutscene &&  <Cutscene scenes={hero.cutscenes} />}
         {GAME.gameState.selectGame && <GameList showTitle/>}
-        {GAME.gameState.gameOver && !GAME.gameState.started && <GameOver/>}
+        {!cutscene && GAME.gameState.gameOver && !GAME.gameState.started && <GameOver/>}
         {hero.flags && hero.flags.showDialogue && hasDialogue && <DialogueBox verticleMiddle dialogue={hero.dialogue} name={hero.dialogueName} id={hero.dialogueId} />}
         {hero.flags && hero.flags.showChoices && !hasDialogue && hero.choiceOptions && <DialogueBox verticleMiddle options={hero.choiceOptions} name={hero.dialogueName} id={hero.dialogueId}/>}
-        {hero.flags && hero.flags.showCutscene && hero.cutscenes && <Cutscene scenes={hero.cutscenes} />}
         <div className="RightHUD" style={{ right: PAGE.isLogOpen ? '22%' : '20px'}}>
           <InventoryHUD/>
           {hero.goals && hero.goals.length && <Goals goals={hero.goals} />}

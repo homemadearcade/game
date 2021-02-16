@@ -24,6 +24,7 @@ class Hero{
   // }
 
   onHeroCollide(hero, collider, result) {
+    if(hero.mod().removed) return
     if(collider.ownerId === hero.id) return
     onHeroTrigger(hero, collider, result, { fromInteractButton: false })
   }
@@ -955,7 +956,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
   }
 
   onUpdateHero(hero, keysDown, delta) {
-
+    if(hero.mod().removed) return
 
     const zoomTarget = hero.mod().zoomMultiplierTarget
     if(zoomTarget) {
@@ -1195,6 +1196,18 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
 
   onDeleteDialogueChoice(heroId, choiceId) {
     delete GAME.heros[heroId].dialogueChoices[choiceId]
+  }
+
+  onHeroDestroyed(object) {
+    if(object.mod().tags.explodeOnDestroy) {
+      global.local.emit('onObjectAnimation', 'explode', object.id)
+    }
+    if(object.mod().tags.spinOffOnDestroy) {
+      global.local.emit('onObjectAnimation', 'spinOff', object.id)
+    }
+    if(object.mod().tags.implodeOnDestroy) {
+      global.local.emit('onObjectAnimation', 'isolatedExplosion', object.id)
+    }
   }
 }
 

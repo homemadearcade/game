@@ -1635,6 +1635,9 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
     if(object.mod().tags.spinOffOnDestroy) {
       global.local.emit('onObjectAnimation', 'spinOff', object.id)
     }
+    if(object.mod().tags.implodeOnDestroy) {
+      global.local.emit('onObjectAnimation', 'isolatedExplosion', object.id)
+    }
     if(object.mod().tags.spawnAllOnDestroy) {
       spawnAllNow(object)
     }
