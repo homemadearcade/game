@@ -13,7 +13,7 @@ export default class GameList extends React.Component{
     super(props)
 
     this.state = {
-
+      gameSaves: global.gameSaves
     }
   }
 
@@ -45,37 +45,42 @@ export default class GameList extends React.Component{
           if(gameSave.data.metadata && gameSave.data.metadata.name && gameSave.data.metadata.author) {
             if(gameSave.data.metadata.name.toLowerCase().indexOf(this.state.searchGameTerm.toLowerCase()) >= 0) return true
             if(gameSave.data.metadata.author.toLowerCase().indexOf(this.state.searchGameTerm.toLowerCase()) >= 0) return true
+            if(gameSave.data.metadata.description.toLowerCase().indexOf(this.state.searchGameTerm.toLowerCase()) >= 0) return true
           }
         } else {
           return true
         }
       }).map((gameSave, i) => {
         if(gameSave.data.metadata && gameSave.data.metadata.name && gameSave.data.metadata.author) {
-          return <div className="Cutscene__games-container__game" onClick={() => {
-            let removeEventListener = window.local.on('onGameLoaded', () => {
-              window.emitGameEvent('onStartPregame')
-              removeEventListener()
-            })
-            if(!GAME.id) {
-              window.emitGameEvent('onLoadGame', gameSave.data)
-            } else {
-              window.emitGameEvent('onChangeGame', gameSave.data)
-            }
-          }}>
-            <div className="Cutscene__games-container__date">{new Date(gameSave.createdAt).toLocaleDateString("en-US")}</div>
-
+          return <div className="Cutscene__games-container__game"
+            onMouseEnter={() => {
+              this.setState({
+                mouseOver: i
+              })
+            }}
+            onClick={() => {
+              let removeEventListener = window.local.on('onGameLoaded', () => {
+                window.emitGameEvent('onStartPregame')
+                removeEventListener()
+              })
+              if(!GAME.id) {
+                window.emitGameEvent('onLoadGame', gameSave.data)
+              } else {
+                window.emitGameEvent('onChangeGame', gameSave.data)
+              }
+            }}
+          >
             <div>
-              <div onMouseEnter={() => {
-                this.setState({
-                  mouseOver: i
-                })
-              }} className="Cutscene__games-container__title">
-                {gameSave.data.metadata.name}
-                {window.user && gameSave.author == window.user._id && <a target="_blank" href={global.HAGameClientUrl+"/?homeEditor=true&gameSaveId="+gameSave._id}>edit</a>}
-                {this.state.mouseOver== i && <a target="_blank" href={global.HAGameClientUrl+"/?arcadeMode=true&shareMode=true&gameSaveId="+gameSave._id}>share</a>}
+              <div className="Cutscene__games-container__title-row">
+                <div className="Cutscene__games-container__title">{gameSave.data.metadata.name}</div>
+                <div className="Cutscene__games-container__author">{"By " + gameSave.data.metadata.author}</div>
+                {this.state.mouseOver== i && window.user && gameSave.author == window.user._id && <a target="_blank" className="Cutscene__games-container__date" href={global.HAGameClientUrl+"/?homeEditor=true&gameSaveId="+gameSave._id}>edit</a>}
+                {this.state.mouseOver== i && <a className="Cutscene__games-container__date"  target="_blank" href={global.HAGameClientUrl+"/?arcadeMode=true&skipLogin=true&gameSaveId="+gameSave._id}>share</a>}
+                {this.state.mouseOver != i && <div className="Cutscene__games-container__date">{new Date(gameSave.createdAt).toLocaleDateString("en-US")}</div>}
               </div>
-              <div className="Cutscene__games-container__author">{"By " + gameSave.data.metadata.author}</div>
-              <div className="Cutscene__games-container__description" title={gameSave.data.metadata.description}>{gameSave.data.metadata.description}</div>
+              <div className="Cutscene__games-container__title-row">
+                <div className="Cutscene__games-container__description" title={gameSave.data.metadata.description}>{gameSave.data.metadata.description}</div>
+              </div>
             </div>
 
             {gameSave.data.metadata.featuredImage && gameSave.data.metadata.featuredImage.url && <img className="Cutscene__games-container__image" src={gameSave.data.metadata.featuredImage.url}/>}
@@ -91,13 +96,13 @@ export default class GameList extends React.Component{
     return <div style={{height}} className="Cutscene Cutscene--stars">
       <Hastartscreen>
       {this.props.showTitle && <div className="Cutscene__game-title-over Cutscene__game-title-over--ha"><TitleAnimation onComplete={() => {}} style={GAME.theme.title.animation} font={{fontFamily: "'Press Start 2P', sans-serif"}} title="Homemade Arcade"></TitleAnimation></div>}
-      <div className="Cutscene__games-container">
+      <div className={classnames("Cutscene__games-container", { "Cutscene__games-container--title" : this.props.showTitle})}>
       <div className="Cutscene__games-container__form">
         <button className={this.state.reverseDate ? "Cutscene__games-container__sort fa fa-chevron-up" : "Cutscene__games-container__sort fa fa-chevron-down"} onClick={() => {
           this.setState({
             reverseDate: !this.state.reverseDate
           })
-        }}></button>
+        }}>{' Recent'}</button>
         <input placeholder="Search by name" className="Cutscene__games-container__search" type="text" value={this.state.searchGameTerm} onChange={(event) => {
           this.setState({
             searchGameTerm: event.target.value
@@ -108,7 +113,7 @@ export default class GameList extends React.Component{
         this.setState({
           mouseOver: null
         })
-      }}>{games ? games : <div className="Cutscene__game-loading">Loading</div>}</div>
+      }}>{games ? games : <div className="Cutscene__game-loading">Loading games...</div>}</div>
       </div>
       </Hastartscreen>
     </div>

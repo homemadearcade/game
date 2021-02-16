@@ -47,6 +47,12 @@ class PlayerUI {
     }, 102)
   }
 
+  onGameReady() {
+    setTimeout(() => {
+      PLAYERUI.ref.forceUpdate()
+    }, 100)
+  }
+
   onEditHero(hero) {
     if(hero.id === HERO.id) {
       setTimeout(() => PLAYERUI.ref.onUpdateState())

@@ -4,6 +4,7 @@ import DialogueBox from './DialogueBox.jsx'
 import Cutscene from './Cutscene.jsx'
 import Goals from './Goals.jsx'
 import GameOver from './GameOver.jsx'
+import GameList from './GameList.jsx'
 
 import InventoryModal from './InventoryModal.jsx'
 import MainMenuModal from './MainMenuModal.jsx'
@@ -217,6 +218,7 @@ export default class Root extends React.Component {
     return (
       <div className="PlayerUI">
         {this._renderFontPreLoad()}
+        {GAME.gameState.selectGame && <GameList showTitle/>}
         {GAME.gameState.gameOver && !GAME.gameState.started && <GameOver/>}
         {hero.flags && hero.flags.showDialogue && hasDialogue && <DialogueBox verticleMiddle dialogue={hero.dialogue} name={hero.dialogueName} id={hero.dialogueId} />}
         {hero.flags && hero.flags.showChoices && !hasDialogue && hero.choiceOptions && <DialogueBox verticleMiddle options={hero.choiceOptions} name={hero.dialogueName} id={hero.dialogueId}/>}

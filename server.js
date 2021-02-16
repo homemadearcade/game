@@ -227,16 +227,17 @@ app.post('/gameSave', (req,res)=>{
    let q;
     q = [
       { $match: { _id: mongoose.Types.ObjectId(req.body.gameSaveId) } },
-      {
-        $lookup: {
-          from: "users",
-          localField: "author",
-          foreignField: "_id",
-          as: "author"
-        }
-      },
+      // {
+      //   $lookup: {
+      //     from: "users",
+      //     localField: "author",
+      //     foreignField: "_id",
+      //     as: "author"
+      //   }
+      // },
       {
         $project: {
+          author: 1,
           data: 1,
           createdAt: 1,
         },
@@ -244,9 +245,9 @@ app.post('/gameSave', (req,res)=>{
     ];
 
     GameSave.findOne({ _id: mongoose.Types.ObjectId(req.body.gameSaveId) })
-      .select("data")
-      .then(({ data }) => {
-        res.status(200).json({ gameSave: data })
+      .select("data author")
+      .then((gameSave) => {
+        res.status(200).json({ gameSave: gameSave.data, authorUserId: gameSave.author })
       });
 })
 

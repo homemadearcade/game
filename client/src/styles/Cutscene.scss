@@ -64,12 +64,20 @@
 
     &__games-container {
 
+      &--title {
+        position: relative;
+        top: -150px;
+      }
+
       a {
         // color:inherit;
         // text-decoration: none;
-        margin-left: 10px;
+        margin-right: 3px;
         color: white;
         font-size: 12px;
+        &:hover {
+          color: blue;
+        }
       }
 
       margin: 0 auto;
@@ -98,25 +106,36 @@
         margin-left: auto;
       }
 
+      &__title-row {
+        display: flex;
+        flex-direction: row;
+        align-items: baseline;
+        width: 400px;
+      }
+
       &__title {
         font-weight: 700;
+        font-size: 20px;
       }
 
       &__description {
         text-overflow: ellipsis;
         line-clamp: 3;
-        margin-top: 10px;
+        margin-top: 5px;
         font-size:12px;
       }
 
       &__author {
-        padding-right: 20px;
+        padding-left: 10px;
         font-size:12px;
       }
 
+
       &__date {
-        width: 100px;
-        padding-right: 20px;
+        // width: 100px;
+        margin-left:auto;
+        text-align: right;
+        font-size: 12px;
       }
 
       &__search {
@@ -130,13 +149,16 @@
       }
 
       &__sort {
-        color: white;
         background: black;
         width: 100px;
         height: 30px;
         margin-right: 20px;
         border:none;
         cursor: pointer;
+        color: #aaa;
+        &:hover {
+          color: white;
+        }
       }
 
       &__form {
@@ -160,7 +182,7 @@
 
       &--ha {
         position: relative;
-        top: -100px;
+        top: -70px;
       }
     }
     &__game-start, &__game-options {

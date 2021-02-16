@@ -144,7 +144,7 @@ class Page{
 
     global.local.emit('onPageLoaded')
 
-    if(PAGE.getParameterByName('arcadeMode') && PAGE.getParameterByName('shareMode')) {
+    if(PAGE.getParameterByName('arcadeMode') && PAGE.getParameterByName('skipLogin')) {
       events.establishALocalHost()
       PAGE.establishRoleFromQueryOnly()
       HERO.getHeroId()
@@ -155,6 +155,7 @@ class Page{
         GAME.heros = {}
         HERO.addHero(HERO.summonFromGameData({ id: HERO.id, heroSummonType }))
         global.local.emit('onGameLoaded')
+        if(game.id == 'new') GAME.gameState.selectGame = true
       })
     } else {
       const container = document.createElement('div')
@@ -185,7 +186,7 @@ class Page{
       return
     }
 
-    if(PAGE.getParameterByName('arcadeMode') && !PAGE.getParameterByName('shareMode')) {
+    if(PAGE.getParameterByName('arcadeMode') && !PAGE.getParameterByName('skipLogin')) {
       events.establishALocalHost()
       PAGE.establishRoleFromQueryOnly()
       HERO.getHeroId()
@@ -196,6 +197,7 @@ class Page{
         GAME.heros = {}
         HERO.addHero(HERO.summonFromGameData({ id: HERO.id, heroSummonType }))
         global.local.emit('onGameLoaded')
+        if(game.id == 'new') GAME.gameState.selectGame = true
       })
       return
     }
@@ -289,6 +291,7 @@ class Page{
     };
 
     fetch(global.HAGameServerUrl + "/gameSave", gameSaveRequestOptions).then(handleResponse).then(res => {
+      if(PAGE.role.isHomeEditor && global.user._id != res.authorUserId) return alert("You can't edit this game!")
       cb(res.gameSave)
     })
   }
@@ -343,6 +346,8 @@ class Page{
         })
         return
       }
+
+      if(!gameId) gameId = 'new'
 
       const options = {
         params: {
@@ -686,25 +691,33 @@ class Page{
        Authorization: 'Bearer ' + global.getUserCookie()
      }
     };
-    fetch(global.HAGameServerUrl + "/addGameSave", gameSaveRequestOptions).then(handleResponse).then(res => {
-      const requestOptions = {
-        method: "POST",
-        mode: 'cors',
-        body: JSON.stringify({
-          gameSaveId: res.gameSaveId,
-          userData: global.user,
-          description: name + ' - ' + description,
-          photo: imageUrl,
-          tags: JSON.stringify([])
-        }),
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-          Authorization: 'Bearer ' + global.getUserCookie()
-        }
-      };
+    fetch(global.HAGameServerUrl + "/addGameSave", gameSaveRequestOptions).then(handleResponse).then(async (res) => {
+      // const requestOptions = {
+      //   method: "POST",
+      //   mode: 'cors',
+      //   body: JSON.stringify({
+      //     gameSaveId: res.gameSaveId,
+      //     userData: global.user,
+      //     description: name + ' - ' + description,
+      //     photo: imageUrl,
+      //     tags: JSON.stringify([])
+      //   }),
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //     'Access-Control-Allow-Origin': '*',
+      //     Authorization: 'Bearer ' + global.getUserCookie()
+      //   }
+      // };
 
-      global.local.emit('onSendNotification', { playerUIHeroId: HERO.id, toast: true, text: 'Game Published!'})
+      await Swal.fire({
+        icon: 'success',
+        title: 'Congratulations!',
+        text: name + ' has been published! Click ok to view it on the Arcade',
+      })
+
+      window.location = 'http://ha-game.herokuapp.com/?arcadeMode=true'
+
+      // global.local.emit('onSendNotification', { playerUIHeroId: HERO.id, toast: true, text: 'Game Published!'})
 
       // return fetch(global.HASocialServerUrl + "/api/post/addPost/", requestOptions)
       //   .then(res => {

@@ -170,7 +170,7 @@ export default class ControlsHUD extends React.Component {
     const { hero } = this.state
     // const hero = GAME.heros[HERO.id].mod()
 
-    if(!hero.keysDown) return null
+    if(hero.keysDown) hero.keysDown = {}
 
     return <div className="ControlsHUD">
       {hero.zButtonBehavior && <div className="ControlsHUD__actioninfo">

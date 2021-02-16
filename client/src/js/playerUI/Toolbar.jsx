@@ -77,7 +77,7 @@ export default class Toolbar extends React.Component {
           popup: 'animated fadeOutUp faster'
         },
         input: 'text',
-        initialValue: GAME.metadata.name,
+        inputValue: GAME.metadata.name,
         showCancelButton: true,
         confirmButtonText: 'Next',
       })
@@ -90,6 +90,7 @@ export default class Toolbar extends React.Component {
           popup: 'animated fadeOutUp faster'
         },
         input: 'text',
+        inputValue: GAME.metadata.description,
         showCancelButton: true,
         confirmButtonText: 'Next',
       })
@@ -119,12 +120,6 @@ export default class Toolbar extends React.Component {
     }}
     iconName="fa-rocket"
     >
-
-    </ToolbarRow>
-
-
-    return <ToolbarRow iconName='fa-cog'>
-      <ToolbarButton iconName="fa-file" onClick={EDITOR.newGame}/>
       <ToolbarButton iconName="fa-download" onClick={() => {
         let saveGame = GAME.cleanForSave(GAME)
         PAGE.downloadObjectAsJson(saveGame, GAME.id)
@@ -138,6 +133,11 @@ export default class Toolbar extends React.Component {
           }
         })
       }}/>
+    </ToolbarRow>
+
+    return <ToolbarRow iconName='fa-cog'>
+      <ToolbarButton iconName="fa-file" onClick={EDITOR.newGame}/>
+
     <ToolbarButton iconName="fa-rocket" onClick={async () => {
 
       }}/>

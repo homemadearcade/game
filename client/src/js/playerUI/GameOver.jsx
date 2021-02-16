@@ -44,11 +44,11 @@ export default class GameOver extends React.Component{
                 }, 200)
               }
             }}>Try Again</button>
-            <button onClick={() => {
+            {!PAGE.role.isHomeEditor && <button onClick={() => {
               this.setState({
                 showOtherGames: true
               })
-            }}>Play Other Games</button>
+            }}>Play Other Games</button>}
             {(PAGE.role.isHomeEditor || PAGE.role.isAdmin) && <button onClick={() => {
               global.emitGameEvent('onEditGameState', { gameOver: false, gameOverReason: null })
               setTimeout(() => {
