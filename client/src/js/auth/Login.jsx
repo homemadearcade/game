@@ -86,7 +86,6 @@ const Login = ({ values, actions }) => {
       onClick={actions.onResetPassword} size="large">
         Reset Password
       </button>
-      <div>{values.message}</div>
     </div>
   } else {
     form = <div>
