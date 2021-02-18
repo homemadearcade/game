@@ -11,7 +11,7 @@ if (global.location.origin.indexOf('localhost') > 0) {
 
 function App() {
   const [cookies, setCookie, removeCookie] = useCookies(['user']);
-  const [state, setState] = useState({ email: '', password: '', message: '', checkingCookie: !!cookies.user});
+  const [state, setState] = useState({ email: '', password: '', retypepassword: '', message: '', firstname: '', lastname: '', checkingCookie: !!cookies.user});
 
   useEffect(() => {
     if(cookies.user && !global.user) {
@@ -48,12 +48,22 @@ function App() {
   };
 
   const onSignUp = () => {
-    global.socket.emit("authentication", { email: state.email, password: state.password, signup: true });
+    global.socket.emit("authentication", { email: state.email, password: state.password, firstname: state.firstname, lastname: state.lastname, signup: true });
   };
 
   const onForgotPassword = () => {
+    console.log('XXX')
     global.socket.emit("authentication", { email: state.email, forgotPassword: true });
   };
+
+  const onResetPassword = () => {
+    if(state.password == state.retypepassword) {
+      global.socket.emit("authentication", { password: state.password, resetPassword: true, token: PAGE.getParameterByName('resetPasswordToken') });
+    } else {
+      setState({...state, message: "Passwords do not match"})
+    }
+  };
+
 
   const onChange = e => {
     setState({ ...state, [e.target.name]: e.target.value });
@@ -69,7 +79,8 @@ function App() {
         onLogIn,
         onSignUp,
         onChange,
-        onForgotPassword
+        onForgotPassword,
+        onResetPassword
       }} values={state} />
     )
   }

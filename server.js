@@ -13,6 +13,7 @@ import dotenv from 'dotenv'; // Loading dotenv to have access to env variables
 // Connect to the Database
 import mongoose from "mongoose"
 import bluebird from 'bluebird'
+import bcrypt from 'bcryptjs'
 
 import User from "./db/User.js"
 import GameSave from "./db/GameSave.js"
@@ -420,7 +421,7 @@ const authenticate = async (socket, data, callback) => {
   // socket.user = { email: 'pedigojon@gmail.com'}
   // callback(null, socket.user)
   // return
-  const { email, password, signup, forgotPassword } = data
+  const { email, password, signup, forgotPassword, resetPassword, token } = data
 
   try {
     // session
@@ -442,9 +443,48 @@ const authenticate = async (socket, data, callback) => {
 
     // sign up
     if (signup) {
-      const user = await User.create({ email, password })
-      socket.user = user
-      return callback(null, !!user)
+
+      bcrypt.hash(password, 10, async (err, hash) => {
+        try {
+          const username = data.firstname + ' ' + data.lastname
+          const user = await User.create({
+            firstName: data.firstname,
+            lastName: data.lastname,
+            username: username,
+            email,
+            password: hash
+           })
+          socket.user = user
+          return callback(null, !!user)
+        } catch (e){
+          console.log(e)
+          socket.emit('auth_message', { message: 'Authentication error. Email probably already exists'})
+          callback(null)
+        }
+      })
+      return
+    }
+
+    if(resetPassword) {
+      const user = jwt.decode(token, process.env.JWT_KEY)
+      if(password) {
+        bcrypt.hash(password, 10, (err, hash) => {
+          if (err) {
+            return res.status(500).json({ message: err });
+          } else {
+            User.findOneAndUpdate({ email: user.email }, { password: hash })
+              .then(() => {
+                socket.emit('auth_message',  { message: 'Password has been reset'})
+              })
+              .catch((err) => {
+                console.log(err.message);
+                socket.emit('auth_message',  { message: 'Error'})
+              });
+          }
+        });
+      }
+
+      return
     }
 
     if(forgotPassword) {
@@ -453,30 +493,37 @@ const authenticate = async (socket, data, callback) => {
         .then(async (user) => {
           if (user) {
 
-            const { _id } = user
+            try {
 
-            const token = jwt.sign(
-              {
-                email,
-                _id,
-              },
-              process.env.JWT_KEY,
-              {
-                expiresIn: "10m",
-              }
-            );
+              const { email } = user
 
-            // send mail with defined transport object
-            let info = await transporter.sendMail({
-              from: '"Homemade Arcade admin" <homemadearcade@yahoo.com>', // sender address
-              to: "pedigojon@gmail.com", // list of receivers
-              subject: "Forgot Password", // Subject line
-              html: "Go to this link to reset password: ha-game.herokuapp.com/?resetPasswordToken" + token, // html body
-            });
-            return socket.emit('auth_message', { message: 'Email sent'})
+              const token = jwt.sign(
+                {
+                  email
+                },
+                process.env.JWT_KEY,
+                {
+                  expiresIn: "10m",
+                }
+              );
+              // send mail with defined transport object
+              let info = await transporter.sendMail({
+                from: '"DONOTREPLY" <homemadearcade@yahoo.com>', // sender address
+                to: "pedigojon@gmail.com", // list of receivers
+                subject: "Forgot Password", // Subject line
+                html: "Go to this link to reset password: ha-game.herokuapp.com/?resetPasswordToken=" + token, // html body
+              });
+
+              return socket.emit('auth_message', { message: 'Email sent'})
+
+            } catch(e) {
+              console.log(e)
+            }
+
 
           }
-        }).catch(() => {
+        }).catch((err) => {
+          console.log(err)
           return socket.emit('auth_message', { message: 'No such email'})
         })
         return
@@ -488,15 +535,30 @@ const authenticate = async (socket, data, callback) => {
       socket.emit('auth_message', { message: 'No such email and password combination'})
       return
     }
-    if(user.validPassword(password)) {
+
+    bcrypt.compare(password, user.password, (err, result) => {
+      if(err) {
+        console.log(err)
+        socket.emit('auth_message',  { message: 'Authentication Error 1'})
+        return
+      }
+
+      if(!result) {
+        socket.emit('auth_message',  { message: 'No such email and password combination'})
+        return
+      }
+
       socket.user = user
       return callback(null, user)
-    }
-
+    });
+    // if(user.validPassword(password)) {
+    //
+    // }
+    
     // error handling
-    socket.emit('auth_message',  { message: 'No such email and password combination'})
+    // socket.emit('auth_message',  { message: 'No such email and password combination'})
   } catch (error) {
-    socket.emit('auth_message', { message: 'Authentication error. Email probably already exists'})
+    socket.emit('auth_message', { message: 'Authentication Error 2'})
     console.log(error)
     callback(error)
   }
