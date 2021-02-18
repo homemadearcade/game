@@ -17,6 +17,26 @@ import bluebird from 'bluebird'
 import User from "./db/User.js"
 import GameSave from "./db/GameSave.js"
 
+import nodemailer from 'nodemailer';
+
+// Generate test SMTP service account from ethereal.email
+// Only needed if you don't have a real mail account for testing
+let testAccount = await nodemailer.createTestAccount();
+
+// create reusable transporter object using the default SMTP transport
+let transporter = nodemailer.createTransport({
+  host: 'smtp.mail.yahoo.com',
+  port: 465,
+  service:'yahoo',
+  secure: false,
+  auth: {
+    user: 'homemadearcade@yahoo.com', // generated ethereal user
+    pass: 'wvycuhsnwofztmeo', // generated ethereal password
+  },
+  debug: false,
+  logger: true,
+});
+
 // import winston from 'winston';
 //
 // const logger = winston.createLogger({
@@ -395,13 +415,12 @@ server.listen(process.env.PORT || 4000, function(){
   console.log('listening on *:' + (process.env.PORT || 4000));
 });
 
-
 // Authenticate!
 const authenticate = async (socket, data, callback) => {
   // socket.user = { email: 'pedigojon@gmail.com'}
   // callback(null, socket.user)
   // return
-  const { email, password, signup } = data
+  const { email, password, signup, forgotPassword } = data
 
   try {
     // session
@@ -421,12 +440,47 @@ const authenticate = async (socket, data, callback) => {
       }
     }
 
-    // // sign up
-    // if (signup) {
-    //   const user = await User.create({ email, password })
-    //   socket.user = user
-    //   return callback(null, !!user)
-    // }
+    // sign up
+    if (signup) {
+      const user = await User.create({ email, password })
+      socket.user = user
+      return callback(null, !!user)
+    }
+
+    if(forgotPassword) {
+      User.findOne({ email: email })
+        .select("email username")
+        .then(async (user) => {
+          if (user) {
+
+            const { _id } = user
+
+            const token = jwt.sign(
+              {
+                email,
+                _id,
+              },
+              process.env.JWT_KEY,
+              {
+                expiresIn: "10m",
+              }
+            );
+
+            // send mail with defined transport object
+            let info = await transporter.sendMail({
+              from: '"Homemade Arcade admin" <homemadearcade@yahoo.com>', // sender address
+              to: "pedigojon@gmail.com", // list of receivers
+              subject: "Forgot Password", // Subject line
+              html: "Go to this link to reset password: ha-game.herokuapp.com/?resetPasswordToken" + token, // html body
+            });
+            return socket.emit('auth_message', { message: 'Email sent'})
+
+          }
+        }).catch(() => {
+          return socket.emit('auth_message', { message: 'No such email'})
+        })
+        return
+    }
 
     // login
     const user = await User.findOne({ email })

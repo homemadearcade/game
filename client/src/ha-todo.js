@@ -14,6 +14,10 @@ View information popup. Tells the user what is going on behind this object, kind
 Allow object library additions to spawn zone
 --
 
+Create Account on HA app
+--
+
+
 ////////////////////////////////
 ////////////////////////////////
 TAGS
@@ -28,7 +32,6 @@ Drops on death tag
 ARCADE VIEW
 ////////////////////////////////
 Escape open meta menu when you are in arcade mode
-Go to new screen after publish with list of games
 
 ////////////////////////////////
 ////////////////////////////////

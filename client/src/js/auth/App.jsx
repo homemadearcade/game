@@ -51,6 +51,10 @@ function App() {
     global.socket.emit("authentication", { email: state.email, password: state.password, signup: true });
   };
 
+  const onForgotPassword = () => {
+    global.socket.emit("authentication", { email: state.email, forgotPassword: true });
+  };
+
   const onChange = e => {
     setState({ ...state, [e.target.name]: e.target.value });
   };
@@ -64,7 +68,8 @@ function App() {
       <Login actions={{
         onLogIn,
         onSignUp,
-        onChange
+        onChange,
+        onForgotPassword
       }} values={state} />
     )
   }

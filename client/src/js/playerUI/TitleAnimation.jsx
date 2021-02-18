@@ -128,7 +128,7 @@ export default class TitleAnimation extends React.Component{
 
     const { style, onComplete } = this.props
 
-    setTimeout(() => {
+    if(GAME && GAME.theme && GAME.theme.audio && GAME.theme.audio.onGameTitleAppears) setTimeout(() => {
       AUDIO.play(GAME.theme.audio.onGameTitleAppears)
     }, 300)
 
