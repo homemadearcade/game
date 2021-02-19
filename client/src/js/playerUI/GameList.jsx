@@ -34,12 +34,18 @@ export default class GameList extends React.Component{
 
     let games
     let gameIdMap = {}
+    let authorsGames = []
 
     if(this.state.gameSaves) {
       games = this.state.gameSaves.filter((gameSave) => {
         if(gameIdMap[gameSave.data.id]) return
 
         gameIdMap[gameSave.data.id] = true
+
+        if(window.user && gameSave.author == window.user._id) {
+          authorsGames.push(gameSave)
+          return false
+        }
 
         if(this.state.searchGameTerm && this.state.searchGameTerm.length) {
           if(gameSave.data.metadata && gameSave.data.metadata.name && gameSave.data.metadata.author) {
@@ -50,41 +56,50 @@ export default class GameList extends React.Component{
         } else {
           return true
         }
-      }).map((gameSave, i) => {
-        if(gameSave.data.metadata && gameSave.data.metadata.name && gameSave.data.metadata.author) {
-          return <div className="Cutscene__games-container__game"
-            onMouseEnter={() => {
-              this.setState({
-                mouseOver: i
-              })
-            }}
-            onClick={() => {
-              let removeEventListener = window.local.on('onGameLoaded', () => {
-                window.emitGameEvent('onStartPregame')
-                removeEventListener()
-              })
-              if(!GAME.id) {
-                window.emitGameEvent('onLoadGame', gameSave.data)
-              } else {
-                window.emitGameEvent('onChangeGame', gameSave.data)
-              }
-            }}
-          >
-            <div>
-              <div className="Cutscene__games-container__title-row">
-                <div className="Cutscene__games-container__title">{gameSave.data.metadata.name}</div>
-                <div className="Cutscene__games-container__author">{"By " + gameSave.data.metadata.author}</div>
-                {this.state.mouseOver== i && window.user && gameSave.author == window.user._id && <a target="_blank" className="Cutscene__games-container__date" href={global.HAGameClientUrl+"/?homeEditor=true&gameSaveId="+gameSave._id}>edit</a>}
-                {this.state.mouseOver== i && <a className="Cutscene__games-container__date"  target="_blank" href={global.HAGameClientUrl+"/?arcadeMode=true&skipLogin=true&gameSaveId="+gameSave._id}>share</a>}
-                {this.state.mouseOver != i && <div className="Cutscene__games-container__date">{new Date(gameSave.createdAt).toLocaleDateString("en-US")}</div>}
-              </div>
-              <div className="Cutscene__games-container__title-row">
-                <div className="Cutscene__games-container__description" title={gameSave.data.metadata.description}>{gameSave.data.metadata.description}</div>
-              </div>
-            </div>
+      })
 
-            {gameSave.data.metadata.featuredImage && gameSave.data.metadata.featuredImage.url && <img className="Cutscene__games-container__image" src={gameSave.data.metadata.featuredImage.url}/>}
-          </div>
+      games = this.state.reverseDate ? [...games, ...authorsGames] : [...authorsGames, ...games]
+
+      games = games.map((gameSave, i) => {
+        //                    {<a className=""  target="_blank" href={global.HAGameClientUrl+"/?arcadeMode=true&gameSaveId="+gameSave._id}>share</a>}
+
+        if(gameSave.data.metadata && gameSave.data.metadata.name && gameSave.data.metadata.author) {
+          return <a target="_blank" href={global.HAGameClientUrl+"/?arcadeMode=true&skipLogin=true&gameSaveId="+gameSave._id}>
+            <div className="Cutscene__games-container__game"
+              onMouseEnter={() => {
+                this.setState({
+                  mouseOver: i
+                })
+              }}
+              onClick={() => {
+                // let removeEventListener = window.local.on('onGameLoaded', () => {
+                //   window.emitGameEvent('onStartPregame')
+                //   removeEventListener()
+                // })
+                // if(!GAME.id) {
+                //   window.emitGameEvent('onLoadGame', gameSave.data)
+                // } else {
+                //   window.emitGameEvent('onChangeGame', gameSave.data)
+                // }
+              }}
+            >
+              <div>
+                <div className="Cutscene__games-container__title-row">
+                  <div className="Cutscene__games-container__title">{gameSave.data.metadata.name}</div>
+                  <div className="Cutscene__games-container__author">{"By " + gameSave.data.metadata.author}</div>
+                  {this.state.mouseOver== i && <div className="Cutscene__games-container__link-group">
+                    {window.user && gameSave.author == window.user._id && <a target="_blank" className="" href={global.HAGameClientUrl+"/?homeEditor=true&gameSaveId="+gameSave._id}>edit</a>}
+                  </div>}
+                  {<div className="Cutscene__games-container__date">{new Date(gameSave.createdAt).toLocaleDateString("en-US")}</div>}
+                </div>
+                <div className="Cutscene__games-container__title-row">
+                  <div className="Cutscene__games-container__description" title={gameSave.data.metadata.description}>{gameSave.data.metadata.description}</div>
+                </div>
+              </div>
+
+              {gameSave.data.metadata.featuredImage && gameSave.data.metadata.featuredImage.url && <img className="Cutscene__games-container__image" src={gameSave.data.metadata.featuredImage.url}/>}
+            </div>
+          </a>
         }
       })
 
@@ -114,6 +129,18 @@ export default class GameList extends React.Component{
           mouseOver: null
         })
       }}>{games ? games : <div className="Cutscene__game-loading">Loading games...</div>}</div>
+
+      <a onClick={() => {
+        localStorage.removeItem('hero')
+        localStorage.removeItem('ghostData')
+        localStorage.removeItem('initialGameState')
+        localStorage.removeItem('saveEditingGame')
+        localStorage.removeItem('editorPreferences')
+        global.clearUserCookie()
+        PAGE.role.isPlayer = false
+        window.location.href = global.HAGameClientUrl
+      }} className="PlayerUI__top-right Cutscene__games-container__wanna-play-more">{'Logout'}</a>
+
       </div>
       </Hastartscreen>
     </div>

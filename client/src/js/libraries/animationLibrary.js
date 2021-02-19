@@ -261,8 +261,8 @@ global.local.on('onFirstPageGameLoaded', () => {
     		"end": "#757575"
     	},
     	"speed": {
-    		"start": 400,
-    		"end": 400,
+    		"start": 120,
+    		"end": 120,
     		"minimumSpeedMultiplier": 1
     	},
     	"acceleration": {

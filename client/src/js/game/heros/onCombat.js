@@ -21,18 +21,16 @@ export default function onCombat(hero, collider, result, options) {
         if(hero.lives <= 0) {
           hero._destroy = true
           hero.removed = true
+          let reason = 'You got hit by a '
+          reason += collider.name ? collider.name : collider.id
+          if(collider.gameOverReason) reason = collider.gameOverReason
+          // if(collider.gameOverPopoverText) hero.popoverText = collider.gameOverPopoverText
 
           if(hero.tags.implodeOnDestroy || hero.tags.explodeOnDestroy || hero.tags.spinOffOnDestroy) {
             setTimeout(() => {
-              let reason = 'You got hit by a '
-              reason += collider.name ? collider.name : collider.id
-              if(collider.gameOverReason) reason = collider.gameOverReason
               global.emitGameEvent('onGameOver', reason)
             }, 2000)
           } else {
-            let reason = 'You got hit by a '
-            reason += collider.name ? collider.name : collider.id
-            if(collider.gameOverReason) reason = collider.gameOverReason
             global.emitGameEvent('onGameOver', reason)
           }
         } else {

@@ -6,6 +6,7 @@ import modals from '../mapeditor/modals.js'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from '../auth/App.jsx'
+import Landing from '../auth/Landing.jsx'
 import axios from 'axios';
 
 class Page{
@@ -144,29 +145,43 @@ class Page{
 
     global.local.emit('onPageLoaded')
 
-    if(PAGE.getParameterByName('arcadeMode') && PAGE.getParameterByName('skipLogin')) {
-      events.establishALocalHost()
-      PAGE.establishRoleFromQueryOnly()
-      HERO.getHeroId()
-      global.local.emit('onUserIdentified')
-      global.local.emit('onPlayerIdentified')
-      PAGE.askCurrentGame((game, heroSummonType) => {
-        GAME.loadGridWorldObjectsCompendiumState(game)
-        GAME.heros = {}
-        HERO.addHero(HERO.summonFromGameData({ id: HERO.id, heroSummonType }))
-        global.local.emit('onGameLoaded')
-        if(game.id == 'new') GAME.gameState.selectGame = true
-      })
-    } else {
+    // if(PAGE.getParameterByName('arcadeMode') && PAGE.getParameterByName('skipLogin')) {
+    //   events.establishALocalHost()
+    //   PAGE.establishRoleFromQueryOnly()
+    //   HERO.getHeroId()
+    //   global.local.emit('onUserIdentified')
+    //   global.local.emit('onPlayerIdentified')
+    //   PAGE.askCurrentGame((game, heroSummonType) => {
+    //     GAME.loadGridWorldObjectsCompendiumState(game)
+    //     GAME.heros = {}
+    //     HERO.addHero(HERO.summonFromGameData({ id: HERO.id, heroSummonType }))
+    //     global.local.emit('onGameLoaded')
+    //     if(game.id == 'new') GAME.gameState.selectGame = true
+    //   })
+    // } else {
+
+    //landing page
+    if(!PAGE.getParameterByName('livePassword') && !PAGE.getParameterByName('arcadeMode') && !PAGE.getParameterByName('homeEditor')) {
       const container = document.createElement('div')
       container.id = 'HomemadeArcade'
       document.body.appendChild(container)
       // Mount React App
       ReactDOM.render(
-        React.createElement(App),
+        React.createElement(Landing),
         container
       )
+      return
     }
+
+    const container = document.createElement('div')
+    container.id = 'HomemadeArcade'
+    document.body.appendChild(container)
+    // Mount React App
+    ReactDOM.render(
+      React.createElement(App),
+      container
+    )
+    // }
   }
 
   async userIdentified() {
@@ -186,7 +201,7 @@ class Page{
       return
     }
 
-    if(PAGE.getParameterByName('arcadeMode') && !PAGE.getParameterByName('skipLogin')) {
+    if(PAGE.getParameterByName('arcadeMode')) {
       events.establishALocalHost()
       PAGE.establishRoleFromQueryOnly()
       HERO.getHeroId()

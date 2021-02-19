@@ -475,7 +475,7 @@ import './styles/index.scss'
 import './styles/jsoneditor.css'
 
 let otherPageOpen = false
-if(!PAGE.getParameterByName('arcadeMode') && !PAGE.getParameterByName('homeEditor')) {
+if(!PAGE.getParameterByName('livePassword')) {
   // Broadcast that you're opening a page.
   localStorage.openpages = Date.now();
   var onLocalStorageEvent = function(e){
@@ -491,7 +491,7 @@ if(!PAGE.getParameterByName('arcadeMode') && !PAGE.getParameterByName('homeEdito
 }
 
 setTimeout(() => {
-  if(PAGE.getParameterByName('arcadeMode') || PAGE.getParameterByName('homeEditor')) {
+  if(!PAGE.getParameterByName('livePassword')) {
     return PAGE.load()
   }
 

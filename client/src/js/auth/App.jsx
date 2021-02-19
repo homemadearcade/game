@@ -17,6 +17,12 @@ function App() {
     if(cookies.user && !global.user) {
       global.socket.emit("authentication", {})
     }
+
+    if(!cookies.user) {
+      if(PAGE.getParameterByName('skipLogin')) {
+        PAGE.userIdentified()
+      }
+    }
   }, [])
 
   global.socket.on("authenticated", ({cookie, user}) => {
@@ -52,7 +58,6 @@ function App() {
   };
 
   const onForgotPassword = () => {
-    console.log('XXX')
     global.socket.emit("authentication", { email: state.email, forgotPassword: true });
   };
 
@@ -64,24 +69,25 @@ function App() {
     }
   };
 
-
   const onChange = e => {
     setState({ ...state, [e.target.name]: e.target.value });
   };
 
-  if (global.user) {
+  if (global.user || PAGE.getParameterByName('skipLogin')) {
     return null
   }
 
   if (!state.checkingCookie) {
     return (
-      <Login actions={{
-        onLogIn,
-        onSignUp,
-        onChange,
-        onForgotPassword,
-        onResetPassword
-      }} values={state} />
+      <div>
+        <Login actions={{
+          onLogIn,
+          onSignUp,
+          onChange,
+          onForgotPassword,
+          onResetPassword
+        }} values={state} />
+      </div>
     )
   }
 

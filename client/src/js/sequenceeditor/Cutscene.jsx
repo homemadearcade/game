@@ -15,7 +15,7 @@ import {
 } from '../components/SelectComponents.jsx'
 
 global.defaultSequenceCutscene = {
-  notificationAllHeros: false,
+  notificationAllHeros: true,
   effectedMainObject: false,
   effectedGuestObject: false,
   effectedIds: [],

@@ -1,4 +1,5 @@
 import mockServer from '../../../../sockets'
+import { startSequence } from '../game/sequence.js'
 
 class EventEmitter {
   constructor(mock) {
@@ -145,6 +146,10 @@ class EventEmitter {
 
       if(AUDIO[eventName]) {
         event.push(AUDIO[eventName])
+      }
+
+      if(PAGE.role.isHost && GAME.library && GAME.library.sequences && GAME.library.sequences[eventName]) {
+        startSequence(eventName, {})
       }
     }
 

@@ -45,9 +45,14 @@ export default class GameOver extends React.Component{
               }
             }}>Try Again</button>
             {!PAGE.role.isHomeEditor && <button onClick={() => {
-              this.setState({
-                showOtherGames: true
-              })
+              if(!window.user) {
+                window.location.href = global.HAGameClientUrl
+              } else {
+                this.setState({
+                  showOtherGames: true
+                })
+              }
+
             }}>Play Other Games</button>}
             {(PAGE.role.isHomeEditor || PAGE.role.isAdmin) && <button onClick={() => {
               global.emitGameEvent('onEditGameState', { gameOver: false, gameOverReason: null })
