@@ -72,7 +72,7 @@ export default class Goals extends React.Component{
       {activeGoal.goalShowNavigation && this._renderNavigationArrow(activeGoal)}
       {activeGoal.goalDescription && <div>{'Goal: ' + activeGoal.goalDescription}</div>}
       {activeGoal.goalDescription && <br/>}
-      {timeRemaining && <div>{timeRemaining}</div>}
+      {!activeGoal.failed && !activeGoal.succeeded && timeRemaining && <div>{timeRemaining}</div>}
       {timeRemaining && <br/>}
       <div>Progress: {tracker.count}</div>
       <div>Goal: {tracker.targetCount}</div>

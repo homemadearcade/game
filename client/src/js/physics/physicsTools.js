@@ -129,7 +129,20 @@ function heroCorrection(hero) {
         const heroCanCollide = (body.gameObject.mod().tags['obstacle'] && !body.gameObject.mod().tags['heroPushable']) || body.gameObject.mod().tags['noHeroAllowed']
         if(heroCanCollide) {
 
-          if(body.gameObject.mod().tags.oneWayPlatform) {
+
+          if(body.gameObject.mod().tags.oneWayRight) {
+            if(result.overlap_x === 1 && (hero.velocityX > 0 || hero._flatVelocityX > 0)) {
+              illegal = true
+            }
+          } else if(body.gameObject.mod().tags.oneWayLeft) {
+            if(result.overlap_x === - 1 && (hero.velocityX < 0 || hero._flatVelocityX < 0)) {
+              illegal = true
+            }
+          } else if(body.gameObject.mod().tags.oneWayDown) {
+            if(result.overlap_y === - 1 && (hero.velocityY < 0 || hero._flatVelocityY < 0)) {
+              illegal = true
+            }
+          } else if(body.gameObject.mod().tags.oneWayPlatform) {
             if(result.overlap_y === 1 && (hero.velocityY > 0 || hero._flatVelocityY > 0)) {
               illegal = true
             }

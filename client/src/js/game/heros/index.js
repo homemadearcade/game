@@ -2,6 +2,7 @@ import { onHeroTrigger } from './onHeroTrigger.js'
 import './ghost.js'
 import pathfinding from '../../utils/pathfinding.js'
 import collisions from '../../utils/collisions.js'
+import { dropObject } from './inventory.js'
 import gridUtil from '../../utils/grid.js'
 import input from '../input.js'
 import triggers from '../triggers.js'
@@ -62,7 +63,7 @@ class Hero{
     	zoomMultiplier: 1.875,
       // x: global.grid.startX + (global.grid.width * global.grid.nodeSize)/2,
       // y: global.grid.startY + (global.grid.height * global.grid.nodeSize)/2,
-      lives: 10,
+      lives: 1,
       score: 0,
       dialogue: [],
       defaultSprite: 'solidcolorsprite',
@@ -557,6 +558,7 @@ class Hero{
       emitterTypePoweredUp: hero.emitterTypePoweredUp,
       emitterTypeJump: hero.emitterTypeJump,
       emitterTypeDash: hero.emitterTypeDash,
+      emitterTypeHeroCollide: hero.emitterTypeHeroCollide,
 
       velocityMax: hero.velocityMax,
       velocityMaxXExtra: hero.velocityMaxXExtra,
@@ -817,7 +819,11 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
 
   removeHero(hero) {
     OBJECTS.forAllSubObjects(hero.subObjects, (subObject) => {
-      OBJECTS.removeSubObject(subObject)
+      if(subObject.mod().tags.dropOnOwnerRespawn) {
+        dropObject(hero, subObject)
+      } else {
+        OBJECTS.removeSubObject(subObject)
+      }
     })
     GAME.heros[hero.id].removed = true
     // if(global.popoverOpen[hero.id]) MAP.closePopover(hero)
@@ -909,6 +915,18 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
     if(moddedTags.stopHeroOnTouchStart) {
       hero.velocityY = 0
       hero.velocityX = 0
+    }
+
+    if(moddedTags['heroAnimationOnTouchStart']) {
+      global.socket.emit('objectAnimation', object.emitterTypeHeroCollide || 'editObject', hero.id)
+    }
+
+    if(moddedTags.scoreSubtractOnTouchStart) {
+      hero.score -= (object.scoreSubtract ? object.scoreSubtract : 1)
+    }
+
+    if(moddedTags.scoreAddOnTouchStart) {
+      hero.score += (object.scoreAdd ? object.scoreAdd : 1)
     }
   }
 
@@ -1208,6 +1226,23 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
     if(object.mod().tags.implodeOnDestroy) {
       global.local.emit('onObjectAnimation', 'isolatedExplosion', object.id)
     }
+  }
+
+  onHeroRespawn(object) {
+    if(object.mod().tags.explodeOnDestroy) {
+      global.local.emit('onObjectAnimation', 'explode', object.id)
+    }
+    if(object.mod().tags.spinOffOnDestroy) {
+      global.local.emit('onObjectAnimation', 'spinOff', object.id)
+    }
+    if(object.mod().tags.implodeOnDestroy) {
+      global.local.emit('onObjectAnimation', 'isolatedExplosion', object.id)
+    }
+    OBJECTS.forAllSubObjects(object.subObjects, (subObject) => {
+      if(subObject.mod().tags.dropOnOwnerRespawn) {
+        dropObject(object, subObject)
+      }
+    })
   }
 }
 

@@ -40,6 +40,9 @@ function setDefault() {
     movingPlatform: false,
     heroPushable: false,
     oneWayPlatform: false,
+    oneWayLeft: false,
+    oneWayRight: false,
+    oneWayDown: false,
     rotateable: {
       relatedTags: ['realRotate', 'realRotateFast', 'realRotateBackAndForth', 'realRotateBackAndForthFast']
     },
@@ -96,6 +99,22 @@ function setDefault() {
     },
     respawn: false,
     destroyOnHeroLand: false,
+    changeHeroSpawnPointOnCollide:  {
+      relatedTags: ['heroAnimationOnTouchStart']
+    },
+    heroAnimationOnTouchStart: false,
+
+    // attachHeroOnCollideRelative: false,
+    // attachHeroOnCollideParent: false,
+    // attachToHeroOnCollideRelative: false,
+    // attachToHeroOnCollideParent: false,
+
+    scoreAddOnTouchStart: false,
+    scoreSubtractOnTouchStart: false,
+    scoreAddOnDestroy: false,
+    scoreSubtractOnDestroy: false,
+    // scoreAddInInventory: false,
+    // scoreSubtractInInventory: false,
     // knockBackOnHit,
     // explodeOnDestroy: false,
     // fadeOutOnDestroy,
@@ -248,7 +267,7 @@ function setDefault() {
     stackable: {
       relatedTags: ['popCount', 'showCountInHUD']
     },
-    // dropOnOwnerDestroyed: false,
+    dropOnOwnerRespawn: false,
     startsPickedUp: false,
     startsEquipped: false,
     showCountInHUD: false,

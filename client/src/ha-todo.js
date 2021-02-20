@@ -6,48 +6,15 @@
 SMALL TASKS
 //////////////////////////////////////////////////////////////////////////////////
 
-Total refresh of all heros and the server and the world
-
 View information popup. Tells the user what is going on behind this object, kind of satisfying a way to see what is going on
   also helps with debugging
---
-Allow object library additions to spawn zone
---
+Add Information such as -you cannot edit the sprite of an object this big - into the descriptions thing
 
-Create Account on HA app
---
+All the effects that are missing
 
+Upload actual upload instead of copy and Paste
 
-////////////////////////////////
-////////////////////////////////
-TAGS
-////////////////////////////////
-Change Hero Spawn Point On Collide
-over one directional collision tags
-Drop equippable items on death
-Drops on death tag
+Bug - Descriptors adding to sand?
 
-////////////////////////////////
-////////////////////////////////
-ARCADE VIEW
-////////////////////////////////
-Escape open meta menu when you are in arcade mode
-
-////////////////////////////////
-////////////////////////////////
-QUESTS UPGRADE
-////////////////////////////////
-Add Quest starting, completing, and succeeding to effects
-Auto Complete/Fail quest based on goals the quest has
-View Quests UI in player menu
-onSucceedSequence, onFailSequence
-
-////////////////////////////////
-////////////////////////////////
-GOALS UPGRADE
-////////////////////////////////
-Goal number -> as many as possible ( so its just tracking basically )
-Chances -> fail on death
-a Score parameter on heros and objects? ( score holding vs score giving )
-
+—
 */

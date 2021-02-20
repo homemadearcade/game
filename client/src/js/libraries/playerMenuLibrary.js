@@ -119,9 +119,9 @@ global.local.on('onGameReady', () => {
   global.heroFlags = {
     paused: false,
     isAdmin: false,
-    // showScore: false,
+    showScore: false,
     // showDialogue: false,
-    // showLives: false,
+    showLives: false,
     showMapHighlight: false,
     showOtherUsersMapHighlight: false,
     constructEditorColor: false,
@@ -133,6 +133,8 @@ global.local.on('onGameReady', () => {
     showBrandImageScreen: false,
     editAllowedWhenGameStarted: false,
     canZoomInAndOut: false,
+
+
   }
 
   global.heroMenuLibrary = {

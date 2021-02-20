@@ -436,11 +436,17 @@ global.defaultAudioTheme = {
 
   onHeroRespawn: null,
 
-  onPlayerUIMouseOverButton: 'assets/audio/UI/HA/Hover over button sound 1.wav',
-  onPlayerUIMenuOpen: 'assets/audio/UI/HA/Notification sound 5.wav',
+  onPlayerUIMouseOverButton: null,
+  onPlayerUIMenuOpen: null,
   // onPlayerUIMenuClick: 'assets/audio/UI/HA/Click sounds 6.wav',
-  onPlayerUIToast: 'assets/audio/UI/HA/Notification sound 4.wav',
-  onMapEditorSwitchNode: 'assets/audio/UI/HA/Switch sounds 18.wav',
+  onPlayerUIToast: null,
+  onMapEditorSwitchNode: null,
+  onGameTitleAppears: 'assets/audio/retro/Game Starting/Game Starting 6.wav',
+  // onPlayerUIMouseOverButton: 'assets/audio/UI/HA/Hover over button sound 1.wav',
+  // onPlayerUIMenuOpen: 'assets/audio/UI/HA/Notification sound 5.wav',
+  // // onPlayerUIMenuClick: 'assets/audio/UI/HA/Click sounds 6.wav',
+  // onPlayerUIToast: 'assets/audio/UI/HA/Notification sound 4.wav',
+  // onMapEditorSwitchNode: 'assets/audio/UI/HA/Switch sounds 18.wav',
 
   onHeroStartQuest: null,//do
   onHeroCompleteQuest: null,//do

@@ -6,12 +6,17 @@ function setDefault() {
 }
 
 function onUpdate(delta) {
-  GAME.gameState.timeouts = GAME.gameState.timeouts.filter((timeout) => {
-    if(timeout.paused) return true
+  GAME.gameState.timeouts.forEach((timeout) => {
+    if(timeout.paused) return
     timeout.timeRemaining -= delta
     if(timeout.timeRemaining <= 0) {
       if(timeout.fx) timeout.fx()
       else console.log('timeout without fx...')
+    }
+  })
+
+  GAME.gameState.timeouts = GAME.gameState.timeouts.filter((timeout) => {
+    if(timeout.timeRemaining <= 0) {
       return false
     }
     return true
@@ -19,6 +24,7 @@ function onUpdate(delta) {
 }
 
 function addTimeout(id, numberOfSeconds, fx) {
+  clearTimeout(id)
   if(PAGE.role.isHost) {
     if(numberOfSeconds <= 0) {
       fx()
@@ -33,6 +39,7 @@ function addTimeout(id, numberOfSeconds, fx) {
       }
       GAME.gameState.timeouts.push(timeout)
       GAME.gameState.timeoutsById[id] = timeout
+
       return id
     }
   }
@@ -49,8 +56,12 @@ function addOrResetTimeout(id, numberOfSeconds, fx) {
 }
 
 function resetTimeout(id, numberOfSeconds) {
-  GAME.gameState.timeoutsById[id].timeRemaining = numberOfSeconds
-  GAME.gameState.timeoutsById[id].totalTime = numberOfSeconds
+  if(numberOfSeconds) GAME.gameState.timeoutsById[id].timeRemaining = numberOfSeconds
+  else GAME.gameState.timeoutsById[id].timeRemaining = GAME.gameState.timeoutsById[id].totalTime
+
+  // if(numberOfSeconds) GAME.gameState.timeoutsById[id].totalTime += numberOfSeconds
+  // else GAME.gameState.timeoutsById[id].totalTime += GAME.gameState.timeoutsById[id].totalTime
+
   GAME.gameState.timeoutsById[id].resetTotal++
 }
 

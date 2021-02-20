@@ -15,7 +15,7 @@ function App() {
 
   useEffect(() => {
     if(cookies.user && !global.user) {
-      global.socket.emit("authentication", {})
+      global.socket.emit("authentication", { livePassword: PAGE.getParameterByName('livePassword') })
     }
 
     if(!cookies.user) {
@@ -50,20 +50,20 @@ function App() {
   });
 
   const onLogIn = () => {
-    global.socket.emit("authentication", {email: state.email, password: state.password});
+    global.socket.emit("authentication", {email: state.email, password: state.password, livePassword: PAGE.getParameterByName('livePassword')});
   };
 
   const onSignUp = () => {
-    global.socket.emit("authentication", { email: state.email, password: state.password, firstname: state.firstname, lastname: state.lastname, signup: true });
+    global.socket.emit("authentication", { email: state.email, password: state.password, firstname: state.firstname, lastname: state.lastname, signup: true, livePassword: PAGE.getParameterByName('livePassword') });
   };
 
   const onForgotPassword = () => {
-    global.socket.emit("authentication", { email: state.email, forgotPassword: true });
+    global.socket.emit("authentication", { email: state.email, forgotPassword: true, livePassword: PAGE.getParameterByName('livePassword') });
   };
 
   const onResetPassword = () => {
     if(state.password == state.retypepassword) {
-      global.socket.emit("authentication", { password: state.password, resetPassword: true, token: PAGE.getParameterByName('resetPasswordToken') });
+      global.socket.emit("authentication", { password: state.password, resetPassword: true, token: PAGE.getParameterByName('resetPasswordToken'), livePassword: PAGE.getParameterByName('livePassword') });
     } else {
       setState({...state, message: "Passwords do not match"})
     }

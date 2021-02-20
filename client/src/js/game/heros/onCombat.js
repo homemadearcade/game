@@ -15,7 +15,9 @@ export default function onCombat(hero, collider, result, options) {
 
     } else if(hero.mod().tags['monsterVictim']) {
 
-        if(hero.lives != 'number') hero.lives = 1
+        if(hero._respawn) return
+
+        if(typeof hero.lives != 'number') hero.lives = 1
         hero.lives--
 
         if(hero.lives <= 0) {

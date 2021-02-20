@@ -221,7 +221,7 @@ function update(camera) {
     const { minX, maxX, minY, maxY, centerY, centerX, leftDiff, rightDiff, topDiff, bottomDiff, cameraHeight, cameraWidth } = HERO.getViewBoundaries(clientHero)
 
     const target = GAME.objectsById[clientHero.navigationTargetId]
-    const inView = collisionsUtil.checkObject(target, {x: clientHero.x - (HERO.cameraWidth * clientHero.zoomMultiplier)/2 + clientHero.width/2, y: clientHero.y - (HERO.cameraHeight * clientHero.zoomMultiplier)/2 + clienthero.height/2, width: (HERO.cameraWidth * clientHero.zoomMultiplier), height: (HERO.cameraHeight * clientHero.zoomMultiplier)})
+    const inView = collisionsUtil.checkObject(target, {x: clientHero.x - (HERO.cameraWidth * clientHero.zoomMultiplier)/2 + clientHero.width/2, y: clientHero.y - (HERO.cameraHeight * clientHero.zoomMultiplier)/2 + clientHero.height/2, width: (HERO.cameraWidth * clientHero.zoomMultiplier), height: (HERO.cameraHeight * clientHero.zoomMultiplier)})
 
     if(inView) {
       drawArrow(ctx, ((target.x + target.width/2) *camera.multiplier - camera.x), ((target.y - 60) *camera.multiplier - camera.y), ((target.x + target.width/2) *camera.multiplier - camera.x), ((target.y - 20) *camera.multiplier - camera.y), { size: .2 })

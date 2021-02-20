@@ -35,10 +35,10 @@ global.goalTypes = {
     number: true,
     tag: true,
   },
-  // 'scoreX' : {
-  //   number: true,
-  //   tag: true,
-  // }
+  'scoreX' : {
+    number: true,
+    tag: true,
+  }
 }
 
 global.defaultSequenceGoal = {
@@ -47,8 +47,10 @@ global.defaultSequenceGoal = {
   goalTargetTags: [],
   goalTimeLimit: -1,
   goalChances: -1,
-  goalWithoutDestroyed: false,
-  effectedMainObject: true,
+  goalDestroyOnFail: true,
+  goalResetOnDestroyed: true,
+  goalAllHeros: true,
+  effectedMainObject: false,
   effectedGuestObject: false,
   effectedOwnerObject: false,
   effectedIds: [],
@@ -161,10 +163,6 @@ export default class Goal extends React.Component{
       // }
     }
 
-    // <React.Fragment>
-    //   <i className="fa fas fa-edit Manager__button" onClick={() => this.props._openEditTextValueModal('notificationModalHeader')}/>
-    //   <div className="SequenceItem__summary SequenceItem__summary--json">{sequenceItem.notificationModalHeader}</div>
-    // </React.Fragment>
 
     return <div className={classnames("SequenceItem__effect")}>
       {goalChooser}
@@ -177,11 +175,12 @@ export default class Goal extends React.Component{
             {chosenGoalForm}
             Time Limit: <div className="SequenceItem__condition-form"><i className="fa fas fa-edit Manager__button" onClick={() => { this.props._openEditNumberModal('goalTimeLimit') }}/>
               <div className="SequenceItem__summary SequenceItem__summary--json">{sequenceItem.goalTimeLimit}</div>
-            </div>
+            </div>  
             Chances: <div className="SequenceItem__condition-form"><i className="fa fas fa-edit Manager__button" onClick={() => { this.props._openEditNumberModal('goalChances') }}/>
               <div className="SequenceItem__summary SequenceItem__summary--json">{sequenceItem.goalChances}</div>
             </div>
-            <div className="SequenceItem__effect-input"><input onChange={() => this.props._onToggleValue('goalWithoutDestroyed')} checked={sequenceItem.goalWithoutDestroyed} type="checkbox"></input>Fail on Destroy</div>
+            <div className="SequenceItem__effect-input"><input onChange={() => this.props._onToggleValue('goalDestroyOnFail')} checked={sequenceItem.goalDestroyOnFail} type="checkbox"></input>Destroy On Fail</div>
+            <div className="SequenceItem__effect-input"><input onChange={() => this.props._onToggleValue('goalResetOnDestroyed')} checked={sequenceItem.goalResetOnDestroyed} type="checkbox"></input>Reset on Respawn</div>
             <div className="SequenceItem__effect-input"><input onChange={() => this.props._onToggleValue('goalShowNavigation')} checked={sequenceItem.goalShowNavigation} type="checkbox"></input>Show Navigation Arrow</div>
             <div className="SequenceItem__effected">Success Sequence Id:<Select
               value={{value: sequenceItem.successSequenceId, label: sequenceItem.successSequenceId}}

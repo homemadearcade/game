@@ -110,6 +110,27 @@ export function onHeroTrigger(hero, collider, result, options = { fromInteractBu
       }
     }
 
+    // if(moddedTags['attachToHeroOnCollideParent'] ) {
+    //   collider.parentId = hero.id
+    // }
+    //
+    // if(moddedTags['attachToHeroOnCollideRelative'] ) {
+    //   collider.relativeId = hero.id
+    // }
+    //
+    // if(moddedTags['attachHeroOnCollideParent'] ) {
+    //   hero._parentId = collider.id
+    // }
+    //
+    // if(moddedTags['attachHeroOnCollideRelative'] ) {
+    //   hero._relativeId = collider.id
+    // }
+
+    if(collider.tags && moddedTags['changeHeroSpawnPointOnCollide']) {
+      hero.spawnPointX = collider.x
+      hero.spawnPointY = collider.y
+    }
+
     if(collider.tags && moddedTags['cameraShakeOnCollide_quickrumble']) {
       global.socket.emit('heroCameraEffect', 'cameraShake', hero.id, { duration: 50, frequency: 10, amplitude: 5})
       triggered = true

@@ -37,6 +37,7 @@ class Tracking {
 
     if(targetCount && tracker.count >= targetCount) {
       if(onTargetCountReached) onTargetCountReached()
+      tracker.trackingObject.navigationTargetId = null
       this.stopTracking(tracker.trackerId)
     }
   }
@@ -48,6 +49,26 @@ class Tracking {
         const possibleObjects = GAME.objectsByTag[tracker.targetTags[0]]
         if(possibleObjects && possibleObjects.length) {
           tracker.trackingObject.navigationTargetId = possibleObjects[0].id
+        }
+      }
+
+      if(tracker.targetEvent === 'scoreX') {
+        const { trackingObject, targetTags, targetCount } = tracker
+
+        let initialCount = tracker.count
+        tracker.count = trackingObject.score
+
+        Object.keys(trackingObject.subObjects).forEach((soname) => {
+          const so = trackingObject.subObjects[soname]
+          if(so.inInventory) {
+            if(so.scoreAdd) tracker.count += (so.scoreAdd || 1)
+            if(so.scoreSubtract) tracker.count -= (so.scoreSubtract || 1)
+          }
+        })
+
+        if(targetCount && initialCount !== tracker.count) {
+          global.emitGameEvent('onUpdatePlayerUI', trackingObject)
+          TRACKING.checkIfTrackerShouldStop(tracker)
         }
       }
 
@@ -121,15 +142,24 @@ class Tracking {
     })
   }
 
-  onHeroDestroyed = (object, hero) => {
+  onHeroRespawn = (hero, object) => {
     if(GAME.gameState.trackers.length) GAME.gameState.trackers.forEach((tracker) => {
       if(tracker.stopped) return
-      const { trackingObject, targetEvent, targetTags } = tracker
-      if(targetEvent === 'destroyX' &&
-        trackingObject.id === hero.id &&
-        this.tagMatch(targetTags, object)) {
-          this.eventHappened(tracker)
+
+      const { trackingObject, resetOnDestroyed, goalId, targetEvent, targetTags } = tracker
+
+      if(resetOnDestroyed && trackingObject.id == hero.id) {
+        tracker.count = 0
+        if(GAME.gameState.timeoutsById[goalId]) {
+          GAME.resetTimeout(goalId)
+        }
       }
+
+      // if(targetEvent === 'destroyX' &&
+      //   trackingObject.id === hero.id &&
+      //   this.tagMatch(targetTags, object)) {
+      //     this.eventHappened(tracker)
+      // }
     })
   }
 }

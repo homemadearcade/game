@@ -414,14 +414,32 @@ server.listen(process.env.PORT || 4000, function(){
   console.log('listening on *:' + (process.env.PORT || 4000));
 });
 
+
+let livePasswordSaved
 // Authenticate!
 const authenticate = async (socket, data, callback) => {
   // socket.user = { email: 'pedigojon@gmail.com'}
   // callback(null, socket.user)
   // return
-  const { email, password, signup, forgotPassword, resetPassword, token } = data
+  const { email, password, signup, forgotPassword, resetPassword, token, livePassword } = data
 
   try {
+
+    if(process.env.IS_LIVE) {
+      // if there is a live password set dont allow anyone to authenticate live unless they match the password
+      if(livePasswordSaved && (livePasswordSaved != livePassword)) {
+        return
+      }
+
+      // if there is no live password set yet, set it to the first one that is entered
+      if(!livePasswordSaved) {
+        livePasswordSaved = livePassword
+        setTimeout(() => {
+          livePasswordSaved = null
+        }, 18000000)
+      }
+    }
+
     // session
     if (socket.handshake.headers.cookie){
       const cookieUser = cookie.parse(socket.handshake.headers.cookie).user

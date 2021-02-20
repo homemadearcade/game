@@ -13,12 +13,8 @@ import collisionsUtil from '../utils/collisions.js'
 import { testCondition } from './conditions.js'
 
 function spawnObject(object, bypassInterval) {
-  if(bypassInterval) console.log('X')
   if(object.tags && object.mod().tags['spawnZone'] && (bypassInterval || object.mod().tags['spawnOnInterval']) ) {
     if(!object.spawnedIds) object.spawnedIds = []
-
-
-    if(bypassInterval) console.log('XX')
 
     object.spawnedIds = object.spawnedIds.filter((id) => {
       if(GAME.objectsById[id] && !GAME.objectsById[id].mod().removed) {
@@ -69,7 +65,7 @@ function spawnObjectOnMap(object, newObject) {
 global.getSubObjectFromChances = function(mainObject, guestObject, ownerObject) {
   let subObjectNames = Object.keys(ownerObject.subObjectChances)
 
-  const availableSubObjects = {...global.subObjectLibrary.addGameLibrary(), ...ownerObject.subObjects}
+  const availableSubObjects = {...global.objectLibrary.addGameLibrary(), ...global.subObjectLibrary.addGameLibrary(), ...ownerObject.subObjects}
 
   if(!availableSubObjects) return
 

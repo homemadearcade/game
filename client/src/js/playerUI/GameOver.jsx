@@ -39,7 +39,7 @@ export default class GameOver extends React.Component{
                 PLAYERUI.ref.forceUpdate()
               } else {
                 setTimeout(() => {
-                  global.socket.emit('startGame')
+                  global.socket.emit('startPregame')
                   PLAYERUI.ref.forceUpdate()
                 }, 200)
               }

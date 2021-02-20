@@ -61,6 +61,11 @@ class Objects{
     object.y = y
     object.velocityX = 0
     object.velocityY = 0
+    OBJECTS.forAllSubObjects(object.subObjects, (subObject) => {
+      if(subObject.mod().tags.dropOnOwnerRespawn) {
+        dropObject(object, subObject)
+      }
+    })
   }
 
   getSpawnCoords(object) {
@@ -248,12 +253,16 @@ class Objects{
       reserved: object.reserved,
       opacity: object.opacity,
 
+      scoreAdd: object.scoreAdd,
+      scoreSubtract: object.scoreSubtract,
+
       emitterData: object.emitterData,
       emitterType: object.emitterType,
       emitterTypeExplosion: object.emitterTypeExplosion,
       emitterTypePoweredUp: object.emitterTypePoweredUp,
       emitterTypeJump: object.emitterTypeJump,
       emitterTypeDash: object.emitterTypeDash,
+      emitterTypeHeroCollide: object.emitterTypeHeroCollide,
 
       increaseHeroCurrentVelocityAmount: object.increaseHeroCurrentVelocityAmount,
       heroTempMod: object.heroTempMod,
@@ -1255,7 +1264,11 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
     // if(global.popoverOpen[object.id]) MAP.closePopover(object)
     if(object.subObjects) {
       OBJECTS.forAllSubObjects(object.subObjects, (subObject, subObjectName) => {
-        OBJECTS.removeSubObject(subObject)
+        if(subObject.mod().tags.dropOnOwnerRespawn) {
+          dropObject(object, subObject)
+        } else {
+          OBJECTS.removeSubObject(subObject)
+        }
       })
     }
     global.local.emit('onUpdatePFgrid', 'remove', object)
@@ -1640,6 +1653,18 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
     }
     if(object.mod().tags.spawnAllOnDestroy) {
       spawnAllNow(object)
+    }
+
+    if(object.mod().tags.scoreSubtractOnDestroy) {
+      GAME.heroList.forEach((hero) => {
+        hero.score -= (object.mod().scoreSubtract ? object.mod().scoreSubtract : 1)
+      })
+    }
+
+    if(object.mod().tags.scoreAddOnDestroy) {
+      GAME.heroList.forEach((hero) => {
+        hero.score += (object.mod().scoreAdd ? object.mod().scoreAdd : 1)
+      })
     }
   }
 

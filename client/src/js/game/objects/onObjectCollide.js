@@ -37,11 +37,11 @@ export default function onObjectCollide(agent, collider, result, agentPO) {
       collider._destroyedById = agent.id
     }
   }
-
-  if(collider.tags && agent.tags && collider.mod().tags['bullet'] && agent.mod().tags['monster']) {
-    agent._remove = true
-    hero.score++
-  }
+  //
+  // if(collider.tags && agent.tags && collider.mod().tags['bullet'] && agent.mod().tags['monster']) {
+  //   agent._remove = true
+  //   hero.score++
+  // }
 
   if(agent.tags && agent.mod().tags['goomba'] && collider.tags && (collider.mod().tags['obstacle'] || collider.mod().tags['noMonsterAllowed'])) {
     if(result.overlap_x === 1 && agent._goalDirection === 'right') {

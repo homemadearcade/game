@@ -87,6 +87,14 @@ Mod honestly needs its own...
 Its getting really complicated. For now im going to cheat it. It should have its own service and its own sequence type, feel me?
 // onGameStart or onHeroLand sequences === automatically trigger on those events
 
+////////////////////////////////
+////////////////////////////////
+QUESTS UPGRADE
+////////////////////////////////
+Add Quest starting, completing, and succeeding to effects
+Auto Complete/Fail quest based on goals the quest has
+View Quests UI in player menu
+onSucceedSequence, onFailSequence
 
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////

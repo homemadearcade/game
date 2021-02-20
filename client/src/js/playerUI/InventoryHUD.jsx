@@ -13,6 +13,35 @@ export default class Goals extends React.Component{
     PLAYERUI.ref.showInventoryModal()
   }
 
+  _renderScore() {
+    const hero = GAME.heros[HERO.id]
+
+    let score = hero.score
+
+    Object.keys(hero.subObjects).forEach((soname) => {
+      const so = hero.subObjects[soname]
+      if(so.inInventory) {
+        if(so.scoreAdd) score += (so.scoreAdd || 1)
+        if(so.scoreSubtract) score -= (so.scoreSubtract || 1)
+      }
+    })
+
+    return <div className="InventoryHUD__item">
+      <div className="InventoryHUD__name">Score</div>
+      <div className="InventoryHUD__count">x{hero.score}</div>
+    </div>
+  }
+
+  _renderLives() {
+    const hero = GAME.heros[HERO.id]
+
+    return <div className="InventoryHUD__item">
+      <div className="InventoryHUD__name">Lives</div>
+      {hero.defaultSprite && hero.defaultSprite !== 'solidcolorsprite' && <div className="InventoryHUD__sprite"><PixiMapSprite textureId={hero.defaultSprite} width="20" height="20"/></div>}
+      <div className="InventoryHUD__count">x{hero.lives}</div>
+    </div>
+  }
+
   render() {
     const hero = GAME.heros[HERO.id]
 
@@ -24,6 +53,8 @@ export default class Goals extends React.Component{
     })
 
     return <div className="InventoryHUD">
+      {hero.flags.showLives && this._renderLives()}
+      {hero.flags.showScore && this._renderScore()}
       {subObjects.map((so) => {
         return <div className="InventoryHUD__item" onClick={this._showInventoryModal} data-inventoryMenuId={so.id}>
           <div className="InventoryHUD__name" data-inventoryMenuId={so.id}>{so.name || so.subObjectName}</div>

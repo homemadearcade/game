@@ -36,7 +36,7 @@ global.startGameLoop = function() {
 
   // begin main loop
   mainLoop()
-  if(!global.isServerHost && PAGE.role.isHost && !PAGE.role.isArcadeMode) setInterval(() => {
+  if(!global.isServerHost && PAGE.role.isHost && !PAGE.role.isArcadeMode && !PAGE.role.isHomeEditor && HERO.id && GAME.heros && GAME.heros[HERO.id]) setInterval(() => {
     axios.post(global.HAGameServerUrl + '/updateGameOnServerOnly', {
       game: {
         id: GAME.id,

@@ -215,6 +215,15 @@ import pathfinding from '../utils/pathfinding.js'
 
     spawnAllNow: {}
 
+
+    // camera shake
+    // animation
+    // score add / score remove
+    // lives add
+    // teleport to
+
+
+
     // 'animation',
     // notification -> chat, private chat, log, toast, modal
     // camera effect
@@ -702,28 +711,64 @@ function processEffect(effect, effected, effector, ownerObject) {
   }
 
   if(effectName === 'startGoal') {
-    if(effected.tags.hero) {
+    effect.goalId = 'goal-'+global.uniqueID()
+
+    if(effected.tags.hero && effected.tags.centerOfAttention) {
       function startTimer() {
         if(effect.goalTimeLimit > 0) {
           GAME.addTimeout(effect.goalId, effect.goalTimeLimit, () => {
-            effect.goalChances--
-            if(effect.goalChances <= 0) {
-              if(effect.failSequenceId) processEffect({ effectName: 'startSequence', effectSequenceId: effect.failSequenceId }, effected, effector, ownerObject)
-              GAME.gameState.goals[effect.goalId].failed = true
-              return
+            //
+            if(effect.goalDestroyOnFail) {
+              effected.lives--
+              if(effected.lives <= 0) {
+
+                if(effect.failSequenceId) processEffect({ effectName: 'startSequence', effectSequenceId: effect.failSequenceId }, effected, effector, ownerObject)
+                GAME.gameState.goals[effect.goalId].failed = true
+
+                effected._destroy = true
+                effected.removed = true
+                let reason = 'You ran out of time!'
+                effected.navigationTargetId = null
+
+                if(effected.tags.implodeOnDestroy || effected.tags.explodeOnDestroy || effected.tags.spinOffOnDestroy) {
+                  setTimeout(() => {
+                    global.emitGameEvent('onGameOver', reason)
+                  }, 2000)
+                } else {
+                  global.emitGameEvent('onGameOver', reason)
+                }
+
+                return
+
+              } else {
+                effected._respawn = true
+              }
+            } else {
+              effect.goalChances--
+              if(effect.goalChances <= 0) {
+
+                if(effect.failSequenceId) processEffect({ effectName: 'startSequence', effectSequenceId: effect.failSequenceId }, effected, effector, ownerObject)
+                GAME.gameState.goals[effect.goalId].failed = true
+
+                return
+              }
             }
+
             startTimer()
           })
         }
       }
 
       const tracker = TRACKING.startTracking({
+        goalId: effect.goalId,
         targetCount: effect.goalTargetCount,
+        resetOnDestroyed: effect.goalResetOnDestroyed,
         trackingObject: effected,
         targetEvent: effect.goalName,
         targetTags: effect.goalTargetTags,
         showTrackingNavigationTargets: effect.goalShowNavigation,
         onTargetCountReached: () => {
+          effected.navigationTargetId = null
           GAME.gameState.goals[effect.goalId].succeeded = true
           if(GAME.gameState.timeoutsById[effect.goalId]) GAME.gameState.timeoutsById[effect.goalId].paused = true
           if(GAME.gameState.trackersById[effect.trackerId]) GAME.gameState.trackersById[effect.trackerId].stopped = true
@@ -733,7 +778,6 @@ function processEffect(effect, effected, effector, ownerObject) {
         },
       })
 
-      effect.goalId = 'goal-'+global.uniqueID()
       if(!GAME.gameState.goals) GAME.gameState.goals = {}
       GAME.gameState.goals[effect.goalId] = effect
 

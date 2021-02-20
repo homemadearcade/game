@@ -33,16 +33,28 @@ export default class SpawnZoneMenu extends React.Component{
         })
       }
 
-      if(key === 'add-library-spawn-object') {
+      if(key === 'add-subobject-library-spawn-object') {
         const library = global.subObjectLibrary.addGameLibrary()
         modals.openSelectFromList('Select a sub object', Object.keys(library), async (result) => {
           const id = result.value
           if(!id) return
           let subObjectChances = objectSelected.subObjectChances
           if(!subObjectChances)subObjectChances ={}
-          global.socket.emit('editObjects', [{id: objectSelected.id, subObjectChances: {...subObjectChances, [id]: {randomWeight: 1, conditionList: null, spawnFromLibrary:true} }}])
+          global.socket.emit('editObjects', [{id: objectSelected.id, subObjectChances: {...subObjectChances, [id]: {randomWeight: 1, conditionList: null, spawnFromSubObjectLibrary:true} }}])
         })
       }
+
+      if(key === 'add-object-library-spawn-object') {
+        const library = global.objectLibrary.addGameLibrary()
+        modals.openSelectFromList('Select an object', Object.keys(library), async (result) => {
+          const id = result.value
+          if(!id) return
+          let subObjectChances = objectSelected.subObjectChances
+          if(!subObjectChances)subObjectChances ={}
+          global.socket.emit('editObjects', [{id: objectSelected.id, subObjectChances: {...subObjectChances, [id]: {randomWeight: 1, conditionList: null, spawnFromObjectLibrary:true} }}])
+        })
+      }
+
 
       if(key === 'spawn-all-now') {
         global.socket.emit('spawnAllNow', objectSelected.id)
@@ -65,8 +77,12 @@ export default class SpawnZoneMenu extends React.Component{
       <SubMenu title="Spawn Objects">
         {subObjectChanceNames.map((subObjectName) => {
           const soChance = objectSelected.subObjectChances[subObjectName]
-          if(soChance.spawnFromLibrary) {
-            return <SubMenu title={subObjectName + ' (Library)'}>
+          if(soChance.spawnFromObjectLibrary) {
+            return <SubMenu title={subObjectName + ' (Object Library)'}>
+              <SubObjectChanceMenu objectSelected={objectSelected} subObjectName={subObjectName}></SubObjectChanceMenu>
+            </SubMenu>
+          } else if(soChance.spawnFromSubObjectLibrary) {
+            return <SubMenu title={subObjectName + ' (SubObject Library)'}>
               <SubObjectChanceMenu objectSelected={objectSelected} subObjectName={subObjectName}></SubObjectChanceMenu>
             </SubMenu>
           } else {
@@ -76,7 +92,8 @@ export default class SpawnZoneMenu extends React.Component{
           }
         })}
         <MenuItem key="add-spawn-object">Add Spawn Object</MenuItem>
-        <MenuItem key="add-library-spawn-object">Add Spawn Object (Library)</MenuItem>
+        <MenuItem key="add-object-library-spawn-object">Add Spawn Object (Object Library)</MenuItem>
+        <MenuItem key="add-subobject-library-spawn-object">Add Spawn Object (Subobject Library)</MenuItem>
       </SubMenu>
       <MenuItem key="spawn-all-now">Spawn All Now</MenuItem>
       <MenuItem key="destroy-spawned">Destroy Spawned</MenuItem>
