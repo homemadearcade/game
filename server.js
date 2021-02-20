@@ -425,7 +425,7 @@ const authenticate = async (socket, data, callback) => {
 
   try {
 
-    if(process.env.IS_LIVE) {
+    if(process.env.IS_LIVE || livePassword) {
       // if there is a live password set dont allow anyone to authenticate live unless they match the password
       if(livePasswordSaved && (livePasswordSaved != livePassword)) {
         return

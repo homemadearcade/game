@@ -14,7 +14,5 @@ All the effects that are missing
 
 Upload actual upload instead of copy and Paste
 
-Bug - Descriptors adding to sand?
-
 —
 */
