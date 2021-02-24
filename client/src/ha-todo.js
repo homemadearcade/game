@@ -14,5 +14,6 @@ All the effects that are missing
 
 Upload actual upload instead of copy and Paste
 
-—
+Take a look at MonsterEffect
+  Maybe just add like a variable choice of what something destorys
 */

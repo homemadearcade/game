@@ -45,10 +45,17 @@ class Tracking {
   onUpdate() {
     if(GAME.gameState.trackers.length) GAME.gameState.trackers.forEach((tracker) => {
       GAME.gameState.trackersById[tracker.trackerId] = tracker
-      if(tracker.showTrackingNavigationTargets) {
-        const possibleObjects = GAME.objectsByTag[tracker.targetTags[0]]
+      if(tracker.count >= tracker.targetCount) return
+      if(tracker.showTrackingNavigationTargets && tracker.targetTags[0]) {
+        let possibleObjects = GAME.objectsByTag[tracker.targetTags[0]]
+        possibleObjects = possibleObjects.filter((object) => {
+          if(object.isEquipped || object.inInventory) return false
+          return true
+        })
         if(possibleObjects && possibleObjects.length) {
           tracker.trackingObject.navigationTargetId = possibleObjects[0].id
+        } else {
+          tracker.trackingObject.navigationTargetId = null
         }
       }
 
@@ -135,7 +142,7 @@ class Tracking {
       if(tracker.stopped) return
       const { trackingObject, targetEvent, targetTags } = tracker
       if(targetEvent === 'destroyX' &&
-        trackingObject.id === hero.id &&
+        // trackingObject.id === hero.id &&
         this.tagMatch(targetTags, object)) {
           this.eventHappened(tracker)
       }
