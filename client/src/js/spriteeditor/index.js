@@ -184,7 +184,8 @@ class SpriteEditor{
           name,
           url
         }
-        // global.local.emit('onSendNotification', { playerUIHeroId: HERO.id, toast: true, text: 'Image saved'})
+
+        // globaPIXIMAP.loadImageAssetsl.local.emit('onSendNotification', { playerUIHeroId: HERO.id, toast: true, text: 'Image saved'})
         global.socket.emit('updateLibrary', { images: GAME.library.images })
 				if(SPRITEEDITOR.objectSelected.constructParts) {
 					SPRITEEDITOR.objectSelected.constructParts.forEach((part) => {
@@ -195,6 +196,8 @@ class SpriteEditor{
 					MAPEDITOR.networkEditObject(SPRITEEDITOR.objectSelected, {id: SPRITEEDITOR.objectSelected.id, defaultSprite: name})
 				}
         cb()
+
+				PIXIMAP.loadImageAssets()
         // console.log(name, url)
       })
     })

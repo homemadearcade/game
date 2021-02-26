@@ -253,6 +253,9 @@ export default class Effect extends React.Component{
         {isTrigger &&
           <div className="SequenceItem__effect-input"><input onChange={() => this.props._onToggleValue('triggerDestroyAfter')} checked={sequenceItem.triggerDestroyAfter} type="checkbox"></input>Delete after trigger is fired</div>
         }
+        {isTrigger &&
+          <div className="SequenceItem__effect-input"><input onChange={() => this.props._onToggleValue('triggerDontUseDefaults')} checked={sequenceItem.triggerDontUseDefaults} type="checkbox"></input>Dont use default main/guest objects</div>
+        }
       </div>
       <NextSelect isTrigger={this.props.isTrigger} sequenceItem={sequenceItem} nextOptions={this.props.nextOptions} nextValue={sequenceItem.next} onChange={this.props._selectNext}/>
     </div>

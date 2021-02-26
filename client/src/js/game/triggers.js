@@ -105,7 +105,7 @@ function fireTrigger(trigger, ownerObject, mainObject, guestObject, fire = true)
   if(trigger.eventName === 'onTagDepleted') {
     eventMatch = mainObject === trigger.mainObjectTag
   } else {
-    eventMatch = testEventMatch(trigger.eventName, mainObject, guestObject, trigger, ownerObject)
+    eventMatch = testEventMatch(trigger.eventName, mainObject, guestObject, trigger, ownerObject, trigger)
   }
 
   if(eventMatch) {

@@ -294,7 +294,7 @@ function testHasTag(tag, testObject, options) {
   return testObject.tags[tag]
 }
 
-function testEventMatch(eventName, mainObject, guestObject, condition, ownerObject, options = { allTestedMustPass: false, testPassReverse: false, testModdedVersion: false }) {
+function testEventMatch(eventName, mainObject, guestObject, condition, ownerObject, options = { allTestedMustPass: false, testPassReverse: false, testModdedVersion: false, triggerDontUseDefaults: false }) {
   let { mainObjectId, mainObjectTag, guestObjectId, guestObjectTag, conditionMainObjectId, conditionMainObjectTag, conditionGuestObjectId, conditionGuestObjectTag  } = condition
 
   if(conditionMainObjectId) mainObjectId = conditionMainObjectId
@@ -310,7 +310,7 @@ function testEventMatch(eventName, mainObject, guestObject, condition, ownerObje
     if(mainObject) mainObject = mainObject.mod()
   }
 
-  if(ownerObject) {
+  if(ownerObject && !options.triggerDontUseDefaults) {
     // the code below attempts to automatically determine the main object or the guest object
     // based on the name of the event
     if(ownerObject.tags.hero) {
@@ -330,6 +330,8 @@ function testEventMatch(eventName, mainObject, guestObject, condition, ownerObje
     }
   }
 
+  // HAVING PROBLEMS?? only add triggers to objectst ath are involved in the event or else it will auto assign itself
+
   // now that we have potential main/guests object ids/tags, we try to match them with the REAL main/guest objects from the event
   if(eventName.indexOf('Object') >= 0 || eventName.indexOf('Hero') >= 0) {
     // just check object
@@ -339,7 +341,7 @@ function testEventMatch(eventName, mainObject, guestObject, condition, ownerObje
     } else if((guestObjectId || guestObjectTag) && !mainObjectId && !mainObjectTag && checkIdOrTagMatch(guestObjectId, guestObjectTag, guestObject)) {
       eventMatch = true
       // check guestObject and object
-    } else if((guestObjectId || guestObjectTag) && (mainObjectId || mainObjectTag) && checkIdOrTagMatch(mainObjectId, mainObjectTag, mainObject) && checkIdOrTagMatch(guestObjectId, guestObjectTag, guestObject)) {
+    } else if((guestObjectId || guestObjectTag) && (mainObjectId || mainObjectTag) && guestObject && checkIdOrTagMatch(mainObjectId, mainObjectTag, mainObject) && checkIdOrTagMatch(guestObjectId, guestObjectTag, guestObject)) {
       eventMatch = true
     }
   }
@@ -354,6 +356,7 @@ function testEventMatch(eventName, mainObject, guestObject, condition, ownerObje
 }
 
 function checkIdOrTagMatch(id, tag, object) {
+  if(!object) console.log('no object in id check' , tag, id)
   if(id && id === object.id) {
     return true
   }

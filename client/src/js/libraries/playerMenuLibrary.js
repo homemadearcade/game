@@ -130,11 +130,9 @@ global.local.on('onGameReady', () => {
     canStartStopGame: false,
     canTakeMapSnapshots: false,
     hasManagementToolbar: false,
-    showBrandImageScreen: false,
+    // showBrandImageScreen: false,
     editAllowedWhenGameStarted: false,
     canZoomInAndOut: false,
-
-
   }
 
   global.heroMenuLibrary = {

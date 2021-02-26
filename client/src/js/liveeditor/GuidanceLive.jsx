@@ -80,9 +80,19 @@ export default class GuidanceLive extends React.Component {
           <DatFolder title='Right Click Menu'>
             <DatFolder title='Hero'>
               {this._renderLibrary('heroMenu', global.heroMenuLibrary)}
+              <DatButton label="Unlock All" onClick={() => {
+                const newHeroMenu = {}
+                Object.keys(global.heroMenuLibrary).forEach(function(key){ newHeroMenu[key] = true });
+                global.socket.emit('editHero', { id: objectSelected.id, heroMenu: newHeroMenu })
+              }}></DatButton>
             </DatFolder>
             <DatFolder title='Objects'>
               {this._renderLibrary('objectMenu', global.objectMenuLibrary)}
+              <DatButton label="Unlock All" onClick={() => {
+                const newObjectMenu = {}
+                Object.keys(global.objectMenuLibrary).forEach(function(key){ newObjectMenu[key] = true });
+                global.socket.emit('editHero', { id: objectSelected.id, objectMenu: newObjectMenu })
+              }}></DatButton>
             </DatFolder>
             <DatFolder title='World'>
               {this._renderLibrary('worldMenu', global.worldMenuLibrary)}
@@ -90,7 +100,38 @@ export default class GuidanceLive extends React.Component {
           </DatFolder>
           <DatFolder title='Other'>
             {this._renderLibrary('flags', global.heroFlags)}
+            <DatButton label="Unlock All" onClick={() => {
+              // Object.keys(global.objectMenuLibrary).forEach(function(key){ newObjectMenu[key] = true });
+              global.socket.emit('editHero', { id: objectSelected.id, flags: {
+                ...objectSelected.flags,
+                showMapHighlight: true,
+                showOtherUsersMapHighlight: true,
+                constructEditorColor: true,
+                constructEditorSprite: true,
+                canStartStopGame: true,
+                canTakeMapSnapshots: true,
+                hasManagementToolbar: true,
+              } })
+            }}></DatButton>
           </DatFolder>
+          <DatButton label="Unlock All" onClick={() => {
+            const newHeroMenu = {}
+            Object.keys(global.heroMenuLibrary).forEach(function(key){ newHeroMenu[key] = true });
+            const newObjectMenu = {}
+            Object.keys(global.objectMenuLibrary).forEach(function(key){ newObjectMenu[key] = true });
+            global.socket.emit('editHero', { id: objectSelected.id, worldMenu: {
+              backgroundColor: true
+            }, objectMenu: newObjectMenu, heroMenu: newHeroMenu, flags: {
+              ...objectSelected.flags,
+              showMapHighlight: true,
+              showOtherUsersMapHighlight: true,
+              constructEditorColor: true,
+              constructEditorSprite: true,
+              canStartStopGame: true,
+              canTakeMapSnapshots: true,
+              hasManagementToolbar: true,
+            } })
+          }}></DatButton>
           <DatFolder title='Demo'>
             <DatButton label="Send Explode" onClick={() => {
                 global.socket.emit('objectAnimation', 'explode', objectSelected.id)

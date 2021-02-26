@@ -65,7 +65,10 @@ export default class WorldContextMenu extends React.Component{
   render() {
     const { objectSelected } = this.props
 
+    const { x, y } = objectSelected
+
     return <Menu onClick={this._handleMapMenuClick}>
+      <MenuItem className='bold-menu-item'>{`x: ${x}, y: ${y}`}</MenuItem>
       <SubMenu title="Create Object">
         <CreateObjectMenu objectSelected={objectSelected}/>
       </SubMenu>

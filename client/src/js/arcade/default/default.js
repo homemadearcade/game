@@ -6,7 +6,12 @@ import particles from '../../map/particles.js'
 
 export default class CustomGame{
   onGameStarted() {
-
+    setInterval(() => {
+      // console.log(GAME.objectsByTag.jumpers)
+      if(GAME.objectsByTag.jumpers) GAME.objectsByTag.jumpers.forEach((object) => {
+        object.velocityY = -300
+      })
+    }, 1000)
   }
 
   onUpdate(delta) {
@@ -22,8 +27,18 @@ export default class CustomGame{
 
   }
 
-  onHeroCollide(hero, collider, result) {
+  onObjectDestroyed(object) {
 
+  }
+
+  onHeroCollide(hero, collider, result) {
+    if(collider.tags.goalitems) {
+      hero.popoverText = "Yum yum!"
+
+      setTimeout(() => {
+        hero.popoverText = null
+      }, 400)
+    }
   }
 
   onHeroInteract(hero, collider, result) {

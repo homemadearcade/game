@@ -245,11 +245,12 @@
 }
 
 .InventoryHUD {
+  font-family: 'Press Start 2P', cursive;
 
   &__item {
-    width: 150px;
+    width: 180px;
     // border: 1px solid white;
-    background: rgba(0,0,0,0.2);
+    background: rgba(0,0,0,1);
     padding: 5px;
     margin-bottom: 4px;
     cursor: pointer;
@@ -262,7 +263,7 @@
 }
 
 .Goal {
-  width: 150px;
+  width: 180px;
   margin-bottom: 4px;
   // border: 1px solid white;
   font-family: 'Press Start 2P', cursive;

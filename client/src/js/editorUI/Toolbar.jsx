@@ -449,11 +449,6 @@ export default class Toolbar extends React.Component {
         <br/>
 
         <ToolbarRow iconName='fa-cog'>
-          <ToolbarButton iconName="fa-code" onClick={() => {
-            document.getElementById('editor').style.display="block"
-          }} onShiftClick={() => {
-            global.saveCodeEditor()
-          }} />
 
           <ToolbarButton iconName="fa-save" onClick={EDITOR.saveGame}/>
           <ToolbarButton iconName="fa-folder-open" onClick={EDITOR.loadGame}/>
@@ -473,6 +468,11 @@ export default class Toolbar extends React.Component {
                 BELOWMANAGER.open({ selectedManager: 'MediaManager' })
             }}>
           </ToolbarButton>
+          <ToolbarButton iconName="fa-code" onClick={() => {
+            document.getElementById('editor').style.display="block"
+          }} onShiftClick={() => {
+            global.saveCodeEditor()
+          }} />
           <ToolbarButton iconName="fa-window-restore" className="haDraggable" onDragStart={(e) => {
             if(e.target.className.indexOf('haDraggable') == -1) return e.preventDefault()
             if(CONSTRUCTEDITOR.open || PATHEDITOR.open || !PAGE.role.isAdmin) return

@@ -632,6 +632,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
               modResetPhysics,
               modResetPhysicsEnd,
               triggerDestroyAfter,
+              triggerDontUseDefaults
             } = hero.triggers[triggerId]
 
         properties.triggers[triggerId] = {
@@ -691,6 +692,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
           notificationDuration,
 
           triggerDestroyAfter,
+          triggerDontUseDefaults
         }
 
         global.removeFalsey(properties.triggers[triggerId])

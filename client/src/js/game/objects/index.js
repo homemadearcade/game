@@ -363,6 +363,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
                   modResetPhysics,
                   modResetPhysicsEnd,
                   triggerDestroyAfter,
+                  triggerDontUseDefaults
                  } = object.triggers[triggerId]
 
         properties.triggers[triggerId] = {
@@ -422,6 +423,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
 
 
           triggerDestroyAfter,
+          triggerDontUseDefaults
         }
 
         global.removeFalsey(properties.triggers[triggerId])
