@@ -41,6 +41,8 @@ class Editor {
         CREATOR.ref._creatorRef.current.forceUpdate()
       }
 
+      if(global.isTargetTextInput(e) || PAGE.typingMode) return
+
       if(EDITOR.shiftPressed && e.keyCode == 82) {
         PAGE.resetStorage()
       }

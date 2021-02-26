@@ -37,6 +37,12 @@ export default class EmitterMenu extends React.Component{
         })
       }
 
+      if(key === 'select-particle-type-score') {
+        modals.openSelectParticleAnimation((particle) => {
+          networkEditObject(objectSelected, { emitterTypeScore: particle.value.type })
+        })
+      }
+
       // if(key === 'clear-emitter-type-poweredup') {
       //   networkEditObject(objectSelected, { emitterTypePoweredUp: null })
       // }
@@ -77,6 +83,7 @@ export default class EmitterMenu extends React.Component{
       <MenuItem key="clear-emitter-type">Clear Default Type</MenuItem>
       {objectSelected.actionButtonBehavior && <MenuItem key="select-particle-type-action">Select Action Type</MenuItem>}
       {objectSelected.tags.explodeOnDestroy && <MenuItem key="select-particle-type-explosion">Select Explosion Type</MenuItem>}
+      {objectSelected.tags.animationOnHeroScoreAdd && <MenuItem key="select-particle-type-score">Select Score Type</MenuItem>}
       <MenuItem key="select-particle-type-poweredup">Select Powered Up Type</MenuItem>
       <MenuItem key="reset-emitters">Reset Emitters</MenuItem>
     </Menu>

@@ -501,7 +501,7 @@ class NotificationsControl{
     if(objects.length == 1) {
       const object = OBJECTS.getObjectOrHeroById(objects[0].id)
       if(object.tags.invisible) return
-      
+
       // idk for some edit sprite shit..
       if(objects[0].color === null) return
 
@@ -542,6 +542,21 @@ class NotificationsControl{
     const owner = OBJECTS.getObjectOrHeroById(ownerId)
     if(owner.tags.invisible) return
     PIXIMAP.onObjectAnimation('editObject', ownerId)
+  }
+
+  onHeroScoreAdd(hero, score) {
+    if(hero.mod().emitterTypeScore || hero.tags.animationOnHeroScoreAdd) {
+      PIXIMAP.onObjectAnimation('score', hero.id)
+    }
+
+    if(hero.mod().tags.spinOnHeroScoreAdd) {
+      hero.tags.realRotateFast = true
+
+      setTimeout(() => {
+        hero.angle = 0
+        hero.tags.realRotateFast = false
+      }, 600)
+    }
   }
 }
 

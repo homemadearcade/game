@@ -1,15 +1,30 @@
 function setDefault() {
   global.movementTags = {
     moving: {
-      relatedTags: ['gravityY', 'pacer', 'spelunker', 'wander', 'lemmings', 'goomba', 'goombaSideways']
+      relatedTags: ['gravityY', 'pacer', 'spelunker', 'wander', 'lemmings', 'goomba', 'goombaSideways'],
+      info: 'Can move'
     },
-    pacer: false,
-    spelunker: false,
-    lemmings: false,
-    wander: false,
-    goomba: false,
-    goombaSideways: false,
-    goDownOnCollideWithObstacle: false,
+    pacer: {
+      info: 'Paces back and forth'
+    },
+    spelunker: {
+      info: 'Explores cave like structures well'
+    },
+    lemmings: {
+      info: 'Keeps walking until it hits a wall....'
+    },
+    wander: {
+      info: 'Wanders aimlessly'
+    },
+    goomba: {
+      info: 'Moves left and right until it hits an obstacle'
+    },
+    goombaSideways: {
+      info: 'Moves up and down until it hits an obstacle'
+    },
+    goDownOnCollideWithObstacle: {
+      info: 'Moves down a block when it hits an obstacle'
+    },
   }
 
   global.targetTags = {
@@ -34,6 +49,15 @@ function setDefault() {
     obstacle: {
       relatedTags: ['noMonsterAllowed', 'heroPushable']
     },
+
+    noAngleMovement: {
+      info: 'Does not move at an angle, but an rotate'
+    },
+
+    ignoreWorldBoundaries: {
+      info: 'Can cross the world boundaries'
+    },
+
     // projectile: false,
     noMonsterAllowed: false,
     noHeroAllowed: false,
@@ -108,6 +132,10 @@ function setDefault() {
     // attachHeroOnCollideParent: false,
     // attachToHeroOnCollideRelative: false,
     // attachToHeroOnCollideParent: false,
+
+    destroyOnHeroCollide: {
+      info: 'Is destroyed when it collides with the hero',
+    },
 
     scoreAddOnTouchStart: false,
     scoreSubtractOnTouchStart: false,
@@ -283,6 +311,12 @@ function setDefault() {
     poweredUp: false,
     groundDisturbanceOnHeroTouchStart: false,
     groundDisturbanceOnHeroTouchEnd: false,
+    animationOnHeroScoreAdd: {
+      info: 'Plays simple animation when scoring'
+    },
+    spinOnHeroScoreAdd: {
+      info: 'Plays simple animation when scoring'
+    }
   }
 
   global.puzzleTags = {

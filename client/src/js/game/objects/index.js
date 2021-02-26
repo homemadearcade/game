@@ -239,6 +239,9 @@ class Objects{
       heroDialogueSet: object.heroDialogueSet,
       heroDialogueSets: object.heroDialogueSets,
       pathfindingLimit: object.pathfindingLimit,
+
+      scoreAddPopoverText: object.scoreAddPopoverText,
+      scoreSubtractPopoverText: object.scoreSubtractPopoverText,
       relativeX: object.relativeX,
       relativeY: object.relativeY,
       relativeId: object.relativeId,
@@ -1659,13 +1662,29 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
 
     if(object.mod().tags.scoreSubtractOnDestroy) {
       GAME.heroList.forEach((hero) => {
-        hero.score -= (object.mod().scoreSubtract ? object.mod().scoreSubtract : 1)
+        let score = (object.mod().scoreSubtract ? object.mod().scoreSubtract : 1)
+        hero.score -= score
+        if(object.scoreSubtractPopoverText) {
+          hero.popoverText = object.scoreSubtractPopoverText
+          setTimeout(() => {
+            hero.popoverText = null
+          }, 600)
+        }
+        global.emitGameEvent('onHeroScoreSubtract', hero, score)
       })
     }
 
     if(object.mod().tags.scoreAddOnDestroy) {
       GAME.heroList.forEach((hero) => {
-        hero.score += (object.mod().scoreAdd ? object.mod().scoreAdd : 1)
+        let score = (object.mod().scoreAdd ? object.mod().scoreAdd : 1)
+        hero.score += score
+        if(object.scoreAddPopoverText) {
+          hero.popoverText = object.scoreAddPopoverText
+          setTimeout(() => {
+            hero.popoverText = null
+          }, 600)
+        }
+        global.emitGameEvent('onHeroScoreAdd', hero, score)
       })
     }
   }

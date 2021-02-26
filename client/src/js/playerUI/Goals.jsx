@@ -65,6 +65,14 @@ export default class Goals extends React.Component{
     } else if(timeRemaining > 0) timeRemaining = Math.floor(timeRemaining) + ' second remaining'
 
     const tracker = GAME.gameState.trackersById[goal.trackerId]
+    let possibleObjects
+    if(tracker && tracker.targetTags[0]) {
+      possibleObjects = GAME.objectsByTag[tracker.targetTags[0]]
+      possibleObjects = possibleObjects.filter((object) => {
+        if(object.isEquipped || object.inInventory) return false
+        return true
+      })
+    }
 
     if(!tracker || !activeGoal) return
 
@@ -72,6 +80,7 @@ export default class Goals extends React.Component{
       {activeGoal.goalShowNavigation && this._renderNavigationArrow(activeGoal)}
       {activeGoal.goalDescription && <div>{'Goal: ' + activeGoal.goalDescription}</div>}
       {activeGoal.goalDescription && <br/>}
+      {possibleObjects && possibleObjects[0] && possibleObjects[0].defaultSprite && possibleObjects[0].defaultSprite !== 'solidcolorsprite' && <div data-inventoryMenuId={possibleObjects[0].id} className="InventoryHUD__sprite"><PixiMapSprite tint={possibleObjects[0].color} textureId={possibleObjects[0].defaultSprite} width="40" height="40"/></div>}
       {!activeGoal.failed && !activeGoal.succeeded && timeRemaining && <div>{timeRemaining}</div>}
       {timeRemaining && <br/>}
       <div>Progress: {tracker.count}</div>

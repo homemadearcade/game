@@ -853,6 +853,24 @@ PIXIMAP.onObjectAnimation = function(type, objectId, options = {}) {
     return
   }
 
+  if(type == 'score') {
+    let useOwnerSprite = false
+    if(object.defaultSprite && object.defaultSprite != 'solidcolorsprite') useOwnerSprite = true
+
+    let options = { persistAfterRemoved: true, matchObjectColor: true, useUpdateOwnerPos: true, useOwnerSprite }
+    if(object.emitterTypeScore) {
+      options = global.particleEmitterLibrary.addGameLibrary()[object.emitterTypeScore]
+    }
+
+    pixiChild.scoreEmitter = initEmitter(object, object.emitterTypeScore || 'editObject', options, { hasNoOwner: true })
+    setTimeout(() => {
+      PIXIMAP.deleteEmitter(pixiChild.scoreEmitter)
+      delete pixiChild.scoreEmitter
+    }, 10000)
+
+    return
+  }
+
   // fail safe animate the rest
   if(options.animationType === 'particle') {
     const customEmitter = initEmitter(object, options.libraryAnimationName, options, { hasNoOwner: true })

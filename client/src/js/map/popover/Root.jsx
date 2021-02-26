@@ -100,7 +100,7 @@ export default class Popover extends React.Component {
     if(object.tags.popCount && object.count > 0) {
       render.push(<div className="Popover__resource">
         {object.inInventory && (!object.defaultSprite || object.defaultSprite == 'solidcolorsprite') && <div className="InventoryHUD__name">{object.name || object.subObjectName}</div>}
-        {object.inInventory && object.defaultSprite !== 'solidcolorsprite' && <div className="InventoryHUD__sprite"><PixiMapSprite textureId={object.defaultSprite} width="20" height="20"/></div>}
+        {object.inInventory && object.defaultSprite !== 'solidcolorsprite' && <div className="InventoryHUD__sprite"><PixiMapSprite tint={object.color} textureId={object.defaultSprite} width="20" height="20"/></div>}
         <div className="InventoryHUD__count">
           {object.count || 0}
         </div>
@@ -113,7 +113,7 @@ export default class Popover extends React.Component {
         let so = object.subObjects[soName]
         render.push(<div className="Popover__resource">
           {!so.defaultSprite || so.defaultSprite == 'solidcolorsprite' &&  <div className="InventoryHUD__name">{so.name || so.subObjectName}</div>}
-          {so.defaultSprite !== 'solidcolorsprite' && <div className="InventoryHUD__sprite"><PixiMapSprite textureId={so.defaultSprite} width="20" height="20"/></div>}
+          {so.defaultSprite !== 'solidcolorsprite' && <div className="InventoryHUD__sprite"><PixiMapSprite tint={so.color} textureId={so.defaultSprite} width="20" height="20"/></div>}
           <div className="InventoryHUD__count">
             {so.count || 0}
             {object.resourceLimit >= 0 && ("/" + object.resourceLimit) }

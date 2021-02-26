@@ -67,7 +67,7 @@ function onRender(){
     let multiplier = (hero.animationZoomMultiplier)/global.constellationDistance
 
     camera.x = ((MAP.canvas.width/2)/multiplier) - MAP.canvas.width /2
-    camera.y = ((MAP.canvas.height/2)/multiplier) -MAP.canvas.height /2
+    camera.y = ((MAP.canvas.height/2)/multiplier) - MAP.canvas.height /2
 
     for(var i = 0; i < arrStars.length; i++){
       arrStars[i].render();

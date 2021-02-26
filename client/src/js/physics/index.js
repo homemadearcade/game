@@ -80,6 +80,7 @@ function correctAndEffectAllObjectAndHeros (delta) {
 
 function setAngleVelocity(hero) {
   const angleCorrection = global.degreesToRadians(90)
+  if(typeof hero.angle != 'number') hero.angle = 0
   hero.velocityX = hero.velocityAngle * Math.cos(hero.angle - angleCorrection)
   hero.velocityY = hero.velocityAngle * Math.sin(hero.angle - angleCorrection)
 }
@@ -112,9 +113,11 @@ function updatePosition(object, delta) {
   if(!gravityVelocityY) gravityVelocityY = 1000
 
   let applyWorldGravity = false
-  if(GAME.world.tags.allMovingObjectsHaveGravityY && object.mod().tags.moving && !object.mod().tags.ignoreWorldGravity) {
+  if(GAME.world.tags.allMovingObjectsHaveGravityY && object.mod().tags.moving && !object.mod().tags.ignoreWorldGravity && (!object.flags || !object.flags.isAdmin)) {
     applyWorldGravity = true
   }
+
+  if(object.mod().tags.rotateable && !object.tags.gravityY && !object.tags.noAngleMovement && typeof object.velocityAngle === 'number') setAngleVelocity(object)
 
   if(object._skipNextGravity) {
     object._skipNextGravity = false
@@ -122,9 +125,8 @@ function updatePosition(object, delta) {
     let distance = (object.velocityY * delta) +  ((gravityVelocityY * (delta * delta))/2)
     object.y += distance
     if(allowGravity) object.velocityY += (gravityVelocityY * delta)
+    // if(allowGravity && object.mod().tags.rotateable) object.velocityAngle += (gravityVelocityY * delta)
   }
-
-  if(object.mod().tags.rotateable && typeof object.velocityAngle === 'number') setAngleVelocity(object)
 
   let isXWithinMaxVelocity = false
   const maxVelocityX = object.mod().velocityMax + (object.mod().velocityMaxXExtra || 0)

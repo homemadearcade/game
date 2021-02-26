@@ -111,7 +111,7 @@ export default class GuidanceLive extends React.Component {
                 canStartStopGame: true,
                 canTakeMapSnapshots: true,
                 hasManagementToolbar: true,
-              } })
+              } } )
             }}></DatButton>
           </DatFolder>
           <DatButton label="Unlock All" onClick={() => {

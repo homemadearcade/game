@@ -470,6 +470,7 @@ export default class Toolbar extends React.Component {
           </ToolbarButton>
           <ToolbarButton iconName="fa-code" onClick={() => {
             document.getElementById('editor').style.display="block"
+            PAGE.typingMode = true
           }} onShiftClick={() => {
             global.saveCodeEditor()
           }} />

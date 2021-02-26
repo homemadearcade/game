@@ -140,6 +140,7 @@ function onPlayerIdentified(){
 
     if(key === 'esc') {
       document.getElementById('editor').style.display="none"
+      PAGE.typingMode = false
       if(e.shiftKey) global.saveCodeEditor()
     }
 

@@ -75,6 +75,11 @@ export function onHeroTrigger(hero, collider, result, options = { fromInteractBu
 
     let moddedTags = collider.mod().tags
 
+    if(moddedTags.destroyOnHeroCollide) {
+      collider._destroy = true
+      collider._destroyedById = hero.id
+    }
+
     if(moddedTags['skipHeroGravityOnCollide']) {
       hero._skipNextGravity = true
     }

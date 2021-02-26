@@ -516,6 +516,27 @@ function containObjectWithinGridBoundaries(object) {
       objectToEdit = JSON.parse(JSON.stringify(object))
     }
 
+    if(object.flags && object.flags.isAdmin) return
+
+    if(object.mod().tags.ignoreWorldBoundaries) {
+      //ALWAYS CONTAIN WITHIN BOUNDARIES OF THE GRID!!
+      if(GAME.world.tags.preventHeroGridBypass || object.tags.hero == false) {
+        if(object.x + object.mod().width > (GAME.grid.nodeSize * GAME.grid.width) + GAME.grid.startX) {
+          object.x = (GAME.grid.nodeSize * GAME.grid.width) + GAME.grid.startX - object.mod().width
+        }
+        if(object.y + object.mod().height > (GAME.grid.nodeSize * GAME.grid.height) + GAME.grid.startY) {
+          object.y = (GAME.grid.nodeSize * GAME.grid.height) + GAME.grid.startY - object.mod().height
+        }
+        if(object.x < GAME.grid.startX) {
+          object.x = GAME.grid.startX
+        }
+        if(object.y < GAME.grid.startY) {
+          object.y = GAME.grid.startY
+        }
+      }
+      return
+    }
+
     let bottom = false
     let legal = true
 

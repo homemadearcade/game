@@ -1,4 +1,6 @@
 import React from 'react'
+import tinycolor from 'tinycolor2'
+
 export default class PixiMapSprite extends React.Component {
   render() {
     const texture = PIXIMAP.textures[this.props.textureId]
@@ -23,6 +25,13 @@ export default class PixiMapSprite extends React.Component {
     }
 
     const backgroundImage = "url('"+texture.baseTexture.textureCacheIds[0]+"')"
+
+    let backgroundColor = ""
+    if(this.props.tint && this.props.tint != 'white' && this.props.tint != '#FFFFFF') {
+      const alpha = tinycolor(this.props.tint).getAlpha()
+      backgroundColor = tinycolor(this.props.tint).setAlpha(alpha - .1).toRgbString()
+    }
+
     const backgroundPositionX = -texture.orig.x
     const backgroundPositionY = -texture.orig.y
     const width = texture.orig.width
@@ -44,7 +53,16 @@ export default class PixiMapSprite extends React.Component {
           width,
           height,
           transform,
+          position:"relative"
         }}>
+          {backgroundColor && <div style={{
+               backgroundColor,
+               position: "absolute",
+               top: 0,
+               left: 0,
+               width: "100%",
+               height: "100%",
+             }}></div>}
       </div>
     </div>
   }

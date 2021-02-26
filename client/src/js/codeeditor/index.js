@@ -25,7 +25,6 @@ window.local.on('onPageLoaded', () => {
     fontSize: "20pt",
   });
   global.customGameEditor = editor
-
 })
 window.local.on('onGameLoaded', () => {
   // editor.resize()

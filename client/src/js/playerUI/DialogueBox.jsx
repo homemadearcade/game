@@ -98,7 +98,7 @@ export default class DialogueBox extends React.Component{
     } else if(item.defaultSprite == 'solidcolorsprite'){
       return <div className="DialogueBox__sprite" style={{background: item.color || GAME.world.defaultObjectColor || global.defaultObjectColor}}/>
     } else if(item.defaultSprite) {
-      return <div className="DialogueBox__sprite"><PixiMapSprite width="50" height="50" textureId={item.defaultSprite}/></div>
+      return <div className="DialogueBox__sprite"><PixiMapSprite width="50" height="50" tint={item.color} textureId={item.defaultSprite}/></div>
     }
   }
 

@@ -37,7 +37,7 @@ export default class Goals extends React.Component{
 
     return <div className="InventoryHUD__item">
       <div className="InventoryHUD__name">Lives</div>
-      {hero.defaultSprite && hero.defaultSprite !== 'solidcolorsprite' && <div className="InventoryHUD__sprite"><PixiMapSprite textureId={hero.defaultSprite} width="20" height="20"/></div>}
+      {hero.defaultSprite && hero.defaultSprite !== 'solidcolorsprite' && <div className="InventoryHUD__sprite"><PixiMapSprite tint={hero.color} textureId={hero.defaultSprite} width="40" height="40"/></div>}
       <div className="InventoryHUD__count">x{hero.lives}</div>
     </div>
   }
@@ -58,7 +58,7 @@ export default class Goals extends React.Component{
       {subObjects.map((so) => {
         return <div className="InventoryHUD__item" onClick={this._showInventoryModal} data-inventoryMenuId={so.id}>
           <div className="InventoryHUD__name" data-inventoryMenuId={so.id}>{so.name || so.subObjectName}</div>
-          {so.defaultSprite && so.defaultSprite !== 'solidcolorsprite' && <div data-inventoryMenuId={so.id} className="InventoryHUD__sprite"><PixiMapSprite textureId={so.defaultSprite} width="20" height="20"/></div>}
+          {so.defaultSprite && so.defaultSprite !== 'solidcolorsprite' && <div data-inventoryMenuId={so.id} className="InventoryHUD__sprite"><PixiMapSprite tint={so.color} textureId={so.defaultSprite} width="40" height="40"/></div>}
           <div className="InventoryHUD__count" data-inventoryMenuId={so.id}>x{so.count || 0}</div>
         </div>
       })}

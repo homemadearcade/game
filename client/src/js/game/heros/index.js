@@ -924,11 +924,27 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
     }
 
     if(moddedTags.scoreSubtractOnTouchStart) {
-      hero.score -= (object.scoreSubtract ? object.scoreSubtract : 1)
+      let score = (object.scoreSubtract ? object.scoreSubtract : 1)
+      hero.score -= score
+      if(object.scoreSubtractPopoverText) {
+        hero.popoverText = object.scoreSubtractPopoverText
+        setTimeout(() => {
+          hero.popoverText = null
+        }, 600)
+      }
+      global.emitGameEvent('onHeroScoreSubtract', hero, score)
     }
 
     if(moddedTags.scoreAddOnTouchStart) {
-      hero.score += (object.scoreAdd ? object.scoreAdd : 1)
+      let score = (object.scoreAdd ? object.scoreAdd : 1)
+      hero.score += score
+      if(object.scoreAddPopoverText) {
+        hero.popoverText = object.scoreAddPopoverText
+        setTimeout(() => {
+          hero.popoverText = null
+        }, 600)
+      }
+      global.emitGameEvent('onHeroScoreAdd', hero, score)
     }
   }
 

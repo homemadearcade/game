@@ -120,7 +120,7 @@ function openType(object, spriteName, type = 'recommended') {
   const appWidth = 600
   const app = new PIXI.Application({
     transparent: true,
-    width: appWidth, height: 400, view: document.getElementById('pixi-sprite-chooser')
+    width: appWidth, height: 600, view: document.getElementById('pixi-sprite-chooser')
   });
 
   let y = 0
