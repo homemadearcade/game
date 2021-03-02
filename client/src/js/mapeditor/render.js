@@ -132,7 +132,7 @@ function update() {
     }
   }
 
-  if(MAPEDITOR.groupGridHighlights && (PAGE.role.isAdmin || GAME.heros[HERO.id] && GAME.heros[HERO.id].flags && GAME.heros[HERO.id].flags.showOtherUsersMapHighlight)) {
+  if(MAPEDITOR.groupGridHighlights && (PAGE.role.isAdmin || (GAME.heros[HERO.id] && GAME.heros[HERO.id].flags && GAME.heros[HERO.id].flags.showOtherUsersMapHighlight && !GAME.gameState.started))) {
     Object.keys(MAPEDITOR.groupGridHighlights).forEach((heroId) => {
       const highlight = MAPEDITOR.groupGridHighlights[heroId]
       if(heroId !== HERO.originalId) {
@@ -154,7 +154,7 @@ function update() {
   if(objectHighlighted && objectHighlighted.CREATOR) {
     currentObject = objectHighlighted
   }
-  if(currentObject) {
+  if(currentObject && (PAGE.role.isAdmin || !GAME.gameState.started)) {
     if(currentObject.tags && currentObject.defaultSprite === 'invisible' || currentObject.tags.invisible || currentObject.tags.hidden || currentObject.opacity == 0) {
       ctx.setLineDash([5, 15]);
       drawTools.drawObject(ctx, {...currentObject, tags: { invisible: false, outline: true }, color: 'rgba(255,255,255,1)'}, camera)
