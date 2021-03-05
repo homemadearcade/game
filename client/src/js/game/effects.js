@@ -759,6 +759,12 @@ function processEffect(effect, effected, effector, ownerObject) {
         }
       }
 
+      if(effect.goalTargetCount == -1) {
+        if(effect.goalTargetTags && effect.goalTargetTags[0] && GAME.objectsByTag[effect.goalTargetTags[0]]) {
+          effect.goalTargetCount = GAME.objectsByTag[effect.goalTargetTags[0]].length
+        }
+      }
+
       const tracker = TRACKING.startTracking({
         goalId: effect.goalId,
         targetCount: effect.goalTargetCount,
