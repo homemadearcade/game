@@ -65,14 +65,14 @@ class Arcade{
   }
 
   onUpdateCustomGameFx(customFx) {
-    if(PAGE.role.isHost) {
+    // if(PAGE.role.isHost) {
       try {
         ARCADE.setLiveCustomFx(customFx)
         GAME.customFx = customFx
       } catch (e) {
         // PAGE.removeLog(e)
       }
-    }
+    // }
 
     if(PAGE.role.isPlayEditor) {
       global.customFx = customFx

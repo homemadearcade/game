@@ -769,6 +769,7 @@ function processEffect(effect, effected, effector, ownerObject) {
         showTrackingNavigationTargets: effect.goalShowNavigation,
         onTargetCountReached: () => {
           effected.navigationTargetId = null
+          if(!GAME.gameState.goals[effect.goalId]) console.log(effect, GAME.gameState)
           GAME.gameState.goals[effect.goalId].succeeded = true
           if(GAME.gameState.timeoutsById[effect.goalId]) GAME.gameState.timeoutsById[effect.goalId].paused = true
           if(GAME.gameState.trackersById[effect.trackerId]) GAME.gameState.trackersById[effect.trackerId].stopped = true

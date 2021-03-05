@@ -24,7 +24,7 @@ export default class CreateObject extends React.Component {
         OBJECTS.create({...objectSelected, tags: {obstacle: true}})
       }
       if(key === 'create-object') {
-        OBJECTS.create({...objectSelected})
+        OBJECTS.create({...objectSelected, tags: {}})
       }
       if(key === 'create-foreground') {
         OBJECTS.create({...objectSelected, tags: {foreground: true}})

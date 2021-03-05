@@ -68,10 +68,12 @@ export default class Goals extends React.Component{
     let possibleObjects
     if(tracker && tracker.targetTags[0]) {
       possibleObjects = GAME.objectsByTag[tracker.targetTags[0]]
-      possibleObjects = possibleObjects.filter((object) => {
-        if(object.isEquipped || object.inInventory) return false
-        return true
-      })
+      if(possibleObjects && possibleObjects.length) {
+        possibleObjects = possibleObjects.filter((object) => {
+          if(object.isEquipped || object.inInventory) return false
+          return true
+        })
+      }
     }
 
     if(!tracker || !activeGoal) return
