@@ -105,8 +105,11 @@ export default class ControlsHUD extends React.Component {
         if(so.actionButtonBehavior === 'dash' || so.actionButtonBehavior === 'teleportDash') {
           timeoutId = hero.id+'-dashable'
         }
+
+        let behavior = window[windowName][so.actionButtonBehavior]
+        if(hero[behaviorPropName+'Label']) behavior = hero[behaviorPropName+'Label']
         return {
-          behavior: window[windowName][so.actionButtonBehavior],
+          behavior,
           key,
           timeoutId
         }
@@ -120,8 +123,11 @@ export default class ControlsHUD extends React.Component {
         timeoutId = hero.id+'-dashable'
       }
 
+
+      let behavior = window[windowName][hero[behaviorPropName]]
+      if(hero[behaviorPropName+'Label']) behavior = hero[behaviorPropName+'Label']
       return {
-        behavior: window[windowName][hero[behaviorPropName]],
+        behavior,
         key,
         timeoutId
       }

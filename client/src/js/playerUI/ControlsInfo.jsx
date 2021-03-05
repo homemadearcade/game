@@ -60,13 +60,18 @@ export default class ControlsInfo extends React.Component {
       const key = behaviorPropName.charAt(0)
 
       if(hero.subObjects[hero[behaviorPropName]]) {
+        let behavior = window[windowName][hero.subObjects[hero[behaviorPropName]].actionButtonBehavior]
+        // if(hero[behaviorPropName+'Label']) behavior = behaviorPropName+'Label'
         return {
-          behavior: window[windowName][hero.subObjects[hero[behaviorPropName]].actionButtonBehavior],
+          behavior,
           key
         }
       }
+
+      let behavior = window[windowName][hero[behaviorPropName]]
+      if(hero[behaviorPropName+'Label']) behavior = hero[behaviorPropName+'Label']
       return {
-        behavior: window[windowName][hero[behaviorPropName]],
+        behavior,
         key
       }
     }
@@ -75,8 +80,10 @@ export default class ControlsInfo extends React.Component {
     if(!window[windowName][hero[behaviorPropName]]) return []
 
     return Object.keys(window[windowName][hero[behaviorPropName]]).map((key) => {
+      let behavior = window[windowName][hero[behaviorPropName]][key]
+      if(hero[behaviorPropName+'Label']) behavior = hero[behaviorPropName+'Label']
       return {
-        behavior: window[windowName][hero[behaviorPropName]][key],
+        behavior,
         key,
       }
     })

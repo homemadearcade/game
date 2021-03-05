@@ -506,10 +506,14 @@ class Hero{
       sprites: hero.sprites,
 
       zButtonBehavior: hero.zButtonBehavior,
+      zButtonBehaviorLabel: hero.zButtonBehaviorLabel,
       xButtonBehavior: hero.xButtonBehavior,
+      xButtonBehaviorLabel: hero.xButtonBehaviorLabel,
       cButtonBehavior: hero.cButtonBehavior,
+      cButtonBehaviorLabel: hero.cButtonBehaviorLabel,
       arrowKeysBehavior: hero.arrowKeysBehavior,
       spaceBarBehavior: hero.spaceBarBehavior,
+      spaceBarBehaviorLabel: hero.spaceBarBehaviorLabel,
 
       color: hero.color,
       defaultSprite: hero.defaultSprite,
