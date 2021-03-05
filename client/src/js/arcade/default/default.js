@@ -24,7 +24,37 @@ export default class CustomGame{
   }
 
   onUpdateObject(object, delta) {
-
+    // if(object.id == "object-414511237917") {
+    //     if(object.x > 1664) {
+    //       object.goLeft = true
+    //     }
+    //     if(object.x < 520) {
+    //       object.goLeft = false
+    //     }
+    //
+    //     if(object.y > 1000) {
+    //       object.velocityY = 0
+    //       object.tags.gravityY = false
+    //     }
+    //
+    //     if(object.waiting) {
+    //       if(object.goLeft) object.x-= 100 * delta
+    //       else object.x+= 100 * delta
+    //       return
+    //     } else {
+    //         object.waiting = true
+    //         object.velocityY = -1000
+    //         object.tags.gravityY = true
+    //
+    //         // setTimeout(() => {
+    //         //     object.tags.gravityY = false
+    //         // }, 5000)
+    //
+    //         setTimeout(() => {
+    //             object.waiting = false
+    //         }, 5000)
+    //     }
+    // }
   }
 
   onObjectDestroyed(object) {
@@ -32,13 +62,6 @@ export default class CustomGame{
   }
 
   onHeroCollide(hero, collider, result) {
-    if(collider.tags.goalitems) {
-      hero.popoverText = "Yum yum!"
-
-      setTimeout(() => {
-        hero.popoverText = null
-      }, 400)
-    }
   }
 
   onHeroInteract(hero, collider, result) {

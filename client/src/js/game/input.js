@@ -112,8 +112,8 @@ function setDefault() {
     'dash': 'Dash',
     'teleportDash': 'Dash ( Teleport )',
     'groundJump': 'Jump ( On Ground )',
-    'floatJump': 'Jump ( On Ground or In Air )',
-    'wallJump': 'Jump ( on Ground or On Wall )',
+    'floatJump': 'Float ( On Ground or In Air )',
+    'wallJump': 'Wall Jump ( on Ground or On Wall )',
     'accelerateUp': 'Jet Pack'
   }
 }

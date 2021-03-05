@@ -945,6 +945,13 @@ PIXIMAP.onPathEditorStart = function() {
 
 PIXIMAP.loadImageAssets = function(cb) {
   const loader = new PIXI.Loader()
+  loader.pre((resource, next) => {
+    // if (window.device && (device.platform === 'iOS' || device.platform === 'Android')) {
+        resource.crossOrigin = 'anonymous';
+        // resource.loadType = PIXI.loaders.Resource.LOAD_TYPE.XHR;
+    // }
+    next();
+});
   Object.keys(GAME.library.images).reduce((prev, next) => {
     const imageData = GAME.library.images[next]
     if(!PIXIMAP.textures[imageData.name]) return prev.add(imageData.url)

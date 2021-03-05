@@ -709,7 +709,7 @@ class Game{
   }
 
   onStartPregame(options) {
-    GAME.onGameStart({...options, silent: true})
+    global.local.emit('onGameStart', {...options, silent: true})
 
     if(GAME.library.sequences.pregame) {
       GAME.gameState.cutscene = true
@@ -724,6 +724,8 @@ class Game{
           GAME.gameState.paused = false
         }
       })
+    } else {
+      global.local.emit('onGameStarted')
     }
   }
 
