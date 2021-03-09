@@ -60,10 +60,11 @@ export default class GameList extends React.Component{
 
       games = this.state.reverseDate ? [...games, ...authorsGames] : [...authorsGames, ...games]
 
+      console.log(games)
       games = games.map((gameSave, i) => {
         //                    {<a className=""  target="_blank" href={global.HAGameClientUrl+"/?arcadeMode=true&gameSaveId="+gameSave._id}>share</a>}
 
-        if(gameSave.data.metadata && gameSave.data.metadata.name && gameSave.data.metadata.author) {
+        if(gameSave.data.metadata && gameSave.data.metadata.name) {
           return <a target="_blank" href={global.HAGameClientUrl+"/?arcadeMode=true&skipLogin=true&gameSaveId="+gameSave._id}>
             <div className="Cutscene__games-container__game"
               onMouseEnter={() => {

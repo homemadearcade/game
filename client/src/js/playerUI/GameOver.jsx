@@ -43,7 +43,7 @@ export default class GameOver extends React.Component{
                   PLAYERUI.ref.forceUpdate()
                 }, 200)
               }
-            }}>Try Again</button>
+            }}>Play Again</button>
             {!PAGE.role.isHomeEditor && <button onClick={() => {
               if(!window.user) {
                 window.location.href = global.HAGameClientUrl

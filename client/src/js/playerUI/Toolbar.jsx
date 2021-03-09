@@ -95,6 +95,20 @@ export default class Toolbar extends React.Component {
         confirmButtonText: 'Next',
       })
 
+      const { value: author } = await Swal.fire({
+        title: "Who is the author of this game?",
+        showClass: {
+          popup: 'animated fadeInDown faster'
+        },
+        hideClass: {
+          popup: 'animated fadeOutUp faster'
+        },
+        input: 'text',
+        inputValue: window.user.username,
+        showCancelButton: true,
+        confirmButtonText: 'Next',
+      })
+
       sequenceEditorModals.openImageSelectModal(async (image) => {
         // const { value: yes } = await Swal.fire({
         //   title: "Are you sure you want to publish? This will create a post in the Homemade Arcade",
@@ -110,6 +124,7 @@ export default class Toolbar extends React.Component {
 
         if(name && description && image) {
           GAME.metadata.name = name
+          GAME.metadata.author = author
           GAME.metadata.featuredImage = image
           GAME.metadata.description = description
           global.emitGameEvent('onEditMetadata', GAME.metadata)

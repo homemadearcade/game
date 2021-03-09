@@ -16,4 +16,6 @@ Upload actual upload instead of copy and Paste
 
 Take a look at MonsterEffect
   Maybe just add like a variable choice of what something destorys
+
+SlowDown tags when objects collide with other objects
 */

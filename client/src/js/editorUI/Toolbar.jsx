@@ -386,6 +386,12 @@ export default class Toolbar extends React.Component {
               PIXIMAP.resetConstructParts()
               this.forceUpdate()
             }}/>
+            <ToolbarButton text="All" active={EDITOR.preferences.selectable.all} onClick={() => {
+              EDITOR.preferences.selectable.all = !EDITOR.preferences.selectable.all
+              PIXIMAP.resetConstructParts()
+              this.forceUpdate()
+            }}/>
+
         </ToolbarRow>
 
         {/* Grid -> Menu

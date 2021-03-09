@@ -725,7 +725,9 @@ class Game{
         }
       })
     } else {
-      global.local.emit('onGameStarted')
+      setTimeout(() => {
+        global.local.emit('onGameStarted')
+      })
     }
   }
 

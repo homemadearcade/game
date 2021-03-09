@@ -17,6 +17,7 @@ global.local.on('onPageLoaded', () => {
         tags: {
           saveAsDefaultHero: true,
           centerOfAttention: true,
+          adminInch: false,
         }
       }
     },
@@ -66,6 +67,7 @@ global.local.on('onPageLoaded', () => {
           // properties: true,
           descriptors: true,
           spriteMenu: true,
+
           // physicsLive: true,
           // dialogue: true,
           // dialogueName: true,

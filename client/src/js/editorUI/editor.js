@@ -17,6 +17,7 @@ class Editor {
           // structure: false,
           constructParts: true,
           subObjects: true,
+          all: true,
         }
       }
       this.zoomDelta = .1250

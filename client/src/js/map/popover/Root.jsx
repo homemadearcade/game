@@ -84,7 +84,7 @@ export default class Popover extends React.Component {
   }
 
   _renderInformation() {
-    const { object } = this.props
+    const object = OBJECTS.getObjectOrHeroById(this.props.object.id)
 
     let render = []
 

@@ -261,6 +261,9 @@ global.isObjectSelectable = function(gameObject) {
   // if(gameObject.id === 'globalConstructStationaryObstacle' && (!PAGE.role.isAdmin || EDITOR.preferences.selectable.structure === false)) return false
   if(gameObject.tags.background && (EDITOR.preferences.selectable.background === false)) return false
   if(gameObject.tags.foreground && (EDITOR.preferences.selectable.foreground === false)) return false
+
+  if(!EDITOR.preferences.selectable.all) return false
+
   return true
 }
 
