@@ -91,7 +91,8 @@ class MapEditor {
         return
       }
 
-      if(!GAME.heros[HERO.id].flags.allowObjectSelection) return
+      if(!GAME.heros[HERO.id].flags.allowObjectSelection && !PAGE.role.isAdmin) return
+
       if(MAPEDITOR.objectHighlighted && MAPEDITOR.objectHighlighted.id) {
         OBJECTS.editingId = MAPEDITOR.objectHighlighted.id
         BELOWMANAGER.open({ objectSelected: MAPEDITOR.objectHighlighted, selectedManager: 'ObjectManager', selectedMenu: 'detail', selectedId: OBJECTS.editingId })

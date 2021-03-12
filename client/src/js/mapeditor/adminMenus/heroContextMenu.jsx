@@ -274,6 +274,7 @@ export default class HeroContextMenu extends React.Component {
       <SubMenu title="All Tags">
         <TagMenu objectSelected={objectSelected}></TagMenu>
       </SubMenu>
+      <MenuItem key="edit-descriptors">Edit Descriptors</MenuItem>
       <SubMenu title="Actions">
         <MenuItem key="reset-to-game-default">Reset To Game Default</MenuItem>
         <MenuItem key="reset-to-core-default">Reset To Core Default</MenuItem>
