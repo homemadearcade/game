@@ -326,8 +326,9 @@ function updateProperties(pixiChild, gameObject) {
   }
 
   if(gameObject.tags.hasTrail && !pixiChild.trailEmitter) {
-    pixiChild.trailEmitter = initEmitter(gameObject, 'trail', { scaleToGameObject: true, matchObjectColor: true, useUpdateOwnerPos: true })
+    pixiChild.trailEmitter = initEmitter(gameObject, 'trail', { useOwnerSprite: gameObject.defaultSprite !== 'solidcolorsprite', scaleToGameObject: true, matchObjectColor: true, useUpdateOwnerPos: true })
   }
+
   if(!gameObject.tags.hasTrail && pixiChild.trailEmitter) {
     PIXIMAP.deleteEmitter(pixiChild.trailEmitter)
     delete pixiChild.trailEmitter
