@@ -40,10 +40,19 @@ function update(delta) {
     cameraController.x += 600 * delta
   }
 
-  if(cameraController.x > grid.x + grid.width) cameraController.x = grid.x + grid.width
-  if(cameraController.y > grid.y + grid.height) cameraController.y = grid.y + grid.height
-  if(cameraController.y < grid.y) cameraController.y = grid.y
-  if(cameraController.x < grid.x) cameraController.x = grid.x
+  if(cameraController.x > grid.x + grid.width) {
+    cameraController.x = grid.x + grid.width
+  }
+  if(cameraController.y > grid.y + grid.height) {
+    cameraController.y =  grid.y + grid.height
+  }
+  if(cameraController.y < grid.y) {
+    cameraController.y = grid.y
+  }
+  if(cameraController.x < grid.x) {
+    cameraController.x = grid.x
+  }
+
 
   gridUtil.keepXYWithinBoundaries(cameraController)
 }
