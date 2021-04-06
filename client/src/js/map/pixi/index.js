@@ -720,7 +720,7 @@ PIXIMAP.updateConstructEditorNodes = function() {
     nodes.forEach((row) => {
       row.forEach((node) => {
         if(node.data.filled) {
-          const fakeObject = { tags: CONSTRUCTEDITOR.object.tags, defaultSprite: node.data.defaultSprite, color: node.data.color, ...node}
+          const fakeObject = { tags: CONSTRUCTEDITOR.object.tags, defaultSprite: node.data.defaultSprite || 'solidcolorsprite', color: node.data.color, ...node}
           fakeObject.currentEditingConstruct = true
           initPixiObject(fakeObject)
           updatePixiObject(fakeObject)

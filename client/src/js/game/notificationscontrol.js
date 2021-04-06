@@ -510,37 +510,37 @@ class NotificationsControl{
   }
 
   onAddSubObject(owner) {
-    if(owner.tags.invisible) return
+    if(owner.tags.invisible || owner.defaultSprite === 'invisible') return
     PIXIMAP.onObjectAnimation('editObject', owner.id)
   }
   onRemoveSubObject(owner) {
-    if(owner.tags.invisible) return
+    if(owner.tags.invisible || owner.defaultSprite === 'invisible') return
     PIXIMAP.onObjectAnimation('editObject', owner.id)
   }
   onEditSubObject(ownerId) {
     const owner = OBJECTS.getObjectOrHeroById(ownerId)
-    if(owner.tags.invisible) return
+    if(owner.tags.invisible || owner.defaultSprite === 'invisible') return
     PIXIMAP.onObjectAnimation('editObject', ownerId)
   }
 
   onEditHero(hero) {
-    if(hero.tags && hero.tags.invisible) return
+    if(hero.tags && hero.tags.invisible || hero.defaultSprite === 'invisible') return
     PIXIMAP.onObjectAnimation('editObject', hero.id)
   }
 
   onEditTrigger(ownerId) {
     const owner = OBJECTS.getObjectOrHeroById(ownerId)
-    if(owner.tags.invisible) return
+    if(owner.tags.invisible || owner.defaultSprite === 'invisible') return
     PIXIMAP.onObjectAnimation('editObject', ownerId)
   }
   onAddTrigger(ownerId) {
     const owner = OBJECTS.getObjectOrHeroById(ownerId)
-    if(owner.tags.invisible) return
+    if(owner.tags.invisible || owner.defaultSprite === 'invisible') return
     PIXIMAP.onObjectAnimation('editObject', ownerId)
   }
   onDeleteTrigger(ownerId) {
     const owner = OBJECTS.getObjectOrHeroById(ownerId)
-    if(owner.tags.invisible) return
+    if(owner.tags.invisible || owner.defaultSprite === 'invisible') return
     PIXIMAP.onObjectAnimation('editObject', ownerId)
   }
 
