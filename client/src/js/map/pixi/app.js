@@ -312,8 +312,12 @@ const initPixiApp = (canvasRef, onLoad) => {
       setGameWindowSize()
       global.local.emit('onResize')
     }
-    global.local.on('onZoomChange', () => {
-      onResize()
+    global.local.on('onZoomChange', (id) => {
+      if(id) {
+        if(id == HERO.id) onResize()
+      } else {
+        onResize()
+      }
     })
     global.local.on('onCloseLog', onResize)
     global.local.on('onOpenLog', onResize)

@@ -1316,6 +1316,26 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
   }
 
   onDeleteObject(object) {
+    if(object.heroDialogueSets && object.heroDialogueSets.destroy) {
+      let hero = GAME.heroList.filter((({tags}) => tags.centerOfAttention))[0]
+
+      if(hero) {
+        let newDialogue = object.heroDialogueSets.destroy.dialogue.slice()
+        hero.dialogue = newDialogue
+
+        hero.flags.showDialogue = true
+        hero.flags.paused = true
+        hero._fireDialogueCompleteWithSpeakerId = true
+        hero.dialogueId = object.id
+        if(object.name) {
+          hero.dialogueName = object.mod().name
+        } else {
+          hero.dialogueName = null
+        }
+
+        global.emitGameEvent('onUpdatePlayerUI', hero)
+      }
+    }
     OBJECTS.deleteObject(object)
     MAP.closePopover(object.id)
     global.local.emit('onUpdatePFgrid', 'delete', object)
@@ -1658,6 +1678,27 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
     }
     if(object.mod().tags.spawnAllOnDestroy) {
       spawnAllNow(object)
+    }
+
+    if(object.heroDialogueSets && object.heroDialogueSets.destroy) {
+      let hero = GAME.heroList.filter((({tags}) => tags.centerOfAttention))[0]
+
+      if(hero) {
+        let newDialogue = object.heroDialogueSets.destroy.dialogue.slice()
+        hero.dialogue = newDialogue
+
+        hero.flags.showDialogue = true
+        hero.flags.paused = true
+        hero._fireDialogueCompleteWithSpeakerId = true
+        hero.dialogueId = object.id
+        if(object.name) {
+          hero.dialogueName = object.mod().name
+        } else {
+          hero.dialogueName = null
+        }
+
+        global.emitGameEvent('onUpdatePlayerUI', hero)
+      }
     }
 
     if(object.mod().tags.scoreSubtractOnDestroy) {

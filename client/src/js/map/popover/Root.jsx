@@ -96,7 +96,7 @@ export default class Popover extends React.Component {
         <Line percent={percent} strokeWidth="4" strokeColor="red" strokeLinecap="none"/>
       </div>)
     }
-
+ 
     if(object.tags.popCount && object.count > 0) {
       render.push(<div className="Popover__resource">
         {object.inInventory && (!object.defaultSprite || object.defaultSprite == 'solidcolorsprite') && <div className="InventoryHUD__name">{object.name || object.subObjectName}</div>}

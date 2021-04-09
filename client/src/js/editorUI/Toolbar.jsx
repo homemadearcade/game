@@ -448,9 +448,49 @@ export default class Toolbar extends React.Component {
               EDITORUI.ref.forceUpdate()
             }}/>
         </ToolbarRow>
+        {hero.flags.canTakeMapSnapshots && <ToolbarRow iconName="fa-camera-retro" onClick={async () => {
+          const { value: name } = await Swal.fire({
+            title: "What is the name of this photo?",
+            showClass: {
+              popup: 'animated fadeInDown faster'
+            },
+            hideClass: {
+              popup: 'animated fadeOutUp faster'
+            },
+            input: 'text',
+            showCancelButton: true,
+            confirmButtonText: 'Take picture',
+          })
+          if(name) {
+            PIXIMAP.snapCamera(name)
+          }
+        }}
+        onShiftClick={() => {
+          PIXIMAP.snapCamera()
+        }}>
 
-
-
+        <ToolbarButton iconName="fa-ruler-horizontal"
+          active={hero.tags.adminInch}
+          onClick={() => {
+            if(hero.tags.adminInch) {
+              global.socket.emit('editHero', { id: hero.id, tags: { adminInch: false } })
+            } else {
+              global.socket.emit('editHero', { id: hero.id, tags: { adminInch: true } })
+            }
+          }}
+        ></ToolbarButton>
+          <ToolbarButton iconName="fa-eye-slash"
+            active={hero.tags.invisible}
+            onClick={() => {
+              if(hero.tags.invisible) {
+                global.socket.emit('editHero', { id: hero.id, tags: { invisible: false } })
+              } else {
+                global.socket.emit('editHero', { id: hero.id, tags: { invisible: true } })
+              }
+            }}
+          ></ToolbarButton>
+          </ToolbarRow>
+        }
 
         <br/>
 

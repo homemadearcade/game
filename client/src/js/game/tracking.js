@@ -124,6 +124,24 @@ class Tracking {
     })
   }
 
+  onHeroInteract = (hero, object) => {
+    if(GAME.gameState.trackers.length) GAME.gameState.trackers.forEach((tracker) => {
+      if(tracker.stopped) return
+
+
+      const { trackingObject, targetEvent, targetTags, trackedIds } = tracker
+      if(!tracker.trackedIds) tracker.trackedIds = {}
+
+
+      if(targetEvent === 'interactX' &&
+        !tracker.trackedIds[object.id] &&
+        trackingObject.id === hero.id &&
+        this.tagMatch(targetTags, object)) {
+          tracker.trackedIds[object.id] = true
+          this.eventHappened(tracker)
+      }
+    })
+  }
 
   onHeroDrop = (hero, object) => {
     if(GAME.gameState.trackers.length) GAME.gameState.trackers.forEach((tracker) => {

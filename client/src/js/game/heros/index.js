@@ -158,6 +158,7 @@ class Hero{
 
   spawn(hero) {
     const {x, y } = HERO.getSpawnCoords(hero)
+
     hero.x = x
     hero.y = y
     hero.velocityX = 0
@@ -168,8 +169,12 @@ class Hero{
   getSpawnCoords(hero) {
     let x = 960;
     let y = 960;
-    // hero spawn point takes precedence
-    if(hero.mod().spawnPointX && typeof hero.mod().spawnPointX == 'number' && hero.mod().spawnPointY && typeof hero.mod().spawnPointY == 'number') {
+
+    if(hero.flags && hero.flags.isAdmin && GAME.defaultHero) {
+      x = GAME.defaultHero.spawnPointX
+      y = GAME.defaultHero.spawnPointY
+    } else if(hero.mod().spawnPointX && typeof hero.mod().spawnPointX == 'number' && hero.mod().spawnPointY && typeof hero.mod().spawnPointY == 'number') {
+      // hero spawn point takes precedence
       x = hero.mod().spawnPointX
       y = hero.mod().spawnPointY
     } else if(GAME && GAME.world.worldSpawnPointX && typeof GAME.world.worldSpawnPointX == 'number' && GAME.world.worldSpawnPointY && typeof GAME.world.worldSpawnPointY == 'number') {
@@ -887,6 +892,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
       } else {
         hero.zoomMultiplier = object.width/HERO.cameraWidth
       }
+      global.emitGameEvent('onZoomChange', hero.id)
     }
 
     let moddedTags = object.mod().tags
@@ -956,6 +962,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
     if(!object) return
     if(object.tags.cameraZoomToFit) {
       hero.zoomMultiplier = hero._prevZoomMultiplier
+      global.emitGameEvent('onZoomChange', hero.id)
     }
   }
 
@@ -1251,6 +1258,9 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
   }
 
   onHeroRespawn(object) {
+    // if(object._prevZoomMultiplier) {
+    //   object.zoomMultiplier = object._prevZoomMultiplier
+    // }
     if(object.mod().tags.explodeOnDestroy) {
       global.local.emit('onObjectAnimation', 'explode', object.id)
     }

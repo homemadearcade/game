@@ -215,7 +215,6 @@ export default class Root extends React.Component {
 
     const hasDialogue = hero.dialogue && hero.dialogue.length > 0
 
-
     const cutscene = hero.flags && hero.flags.showCutscene && hero.cutscenes
 
     return (

@@ -181,7 +181,7 @@ export default class LibraryObjectContextMenu extends React.Component{
           confirmButtonText: 'Next',
         })
         if(!name) return
-        global.socket.emit('updateLibrary', { object: {...GAME.library.objects, [name]: OBJECTS.getProperties(objectSelected)} })
+        global.socket.emit('updateLibrary', { object: {...GAME.library.object, [name]: OBJECTS.getProperties(objectSelected)} })
       }
 
       if (key === "copy-to-subobject-library") {

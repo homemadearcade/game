@@ -19,6 +19,10 @@ global.goalTypes = {
     number: true,
     tag: true,
   },
+  'interactX': {
+    number: true,
+    tag: true,
+  },
   'touchX' : {
     number: true,
     tag: true,
@@ -175,7 +179,7 @@ export default class Goal extends React.Component{
             {chosenGoalForm}
             Time Limit: <div className="SequenceItem__condition-form"><i className="fa fas fa-edit Manager__button" onClick={() => { this.props._openEditNumberModal('goalTimeLimit') }}/>
               <div className="SequenceItem__summary SequenceItem__summary--json">{sequenceItem.goalTimeLimit}</div>
-            </div>  
+            </div>
             Chances: <div className="SequenceItem__condition-form"><i className="fa fas fa-edit Manager__button" onClick={() => { this.props._openEditNumberModal('goalChances') }}/>
               <div className="SequenceItem__summary SequenceItem__summary--json">{sequenceItem.goalChances}</div>
             </div>

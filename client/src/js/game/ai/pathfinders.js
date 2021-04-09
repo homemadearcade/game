@@ -11,7 +11,6 @@ function pathfindingAI(object) {
     setTarget(object, hero)
   }
 
-
   if(hero && object.tags && object.mod().tags['homing'] && autoTarget) {
     if(!object.path || (object.path && !object.path.length)) {
       setPathTarget(object, hero)

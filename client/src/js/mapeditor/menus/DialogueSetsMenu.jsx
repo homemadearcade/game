@@ -5,6 +5,9 @@ import modals from '../modals.js'
 global.getGlobalName = async function() {
   const list = global.getListOfAllSetsAndSequences()
 
+  list.unshift('greeting')
+  list.unshift('pickup')
+  list.unshift('destroy')
   list.unshift('New')
 
   let { value: name } = await Swal.fire({

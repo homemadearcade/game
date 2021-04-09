@@ -390,6 +390,7 @@ function processSequence(sequence) {
   if(item.sequenceType === 'sequenceGoal') {
     const effectedObjects = effects.getEffectedObjects(item, sequence.mainObject, sequence.guestObject, sequence.ownerObject)
 
+    console.log(effectedObjects)
     const effect = {
       effectName: 'startGoal',
       ...item

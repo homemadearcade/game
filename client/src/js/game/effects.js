@@ -676,6 +676,9 @@ function processEffect(effect, effected, effector, ownerObject) {
       hero.flags.editAllowedWhenGameStarted = false
     });
     GAME.library.tags = {}
+    GAME.library.object = {}
+    GAME.library.subobject = {}
+
     global.allTags = _.cloneDeep(global.tags)
     GAME.library.sequences = { "gameOver": { items: []}, "youWin": { items: []}, "pregame": {"items":[{"id":"a","sequenceType":"sequenceCutscene","notificationAllHeros":true,"effectedMainObject":false,"effectedGuestObject":false,"effectedIds":[],"effectedTags":[],"scenes":[{"duration":-1,"text":"","imageUrl":null,"startScreen":true}],"next":"sequential"}],"pauseGame":false,"id":"pregame"}}
     global.emitEvent('onNetworkUpdateGameState', GAME.gameState)
