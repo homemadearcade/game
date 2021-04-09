@@ -978,6 +978,7 @@ class Game{
   }
 
   onEditGameState(gameState) {
+    console.log(gameState)
     global.mergeDeep(GAME.gameState, gameState)
   }
 

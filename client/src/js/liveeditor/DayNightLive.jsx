@@ -39,7 +39,7 @@ export default class DayNightLive extends React.Component {
         GAME.gameState.ambientLight = newData.initialAmbientLight
         GAME.gameState.ambientLightDelta = 0
       } else {
-        global.emitEvent('onNetworkUpdateGameState', { ambientLight: newData.initialAmbientLight, ambientLightDelta: 0 })
+        global.socket.emit('editGameState', { ambientLight: newData.initialAmbientLight, ambientLightDelta: 0 })
       }
     }
 
@@ -61,10 +61,9 @@ export default class DayNightLive extends React.Component {
         GAME.gameState.ambientLight = updatedAmbientLight
         GAME.gameState.ambientLightDelta = 0
       } else {
-        global.emitEvent('onNetworkUpdateGameState', { ambientLight: updatedAmbientLight, ambientLightDelta: 0 })
+        global.socket.emit('editGameState', { ambientLight: updatedAmbientLight, ambientLightDelta: 0 })
       }
     }
-
   }
 
 
@@ -89,7 +88,6 @@ export default class DayNightLive extends React.Component {
             <DatNumber path='transitionTime' label="transitionTime" min={0} max={100} step={1} />
             <DatNumber path='dayAmbientLight' label="dayAmbientLight" min={0} max={1} step={.01} />
             <DatNumber path='nightAmbientLight' label="nightAmbientLight" min={0} max={1} step={.01} />
-
             <DatNumber path='initialAmbientLight' label="initialAmbientLight" min={0} max={1} step={.01} />
           </DatGui>
         </div>

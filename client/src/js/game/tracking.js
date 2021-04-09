@@ -128,10 +128,8 @@ class Tracking {
     if(GAME.gameState.trackers.length) GAME.gameState.trackers.forEach((tracker) => {
       if(tracker.stopped) return
 
-
       const { trackingObject, targetEvent, targetTags, trackedIds } = tracker
       if(!tracker.trackedIds) tracker.trackedIds = {}
-
 
       if(targetEvent === 'interactX' &&
         !tracker.trackedIds[object.id] &&

@@ -190,10 +190,11 @@ class SpriteEditor{
 				if(SPRITEEDITOR.objectSelected.constructParts) {
 					SPRITEEDITOR.objectSelected.constructParts.forEach((part) => {
 						part.defaultSprite = name
+						part.color = null
 					})
-					MAPEDITOR.networkEditObject(SPRITEEDITOR.objectSelected, {id: SPRITEEDITOR.objectSelected.id, defaultSprite: name})
+					MAPEDITOR.networkEditObject(SPRITEEDITOR.objectSelected, {id: SPRITEEDITOR.objectSelected.id, color: null, defaultSprite: name})
 				} else {
-					MAPEDITOR.networkEditObject(SPRITEEDITOR.objectSelected, {id: SPRITEEDITOR.objectSelected.id, defaultSprite: name})
+					MAPEDITOR.networkEditObject(SPRITEEDITOR.objectSelected, {id: SPRITEEDITOR.objectSelected.id, color: null, defaultSprite: name})
 				}
         cb()
 
