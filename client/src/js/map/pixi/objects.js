@@ -221,6 +221,12 @@ const updatePixiEmitter = (pixiChild, gameObject) => {
     }
   }
 
+
+
+  const data = emitter.data
+
+  if(!data) return
+
   /////////////////////
   /////////////////////
   // SCALE
@@ -229,9 +235,14 @@ const updatePixiEmitter = (pixiChild, gameObject) => {
     if(emitter.startScale.next) emitter.startScale.next.value = emitter.data.scale.end * camera.multiplier
   }
 
-  const data = emitter.data
 
-  if(!data) return
+  /////////////////////
+  /////////////////////
+  // speed
+  emitter.acceleration.x = data.acceleration.x * MAP.camera.multiplier
+  emitter.acceleration.y = data.acceleration.y * MAP.camera.multiplier
+  emitter.startSpeed.value = data.speed.start * MAP.camera.multiplier
+  if(emitter.startSpeed.next) emitter.startSpeed.next.value = data.speed.end * MAP.camera.multiplier
 
   const usesCircle = (data.spawnType === 'ring' || data.spawnType === 'circle')
   if(emitter.spawnCircle && usesCircle) {

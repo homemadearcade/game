@@ -448,7 +448,7 @@ export default class Toolbar extends React.Component {
               EDITORUI.ref.forceUpdate()
             }}/>
         </ToolbarRow>
-        {hero.flags.canTakeMapSnapshots && <ToolbarRow iconName="fa-camera-retro" onClick={async () => {
+        <ToolbarRow iconName="fa-camera-retro" onClick={async () => {
           const { value: name } = await Swal.fire({
             title: "What is the name of this photo?",
             showClass: {
@@ -490,7 +490,6 @@ export default class Toolbar extends React.Component {
             }}
           ></ToolbarButton>
           </ToolbarRow>
-        }
 
         <br/>
 

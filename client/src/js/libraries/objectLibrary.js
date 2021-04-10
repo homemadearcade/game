@@ -61,6 +61,7 @@ global.local.on('onFirstPageGameLoaded', () => {
         spawnZone: true,
         spawnRandomlyWithin: true,
         spawnOnInterval: true,
+        spawnOverNonObstacles: true,
         invisible: true,
       },
       subObjects: {

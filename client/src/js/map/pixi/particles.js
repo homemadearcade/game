@@ -99,8 +99,8 @@ function updatePixiEmitterData(pixiChild, gameObject, options) {
    return
   }
 
-  emitter.startSpeed.value = data.speed.start
-  if(emitter.startSpeed.next) emitter.startSpeed.next.value = data.speed.end
+  emitter.startSpeed.value = data.speed.start * MAP.camera.multiplier
+  if(emitter.startSpeed.next) emitter.startSpeed.next.value = data.speed.end * MAP.camera.multiplier
   else if(PAGE.role.isHost && data.speed.start !== data.speed.end && data.acceleration.x === 0 && data.acceleration.y === 0) {
    global.socket.emit('resetLiveParticle', gameObject.id)
    return
