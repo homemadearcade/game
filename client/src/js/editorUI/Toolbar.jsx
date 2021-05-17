@@ -399,15 +399,15 @@ export default class Toolbar extends React.Component {
         <ToolbarRow iconName='fa-search'>
           <ToolbarButton iconName="fa-search-plus" onClick={() => {
             EDITOR.preferences.zoomMultiplier -= (EDITOR.zoomDelta * 4)
-            global.local.emit('onZoomChange', HERO.editingId)
+            global.local.emit('onZoomChange')
           }}/>
           <ToolbarButton iconName="fa-search-minus" onClick={() => {
             EDITOR.preferences.zoomMultiplier += (EDITOR.zoomDelta * 4)
-            global.local.emit('onZoomChange', HERO.editingId)
+            global.local.emit('onZoomChange')
           }}/>
           <ToolbarButton iconName="fa-times" onClick={() => {
             EDITOR.preferences.zoomMultiplier = 0
-            global.local.emit('onZoomChange', HERO.editingId)
+            global.local.emit('onZoomChange')
           }}/>
         </ToolbarRow>
 

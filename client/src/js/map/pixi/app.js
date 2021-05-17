@@ -316,6 +316,7 @@ const initPixiApp = (canvasRef, onLoad) => {
       if(id) {
         if(id == HERO.id) onResize()
       } else {
+        console.log('XX')
         onResize()
       }
     })
