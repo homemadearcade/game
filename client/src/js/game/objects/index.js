@@ -555,6 +555,7 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
         let choice = hero.mod().dialogueChoices[id]
         if(!choice || choice.triggerPool === 0) return
         choice.id = id
+
         if(choice.tags) Object.keys(choice.tags).forEach((tag) => {
           if(addedDialogueChoice) return
           if(object.mod().tags[tag]) {
@@ -566,7 +567,8 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
         if(addedDialogueChoice) return
 
         let heroDialogueSet = choice.heroDialogueSet
-        let dialogueSets = object.mod().dialogueSets
+        let dialogueSets = object.mod().heroDialogueSets
+
         if(heroDialogueSet && dialogueSets && dialogueSets[heroDialogueSet]) {
           addedDialogueChoice = true
           interactions.push({text: choice.choiceText, dialogueChoice: choice})

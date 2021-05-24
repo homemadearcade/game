@@ -200,6 +200,8 @@ export function triggerInteraction(interaction, hero, collider, result, options)
   let interactionName = interaction.interaction
   let triggered = false
 
+  console.log(interaction)
+
   if(interaction.dialogueChoice) {
     const { heroEffect, heroEffectProps, guestEffectProps, guestEffect, heroDialogue, heroDialogueSet, guestSequenceId } = interaction.dialogueChoice
 

@@ -50,6 +50,7 @@ class Arcade{
       ARCADE.started = true
       global.local.emit('onStartPregame', { started: true })
     }
+    global.local.emit('onGameStarted', { started: true })
   }
 
   onGetCustomGameFx(customFx) {
@@ -58,6 +59,7 @@ class Arcade{
 
   onGameLoaded() {
     if(GAME.customFx) {
+      console.log('XX')
       ARCADE.setLiveCustomFx(GAME.customFx)
     } else {
       ARCADE.liveCustomGame = null
@@ -98,7 +100,7 @@ class Arcade{
   setLiveCustomFx(customFx) {
     customFx = ARCADE.evalLiveCustomFx(customFx)
     customFx = customFx(pathfinding, gridUtil, collisions, drawTools, particles)
-    customFx = new customFx
+    customFx = new customFx()
     ARCADE.liveCustomGame = customFx
   }
 
