@@ -1046,6 +1046,10 @@ testAndModOwnerWhenEquipped, testFailDestroyMod, testPassReverse, testModdedVers
       return
     }
 
+    if(object.width == 0 || object.height == 0) {
+        OBJECTS.deleteObject(object)
+    }
+
     if(moddedTags.realRotate) {
       if(typeof object.angle != 'number') object.angle = 0
       object.angle += 1 * delta

@@ -356,7 +356,7 @@ function testEventMatch(eventName, mainObject, guestObject, condition, ownerObje
 }
 
 function checkIdOrTagMatch(id, tag, object) {
-  if(!object) console.log('no object in id check' , tag, id)
+  if(!object) return console.log('no object in id check' , tag, id)
   if(id && id === object.id) {
     return true
   }

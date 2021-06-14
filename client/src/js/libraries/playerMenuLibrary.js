@@ -81,7 +81,6 @@ global.local.on('onGameReady', () => {
     descriptors: {
       action: 'edit-descriptors',
       title: 'Describe',
-      menusNegating: ['spriteMenu']
     },
     spriteMenu: {
       useExistingMenu: 'SpriteChoose',
