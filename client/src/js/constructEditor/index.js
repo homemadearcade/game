@@ -207,6 +207,7 @@ class ConstructEditor {
   }
 
   addNodeHistory(nodes) {
+    return
     nodes = _.cloneDeep(nodes)
     if(this.nodesHistory.length >= 5) {
       this.nodesHistory.pop()

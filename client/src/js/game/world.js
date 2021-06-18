@@ -26,7 +26,7 @@ function setDefault() {
       allMovingObjectsHaveGravityY: false,
       gameBoundaryBottomDestroyHero: false,
       gameBoundaryDestroyHero: false,
-      gameBoundaryDestroyObjects: true,
+      gameBoundaryDestroyObjects: false,
       predictNonHostPosition: false,
       interpolateHeroPositions: false,
       // randomFadeAllObjectsIn,

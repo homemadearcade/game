@@ -452,10 +452,9 @@ function updateGridHighlight(location) {
     //   }
     // )
   }
-
 }
 
-function updateResizingObject(object, options = { allowTiny: true }) {
+function updateResizingObject(object, options = { allowTiny: false }) {
   const { mousePos } = MAPEDITOR
   if (mousePos.x < object.x || mousePos.y < object.y) {
     return

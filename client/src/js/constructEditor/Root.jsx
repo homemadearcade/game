@@ -131,6 +131,19 @@ export default class Root extends React.Component{
     //     })
     //   }}
     // />
+
+    // {/*<ToolbarRow iconName='fa-search'>
+    //   <ToolbarButton iconName="fa-search-plus" onClick={() => {
+    //       CONSTRUCTEDITOR.cameraController.zoomMultiplier -= (EDITOR.zoomDelta * 4)
+    //       global.local.emit('onZoomChange')
+    //   }}/>
+    //   <ToolbarButton iconName="fa-search-minus" onClick={() => {
+    //     CONSTRUCTEDITOR.cameraController.zoomMultiplier += (EDITOR.zoomDelta * 4)
+    //     global.local.emit('onZoomChange')
+    //   }}/>
+    // </ToolbarRow>/*}
+
+
     return <div className="ConstructEditor__menu-list">
       {colorSelection && !isColorPickerOpen && <ToolbarRow iconName="fa-palette" rowButtonBackgroundColor={CONSTRUCTEDITOR.selectedColor} onClick={this._openColorPicker}>
         <ToolbarButton iconName="fa-times" onClick={() => {
@@ -173,16 +186,7 @@ export default class Root extends React.Component{
       }}/>}
       </ToolbarRow>
       <br/>
-      <ToolbarRow iconName='fa-search'>
-        <ToolbarButton iconName="fa-search-plus" onClick={() => {
-            CONSTRUCTEDITOR.cameraController.zoomMultiplier -= (EDITOR.zoomDelta * 4)
-            global.local.emit('onZoomChange')
-        }}/>
-        <ToolbarButton iconName="fa-search-minus" onClick={() => {
-          CONSTRUCTEDITOR.cameraController.zoomMultiplier += (EDITOR.zoomDelta * 4)
-          global.local.emit('onZoomChange')
-        }}/>
-      </ToolbarRow>
+
       <ToolbarRow iconName="fa-layer-group"
         active={this.state.isMapVisible.all}
         onClick={() => {
