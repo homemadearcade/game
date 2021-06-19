@@ -46,10 +46,6 @@ function init() {
       global.local.emit('onDestroySpawnIds', objectId)
     })
 
-    global.socket.on('onEditSubObject', (ownerId, subObjectName, update) => {
-      global.local.emit('onEditSubObject', ownerId, subObjectName, update)
-    })
-
     // PLAYERS CALL THIS
     global.socket.on('onSendHeroInput', (heroInput, heroId) => {
       global.local.emit('onSendHeroInput', heroInput, heroId)
@@ -101,6 +97,10 @@ function init() {
       global.socket.emit('sendCurrentGame', GAME)
     })
   }
+
+  global.socket.on('onEditSubObject', (ownerId, subObjectName, update) => {
+    global.local.emit('onEditSubObject', ownerId, subObjectName, update)
+  })
 
   global.socket.on('onAddTrigger', (ownerId, trigger) => {
     global.local.emit('onAddTrigger', ownerId, trigger)

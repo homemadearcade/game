@@ -38,9 +38,18 @@ export default class CurrentTagsMenu extends React.Component {
         }
     }
 
+    componentDidUpdate(prevProps) {
+      if(prevProps.objectSelected.id != this.props.objectSelected.id) {
+        this.setState({
+          localTags: this.props.objectSelected.tags
+        })
+      }
+    }
+
     _renderTagMenuItems(tag) {
         const { objectSelected } = this.props
         const { localTags } = this.state
+
         if (localTags[tag]) {
             return <MenuItem className='dont-close-menu' key={tag}>{tag}<i style={{ marginLeft: '6px' }} className="fas fa-check"></i></MenuItem>
         } else {

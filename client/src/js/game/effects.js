@@ -213,7 +213,9 @@ import pathfinding from '../utils/pathfinding.js'
       number: true,
     },
 
-    spawnAllNow: {}
+    spawnAllNow: {},
+
+    setMetadata: {},
 
 
     // camera shake
@@ -653,6 +655,19 @@ function processEffect(effect, effected, effector, ownerObject) {
     GAME.gameState.activeMods = {}
   }
 
+
+  if(effectName === 'setMetadata') {
+    GAME.heroList.forEach((hero, i) => {
+      if(hero.tags.centerOfAttention) {
+        let id = hero.user.firstName + '-' + hero.user.lastName + '-'+window.uniqueID()
+        GAME.id = id
+        GAME.metadata.name = hero.user.firstName + ' ' + hero.user.lastName + "'s Game"
+        GAME.metadata.author = hero.user.firstName + ' ' + hero.user.lastName
+        window.emitGameEvent('onEditMetadata', GAME.metadata)
+      }
+    })
+  }
+
   if(effectName === 'stopPrologue') {
     GAME.gameState.started = false
     GAME.removeListeners()
@@ -660,12 +675,6 @@ function processEffect(effect, effected, effector, ownerObject) {
     GAME.gameState.activeModList = []
     GAME.gameState.activeMods = {}
     GAME.heroList.forEach((hero, i) => {
-      if(hero.tags.centerOfAttention) {
-        let id = hero.user.firstName + '-' + hero.user.lastName + '-'+window.uniqueID()
-        GAME.id = id
-        GAME.metadata.name = hero.user.firstName + ' ' + hero.user.lastName + "'s Game"
-        GAME.metadata.author = hero.user.firstName + ' ' + hero.user.lastName
-      }
       Object.keys(hero.triggers || {}).forEach((triggerName) => {
         hero.triggers[triggerName] = null
       })

@@ -135,7 +135,7 @@ export default class Toolbar extends React.Component {
     }}
     iconName="fa-rocket"
     >
-      <ToolbarButton iconName="fa-download" onClick={() => {
+      {PAGE.role.isHomeEditor && <><ToolbarButton iconName="fa-download" onClick={() => {
         let saveGame = GAME.cleanForSave(GAME)
         PAGE.downloadObjectAsJson(saveGame, GAME.id)
       }}/>
@@ -147,7 +147,7 @@ export default class Toolbar extends React.Component {
             GAME.loadAndJoin(game)
           }
         })
-      }}/>
+      }}/></>}
     </ToolbarRow>
 
     return <ToolbarRow iconName='fa-cog'>
